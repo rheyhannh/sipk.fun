@@ -1,19 +1,21 @@
 .aside {
     width: 70px;
-    opacity: 1;
+    opacity: 0;
     top: 0;
-    left: 0;
+    left: -100%;
     height: 100vh;
     position: fixed;
     z-index: var(--z-fixed);
     transition: var(--transition-default) ease-in-out;
     background: var(--white-color);
-    box-shadow: .25rem 1.25rem 1.25rem var(--light-color);
+    /* box-shadow: .25rem 1.25rem 1.25rem var(--light-color); */
 }
 
 .aside.active {
+    opacity: 1;
+    left: 0;
     width: 185px;
-    box-shadow: .5rem 2.25rem 2.25rem var(--light-color);
+    /* box-shadow: .5rem 2.25rem 2.25rem var(--light-color); */
 }
 
 .sidebar {
@@ -59,8 +61,51 @@
     grid-template-columns: 1fr;
     width: 100%;
     height: 100%;
-    margin-left: 70px;
+    margin-left: 0;
     transition: var(--transition-default);
+}
+
+@media screen and (min-height: 550px) {
+    /* Set logout nav on bottom later */
+}
+
+@media screen and (min-width: 768px) {
+    .content {
+        margin-left: calc(1.8rem + 70px);
+    }
+
+    .aside {
+        opacity: 1;
+        left: 0;
+        background: var(--body-color);
+        box-shadow: none;
+    }
+
+    .aside.active {
+        box-shadow: none;
+    }
+}
+
+@media screen and (min-width: 1280px) {
+    .content {
+        display: grid;
+        gap: 1.8rem;
+        margin: 0;
+        grid-template-columns: 75px 1fr;
+    }
+
+    .content:has(.aside.active) {
+        grid-template-columns: 185px 1fr;
+    }
+
+    .aside {
+        position: sticky;
+        padding-top: 5.35rem;
+    }
+
+    .sidebar {
+        padding-top: 0;
+    }
 }
 
 @media (hover: hover) and (pointer: fine) {
@@ -83,7 +128,7 @@
     @media screen and (max-width: 1279px) {
         .aside:hover {
             width: 185px;
-            box-shadow: .5rem 2.25rem 2.25rem var(--light-color);
+            /* box-shadow: .5rem 2.25rem 2.25rem var(--light-color); */
         }
 
         .aside:hover .link:hover .link__icon {
@@ -97,53 +142,5 @@
         .aside:hover .link:not(.active):hover .link__icon {
             margin-left: 1rem;
         }
-    }
-}
-
-@media screen and (min-height: 550px) {
-    /* Set logout nav on bottom later */
-}
-
-@media screen and (max-width: 767px) {
-    .content {
-        margin-left: 0;
-    }
-
-    .aside {
-        opacity: 0;
-        left: -100%;
-    }
-
-    .aside.active {
-        opacity: 1;
-        left: 0;
-    }
-}
-
-@media screen and (min-width: 1280px) {
-    .content {
-        display: grid;
-        gap: 2rem;
-        margin: 0;
-        grid-template-columns: 75px 1fr;
-    }
-
-    .content:has(.aside.active) {
-        grid-template-columns: 185px 1fr;
-    }
-
-    .aside {
-        position: sticky;
-        padding-top: 5.35rem;
-        background: var(--body-color);
-        box-shadow: none;
-    }
-
-    .aside.active {
-        box-shadow: none;
-    }
-
-    .sidebar {
-        padding-top: 0;
     }
 }
