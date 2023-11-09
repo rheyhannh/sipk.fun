@@ -2,10 +2,10 @@
 
 import { useContext, useEffect } from 'react'
 import { usePathname, useSearchParams } from 'next/navigation'
-import { ThemeContext } from './Theme';
+import { ContentContext } from './provider/Content';
 
 export function NavigationEvents() {
-    const { linkActive, setActiveLink } = useContext(ThemeContext);
+    const { setActiveLink } = useContext(ContentContext);
     const pathname = usePathname();
     const searchParams = useSearchParams();
 

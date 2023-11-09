@@ -1,25 +1,22 @@
 'use client'
 
 import { useContext } from 'react'
-import { ThemeContext } from './Theme';
+import { ContentContext } from './provider/Content';
 import { RxHamburgerMenu } from 'react-icons/rx';
 import { LiaTimesSolid } from 'react-icons/lia';
 import styles from './style/header.module.css'
 
 export default function Header() {
-    const { navActive, setNavActive } = useContext(ThemeContext);
+    const { isNavbarActive, setNavbarActive } = useContext(ContentContext);
 
-    const handleActiveNav = () => {
-        setNavActive((current) => (current === true ? false : true))
-    }
     return (
         <>
             <div className={styles.dashboard}>
                 <div className={styles.corner}>
                     <div className={styles.hamburger}>
-                        {navActive ?
-                            <LiaTimesSolid onClick={handleActiveNav} size={'24px'} />
-                            : <RxHamburgerMenu onClick={handleActiveNav} size={'24px'} />
+                        {isNavbarActive ?
+                            <LiaTimesSolid onClick={() => { setNavbarActive((current) => (current === true ? false : true)) }} size={'24px'} />
+                            : <RxHamburgerMenu onClick={() => { setNavbarActive((current) => (current === true ? false : true)) }} size={'24px'} />
                         }
                     </div>
                     <div className={styles.logo}>

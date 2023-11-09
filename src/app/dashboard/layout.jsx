@@ -2,7 +2,7 @@ import { Suspense } from 'react';
 import { Poppins } from 'next/font/google';
 import Navbar from '@/component/Nav'
 import { NavigationEvents } from '@/component/NavigationEvents';
-import { ThemeProvider } from '@/component/Theme'
+import { ContentProvider } from '@/component/provider/Content'
 
 const poppins = Poppins({
   subsets: ['latin'],
@@ -24,14 +24,14 @@ export default function DashboardLayout({
   return (
     <>
       <main className={`${poppins.variable} dashboard`}>
-        <ThemeProvider>
+        <ContentProvider>
           <Navbar>
             {children}
           </Navbar>
           <Suspense fallback={null}>
             <NavigationEvents />
           </Suspense>
-        </ThemeProvider>
+        </ContentProvider>
       </main>
     </>
   )
