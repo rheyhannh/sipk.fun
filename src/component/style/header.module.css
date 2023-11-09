@@ -1,4 +1,4 @@
-.header {
+.dashboard {
     top: 0;
     position: sticky;
     padding: .75rem 1.75rem;
@@ -26,7 +26,7 @@
 }
 
 @media screen and (min-width: 1280px) {
-    .header {
+    .dashboard {
         background: var(--body-color);
     }
 

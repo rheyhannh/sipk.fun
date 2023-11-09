@@ -115,7 +115,6 @@ body {
     width: 100vw;
     height: 100vh;
     font-size: .8rem;
-    font-family: var(--poppins-font);
     background: var(--body-color);
     color: var(--dark-color);
     user-select: none;
@@ -178,4 +177,18 @@ small {
     background-color: hsl(11, 8%, 40%);
     ;
     border-radius: .5rem;
+}
+
+main.dashboard {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    font-family: var(--poppins-font);
+}
+
+@media screen and (min-width: 1280px) {
+    main.dashboard {
+        width: 98%;
+        margin: 0 auto;
+    }
 }

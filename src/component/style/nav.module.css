@@ -54,13 +54,7 @@
     margin-left: .75rem;
 }
 
-.main {
-    width: 100%;
-    height: 100%;
-    margin: 0;
-}
-
-.container {
+.content {
     display: grid;
     grid-template-columns: 1fr;
     width: 100%;
@@ -111,7 +105,7 @@
 }
 
 @media screen and (max-width: 767px) {
-    .container {
+    .content {
         margin-left: 0;
     }
 
@@ -127,19 +121,14 @@
 }
 
 @media screen and (min-width: 1280px) {
-    .main {
-        width: 98%;
-        margin: 0 auto;
-    }
-
-    .container {
+    .content {
         display: grid;
-        gap: 2.5rem;
+        gap: 2rem;
         margin: 0;
         grid-template-columns: 75px 1fr;
     }
 
-    .container:has(.aside.active) {
+    .content:has(.aside.active) {
         grid-template-columns: 185px 1fr;
     }
 
