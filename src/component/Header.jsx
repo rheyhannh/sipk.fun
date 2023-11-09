@@ -14,7 +14,7 @@ export default function Header() {
     }
     return (
         <>
-            <div className={styles.header}>
+            <div className={styles.dashboard}>
                 <div className={styles.corner}>
                     <div className={styles.hamburger}>
                         {navActive ?

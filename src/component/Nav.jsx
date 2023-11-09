@@ -40,43 +40,17 @@ export default function Nav({ children }) {
 
     return (
         <>
-            <div className={styles.main}>
-                <Header />
-                {isRichContent ?
-                    <>
-                        <div className={styles.container}>
-                            <div className={`${styles.aside} ${navActive ? styles.active : ''}`} id='aside'>
-                                <div className={styles.sidebar}>
-                                    {navList.map((item, index) => (
-                                        <Link
-                                            href={item.href}
-                                            className={`${styles.link} ${linkActive === item.href ? styles.active : ''}`}
-                                            prefetch={false}
-                                            key={crypto.randomUUID()}
-                                        >
-                                            <span className={styles.link__icon}>
-                                                <Icon name={item.icon} lib={item.lib} props={{ size: '24px' }} />
-                                            </span>
-
-                                            <span className={styles.link__text} >
-                                                {item.text}
-                                            </span>
-                                        </Link>
-                                    ))}
-                                </div>
-                            </div>
-
-                            {children}
-                        </div>
-                    </>
-                    :
-                    <>
+            <Header />
+            {isRichContent ?
+                <>
+                    <div className={styles.content}>
                         <div className={`${styles.aside} ${navActive ? styles.active : ''}`} id='aside'>
                             <div className={styles.sidebar}>
                                 {navList.map((item, index) => (
                                     <Link
                                         href={item.href}
                                         className={`${styles.link} ${linkActive === item.href ? styles.active : ''}`}
+                                        prefetch={false}
                                         key={crypto.randomUUID()}
                                     >
                                         <span className={styles.link__icon}>
@@ -90,12 +64,36 @@ export default function Nav({ children }) {
                                 ))}
                             </div>
                         </div>
-                        <div className={styles.container}>
-                            {children}
+
+                        {children}
+                    </div>
+                </>
+                :
+                <>
+                    <div className={`${styles.aside} ${navActive ? styles.active : ''}`} id='aside'>
+                        <div className={styles.sidebar}>
+                            {navList.map((item, index) => (
+                                <Link
+                                    href={item.href}
+                                    className={`${styles.link} ${linkActive === item.href ? styles.active : ''}`}
+                                    key={crypto.randomUUID()}
+                                >
+                                    <span className={styles.link__icon}>
+                                        <Icon name={item.icon} lib={item.lib} props={{ size: '24px' }} />
+                                    </span>
+
+                                    <span className={styles.link__text} >
+                                        {item.text}
+                                    </span>
+                                </Link>
+                            ))}
                         </div>
-                    </>
-                }
-            </div>
+                    </div>
+                    <div className={styles.content}>
+                        {children}
+                    </div>
+                </>
+            }
         </>
     )
 }
