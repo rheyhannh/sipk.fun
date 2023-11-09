@@ -1,0 +1,33 @@
+.header {
+    top: 0;
+    position: sticky;
+    padding: .75rem 1.75rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: var(--header-height);
+    width: 100%;
+    z-index: calc(var(--z-fixed) + 1);
+    background: var(--white-color);
+}
+
+.corner {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.corner div {
+    display: flex;
+}
+
+.hamburger {
+    cursor: pointer;
+}
+
+@media screen and (min-width: 1280px) {
+    .header {
+        background: var(--body-color);
+    }
+
+}
