@@ -2,13 +2,13 @@
 
 import Link from 'next/link';
 import { useContext, useEffect } from 'react'
-import { ThemeContext } from './Theme';
-import { Icon } from './Icon';
+import { ContentContext } from './provider/Content';
+import { Icon } from './loader/ReactIcons';
 import Header from './Header';
 import styles from './style/nav.module.css'
 
 export default function Nav({ children }) {
-    const { navActive, setNavActive, isRichContent, linkActive } = useContext(ThemeContext);
+    const { isNavbarActive, setNavbarActive, isRichContent, activeLink } = useContext(ContentContext);
 
     const navList = [
         { text: 'Dashboard', href: '/dashboard', icon: 'AiOutlineAppstore', lib: 'ai' },
@@ -25,8 +25,8 @@ export default function Nav({ children }) {
     useEffect(() => {
         const handleClickOutside = (e) => {
             const aside = document.getElementById('aside');
-            if (navActive && aside && !isRichContent && !aside.contains(e.target)) {
-                setNavActive(false);
+            if (isNavbarActive && aside && !isRichContent && !aside.contains(e.target)) {
+                setNavbarActive(false);
             }
         }
 
@@ -36,7 +36,7 @@ export default function Nav({ children }) {
             document.removeEventListener('click', handleClickOutside);
 
         }
-    }, [navActive])
+    }, [isNavbarActive])
 
     return (
         <>
@@ -44,12 +44,12 @@ export default function Nav({ children }) {
             {isRichContent ?
                 <>
                     <div className={styles.content}>
-                        <div className={`${styles.aside} ${navActive ? styles.active : ''}`} id='aside'>
+                        <div className={`${styles.aside} ${isNavbarActive ? styles.active : ''}`} id='aside'>
                             <div className={styles.sidebar}>
                                 {navList.map((item, index) => (
                                     <Link
                                         href={item.href}
-                                        className={`${styles.link} ${linkActive === item.href ? styles.active : ''}`}
+                                        className={`${styles.link} ${activeLink === item.href ? styles.active : ''}`}
                                         prefetch={false}
                                         key={crypto.randomUUID()}
                                     >
@@ -70,12 +70,12 @@ export default function Nav({ children }) {
                 </>
                 :
                 <>
-                    <div className={`${styles.aside} ${navActive ? styles.active : ''}`} id='aside'>
+                    <div className={`${styles.aside} ${isNavbarActive ? styles.active : ''}`} id='aside'>
                         <div className={styles.sidebar}>
                             {navList.map((item, index) => (
                                 <Link
                                     href={item.href}
-                                    className={`${styles.link} ${linkActive === item.href ? styles.active : ''}`}
+                                    className={`${styles.link} ${activeLink === item.href ? styles.active : ''}`}
                                     key={crypto.randomUUID()}
                                 >
                                     <span className={styles.link__icon}>
