@@ -11,6 +11,7 @@ export const ContentProvider = ({ children }) => {
     const [activeLink, setActiveLink] = useState(null);
     // Content
     const [isRichContent, setRichContent] = useState(false);
+    const [isPhoneContent, setPhoneContent] = useState(false);
 
     useEffect(() => {
         // Theme Init
@@ -20,16 +21,26 @@ export const ContentProvider = ({ children }) => {
 
         // Content Init
         const richMediaQuery = window.matchMedia('(min-width: 1280px)');
-        const handleMediaQueryChange = (e) => {
+        const phoneMediaQuery = window.matchMedia('(max-width: 767px)');
+
+        const handleRichMediaQueryChange = (e) => {
             setNavbarActive(e.matches);
             setRichContent(e.matches);
         }
 
-        handleMediaQueryChange(richMediaQuery);
-        richMediaQuery.addEventListener('change', handleMediaQueryChange);
+        const handlePhoneMediaQueryChange = (e) => {
+            setPhoneContent(e.matches);
+        }
+
+        handleRichMediaQueryChange(richMediaQuery);
+        handlePhoneMediaQueryChange(phoneMediaQuery);
+
+        richMediaQuery.addEventListener('change', handleRichMediaQueryChange);
+        phoneMediaQuery.addEventListener('change', handlePhoneMediaQueryChange);
 
         return () => {
-            richMediaQuery.removeEventListener('change', handleMediaQueryChange);
+            richMediaQuery.removeEventListener('change', handleRichMediaQueryChange);
+            phoneMediaQuery.removeEventListener('change', handlePhoneMediaQueryChange);
         }
 
     }, []);
@@ -40,7 +51,8 @@ export const ContentProvider = ({ children }) => {
                 theme, setTheme,
                 isNavbarActive, setNavbarActive,
                 activeLink, setActiveLink,
-                isRichContent, setRichContent
+                isRichContent, setRichContent,
+                isPhoneContent, setPhoneContent
             }}
         >
             {children}

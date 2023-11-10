@@ -1,15 +1,8 @@
 import { Suspense } from 'react';
-import { Poppins } from 'next/font/google';
+import Header from '@/component/Header';
 import Navbar from '@/component/Nav'
 import { NavigationEvents } from '@/component/NavigationEvents';
 import { ContentProvider } from '@/component/provider/Content'
-
-const poppins = Poppins({
-  subsets: ['latin'],
-  display: 'swap',
-  variable: '--poppins-font',
-  weight: ['100', '200', '300', '400', '500', '600', '700', '800', '900']
-});
 
 export const metadata = {
   title: 'Dashboard',
@@ -23,16 +16,18 @@ export default function DashboardLayout({
 }) {
   return (
     <>
-      <main className={`${poppins.variable} dashboard`}>
-        <ContentProvider>
+      <ContentProvider>
+        <Header />
+        <main className={`dashboard`}>
           <Navbar>
             {children}
           </Navbar>
           <Suspense fallback={null}>
             <NavigationEvents />
           </Suspense>
-        </ContentProvider>
-      </main>
+
+        </main>
+      </ContentProvider>
     </>
   )
 }
