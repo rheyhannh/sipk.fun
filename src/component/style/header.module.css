@@ -1,6 +1,6 @@
 .dashboard {
     top: 0;
-    position: sticky;
+    position: fixed;
     padding: .75rem 1.75rem;
     display: flex;
     justify-content: space-between;
@@ -9,6 +9,11 @@
     width: 100%;
     z-index: calc(var(--z-fixed) + 1);
     background: var(--white-color);
+    transition: var(--transition-default) ease-in-out;
+}
+
+.dashboard.hide {
+    top: -100%;
 }
 
 .corner {
