@@ -42,26 +42,28 @@ export default function Nav({ children }) {
             {isRichContent ?
                 <>
                     <div className={styles.content}>
-                        <div className={`${styles.aside} ${isNavbarActive ? styles.active : ''}`} id='aside'>
-                            <div className={styles.sidebar}>
-                                {navList.map((item, index) => (
-                                    <Link
-                                        href={item.href}
-                                        className={`${styles.link} ${activeLink === item.href ? styles.active : ''}`}
-                                        prefetch={false}
-                                        key={crypto.randomUUID()}
-                                    >
-                                        <span className={styles.link__icon}>
-                                            <Icon name={item.icon} lib={item.lib} props={{ size: '24px' }} />
-                                        </span>
+                        <aside className='dashboard'>
+                            <div className={`${styles.aside} ${isNavbarActive ? styles.active : ''}`} id='aside'>
+                                <div className={styles.sidebar}>
+                                    {navList.map((item, index) => (
+                                        <Link
+                                            href={item.href}
+                                            className={`${styles.link} ${activeLink === item.href ? styles.active : ''}`}
+                                            prefetch={false}
+                                            key={crypto.randomUUID()}
+                                        >
+                                            <span className={styles.link__icon}>
+                                                <Icon name={item.icon} lib={item.lib} props={{ size: '24px' }} />
+                                            </span>
 
-                                        <h4 className={styles.link__text} >
-                                            {item.text}
-                                        </h4>
-                                    </Link>
-                                ))}
+                                            <h4 className={styles.link__text} >
+                                                {item.text}
+                                            </h4>
+                                        </Link>
+                                    ))}
+                                </div>
                             </div>
-                        </div>
+                        </aside>
 
                         {children}
                     </div>
