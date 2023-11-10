@@ -25,6 +25,7 @@ export default function Nav({ children }) {
         const handleClickOutside = (e) => {
             const aside = document.getElementById('aside');
             if (isNavbarActive && aside && !isRichContent && !aside.contains(e.target)) {
+                document.body.classList.remove('disable_scroll');
                 setNavbarActive(false);
             }
         }
