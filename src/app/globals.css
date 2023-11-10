@@ -196,4 +196,8 @@ main.dashboard {
         width: 98%;
         margin: 0 auto;
     }
+
+    aside.dashboard {
+        position: relative;
+    }
 }
