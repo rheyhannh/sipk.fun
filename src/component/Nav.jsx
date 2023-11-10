@@ -4,7 +4,6 @@ import Link from 'next/link';
 import { useContext, useEffect } from 'react'
 import { ContentContext } from './provider/Content';
 import { Icon } from './loader/ReactIcons';
-import Header from './Header';
 import styles from './style/nav.module.css'
 
 export default function Nav({ children }) {
@@ -40,7 +39,6 @@ export default function Nav({ children }) {
 
     return (
         <>
-            <Header />
             {isRichContent ?
                 <>
                     <div className={styles.content}>
@@ -57,9 +55,9 @@ export default function Nav({ children }) {
                                             <Icon name={item.icon} lib={item.lib} props={{ size: '24px' }} />
                                         </span>
 
-                                        <span className={styles.link__text} >
+                                        <h4 className={styles.link__text} >
                                             {item.text}
-                                        </span>
+                                        </h4>
                                     </Link>
                                 ))}
                             </div>
