@@ -26,6 +26,8 @@
     --scroll-thumb-color: hsl(222, 12%, 80%);
     --skeleton-base: hsl(11, 8%, 92%);
     --skeleton-highlight: hsl(11, 8%, 99%);
+    --logo-first-color: #FF6341;
+    --logo-second-color: #1d3263; 
     /* === END OF UTILS COLOR === */
 
     /* === BORDER-RADIUS === */
@@ -93,6 +95,8 @@
     --scroll-thumb-color: rgba(0, 0, 0, 0.5);
     --skeleton-base: rgba(132, 139, 200, 0.1);
     --skeleton-highlight: #677483;
+    --logo-first-color: #f6f6f9;
+    --logo-second-color: #FF6341;
     /* === END OF UTILS COLOR === */
 
     /* === BOX-SHADOW === */
@@ -127,13 +131,17 @@ body {
     overflow-x: hidden;
 }
 
+body.disable_scroll {
+    overflow: hidden;
+}
+
 a {
     color: var(--dark-color);
 }
 
 img {
-    display: block;
     width: 100%;
+    height: auto;
 }
 
 h1,
