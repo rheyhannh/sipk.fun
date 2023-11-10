@@ -43,7 +43,7 @@
 .sidebar {
     display: flex;
     flex-direction: column;
-    padding: 5rem .75rem .75rem .75rem;
+    padding: 5rem 1rem .75rem .75rem;
     overflow: hidden;
 }
 
