@@ -24,6 +24,8 @@
     --light-color: rgba(132, 139, 200, 0.2);
     --scroll-bar-color: hsl(222, 12%, 90%);
     --scroll-thumb-color: hsl(222, 12%, 80%);
+    --skeleton-base: hsl(11, 8%, 92%);
+    --skeleton-highlight: hsl(11, 8%, 99%);
     /* === END OF UTILS COLOR === */
 
     /* === BORDER-RADIUS === */
@@ -68,7 +70,7 @@
     /*  === END OF Z-INDEX === */
 
     /* === BOX-SHADOW === */
-    --box-shadow: 0 2rem 3rem var(--light-color);
+    --box-shadow: 0 1rem 1.5rem var(--light-color);
     /* === END OF BOX-SHADOW === */
 
     /* === TRANSITION === */
@@ -89,10 +91,12 @@
     --light-color: rgba(0, 0, 0, 0.4);
     --scroll-bar-color: #677483;
     --scroll-thumb-color: rgba(0, 0, 0, 0.5);
+    --skeleton-base: rgba(132, 139, 200, 0.1);
+    --skeleton-highlight: #677483;
     /* === END OF UTILS COLOR === */
 
     /* === BOX-SHADOW === */
-    --box-shadow: 0 2rem 3rem var(--light-color);
+    --box-shadow: 0 1rem 1.5rem var(--light-color);
     /* === END OF BOX-SHADOW === */
 
 }
@@ -109,11 +113,13 @@
 
 html {
     font-size: 14px;
+    
 }
 
 body {
     width: 100vw;
     height: 100vh;
+    font-family: var(--poppins-font);
     font-size: .8rem;
     background: var(--body-color);
     color: var(--dark-color);
@@ -183,7 +189,6 @@ main.dashboard {
     width: 100%;
     height: 100%;
     margin: 0;
-    font-family: var(--poppins-font);
 }
 
 @media screen and (min-width: 1280px) {
