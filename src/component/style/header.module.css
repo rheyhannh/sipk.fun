@@ -1,7 +1,7 @@
 .dashboard {
     top: 0;
     position: fixed;
-    padding: .75rem 1.75rem;
+    padding: .75rem 1.5rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -16,18 +16,17 @@
     top: -100%;
 }
 
-.corner {
+.dashboard__nav,
+.dashboard__logo, 
+.dashboard__toolkit {
     display: flex;
     align-items: center;
-    gap: 1rem;
-}
-
-.corner div {
-    display: flex;
-}
-
-.hamburger {
+    justify-content: center;
     cursor: pointer;
+}
+
+.dashboard__logo img {
+    width: 48px;
 }
 
 @media screen and (min-width: 768px) {
