@@ -6,6 +6,7 @@
     /* === MAIN COLOR === */
     --first-color: #FF6341;
     --first-color-lighter: hsl(11, 100%, 60%);
+    --second-color-lighter: hsl(222, 40%, 30%);
     --second-color: #1d3263;
     /* === END OF MAIN COLOR === */
 
@@ -83,6 +84,7 @@
 .dark-theme {
     /* === MAIN COLOR === */
     --first-color-lighter: hsl(11, 100%, 65%);
+    --second-color-lighter: hsl(222, 30%, 35%);
     /* === END OF MAIN COLOR === */
 
     /* === UTILS COLOR === */
