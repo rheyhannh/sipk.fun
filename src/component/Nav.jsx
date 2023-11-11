@@ -40,7 +40,7 @@ export default function Nav({ children }) {
 
     return (
         <>
-            {isRichContent ?
+            {isRichContent === true ?
                 <>
                     <div className={styles.content}>
                         <aside className='dashboard'>
@@ -69,7 +69,7 @@ export default function Nav({ children }) {
                         {children}
                     </div>
                 </>
-                :
+                : isRichContent === false ?
                 <>
                     <div className={`${styles.aside} ${isNavbarActive ? styles.active : ''}`} id='aside'>
                         <div className={styles.sidebar}>
@@ -94,6 +94,7 @@ export default function Nav({ children }) {
                         {children}
                     </div>
                 </>
+                : <></>
             }
         </>
     )
