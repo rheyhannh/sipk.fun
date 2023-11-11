@@ -10,7 +10,7 @@ export const ContentProvider = ({ children }) => {
     const [isNavbarActive, setNavbarActive] = useState(false);
     const [activeLink, setActiveLink] = useState(null);
     // Content
-    const [isRichContent, setRichContent] = useState(false);
+    const [isRichContent, setRichContent] = useState(0);
     const [isPhoneContent, setPhoneContent] = useState(false);
 
     useEffect(() => {
