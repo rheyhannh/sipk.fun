@@ -3,11 +3,17 @@
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import { Icon } from '@/component/loader/ReactIcons'
 import { useEffect, useState } from 'react';
+import { mutate } from 'swr';
 import CountUp from 'react-countup';
+import Spinner from "./loader/Spinner";
 import "react-loading-skeleton/dist/skeleton.css";
 import styles from './style/card.module.css'
 
 export function Summary({ state, icon, color, title, data }) {
+
+    const handleRetry = () => {
+        mutate('/api/matkulku')
+    }
 
     const SkeletonCard = () => (
         <div className={`${styles.summary}`}>
@@ -80,7 +86,6 @@ export function Summary({ state, icon, color, title, data }) {
                         <Icon name={icon.name} lib={icon.lib} props={{ size: '24px' }} />
                         : null
                     }
-
                 </div>
 
                 <div className={styles.summary__data}>
@@ -134,9 +139,19 @@ export function Summary({ state, icon, color, title, data }) {
     const ErrorCard = () => (
         <div className={styles.summary}>
             <div className={styles.error__wrapper}>
-                <div className={styles.error__content}>
+                <div className={styles.error__content} onClick={handleRetry}>
                     <h5>Gagal mengambil data</h5>
                     <h1>&#x21bb;</h1>
+                </div>
+            </div>
+        </div>
+    )
+
+    const ValidatingCard = () => (
+        <div className={styles.summary}>
+            <div className={styles.validating__wrapper}>
+                <div className={styles.validating__content} onClick={handleRetry}>
+                    <Spinner size={'35px'} color={'var(--logo-second-color)'}/>
                 </div>
             </div>
         </div>
@@ -145,5 +160,6 @@ export function Summary({ state, icon, color, title, data }) {
     if (state === 'loading') { return (<SkeletonCard />) }
     else if (state === 'loaded') { return (<LoadedCard />) }
     else if (state === 'error') { return (<ErrorCard />) }
-    else { return null }
+    else if (state === 'validating') { return (<ValidatingCard />) }
+    else { return 'Unidentified Card State' }
 }

@@ -1,4 +1,5 @@
-.error__wrapper {
+.error__wrapper,
+.validating__wrapper {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -6,7 +7,8 @@
     height: 100%;
 }
 
-.error__content {
+.error__content,
+.validating__content {
     display: flex;
     flex-direction: column;
     justify-content: center;
