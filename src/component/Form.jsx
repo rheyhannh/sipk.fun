@@ -310,7 +310,17 @@ export function UsersForm() {
                             size='invisible'
                         />
 
-                        <form onSubmit={handleLogin} className={styles.sign_in_form}>
+                        <form
+                            onSubmit={handleLogin}
+                            onSubmitCapture={(e) => {
+                                setErrorMessage('');
+                                const allInput  = e.target.querySelectorAll('input');
+                                allInput.forEach(input => {
+                                    input.blur();
+                                });
+                            }}
+                            className={styles.sign_in_form}
+                        >
                             <h2 className={styles.title}>Login</h2>
                             <h3 style={{ margin: '.25rem 0', color: 'var(--danger-color)', fontWeight: 'var(--font-medium)' }}>{errorMessage}</h3>
                             <div className={styles.input_field}>
