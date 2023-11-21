@@ -2,10 +2,10 @@
 
 import { useContext, useEffect } from 'react'
 import { usePathname, useSearchParams } from 'next/navigation'
-import { ContentContext } from './provider/Content';
+import { DashboardContext } from './provider/Dashboard';
 
 export function NavigationEvents() {
-    const { setActiveLink } = useContext(ContentContext);
+    const { setActiveLink } = useContext(DashboardContext);
     const pathname = usePathname();
     const searchParams = useSearchParams();
 

@@ -1,4 +1,4 @@
-import { ContentProvider } from '@/component/provider/Content'
+import { GlobalProvider } from '@/component/provider/Global'
 
 export const metadata = {
   title: 'SIPK',
@@ -12,9 +12,9 @@ export default function UsersLayout({
 }) {
   return (
     <>
-      <ContentProvider>
+      <GlobalProvider>
         {children}
-      </ContentProvider>
+      </GlobalProvider>
     </>
   )
 }
