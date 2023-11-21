@@ -9,8 +9,11 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@hcaptcha/react-hcaptcha": "^1.9.1",
     "@loadable/component": "^5.15.3",
     "@supabase/ssr": "^0.0.10",
+    "crypto-js": "^4.2.0",
+    "joi": "^17.11.0",
     "lru-cache": "^10.0.2",
     "next": "13.5.6",
     "react": "^18",
@@ -20,6 +23,7 @@
     "react-icons": "^4.11.0",
     "react-loading-skeleton": "^3.3.1",
     "react-scroll": "^1.9.0",
-    "swr": "^2.2.4"
+    "swr": "^2.2.4",
+    "validator": "^13.11.0"
   }
 }
