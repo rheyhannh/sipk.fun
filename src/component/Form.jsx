@@ -2,11 +2,10 @@
 
 // ========== NEXT DEPEDENCY ========== //
 import Image from 'next/image';
-import dynamic from 'next/dynamic';
-import { redirect, useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 
 // ========== REACT DEPEDENCY ========== //
-import { useState, useContext, useRef, useEffect } from 'react';
+import { useState, useContext, useRef } from 'react';
 
 // ========== CAPTCHA DEPEDENCY ========== //
 import HCaptcha from '@hcaptcha/react-hcaptcha';
@@ -21,7 +20,8 @@ import isInt from 'validator/lib/isInt';
 
 // ========== COMPONENTS DEPEDENCY ========== //
 import toast from 'react-hot-toast';
-import { ContentContext } from '@/component/provider/Content'
+import { GlobalContext } from '@/component/provider/Global'
+import { UsersContext } from './provider/Users';
 import { Accordion } from '@/component/Accordion'
 import { Ball } from '@/component/loader/Loading';
 import Modal from './Modal';
@@ -40,12 +40,10 @@ import {
     FaInfoCircle,
     FaEye,
     FaEyeSlash,
-    FaTimes
 } from "react-icons/fa";
-import { FaCircleInfo, FaGear, FaPlus } from "react-icons/fa6";
+import { FaCircleInfo, FaGear } from "react-icons/fa6";
 import { FiSun } from 'react-icons/fi';
 import { BiMoon } from 'react-icons/bi';
-
 
 /*
 ============================== CODE START HERE ==============================
@@ -60,7 +58,12 @@ export function UsersForm() {
     /*
     ========== Context ==========
     */
-    const { theme, setTheme } = useContext(ContentContext);
+    const { theme, setTheme } = useContext(GlobalContext);
+    const {
+        loginMode, setLoginMode,
+        isBigContent,
+        listUniversitas, daftarAccordionList
+    } = useContext(UsersContext);
 
     /*
     ========== States ==========
@@ -78,9 +81,6 @@ export function UsersForm() {
         })
     );
 
-    // Mode
-    const [loginMode, setLoginMode] = useState(true);
-
     // Forms Inputs
     const [namaLengkap, setNamaLengkap] = useState('');
     const [universitas, setUniversitas] = useState(0);
@@ -88,116 +88,12 @@ export function UsersForm() {
     const [password, setPassword] = useState('');
 
     // Utils
-    const [isBigContent, setBigContent] = useState(0);
     const [loading, setLoading] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
-    const [allowDaftarSubmit, setAllowDaftarSubmit] = useState(false);
+    const [modalDaftar, setModalDaftar] = useState(false);
     const [hideLoginPassword, setHideLoginPassword] = useState(true);
     const [hideDaftarPassword, setHideDaftarPassword] = useState(true);
-    const [modalDaftar, setModalDaftar] = useState(false);
-    const [daftarAccordion, setDaftarAccordion] = useState(Array(5).fill(false));
-    const [captchaToken, setCaptchaToken] = useState('');
     const [inputValidator, setInputValidator] = useState(initialInputValidator);
-
-    /*
-    ========== Use Effect Hook ==========
-    */
-    useEffect(() => {
-        // Content Init
-        const bigMediaQuery = window.matchMedia('(min-width: 870px)');
-
-        const handleBigMediaQueryChange = (e) => {
-            setBigContent(e.matches);
-        }
-
-        handleBigMediaQueryChange(bigMediaQuery);
-
-        bigMediaQuery.addEventListener('change', handleBigMediaQueryChange);
-
-        return () => {
-            bigMediaQuery.removeEventListener('change', handleBigMediaQueryChange);
-        }
-
-    }, []);
-
-    /*
-    ========== Required Data ==========
-    */
-    const listUniversitas = [
-        { id: 1, nama: 'Universitas Brawijaya' },
-        { id: 2, nama: 'Universitas Diponegoro' },
-        { id: 3, nama: 'Universitas Indonesia' },
-        { id: 4, nama: 'Institut Teknologi Bandung' },
-        { id: 5, nama: 'Universitas Airlangga' },
-        { id: 6, nama: 'Institut Pertanian Bogor' },
-        { id: 7, nama: 'Institut Teknologi Sepuluh November' },
-        { id: 8, nama: 'Telkom University' },
-        { id: 9, nama: 'Universitas Padjajaran' },
-        { id: 10, nama: 'Universitas Jendral Soedirman' },
-    ]
-
-    const daftarAccordionList = [
-        {
-            title: 'Kriteria Nama Lengkap',
-            description: (
-                <ul>
-                    <li>Gunakan hanya huruf, tanpa simbol atau angka</li>
-                    <li>Panjang minimal 6 karakter, maksimal 100</li>
-                    <li>Gunakan hanya satu spasi di antara setiap kata</li>
-                </ul>
-            ),
-            icon: <FaPlus />
-        },
-        {
-            title: 'Kriteria Universitas',
-            description: (
-                <ul>
-                    <li>Pilih universitas yang sesuai dan tersedia</li>
-                    <li>Universitas yang berbeda dapat mempengaruhi penilaian, pastikan kamu memilih yang sesuai</li>
-                    <li>Jika universitasmu belum tersedia, kamu dapat daftar <span style={{ color: 'green' }}>disini</span></li>
-                </ul>
-            ),
-            icon: <FaPlus />
-        },
-        {
-            title: 'Kriteria Email',
-            description: (
-                <ul>
-                    <li>Gunakan email valid yang dapat dihubungi</li>
-                    <li>Konfirmasi pendaftaran dengan mengklik link yang dikirimkan SIPK</li>
-                </ul>
-
-            ),
-            icon: <FaPlus />
-        }
-        ,
-        {
-            title: 'Kriteria Password',
-            description: (
-                <ul>
-                    <li>Gunakan password minimal 6 karakter, maksimal 50</li>
-                    <li>Disarankan kombinasi huruf kecil, huruf besar, angka dan simbol</li>
-                    <li>Password lemah atau kurang kuat dapat digunakan, walaupun tidak disarankan</li>
-                </ul>
-            ),
-            icon: <FaPlus />
-        }
-        ,
-        {
-            title: 'Keterangan Icon',
-            description: (
-                <div className={styles.keterangan_icon}>
-                    <span><FaCircleInfo color='var(--primary-color)' />  Data dibutuhkan</span>
-                    <span><FaGear color='var(--logo-second-color)' />  Data sedang divalidasi</span>
-                    <span><FaCheckCircle color='var(--success-color)' />  Data Valid</span>
-                    <span><FaCheckCircle color='var(--warning-color)' />  Password kurang kuat</span>
-                    <span><FaCheckCircle color='var(--danger-color)' />  Password lemah</span>
-                    <span><FaExclamationCircle color='crimson' />  Data Invalid</span>
-                </div>
-            ),
-            icon: <FaPlus />
-        }
-    ]
 
     /*
     ========== Methods, Functions, Helpers ==========
@@ -248,15 +144,6 @@ export function UsersForm() {
                 setLoading(false);
                 captcha.current.resetCaptcha();
             });
-    }
-
-    const handleDaftarAccordion = (index) => {
-        setDaftarAccordion((prevArray) => {
-            const currentVal = prevArray[index];
-            const newArray = Array(prevArray.length).fill(false);
-            newArray[index] = currentVal ? false : true;
-            return newArray;
-        })
     }
 
     const getToastOptions = (form, style, icon) => {
@@ -362,15 +249,6 @@ export function UsersForm() {
 
             return newArray;
         })
-
-        // Allow Daftar Forms Submit
-        if (
-            inputValidator[2].status === 'success' &&
-            inputValidator[3].status === 'success' &&
-            inputValidator[4].status === 'success' &&
-            inputValidator[5].status === 'success'
-        ) { setAllowDaftarSubmit(true) }
-        else { setAllowDaftarSubmit(false) }
     }
 
     const handleNamaLengkapChange = (e) => { setNamaLengkap(e.target.value); }
@@ -399,7 +277,7 @@ export function UsersForm() {
         setPassword('');
         setErrorMessage('');
         setInputValidator(initialInputValidator);
-        // captcha.current.resetCaptcha();
+        captcha.current.resetCaptcha();
     }
 
     const getSelectColor = () => { return universitas === 0 ? 'var(--infoDark-color)' : 'var(--dark-color)'; }
@@ -428,7 +306,6 @@ export function UsersForm() {
                         <HCaptcha
                             ref={captcha}
                             sitekey="c397ab1e-e96e-4b8a-8bb3-f2fb86e62b47"
-                            onVerify={setCaptchaToken}
                             onClose={() => { setErrorMessage('Captcha diperlukan untuk login') }}
                             size='invisible'
                         />

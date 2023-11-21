@@ -2,7 +2,8 @@ import { Suspense } from 'react';
 import Header from '@/component/Header';
 import Navbar from '@/component/Nav'
 import { NavigationEvents } from '@/component/NavigationEvents';
-import { ContentProvider } from '@/component/provider/Content'
+import { GlobalProvider } from '@/component/provider/Global'
+import { DashboardProvider } from '@/component/provider/Dashboard';
 
 export const metadata = {
   title: 'Dashboard',
@@ -16,18 +17,19 @@ export default function DashboardLayout({
 }) {
   return (
     <>
-      <ContentProvider>
-        <Header />
-        <main className={`dashboard`}>
-          <Navbar>
-            {children}
-          </Navbar>
-          <Suspense fallback={null}>
-            <NavigationEvents />
-          </Suspense>
-
-        </main>
-      </ContentProvider>
+      <GlobalProvider>
+        <DashboardProvider>
+          <Header />
+          <main className={`dashboard`}>
+            <Navbar>
+              {children}
+            </Navbar>
+            <Suspense fallback={null}>
+              <NavigationEvents />
+            </Suspense>
+          </main>
+        </DashboardProvider>
+      </GlobalProvider>
     </>
   )
 }

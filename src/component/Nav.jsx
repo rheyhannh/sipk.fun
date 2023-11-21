@@ -2,21 +2,23 @@
 
 import Link from 'next/link';
 import { useContext, useEffect } from 'react'
-import { ContentContext } from './provider/Content';
+import { DashboardContext } from './provider/Dashboard';
 import { Icon } from './loader/ReactIcons';
 import styles from './style/nav.module.css'
-import { createBrowserClient } from '@supabase/ssr';
 
 export default function Nav({ children }) {
-    const { isNavbarActive, setNavbarActive, isRichContent, activeLink } = useContext(ContentContext);
+    const {
+        isNavbarActive,
+        setNavbarActive,
+        isRichContent,
+        activeLink
+    } = useContext(DashboardContext);
 
     const navList = [
         { text: 'Dashboard', href: '/dashboard', icon: 'AiOutlineAppstore', lib: 'ai' },
         { text: 'Profil', href: '/dashboard/profil', icon: 'AiOutlineIdcard', lib: 'ai' },
-        // { text: 'Akun', href: '/dashboard/akun', icon: 'MdOutlineManageAccounts', lib: 'md' },
         { text: 'Matakuliah', href: '/dashboard/matkul', icon: 'BsJournalBookmark', lib: 'bs' },
         { text: 'Statistik', href: '/dashboard/statistik', icon: 'MdOutlineQueryStats', lib: 'md' },
-        // { text: 'Pesan', href: '/dashboard/pesan', icon: 'BsEnvelope', lib: 'bs' },
         { text: 'Laporkan', href: '/dashboard/laporkan', icon: 'GoReport', lib: 'go' },
         { text: 'Tentang', href: '/dashboard/tentang', icon: 'AiOutlineInfoCircle', lib: 'ai' },
         { text: 'Keluar', href: '/api/logout', icon: 'FiLogOut', lib: 'fi' },
@@ -71,32 +73,32 @@ export default function Nav({ children }) {
                     </div>
                 </>
                 : isRichContent === false ?
-                <>
-                    <div className={`${styles.aside} ${isNavbarActive ? styles.active : ''}`} id='aside'>
-                        <div className={styles.sidebar}>
-                            {navList.map((item, index) => (
-                                <Link
-                                    href={item.href}
-                                    className={`${styles.link} ${activeLink === item.href ? styles.active : ''}`}
-                                    prefetch={false}
-                                    key={crypto.randomUUID()}
-                                >
-                                    <span className={styles.link__icon}>
-                                        <Icon name={item.icon} lib={item.lib} props={{ size: '24px' }} />
-                                    </span>
+                    <>
+                        <div className={`${styles.aside} ${isNavbarActive ? styles.active : ''}`} id='aside'>
+                            <div className={styles.sidebar}>
+                                {navList.map((item, index) => (
+                                    <Link
+                                        href={item.href}
+                                        className={`${styles.link} ${activeLink === item.href ? styles.active : ''}`}
+                                        prefetch={false}
+                                        key={crypto.randomUUID()}
+                                    >
+                                        <span className={styles.link__icon}>
+                                            <Icon name={item.icon} lib={item.lib} props={{ size: '24px' }} />
+                                        </span>
 
-                                    <span className={styles.link__text} >
-                                        {item.text}
-                                    </span>
-                                </Link>
-                            ))}
+                                        <span className={styles.link__text} >
+                                            {item.text}
+                                        </span>
+                                    </Link>
+                                ))}
+                            </div>
                         </div>
-                    </div>
-                    <div className={styles.content}>
-                        {children}
-                    </div>
-                </>
-                : <></>
+                        <div className={styles.content}>
+                            {children}
+                        </div>
+                    </>
+                    : <></>
             }
         </>
     )

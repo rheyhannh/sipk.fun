@@ -2,7 +2,8 @@
 
 import Image from 'next/image';
 import { useContext, useEffect, useState } from 'react'
-import { ContentContext } from './provider/Content';
+import { GlobalContext } from './provider/Global';
+import { DashboardContext } from './provider/Dashboard';
 import { animateScroll as scroll } from 'react-scroll';
 import { RxHamburgerMenu } from 'react-icons/rx';
 import { LiaTimesSolid } from 'react-icons/lia';
@@ -11,7 +12,15 @@ import { FiSun, FiMoon } from 'react-icons/fi';
 import styles from './style/header.module.css'
 
 export default function Header() {
-    const { isNavbarActive, setNavbarActive, isPhoneContent, theme, setTheme, isRichContent } = useContext(ContentContext);
+    const {
+        isNavbarActive,
+        setNavbarActive,
+        isPhoneContent,
+        isRichContent
+    } = useContext(DashboardContext);
+    const {
+        theme, setTheme,
+    } = useContext(GlobalContext)
     const [prevScrollPos, setPrevScrollPos] = useState(0);
     const [showHeader, setShowHeader] = useState(true);
 

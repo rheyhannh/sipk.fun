@@ -1,24 +1,28 @@
 'use client'
 
+// ========== REACT DEPEDENCY ========== //
 import { createContext, useEffect, useState } from "react"
 
-export const ContentContext = createContext();
-export const ContentProvider = ({ children }) => {
-    // Theme 
-    const [theme, setTheme] = useState('light');
-    // Nav
+/*
+============================== CODE START HERE ==============================
+*/
+export const DashboardContext = createContext();
+export const DashboardProvider = ({ children }) => {
+    /*
+    ========== States ==========
+    */
+    // Nav 
     const [isNavbarActive, setNavbarActive] = useState(false);
     const [activeLink, setActiveLink] = useState(null);
-    // Content
+
+    // Rich (min-width: 1280px), Phone (max-width: 768px)
     const [isRichContent, setRichContent] = useState(0);
     const [isPhoneContent, setPhoneContent] = useState(false);
 
+    /*
+    ========== Use Effect Hook ==========
+    */
     useEffect(() => {
-        // Theme Init
-        const localTheme = localStorage.getItem('_theme');
-        if (localTheme === 'dark') { setTheme(localTheme); document.body.classList.add('dark-theme'); }
-        else { localStorage.setItem('_theme', 'light') }
-
         // Content Init
         const richMediaQuery = window.matchMedia('(min-width: 1280px)');
         const phoneMediaQuery = window.matchMedia('(max-width: 767px)');
@@ -42,20 +46,18 @@ export const ContentProvider = ({ children }) => {
             richMediaQuery.removeEventListener('change', handleRichMediaQueryChange);
             phoneMediaQuery.removeEventListener('change', handlePhoneMediaQueryChange);
         }
-
-    }, []);
+    }, [])
 
     return (
-        <ContentContext.Provider
+        <DashboardContext.Provider
             value={{
-                theme, setTheme,
                 isNavbarActive, setNavbarActive,
                 activeLink, setActiveLink,
                 isRichContent, setRichContent,
-                isPhoneContent, setPhoneContent
+                isPhoneContent, setPhoneContent,
             }}
         >
             {children}
-        </ContentContext.Provider>
+        </DashboardContext.Provider>
     )
 }
