@@ -180,7 +180,7 @@ body.disable_scroll {
 body,
 input,
 select {
-    font-family: var(--leaguespartan-font);
+    font-family: var(--poppins-font);
 }
 
 input[type="number"]::-webkit-outer-spin-button,

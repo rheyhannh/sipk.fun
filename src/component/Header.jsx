@@ -1,6 +1,7 @@
 'use client'
 
 import Image from 'next/image';
+import { League_Spartan } from 'next/font/google';
 import { useContext, useEffect, useState } from 'react'
 import { GlobalContext } from './provider/Global';
 import { DashboardContext } from './provider/Dashboard';
@@ -10,6 +11,13 @@ import { LiaTimesSolid } from 'react-icons/lia';
 import toast from 'react-hot-toast';
 import { FiSun, FiMoon } from 'react-icons/fi';
 import styles from './style/header.module.css'
+
+const league_spartan = League_Spartan({
+    subsets: ['latin'],
+    display: 'swap',
+    variable: '--leaguespartan-font',
+    weight: ['100', '200', '300', '400', '500', '600', '700', '800', '900']
+})
 
 export default function Header() {
     const {
@@ -21,14 +29,9 @@ export default function Header() {
     const {
         theme, setTheme,
     } = useContext(GlobalContext)
+    
     const [prevScrollPos, setPrevScrollPos] = useState(0);
     const [showHeader, setShowHeader] = useState(true);
-
-    // const darkWord = ['Belum bayar listrik', 'Listrik jepret', 'Gelap', 'Humorku', 'Mode Gelap', 'Malam'];
-    // const lightWord = ['Abis bayar listrik', 'Listrik hidup', 'Silau', 'Masadepan', 'Mode Terang', 'Siang'];
-
-    // const helloDark = () => toast(darkWord[Math.floor(Math.random() * darkWord.length)], { duration: 2000, icon: <FiMoon size={'17px'} /> });
-    // const helloLight = () => toast(lightWord[Math.floor(Math.random() * lightWord.length)], { duration: 2000, icon: <FiSun size={'17px'} /> });
 
     const helloDark = () => toast('Dark Mode', { duration: 2000, icon: <FiMoon size={'17px'} /> });
     const helloLight = () => toast('Light Mode', { duration: 2000, icon: <FiSun size={'17px'} /> });
@@ -97,7 +100,7 @@ export default function Header() {
                         alt={'SIPK Logo'}
                         priority
                     />
-                    <h2>
+                    <h2 className={league_spartan.variable} style={{fontFamily: 'var(--leaguespartan-font)'}}>
                         <span style={{ color: 'var(--logo-first-color)' }}>SIP</span>
                         <span style={{ color: 'var(--logo-second-color)' }}>K</span>
                     </h2>

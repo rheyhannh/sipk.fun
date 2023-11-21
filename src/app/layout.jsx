@@ -1,23 +1,23 @@
 import Notification from '@/component/loader/Toaster';
-import { Poppins, League_Spartan } from 'next/font/google';
+import { Poppins } from 'next/font/google';
 import './globals.css'
 export const metadata = {
   title: 'SIPK Application',
   description: 'Elevate your academic journey',
 }
 
-const league_spartan = League_Spartan({
+const poppins = Poppins({
   subsets: ['latin'],
   display: 'swap',
-  variable: '--leaguespartan-font',
+  variable: '--poppins-font',
   weight: ['100', '200', '300', '400', '500', '600', '700', '800', '900']
-})
+});
 
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={league_spartan.variable}>
-        <Notification/>
+      <body className={poppins.variable}>
+        <Notification />
         {children}
       </body>
     </html>
