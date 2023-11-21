@@ -2,9 +2,9 @@
 
 import { toast, Toaster, ToastBar } from 'react-hot-toast';
 import { FaTimes } from 'react-icons/fa';
-import Spinner from './Spinner';
+import { Spinner } from './Loading';
 
-export default function Notification() {
+export default function Notification({ position }) {
     return (
         <Toaster
             toastOptions={{
