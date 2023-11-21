@@ -4,17 +4,18 @@
     --aside-width: 10rem;
 
     /* === MAIN COLOR === */
-    --first-color: #FF6341;
+    --first-color: hsla(11, 100%, 63%, 1);
+    --second-color: hsla(222, 55%, 25%, 1);
     --first-color-lighter: hsl(11, 100%, 60%);
     --second-color-lighter: hsl(222, 40%, 30%);
-    --second-color: #1d3263;
     /* === END OF MAIN COLOR === */
 
     /* === UTILS COLOR === */
-    --primary-color: #7380ec;
-    --danger-color: #ff7782;
-    --success-color: #41f1b6;
-    --warning-color: #ffbb55;
+    --primary-color: hsla(234, 86%, 65%, 1);
+    --danger-color: hsla(355, 80%, 57%, 1);
+    --success-color: hsla(160, 70%, 45%, 1);
+    --warning-color: hsla(36, 70%, 57%, 1);
+    --whatsapp-color: #25D366;
     --infoDark-color: #7d8da1;
     --infoLight-color: #dce1eb;
     --body-color: #f6f6f9;
@@ -25,10 +26,11 @@
     --light-color: rgba(132, 139, 200, 0.2);
     --scroll-bar-color: hsl(222, 12%, 90%);
     --scroll-thumb-color: hsl(222, 12%, 80%);
+    --scroll-thumbHover-color: hsla(222, 40%, 30%, .75);
     --skeleton-base: hsl(11, 8%, 92%);
     --skeleton-highlight: hsl(11, 8%, 99%);
     --logo-first-color: #FF6341;
-    --logo-second-color: #1d3263; 
+    --logo-second-color: #1d3263;
     /* === END OF UTILS COLOR === */
 
     /* === BORDER-RADIUS === */
@@ -55,6 +57,16 @@
     --m-3: 3rem;
     /*  === END OF MARGIN === */
 
+    /* === FONT-SIZE === */
+    --big-font-size: 2.5rem;
+    --h1-font-size: 1.725rem;
+    --h2-font-size: 1.5rem;
+    --h3-font-size: 1.25rem;
+    --normal-font-size: 1.075rem;
+    --small-font-size: .850rem;
+    --smaller-font-size: .800rem;
+    /*  === END OF FONT-SIZE === */
+
     /* === FONT-WEIGHT === */
     --font-extra-light: 200;
     --font-light: 300;
@@ -79,6 +91,18 @@
     /* === TRANSITION === */
     --transition-default: .3s;
     /* === END OF TRANSITION === */
+
+    /* === USERS '/users' === */
+    --users-big-circle: linear-gradient(-45deg, hsl(222, 40%, 30%), hsl(222, 40%, 30%));
+    --users-box-shadow: 0 0 .5rem var(--logo-second-color);
+    --users-box-shadow-lighter: 0 0 .5rem rgba(29, 50, 99, .5);
+    --users-btn-alt: var(--second-color-lighter);
+    --users-btn-hov: var(--second-color);
+    --users-loader-prim: #edeffd;
+    --users-loader-sec: #1d3263;
+    --accordion-bg-color: hsl(222, 42%, 95%);
+    --accordion-highlight-color: hsl(222, 40%, 30%);
+    /* === END OF USERS '/users' === */
 }
 
 .dark-theme {
@@ -88,6 +112,10 @@
     /* === END OF MAIN COLOR === */
 
     /* === UTILS COLOR === */
+    --primary-color: hsla(234, 76%, 69%, 1);
+    --danger-color: hsla(355, 100%, 73%, 1);
+    --success-color: hsla(160, 86%, 60%, 1);
+    --warning-color: hsla(36, 100%, 67%, 1);
     --body-color: #181a1e;
     --white-color: #202528;
     --dark-color: #edeffd;
@@ -95,6 +123,7 @@
     --light-color: rgba(0, 0, 0, 0.4);
     --scroll-bar-color: #677483;
     --scroll-thumb-color: rgba(0, 0, 0, 0.5);
+    --scroll-thumbHover-color: hsla(11, 75%, 35%, .5);
     --skeleton-base: rgba(132, 139, 200, 0.1);
     --skeleton-highlight: #677483;
     --logo-first-color: #f6f6f9;
@@ -105,27 +134,38 @@
     --box-shadow: 0 1rem 1.5rem var(--light-color);
     /* === END OF BOX-SHADOW === */
 
+    /* === USERS '/users' === */
+    --users-big-circle: linear-gradient(-45deg, #FF6341, #FF6341);
+    --users-box-shadow: 0 0 .5rem var(--logo-second-color);
+    --users-box-shadow-lighter: 0 0 .5rem rgba(255, 99, 65, .75);
+    --users-btn-alt: var(--first-color-lighter);
+    --users-btn-hov: var(--first-color);
+    --users-loader-prim: #FF6341;
+    --users-loader-sec: #1d3263;
+    --accordion-bg-color: hsl(200, 6%, 32%);
+    --accordion-highlight-color: hsl(11, 100%, 65%);
+    /* === END OF USERS '/users' === */
+
 }
 
 * {
     margin: 0;
     padding: 0;
     outline: 0;
-    appearance: none;
     border: 0;
+    appearance: none;
     text-decoration: none;
     box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
 }
 
 html {
     font-size: 14px;
-    
 }
 
 body {
     width: 100vw;
     height: 100vh;
-    font-family: var(--poppins-font);
     font-size: .8rem;
     background: var(--body-color);
     color: var(--dark-color);
@@ -135,6 +175,22 @@ body {
 
 body.disable_scroll {
     overflow: hidden;
+}
+
+body,
+input,
+select {
+    font-family: var(--poppins-font);
+}
+
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type="number"] {
+    -moz-appearance: textField;
 }
 
 a {
@@ -190,7 +246,7 @@ small {
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background-color: hsl(11, 8%, 40%);
+    background-color: var(--scroll-thumbHover-color);
     ;
     border-radius: .5rem;
 }
@@ -199,14 +255,6 @@ main.dashboard {
     width: 100%;
     height: 100%;
     margin: 0;
-}
-
-.spinner {
-    border-radius: 50%;
-    display: inline-block;
-    border-right: 3px solid transparent;
-    box-sizing: border-box;
-    animation: rotation 1s linear infinite;
 }
 
 @media screen and (min-width: 1280px) {
@@ -220,12 +268,14 @@ main.dashboard {
     }
 }
 
-@keyframes rotation {
-    0% {
-        transform: rotate(0deg);
-    }
-
-    100% {
-        transform: rotate(360deg);
+@media screen and (min-width: 1440px) {
+    :root {
+        --big-font-size: 3rem;
+        --h1-font-size: 2rem;
+        --h2-font-size: 1.75rem;
+        --h3-font-size: 1.5rem;
+        --normal-font-size: 1.225rem;
+        --small-font-size: 1.075rem;
+        --smaller-font-size: .975rem;
     }
 }
