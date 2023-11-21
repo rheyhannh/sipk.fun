@@ -1,0 +1,61 @@
+.backdrop {
+    opacity: 0;
+    visibility: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    background: rgba(0, 0, 0, .25);
+    backdrop-filter: blur(1px);
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 9999;
+    transition: all .3s ease-in-out;
+}
+
+.backdrop.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.container {
+    position: relative;
+    max-width: 400px;
+    width: 100%;
+    background: var(--white-color);
+    padding: 2rem;
+    border-radius: 1rem;
+    transition: all .3s ease-in-out;
+    transform: scale(.5) translateY(10%);
+}
+
+.backdrop.active .container {
+    transform: scale(1) translateY(0);
+}
+
+.close {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    padding: .25rem;
+    background: var(--logo-second-color);
+    border-radius: .5rem;
+    color: var(--body-color);
+    position: absolute;
+    font-size: var(--h3-font-size);
+    top: 2rem;
+    right: 2rem;
+}
+
+@media screen and (max-width: 425px) {
+    .container {
+        position: relative;
+        width: 100%;
+        background: var(--white-color);
+        margin: 0 1rem;
+    }
+}
+
