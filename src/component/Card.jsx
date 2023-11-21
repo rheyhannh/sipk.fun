@@ -1,5 +1,6 @@
 'use client'
 
+import Image from "next/image";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import { Icon } from '@/component/loader/ReactIcons'
 import { useEffect, useState } from 'react';
@@ -157,9 +158,27 @@ export function Summary({ state, icon, color, title, data }) {
         </div>
     )
 
+    const EmptyCard = () => (
+        <div className={styles.summary}>
+            <div className={styles.empty__wrapper}>
+                <div className={styles.empty__content} onClick={() => { console.log('Tambah Matkul') }}>
+                    <Image
+                        src={'/tambah_matkul.svg'}
+                        width={100}
+                        height={100}
+                        alt='Tambah Matakuliah'
+                        className={styles.image}
+                    />
+                    <h5>Tambah Matakuliah</h5>
+                </div>
+            </div>
+        </div>
+    )
+
     if (state === 'loading') { return (<SkeletonCard />) }
     else if (state === 'loaded') { return (<LoadedCard />) }
     else if (state === 'error') { return (<ErrorCard />) }
     else if (state === 'validating') { return (<ValidatingCard />) }
+    else if (state === 'empty') { return (<EmptyCard />) }
     else { return 'Unidentified Card State' }
 }
