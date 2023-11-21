@@ -2,15 +2,38 @@ import { NextResponse } from 'next/server';
 import { cookies } from 'next/headers';
 import { createServerClient } from '@supabase/ssr';
 import rateLimit from '@/utils/rateLimit';
+import CryptoJS from 'crypto-js';
+
+function encryptSomething(message) {
+    try {
+        const ciphertext = CryptoJS.AES.encrypt(message, process.env.SECRET_KEY).toString();
+        return ciphertext;
+    } catch (error) {
+        console.error(error);
+        return 0;
+    }
+}
+
+function decryptSomething(ciphertext, parse = false) {
+    try {
+        const bytes = CryptoJS.AES.decrypt(ciphertext, process.env.SECRET_KEY);
+        const decryptedData = bytes.toString(CryptoJS.enc.Utf8);
+        if (parse) { return JSON.parse(decryptedData) }
+        return decryptedData;
+    } catch (error) {
+        console.error(error);
+        return 0;
+    }
+}
 
 const limiter = rateLimit({
     interval: 60 * 1000,
     uniqueTokenPerInterval: 500,
 })
 
-export async function GET(req) {
+export async function GET(request) {
     const limitRequest = 20;
-    const userAccessToken = req.cookies.get('sb-mbdyljoaqssmjfrumdad-auth-token');
+    const userAccessToken = request.cookies.get(`${process.env.USER_SESSION_COOKIES_NAME}`)?.value;
 
     if (!userAccessToken) {
         return new NextResponse(null, {
@@ -18,33 +41,52 @@ export async function GET(req) {
         })
     }
 
+    const decryptedSession = decryptSomething(userAccessToken, true);
+    const userId = decryptedSession?.user?.id
+
+    if (!userId) {
+        return new NextResponse(null, {
+            status: 401
+        })
+    }
+
     try {
-        var currentUsage = await limiter.check(limitRequest, userAccessToken.value);
+        var currentUsage = await limiter.check(limitRequest, `me-${userId}`);
     } catch {
         return new NextResponse(null, {
             status: 429,
             headers: {
                 'X-Ratelimit-Limit': limitRequest,
                 'X-Ratelimit-Remaining': 0,
-                'X-Powered-By': 'Next.js'
             }
         })
     }
 
     const cookieStore = cookies();
+    const cookieAuthOptions = { secure: true, httpOnly: true, maxAge: 2592000, sameSite: 'lax' };
     const supabase = createServerClient(
         process.env.NEXT_PUBLIC_SUPABASE_URL,
         process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
         {
             cookies: {
                 get(name) {
-                    return cookieStore.get(name)?.value
+                    const encryptedSession = cookieStore.get(process.env.USER_SESSION_COOKIES_NAME)?.value
+                    if (encryptedSession) {
+                        const decryptedSession = decryptSomething(encryptedSession) || 'removeMe';
+                        return decryptedSession;
+                    }
+                    return encryptedSession;
                 },
                 set(name, value, options) {
-                    cookieStore.set({ name, value, ...options })
+                    const encryptedSession = encryptSomething(value);
+                    if (encryptedSession) {
+                        cookieStore.set({ name: process.env.USER_SESSION_COOKIES_NAME, value: encryptedSession, ...cookieAuthOptions })
+                    } else {
+                        cookieStore.set({ name: process.env.USER_SESSION_COOKIES_NAME, value, ...cookieAuthOptions })
+                    }
                 },
                 remove(name, options) {
-                    cookieStore.set({ name, value: '', ...options })
+                    cookieStore.set({ name: process.env.USER_SESSION_COOKIES_NAME, value: '', ...options })
                 },
             },
         }
@@ -59,7 +101,6 @@ export async function GET(req) {
             headers: {
                 'X-Ratelimit-Limit': limitRequest,
                 'X-Ratelimit-Remaining': limitRequest - currentUsage,
-                'X-Powered-By': 'Next.js'
             }
         })
     }
@@ -69,7 +110,6 @@ export async function GET(req) {
         headers: {
             'X-Ratelimit-Limit': limitRequest,
             'X-Ratelimit-Remaining': limitRequest - currentUsage,
-            'X-Powered-By': 'Next.js'
         }
     });
 }
