@@ -1,5 +1,6 @@
 .error__wrapper,
-.validating__wrapper {
+.validating__wrapper,
+.empty__wrapper {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -8,7 +9,8 @@
 }
 
 .error__content,
-.validating__content {
+.validating__content,
+.empty__content {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -20,6 +22,11 @@
 .error__content h5,
 .error__content h1 {
     font-weight: var(--font-medium);
+}
+
+.empty__content .image {
+    max-width: 60px;
+    margin-bottom: 1rem;
 }
 
 .summary {

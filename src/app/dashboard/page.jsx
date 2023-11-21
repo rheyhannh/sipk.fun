@@ -24,18 +24,25 @@ function AcademicCard({ count }) {
     }
 
     if (userValidating || matkulValidating) {
-        const loadingCount = Array.from({ length: count }, (_, index) => (
+        const validatingCount = Array.from({ length: count }, (_, index) => (
             <Summary state='validating' key={crypto.randomUUID()} />
         ));
-        return <>{loadingCount}</>;
+        return <>{validatingCount}</>;
+    }
+
+    if (matkul.length === 0) {
+        const emptyCount = Array.from({ length: count }, (_, index) => (
+            <Summary state='empty' key={crypto.randomUUID()} />
+        ));
+        return <>{emptyCount}</>;
     }
 
     return (
         <>
             <Summary
                 state='loaded'
-                color='var(--primary-color)'
-                icon={{ name: 'TbSum', lib: 'tb' }}
+                color='var(--second-color-lighter)'
+                icon={{ name: 'MdOutlineConfirmationNumber', lib: 'md' }}
                 data={{ value: x.getUserSks(matkul), percentage: x.getUserSksPercentage(user, matkul), lastUpdated: "Terakhir Diupdate" }}
                 title={'SKS'}
             >
@@ -44,18 +51,18 @@ function AcademicCard({ count }) {
             <Summary
                 state='loaded'
                 color='var(--first-color)'
-                icon={{ name: 'TbSum', lib: 'tb' }}
+                icon={{ name: 'IoBookOutline', lib: 'io5' }}
                 data={{ value: x.getUserMatkul(matkul), percentage: x.getUserMatkulPercentage(), lastUpdated: 'Terakhir Diupdate' }}
-                title={'Matkul'}
+                title={'Matakuliah'}
             >
             </Summary>
 
             <Summary
                 state='loaded'
-                color='var(--second-color-lighter)'
-                icon={{ name: 'TbSum', lib: 'tb' }}
+                color='var(--success-color)'
+                icon={{ name: 'FaRegStar', lib: 'fa' }}
                 data={{ value: x.getUserIpk(matkul), percentage: x.getUserIpkPercentage(user, matkul), lastUpdated: 'Terakhir Diupdate' }}
-                title={'Ipk'}
+                title={'IPK'}
             >
             </Summary>
         </>
