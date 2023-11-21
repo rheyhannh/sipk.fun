@@ -5,6 +5,7 @@ import { useContext, useEffect } from 'react'
 import { ContentContext } from './provider/Content';
 import { Icon } from './loader/ReactIcons';
 import styles from './style/nav.module.css'
+import { createBrowserClient } from '@supabase/ssr';
 
 export default function Nav({ children }) {
     const { isNavbarActive, setNavbarActive, isRichContent, activeLink } = useContext(ContentContext);
@@ -12,13 +13,13 @@ export default function Nav({ children }) {
     const navList = [
         { text: 'Dashboard', href: '/dashboard', icon: 'AiOutlineAppstore', lib: 'ai' },
         { text: 'Profil', href: '/dashboard/profil', icon: 'AiOutlineIdcard', lib: 'ai' },
-        { text: 'Akun', href: '/dashboard/akun', icon: 'MdOutlineManageAccounts', lib: 'md' },
+        // { text: 'Akun', href: '/dashboard/akun', icon: 'MdOutlineManageAccounts', lib: 'md' },
         { text: 'Matakuliah', href: '/dashboard/matkul', icon: 'BsJournalBookmark', lib: 'bs' },
         { text: 'Statistik', href: '/dashboard/statistik', icon: 'MdOutlineQueryStats', lib: 'md' },
-        { text: 'Pesan', href: '/dashboard/pesan', icon: 'BsEnvelope', lib: 'bs' },
+        // { text: 'Pesan', href: '/dashboard/pesan', icon: 'BsEnvelope', lib: 'bs' },
         { text: 'Laporkan', href: '/dashboard/laporkan', icon: 'GoReport', lib: 'go' },
         { text: 'Tentang', href: '/dashboard/tentang', icon: 'AiOutlineInfoCircle', lib: 'ai' },
-        { text: 'Keluar', href: '/users/logout', icon: 'FiLogOut', lib: 'fi' },
+        { text: 'Keluar', href: '/api/logout', icon: 'FiLogOut', lib: 'fi' },
     ]
 
     useEffect(() => {
@@ -77,6 +78,7 @@ export default function Nav({ children }) {
                                 <Link
                                     href={item.href}
                                     className={`${styles.link} ${activeLink === item.href ? styles.active : ''}`}
+                                    prefetch={false}
                                     key={crypto.randomUUID()}
                                 >
                                     <span className={styles.link__icon}>
