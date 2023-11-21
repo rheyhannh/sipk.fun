@@ -5,7 +5,7 @@ import { Icon } from '@/component/loader/ReactIcons'
 import { useEffect, useState } from 'react';
 import { mutate } from 'swr';
 import CountUp from 'react-countup';
-import Spinner from "./loader/Spinner";
+import { Spinner } from "./loader/Loading";
 import "react-loading-skeleton/dist/skeleton.css";
 import styles from './style/card.module.css'
 
@@ -151,7 +151,7 @@ export function Summary({ state, icon, color, title, data }) {
         <div className={styles.summary}>
             <div className={styles.validating__wrapper}>
                 <div className={styles.validating__content} onClick={handleRetry}>
-                    <Spinner size={'35px'} color={'var(--logo-second-color)'}/>
+                    <Spinner size={'35px'} color={'var(--logo-second-color)'} />
                 </div>
             </div>
         </div>
