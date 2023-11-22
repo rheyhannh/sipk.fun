@@ -4,13 +4,16 @@
     padding: 0 1.5rem;
     grid-template-columns: 1fr;
     gap: 1.5rem;
-    /* background: rgba(0, 255, 0, 0.2); */
 }
 
-.card {
+.insight {
     display: grid;
     grid-template-columns: 1fr;
     gap: 0;
+}
+
+.secondary {
+    margin-top: 1rem;
 }
 
 @media screen and (min-width: 768px) {
@@ -18,12 +21,16 @@
         display: grid;
         padding: 0;
         grid-template-columns: auto 23rem;
-        gap: 2.5rem;
+        gap: 2rem;
+    }
+
+    .secondary {
+        margin-top: 4rem;
     }
 }
 
 @media screen and (min-width: 1280px) {
-    .card {
+    .insight {
         grid-template-columns: repeat(3, 1fr);
         gap: 1.6rem;
         height: max-content;

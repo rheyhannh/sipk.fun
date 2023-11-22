@@ -22,3 +22,7 @@ export function useUniversitas() {
 export function useUser() {
     return useSWR('/api/me', fetcher, swrOptions)
 }
+
+export function useNotifikasi() {
+    return useSWR('/api/notifikasi', fetcher, swrOptions)
+}

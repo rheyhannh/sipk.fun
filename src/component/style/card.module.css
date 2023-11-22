@@ -24,12 +24,26 @@
     font-weight: var(--font-medium);
 }
 
-.empty__content .image {
+.validating__content {
+    cursor: auto;
+}
+
+.summary .empty__content .image {
     max-width: 60px;
     margin-bottom: 1rem;
 }
 
-.summary {
+.notification .empty__content {
+    cursor: auto;
+}
+
+.notification .empty__content .image {
+    max-width: 150px;
+    margin-bottom: 1rem;
+}
+
+.summary,
+.notification {
     height: 225px;
     background: var(--white-color);
     padding: var(--card-padding);
@@ -111,8 +125,89 @@
     left: 45%;
 }
 
+.notification {
+    position: relative;
+    overflow: hidden;
+    height: 340px;
+    padding: 1.25rem;
+}
+
+.notification__inner {
+    height: 302.5px;
+    overflow: auto;
+}
+
+.notification__inner::-webkit-scrollbar {
+    visibility: hidden;
+    width: .30rem;
+    border-radius: .25rem;
+}
+
+.notification__inner::-webkit-scrollbar-thumb {
+    border-radius: .25rem;
+    visibility: hidden;
+}
+
+.notification__inner::-webkit-scrollbar-thumb:hover {
+    border-radius: .25rem;
+    visibility: hidden;
+}
+
+.notification__post {
+    display: grid;
+    grid-template-rows: 1.25rem auto;
+    gap: .25rem;
+    cursor: pointer;
+    padding: .75rem;
+    margin: .35rem;
+    border-radius: .5rem;
+}
+
+.notification__post.skeleton {
+    cursor: auto;
+}
+
+.notification__main {
+    display: flex;
+    line-height: 1;
+    align-items: center;
+    gap: .5rem;
+}
+
+.notification__details {
+    color: var(--darkVariant-color);
+    text-align: justify;
+}
+
+.notification small {
+    color: var(--infoDark-color);
+}
+
 @media (hover: hover) and (pointer: fine) {
-    .summary:hover {
+    .summary:hover,
+    .notification:hover {
         box-shadow: none;
+    }
+
+    .notification__post:not(.skeleton):hover {
+        background: var(--accordion-bg-color);
+    }
+
+    .notification:hover .notification__inner::-webkit-scrollbar {
+        visibility: visible;
+    }
+    
+    .notification:hover .notification__inner::-webkit-scrollbar-thumb {
+        visibility: visible;
+    }
+    
+    .notification:hover .notification__inner::-webkit-scrollbar-thumb:hover {
+        visibility: visible;
+    }
+}
+
+@media screen and (max-width: 360px) {
+    .notification {
+        height: 375px;
     }
 }
