@@ -1,7 +1,7 @@
 'use client'
 
-import { Summary } from '@/component/Card'
-import { useMatkul, useUser } from '@/data/core';
+import { Summary, Notification } from '@/component/Card'
+import { useMatkul, useNotifikasi, useUser } from '@/data/core';
 import * as x from '@/data/summary';
 import styles from './home.module.css'
 
@@ -69,14 +69,50 @@ function AcademicCard({ count }) {
     )
 }
 
+function NotifikasiCard() {
+    const { data: notifikasi, error: notifikasiError, isLoading: notifikasiLoading, isValidating: notifikasiValidating } = useNotifikasi();
+
+    if (notifikasiError) {
+        return (
+            <Notification state={'error'} />
+        )
+    }
+
+    if (notifikasiLoading) {
+        return (
+            <Notification state={'loading'} />
+        )
+    }
+
+    if (notifikasiValidating) {
+        return (
+            <Notification state={'validating'} />
+        )
+    }
+
+    if (notifikasi.length === 0) {
+        return (
+            <Notification state={'empty'} />
+        )
+    } 
+
+    return (
+        <Notification state={'loaded'} data={notifikasi} />
+    )
+}
+
 export default function DashboardPage() {
     return (
         <div className={styles.wrapper}>
-            <div className={styles.card}>
-                <AcademicCard count={3} />
+            <div className={styles.primary}>
+                <h1>Dasbor</h1>
+                <div className={styles.insight}>
+                    <AcademicCard count={3} />
+                </div>
             </div>
-            <div>
-                <h1>Dashboard Content 2</h1>
+            <div className={styles.secondary}>
+                <h2>Notifikasi</h2>
+                <NotifikasiCard />
             </div>
         </div>
     )

@@ -14,7 +14,7 @@
     --primary-color: hsla(234, 86%, 65%, 1);
     --danger-color: hsla(355, 80%, 57%, 1);
     --success-color: hsla(160, 70%, 45%, 1);
-    --warning-color: hsla(36, 70%, 57%, 1);
+    --warning-color: hsla(36, 80%, 57%, 1);
     --whatsapp-color: #25D366;
     --infoDark-color: #7d8da1;
     --infoLight-color: #dce1eb;
@@ -206,6 +206,14 @@ a {
     color: var(--dark-color);
 }
 
+p {
+    color: var(--darkVariant-color);
+}
+
+b {
+    color: var(--dark-color);
+}
+
 img {
     width: 100%;
     height: auto;
@@ -266,10 +274,16 @@ main.dashboard {
     margin: 0;
 }
 
+@media screen and (min-width: 768px) {
+    main.dashboard {
+        width: 96%;
+        margin: 0 auto;
+    }
+}
+
 @media screen and (min-width: 1280px) {
     main.dashboard {
         width: 98%;
-        margin: 0 auto;
     }
 
     aside.dashboard {
