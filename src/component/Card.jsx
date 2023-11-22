@@ -256,7 +256,7 @@ export function Notification({ state, data }) {
                             }
 
                             return (
-                                <Link href={item.href} className={styles.notification__post} prefetch={true} key={crypto.randomUUID()}>
+                                <Link href={item.href} className={styles.notification__post} prefetch={false} key={crypto.randomUUID()}>
                                     <div className={styles.notification__main}>
                                         <span style={{ color: item.color }}>
                                             <Icon name={item.icon.name} lib={item.icon.lib} />
