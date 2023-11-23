@@ -60,7 +60,7 @@
 }
 
 .link.active {
-    color: var(--first-color-lighter);
+    color: var(--logo-second-color);
     background: var(--light-color);
 }
 
@@ -146,7 +146,7 @@
     }
 
     .aside.active .link:hover {
-        color: var(--first-color-lighter);
+        color: var(--logo-second-color);
     }
 
     .aside.active .link:not(.active):hover .link__icon {
@@ -154,7 +154,7 @@
     }
 
     .aside .link:hover {
-        color: var(--first-color-lighter);
+        color: var(--logo-second-color);
     }
 
     @media screen and (max-width: 1279px) {
@@ -168,7 +168,7 @@
         }
 
         .aside:hover .link:hover {
-            color: var(--first-color-lighter);
+            color: var(--logo-second-color);
         }
 
         .aside:hover .link:not(.active):hover .link__icon {
