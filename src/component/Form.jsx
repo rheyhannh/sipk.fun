@@ -2,10 +2,10 @@
 
 // ========== NEXT DEPEDENCY ========== //
 import Image from 'next/image';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 
 // ========== REACT DEPEDENCY ========== //
-import { useState, useContext, useRef } from 'react';
+import { useState, useContext, useRef, useEffect } from 'react';
 
 // ========== CAPTCHA DEPEDENCY ========== //
 import HCaptcha from '@hcaptcha/react-hcaptcha';
@@ -54,6 +54,7 @@ export function UsersForm() {
     */
     const captcha = useRef();
     const router = useRouter();
+    const searchParams = useSearchParams();
 
     /*
     ========== Context ==========
@@ -94,6 +95,20 @@ export function UsersForm() {
     const [hideLoginPassword, setHideLoginPassword] = useState(true);
     const [hideDaftarPassword, setHideDaftarPassword] = useState(true);
     const [inputValidator, setInputValidator] = useState(initialInputValidator);
+
+    /*
+    ========== useEffect ==========
+    */
+    useEffect(() => {
+        // Login Mode or Daftar Mode ?
+        const mode = searchParams.get('action');
+        if (mode === 'daftar') { setLoginMode(false) }
+        else { setLoginMode(true) }
+
+        // Something Error ? 
+        const error = searchParams.get('error');
+        if (error === 'session') { setErrorMessage('Silahkan login kembali') }
+    }, [searchParams])
 
     /*
     ========== Methods, Functions, Helpers ==========
@@ -285,276 +300,283 @@ export function UsersForm() {
 
     return (
         <>
-            <Ball active={loading} backdrop={true} />
-            <Modal active={modalDaftar} setActive={setModalDaftar}>
-                <h2 style={{ textAlign: 'center' }}>Panduan Daftar</h2>
-                <p style={{ textAlign: 'justify', margin: '1.25rem 0 1rem 0' }}>
-                    Pastikan data yang kamu masukkan memenuhi kriteria sebagai berikut :
-                </p>
+            {loginMode === null ?
+                <>
+                </>
+                :
+                <>
+                    <Ball active={loading} backdrop={true} />
+                    <Modal active={modalDaftar} setActive={setModalDaftar}>
+                        <h2 style={{ textAlign: 'center' }}>Panduan Daftar</h2>
+                        <p style={{ textAlign: 'justify', margin: '1.25rem 0 1rem 0' }}>
+                            Pastikan data yang kamu masukkan memenuhi kriteria sebagai berikut :
+                        </p>
 
-                <Accordion item={daftarAccordionList} />
+                        <Accordion item={daftarAccordionList} />
 
-                <p style={{ textAlign: 'justify', margin: '1.25rem 0 .5rem 0' }}>
-                    Jika kamu masih binggung, kamu dapat membaca panduan lengkap <span style={{ color: 'green' }}>disini </span>
-                    atau kamu dapat menghubungi admin <span style={{ color: 'green' }}>disini</span>
-                </p>
+                        <p style={{ textAlign: 'justify', margin: '1.25rem 0 .5rem 0' }}>
+                            Jika kamu masih binggung, kamu dapat membaca panduan lengkap <span style={{ color: 'green' }}>disini </span>
+                            atau kamu dapat menghubungi admin <span style={{ color: 'green' }}>disini</span>
+                        </p>
 
-            </Modal>
-            <div className={`${styles.container} ${loginMode ? '' : styles.sign_up_mode}`}>
-                <div className={styles.forms_container}>
-                    <div className={styles.signin_signup}>
-                        <HCaptcha
-                            ref={captcha}
-                            sitekey="c397ab1e-e96e-4b8a-8bb3-f2fb86e62b47"
-                            onClose={() => { setErrorMessage('Captcha diperlukan untuk login') }}
-                            size='invisible'
-                        />
-
-                        <form
-                            onSubmit={handleLogin}
-                            onSubmitCapture={(e) => {
-                                setErrorMessage('');
-                                const allInput  = e.target.querySelectorAll('input');
-                                allInput.forEach(input => {
-                                    input.blur();
-                                });
-                            }}
-                            className={styles.sign_in_form}
-                        >
-                            <h2 className={styles.title}>Login</h2>
-                            <h3 style={{ margin: '.25rem 0', color: 'var(--danger-color)', fontWeight: 'var(--font-medium)' }}>{errorMessage}</h3>
-                            <div className={styles.input_field}>
-                                <i><FaEnvelope /></i>
-                                <input
-                                    type="email"
-                                    name='email'
-                                    placeholder="Email"
-                                    autoComplete='email'
-                                    value={email}
-                                    onChange={handleEmailChange}
-                                    onFocus={() => { handleInputFocus(0) }}
-                                    onBlur={(e) => { handleInputBlur(e, 0, 'email', 'login') }}
-                                    required
-                                />
-                                <i className={`${styles.validator} ${inputValidator[0].state}`}>
-                                    <span onClick={() => { handleShowValidator(inputValidator[0], 'login') }}>
-                                        {
-                                            inputValidator[0].state.includes(`${styles.validating}`) ? <FaGear /> :
-                                                inputValidator[0].state.includes(`${styles.valid}`) ? <FaCheckCircle /> :
-                                                    inputValidator[0].state.includes(`${styles.invalid}`) ? <FaExclamationCircle /> :
-                                                        <FaCircleInfo />
-                                        }
-                                    </span>
-                                </i>
-                            </div>
-                            <div className={`${styles.input_field} ${styles.password}`}>
-                                <i><FaLock /></i>
-
-                                <input
-                                    type={hideLoginPassword ? 'password' : 'text'}
-                                    name='password'
-                                    placeholder="Password"
-                                    autoComplete='current-password'
-                                    value={password}
-                                    onChange={handlePasswordChange}
-                                    onFocus={() => { handleInputFocus(1) }}
-                                    onBlur={(e) => { handleInputBlur(e, 1, 'password', 'login') }}
-                                    required
+                    </Modal>
+                    <div className={`${styles.container} ${loginMode ? '' : styles.sign_up_mode}`}>
+                        <div className={styles.forms_container}>
+                            <div className={styles.signin_signup}>
+                                <HCaptcha
+                                    ref={captcha}
+                                    sitekey="c397ab1e-e96e-4b8a-8bb3-f2fb86e62b47"
+                                    onClose={() => { setErrorMessage('Captcha diperlukan untuk login') }}
+                                    size='invisible'
                                 />
 
-                                <i className={styles.eye}>
-                                    <span onClick={() => { handleTogglePassword('login') }}>
-                                        {hideLoginPassword ? <FaEye /> : <FaEyeSlash />}
-                                    </span>
-                                </i>
-
-                                <i className={`${styles.validator} ${inputValidator[1].state}`}>
-                                    <span onClick={() => { handleShowValidator(inputValidator[1], 'login') }}>
-                                        {
-                                            inputValidator[1].state.includes(`${styles.validating}`) ? <FaGear /> :
-                                                inputValidator[1].state.includes(`${styles.valid}`) ? <FaCheckCircle /> :
-                                                    inputValidator[1].state.includes(`${styles.invalid}`) ? <FaExclamationCircle /> :
-                                                        <FaCircleInfo />
-                                        }
-                                    </span>
-                                </i>
-                            </div>
-
-                            {/* <input type="submit" value={'login'} className={`${styles.btn} ${styles.solid}`} /> */}
-                            <button type='submit' className={`${styles.btn} ${styles.solid}`}>Login</button>
-
-                            <p className={styles.social_text}>
-                                <a>Lupa password ? Klik disini.</a>
-                            </p>
-                        </form>
-                        <form className={styles.sign_up_form}>
-                            <h2 className={styles.title}>Daftar</h2>
-                            <h3 style={{ margin: '.25rem 0', color: 'var(--danger-color)', fontWeight: 'var(--font-medium)' }}>{errorMessage}</h3>
-                            <div className={styles.input_field}>
-                                <i><FaUser /></i>
-                                <input
-                                    type="text"
-                                    placeholder="Nama Lengkap"
-                                    autoComplete='off'
-                                    value={namaLengkap}
-                                    onChange={handleNamaLengkapChange}
-                                    onFocus={() => { handleInputFocus(2) }}
-                                    onBlur={(e) => { handleInputBlur(e, 2, 'namalengkap', 'daftar') }}
-                                    required
-                                />
-                                <i className={`${styles.validator} ${inputValidator[2].state}`}>
-                                    <span onClick={() => { handleShowValidator(inputValidator[2], 'daftar') }}>
-                                        {
-                                            inputValidator[2].state.includes(`${styles.validating}`) ? <FaGear /> :
-                                                inputValidator[2].state.includes(`${styles.valid}`) ? <FaCheckCircle /> :
-                                                    inputValidator[2].state.includes(`${styles.invalid}`) ? <FaExclamationCircle /> :
-                                                        <FaCircleInfo />
-                                        }
-                                    </span>
-                                </i>
-                            </div>
-                            <div className={styles.input_field}>
-                                <i><FaUniversity /></i>
-                                <select
-                                    id='universitas'
-                                    style={{
-                                        background: 'transparent',
-                                        fontWeight: getSelectFontWeight(),
-                                        color: getSelectColor(),
-                                        cursor: 'pointer',
-                                        userSelect: 'none',
-                                        textOverflow: 'ellipsis',
-                                        outline: 'none',
-                                        appearance: 'none',
+                                <form
+                                    onSubmit={handleLogin}
+                                    onSubmitCapture={(e) => {
+                                        setErrorMessage('');
+                                        const allInput = e.target.querySelectorAll('input');
+                                        allInput.forEach(input => {
+                                            input.blur();
+                                        });
                                     }}
-                                    value={universitas}
-                                    onChange={handleUniversitasChange}
-                                    onFocus={() => { handleInputFocus(3) }}
-                                    onBlur={(e) => { handleInputBlur(e, 3, 'universitas', 'daftar') }}
-                                    required
+                                    className={styles.sign_in_form}
                                 >
-                                    <option style={{ color: 'var(--infoDark-color)' }} value={0}>Pilih Universitas</option>
-                                    {
-                                        listUniversitas.map((item, index) => (
-                                            <option style={{ color: '#000' }} value={item.id} key={crypto.randomUUID()}>{item.nama}</option>
-                                        ))
-                                    }
-                                </select>
-                                <i className={`${styles.validator} ${inputValidator[3].state}`}>
-                                    <span onClick={() => { handleShowValidator(inputValidator[3], 'daftar') }}>
-                                        {
-                                            inputValidator[3].state.includes(`${styles.validating}`) ? <FaGear /> :
-                                                inputValidator[3].state.includes(`${styles.valid}`) ? <FaCheckCircle /> :
-                                                    inputValidator[3].state.includes(`${styles.invalid}`) ? <FaExclamationCircle /> :
-                                                        <FaCircleInfo />
-                                        }
-                                    </span>
-                                </i>
+                                    <h2 className={styles.title}>Login</h2>
+                                    <h3 style={{ margin: '.25rem 0', color: 'var(--danger-color)', fontWeight: 'var(--font-medium)' }}>{errorMessage}</h3>
+                                    <div className={styles.input_field}>
+                                        <i><FaEnvelope /></i>
+                                        <input
+                                            type="email"
+                                            name='email'
+                                            placeholder="Email"
+                                            autoComplete='email'
+                                            value={email}
+                                            onChange={handleEmailChange}
+                                            onFocus={() => { handleInputFocus(0) }}
+                                            onBlur={(e) => { handleInputBlur(e, 0, 'email', 'login') }}
+                                            required
+                                        />
+                                        <i className={`${styles.validator} ${inputValidator[0].state}`}>
+                                            <span onClick={() => { handleShowValidator(inputValidator[0], 'login') }}>
+                                                {
+                                                    inputValidator[0].state.includes(`${styles.validating}`) ? <FaGear /> :
+                                                        inputValidator[0].state.includes(`${styles.valid}`) ? <FaCheckCircle /> :
+                                                            inputValidator[0].state.includes(`${styles.invalid}`) ? <FaExclamationCircle /> :
+                                                                <FaCircleInfo />
+                                                }
+                                            </span>
+                                        </i>
+                                    </div>
+                                    <div className={`${styles.input_field} ${styles.password}`}>
+                                        <i><FaLock /></i>
+
+                                        <input
+                                            type={hideLoginPassword ? 'password' : 'text'}
+                                            name='password'
+                                            placeholder="Password"
+                                            autoComplete='current-password'
+                                            value={password}
+                                            onChange={handlePasswordChange}
+                                            onFocus={() => { handleInputFocus(1) }}
+                                            onBlur={(e) => { handleInputBlur(e, 1, 'password', 'login') }}
+                                            required
+                                        />
+
+                                        <i className={styles.eye}>
+                                            <span onClick={() => { handleTogglePassword('login') }}>
+                                                {hideLoginPassword ? <FaEye /> : <FaEyeSlash />}
+                                            </span>
+                                        </i>
+
+                                        <i className={`${styles.validator} ${inputValidator[1].state}`}>
+                                            <span onClick={() => { handleShowValidator(inputValidator[1], 'login') }}>
+                                                {
+                                                    inputValidator[1].state.includes(`${styles.validating}`) ? <FaGear /> :
+                                                        inputValidator[1].state.includes(`${styles.valid}`) ? <FaCheckCircle /> :
+                                                            inputValidator[1].state.includes(`${styles.invalid}`) ? <FaExclamationCircle /> :
+                                                                <FaCircleInfo />
+                                                }
+                                            </span>
+                                        </i>
+                                    </div>
+
+                                    {/* <input type="submit" value={'login'} className={`${styles.btn} ${styles.solid}`} /> */}
+                                    <button type='submit' className={`${styles.btn} ${styles.solid}`}>Login</button>
+
+                                    <p className={styles.social_text}>
+                                        <a>Lupa password ? Klik disini.</a>
+                                    </p>
+                                </form>
+                                <form className={styles.sign_up_form}>
+                                    <h2 className={styles.title}>Daftar</h2>
+                                    <h3 style={{ margin: '.25rem 0', color: 'var(--danger-color)', fontWeight: 'var(--font-medium)' }}>{errorMessage}</h3>
+                                    <div className={styles.input_field}>
+                                        <i><FaUser /></i>
+                                        <input
+                                            type="text"
+                                            placeholder="Nama Lengkap"
+                                            autoComplete='off'
+                                            value={namaLengkap}
+                                            onChange={handleNamaLengkapChange}
+                                            onFocus={() => { handleInputFocus(2) }}
+                                            onBlur={(e) => { handleInputBlur(e, 2, 'namalengkap', 'daftar') }}
+                                            required
+                                        />
+                                        <i className={`${styles.validator} ${inputValidator[2].state}`}>
+                                            <span onClick={() => { handleShowValidator(inputValidator[2], 'daftar') }}>
+                                                {
+                                                    inputValidator[2].state.includes(`${styles.validating}`) ? <FaGear /> :
+                                                        inputValidator[2].state.includes(`${styles.valid}`) ? <FaCheckCircle /> :
+                                                            inputValidator[2].state.includes(`${styles.invalid}`) ? <FaExclamationCircle /> :
+                                                                <FaCircleInfo />
+                                                }
+                                            </span>
+                                        </i>
+                                    </div>
+                                    <div className={styles.input_field}>
+                                        <i><FaUniversity /></i>
+                                        <select
+                                            id='universitas'
+                                            style={{
+                                                background: 'transparent',
+                                                fontWeight: getSelectFontWeight(),
+                                                color: getSelectColor(),
+                                                cursor: 'pointer',
+                                                userSelect: 'none',
+                                                textOverflow: 'ellipsis',
+                                                outline: 'none',
+                                                appearance: 'none',
+                                            }}
+                                            value={universitas}
+                                            onChange={handleUniversitasChange}
+                                            onFocus={() => { handleInputFocus(3) }}
+                                            onBlur={(e) => { handleInputBlur(e, 3, 'universitas', 'daftar') }}
+                                            required
+                                        >
+                                            <option style={{ color: 'var(--infoDark-color)' }} value={0}>Pilih Universitas</option>
+                                            {
+                                                listUniversitas.map((item, index) => (
+                                                    <option style={{ color: '#000' }} value={item.id} key={crypto.randomUUID()}>{item.nama}</option>
+                                                ))
+                                            }
+                                        </select>
+                                        <i className={`${styles.validator} ${inputValidator[3].state}`}>
+                                            <span onClick={() => { handleShowValidator(inputValidator[3], 'daftar') }}>
+                                                {
+                                                    inputValidator[3].state.includes(`${styles.validating}`) ? <FaGear /> :
+                                                        inputValidator[3].state.includes(`${styles.valid}`) ? <FaCheckCircle /> :
+                                                            inputValidator[3].state.includes(`${styles.invalid}`) ? <FaExclamationCircle /> :
+                                                                <FaCircleInfo />
+                                                }
+                                            </span>
+                                        </i>
+                                    </div>
+                                    <div className={styles.input_field}>
+                                        <i><FaEnvelope /></i>
+                                        <input
+                                            type="email"
+                                            placeholder="Email"
+                                            autoComplete='off'
+                                            value={email}
+                                            onChange={handleEmailChange}
+                                            onFocus={() => { handleInputFocus(4) }}
+                                            onBlur={(e) => { handleInputBlur(e, 4, 'email', 'daftar') }}
+                                            required
+                                        />
+                                        <i className={`${styles.validator} ${inputValidator[4].state}`}>
+                                            <span onClick={() => { handleShowValidator(inputValidator[4], 'daftar') }}>
+                                                {
+                                                    inputValidator[4].state.includes(`${styles.validating}`) ? <FaGear /> :
+                                                        inputValidator[4].state.includes(`${styles.valid}`) ? <FaCheckCircle /> :
+                                                            inputValidator[4].state.includes(`${styles.invalid}`) ? <FaExclamationCircle /> :
+                                                                <FaCircleInfo />
+                                                }
+                                            </span>
+                                        </i>
+                                    </div>
+                                    <div className={`${styles.input_field} ${styles.password}`}>
+                                        <i><FaLock /></i>
+                                        <input
+                                            type={hideDaftarPassword ? 'password' : 'text'}
+                                            placeholder="Password"
+                                            autoComplete='off'
+                                            value={password}
+                                            onChange={handlePasswordChange}
+                                            onFocus={() => { handleInputFocus(5) }}
+                                            onBlur={(e) => { handleInputBlur(e, 5, 'password', 'daftar') }}
+                                            required
+                                        />
+
+                                        <i className={styles.eye}>
+                                            <span onClick={() => { handleTogglePassword('daftar') }}>
+                                                {hideDaftarPassword ? <FaEye /> : <FaEyeSlash />}
+                                            </span>
+                                        </i>
+
+                                        <i className={`${styles.validator} ${inputValidator[5].state}`}>
+                                            <span onClick={() => { handleShowValidator(inputValidator[5], 'daftar') }}>
+                                                {
+                                                    inputValidator[5].state.includes(`${styles.validating}`) ? <FaGear /> :
+                                                        inputValidator[5].state.includes(`${styles.valid}`) ? <FaCheckCircle /> :
+                                                            inputValidator[5].state.includes(`${styles.invalid}`) ? <FaExclamationCircle /> :
+                                                                <FaCircleInfo />
+                                                }
+                                            </span>
+                                        </i>
+                                    </div>
+
+                                    <input type="submit" value={'daftar'} className={`${styles.btn} ${styles.solid}`} />
+
+                                    <p className={styles.social_text}>
+                                        <a onClick={() => { setModalDaftar(true) }}>Butuh bantuan ? Klik disini.</a>
+                                    </p>
+                                </form>
                             </div>
-                            <div className={styles.input_field}>
-                                <i><FaEnvelope /></i>
-                                <input
-                                    type="email"
-                                    placeholder="Email"
-                                    autoComplete='off'
-                                    value={email}
-                                    onChange={handleEmailChange}
-                                    onFocus={() => { handleInputFocus(4) }}
-                                    onBlur={(e) => { handleInputBlur(e, 4, 'email', 'daftar') }}
-                                    required
-                                />
-                                <i className={`${styles.validator} ${inputValidator[4].state}`}>
-                                    <span onClick={() => { handleShowValidator(inputValidator[4], 'daftar') }}>
-                                        {
-                                            inputValidator[4].state.includes(`${styles.validating}`) ? <FaGear /> :
-                                                inputValidator[4].state.includes(`${styles.valid}`) ? <FaCheckCircle /> :
-                                                    inputValidator[4].state.includes(`${styles.invalid}`) ? <FaExclamationCircle /> :
-                                                        <FaCircleInfo />
-                                        }
-                                    </span>
-                                </i>
-                            </div>
-                            <div className={`${styles.input_field} ${styles.password}`}>
-                                <i><FaLock /></i>
-                                <input
-                                    type={hideDaftarPassword ? 'password' : 'text'}
-                                    placeholder="Password"
-                                    autoComplete='off'
-                                    value={password}
-                                    onChange={handlePasswordChange}
-                                    onFocus={() => { handleInputFocus(5) }}
-                                    onBlur={(e) => { handleInputBlur(e, 5, 'password', 'daftar') }}
-                                    required
-                                />
-
-                                <i className={styles.eye}>
-                                    <span onClick={() => { handleTogglePassword('daftar') }}>
-                                        {hideDaftarPassword ? <FaEye /> : <FaEyeSlash />}
-                                    </span>
-                                </i>
-
-                                <i className={`${styles.validator} ${inputValidator[5].state}`}>
-                                    <span onClick={() => { handleShowValidator(inputValidator[5], 'daftar') }}>
-                                        {
-                                            inputValidator[5].state.includes(`${styles.validating}`) ? <FaGear /> :
-                                                inputValidator[5].state.includes(`${styles.valid}`) ? <FaCheckCircle /> :
-                                                    inputValidator[5].state.includes(`${styles.invalid}`) ? <FaExclamationCircle /> :
-                                                        <FaCircleInfo />
-                                        }
-                                    </span>
-                                </i>
-                            </div>
-
-                            <input type="submit" value={'daftar'} className={`${styles.btn} ${styles.solid}`} />
-
-                            <p className={styles.social_text}>
-                                <a onClick={() => { setModalDaftar(true) }}>Butuh bantuan ? Klik disini.</a>
-                            </p>
-                        </form>
-                    </div>
-                </div>
-                <div className={styles.panels_container}>
-                    <div className={`${styles.panel} ${styles.left_panel}`}>
-                        <div className={styles.content}>
-                            <h3>Belum daftar?</h3>
-                            <p>Yuk daftar dan nikmati fitur yang ditawarkan SIPK secara gratis.</p>
-                            <button className={`${styles.btn} ${styles.transparent}`} onClick={handleModeDaftar}>Daftar</button>
                         </div>
-                        <Image
-                            src="/daftar.svg"
-                            width={500}
-                            height={500}
-                            alt="Register"
-                            className={styles.image}
-                            priority
-                        />
-                    </div>
-                    <div className={`${styles.panel} ${styles.right_panel}`}>
-                        <div className={styles.content}>
-                            <h3>Sudah punya akun?</h3>
-                            <p>Silahkan klik tombol dibawah untuk login.</p>
-                            <button className={`${styles.btn} ${styles.transparent}`} onClick={handleModeLogin}>Login</button>
+                        <div className={styles.panels_container}>
+                            <div className={`${styles.panel} ${styles.left_panel}`}>
+                                <div className={styles.content}>
+                                    <h3>Belum daftar?</h3>
+                                    <p>Yuk daftar dan nikmati fitur yang ditawarkan SIPK secara gratis.</p>
+                                    <button className={`${styles.btn} ${styles.transparent}`} onClick={handleModeDaftar}>Daftar</button>
+                                </div>
+                                <Image
+                                    src="/daftar.svg"
+                                    width={500}
+                                    height={500}
+                                    alt="Register"
+                                    className={styles.image}
+                                    priority
+                                />
+                            </div>
+                            <div className={`${styles.panel} ${styles.right_panel}`}>
+                                <div className={styles.content}>
+                                    <h3>Sudah punya akun?</h3>
+                                    <p>Silahkan klik tombol dibawah untuk login.</p>
+                                    <button className={`${styles.btn} ${styles.transparent}`} onClick={handleModeLogin}>Login</button>
+                                </div>
+                                <Image
+                                    src="/login.svg"
+                                    width={500}
+                                    height={500}
+                                    alt="Register"
+                                    className={styles.image}
+                                    priority
+                                />
+                            </div>
                         </div>
-                        <Image
-                            src="/login.svg"
-                            width={500}
-                            height={500}
-                            alt="Register"
-                            className={styles.image}
-                            priority
-                        />
+                        <div className={styles.theme_toggle} onClick={handleChangeTheme}>
+                            <i>
+                                {theme === 'dark' ?
+                                    <FiSun />
+                                    :
+                                    <BiMoon />
+                                }
+                            </i>
+                        </div>
                     </div>
-                </div>
-                <div className={styles.theme_toggle} onClick={handleChangeTheme}>
-                    <i>
-                        {theme === 'dark' ?
-                            <FiSun />
-                            :
-                            <BiMoon />
-                        }
-                    </i>
-                </div>
-            </div>
+                </>
+            }
         </>
     )
 }
