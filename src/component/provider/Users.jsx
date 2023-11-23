@@ -26,7 +26,7 @@ export const UsersProvider = ({ children }) => {
     ========== States ==========
     */
     // Mode (Login or Register)
-    const [loginMode, setLoginMode] = useState(true);
+    const [loginMode, setLoginMode] = useState(null);
 
     // Big Content (min-width: 870px)
     const [isBigContent, setBigContent] = useState(0);
