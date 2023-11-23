@@ -20,12 +20,24 @@
 }
 
 .error__content h5,
-.error__content h1 {
+.error__content h1,
+.error__content h2 {
     font-weight: var(--font-medium);
 }
 
 .validating__content {
     cursor: auto;
+}
+
+.history .error__content {
+    width: 100%;
+    height: 100%;
+    flex-direction: row;
+    gap: .5rem;
+}
+
+.history .error__content h2 {
+    margin-bottom: 0;
 }
 
 .summary .empty__content .image {
@@ -51,6 +63,10 @@
     box-shadow: var(--box-shadow);
     margin-top: 1rem;
     transition: all var(--transition-default) ease;
+}
+
+.summary.skeleton {
+    box-shadow: none;
 }
 
 .summary small {
@@ -82,6 +98,7 @@
     display: grid;
     grid-template-columns: 1fr max-content;
     align-items: center;
+    color: var(--dark-color);
 }
 
 .summary__title {
@@ -130,6 +147,10 @@
     overflow: hidden;
     height: 340px;
     padding: 1.25rem;
+}
+
+.notification.skeleton {
+    box-shadow: none;
 }
 
 .notification__inner {
@@ -183,9 +204,149 @@
     color: var(--infoDark-color);
 }
 
+.history {
+    position: relative;
+    height: 80px;
+    background: var(--white-color);
+    margin-bottom: 1.25rem;
+    padding: 1.4rem var(--card-padding);
+    border-radius: 1.2rem;
+    box-shadow: var(--box-shadow);
+    transition: all var(--transition-default) ease;
+}
+
+.history.skeleton {
+    box-shadow: none;
+}
+
+.history__tooltip {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    visibility: hidden;
+    border-radius: 1.2rem;
+    background: var(--lighter-color);
+    backdrop-filter: blur(1px);
+    transition: all var(--transition-default) ease;
+}
+
+.history__tooltip .wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    color: var(--logo-second-color);
+    padding: .5rem;
+    background: var(--body-color);
+    border-radius: 1.2rem;
+    transition: all var(--transition-default) ease;
+}
+
+.history__tooltip .wrapper i {
+    display: flex;
+    cursor: pointer;
+    padding: .6rem;
+    background: transparent;
+    border-radius: 50%;
+}
+
+.history small {
+    color: var(--infoDark-color);
+}
+
+.history__content {
+    display: grid;
+    grid-template-columns: 40px auto 40px;
+    gap: 1rem;
+    color: var(--dark-color);
+    transition: all var(--transition-default) ease;
+}
+
+.history__icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 40px;
+    height: 40px;
+    padding: .6rem;
+    color: var(--white-color);
+    border-radius: 50%;
+    background: var(--primary-color);
+}
+
+.history__icon.skeleton {
+    padding: 0;
+    border: none;
+    color: initial;
+    background: transparent;
+}
+
+.history__icon.tambah {
+    background: var(--primary-color);
+}
+
+.history__icon.hapus {
+    background: var(--danger-color);
+}
+
+.history__icon.ubah {
+    background: var(--success-color);
+}
+
+.history__details {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    margin: auto 0;
+}
+
+.history__value {
+    margin: auto;
+    text-align: center;
+}
+
+.history.tambah {
+    height: 67.5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    color: var(--logo-second-color);
+    background: transparent;
+    border: 2px dashed var(--logo-second-color);
+    transition: all var(--transition-default) ease;
+}
+
+.history.tambah.skeleton {
+    cursor: auto;
+    color: initial;
+    border: 2px dashed var(--skeleton-base);
+    box-shadow: none;
+}
+
+.history.tambah:not(.skeleton):hover {
+    color: var(--white-color);
+    background: var(--logo-second-color);
+}
+
+.history.tambah .content {
+    display: flex;
+    align-items: center;
+    min-height: 24px;
+    gap: .6rem;
+}
+
 @media (hover: hover) and (pointer: fine) {
-    .summary:hover,
-    .notification:hover {
+
+    .summary:not(.skeleton):hover,
+    .notification:not(.skeleton):hover,
+    .history:not(.skeleton):hover {
         box-shadow: none;
     }
 
@@ -196,18 +357,23 @@
     .notification:hover .notification__inner::-webkit-scrollbar {
         visibility: visible;
     }
-    
+
     .notification:hover .notification__inner::-webkit-scrollbar-thumb {
         visibility: visible;
     }
-    
+
     .notification:hover .notification__inner::-webkit-scrollbar-thumb:hover {
+        visibility: visible;
+    }
+
+    .history__tooltip .wrapper i:hover {
+        background: var(--accordion-bg-color);
+    }
+
+    .history:hover .history__tooltip {
+        opacity: 1;
         visibility: visible;
     }
 }
 
-@media screen and (max-width: 360px) {
-    .notification {
-        height: 375px;
-    }
-}
+@media screen and (max-width: 360px) {}

@@ -1,7 +1,7 @@
 'use client'
 
-import { Summary, Notification } from '@/component/Card'
-import { useMatkul, useNotifikasi, useUser } from '@/data/core';
+import { Summary, Notification, History } from '@/component/Card'
+import { useMatkul, useNotifikasi, useUser, useUniversitas } from '@/data/core';
 import * as x from '@/data/summary';
 import styles from './home.module.css'
 
@@ -69,7 +69,7 @@ function AcademicCard({ count }) {
     )
 }
 
-function NotifikasiCard() {
+function UpdateCard() {
     const { data: notifikasi, error: notifikasiError, isLoading: notifikasiLoading, isValidating: notifikasiValidating } = useNotifikasi();
 
     if (notifikasiError) {
@@ -94,10 +94,49 @@ function NotifikasiCard() {
         return (
             <Notification state={'empty'} />
         )
-    } 
+    }
 
     return (
         <Notification state={'loaded'} data={notifikasi} />
+    )
+}
+
+function HistoryCard() {
+    const { data: user, error: userError, isLoading: userLoading, isValidating: userValidating } = useUser();
+    const { data: universitas, error: universitasError, isLoading: universitasLoading, isValidating: universitasValidating } = useUniversitas();
+
+    const data = [
+        { type: 'tambah', nama: 'Sistem Kendali', nilai: "A", sks: 3, unix_created_at: 1700669815 },
+        { type: 'ubah', nama: 'Sistem Mikrokontroller', nilai: "C", sks: 5, unix_created_at: 1700558215 },
+        { type: 'hapus', nama: 'Jaringan Komputer', nilai: "B", sks: 4, unix_created_at: 1700126215 }
+    ]
+
+    if (userError || universitasError) {
+        return (
+            <History state={'error'} />
+        )
+    }
+
+    if (userLoading || universitasLoading) {
+        return (
+            <History state={'loading'} />
+        )
+    }
+
+    if (userValidating || universitasValidating) {
+        return (
+            <History state={'validating'} />
+        )
+    }
+
+    if (data.length === 0) {
+        return (
+            <History state={'empty'} />
+        )
+    }
+
+    return (
+        <History state={'loaded'} data={data} universitas={universitas} />
     )
 }
 
@@ -111,8 +150,14 @@ export default function DashboardPage() {
                 </div>
             </div>
             <div className={styles.secondary}>
-                <h2>Notifikasi</h2>
-                <NotifikasiCard />
+                <div>
+                    <h2>Update</h2>
+                    <UpdateCard />
+                </div>
+                <div className={styles.history}>
+                    <h2>Perubahan Terakhir</h2>
+                    <HistoryCard />
+                </div>
             </div>
         </div>
     )
