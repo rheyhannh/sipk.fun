@@ -11,14 +11,20 @@ import { Spinner } from "./loader/Loading";
 import "react-loading-skeleton/dist/skeleton.css";
 import styles from './style/card.module.css'
 import Link from "next/link";
+import { IoAddOutline } from "react-icons/io5";
+import { CiTrash, CiEdit } from "react-icons/ci";
+import { useUniversitas, useUser } from "@/data/core";
+import { FaInfo, FaUndo } from "react-icons/fa";
+import Modal from "./Modal";
 
 export function Summary({ state, icon, color, title, data }) {
     const handleRetry = () => {
         mutate('/api/matkulku')
+        mutate('/api/me')
     }
 
     const SkeletonCard = () => (
-        <div className={`${styles.summary}`}>
+        <div className={`${styles.summary} ${styles.skeleton}`}>
             <SkeletonTheme
                 baseColor="var(--skeleton-base)"
                 highlightColor="var(--skeleton-highlight)"
@@ -152,8 +158,8 @@ export function Summary({ state, icon, color, title, data }) {
     const ValidatingCard = () => (
         <div className={styles.summary}>
             <div className={styles.validating__wrapper}>
-                <div className={styles.validating__content} onClick={handleRetry}>
-                    <Spinner size={'35px'} color={'var(--logo-second-color)'} />
+                <div className={styles.validating__content}>
+                    <Spinner size={'30px'} color={'var(--logo-second-color)'} />
                 </div>
             </div>
         </div>
@@ -190,11 +196,11 @@ export function Notification({ state, data }) {
     }
 
     const {
-        isRichContent,
+        isPhoneContent,
     } = useContext(DashboardContext);
 
     const SkeletonCard = () => {
-        if (isRichContent === true) {
+        if (isPhoneContent === false) {
             const skeletonElement = Array.from({ length: 3 }, (_, index) => (
                 <div className={`${styles.notification__post} ${styles.skeleton}`}>
                     <div className={styles.notification__main}>
@@ -220,13 +226,13 @@ export function Notification({ state, data }) {
                 </div>
             ))
             return (
-                <div className={styles.notification}>
+                <div className={`${styles.notification} ${styles.skeleton}`}>
                     <div className={styles.notification__inner}>
                         {skeletonElement}
                     </div>
                 </div>
             )
-        } else if (isRichContent === false) {
+        } else if (isPhoneContent === true) {
             return (
                 <>
                     Swiper Skeleton Notification
@@ -236,7 +242,7 @@ export function Notification({ state, data }) {
     }
 
     const LoadedCard = () => {
-        if (isRichContent === true) {
+        if (isPhoneContent === false) {
             return (
                 <div className={styles.notification}>
                     <div className={styles.notification__inner}>
@@ -279,7 +285,7 @@ export function Notification({ state, data }) {
                     </div>
                 </div>
             )
-        } else if (isRichContent === false) {
+        } else if (isPhoneContent === true) {
             return (
                 <>
                     Swiper Notification
@@ -289,7 +295,7 @@ export function Notification({ state, data }) {
     }
 
     const ErrorCard = () => {
-        if (isRichContent === true) {
+        if (isPhoneContent === false) {
             return (
                 <div className={styles.notification}>
                     <div className={styles.error__wrapper}>
@@ -300,7 +306,7 @@ export function Notification({ state, data }) {
                     </div>
                 </div>
             )
-        } else if (isRichContent === false) {
+        } else if (isPhoneContent === true) {
             return (
                 <>
                     Swiper Error Notification
@@ -310,17 +316,17 @@ export function Notification({ state, data }) {
     }
 
     const ValidatingCard = () => {
-        if (isRichContent === true) {
+        if (isPhoneContent === false) {
             return (
                 <div className={styles.notification}>
                     <div className={styles.validating__wrapper}>
-                        <div className={styles.validating__content} onClick={handleRetry}>
+                        <div className={styles.validating__content}>
                             <Spinner size={'35px'} color={'var(--logo-second-color)'} />
                         </div>
                     </div>
                 </div>
             )
-        } else if (isRichContent === false) {
+        } else if (isPhoneContent === true) {
             return (
                 <>
                     Swiper Validating Notification
@@ -330,7 +336,7 @@ export function Notification({ state, data }) {
     }
 
     const EmptyCard = () => {
-        if (isRichContent === true) {
+        if (isPhoneContent === false) {
             return (
                 <div className={styles.notification}>
                     <div className={styles.empty__wrapper}>
@@ -347,13 +353,229 @@ export function Notification({ state, data }) {
                     </div>
                 </div>
             )
-        } else if (isRichContent === false) {
+        } else if (isPhoneContent === true) {
             return (
                 <>
                     Swiper Empty Notification
                 </>
             )
         }
+    }
+
+    if (state === 'loading') { return (<SkeletonCard />) }
+    else if (state === 'loaded') { return (<LoadedCard />) }
+    else if (state === 'error') { return (<ErrorCard />) }
+    else if (state === 'validating') { return (<ValidatingCard />) }
+    else if (state === 'empty') { return (<EmptyCard />) }
+    else { return 'Unidentified Card State' }
+}
+
+export function History({ state, data, universitas }) {
+    const handleRetry = () => {
+        mutate('/api/history')
+    }
+
+    const SkeletonCard = () => {
+        const skeletonElement = Array.from({ length: 3 }, (_, index) => (
+            <div
+                className={`${styles.history} ${styles.skeleton}`}
+
+            >
+                <div className={styles.history__content}>
+                    <SkeletonTheme
+                        baseColor="var(--skeleton-base)"
+                        highlightColor="var(--skeleton-highlight)"
+                    >
+                        <Skeleton borderRadius={'50%'} width={"100%"} height={"100%"} containerClassName={`${styles.history__icon} ${styles.skeleton}`} />
+                    </SkeletonTheme>
+
+                    <div className={styles.history__details}>
+                        <h3>
+                            <SkeletonTheme
+                                baseColor="var(--skeleton-base)"
+                                highlightColor="var(--skeleton-highlight)"
+                            >
+                                <Skeleton width={"80%"} height={"100%"} />
+                            </SkeletonTheme>
+                        </h3>
+                        <small>
+                            <SkeletonTheme
+                                baseColor="var(--skeleton-base)"
+                                highlightColor="var(--skeleton-highlight)"
+                            >
+                                <Skeleton width={"60%"} height={"100%"} />
+                            </SkeletonTheme>
+                        </small>
+                    </div>
+                    <div className={styles.history__value} style={{ width: '100%' }}>
+                        <Skeleton
+                            width={"50%"}
+                            height={"100%"}
+                            baseColor="var(--skeleton-base)"
+                            highlightColor="var(--skeleton-highlight)"
+                        />
+                        <Skeleton
+                            width={"100%"}
+                            height={"100%"}
+                            baseColor="var(--skeleton-base)"
+                            highlightColor="var(--skeleton-highlight)"
+                        />
+                    </div>
+                </div>
+            </div>
+        ))
+
+        return (
+            <>
+                {skeletonElement}
+                <div className={`${styles.history} ${styles.tambah} ${styles.skeleton}`}>
+                    <div className={styles.content} />
+                </div>
+            </>
+        )
+    }
+
+    const LoadedCard = () => {
+        const getIcon = {
+            tambah: <IoAddOutline size={'24px'} />,
+            hapus: <CiTrash size={'24px'} />,
+            ubah: <CiEdit size={'24px'} />
+        }
+
+        const postedAt = (created_at, type) => {
+            const postedAt = type === 'unix' ? new Date(created_at * 1000) : new Date(created_at);
+            const currentDate = new Date();
+            if (postedAt.toDateString() === currentDate.toDateString()) {
+                const timeOnly = new Intl.DateTimeFormat('en-US', { hour: '2-digit', minute: '2-digit', hour12: false }).format(postedAt);
+                return timeOnly;
+            } else if (postedAt.toDateString() == new Date(currentDate - 86400000).toDateString()) {
+                return 'Kemarin';
+            } else {
+                const dateMonth = new Intl.DateTimeFormat('id-ID', { day: 'numeric', month: 'short' }).format(postedAt);
+                return dateMonth;
+            }
+        }
+
+        const [editModal, setEditModal] = useState(Array(data.length).fill(false));
+        const [undoModal, setUndoModal] = useState(Array(data.length).fill(false));
+
+        const handleEditModal = (index) => {
+            setEditModal((prevState) => {
+                const currentState = prevState[index];
+                const newState = Array(prevState.length).fill(false);
+                newState[index] = currentState ? false : true;
+                return newState;
+            })
+        }
+
+        const handleUndoModal = (index) => {
+            setUndoModal((prevState) => {
+                const currentState = prevState[index];
+                const newState = Array(prevState.length).fill(false);
+                newState[index] = currentState ? false : true;
+                return newState;
+            })
+        }
+
+        return (
+            <>
+                {data.map((item, index) => {
+                    const style = universitas[0]?.penilaian?.default[item.nilai]?.style
+                    return (
+                        <div
+                            className={styles.history}
+
+                        >
+                            <div className={styles.history__tooltip}>
+                                <div className={styles.wrapper}>
+                                    <i onClick={() => { handleUndoModal(index) }}>
+                                        <FaUndo size={'12px'} />
+                                    </i>
+                                    <i onClick={() => { handleEditModal(index) }}>
+                                        <FaInfo size={'12px'} />
+                                    </i>
+                                </div>
+                            </div>
+                            <div className={styles.history__content}>
+                                <div className={`${styles.history__icon} ${item.type ? styles[item.type] : ''}`}>
+                                    {getIcon[item.type]}
+                                </div>
+                                <div className={styles.history__details}>
+                                    <h3>{item.nama}</h3>
+                                    <small>{postedAt(item.unix_created_at, 'unix')}</small>
+                                </div>
+                                <div className={styles.history__value}>
+                                    <h5 style={{ color: style ? `var(--${style}-color)` : '' }}>{item.nilai}</h5>
+                                    <h5>{item.sks} SKS</h5>
+                                </div>
+                            </div>
+                        </div>
+                    )
+                })}
+                <div className={`${styles.history} ${styles.tambah}`} onClick={() => { console.log('Tambah Matkul') }}>
+                    <div className={styles.content}>
+                        <IoAddOutline size={'24px'} />
+                        <h3>Tambah Matakuliah</h3>
+                    </div>
+                </div>
+            </>
+        )
+    }
+
+    const ErrorCard = () => {
+        const errorElement = Array.from({ length: 3 }, (_, index) => (
+            <div
+                className={styles.history}
+            >
+                <div className={styles.error__content} onClick={handleRetry}>
+                    <h5>Gagal mengambil data</h5>
+                    <h2>&#x21bb;</h2>
+                </div>
+            </div>
+        ))
+
+        return (
+            <>
+                {errorElement}
+                <div className={`${styles.history} ${styles.tambah} ${styles.skeleton}`}>
+                    <div className={styles.content} />
+                </div>
+            </>
+        )
+    }
+
+    const ValidatingCard = () => {
+        const validatingElement = Array.from({ length: 3 }, (_, index) => (
+            <div
+                className={styles.history}
+            >
+                <div className={styles.validating__wrapper}>
+                    <div className={styles.validating__content}>
+                        <Spinner size={'25px'} color={'var(--logo-second-color)'} />
+                    </div>
+                </div>
+            </div>
+        ))
+
+        return (
+            <>
+                {validatingElement}
+                <div className={`${styles.history} ${styles.tambah} ${styles.skeleton}`}>
+                    <div className={styles.content} />
+                </div>
+            </>
+        )
+    }
+
+    const EmptyCard = () => {
+        return (
+            <div className={`${styles.history} ${styles.tambah}`} onClick={() => { console.log('Tambah Matkul') }}>
+                <div className={styles.content}>
+                    <IoAddOutline size={'24px'} />
+                    <h3>Tambah Matakuliah</h3>
+                </div>
+            </div>
+        )
     }
 
     if (state === 'loading') { return (<SkeletonCard />) }

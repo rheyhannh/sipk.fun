@@ -24,6 +24,7 @@
     --dark-color: #363949;
     --darkVariant-color: #677483;
     --light-color: rgba(132, 139, 200, 0.2);
+    --lighter-color: rgba(132, 139, 200, 0.2);
     --scroll-bar-color: hsl(222, 12%, 90%);
     --scroll-thumb-color: hsl(222, 12%, 80%);
     --scroll-thumbHover-color: hsla(222, 40%, 30%, .75);
@@ -121,6 +122,7 @@
     --dark-color: #edeffd;
     --darkVariant-color: #a3bdcc;
     --light-color: rgba(0, 0, 0, 0.4);
+    --lighter-color: rgba(0, 0, 0, 0.2);
     --scroll-bar-color: #677483;
     --scroll-thumb-color: rgba(0, 0, 0, 0.5);
     --scroll-thumbHover-color: hsla(11, 75%, 35%, .5);

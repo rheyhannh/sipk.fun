@@ -1,6 +1,7 @@
 .wrapper {
     display: grid;
-    margin-top: 5.35rem;
+    /* margin-top: 5.35rem; */
+    margin-top: 4rem;
     padding: 0 1.5rem;
     grid-template-columns: 1fr;
     gap: 1.5rem;
@@ -16,16 +17,20 @@
     margin-top: 1rem;
 }
 
+.history {
+    margin-top: 2rem;
+}
+
+.history h2 {
+    margin-bottom: 1rem;
+}
+
 @media screen and (min-width: 768px) {
     .wrapper {
         display: grid;
         padding: 0;
         grid-template-columns: auto 23rem;
         gap: 2rem;
-    }
-
-    .secondary {
-        margin-top: 4rem;
     }
 }
 
