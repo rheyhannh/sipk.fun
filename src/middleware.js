@@ -25,6 +25,7 @@ function decryptSomething(ciphertext) {
 
 export default async function middleware(request) {
     const authSessionToken = request.cookies.get(`${process.env.USER_SESSION_COOKIES_NAME}`)?.value;
+    const { pathname } = request.nextUrl;
 
     let response = NextResponse.next({
         request: {
@@ -33,13 +34,15 @@ export default async function middleware(request) {
     })
 
     if (!authSessionToken) {
+        if (pathname.startsWith('/users')) { return response }
         const loginUrl = new URL("/users", request.url);
-        loginUrl.searchParams.set('from', request.nextUrl.pathname);
+        loginUrl.searchParams.set('action', 'login');
         response = NextResponse.redirect(loginUrl);
         return response;
     }
 
     const cookieAuthOptions = { secure: true, httpOnly: true, maxAge: 2592000, sameSite: 'lax' };
+    const deleteCookieAuthOptions = { secure: true, httpOnly: true, maxAge: -2592000, sameSite: 'lax' };
     const supabase = createServerClient(
         process.env.NEXT_PUBLIC_SUPABASE_URL,
         process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
@@ -97,18 +100,18 @@ export default async function middleware(request) {
                     request.cookies.set({
                         name: process.env.USER_SESSION_COOKIES_NAME,
                         value: '',
-                        ...options,
+                        ...deleteCookieAuthOptions,
                     })
 
                     const loginUrl = new URL("/users", request.url);
-                    loginUrl.searchParams.set('from', request.nextUrl.pathname);
-
+                    loginUrl.searchParams.set('error', 'session');
+                    loginUrl.searchParams.set('action', 'login');
                     response = NextResponse.redirect(loginUrl);
 
                     response.cookies.set({
                         name: process.env.USER_SESSION_COOKIES_NAME,
                         value: '',
-                        ...options,
+                        ...deleteCookieAuthOptions,
                     })
                 },
             },
@@ -116,10 +119,33 @@ export default async function middleware(request) {
     )
 
     const { data, error } = await supabase.auth.getSession();
+    if (error || !data.session) {
+        request.cookies.set({
+            name: process.env.USER_SESSION_COOKIES_NAME,
+            value: '',
+            ...deleteCookieAuthOptions,
+        })
+
+        const loginUrl = new URL("/users", request.url);
+        loginUrl.searchParams.set('error', 'session');
+        loginUrl.searchParams.set('action', 'login');
+        response = NextResponse.redirect(loginUrl);
+
+        response.cookies.set({
+            name: process.env.USER_SESSION_COOKIES_NAME,
+            value: '',
+            ...deleteCookieAuthOptions,
+        })
+    }
+
+    if (pathname.startsWith('/users')) {
+        const dashboardUrl = new URL("/dashboard", request.url);
+        response = NextResponse.redirect(dashboardUrl);
+    }
 
     return response;
 }
 
 export const config = {
-    matcher: ['/dashboard/:path*'],
+    matcher: ['/dashboard/:path*', '/users/:path*'],
 }
