@@ -1,7 +1,6 @@
 .wrapper {
     display: grid;
-    /* margin-top: 5.35rem; */
-    margin-top: 4rem;
+    margin-top: calc(var(--header-height) + .75rem);
     padding: 0 1.5rem;
     grid-template-columns: 1fr;
     gap: 1.5rem;
