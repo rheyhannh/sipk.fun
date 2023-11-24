@@ -330,11 +330,6 @@
     box-shadow: none;
 }
 
-.history.tambah:not(.skeleton):hover {
-    color: var(--white-color);
-    background: var(--logo-second-color);
-}
-
 .history.tambah .content {
     display: flex;
     align-items: center;
@@ -373,6 +368,11 @@
     .history:hover .history__tooltip {
         opacity: 1;
         visibility: visible;
+    }
+
+    .history.tambah:not(.skeleton):hover {
+        color: var(--white-color);
+        background: var(--logo-second-color);
     }
 }
 
