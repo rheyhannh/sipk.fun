@@ -18,9 +18,6 @@ export default function Nav({ children }) {
         { text: 'Dashboard', href: '/dashboard', icon: 'AiOutlineAppstore', lib: 'ai' },
         { text: 'Profil', href: '/dashboard/profil', icon: 'AiOutlineIdcard', lib: 'ai' },
         { text: 'Matakuliah', href: '/dashboard/matkul', icon: 'BsJournalBookmark', lib: 'bs' },
-        { text: 'Statistik', href: '/dashboard/statistik', icon: 'MdOutlineQueryStats', lib: 'md' },
-        { text: 'Laporkan', href: '/dashboard/laporkan', icon: 'GoReport', lib: 'go' },
-        { text: 'Tentang', href: '/dashboard/tentang', icon: 'AiOutlineInfoCircle', lib: 'ai' },
         { text: 'Keluar', href: '/api/logout', icon: 'FiLogOut', lib: 'fi' },
     ]
 
