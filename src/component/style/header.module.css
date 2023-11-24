@@ -1,7 +1,7 @@
 .dashboard {
     top: 0;
     position: fixed;
-    padding: .75rem 1.5rem;
+    padding: .75rem 1.5rem .5rem 1.5rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -18,19 +18,132 @@
 
 .dashboard__nav,
 .dashboard__logo, 
-.dashboard__toolkit {
+.dashboard__right {
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
 }
 
+.dashboard__right {
+    cursor: auto;
+    gap: 1.5rem;
+}
+
 .dashboard__logo img {
     width: 48px;
 }
 
+.dashboard__logo h2 {
+    font-size: var(--h2-font-size);
+}
+
+.dashboard__theme {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 4rem;
+    height: 1.75rem;
+    border-radius: .4rem;
+    background: var(--light-color);
+}
+
+.dashboard__theme span {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 50%;
+    border-radius: .4rem;
+    cursor: pointer;
+    color: var(--dark-color);
+}
+
+.dashboard__theme span.active {
+    color: var(--white-color);
+    background: var(--logo-second-color);
+    border-radius: .4rem;
+}
+
+.dashboard__profile {
+    display: none;
+}
+
+.dashboard__profile_info {
+    max-width: 150px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+.dashboard__profile_info.skeleton {
+    width: 150px;
+}
+
+.dashboard__profile_info small {
+    color: var(--infoDark-color);
+}
+
+.dashboard__profile_avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--logo-second-color);
+}
+
+.dashboard__profile_avatar.skeleton {
+    border: none;
+    background: none;
+}
+
+@media screen and (min-width: 1280px) {
+    .dashboard__logo {
+        position: absolute;
+        left: 50%;
+    }
+}
+
 @media screen and (min-width: 768px) {
     .dashboard {
+        padding: 1rem 1.5rem;
         background: var(--body-color);
+    }
+
+    .dashboard__profile {
+        display: flex;
+        align-items: center;
+        gap: 1.25rem;
+        text-align: right;
+    }
+
+    .dashboard__profile.validating,
+    .dashboard__profile.error,
+    .dashboard__profile.empty {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 190px;
+        height: 40px;
+    }
+
+    .dashboard__profile.error {
+        gap: .5rem;
+    }
+
+    .dashboard__profile.error h5,
+    .dashboard__profile.error h2 {
+        font-weight: var(--font-medium);
+    }
+
+    .dashboard__profile.error h2 {
+        cursor: pointer;
+    }
+    
+    .dashboard__logo img {
+        width: 58px;
+    }
+
+    .dashboard__logo h2 {
+        font-size: var(--h1-font-size);
     }
 }

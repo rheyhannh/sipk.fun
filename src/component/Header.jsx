@@ -1,6 +1,9 @@
 'use client'
 
 import Image from 'next/image';
+import Skeleton from "react-loading-skeleton";
+import { Spinner } from "./loader/Loading";
+import { mutate } from 'swr';
 import { League_Spartan } from 'next/font/google';
 import { useContext, useEffect, useState } from 'react'
 import { GlobalContext } from './provider/Global';
@@ -11,6 +14,7 @@ import { LiaTimesSolid } from 'react-icons/lia';
 import toast from 'react-hot-toast';
 import { FiSun, FiMoon } from 'react-icons/fi';
 import styles from './style/header.module.css'
+import { useUser } from '@/data/core';
 
 const league_spartan = League_Spartan({
     subsets: ['latin'],
@@ -18,6 +22,86 @@ const league_spartan = League_Spartan({
     variable: '--leaguespartan-font',
     weight: ['100', '200', '300', '400', '500', '600', '700', '800', '900']
 })
+
+function Profile() {
+    const { data, error, isLoading, isValidating } = useUser();
+    const handleNamaLengkap = (input, maxLength) => {
+        const trimmedInput = input.trim();
+        if (trimmedInput.length <= maxLength) {
+            return trimmedInput;
+        } else {
+            const words = trimmedInput.split(' ');
+            let truncatedText = '';
+            let currentLength = 0;
+
+            for (const word of words) {
+                if (currentLength + word.length + 1 <= maxLength) {
+                    truncatedText += word + ' ';
+                    currentLength += word.length + 1;
+                } else {
+                    break;
+                }
+            }
+
+            return truncatedText.trim();
+        }
+    }
+
+    if (error) {
+        return (
+            <div className={`${styles.dashboard__profile} ${styles.error}`}>
+                <h5>Gagal mengambil data</h5>
+                <h2 onClick={handleRetry}>&#x21bb;</h2>
+            </div>
+        )
+    }
+
+    if (isLoading) {
+        return (
+            <div className={styles.dashboard__profile}>
+                <div className={`${styles.dashboard__profile_info} ${styles.skeleton}`}>
+                    <Skeleton width={"100%"} height={"100%"} baseColor="var(--skeleton-base)" highlightColor="var(--skeleton-highlight)" />
+                    <Skeleton width={"50%"} height={"100%"} baseColor="var(--skeleton-base)" highlightColor="var(--skeleton-highlight)" />
+                </div>
+                <div className={`${styles.dashboard__profile_avatar} ${styles.skeleton}`}>
+                    <Skeleton borderRadius={'50%'} width={"100%"} height={"100%"} baseColor="var(--skeleton-base)" highlightColor="var(--skeleton-highlight)" />
+                </div>
+            </div>
+        )
+    }
+
+    if (isValidating) {
+        return (
+            <div className={`${styles.dashboard__profile} ${styles.validating}`}>
+                <Spinner size={'20px'} color={'var(--logo-second-color)'} />
+            </div>
+        )
+    }
+
+    if (data.length === 0) {
+        return (
+            <div className={`${styles.dashboard__profile} ${styles.empty}`}>
+
+            </div>
+        )
+    }
+
+    return (
+        <div className={styles.dashboard__profile}>
+            <div className={`${styles.dashboard__profile_info}`}>
+                <p>
+                    <b>
+                        {handleNamaLengkap(data[0].fullname, 20)}
+                    </b>
+                </p>
+                <small>
+                    {data[0].nickname}
+                </small>
+            </div>
+            <div className={`${styles.dashboard__profile_avatar}`} />
+        </div>
+    )
+}
 
 export default function Header() {
     const {
@@ -28,8 +112,8 @@ export default function Header() {
     } = useContext(DashboardContext);
     const {
         theme, setTheme,
-    } = useContext(GlobalContext)
-    
+    } = useContext(GlobalContext);
+
     const [prevScrollPos, setPrevScrollPos] = useState(0);
     const [showHeader, setShowHeader] = useState(true);
 
@@ -43,6 +127,10 @@ export default function Header() {
         })
     }
 
+    const handleRetry = () => {
+        mutate('/api/me')
+    }
+
     const handleNavbarClick = () => {
         if (!isRichContent) {
             if (isNavbarActive) { document.body.classList.remove('disable_scroll'); }
@@ -51,8 +139,9 @@ export default function Header() {
         setNavbarActive((current) => (current === true ? false : true))
     }
 
-    const handleChangeTheme = () => {
-        setTheme((currentTheme) => (currentTheme === 'light' ? 'dark' : 'light'));
+    const handleChangeTheme = (newTheme) => {
+        if (theme === newTheme) { return }
+        setTheme(newTheme);
         document.body.classList.toggle('dark-theme', theme !== 'dark');
         localStorage.setItem('_theme', theme === 'dark' ? 'light' : 'dark')
         if (theme === 'dark') { helloLight() }
@@ -100,18 +189,23 @@ export default function Header() {
                         alt={'SIPK Logo'}
                         priority
                     />
-                    <h2 className={league_spartan.variable} style={{fontFamily: 'var(--leaguespartan-font)'}}>
+                    <h2 className={league_spartan.variable} style={{ fontFamily: 'var(--leaguespartan-font)' }}>
                         <span style={{ color: 'var(--logo-first-color)' }}>SIP</span>
                         <span style={{ color: 'var(--logo-second-color)' }}>K</span>
                     </h2>
                 </div>
 
-                <div onClick={handleChangeTheme} className={styles.dashboard__toolkit}>
-                    {theme === 'dark' ?
-                        <FiSun size={'24px'} />
-                        :
-                        <FiMoon size={'24px'} />
-                    }
+                <div className={styles.dashboard__right}>
+                    <div className={styles.dashboard__theme}>
+                        <span className={theme === 'light' ? styles.active : ''} onClick={() => { handleChangeTheme('light') }}>
+                            <FiSun size={'15px'} />
+                        </span>
+                        <span className={theme === 'dark' ? styles.active : ''} onClick={() => { handleChangeTheme('dark') }}>
+                            <FiMoon size={'15px'} />
+                        </span>
+                    </div>
+
+                    <Profile />
                 </div>
             </div>
         </>
