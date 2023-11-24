@@ -277,6 +277,10 @@ main.dashboard {
 }
 
 @media screen and (min-width: 768px) {
+    :root {
+        --header-height: 5rem;
+    }
+
     main.dashboard {
         width: 96%;
         margin: 0 auto;
