@@ -107,7 +107,7 @@ export function UsersForm() {
 
         // Something Error ? 
         const error = searchParams.get('error');
-        if (error === 'session') { setErrorMessage('Silahkan login kembali') }
+        if (error === 'session' && mode === 'login') { setErrorMessage('Silahkan login kembali') }
     }, [searchParams])
 
     /*
