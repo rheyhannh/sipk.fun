@@ -16,6 +16,7 @@ import { CiTrash, CiEdit } from "react-icons/ci";
 import { useUniversitas, useUser } from "@/data/core";
 import { FaInfo, FaUndo } from "react-icons/fa";
 import Modal from "./Modal";
+import { ModalContext } from "./provider/Modal";
 
 export function Summary({ state, icon, color, title, data }) {
     const handleRetry = () => {
@@ -165,22 +166,38 @@ export function Summary({ state, icon, color, title, data }) {
         </div>
     )
 
-    const EmptyCard = () => (
-        <div className={styles.summary}>
-            <div className={styles.empty__wrapper}>
-                <div className={styles.empty__content} onClick={() => { console.log('Tambah Matkul') }}>
-                    <Image
-                        src={'/tambah_matkul.svg'}
-                        width={100}
-                        height={100}
-                        alt='Tambah Matakuliah'
-                        className={styles.image}
-                    />
-                    <h5>Tambah Matakuliah</h5>
+    const EmptyCard = () => {
+        const {
+            setModal,
+            setActive,
+            setData
+        } = useContext(ModalContext);
+
+        const handleTambahModal = () => {
+            setData(null);
+            setModal('tambahMatkul');
+            setTimeout(() => {
+                setActive(true);
+            }, 50)
+        }
+
+        return (
+            <div className={styles.summary}>
+                <div className={styles.empty__wrapper}>
+                    <div className={styles.empty__content} onClick={() => { handleTambahModal() }}>
+                        <Image
+                            src={'/tambah_matkul.svg'}
+                            width={100}
+                            height={100}
+                            alt='Tambah Matakuliah'
+                            className={styles.image}
+                        />
+                        <h5>Tambah Matakuliah</h5>
+                    </div>
                 </div>
             </div>
-        </div>
-    )
+        )
+    }
 
     if (state === 'loading') { return (<SkeletonCard />) }
     else if (state === 'loaded') { return (<LoadedCard />) }
@@ -345,7 +362,7 @@ export function Notification({ state, data }) {
                                 src={'/notifikasi_kosong.svg'}
                                 width={100}
                                 height={100}
-                                alt='Tambah Matakuliah'
+                                alt='Notifikasi Kosong'
                                 className={styles.image}
                             />
                             <h5>Belum Ada Notifikasi</h5>
@@ -373,6 +390,23 @@ export function Notification({ state, data }) {
 export function History({ state, data, universitas }) {
     const handleRetry = () => {
         mutate('/api/history')
+    }
+
+    const {
+        isTouchDevice,
+    } = useContext(DashboardContext);
+    const {
+        setModal,
+        setActive,
+        setData
+    } = useContext(ModalContext);
+
+    const handleTambahModal = () => {
+        setData(null);
+        setModal('tambahMatkul');
+        setTimeout(() => {
+            setActive(true);
+        }, 50)
     }
 
     const SkeletonCard = () => {
@@ -456,63 +490,58 @@ export function History({ state, data, universitas }) {
             }
         }
 
-        const [editModal, setEditModal] = useState(Array(data.length).fill(false));
-        const [undoModal, setUndoModal] = useState(Array(data.length).fill(false));
-
-        const handleEditModal = (index) => {
-            setEditModal((prevState) => {
-                const currentState = prevState[index];
-                const newState = Array(prevState.length).fill(false);
-                newState[index] = currentState ? false : true;
-                return newState;
-            })
+        const handleEditModal = (data) => {
+            setData(data);
+            setModal('perubahanTerakhirDetail');
+            setTimeout(() => {
+                setActive(true);
+            }, 50)
         }
 
-        const handleUndoModal = (index) => {
-            setUndoModal((prevState) => {
-                const currentState = prevState[index];
-                const newState = Array(prevState.length).fill(false);
-                newState[index] = currentState ? false : true;
-                return newState;
-            })
+        const handleUndoModal = (data) => {
+            setData(data);
+            setModal('perubahanTerakhirConfirm');
+            setTimeout(() => {
+                setActive(true);
+            }, 50)
         }
 
         return (
             <>
                 {data.map((item, index) => {
-                    const style = universitas[0]?.penilaian?.default[item.nilai]?.style
+                    const style = universitas[0]?.penilaian?.default[item?.current?.nilai ? item?.current?.nilai : item?.prev?.nilai]?.style
                     return (
                         <div
                             className={styles.history}
-
+                            {...isTouchDevice ? { onClick: () => handleEditModal(item) } : {}}
                         >
                             <div className={styles.history__tooltip}>
                                 <div className={styles.wrapper}>
-                                    <i onClick={() => { handleUndoModal(index) }}>
+                                    <i onClick={() => { handleUndoModal(item) }}>
                                         <FaUndo size={'12px'} />
                                     </i>
-                                    <i onClick={() => { handleEditModal(index) }}>
+                                    <i onClick={() => { handleEditModal(item) }}>
                                         <FaInfo size={'12px'} />
                                     </i>
                                 </div>
                             </div>
                             <div className={styles.history__content}>
-                                <div className={`${styles.history__icon} ${item.type ? styles[item.type] : ''}`}>
-                                    {getIcon[item.type]}
+                                <div className={`${styles.history__icon} ${item?.current?.type ? styles[item?.current?.type] : styles[item?.prev?.type]}`}>
+                                    {getIcon[item?.current?.type ? item?.current?.type : item?.prev?.type]}
                                 </div>
                                 <div className={styles.history__details}>
-                                    <h3>{item.nama}</h3>
-                                    <small>{postedAt(item.unix_created_at, 'unix')}</small>
+                                    <h3>{item?.current?.nama ? item?.current?.nama : item?.prev?.nama}</h3>
+                                    <small>{postedAt(item?.current?.created_at ? item?.current?.created_at : item?.prev?.created_at, 'unix')}</small>
                                 </div>
                                 <div className={styles.history__value}>
-                                    <h5 style={{ color: style ? `var(--${style}-color)` : '' }}>{item.nilai}</h5>
-                                    <h5>{item.sks} SKS</h5>
+                                    <h5 style={{ color: style ? `var(--${style}-color)` : '' }}>{item?.current?.nilai ? item?.current?.nilai : item?.prev?.nilai}</h5>
+                                    <h5>{item?.current?.sks ? item?.current?.sks : item?.prev?.sks} SKS</h5>
                                 </div>
                             </div>
                         </div>
                     )
                 })}
-                <div className={`${styles.history} ${styles.tambah}`} onClick={() => { console.log('Tambah Matkul') }}>
+                <div className={`${styles.history} ${styles.tambah}`} onClick={() => { handleTambahModal() }}>
                     <div className={styles.content}>
                         <IoAddOutline size={'24px'} />
                         <h3>Tambah Matakuliah</h3>
@@ -569,8 +598,8 @@ export function History({ state, data, universitas }) {
 
     const EmptyCard = () => {
         return (
-            <div className={`${styles.history} ${styles.tambah}`} onClick={() => { console.log('Tambah Matkul') }}>
-                <div className={styles.content}>
+            <div className={`${styles.history} ${styles.tambah}`} onClick={() => { handleTambahModal() }}>
+                <div className={styles.content} >
                     <IoAddOutline size={'24px'} />
                     <h3>Tambah Matakuliah</h3>
                 </div>

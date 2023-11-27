@@ -4,6 +4,7 @@ import Navbar from '@/component/Nav'
 import { NavigationEvents } from '@/component/NavigationEvents';
 import { GlobalProvider } from '@/component/provider/Global'
 import { DashboardProvider } from '@/component/provider/Dashboard';
+import { ModalProvider } from '@/component/provider/Modal';
 
 export const metadata = {
   title: 'Dashboard',
@@ -19,15 +20,17 @@ export default function DashboardLayout({
     <>
       <GlobalProvider>
         <DashboardProvider>
-          <Header />
-          <main className={`dashboard`}>
-            <Navbar>
-              {children}
-            </Navbar>
-            <Suspense fallback={null}>
-              <NavigationEvents />
-            </Suspense>
-          </main>
+          <ModalProvider>
+            <Header />
+            <main className={`dashboard`}>
+              <Navbar>
+                {children}
+              </Navbar>
+              <Suspense fallback={null}>
+                <NavigationEvents />
+              </Suspense>
+            </main>
+          </ModalProvider>
         </DashboardProvider>
       </GlobalProvider>
     </>
