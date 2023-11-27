@@ -106,9 +106,9 @@ function HistoryCard() {
     const { data: universitas, error: universitasError, isLoading: universitasLoading, isValidating: universitasValidating } = useUniversitas();
 
     const data = [
-        { type: 'tambah', nama: 'Sistem Kendali', nilai: "A", sks: 3, unix_created_at: 1700669815 },
-        { type: 'ubah', nama: 'Sistem Mikrokontroller', nilai: "C", sks: 5, unix_created_at: 1700558215 },
-        { type: 'hapus', nama: 'Jaringan Komputer', nilai: "B", sks: 4, unix_created_at: 1700126215 }
+        { current: { type: 'tambah', nama: 'Sistem Kendali', nilai: "A", sks: 3, semester: 4, created_at: 1700669815, deleted_at: 1700669815, edited_at: null }, prev: {} },
+        { current: { type: 'ubah', nama: 'Sistem Mikrokontroller', nilai: "C", sks: 5, semester: 2, created_at: 1700669815, deleted_at: null, edited_at: 1700669815 }, prev: { type: 'tambah', nama: 'Sistem Kontroller', nilai: "A", sks: 4, semester: 3, created_at: 1700669815, deleted_at: null, edited_at: 1700669815 } },
+        { current: {}, prev: { type: 'hapus', nama: 'Jaringan Komputer Lanjutan', nilai: "B", sks: 4, semester: 2, created_at: 1700669815, deleted_at: 1700669815, edited_at: null } }
     ]
 
     if (userError || universitasError) {
