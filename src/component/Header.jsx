@@ -23,8 +23,28 @@ const league_spartan = League_Spartan({
     weight: ['100', '200', '300', '400', '500', '600', '700', '800', '900']
 })
 
-function Profile() {
+function Right() {
     const { data, error, isLoading, isValidating } = useUser();
+    const {
+        theme, setTheme,
+    } = useContext(GlobalContext);
+
+    const helloDark = () => toast('Dark Mode', { duration: 2000, icon: <FiMoon size={'17px'} /> });
+    const helloLight = () => toast('Light Mode', { duration: 2000, icon: <FiSun size={'17px'} /> });
+    
+    const handleRetry = () => {
+        mutate('/api/me')
+    }
+
+    const handleChangeTheme = (newTheme) => {
+        if (theme === newTheme) { return }
+        setTheme(newTheme);
+        document.body.classList.toggle('dark-theme', theme !== 'dark');
+        localStorage.setItem('_theme', theme === 'dark' ? 'light' : 'dark')
+        if (theme === 'dark') { helloLight() }
+        else { helloDark() }
+    }
+
     const handleNamaLengkap = (input, maxLength) => {
         const trimmedInput = input.trim();
         if (trimmedInput.length <= maxLength) {
@@ -49,57 +69,112 @@ function Profile() {
 
     if (error) {
         return (
-            <div className={`${styles.dashboard__profile} ${styles.error}`}>
-                <h5>Gagal mengambil data</h5>
-                <h2 onClick={handleRetry}>&#x21bb;</h2>
-            </div>
+            <>
+                <div className={styles.dashboard__theme}>
+                    <span className={theme === 'light' ? styles.active : ''} onClick={() => { handleChangeTheme('light') }}>
+                        <FiSun size={'15px'} />
+                    </span>
+                    <span className={theme === 'dark' ? styles.active : ''} onClick={() => { handleChangeTheme('dark') }}>
+                        <FiMoon size={'15px'} />
+                    </span>
+                </div>
+
+                <div className={`${styles.dashboard__profile} ${styles.error}`}>
+                    <h5>Gagal mengambil data</h5>
+                    <h2 onClick={handleRetry}>&#x21bb;</h2>
+                </div>
+            </>
         )
     }
 
     if (isLoading) {
         return (
-            <div className={styles.dashboard__profile}>
-                <div className={`${styles.dashboard__profile_info} ${styles.skeleton}`}>
-                    <Skeleton width={"100%"} height={"100%"} baseColor="var(--skeleton-base)" highlightColor="var(--skeleton-highlight)" />
-                    <Skeleton width={"50%"} height={"100%"} baseColor="var(--skeleton-base)" highlightColor="var(--skeleton-highlight)" />
+            <>
+                <div style={{ visibility: 'hidden', opacity: '0' }} className={styles.dashboard__theme}>
+                    <span className={theme === 'light' ? styles.active : ''} onClick={() => { handleChangeTheme('light') }}>
+                        <FiSun size={'15px'} />
+                    </span>
+                    <span className={theme === 'dark' ? styles.active : ''} onClick={() => { handleChangeTheme('dark') }}>
+                        <FiMoon size={'15px'} />
+                    </span>
                 </div>
-                <div className={`${styles.dashboard__profile_avatar} ${styles.skeleton}`}>
-                    <Skeleton borderRadius={'50%'} width={"100%"} height={"100%"} baseColor="var(--skeleton-base)" highlightColor="var(--skeleton-highlight)" />
+
+                <div className={styles.dashboard__profile}>
+                    <div className={`${styles.dashboard__profile_info} ${styles.skeleton}`}>
+                        <Skeleton width={"100%"} height={"100%"} baseColor="var(--skeleton-base)" highlightColor="var(--skeleton-highlight)" />
+                        <Skeleton width={"50%"} height={"100%"} baseColor="var(--skeleton-base)" highlightColor="var(--skeleton-highlight)" />
+                    </div>
+                    <div className={`${styles.dashboard__profile_avatar} ${styles.skeleton}`}>
+                        <Skeleton borderRadius={'50%'} width={"100%"} height={"100%"} baseColor="var(--skeleton-base)" highlightColor="var(--skeleton-highlight)" />
+                    </div>
                 </div>
-            </div>
+            </>
         )
     }
 
     if (isValidating) {
         return (
-            <div className={`${styles.dashboard__profile} ${styles.validating}`}>
-                <Spinner size={'20px'} color={'var(--logo-second-color)'} />
-            </div>
+            <>
+                <div style={{ visibility: 'hidden', opacity: '0' }} className={styles.dashboard__theme}>
+                    <span className={theme === 'light' ? styles.active : ''} onClick={() => { handleChangeTheme('light') }}>
+                        <FiSun size={'15px'} />
+                    </span>
+                    <span className={theme === 'dark' ? styles.active : ''} onClick={() => { handleChangeTheme('dark') }}>
+                        <FiMoon size={'15px'} />
+                    </span>
+                </div>
+
+                <div className={`${styles.dashboard__profile} ${styles.validating}`}>
+                    <Spinner size={'20px'} color={'var(--logo-second-color)'} />
+                </div>
+            </>
+
         )
     }
 
     if (data.length === 0) {
         return (
-            <div className={`${styles.dashboard__profile} ${styles.empty}`}>
+            <>
+                <div className={styles.dashboard__theme}>
+                    <span className={theme === 'light' ? styles.active : ''} onClick={() => { handleChangeTheme('light') }}>
+                        <FiSun size={'15px'} />
+                    </span>
+                    <span className={theme === 'dark' ? styles.active : ''} onClick={() => { handleChangeTheme('dark') }}>
+                        <FiMoon size={'15px'} />
+                    </span>
+                </div>
 
-            </div>
+                <div className={`${styles.dashboard__profile} ${styles.empty}`} />
+            </>
         )
     }
 
     return (
-        <div className={styles.dashboard__profile}>
-            <div className={`${styles.dashboard__profile_info}`}>
-                <p>
-                    <b>
-                        {handleNamaLengkap(data[0].fullname, 20)}
-                    </b>
-                </p>
-                <small>
-                    {data[0].nickname}
-                </small>
+        <>
+            <div className={styles.dashboard__theme}>
+                <span className={theme === 'light' ? styles.active : ''} onClick={() => { handleChangeTheme('light') }}>
+                    <FiSun size={'15px'} />
+                </span>
+                <span className={theme === 'dark' ? styles.active : ''} onClick={() => { handleChangeTheme('dark') }}>
+                    <FiMoon size={'15px'} />
+                </span>
             </div>
-            <div className={`${styles.dashboard__profile_avatar}`} />
-        </div>
+
+            <div className={styles.dashboard__profile}>
+                <div className={`${styles.dashboard__profile_info}`}>
+                    <p>
+                        <b>
+                            {handleNamaLengkap(data[0].fullname, 20)}
+                        </b>
+                    </p>
+                    <small>
+                        {data[0].nickname}
+                    </small>
+                </div>
+                <div className={`${styles.dashboard__profile_avatar}`} />
+            </div>
+        </>
+
     )
 }
 
@@ -110,15 +185,9 @@ export default function Header() {
         isPhoneContent,
         isRichContent
     } = useContext(DashboardContext);
-    const {
-        theme, setTheme,
-    } = useContext(GlobalContext);
 
     const [prevScrollPos, setPrevScrollPos] = useState(0);
     const [showHeader, setShowHeader] = useState(true);
-
-    const helloDark = () => toast('Dark Mode', { duration: 2000, icon: <FiMoon size={'17px'} /> });
-    const helloLight = () => toast('Light Mode', { duration: 2000, icon: <FiSun size={'17px'} /> });
 
     const scrollToTop = () => {
         scroll.scrollToTop({
@@ -127,25 +196,12 @@ export default function Header() {
         })
     }
 
-    const handleRetry = () => {
-        mutate('/api/me')
-    }
-
     const handleNavbarClick = () => {
         if (!isRichContent) {
             if (isNavbarActive) { document.body.classList.remove('disable_scroll'); }
             else { document.body.classList.add('disable_scroll'); }
         }
         setNavbarActive((current) => (current === true ? false : true))
-    }
-
-    const handleChangeTheme = (newTheme) => {
-        if (theme === newTheme) { return }
-        setTheme(newTheme);
-        document.body.classList.toggle('dark-theme', theme !== 'dark');
-        localStorage.setItem('_theme', theme === 'dark' ? 'light' : 'dark')
-        if (theme === 'dark') { helloLight() }
-        else { helloDark() }
     }
 
     useEffect(() => {
@@ -173,7 +229,7 @@ export default function Header() {
 
     return (
         <>
-            <div className={`${styles.dashboard} ${!showHeader ? styles.hide : ''}`}>
+            <div className={`${styles.dashboard} ${!showHeader ? styles.hide : ''}`} id='header'>
                 <div className={styles.dashboard__nav}>
                     {isNavbarActive ?
                         <LiaTimesSolid onClick={handleNavbarClick} size={'24px'} />
@@ -196,16 +252,7 @@ export default function Header() {
                 </div>
 
                 <div className={styles.dashboard__right}>
-                    <div className={styles.dashboard__theme}>
-                        <span className={theme === 'light' ? styles.active : ''} onClick={() => { handleChangeTheme('light') }}>
-                            <FiSun size={'15px'} />
-                        </span>
-                        <span className={theme === 'dark' ? styles.active : ''} onClick={() => { handleChangeTheme('dark') }}>
-                            <FiMoon size={'15px'} />
-                        </span>
-                    </div>
-
-                    <Profile />
+                    <Right />
                 </div>
             </div>
         </>
