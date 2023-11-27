@@ -13,8 +13,12 @@
     /* === UTILS COLOR === */
     --primary-color: hsla(234, 86%, 65%, 1);
     --danger-color: hsla(355, 80%, 57%, 1);
-    --success-color: hsla(160, 70%, 45%, 1);
+    --success-color: hsla(160, 70%, 47%, 1);
     --warning-color: hsla(36, 80%, 57%, 1);
+    --primary-sec-color: hsla(234, 86%, 60%, 1);
+    --danger-sec-color: hsla(355, 80%, 47%, 1);
+    --success-sec-color: hsla(160, 70%, 44%, 1);
+    --warning-sec-color: hsla(36, 80%, 47%, 1);
     --whatsapp-color: #25D366;
     --infoDark-color: #7d8da1;
     --infoLight-color: #dce1eb;
@@ -102,6 +106,7 @@
     --users-loader-prim: #edeffd;
     --users-loader-sec: #1d3263;
     --accordion-bg-color: hsl(222, 42%, 95%);
+    --accordion-bg2-color: hsl(222, 42%, 85%);
     --accordion-highlight-color: hsl(222, 40%, 30%);
     /* === END OF USERS '/users' === */
 }
@@ -114,9 +119,13 @@
 
     /* === UTILS COLOR === */
     --primary-color: hsla(234, 76%, 69%, 1);
-    --danger-color: hsla(355, 100%, 73%, 1);
+    --danger-color: hsla(355, 100%, 68%, 1);
     --success-color: hsla(160, 86%, 60%, 1);
     --warning-color: hsla(36, 100%, 67%, 1);
+    --primary-sec-color: hsla(234, 76%, 64%, 1);
+    --danger-sec-color: hsla(355, 100%, 63%, 1);
+    --success-sec-color: hsla(160, 86%, 50%, 1);
+    --warning-sec-color: hsla(36, 100%, 62%, 1);
     --body-color: #181a1e;
     --white-color: #202528;
     --dark-color: #edeffd;
@@ -145,6 +154,7 @@
     --users-loader-prim: #FF6341;
     --users-loader-sec: #1d3263;
     --accordion-bg-color: hsl(200, 6%, 32%);
+    --accordion-bg2-color: hsl(200, 6%, 47%);
     --accordion-highlight-color: hsl(11, 100%, 65%);
     /* === END OF USERS '/users' === */
 
@@ -278,7 +288,7 @@ main.dashboard {
 
 @media screen and (min-width: 768px) {
     :root {
-        --header-height: 5rem;
+        --header-height: 4.5rem;
     }
 
     main.dashboard {
