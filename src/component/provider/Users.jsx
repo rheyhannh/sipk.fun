@@ -71,7 +71,7 @@ export const UsersProvider = ({ children }) => {
 
     const daftarAccordionList = [
         {
-            title: 'Kriteria Nama Lengkap',
+            title: 'Nama Lengkap',
             description: (
                 <ul>
                     <li>Gunakan hanya huruf, tanpa simbol atau angka</li>
@@ -82,7 +82,7 @@ export const UsersProvider = ({ children }) => {
             icon: <FaPlus />
         },
         {
-            title: 'Kriteria Universitas',
+            title: 'Universitas',
             description: (
                 <ul>
                     <li>Pilih universitas yang sesuai dan tersedia</li>
@@ -93,7 +93,7 @@ export const UsersProvider = ({ children }) => {
             icon: <FaPlus />
         },
         {
-            title: 'Kriteria Email',
+            title: 'Email',
             description: (
                 <ul>
                     <li>Gunakan email valid yang dapat dihubungi</li>
@@ -105,7 +105,7 @@ export const UsersProvider = ({ children }) => {
         }
         ,
         {
-            title: 'Kriteria Password',
+            title: 'Password',
             description: (
                 <ul>
                     <li>Gunakan password minimal 6 karakter, maksimal 50</li>
