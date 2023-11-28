@@ -1,11 +1,21 @@
 'use client'
 
+// ========== NEXT DEPEDENCY ========== //
 import Link from 'next/link';
+
+// ========== REACT DEPEDENCY ========== //
 import { useContext, useEffect } from 'react'
+
+// ========== COMPONENT DEPEDENCY ========== //
 import { DashboardContext } from './provider/Dashboard';
 import { Icon } from './loader/ReactIcons';
+
+// ========== STYLE DEPEDENCY ========== //
 import styles from './style/nav.module.css'
 
+/*
+============================== CODE START HERE ==============================
+*/
 export default function Nav({ children }) {
     const {
         isNavbarActive,

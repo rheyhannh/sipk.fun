@@ -1,21 +1,26 @@
 'use client'
 
+// ========== NEXT DEPEDENCY ========== //
 import Image from 'next/image';
-import Skeleton from "react-loading-skeleton";
-import { Spinner } from "./loader/Loading";
-import { mutate } from 'swr';
 import { League_Spartan } from 'next/font/google';
+
+// ========== REACT DEPEDENCY ========== //
 import { useContext, useEffect, useState } from 'react'
+
+// ========== COMPONENT DEPEDENCY ========== //
+import { mutate } from 'swr';
+import Skeleton from "react-loading-skeleton";
+import toast from 'react-hot-toast';
+import { animateScroll as scroll } from 'react-scroll';
 import { GlobalContext } from './provider/Global';
 import { DashboardContext } from './provider/Dashboard';
-import { animateScroll as scroll } from 'react-scroll';
-import { RxHamburgerMenu } from 'react-icons/rx';
-import { LiaTimesSolid } from 'react-icons/lia';
-import toast from 'react-hot-toast';
-import { FiSun, FiMoon } from 'react-icons/fi';
-import styles from './style/header.module.css'
+import { Spinner } from "./loader/Loading";
+
+// ========== DATA DEPEDENCY ========== //
 import { useUser } from '@/data/core';
 
+// ========== STYLE DEPEDENCY ========== //
+import styles from './style/header.module.css'
 const league_spartan = League_Spartan({
     subsets: ['latin'],
     display: 'swap',
@@ -23,6 +28,14 @@ const league_spartan = League_Spartan({
     weight: ['100', '200', '300', '400', '500', '600', '700', '800', '900']
 })
 
+// ========== ICON DEPEDENCY ========== //
+import { RxHamburgerMenu } from 'react-icons/rx';
+import { LiaTimesSolid } from 'react-icons/lia';
+import { FiSun, FiMoon } from 'react-icons/fi';
+
+/*
+============================== CODE START HERE ==============================
+*/
 function Right() {
     const { data, error, isLoading, isValidating } = useUser();
     const {

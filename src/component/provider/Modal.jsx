@@ -3,13 +3,13 @@
 // ========== REACT DEPEDENCY ========== //
 import { createContext, useEffect, useState } from "react"
 
-// ========== ICONS DEPEDENCY ========== //
+// ========== COMPONENT DEPEDENCY ========== //
 import {
     PanduanDaftar,
     PerubahanTerakhirDetail,
     PerubahanTerakhirConfirm,
     TambahMatkul
-} from "../Modals"
+} from "../Modal"
 
 /*
 ============================== CODE START HERE ==============================

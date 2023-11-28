@@ -1,5 +1,9 @@
+// ========== STYLE DEPEDENCY ========== //
 import styles from '../style/loading.module.css'
 
+/*
+============================== CODE START HERE ==============================
+*/
 export function Spinner({ size, color }) {
     return (
         <span

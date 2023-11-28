@@ -1,3 +1,6 @@
+/*
+============================== CODE START HERE ==============================
+*/
 const getUserIpk = (matkul) => {
   if (!matkul.error) {
     const totalSks = getUserSks(matkul);

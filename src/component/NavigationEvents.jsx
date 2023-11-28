@@ -1,9 +1,17 @@
 'use client'
 
-import { useContext, useEffect } from 'react'
+// ========== NEXT DEPEDENCY ========== //
 import { usePathname, useSearchParams } from 'next/navigation'
+
+// ========== REACT DEPEDENCY ========== //
+import { useContext, useEffect } from 'react'
+
+// ========== COMPONENT DEPEDENCY ========== //
 import { DashboardContext } from './provider/Dashboard';
 
+/*
+============================== CODE START HERE ==============================
+*/
 export function NavigationEvents() {
     const { setActiveLink, setNavbarActive, isRichContent } = useContext(DashboardContext);
     const pathname = usePathname();

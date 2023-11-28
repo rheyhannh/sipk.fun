@@ -1,5 +1,9 @@
+// ========== COMPONENT DEPEDENCY ========== //
 import useSWR from 'swr'
 
+/*
+============================== CODE START HERE ==============================
+*/
 const fetcher = (url) => fetch(url).then((res) => res.json().then((data) => data))
 const swrOptions = {
     refreshInterval: 0,

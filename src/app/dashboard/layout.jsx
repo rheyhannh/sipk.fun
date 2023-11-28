@@ -1,11 +1,16 @@
+// ========== REACT DEPEDENCY ========== //
 import { Suspense } from 'react';
 import Header from '@/component/Header';
 import Navbar from '@/component/Nav'
+
+// ========== COMPONENT DEPEDENCY ========== //
 import { NavigationEvents } from '@/component/NavigationEvents';
 import { GlobalProvider } from '@/component/provider/Global'
 import { DashboardProvider } from '@/component/provider/Dashboard';
 import { ModalProvider } from '@/component/provider/Modal';
 
+
+// ========== TAG / METADATA ========== //
 export const metadata = {
   title: 'Dashboard',
   description: 'SIPK Dashboard',
@@ -13,6 +18,9 @@ export const metadata = {
   author: '@SIPK',
 }
 
+/*
+============================== CODE START HERE ==============================
+*/
 export default function DashboardLayout({
   children,
 }) {

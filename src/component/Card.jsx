@@ -1,22 +1,36 @@
 'use client'
 
+// ========== NEXT DEPEDENCY ========== //
 import Image from "next/image";
-import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
-import { Icon } from '@/component/loader/ReactIcons'
-import { useContext, useEffect, useState } from 'react';
-import { DashboardContext } from "./provider/Dashboard";
-import { mutate } from 'swr';
-import CountUp from 'react-countup';
-import { Spinner } from "./loader/Loading";
-import "react-loading-skeleton/dist/skeleton.css";
-import styles from './style/card.module.css'
 import Link from "next/link";
+
+// ========== REACT DEPEDENCY ========== //
+import { useContext, useEffect, useState } from 'react';
+
+// ========== COMPONENT DEPEDENCY ========== //
+import { mutate } from 'swr';
+import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
+import CountUp from 'react-countup';
+import { DashboardContext } from "./provider/Dashboard";
+import { ModalContext } from "./provider/Modal";
+import { Icon } from '@/component/loader/ReactIcons'
+import { Spinner } from "./loader/Loading";
+
+// ========== DATA DEPEDENCY ========== //
+import { useUniversitas, useUser } from "@/data/core";
+
+// ========== STYLE DEPEDENCY ========== //
+import styles from './style/card.module.css'
+import "react-loading-skeleton/dist/skeleton.css";
+
+// ========== ICON DEPEDENCY ========== //
 import { IoAddOutline } from "react-icons/io5";
 import { CiTrash, CiEdit } from "react-icons/ci";
-import { useUniversitas, useUser } from "@/data/core";
 import { FaInfo, FaUndo } from "react-icons/fa";
-import { ModalContext } from "./provider/Modal";
 
+/*
+============================== CODE START HERE ==============================
+*/
 export function Summary({ state, icon, color, title, data }) {
     const handleRetry = () => {
         mutate('/api/matkulku')

@@ -1,7 +1,13 @@
+// ========== NEXT DEPEDENCY ========== //
 import { NextResponse } from 'next/server'
+
+// ========== COMPONENT DEPEDENCY ========== //
 import { createServerClient } from '@supabase/ssr'
 import CryptoJS from 'crypto-js';
 
+/*
+============================== CODE START HERE ==============================
+*/
 function encryptSomething(message) {
     try {
         const ciphertext = CryptoJS.AES.encrypt(message, process.env.SECRET_KEY).toString();

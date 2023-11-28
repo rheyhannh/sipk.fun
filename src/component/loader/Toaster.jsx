@@ -1,9 +1,15 @@
 'use client'
 
+// ========== COMPONENT DEPEDENCY ========== //
 import { toast, Toaster, ToastBar } from 'react-hot-toast';
 import { FaTimes } from 'react-icons/fa';
+
+// ========== ICON DEPEDENCY ========== //
 import { Spinner } from './Loading';
 
+/*
+============================== CODE START HERE ==============================
+*/
 export default function Notification({ position }) {
     return (
         <Toaster

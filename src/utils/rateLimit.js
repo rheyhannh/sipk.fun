@@ -1,5 +1,9 @@
+// ========== COMPONENT DEPEDENCY ========== //
 import { LRUCache } from 'lru-cache';
 
+/*
+============================== CODE START HERE ==============================
+*/
 export default function rateLimit(options) {
     const tokenCache = new LRUCache({
         max: options?.uniqueTokenPerInterval || 500,

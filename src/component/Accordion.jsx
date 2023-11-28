@@ -1,8 +1,14 @@
 'use client'
 
+// ========== REACT DEPEDENCY ========== //
 import { useState } from 'react'
+
+// ========== STYLE DEPEDENCY ========== //
 import styles from './style/accordion.module.css';
 
+/*
+============================== CODE START HERE ==============================
+*/
 export function Accordion({
     item = [
         { title: 'Title', description: 'Description', icon: '+' },
