@@ -1,4 +1,6 @@
 import { GlobalProvider } from '@/component/provider/Global'
+import { ModalProvider } from '@/component/provider/Modal';
+import { UsersProvider } from "@/component/provider/Users"
 
 export const metadata = {
   title: 'SIPK',
@@ -13,7 +15,11 @@ export default function UsersLayout({
   return (
     <>
       <GlobalProvider>
-        {children}
+        <UsersProvider>
+          <ModalProvider>
+            {children}
+          </ModalProvider>
+        </UsersProvider>
       </GlobalProvider>
     </>
   )

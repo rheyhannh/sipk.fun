@@ -22,9 +22,8 @@ import isInt from 'validator/lib/isInt';
 import toast from 'react-hot-toast';
 import { GlobalContext } from '@/component/provider/Global'
 import { UsersContext } from './provider/Users';
-import { Accordion } from '@/component/Accordion'
+import { ModalContext } from "./provider/Modal";
 import { Ball } from '@/component/loader/Loading';
-import Modal from './Modal';
 
 // ========== STYLE DEPEDENCY ========== //
 import styles from './style/form.module.css'
@@ -63,8 +62,13 @@ export function UsersForm() {
     const {
         loginMode, setLoginMode,
         isBigContent,
-        listUniversitas, daftarAccordionList
+        listUniversitas
     } = useContext(UsersContext);
+    const {
+        setModal,
+        setActive,
+        setData
+    } = useContext(ModalContext);
 
     /*
     ========== States ==========
@@ -91,7 +95,6 @@ export function UsersForm() {
     // Utils
     const [loading, setLoading] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
-    const [modalDaftar, setModalDaftar] = useState(false);
     const [hideLoginPassword, setHideLoginPassword] = useState(true);
     const [hideDaftarPassword, setHideDaftarPassword] = useState(true);
     const [inputValidator, setInputValidator] = useState(initialInputValidator);
@@ -177,6 +180,14 @@ export function UsersForm() {
                 return { duration: duration, position: 'top-center', style: style || '', ...(icon && { icon }) }
             }
         }
+    }
+
+    const handleDaftarModal = () => {
+        setData(null);
+        setModal('panduanDaftar');
+        setTimeout(() => {
+            setActive(true);
+        }, 50)
     }
 
     const handleShowValidator = (data, form) => {
@@ -306,20 +317,6 @@ export function UsersForm() {
                 :
                 <>
                     <Ball active={loading} backdrop={true} />
-                    <Modal active={modalDaftar} setActive={setModalDaftar}>
-                        <h2 style={{ textAlign: 'center' }}>Panduan Daftar</h2>
-                        <p style={{ textAlign: 'justify', margin: '1.25rem 0 1rem 0' }}>
-                            Pastikan data yang kamu masukkan memenuhi kriteria sebagai berikut :
-                        </p>
-
-                        <Accordion item={daftarAccordionList} />
-
-                        <p style={{ textAlign: 'justify', margin: '1.25rem 0 .5rem 0' }}>
-                            Jika kamu masih binggung, kamu dapat membaca panduan lengkap <span style={{ color: 'green' }}>disini </span>
-                            atau kamu dapat menghubungi admin <span style={{ color: 'green' }}>disini</span>
-                        </p>
-
-                    </Modal>
                     <div className={`${styles.container} ${loginMode ? '' : styles.sign_up_mode}`}>
                         <div className={styles.forms_container}>
                             <div className={styles.signin_signup}>
@@ -528,7 +525,7 @@ export function UsersForm() {
                                     <input type="submit" value={'daftar'} className={`${styles.btn} ${styles.solid}`} />
 
                                     <p className={styles.social_text}>
-                                        <a onClick={() => { setModalDaftar(true) }}>Butuh bantuan ? Klik disini.</a>
+                                        <a onClick={() => { handleDaftarModal() }}>Butuh bantuan ? Klik disini.</a>
                                     </p>
                                 </form>
                             </div>

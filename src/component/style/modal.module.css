@@ -22,9 +22,10 @@
 }
 
 .perubahan__terakhir,
-.tambah__matakuliah {
+.tambah__matakuliah,
+.panduan__daftar {
     display: grid;
-    grid-template-rows: calc(30px + 1rem) auto 50px;
+    grid-template-rows: 30px auto 50px;
     gap: 1rem;
     height: 100%;
     width: 100%;
@@ -39,7 +40,7 @@
 
 .perubahan__terakhir.ubah {
     display: grid;
-    grid-template-rows: calc(30px + 1rem) 30px auto 50px;
+    grid-template-rows: 30px 30px auto 50px;
     max-height: 460px;
 }
 
@@ -55,15 +56,19 @@
     max-height: 355px;
 }
 
+.panduan__daftar {
+    max-height: 550px;
+}
+
 .backdrop.active .perubahan__terakhir,
-.backdrop.active .tambah__matakuliah {
+.backdrop.active .tambah__matakuliah,
+.backdrop.active .panduan__daftar {
     transform: scale(1) translateY(0);
 }
 
 .top {
     display: flex;
     justify-content: space-between;
-    margin-bottom: 1rem;
 }
 
 .title {
@@ -236,15 +241,21 @@
         visibility: hidden;
     }
 
-    .perubahan__terakhir:hover .inner::-webkit-scrollbar {
+    .perubahan__terakhir:hover .inner::-webkit-scrollbar,
+    .tambah__matakuliah:hover .inner::-webkit-scrollbar,
+    .panduan__daftar:hover .inner::-webkit-scrollbar {
         visibility: visible;
     }
 
-    .perubahan__terakhir:hover .inner::-webkit-scrollbar-thumb {
+    .perubahan__terakhir:hover .inner::-webkit-scrollbar-thumb,
+    .tambah__matakuliah:hover .inner::-webkit-scrollbar-thumb,
+    .panduan__daftar:hover .inner::-webkit-scrollbar-thumb {
         visibility: visible;
     }
 
-    .perubahan__terakhir:hover .inner::-webkit-scrollbar-thumb:hover {
+    .perubahan__terakhir:hover .inner::-webkit-scrollbar-thumb:hover,
+    .tambah__matakuliah:hover .inner::-webkit-scrollbar-thumb:hover,
+    .panduan__daftar:hover .inner::-webkit-scrollbar-thumb:hover {
         visibility: visible;
     }
 
@@ -273,7 +284,8 @@
 
     .perubahan__terakhir,
     .perubahan__terakhir.ubah,
-    .tambah__matakuliah {
+    .tambah__matakuliah,
+    .panduan__daftar {
         max-height: none;
         max-width: none;
         padding: 2rem 1rem;

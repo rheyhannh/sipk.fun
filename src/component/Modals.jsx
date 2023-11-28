@@ -1,11 +1,64 @@
+// ========== NEXT DEPEDENCY ========== //
+import Link from "next/link";
+
+// ========== REACT DEPEDENCY ========== //
+import { useState, useContext } from "react";
+
+// ========== COMPONENTS DEPEDENCY ========== //
 import { ModalContext } from "./provider/Modal";
+import { UsersContext } from './provider/Users';
+import { Accordion } from '@/component/Accordion'
 
 // ========== ICONS DEPEDENCY ========== //
 import { FaTimes } from 'react-icons/fa'
 
 // ========== STYLE DEPEDENCY ========== //
 import styles from './style/modal.module.css'
-import { useState } from "react";
+
+export const PanduanDaftar = () => {
+    const {
+        daftarAccordionList
+    } = useContext(UsersContext);
+    return (
+        <ModalContext.Consumer>
+            {context => {
+                return (
+                    <div className={`${styles.backdrop} ${context.active ? styles.active : ''}`}>
+                        <div className={styles.panduan__daftar} id='modal'>
+                            <div className={styles.top}>
+                                <div className={styles.title}>
+                                    <h2>Panduan Daftar</h2>
+                                </div>
+                                <div className={styles.close} onClick={() => { context.handleModalClose() }}>
+                                    <FaTimes />
+                                </div>
+                            </div>
+
+                            <div className={styles.inner}>
+                                <p style={{ textAlign: 'justify', marginBottom: '.75rem' }}>
+                                    Pastikan data yang kamu masukkan memenuhi kriteria sebagai berikut :
+                                </p>
+                                <Accordion item={daftarAccordionList} />
+                            </div>
+
+                            <div className={styles.form__action}>
+                                <Link
+                                    prefetch={false}
+                                    className={styles.btn}
+                                    href='/docs'
+                                    target={'_blank'}
+                                >
+                                    <h3>Panduan Lengkap</h3>
+                                </Link>
+                            </div>
+                        </div>
+
+                    </div>
+                )
+            }}
+        </ModalContext.Consumer>
+    )
+}
 
 export const PerubahanTerakhirDetail = () => {
     const [isSebelumForm, setIsSebelumForm] = useState(true);
@@ -336,10 +389,11 @@ export const PerubahanTerakhirConfirm = () => {
         <ModalContext.Consumer>
             {context => {
                 const getConfirmMessage = () => {
-                    const type = context?.data?.current?.type ? context?.data?.current?.type : context?.data?.prev?.type
-                    if (type === 'tambah') { return `Kamu ingin menghapus ${context?.data?.current?.nama}?` }
-                    else if (type === 'hapus') { return `Kamu ingin menambah kembali ${context?.data?.prev?.nama}?` }
-                    else if (type === 'ubah') { return `Kamu ingin mengubah ${context?.data?.current?.nama} ke data sebelumnya?` }
+                    const type = context?.data?.current?.type ? context?.data?.current?.type : context?.data?.prev?.type;
+                    const nama = context?.data?.current?.nama ? context?.data?.current?.nama : context?.data?.prev?.nama
+                    if (type === 'tambah') { return (<p>Kamu ingin menghapus <b style={{fontWeight: '600'}}>{nama}</b> yang sudah ditambah?</p>) }
+                    else if (type === 'hapus') { return (<p>Kamu ingin menambah kembali <b style={{fontWeight: '600'}}>{nama}</b> yang sudah dihapus?</p>) }
+                    else if (type === 'ubah') { return (<p>Kamu ingin mengubah <b style={{fontWeight: '600'}}>{nama}</b> ke data sebelumnya?</p>) }
                     else { return 0; }
                 }
 

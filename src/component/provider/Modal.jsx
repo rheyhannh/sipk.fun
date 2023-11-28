@@ -5,6 +5,7 @@ import { createContext, useEffect, useState } from "react"
 
 // ========== ICONS DEPEDENCY ========== //
 import {
+    PanduanDaftar,
     PerubahanTerakhirDetail,
     PerubahanTerakhirConfirm,
     TambahMatkul
@@ -47,6 +48,7 @@ export const ModalProvider = ({ children }) => {
 
     const modalList = {
         type: {
+            panduanDaftar: <PanduanDaftar/>,
             perubahanTerakhirDetail: <PerubahanTerakhirDetail />,
             perubahanTerakhirConfirm: <PerubahanTerakhirConfirm />,
             tambahMatkul: <TambahMatkul/>
