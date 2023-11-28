@@ -4,15 +4,11 @@
 import { createContext, useEffect, useState } from "react"
 
 // ========== ICONS DEPEDENCY ========== //
-import { FaTimes } from 'react-icons/fa'
 import {
     PerubahanTerakhirDetail,
     PerubahanTerakhirConfirm,
     TambahMatkul
 } from "../Modals"
-
-// ========== STYLE DEPEDENCY ========== //
-import styles from '../style/modal.module.css'
 
 /*
 ============================== CODE START HERE ==============================
