@@ -23,7 +23,8 @@
 
 .perubahan__terakhir,
 .tambah__matakuliah,
-.panduan__daftar {
+.panduan__daftar,
+.logout {
     display: grid;
     grid-template-rows: 30px auto 50px;
     gap: 1rem;
@@ -44,7 +45,8 @@
     max-height: 460px;
 }
 
-.perubahan__terakhir.confirm {
+.perubahan__terakhir.confirm,
+.logout.confirm {
     grid-template-rows: 30px max-content 100px;
     max-height: 230px;
     max-width: 460px;
@@ -62,7 +64,8 @@
 
 .backdrop.active .perubahan__terakhir,
 .backdrop.active .tambah__matakuliah,
-.backdrop.active .panduan__daftar {
+.backdrop.active .panduan__daftar,
+.backdrop.active .logout {
     transform: scale(1) translateY(0);
 }
 
@@ -292,7 +295,8 @@
         border-radius: 0;
     }
 
-    .perubahan__terakhir.confirm {
+    .perubahan__terakhir.confirm,
+    .logout.confirm {
         position: absolute;
         bottom: -100%;
         left: 0;
@@ -302,7 +306,8 @@
         transform: none;
     }
 
-    .backdrop.active .perubahan__terakhir.confirm {
+    .backdrop.active .perubahan__terakhir.confirm,
+    .backdrop.active .logout.confirm {
         bottom: 0;
         transform: none;
     }

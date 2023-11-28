@@ -8,6 +8,7 @@ import { useContext, useEffect } from 'react'
 
 // ========== COMPONENT DEPEDENCY ========== //
 import { DashboardContext } from './provider/Dashboard';
+import { ModalContext } from './provider/Modal';
 import { Icon } from './loader/ReactIcons';
 
 // ========== STYLE DEPEDENCY ========== //
@@ -23,12 +24,16 @@ export default function Nav({ children }) {
         isRichContent,
         activeLink
     } = useContext(DashboardContext);
+    const {
+        setModal,
+        setActive,
+        setData
+    } = useContext(ModalContext);
 
     const navList = [
         { text: 'Dashboard', href: '/dashboard', icon: 'AiOutlineAppstore', lib: 'ai' },
         { text: 'Profil', href: '/dashboard/profil', icon: 'AiOutlineIdcard', lib: 'ai' },
         { text: 'Matakuliah', href: '/dashboard/matkul', icon: 'BsJournalBookmark', lib: 'bs' },
-        { text: 'Keluar', href: '/api/logout', icon: 'FiLogOut', lib: 'fi' },
     ]
 
     useEffect(() => {
@@ -48,6 +53,15 @@ export default function Nav({ children }) {
         }
     }, [isNavbarActive])
 
+    const handleLogoutModal = () => {
+        if (!isRichContent) { setNavbarActive(false); }
+        setData(null);
+        setModal('logout');
+        setTimeout(() => {
+            setActive(true);
+        }, 50)
+    }
+
     return (
         <>
             {isRichContent === true ?
@@ -56,6 +70,48 @@ export default function Nav({ children }) {
                         <aside className='dashboard'>
                             <div className={`${styles.aside} ${isNavbarActive ? styles.active : ''}`} id='aside'>
                                 <div className={styles.sidebar}>
+                                    <div>
+                                        {navList.map((item, index) => (
+                                            <Link
+                                                href={item.href}
+                                                className={`${styles.link} ${activeLink === item.href ? styles.active : ''}`}
+                                                prefetch={false}
+                                                key={crypto.randomUUID()}
+                                            >
+                                                <span className={styles.link__icon}>
+                                                    <Icon name={item.icon} lib={item.lib} props={{ size: '24px' }} />
+                                                </span>
+
+                                                <h4 className={styles.link__text} >
+                                                    {item.text}
+                                                </h4>
+                                            </Link>
+                                        ))}
+                                        <span
+                                            className={styles.link}
+                                            onClick={() => { handleLogoutModal() }}
+                                        >
+                                            <span className={styles.link__icon}>
+                                                <Icon name={'FiLogOut'} lib={'fi'} props={{ size: '24px' }} />
+                                            </span>
+
+                                            <h4 className={styles.link__text} >
+                                                {'Keluar'}
+                                            </h4>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </aside>
+
+                        {children}
+                    </div>
+                </>
+                : isRichContent === false ?
+                    <>
+                        <div className={`${styles.aside} ${isNavbarActive ? styles.active : ''}`} id='aside'>
+                            <div className={styles.sidebar}>
+                                <div>
                                     {navList.map((item, index) => (
                                         <Link
                                             href={item.href}
@@ -72,33 +128,19 @@ export default function Nav({ children }) {
                                             </h4>
                                         </Link>
                                     ))}
-                                </div>
-                            </div>
-                        </aside>
-
-                        {children}
-                    </div>
-                </>
-                : isRichContent === false ?
-                    <>
-                        <div className={`${styles.aside} ${isNavbarActive ? styles.active : ''}`} id='aside'>
-                            <div className={styles.sidebar}>
-                                {navList.map((item, index) => (
-                                    <Link
-                                        href={item.href}
-                                        className={`${styles.link} ${activeLink === item.href ? styles.active : ''}`}
-                                        prefetch={false}
-                                        key={crypto.randomUUID()}
+                                    <span
+                                        className={styles.link}
+                                        onClick={() => { handleLogoutModal() }}
                                     >
                                         <span className={styles.link__icon}>
-                                            <Icon name={item.icon} lib={item.lib} props={{ size: '24px' }} />
+                                            <Icon name={'FiLogOut'} lib={'fi'} props={{ size: '24px' }} />
                                         </span>
 
-                                        <span className={styles.link__text} >
-                                            {item.text}
-                                        </span>
-                                    </Link>
-                                ))}
+                                        <h4 className={styles.link__text} >
+                                            {'Keluar'}
+                                        </h4>
+                                    </span>
+                                </div>
                             </div>
                         </div>
                         <div className={styles.content}>

@@ -1,10 +1,12 @@
 // ========== NEXT DEPEDENCY ========== //
 import Link from "next/link";
+import { useRouter } from 'next/navigation';
 
 // ========== REACT DEPEDENCY ========== //
 import { useState, useContext } from "react";
 
 // ========== COMPONENTS DEPEDENCY ========== //
+import toast from 'react-hot-toast';
 import { ModalContext } from "./provider/Modal";
 import { UsersContext } from './provider/Users';
 import { Accordion } from '@/component/Accordion'
@@ -53,6 +55,75 @@ export const PanduanDaftar = () => {
                             </div>
                         </div>
 
+                    </div>
+                )
+            }}
+        </ModalContext.Consumer>
+    )
+}
+
+export const Logout = () => {
+    const router = useRouter();
+
+    const handleLogout = async () => {
+        try {
+            const response = await fetch('/api/logout', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+            })
+
+            if (!response.ok) {
+                if (response.status === 429) {
+                    toast.error('Terlalu banyak request', { duration: 4000, position: 'top-left' })
+                } else {
+                    try {
+                        const { message } = await response.json();
+                        if (message) { toast.error(message, { duration: 4000, position: 'top-left' }) }
+                        else { throw new Error(`Terjadi kesalahan`); }
+                    } catch (error) {
+                        console.error(error);
+                        throw new Error(`Terjadi kesalahan`);
+                    }
+                }
+            } else {
+                router.push('/users?action=login', {
+                    scroll: false,
+                });
+            }
+        } catch (error) {
+            toast.error(error.message ? error.message : 'Terjadi kesalahan', { duration: 4000, position: 'top-left' })
+        }
+    }
+    return (
+        <ModalContext.Consumer>
+            {context => {
+                return (
+                    <div className={`${styles.backdrop} ${context.active ? styles.active : ''}`}>
+                        <div className={`${styles.logout} ${styles.confirm}`} id='modal'>
+                            <div className={styles.top}>
+                                <div className={styles.title}>
+                                    <h2>Logout</h2>
+                                </div>
+                                <div className={styles.close} onClick={() => { context.handleModalClose() }}>
+                                    <FaTimes />
+                                </div>
+                            </div>
+
+                            <div style={{ color: 'var(--infoDark-color)' }}>
+                                Apakah kamu ingin logout dari SIPK?
+                            </div>
+
+                            <div className={styles.form__action}>
+                                <div className={`${styles.btn} ${styles.confirm}`} onClick={() => { context.handleModalClose(); handleLogout(); }}>
+                                    <h3>Logout</h3>
+                                </div>
+                                <div className={`${styles.btn} ${styles.cancel}`} onClick={() => { context.handleModalClose(); }}>
+                                    <h3>Cancel</h3>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 )
             }}
@@ -391,9 +462,9 @@ export const PerubahanTerakhirConfirm = () => {
                 const getConfirmMessage = () => {
                     const type = context?.data?.current?.type ? context?.data?.current?.type : context?.data?.prev?.type;
                     const nama = context?.data?.current?.nama ? context?.data?.current?.nama : context?.data?.prev?.nama
-                    if (type === 'tambah') { return (<p>Kamu ingin menghapus <b style={{fontWeight: '600'}}>{nama}</b> yang sudah ditambah?</p>) }
-                    else if (type === 'hapus') { return (<p>Kamu ingin menambah kembali <b style={{fontWeight: '600'}}>{nama}</b> yang sudah dihapus?</p>) }
-                    else if (type === 'ubah') { return (<p>Kamu ingin mengubah <b style={{fontWeight: '600'}}>{nama}</b> ke data sebelumnya?</p>) }
+                    if (type === 'tambah') { return (<p>Kamu ingin menghapus <b style={{ fontWeight: '600' }}>{nama}</b> yang sudah ditambah?</p>) }
+                    else if (type === 'hapus') { return (<p>Kamu ingin menambah kembali <b style={{ fontWeight: '600' }}>{nama}</b> yang sudah dihapus?</p>) }
+                    else if (type === 'ubah') { return (<p>Kamu ingin mengubah <b style={{ fontWeight: '600' }}>{nama}</b> ke data sebelumnya?</p>) }
                     else { return 0; }
                 }
 
@@ -407,7 +478,7 @@ export const PerubahanTerakhirConfirm = () => {
                 return (
                     <div className={`${styles.backdrop} ${context.active ? styles.active : ''}`}>
                         <div className={`${styles.perubahan__terakhir} ${styles.confirm}`} id='modal'>
-                            <div style={{ marginBottom: '0' }} className={styles.top}>
+                            <div className={styles.top}>
                                 <div className={styles.title}>
                                     <h2>{getConfirmTitle() ? getConfirmTitle() : 'Terjadi kesalahan'}</h2>
                                 </div>

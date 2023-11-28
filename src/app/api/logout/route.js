@@ -31,13 +31,16 @@ const limiter = rateLimit({
     uniqueTokenPerInterval: 500,
 })
 
-export async function GET(request) {
+export async function POST(request) {
     const limitRequest = 10;
     const userAccessToken = request.cookies.get(`${process.env.USER_SESSION_COOKIES_NAME}`)?.value;
+    const cookieStore = cookies();
+    const cookieAuthOptions = { secure: true, httpOnly: true, maxAge: 2592000, sameSite: 'lax' };
+    const cookieAuthDeleteOptions = { secure: true, httpOnly: true, maxAge: -2592000, sameSite: 'lax' };
 
     if (!userAccessToken) {
-        return new NextResponse(null, {
-            status: 401
+        return NextResponse.json({}, {
+            status: 401,
         })
     }
 
@@ -45,7 +48,8 @@ export async function GET(request) {
     const userId = decryptedSession?.user?.id
 
     if (!userId) {
-        return new NextResponse(null, {
+        cookieStore.set({ name: process.env.USER_SESSION_COOKIES_NAME, value: '', ...cookieAuthDeleteOptions })
+        return NextResponse.json({}, {
             status: 401
         })
     }
@@ -53,7 +57,7 @@ export async function GET(request) {
     try {
         var currentUsage = await limiter.check(limitRequest, `logout-${userId}`);
     } catch {
-        return new NextResponse(null, {
+        return NextResponse.json({}, {
             status: 429,
             headers: {
                 'X-Ratelimit-Limit': limitRequest,
@@ -62,8 +66,6 @@ export async function GET(request) {
         })
     }
 
-    const cookieStore = cookies();
-    const cookieAuthOptions = { secure: true, httpOnly: true, maxAge: 2592000, sameSite: 'lax' };
     const supabase = createServerClient(
         process.env.NEXT_PUBLIC_SUPABASE_URL,
         process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
@@ -86,17 +88,17 @@ export async function GET(request) {
                     }
                 },
                 remove(name, options) {
-                    cookieStore.set({ name: process.env.USER_SESSION_COOKIES_NAME, value: '', ...options })
+                    cookieStore.set({ name: process.env.USER_SESSION_COOKIES_NAME, value: '', ...cookieAuthDeleteOptions })
                 },
             },
         }
     )
 
-    let { error } = await supabase.auth.signOut()
+    let { error } = await supabase.auth.signOut();
 
     if (error) {
         console.error(error);
-        return new NextResponse(null, {
+        return NextResponse.json({}, {
             status: 500,
             headers: {
                 'X-Ratelimit-Limit': limitRequest,
@@ -105,5 +107,7 @@ export async function GET(request) {
         })
     }
 
-    return NextResponse.redirect(new URL("/users", request.url));
+    return NextResponse.json({}, {
+        status: 200
+    })
 }
