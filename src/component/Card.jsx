@@ -15,7 +15,6 @@ import { IoAddOutline } from "react-icons/io5";
 import { CiTrash, CiEdit } from "react-icons/ci";
 import { useUniversitas, useUser } from "@/data/core";
 import { FaInfo, FaUndo } from "react-icons/fa";
-import Modal from "./Modal";
 import { ModalContext } from "./provider/Modal";
 
 export function Summary({ state, icon, color, title, data }) {
