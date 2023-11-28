@@ -56,6 +56,9 @@
     align-items: center;
     height: 3.25rem;
     border-radius: .5rem;
+    cursor: pointer;
+    color: var(--dark-color);
+    background: none;
     transition: margin var(--transition-default) ease-in-out;
 }
 
