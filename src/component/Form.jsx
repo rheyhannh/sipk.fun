@@ -149,9 +149,9 @@ export function UsersForm() {
                         }
                     }
                 } else {
-                    const { data } = await response.json();
-                    // Do something with data. (set cookies, etc)
-                    router.push('/dashboard');
+                    router.push('/dashboard', {
+                        scroll: false
+                    });
                 }
             })
             .catch((error) => {
