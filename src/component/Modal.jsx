@@ -88,7 +88,7 @@ export const Logout = () => {
                     }
                 }
             } else {
-                router.push('/users?action=login', {
+                router.replace('/users?action=login', {
                     scroll: false,
                 });
             }

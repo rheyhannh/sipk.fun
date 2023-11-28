@@ -149,7 +149,7 @@ export function UsersForm() {
                         }
                     }
                 } else {
-                    router.push('/dashboard', {
+                    router.replace('/dashboard', {
                         scroll: false
                     });
                 }
