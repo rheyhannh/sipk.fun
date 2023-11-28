@@ -496,6 +496,13 @@
     }
 }
 
+@media screen and (max-width: 400px) {
+    .keterangan_icon {
+        display: flex;
+        flex-direction: column;
+    }
+}
+
 @media screen and (max-width: 570px) {
     .signin_signup form {
         padding: 0 2rem;
@@ -539,11 +546,6 @@
             top .95s .95s ease-in-out,
             box-shadow var(--transition-default) ease-in-out,
             color var(--transition-default) ease-in-out;
-    }
-
-    .keterangan_icon {
-        display: flex;
-        flex-direction: column;
     }
 }
 
