@@ -123,5 +123,5 @@ export async function POST(req) {
         return NextResponse.json({ message: error.message }, { status: 400, headers: newHeaders })
     }
 
-    return NextResponse.json({ data: data }, { status: 200, headers: newHeaders })
+    return NextResponse.json({ success: true }, { status: 200, headers: newHeaders })
 }
