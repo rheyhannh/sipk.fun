@@ -31,7 +31,7 @@ function decryptSomething(ciphertext) {
     }
 }
 
-export async function POST(req) {
+export async function POST(request) {
     // Limit {limitRequest} each {rateLimit.interval}
     const limitRequest = 5;
     const newHeaders = {};
@@ -63,7 +63,7 @@ export async function POST(req) {
     }
 
     // Check are formData equal to schema using 'Joi'
-    const formData = await req.json();
+    const formData = await request.json();
     const formDataSchema = Joi.object({
         email: Joi.string().min(6).max(100).email().required(),
         password: Joi.string().min(6).max(50).required(),
