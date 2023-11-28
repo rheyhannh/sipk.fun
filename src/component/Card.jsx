@@ -232,7 +232,7 @@ export function Notification({ state, data }) {
     const SkeletonCard = () => {
         if (isPhoneContent === false) {
             const skeletonElement = Array.from({ length: 3 }, (_, index) => (
-                <div className={`${styles.notification__post} ${styles.skeleton}`}>
+                <div className={`${styles.notification__post} ${styles.skeleton}`} key={crypto.randomUUID()}>
                     <div className={styles.notification__main}>
                         <div style={{ width: '100%' }}>
                             <SkeletonTheme
@@ -426,7 +426,7 @@ export function History({ state, data, universitas }) {
         const skeletonElement = Array.from({ length: 3 }, (_, index) => (
             <div
                 className={`${styles.history} ${styles.skeleton}`}
-
+                key={crypto.randomUUID()}
             >
                 <div className={styles.history__content}>
                     <SkeletonTheme
@@ -527,8 +527,9 @@ export function History({ state, data, universitas }) {
                         <div
                             className={styles.history}
                             {...isTouchDevice ? { onClick: () => handleEditModal(item) } : {}}
+                            key={crypto.randomUUID()}
                         >
-                            <div className={styles.history__tooltip}>
+                            <div className={styles.history__tooltip} key={crypto.randomUUID()}>
                                 <div className={styles.wrapper}>
                                     <i onClick={() => { handleUndoModal(item) }}>
                                         <FaUndo size={'12px'} />
@@ -538,7 +539,7 @@ export function History({ state, data, universitas }) {
                                     </i>
                                 </div>
                             </div>
-                            <div className={styles.history__content}>
+                            <div className={styles.history__content} key={crypto.randomUUID()}>
                                 <div className={`${styles.history__icon} ${item?.current?.type ? styles[item?.current?.type] : styles[item?.prev?.type]}`}>
                                     {getIcon[item?.current?.type ? item?.current?.type : item?.prev?.type]}
                                 </div>
@@ -590,6 +591,7 @@ export function History({ state, data, universitas }) {
         const validatingElement = Array.from({ length: 3 }, (_, index) => (
             <div
                 className={styles.history}
+                key={crypto.randomUUID()}
             >
                 <div className={styles.validating__wrapper}>
                     <div className={styles.validating__content}>
