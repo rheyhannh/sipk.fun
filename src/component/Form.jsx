@@ -287,8 +287,16 @@ export function UsersForm() {
         else { setHideDaftarPassword((current) => (current ? false : true)) }
     }
 
-    const handleModeDaftar = () => { setLoginMode(false); setTimeout(() => { resetFormValue(); }, 1250); }
-    const handleModeLogin = () => { setLoginMode(true); setTimeout(() => { resetFormValue(); }, 1250); }
+    const handleModeDaftar = () => {
+        setLoginMode(false);
+        router.push('/users?action=daftar', undefined, { shallow: true })
+        setTimeout(() => { resetFormValue(); }, 1250);
+    }
+    const handleModeLogin = () => { 
+        setLoginMode(true);
+        router.push('/users?action=login', undefined, { shallow: true }) 
+        setTimeout(() => { resetFormValue(); }, 1250); 
+    }
 
     const handleChangeTheme = () => {
         setTheme((currentTheme) => (currentTheme === 'light' ? 'dark' : 'light'));
