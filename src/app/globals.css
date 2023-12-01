@@ -15,6 +15,7 @@
     --danger-color: hsla(355, 80%, 57%, 1);
     --success-color: hsla(160, 70%, 47%, 1);
     --warning-color: hsla(36, 80%, 57%, 1);
+    --crimson-color: crimson;
     --primary-sec-color: hsla(234, 86%, 60%, 1);
     --danger-sec-color: hsla(355, 80%, 47%, 1);
     --success-sec-color: hsla(160, 70%, 44%, 1);
@@ -122,6 +123,7 @@
     --danger-color: hsla(355, 100%, 68%, 1);
     --success-color: hsla(160, 86%, 60%, 1);
     --warning-color: hsla(36, 100%, 67%, 1);
+    --crimson-color: crimson;
     --primary-sec-color: hsla(234, 76%, 64%, 1);
     --danger-sec-color: hsla(355, 100%, 63%, 1);
     --success-sec-color: hsla(160, 86%, 50%, 1);
