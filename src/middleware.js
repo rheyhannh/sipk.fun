@@ -31,6 +31,11 @@ function decryptSomething(ciphertext) {
 
 export default async function middleware(request) {
     const authSessionToken = request.cookies.get(`${process.env.USER_SESSION_COOKIES_NAME}`)?.value;
+    const serviceUserCookie = request.cookies.get('s_user_id')?.value;
+    const serviceGuestCookie = request.cookies.get('s_guest_id')?.value;
+    const cookieAuthOptions = { secure: true, httpOnly: true, maxAge: 2592000, sameSite: 'lax' };
+    const cookieServiceOptions = { secure: false, httpOnly: false, maxAge: 2592000, sameSite: 'lax' };
+    const deleteCookieAuthOptions = { secure: true, httpOnly: true, maxAge: -2592000, sameSite: 'lax' };
     const { pathname } = request.nextUrl;
 
     let response = NextResponse.next({
@@ -40,15 +45,22 @@ export default async function middleware(request) {
     })
 
     if (!authSessionToken) {
-        if (pathname.startsWith('/users')) { return response }
+        if (pathname.startsWith('/users')) {
+            if (!serviceGuestCookie) {
+                response.cookies.set({
+                    name: 's_guest_id',
+                    value: crypto.randomUUID(),
+                    ...cookieAuthOptions
+                })
+            }
+            return response
+        }
         const loginUrl = new URL("/users", request.url);
         loginUrl.searchParams.set('action', 'login');
         response = NextResponse.redirect(loginUrl);
         return response;
     }
 
-    const cookieAuthOptions = { secure: true, httpOnly: true, maxAge: 2592000, sameSite: 'lax' };
-    const deleteCookieAuthOptions = { secure: true, httpOnly: true, maxAge: -2592000, sameSite: 'lax' };
     const supabase = createServerClient(
         process.env.NEXT_PUBLIC_SUPABASE_URL,
         process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
@@ -142,6 +154,35 @@ export default async function middleware(request) {
             value: '',
             ...deleteCookieAuthOptions,
         })
+
+        response.cookies.set({
+            name: 's_user_id',
+            value: '',
+            ...deleteCookieAuthOptions,
+        })
+    } else {
+        if (serviceGuestCookie) {
+            response.cookies.set({
+                name: 's_guest_id',
+                value: '',
+                ...deleteCookieAuthOptions,
+            })
+        }
+        if (!serviceUserCookie) {
+            response.cookies.set({
+                name: 's_user_id',
+                value: data.session.user.id,
+                ...cookieServiceOptions
+            })
+        } else {
+            if (serviceUserCookie !== data.session.user.id) {
+                response.cookies.set({
+                    name: 's_user_id',
+                    value: data.session.user.id,
+                    ...cookieServiceOptions
+                })
+            }
+        }
     }
 
     if (pathname.startsWith('/users')) {

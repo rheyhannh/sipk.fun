@@ -89,6 +89,7 @@ export async function POST(request) {
                 },
                 remove(name, options) {
                     cookieStore.set({ name: process.env.USER_SESSION_COOKIES_NAME, value: '', ...cookieAuthDeleteOptions })
+                    cookieStore.set({ name: 's_user_id', value: '', ...cookieAuthDeleteOptions })
                 },
             },
         }
