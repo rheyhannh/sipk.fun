@@ -3,6 +3,7 @@ import { Poppins } from 'next/font/google';
 
 // ========== COMPONENT DEPEDENCY ========== //
 import Notification from '@/component/loader/Toaster';
+import { CookiesProvider } from 'next-client-cookies/server';
 
 // ========== STYLE DEPEDENCY ========== //
 import './globals.css'
@@ -26,8 +27,10 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={poppins.variable}>
+        <CookiesProvider>
         <Notification />
-        {children}
+          {children}
+        </CookiesProvider>
       </body>
     </html>
   )
