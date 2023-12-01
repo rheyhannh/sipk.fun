@@ -55,7 +55,7 @@
 }
 
 .tambah__matakuliah {
-    max-height: 355px;
+    max-height: 390px;
 }
 
 .panduan__daftar {
@@ -161,6 +161,26 @@
     font-size: var(--small-font-size);
 }
 
+.form__input.max_length {
+    max-width: calc(100% - 40px);
+    padding-right: .25rem;
+}
+
+.form__input_length {
+    position: absolute;
+    right: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 25px;
+    height: 100%;
+    color: var(--infoDark-color);
+}
+
+.form__input_length.max {
+    color: crimson;
+}
+
 .form__label {
     position: absolute;
     top: 0;
@@ -175,6 +195,37 @@
     transition: all var(--transition-default) ease-in-out;
 }
 
+.form__select {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    padding: 0 1rem;
+    z-index: 1;
+    background: transparent;
+    outline: none;
+    border: none;
+    line-height: 45px;
+    color: var(--dark-color);
+    font-weight: var(--font-semi-bold);
+    font-size: var(--small-font-size);
+    cursor: pointer;
+    /* user-select: none; */
+    text-overflow: ellipsis;
+    appearance: none;
+}
+
+.form__select option {
+    background-color: var(--white-color);
+    color: var(--dark-color);
+}
+
+.form__select option:checked {
+    background-color: var(--logo-second-color);
+    color: var(--white-color);
+}
+
 .form__input:focus+.form__label {
     top: -1.6rem;
     font-size: .7rem;
@@ -187,6 +238,22 @@
     font-size: .7rem;
     font-weight: 500;
     z-index: 10;
+}
+
+.form__select:focus+.form__label {
+    top: -1.6rem;
+    font-size: .7rem;
+    font-weight: 500;
+    z-index: 10;
+    color: var(--logo-second-color);
+}
+
+.form__select.filled+.form__label {
+    top: -1.6rem;
+    font-size: .7rem;
+    font-weight: 500;
+    z-index: 10;
+    color: var(--logo-second-color);
 }
 
 .tambah__matakuliah .form__input:focus+.form__label {
