@@ -405,7 +405,6 @@ export function UsersForm() {
                                         </i>
                                     </div>
 
-                                    {/* <input type="submit" value={'login'} className={`${styles.btn} ${styles.solid}`} /> */}
                                     <button type='submit' className={`${styles.btn} ${styles.solid}`}>Login</button>
 
                                     <p className={styles.social_text}>
