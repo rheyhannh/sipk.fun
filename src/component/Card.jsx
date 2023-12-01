@@ -400,7 +400,7 @@ export function Notification({ state, data }) {
     else { return 'Unidentified Card State' }
 }
 
-export function History({ state, data, universitas }) {
+export function History({ state, data, universitas, count }) {
     const handleRetry = () => {
         mutate('/api/history')
     }
@@ -519,10 +519,15 @@ export function History({ state, data, universitas }) {
             }, 50)
         }
 
+        const getArrayLength = () => {
+            if (count) { return data.slice(0, count) }
+            else { return data }
+        }
+
         return (
             <>
-                {data.map((item, index) => {
-                    const style = universitas[0]?.penilaian?.default[item?.current?.nilai ? item?.current?.nilai : item?.prev?.nilai]?.style
+                {getArrayLength().map((item, index) => {
+                    const style = universitas[item?.current?.nilai.indeks ? item?.current?.nilai.indeks : item?.prev?.nilai.indeks]?.style
                     return (
                         <div
                             className={styles.history}
@@ -545,10 +550,10 @@ export function History({ state, data, universitas }) {
                                 </div>
                                 <div className={styles.history__details}>
                                     <h3>{item?.current?.nama ? item?.current?.nama : item?.prev?.nama}</h3>
-                                    <small>{postedAt(item?.current?.created_at ? item?.current?.created_at : item?.prev?.created_at, 'unix')}</small>
+                                    <small>{postedAt(item?.last_change_at, 'unix')}</small>
                                 </div>
                                 <div className={styles.history__value}>
-                                    <h5 style={{ color: style ? `var(--${style}-color)` : '' }}>{item?.current?.nilai ? item?.current?.nilai : item?.prev?.nilai}</h5>
+                                    <h5 style={{ color: style ? `var(--${style}-color)` : '' }}>{item?.current?.nilai.indeks ? item?.current?.nilai.indeks : item?.prev?.nilai.indeks}</h5>
                                     <h5>{item?.current?.sks ? item?.current?.sks : item?.prev?.sks} SKS</h5>
                                 </div>
                             </div>

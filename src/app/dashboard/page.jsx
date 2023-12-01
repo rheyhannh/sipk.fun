@@ -4,7 +4,8 @@
 import { Summary, Notification, History } from '@/component/Card'
 
 // ========== DATA DEPEDENCY ========== //
-import { useMatkul, useNotifikasi, useUser, useUniversitas } from '@/data/core';
+import { useMatkul, useNotifikasi, useUser, useMatkulHistory } from '@/data/core';
+import { getPenilaianUniversitas } from '@/data/universitas';
 import * as x from '@/data/summary';
 
 // ========== STYLE DEPEDENCY ========== //
@@ -109,42 +110,36 @@ function UpdateCard() {
     )
 }
 
-function HistoryCard() {
+function HistoryCard({ count }) {
     const { data: user, error: userError, isLoading: userLoading, isValidating: userValidating } = useUser();
-    const { data: universitas, error: universitasError, isLoading: universitasLoading, isValidating: universitasValidating } = useUniversitas();
+    const { data: matkulHistory, error: matkulHistoryError, isLoading: matkulHistoryLoading, isValidating: matkulHistoryValidating } = useMatkulHistory();
 
-    const data = [
-        { current: { type: 'tambah', nama: 'Sistem Kendali', nilai: "A", sks: 3, semester: 4, created_at: 1700669815, deleted_at: 1700669815, edited_at: null }, prev: {} },
-        { current: { type: 'ubah', nama: 'Sistem Mikrokontroller', nilai: "C", sks: 5, semester: 2, created_at: 1700669815, deleted_at: null, edited_at: 1700669815 }, prev: { type: 'tambah', nama: 'Sistem Kontroller', nilai: "A", sks: 4, semester: 3, created_at: 1700669815, deleted_at: null, edited_at: 1700669815 } },
-        { current: {}, prev: { type: 'hapus', nama: 'Jaringan Komputer Lanjutan', nilai: "B", sks: 4, semester: 2, created_at: 1700669815, deleted_at: 1700669815, edited_at: null } }
-    ]
-
-    if (userError || universitasError) {
+    if (userError || matkulHistoryError) {
         return (
             <History state={'error'} />
         )
     }
 
-    if (userLoading || universitasLoading) {
+    if (userLoading || matkulHistoryLoading) {
         return (
             <History state={'loading'} />
         )
     }
 
-    if (userValidating || universitasValidating) {
+    if (userValidating || matkulHistoryValidating) {
         return (
             <History state={'validating'} />
         )
     }
 
-    if (data.length === 0) {
+    if (matkulHistory.length === 0) {
         return (
             <History state={'empty'} />
         )
     }
 
     return (
-        <History state={'loaded'} data={data} universitas={universitas} />
+        <History state={'loaded'} data={matkulHistory} universitas={getPenilaianUniversitas(user[0]?.university_id)} count={count} />
     )
 }
 
@@ -164,7 +159,7 @@ export default function DashboardPage() {
                 </div>
                 <div className={styles.history}>
                     <h2>Perubahan Terakhir</h2>
-                    <HistoryCard />
+                    <HistoryCard count={3} />
                 </div>
             </div>
         </div>
