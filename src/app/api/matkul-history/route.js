@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import { cookies } from 'next/headers';
 import { createServerClient } from '@supabase/ssr';
-import { encryptAES, encryptSyncAES, decryptAES, decryptSyncAES, rateLimit } from '@/utils/server_side';
+import { encryptSyncAES, decryptAES, decryptSyncAES, rateLimit } from '@/utils/server_side';
 
 const limiter = rateLimit({
     interval: 60 * 1000,
@@ -16,7 +16,7 @@ export async function GET(request) {
     const cookieAuthDeleteOptions = { secure: true, httpOnly: true, maxAge: -2592000, sameSite: 'lax' };
 
     if (!userAccessToken) {
-        return NextResponse.json({}, {
+        return NextResponse.json({ message: 'Unauthorized - Missing access token' }, {
             status: 401,
         })
     }
@@ -26,7 +26,8 @@ export async function GET(request) {
 
     if (!userId) {
         cookieStore.set({ name: process.env.USER_SESSION_COOKIES_NAME, value: '', ...cookieAuthDeleteOptions })
-        return NextResponse.json({}, {
+        cookieStore.set({ name: 's_user_id', value: '', ...cookieAuthDeleteOptions})
+        return NextResponse.json({ message: 'Unauthorized - Invalid access token' }, {
             status: 401
         })
     }
@@ -34,7 +35,7 @@ export async function GET(request) {
     try {
         var currentUsage = await limiter.check(limitRequest, `matkul-history-${userId}`);
     } catch {
-        return NextResponse.json({}, {
+        return NextResponse.json({ message: 'Too many request' }, {
             status: 429,
             headers: {
                 'X-Ratelimit-Limit': limitRequest,
@@ -75,7 +76,7 @@ export async function GET(request) {
 
     if (error) {
         console.error(error);
-        return NextResponse.json({}, {
+        return NextResponse.json({ message: 'Terjadi kesalahan pada server' }, {
             status: 500,
             headers: {
                 'X-Ratelimit-Limit': limitRequest,
