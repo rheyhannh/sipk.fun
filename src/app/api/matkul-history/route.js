@@ -1,31 +1,7 @@
 import { NextResponse } from 'next/server';
 import { cookies } from 'next/headers';
 import { createServerClient } from '@supabase/ssr';
-import Joi from 'joi'
-import rateLimit from '@/utils/rateLimit';
-import CryptoJS from 'crypto-js';
-
-function encryptSomething(message) {
-    try {
-        const ciphertext = CryptoJS.AES.encrypt(message, process.env.SECRET_KEY).toString();
-        return ciphertext;
-    } catch (error) {
-        console.error(error);
-        return 0;
-    }
-}
-
-function decryptSomething(ciphertext, parse = false) {
-    try {
-        const bytes = CryptoJS.AES.decrypt(ciphertext, process.env.SECRET_KEY);
-        const decryptedData = bytes.toString(CryptoJS.enc.Utf8);
-        if (parse) { return JSON.parse(decryptedData) }
-        return decryptedData;
-    } catch (error) {
-        console.error(error);
-        return 0;
-    }
-}
+import { encryptAES, encryptSyncAES, decryptAES, decryptSyncAES, rateLimit } from '@/utils/server_side';
 
 const limiter = rateLimit({
     interval: 60 * 1000,
@@ -45,8 +21,8 @@ export async function GET(request) {
         })
     }
 
-    const decryptedSession = decryptSomething(userAccessToken, true);
-    const userId = decryptedSession?.user?.id
+    const decryptedSession = await decryptAES(userAccessToken, true);
+    const userId = decryptedSession?.user?.id;
 
     if (!userId) {
         cookieStore.set({ name: process.env.USER_SESSION_COOKIES_NAME, value: '', ...cookieAuthDeleteOptions })
@@ -75,13 +51,13 @@ export async function GET(request) {
                 get(name) {
                     const encryptedSession = cookieStore.get(process.env.USER_SESSION_COOKIES_NAME)?.value
                     if (encryptedSession) {
-                        const decryptedSession = decryptSomething(encryptedSession) || 'removeMe';
+                        const decryptedSession = decryptSyncAES(encryptedSession) || 'removeMe';
                         return decryptedSession;
                     }
                     return encryptedSession;
                 },
                 set(name, value, options) {
-                    const encryptedSession = encryptSomething(value);
+                    const encryptedSession = encryptSyncAES(value);
                     if (encryptedSession) {
                         cookieStore.set({ name: process.env.USER_SESSION_COOKIES_NAME, value: encryptedSession, ...cookieAuthOptions })
                     } else {
