@@ -16,7 +16,8 @@ import { useCookies } from 'next-client-cookies';
 import toast from 'react-hot-toast';
 import { ModalContext } from "./provider/Modal";
 import { UsersContext } from './provider/Users';
-import { Accordion } from '@/component/Accordion'
+import { Accordion } from '@/component/Accordion';
+import { unixToDate } from "@/utils/client_side";
 
 // ========== DATA DEPEDENCY ========== //
 import { useUser } from "@/data/core";
@@ -100,7 +101,8 @@ export const Logout = () => {
                     }
                 }
             } else {
-                router.replace('/users?action=login', {
+                const stamp = Math.floor(Date.now() / 1000);
+                router.replace(`/users?logout=${stamp}`, {
                     scroll: false,
                 });
             }
@@ -145,170 +147,177 @@ export const Logout = () => {
 
 export const PerubahanTerakhirDetail = () => {
     const [isSebelumForm, setIsSebelumForm] = useState(true);
+
     return (
         <ModalContext.Consumer>
             {context => {
                 return (
                     <div className={`${styles.backdrop} ${context.active ? styles.active : ''}`}>
                         {
-                            context?.data?.current?.type === 'ubah' ? <div className={`${styles.perubahan__terakhir} ${styles.ubah}`} id='modal'>
-                                <div className={styles.top}>
-                                    <div className={styles.title}>
-                                        <h2>Detail Matakuliah</h2>
-                                    </div>
-                                    <div className={styles.close} onClick={() => { context.handleModalClose() }}>
-                                        <FaTimes />
-                                    </div>
-                                </div>
-                                <div className={styles.form__type}>
-                                    <span className={isSebelumForm ? styles.active : ''} onClick={() => { setIsSebelumForm(true) }}>
-                                        <h3>Sebelum</h3>
-                                    </span>
-                                    <span className={!isSebelumForm ? styles.active : ''} onClick={() => { setIsSebelumForm(false) }}>
-                                        <h3>Setelah</h3>
-                                    </span>
-                                </div>
-                                <div className={styles.inner}>
-                                    <form>
-                                        <div className={styles.form__input_field}>
-                                            <input
-                                                type="text"
-                                                id="nama"
-                                                placeholder=" "
-                                                className={styles.form__input}
-                                                value={isSebelumForm ? context?.data?.prev?.nama : context?.data?.current?.nama}
-                                                autoComplete='off'
-                                                disabled
-                                            />
-                                            <label
-                                                htmlFor="nama"
-                                                className={styles.form__label}
-                                            >
-                                                Nama
-                                            </label>
+                            context?.data?.current?.type === 'ubah' ?
+                                <div className={`${styles.perubahan__terakhir} ${styles.ubah}`} id='modal'>
+                                    <div className={styles.top}>
+                                        <div className={styles.title}>
+                                            <h2>Detail Matakuliah</h2>
                                         </div>
-                                        <div style={{
-                                            display: 'grid',
-                                            gridTemplateColumns: 'repeat(3,1fr)',
-                                            gap: '1rem'
-                                        }}>
+                                        <div className={styles.close} onClick={() => { context.handleModalClose() }}>
+                                            <FaTimes />
+                                        </div>
+                                    </div>
+                                    <div className={styles.form__type}>
+                                        <span className={isSebelumForm ? styles.active : ''} onClick={() => { setIsSebelumForm(true) }}>
+                                            <h3>Sebelum</h3>
+                                        </span>
+                                        <span className={!isSebelumForm ? styles.active : ''} onClick={() => { setIsSebelumForm(false) }}>
+                                            <h3>Setelah</h3>
+                                        </span>
+                                    </div>
+                                    <div className={styles.inner}>
+                                        <form>
                                             <div className={styles.form__input_field}>
                                                 <input
-                                                    type="number"
-                                                    id="sks"
+                                                    type="text"
+                                                    id="nama"
                                                     placeholder=" "
                                                     className={styles.form__input}
-                                                    value={isSebelumForm ? context?.data?.prev?.sks : context?.data?.current?.sks}
+                                                    value={isSebelumForm ? context?.data?.prev?.nama : context?.data?.current?.nama}
                                                     autoComplete='off'
                                                     disabled
                                                 />
                                                 <label
-                                                    htmlFor="sks"
+                                                    htmlFor="nama"
                                                     className={styles.form__label}
                                                 >
-                                                    Sks
+                                                    Nama
                                                 </label>
+                                            </div>
+                                            <div style={{
+                                                display: 'grid',
+                                                gridTemplateColumns: 'repeat(3,1fr)',
+                                                gap: '1rem'
+                                            }}>
+                                                <div className={styles.form__input_field}>
+                                                    <input
+                                                        type="number"
+                                                        id="sks"
+                                                        placeholder=" "
+                                                        className={styles.form__input}
+                                                        value={isSebelumForm ? context?.data?.prev?.sks : context?.data?.current?.sks}
+                                                        autoComplete='off'
+                                                        disabled
+                                                    />
+                                                    <label
+                                                        htmlFor="sks"
+                                                        className={styles.form__label}
+                                                    >
+                                                        Sks
+                                                    </label>
+                                                </div>
+                                                <div className={styles.form__input_field}>
+                                                    <input
+                                                        type="text"
+                                                        id="nilai"
+                                                        placeholder=" "
+                                                        className={styles.form__input}
+                                                        value={isSebelumForm ? context?.data?.prev?.nilai?.indeks : context?.data?.current?.nilai?.indeks}
+                                                        autoComplete='off'
+                                                        disabled
+                                                    />
+                                                    <label
+                                                        htmlFor="nilai"
+                                                        className={styles.form__label}
+                                                    >
+                                                        Nilai
+                                                    </label>
+                                                </div>
+                                                <div className={styles.form__input_field}>
+                                                    <input
+                                                        type="number"
+                                                        id="semester"
+                                                        placeholder=" "
+                                                        className={styles.form__input}
+                                                        value={isSebelumForm ? context?.data?.prev?.semester : context?.data?.current?.semester}
+                                                        autoComplete='off'
+                                                        disabled
+                                                    />
+                                                    <label
+                                                        htmlFor="semester"
+                                                        className={styles.form__label}
+                                                    >
+                                                        Semester
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div style={{
+                                                display: 'grid',
+                                                gridTemplateColumns: 'repeat(2,1fr)',
+                                                gap: '1rem'
+                                            }}>
+                                                <div className={styles.form__input_field}>
+                                                    <input
+                                                        type="text"
+                                                        id="dapatDiulang"
+                                                        placeholder=" "
+                                                        className={styles.form__input}
+                                                        value={isSebelumForm ? context?.data?.prev?.dapat_diulang : context?.data?.current?.dapat_diulang}
+                                                        autoComplete='off'
+                                                        disabled
+                                                    />
+                                                    <label
+                                                        htmlFor="dapatDiulang"
+                                                        className={styles.form__label}
+                                                    >
+                                                        Bisa Diulang
+                                                    </label>
+                                                </div>
+                                                <div className={styles.form__input_field}>
+                                                    <input
+                                                        type="text"
+                                                        id="maxNilai"
+                                                        placeholder=" "
+                                                        className={styles.form__input}
+                                                        value={isSebelumForm ? context?.data?.prev?.target_nilai?.indeks : context?.data?.current?.target_nilai?.indeks}
+                                                        autoComplete='off'
+                                                        disabled
+                                                    />
+                                                    <label
+                                                        htmlFor="maxNilai"
+                                                        className={styles.form__label}
+                                                    >
+                                                        Nilai Maks
+                                                    </label>
+                                                </div>
                                             </div>
                                             <div className={styles.form__input_field}>
                                                 <input
                                                     type="text"
-                                                    id="nilai"
+                                                    id="date"
                                                     placeholder=" "
                                                     className={styles.form__input}
-                                                    value={isSebelumForm ? context?.data?.prev?.nilai : context?.data?.current?.nilai}
+                                                    value={unixToDate(isSebelumForm ? context?.data?.prev?.stamp : context?.data?.current?.stamp)}
                                                     autoComplete='off'
                                                     disabled
                                                 />
                                                 <label
-                                                    htmlFor="nilai"
+                                                    htmlFor="date"
                                                     className={styles.form__label}
                                                 >
-                                                    Nilai
+                                                    {
+                                                        context?.data?.current?.type === 'tambah' ? 'Ditambah'
+                                                            : context?.data?.current?.type === 'ubah' ? 'Diedit'
+                                                                : context?.data?.current?.type === 'hapus' ? 'Dihapus'
+                                                                    : 'Tanggal'
+                                                    }
                                                 </label>
                                             </div>
-                                            <div className={styles.form__input_field}>
-                                                <input
-                                                    type="number"
-                                                    id="semester"
-                                                    placeholder=" "
-                                                    className={styles.form__input}
-                                                    value={isSebelumForm ? context?.data?.prev?.semester : context?.data?.current?.semester}
-                                                    autoComplete='off'
-                                                    disabled
-                                                />
-                                                <label
-                                                    htmlFor="semester"
-                                                    className={styles.form__label}
-                                                >
-                                                    Semester
-                                                </label>
-                                            </div>
+                                        </form>
+                                    </div>
+                                    <div className={styles.form__action}>
+                                        <div className={styles.btn} onClick={() => { context.setModal('perubahanTerakhirConfirm'); }}>
+                                            <h3>Batalkan</h3>
                                         </div>
-                                        <div style={{
-                                            display: 'grid',
-                                            gridTemplateColumns: 'repeat(2,1fr)',
-                                            gap: '1rem'
-                                        }}>
-                                            <div className={styles.form__input_field}>
-                                                <input
-                                                    type="text"
-                                                    id="dapatDiulang"
-                                                    placeholder=" "
-                                                    className={styles.form__input}
-                                                    value={isSebelumForm ? 'Ya' : 'Tidak'}
-                                                    autoComplete='off'
-                                                    disabled
-                                                />
-                                                <label
-                                                    htmlFor="dapatDiulang"
-                                                    className={styles.form__label}
-                                                >
-                                                    Bisa Diulang
-                                                </label>
-                                            </div>
-                                            <div className={styles.form__input_field}>
-                                                <input
-                                                    type="text"
-                                                    id="maxNilai"
-                                                    placeholder=" "
-                                                    className={styles.form__input}
-                                                    value={isSebelumForm ? 'A' : 'B'}
-                                                    autoComplete='off'
-                                                    disabled
-                                                />
-                                                <label
-                                                    htmlFor="maxNilai"
-                                                    className={styles.form__label}
-                                                >
-                                                    Nilai Maks
-                                                </label>
-                                            </div>
-                                        </div>
-                                        <div className={styles.form__input_field}>
-                                            <input
-                                                type="text"
-                                                id="date"
-                                                placeholder=" "
-                                                className={styles.form__input}
-                                                value={isSebelumForm ? '22 November 2023, 10:52' : '24 November 2023, 21:55'}
-                                                autoComplete='off'
-                                                disabled
-                                            />
-                                            <label
-                                                htmlFor="date"
-                                                className={styles.form__label}
-                                            >
-                                                {isSebelumForm ? 'Dibuat' : 'Diedit'}
-                                            </label>
-                                        </div>
-                                    </form>
-                                </div>
-                                <div className={styles.form__action}>
-                                    <div className={styles.btn} onClick={() => { context.setModal('perubahanTerakhirConfirm'); }}>
-                                        <h3>Batalkan</h3>
                                     </div>
                                 </div>
-                            </div>
                                 : <div className={styles.perubahan__terakhir} id='modal'>
                                     <div className={styles.top}>
                                         <div className={styles.title}>
@@ -365,7 +374,7 @@ export const PerubahanTerakhirDetail = () => {
                                                         id="nilai"
                                                         placeholder=" "
                                                         className={styles.form__input}
-                                                        value={context?.data?.current?.nilai ? context?.data?.current?.nilai : context?.data?.prev?.nilai}
+                                                        value={context?.data?.current?.nilai?.indeks ? context?.data?.current?.nilai?.indeks : context?.data?.prev?.nilai?.indeks}
                                                         autoComplete='off'
                                                         disabled
                                                     />
@@ -405,7 +414,7 @@ export const PerubahanTerakhirDetail = () => {
                                                         id="dapatDiulang"
                                                         placeholder=" "
                                                         className={styles.form__input}
-                                                        value={isSebelumForm ? 'Ya' : 'Tidak'}
+                                                        value={context?.data?.current?.dapat_diulang ? `${context?.data?.current?.dapat_diulang === true ? 'Ya' : 'Tidak'}` : `${context?.data?.prev?.dapat_diulang === true ? 'Ya' : 'Tidak'}`}
                                                         autoComplete='off'
                                                         disabled
                                                     />
@@ -422,7 +431,7 @@ export const PerubahanTerakhirDetail = () => {
                                                         id="maxNilai"
                                                         placeholder=" "
                                                         className={styles.form__input}
-                                                        value={isSebelumForm ? 'A' : 'B'}
+                                                        value={context?.data?.current?.target_nilai?.indeks || context?.data?.prev?.target_nilai?.indeks}
                                                         autoComplete='off'
                                                         disabled
                                                     />
@@ -440,7 +449,7 @@ export const PerubahanTerakhirDetail = () => {
                                                     id="date"
                                                     placeholder=" "
                                                     className={styles.form__input}
-                                                    value={isSebelumForm ? '22 November 2023, 10:52' : '24 November 2023, 21:55'}
+                                                    value={unixToDate(context?.data?.current?.stamp || context?.data?.prev?.stamp)}
                                                     autoComplete='off'
                                                     disabled
                                                 />
@@ -448,7 +457,12 @@ export const PerubahanTerakhirDetail = () => {
                                                     htmlFor="date"
                                                     className={styles.form__label}
                                                 >
-                                                    {isSebelumForm ? 'Dibuat' : 'Diedit'}
+                                                    {
+                                                        context?.data?.current?.type === 'tambah' ? 'Ditambah'
+                                                            : context?.data?.current?.type === 'ubah' ? 'Diedit'
+                                                                : context?.data?.current?.type === 'hapus' ? 'Dihapus'
+                                                                    : 'Tanggal'
+                                                    }
                                                 </label>
                                             </div>
                                         </form>
@@ -504,7 +518,10 @@ export const PerubahanTerakhirConfirm = () => {
                             </div>
 
                             <div className={styles.form__action}>
-                                <div className={`${styles.btn} ${styles.confirm} ${context?.data?.current?.type ? styles[context?.data?.current?.type] : styles[context?.data?.prev?.type]}`}>
+                                <div
+                                    className={`${styles.btn} ${styles.confirm} ${context?.data?.current?.type ? styles[context?.data?.current?.type] : styles[context?.data?.prev?.type]}`}
+                                    onClick={() => { console.log(`Hapus ${context?.data?.matkul_id}`) }}
+                                >
                                     <h3>Ya</h3>
                                 </div>
                                 <div className={`${styles.btn} ${styles.cancel}`} onClick={() => { context.handleModalClose(); }}>
@@ -520,7 +537,7 @@ export const PerubahanTerakhirConfirm = () => {
 }
 
 export const TambahMatkul = () => {
-    const { data: user } = useUser();
+    const { data: user } = useUser({ revalidateOnMount: false })
     const penilaian = getPenilaianUniversitas(user[0]?.university_id);
     const penilaianKey = Object.keys(penilaian);
     const [nama, setNama] = useState('');
@@ -574,13 +591,13 @@ export const TambahMatkul = () => {
                         semester: semester,
                         sks: sks,
                         nilai: {
-                            indeks: penilaianKey.find((key) => penilaian[key].weight === parseInt(nilai, 10)),
+                            indeks: penilaianKey.find((key) => `${penilaian[key].weight}` === `${nilai}`),
                             bobot: nilai,
                             akhir: sks * nilai
                         },
                         dapat_diulang: dapatDiulang || true,
                         target_nilai: {
-                            indeks: penilaianKey.find((key) => penilaian[key].weight === parseInt(targetNilai, 10)) || 'A',
+                            indeks: penilaianKey.find((key) => `${penilaian[key].weight}` === `${targetNilai}`) || 'A',
                             bobot: targetNilai !== -1 ? targetNilai : 4
                         }
                     }
