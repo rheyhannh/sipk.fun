@@ -12,27 +12,31 @@ const swrOptions = {
     refreshInterval: 0,
     revalidateIfStale: true,
     revalidateOnMount: true,
-    revalidateOnFocus: true,
+    revalidateOnFocus: false,
     revalidateOnReconnect: true,
     dedupingInterval: 5000,
     shouldRetryOnError: false,
 }
 
-export function useUser() {
+export function useUser(custom) {
     const userIdCookie = useCookies().get('s_user_id');
-    return useSWR(['/api/me', , userIdCookie], ([url, id]) => fetchWithUserId(url, id), swrOptions)
+    const options = custom ? custom : swrOptions;
+    return useSWR(['/api/me', userIdCookie], ([url, id]) => fetchWithUserId(url, id), options)
 }
 
-export function useMatkul() {
+export function useMatkul(custom) {
     const userIdCookie = useCookies().get('s_user_id');
-    return useSWR(['/api/matkulku', userIdCookie], ([url, id]) => fetchWithUserId(url, id), swrOptions)
+    const options = custom ? custom : swrOptions;
+    return useSWR(['/api/matkulku', userIdCookie], ([url, id]) => fetchWithUserId(url, id), options)
 }
 
-export function useMatkulHistory() {
+export function useMatkulHistory(custom) {
     const userIdCookie = useCookies().get('s_user_id');
-    return useSWR(['/api/matkul-history', userIdCookie], ([url, id]) => fetchWithUserId(url, id), swrOptions)
+    const options = custom ? custom : swrOptions;
+    return useSWR(['/api/matkul-history', userIdCookie], ([url, id]) => fetchWithUserId(url, id), options)
 }
 
-export function useNotifikasi() {
-    return useSWR('/api/notifikasi', fetchDefault, swrOptions)
+export function useNotifikasi(custom) {
+    const options = custom ? custom : swrOptions;
+    return useSWR('/api/notifikasi', fetchDefault, options)
 }
