@@ -6,7 +6,7 @@ const getUserIpk = (matkul) => {
     const totalSks = getUserSks(matkul);
     const { totalNilaiAkhir } = matkul.reduce((sum, current) => {
       return {
-        totalNilaiAkhir: sum.totalNilaiAkhir + current.nilai_akhir
+        totalNilaiAkhir: sum.totalNilaiAkhir + current.nilai.akhir
       };
     }, { totalNilaiAkhir: 0 }
     );
