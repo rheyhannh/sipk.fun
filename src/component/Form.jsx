@@ -111,6 +111,10 @@ export function UsersForm() {
         // Something Error ? 
         const error = searchParams.get('error');
         if (error === 'session' && mode === 'login') { setErrorMessage('Silahkan login kembali') }
+
+        // From Logout ? 
+        const logout = searchParams.get('logout');
+        if (logout) { router.refresh(); }
     }, [searchParams])
 
     /*
@@ -584,8 +588,6 @@ export function UsersForm() {
         </>
     )
 }
-
-
 
 /*
 ============================== CODE END HERE ==============================
