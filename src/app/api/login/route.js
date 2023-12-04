@@ -1,7 +1,13 @@
 import { NextResponse } from 'next/server';
 import { cookies, headers } from 'next/headers';
 import { createServerClient } from '@supabase/ssr';
-import { encryptSyncAES, decryptSyncAES, rateLimit } from '@/utils/server_side';
+import {
+    encryptSyncAES,
+    decryptSyncAES,
+    rateLimit,
+    cookieAuthOptions,
+    cookieAuthDeleteOptions
+} from '@/utils/server_side';
 import Joi from 'joi'
 
 const limiter = rateLimit({
@@ -10,7 +16,6 @@ const limiter = rateLimit({
 })
 
 export async function POST(request) {
-    // Limit {limitRequest} each {rateLimit.interval}
     const limitRequest = 2;
     const newHeaders = {};
     const headerList = headers();
@@ -57,7 +62,6 @@ export async function POST(request) {
 
     // Create connection to 'supabase' using createServerClient
     const cookieStore = cookies();
-    const cookieAuthOptions = { secure: true, httpOnly: true, maxAge: 2592000, sameSite: 'lax' };
     const supabase = createServerClient(
         process.env.NEXT_PUBLIC_SUPABASE_URL,
         process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
@@ -81,7 +85,7 @@ export async function POST(request) {
 
                 },
                 remove(name, options) {
-                    cookieStore.set({ name: process.env.USER_SESSION_COOKIES_NAME, value: '', ...options })
+                    cookieStore.set({ name: process.env.USER_SESSION_COOKIES_NAME, value: '', ...cookieAuthDeleteOptions })
                 },
             },
         }

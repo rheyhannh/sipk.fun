@@ -116,3 +116,18 @@ export function rateLimit(options) {
 }
 
 // Validator & Sanitizer
+
+// Options
+/**
+ * Options untuk set auth cookie. 
+ * 
+ * `secure = true`, `httpOnly = true`, `maxAge = 2592000`, `sameSite = 'lax'`
+ */
+export const cookieAuthOptions = { secure: true, httpOnly: true, maxAge: 2592000, sameSite: 'lax' };
+
+/**
+ * Options untuk remove/revoke auth cookie. 
+ * 
+ * `secure = true`, `httpOnly = true`, `maxAge = -2592000`, `sameSite = 'lax'`
+ */
+export const cookieAuthDeleteOptions = { secure: true, httpOnly: true, maxAge: -2592000, sameSite: 'lax' };

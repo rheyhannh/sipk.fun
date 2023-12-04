@@ -1,7 +1,14 @@
 import { NextResponse } from 'next/server';
 import { cookies } from 'next/headers';
 import { createServerClient } from '@supabase/ssr';
-import { encryptSyncAES, decryptAES, decryptSyncAES, rateLimit } from '@/utils/server_side';
+import {
+    encryptSyncAES,
+    decryptAES,
+    decryptSyncAES,
+    rateLimit,
+    cookieAuthOptions,
+    cookieAuthDeleteOptions
+} from '@/utils/server_side';
 
 const limiter = rateLimit({
     interval: 60 * 1000,
@@ -12,8 +19,6 @@ export async function POST(request) {
     const limitRequest = 10;
     const userAccessToken = request.cookies.get(`${process.env.USER_SESSION_COOKIES_NAME}`)?.value;
     const cookieStore = cookies();
-    const cookieAuthOptions = { secure: true, httpOnly: true, maxAge: 2592000, sameSite: 'lax' };
-    const cookieAuthDeleteOptions = { secure: true, httpOnly: true, maxAge: -2592000, sameSite: 'lax' };
 
     if (!userAccessToken) {
         return NextResponse.json({ message: 'Unauthorized - Missing access token' }, {
