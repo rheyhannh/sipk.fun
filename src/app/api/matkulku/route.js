@@ -121,7 +121,7 @@ export async function POST(request) {
     }
 
     var { data: matkulBaruHistory, error } = await supabase.from('matkul_history').insert(
-        { matkul_id: matkulBaru[0].id, current: { ...formData, type: 'tambah' }, prev: null, owned_by: userId, last_change_at: unixNow }
+        { matkul_id: matkulBaru[0].id, current: { ...formData, type: 'tambah', stamp: unixNow }, prev: null, owned_by: userId, last_change_at: unixNow }
     ).select();
 
     if (error) {
@@ -150,7 +150,7 @@ export async function GET(request) {
 
     if (!userId) {
         cookieStore.set({ name: process.env.USER_SESSION_COOKIES_NAME, value: '', ...cookieAuthDeleteOptions })
-        cookieStore.set({ name: 's_user_id', value: '', ...cookieAuthDeleteOptions})
+        cookieStore.set({ name: 's_user_id', value: '', ...cookieAuthDeleteOptions })
         return NextResponse.json({ message: 'Unauthorized - Invalid access token' }, {
             status: 401
         })
