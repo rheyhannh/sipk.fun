@@ -10,13 +10,13 @@ import {
 } from '@/utils/server_side';
 import Joi from 'joi'
 
+const limitRequest = parseInt(process.env.API_LOGIN_REQUEST_LIMIT);
 const limiter = rateLimit({
-    interval: 30 * 1000,
-    uniqueTokenPerInterval: 500,
+    interval: parseInt(process.env.API_LOGIN_TOKEN_INTERVAL_SECONDS) * 1000,
+    uniqueTokenPerInterval: parseInt(process.env.API_LOGIN_MAX_TOKEN_PERINTERVAL),
 })
 
 export async function POST(request) {
-    const limitRequest = 2;
     const newHeaders = {};
     const headerList = headers();
     const userIp =

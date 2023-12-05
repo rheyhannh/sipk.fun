@@ -10,13 +10,13 @@ import {
     cookieAuthDeleteOptions
 } from '@/utils/server_side';
 
+const limitRequest = parseInt(process.env.API_ME_REQUEST_LIMIT);
 const limiter = rateLimit({
-    interval: 60 * 1000,
-    uniqueTokenPerInterval: 500,
+    interval: parseInt(process.env.API_ME_TOKEN_INTERVAL_SECONDS) * 1000,
+    uniqueTokenPerInterval: parseInt(process.env.API_ME_MAX_TOKEN_PERINTERVAL),
 })
 
 export async function GET(request) {
-    const limitRequest = 20;
     const userAccessToken = request.cookies.get(`${process.env.USER_SESSION_COOKIES_NAME}`)?.value;
     const cookieStore = cookies();
 
