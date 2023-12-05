@@ -127,6 +127,7 @@
     }
 
     .dashboard__profile.error {
+        cursor: pointer;
         gap: .5rem;
     }
 
@@ -135,10 +136,6 @@
         font-weight: var(--font-medium);
     }
 
-    .dashboard__profile.error h2 {
-        cursor: pointer;
-    }
-    
     .dashboard__logo img {
         width: 58px;
     }
