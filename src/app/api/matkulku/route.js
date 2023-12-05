@@ -15,11 +15,129 @@ const limiter = rateLimit({
     uniqueTokenPerInterval: 500,
 })
 
+export async function DELETE(request) {
+    const limitRequest = 20;
+    const newHeaders = {};
+    const userAccessToken = request.cookies.get(`${process.env.USER_SESSION_COOKIES_NAME}`)?.value;
+    const cookieStore = cookies();
+    const searchParams = request.nextUrl.searchParams;
+    const matkulId = searchParams.get('id');
+
+    if (!userAccessToken) {
+        return NextResponse.json({ message: 'Unauthorized - Missing access token' }, {
+            status: 401,
+        })
+    }
+
+    const decryptedSession = await decryptAES(userAccessToken, true);
+    const userId = decryptedSession?.user?.id;
+
+    if (!userId) {
+        cookieStore.set({ name: process.env.USER_SESSION_COOKIES_NAME, value: '', ...cookieAuthDeleteOptions })
+        cookieStore.set({ name: 's_user_id', value: '', ...cookieAuthDeleteOptions })
+        return NextResponse.json({ message: 'Unauthorized - Invalid access token' }, {
+            status: 401
+        })
+    }
+
+    try {
+        var currentUsage = await limiter.check(limitRequest, `matkul-${userId}`);
+        newHeaders['X-Ratelimit-limit'] = limitRequest;
+        newHeaders['X-Ratelimit-Remaining'] = limitRequest - currentUsage;
+    } catch {
+        return NextResponse.json({ message: `Terlalu banyak request, coba lagi dalam 1 menit` }, {
+            status: 429,
+            headers: {
+                'X-Ratelimit-Limit': limitRequest,
+                'X-Ratelimit-Remaining': 0,
+            }
+        })
+    }
+
+    if (!matkulId) {
+        return NextResponse.json({ message: `Gagal menghapus matakuliah` }, {
+            status: 400,
+            headers: newHeaders
+        })
+    }
+
+    const supabase = createServerClient(
+        process.env.NEXT_PUBLIC_SUPABASE_URL,
+        process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
+        {
+            cookies: {
+                get(name) {
+                    const encryptedSession = cookieStore.get(process.env.USER_SESSION_COOKIES_NAME)?.value
+                    if (encryptedSession) {
+                        const decryptedSession = decryptSyncAES(encryptedSession) || 'removeMe';
+                        return decryptedSession;
+                    }
+                    return encryptedSession;
+                },
+                set(name, value, options) {
+                    const encryptedSession = encryptSyncAES(value);
+                    if (encryptedSession) {
+                        cookieStore.set({ name: process.env.USER_SESSION_COOKIES_NAME, value: encryptedSession, ...cookieAuthOptions })
+                    } else {
+                        cookieStore.set({ name: process.env.USER_SESSION_COOKIES_NAME, value, ...cookieAuthOptions })
+                    }
+                },
+                remove(name, options) {
+                    cookieStore.set({ name: process.env.USER_SESSION_COOKIES_NAME, value: '', ...cookieAuthDeleteOptions })
+                },
+            },
+        }
+    )
+
+    const unixNow = Math.floor(Date.now() / 1000);
+
+    var { error } = await supabase.from('matkul').delete().eq('id', matkulId)
+
+    if (error) {
+        console.error(error);
+        return NextResponse.json({ message: `Gagal menghapus matakuliah` }, { status: 500, headers: newHeaders })
+    }
+
+    var { data, error } = await supabase.from('matkul_history').select().eq('matkul_id', matkulId);
+    const prevHistory = data[0].current;
+
+    if (error) {
+        // Rollback will be good
+        console.error(error);
+        return NextResponse.json({ message: `Gagal memperbarui riwayat` }, { status: 500, headers: newHeaders })
+    }
+
+    var { data: matkulHistory, error } = await supabase.from('matkul_history').update(
+        {
+            matkul_id: data[0].matkul_id,
+            current:
+            {
+                ...prevHistory,
+                type: 'hapus',
+                stamp: unixNow
+            },
+            prev: { ...prevHistory },
+            owned_by: userId,
+            last_change_at: unixNow
+        }
+    ).eq('matkul_id', matkulId).select();
+
+    if (error) {
+        // Rollback will be good
+        console.error(error);
+        return NextResponse.json({ message: `Gagal memperbarui riwayat` }, { status: 500, headers: newHeaders })
+    }
+
+    return NextResponse.json({ ref: matkulHistory[0] }, { status: 200, headers: newHeaders })
+}
+
 export async function POST(request) {
     const limitRequest = 20;
     const newHeaders = {};
     const userAccessToken = request.cookies.get(`${process.env.USER_SESSION_COOKIES_NAME}`)?.value;
     const cookieStore = cookies();
+    const searchParams = request.nextUrl.searchParams;
+    const ref = searchParams.get('ref');
 
     if (!userAccessToken) {
         return NextResponse.json({ message: 'Unauthorized - Missing access token' }, {
@@ -125,9 +243,14 @@ export async function POST(request) {
         return NextResponse.json({ message: `Gagal menambahkan ${formData.nama}` }, { status: 500, headers: newHeaders })
     }
 
-    var { data: matkulBaruHistory, error } = await supabase.from('matkul_history').insert(
-        { matkul_id: matkulBaru[0].id, current: { ...formData, type: 'tambah', stamp: unixNow }, prev: null, owned_by: userId, last_change_at: unixNow }
-    ).select();
+    var { data: matkulBaruHistory, error } = ref ?
+        await supabase.from('matkul_history')
+            .update({ matkul_id: matkulBaru[0].id, current: { ...formData, type: 'tambah', stamp: unixNow }, prev: null, owned_by: userId, last_change_at: unixNow })
+            .eq('matkul_id', ref)
+            .select()
+        : await supabase.from('matkul_history')
+            .insert({ matkul_id: matkulBaru[0].id, current: { ...formData, type: 'tambah', stamp: unixNow }, prev: null, owned_by: userId, last_change_at: unixNow })
+            .select();
 
     if (error) {
         console.error(error);
