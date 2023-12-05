@@ -3,39 +3,21 @@ import { NextResponse } from 'next/server'
 
 // ========== COMPONENT DEPEDENCY ========== //
 import { createServerClient } from '@supabase/ssr'
-import CryptoJS from 'crypto-js';
+import {
+    encryptSyncAES,
+    decryptSyncAES,
+    cookieAuthOptions,
+    cookieAuthDeleteOptions,
+    cookieServiceOptions
+} from '@/utils/server_side';
 
 /*
 ============================== CODE START HERE ==============================
 */
-function encryptSomething(message) {
-    try {
-        const ciphertext = CryptoJS.AES.encrypt(message, process.env.SECRET_KEY).toString();
-        return ciphertext;
-    } catch (error) {
-        console.error(error);
-        return 0;
-    }
-}
-
-function decryptSomething(ciphertext) {
-    try {
-        const bytes = CryptoJS.AES.decrypt(ciphertext, process.env.SECRET_KEY);
-        const decryptedData = bytes.toString(CryptoJS.enc.Utf8);
-        return decryptedData;
-    } catch (error) {
-        console.error(error);
-        return 0;
-    }
-}
-
 export default async function middleware(request) {
     const authSessionToken = request.cookies.get(`${process.env.USER_SESSION_COOKIES_NAME}`)?.value;
     const serviceUserCookie = request.cookies.get('s_user_id')?.value;
     const serviceGuestCookie = request.cookies.get('s_guest_id')?.value;
-    const cookieAuthOptions = { secure: true, httpOnly: true, maxAge: 2592000, sameSite: 'lax' };
-    const cookieServiceOptions = { secure: false, httpOnly: false, maxAge: 2592000, sameSite: 'lax' };
-    const deleteCookieAuthOptions = { secure: true, httpOnly: true, maxAge: -2592000, sameSite: 'lax' };
     const { pathname } = request.nextUrl;
 
     let response = NextResponse.next({
@@ -48,7 +30,7 @@ export default async function middleware(request) {
         response.cookies.set({
             name: 's_user_id',
             value: '',
-            ...deleteCookieAuthOptions
+            ...cookieAuthDeleteOptions
         })
         if (pathname.startsWith('/users')) {
             if (!serviceGuestCookie) {
@@ -74,13 +56,13 @@ export default async function middleware(request) {
                 get(name) {
                     const encryptedSession = request.cookies.get(process.env.USER_SESSION_COOKIES_NAME)?.value
                     if (encryptedSession) {
-                        const decryptedSession = decryptSomething(encryptedSession) || 'removeMe';
+                        const decryptedSession = decryptSyncAES(encryptedSession) || 'removeMe';
                         return decryptedSession;
                     }
                     return encryptedSession;
                 },
                 set(name, value, options) {
-                    const encryptedSession = encryptSomething(value);
+                    const encryptedSession = encryptSyncAES(value);
                     if (encryptedSession) {
                         request.cookies.set({
                             name: process.env.USER_SESSION_COOKIES_NAME,
@@ -123,7 +105,7 @@ export default async function middleware(request) {
                     request.cookies.set({
                         name: process.env.USER_SESSION_COOKIES_NAME,
                         value: '',
-                        ...deleteCookieAuthOptions,
+                        ...cookieAuthDeleteOptions,
                     })
 
                     const loginUrl = new URL("/users", request.url);
@@ -134,13 +116,13 @@ export default async function middleware(request) {
                     response.cookies.set({
                         name: 's_user_id',
                         value: '',
-                        ...deleteCookieAuthOptions
+                        ...cookieAuthDeleteOptions
                     })
 
                     response.cookies.set({
                         name: process.env.USER_SESSION_COOKIES_NAME,
                         value: '',
-                        ...deleteCookieAuthOptions,
+                        ...cookieAuthDeleteOptions,
                     })
                 },
             },
@@ -152,7 +134,7 @@ export default async function middleware(request) {
         request.cookies.set({
             name: process.env.USER_SESSION_COOKIES_NAME,
             value: '',
-            ...deleteCookieAuthOptions,
+            ...cookieAuthDeleteOptions,
         })
 
         const loginUrl = new URL("/users", request.url);
@@ -163,20 +145,20 @@ export default async function middleware(request) {
         response.cookies.set({
             name: process.env.USER_SESSION_COOKIES_NAME,
             value: '',
-            ...deleteCookieAuthOptions,
+            ...cookieAuthDeleteOptions,
         })
 
         response.cookies.set({
             name: 's_user_id',
             value: '',
-            ...deleteCookieAuthOptions,
+            ...cookieAuthDeleteOptions,
         })
     } else {
         if (serviceGuestCookie) {
             response.cookies.set({
                 name: 's_guest_id',
                 value: '',
-                ...deleteCookieAuthOptions,
+                ...cookieAuthDeleteOptions,
             })
         }
         if (!serviceUserCookie) {
