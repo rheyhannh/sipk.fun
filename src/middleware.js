@@ -45,6 +45,11 @@ export default async function middleware(request) {
     })
 
     if (!authSessionToken) {
+        response.cookies.set({
+            name: 's_user_id',
+            value: '',
+            ...deleteCookieAuthOptions
+        })
         if (pathname.startsWith('/users')) {
             if (!serviceGuestCookie) {
                 response.cookies.set({
@@ -125,6 +130,12 @@ export default async function middleware(request) {
                     loginUrl.searchParams.set('error', 'session');
                     loginUrl.searchParams.set('action', 'login');
                     response = NextResponse.redirect(loginUrl);
+
+                    response.cookies.set({
+                        name: 's_user_id',
+                        value: '',
+                        ...deleteCookieAuthOptions
+                    })
 
                     response.cookies.set({
                         name: process.env.USER_SESSION_COOKIES_NAME,
