@@ -5,14 +5,67 @@ import { useCookies } from 'next-client-cookies';
 /*
 ============================== CODE START HERE ==============================
 */
-const fetchDefault = (url) => fetch(url).then((res) => res.json().then((data) => data))
-const fetchWithUserId = (url, id) => fetch(url).then((res) => res.json().then((data) => data))
+const fetchDefault = (url) => {
+    return fetch(url, {
+        headers: {
+            'Authorization': `Accesses_Token`,
+            'Content-Type': 'application/json',
+        }
+    })
+        .then(async (response) => {
+            if (!response.ok) {
+                try {
+                    const { message } = await response.json();
+                    if (message) { throw new Error(`${message} (code: ${response.status})`); }
+                    else { throw new Error(`Terjadi error (code: ${response.status})`); }
+                } catch (error) {
+                    throw error;
+                }
+            }
+            return response.json();
+        })
+        .then(data => {
+            return data;
+        })
+        .catch(error => {
+            console.error('Gagal mengambil data:', error.message);
+            throw error;
+        });
+}
+
+const fetchWithUserId = (url, id) => {
+    return fetch(url, {
+        headers: {
+            'Authorization': `Accesses_Token`,
+            'Content-Type': 'application/json',
+        }
+    })
+        .then(async (response) => {
+            if (!response.ok) {
+                try {
+                    const { message } = await response.json();
+                    if (message) { throw new Error(`${message} (code: ${response.status})`); }
+                    else { throw new Error(`Terjadi error (code: ${response.status})`); }
+                } catch (error) {
+                    throw error;
+                }
+            }
+            return response.json();
+        })
+        .then(data => {
+            return data;
+        })
+        .catch(error => {
+            console.error('Gagal mengambil data:', error.message);
+            throw error;
+        });
+}
 
 const swrOptions = {
     refreshInterval: 0,
     revalidateIfStale: true,
     revalidateOnMount: true,
-    revalidateOnFocus: false,
+    revalidateOnFocus: true,
     revalidateOnReconnect: true,
     dedupingInterval: 5000,
     shouldRetryOnError: false,
