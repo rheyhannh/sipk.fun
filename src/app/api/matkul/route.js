@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { cookies } from 'next/headers';
+import { cookies, headers } from 'next/headers';
 import { createServerClient } from '@supabase/ssr';
 import {
     encryptSyncAES,
@@ -19,13 +19,20 @@ const limiter = rateLimit({
 export async function DELETE(request) {
     const newHeaders = {};
     const userAccessToken = request.cookies.get(`${process.env.USER_SESSION_COOKIES_NAME}`)?.value;
+    const authorizationHeader = headers().get('Authorization');
     const cookieStore = cookies();
     const searchParams = request.nextUrl.searchParams;
     const matkulId = searchParams.get('id');
 
-    if (!userAccessToken) {
+    if (!userAccessToken || !authorizationHeader) {
         return NextResponse.json({ message: 'Unauthorized - Missing access token' }, {
             status: 401,
+        })
+    }
+
+    if (authorizationHeader !== 'Accesses_Token') {
+        return NextResponse.json({ message: 'Unauthorized - Invalid access token' }, {
+            status: 401
         })
     }
 
@@ -134,13 +141,20 @@ export async function DELETE(request) {
 export async function POST(request) {
     const newHeaders = {};
     const userAccessToken = request.cookies.get(`${process.env.USER_SESSION_COOKIES_NAME}`)?.value;
+    const authorizationHeader = headers().get('Authorization');
     const cookieStore = cookies();
     const searchParams = request.nextUrl.searchParams;
     const ref = searchParams.get('ref');
 
-    if (!userAccessToken) {
+    if (!userAccessToken || !authorizationHeader) {
         return NextResponse.json({ message: 'Unauthorized - Missing access token' }, {
             status: 401,
+        })
+    }
+
+    if (authorizationHeader !== 'Accesses_Token') {
+        return NextResponse.json({ message: 'Unauthorized - Invalid access token' }, {
+            status: 401
         })
     }
 
@@ -262,12 +276,17 @@ export async function POST(request) {
 export async function GET(request) {
     const userAccessToken = request.cookies.get(`${process.env.USER_SESSION_COOKIES_NAME}`)?.value;
     const cookieStore = cookies();
-    const cookieAuthOptions = { secure: true, httpOnly: true, maxAge: 2592000, sameSite: 'lax' };
-    const cookieAuthDeleteOptions = { secure: true, httpOnly: true, maxAge: -2592000, sameSite: 'lax' };
+    const authorizationHeader = headers().get('Authorization');
 
-    if (!userAccessToken) {
+    if (!userAccessToken || !authorizationHeader) {
         return NextResponse.json({ message: 'Unauthorized - Missing access token' }, {
             status: 401,
+        })
+    }
+
+    if (authorizationHeader !== 'Accesses_Token') {
+        return NextResponse.json({ message: 'Unauthorized - Invalid access token' }, {
+            status: 401
         })
     }
 

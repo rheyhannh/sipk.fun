@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { cookies } from 'next/headers';
+import { cookies, headers } from 'next/headers';
 import { createServerClient } from '@supabase/ssr';
 import {
     encryptSyncAES,
@@ -18,11 +18,18 @@ const limiter = rateLimit({
 
 export async function GET(request) {
     const userAccessToken = request.cookies.get(`${process.env.USER_SESSION_COOKIES_NAME}`)?.value;
+    const authorizationHeader = headers().get('Authorization');
     const cookieStore = cookies();
 
-    if (!userAccessToken) {
+    if (!userAccessToken || !authorizationHeader) {
         return NextResponse.json({ message: 'Unauthorized - Missing access token' }, {
             status: 401,
+        })
+    }
+
+    if (authorizationHeader !== 'Accesses_Token') {
+        return NextResponse.json({ message: 'Unauthorized - Invalid access token' }, {
+            status: 401
         })
     }
 
