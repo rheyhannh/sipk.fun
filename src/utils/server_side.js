@@ -131,3 +131,10 @@ export const cookieAuthOptions = { secure: true, httpOnly: true, maxAge: 2592000
  * `secure = true`, `httpOnly = true`, `maxAge = -2592000`, `sameSite = 'lax'`
  */
 export const cookieAuthDeleteOptions = { secure: true, httpOnly: true, maxAge: -2592000, sameSite: 'lax' };
+
+/**
+ * Options untuk set service cookie. 
+ * 
+ * `secure = false`, `httpOnly = false`, `maxAge = 2592000`, `sameSite = 'lax'`
+ */
+export const cookieServiceOptions = { secure: false, httpOnly: false, maxAge: 2592000, sameSite: 'lax' };
