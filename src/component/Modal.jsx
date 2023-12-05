@@ -482,12 +482,15 @@ export const PerubahanTerakhirDetail = () => {
 }
 
 export const PerubahanTerakhirConfirm = () => {
+    const userIdCookie = useCookies().get('s_user_id');
+
     return (
         <ModalContext.Consumer>
             {context => {
+                const type = context?.data?.current?.type ? context?.data?.current?.type : context?.data?.prev?.type;
+                const nama = context?.data?.current?.nama ? context?.data?.current?.nama : context?.data?.prev?.nama
+
                 const getConfirmMessage = () => {
-                    const type = context?.data?.current?.type ? context?.data?.current?.type : context?.data?.prev?.type;
-                    const nama = context?.data?.current?.nama ? context?.data?.current?.nama : context?.data?.prev?.nama
                     if (type === 'tambah') { return (<p>Kamu ingin menghapus <b style={{ fontWeight: '600' }}>{nama}</b> yang sudah ditambah?</p>) }
                     else if (type === 'hapus') { return (<p>Kamu ingin menambah kembali <b style={{ fontWeight: '600' }}>{nama}</b> yang sudah dihapus?</p>) }
                     else if (type === 'ubah') { return (<p>Kamu ingin mengubah <b style={{ fontWeight: '600' }}>{nama}</b> ke data sebelumnya?</p>) }
@@ -495,12 +498,138 @@ export const PerubahanTerakhirConfirm = () => {
                 }
 
                 const getConfirmTitle = () => {
-                    const type = context?.data?.current?.type ? context?.data?.current?.type : context?.data?.prev?.type
                     if (type === 'tambah') { return `Hapus Matakuliah` }
                     else if (type === 'hapus') { return `Tambah Matakuliah` }
                     else if (type === 'ubah') { return `Ubah Matakuliah` }
                     else { return 0; }
                 }
+
+                const handleUndoMatkul = async (e) => {
+                    if (type === 'tambah') {
+                        e.preventDefault();
+
+                        context.handleModalClose();
+
+                        try {
+                            const response = await fetch(`/api/matkulku?id=${context?.data?.matkul_id}`, {
+                                method: 'DELETE',
+                            })
+
+                            if (!response.ok) {
+                                try {
+                                    const { message } = await response.json();
+                                    if (message) { throw new Error(message); }
+                                    else { throw new Error(`Terjadi kesalahan`); }
+                                } catch (error) {
+                                    console.error(error);
+                                    throw error;
+                                }
+                            } else {
+                                toast.success(`${context?.data?.current?.nama} berhasil dihapus`, { duration: 4000, position: 'top-left' })
+                                try {
+                                    const { ref } = await response.json();
+                                    if (!ref) { throw new Error('Failed to update cache') }
+                                    mutate(['/api/matkulku', userIdCookie], undefined, {
+                                        populateCache: (_, currentMatkul) => {
+                                            if (currentMatkul.length - 1 === 0) { return [] }
+                                            else {
+                                                const filteredMatkul = currentMatkul.filter(matkul => matkul.id !== `${context?.data?.matkul_id}`)
+                                                return [...filteredMatkul]
+                                            }
+                                        },
+                                        revalidate: false
+                                    })
+                                    mutate(['/api/matkul-history', userIdCookie], ref, {
+                                        populateCache: (ref, currentRef) => {
+                                            if (currentRef.length === 1) { return [ref] }
+                                            else {
+                                                const filteredRef = currentRef.filter(refs => refs.id !== ref.id)
+                                                return [ref, ...filteredRef]
+                                            }
+                                        },
+                                        revalidate: false
+                                    })
+                                } catch {
+                                    mutate(['/api/matkulku', userIdCookie]);
+                                    mutate(['/api/matkul-history', userIdCookie]);
+                                }
+                            }
+                        } catch (error) {
+                            toast.error(error.message ? error.message : 'Terjadi kesalahan', { duration: 4000, position: 'top-left' })
+                        }
+                    }
+                    else if (type === 'hapus') {
+                        e.preventDefault();
+
+                        context.handleModalClose();
+
+                        try {
+                            const response = await fetch(`/api/matkulku?ref=${context?.data?.matkul_id}`, {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json'
+                                },
+                                body: JSON.stringify({
+                                    nama: context?.data?.current?.nama,
+                                    semester: context?.data?.current?.semester,
+                                    sks: context?.data?.current?.sks,
+                                    nilai: {
+                                        indeks: context?.data?.current?.nilai?.indeks,
+                                        bobot: context?.data?.current?.nilai?.bobot,
+                                        akhir: context?.data?.current?.nilai?.akhir
+                                    },
+                                    dapat_diulang: context?.data?.current?.dapat_diulang,
+                                    target_nilai: {
+                                        indeks: context?.data?.current?.target_nilai?.indeks,
+                                        bobot: context?.data?.current?.target_nilai?.bobot
+                                    }
+                                }),
+                            })
+
+                            if (!response.ok) {
+                                try {
+                                    const { message } = await response.json();
+                                    if (message) { throw new Error(message); }
+                                    else { throw new Error(`Terjadi kesalahan`); }
+                                } catch (error) {
+                                    console.error(error);
+                                    throw error;
+                                }
+                            } else {
+                                toast.success(`${context?.data?.current?.nama} berhasil ditambah`, { duration: 4000, position: 'top-left' })
+                                try {
+                                    const { matkul, ref } = await response.json();
+                                    if (!matkul || !ref) { throw new Error('Failed to update cache') }
+                                    mutate(['/api/matkulku', userIdCookie], matkul, {
+                                        populateCache: (matkul, currentMatkul) => {
+                                            if (currentMatkul.length === 0) { return [matkul] }
+                                            else { return [matkul, ...currentMatkul] }
+                                        },
+                                        revalidate: false
+                                    })
+                                    mutate(['/api/matkul-history', userIdCookie], ref, {
+                                        populateCache: (ref, currentRef) => {
+                                            if (currentRef.length === 1) { return [ref] }
+                                            else {
+                                                const filteredRef = currentRef.filter(refs => refs.id !== ref.id)
+                                                return [ref, ...filteredRef]
+                                            }
+                                        },
+                                        revalidate: false
+                                    })
+                                } catch {
+                                    mutate(['/api/matkulku', userIdCookie]);
+                                    mutate(['/api/matkul-history', userIdCookie]);
+                                }
+                            }
+                        } catch (error) {
+                            toast.error(error.message ? error.message : 'Terjadi kesalahan', { duration: 4000, position: 'top-left' })
+                        }
+                    }
+                    else if (type === 'ubah') { console.log(`Ubah Matakuliah ${context?.data?.matkul_id}`) }
+                    else { return 0; }
+                }
+
                 return (
                     <div className={`${styles.backdrop} ${context.active ? styles.active : ''}`}>
                         <div className={`${styles.perubahan__terakhir} ${styles.confirm}`} id='modal'>
@@ -520,7 +649,7 @@ export const PerubahanTerakhirConfirm = () => {
                             <div className={styles.form__action}>
                                 <div
                                     className={`${styles.btn} ${styles.confirm} ${context?.data?.current?.type ? styles[context?.data?.current?.type] : styles[context?.data?.prev?.type]}`}
-                                    onClick={() => { console.log(`Hapus ${context?.data?.matkul_id}`) }}
+                                    onClick={(e) => { handleUndoMatkul(e) }}
                                 >
                                     <h3>Ya</h3>
                                 </div>
