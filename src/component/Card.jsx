@@ -527,7 +527,7 @@ export function History({ state, data, universitas, count }) {
         return (
             <>
                 {getArrayLength().map((item, index) => {
-                    const style = universitas[item?.current?.nilai.indeks ? item?.current?.nilai.indeks : item?.prev?.nilai.indeks]?.style
+                    const style = universitas[item?.current?.nilai?.indeks ? item?.current?.nilai?.indeks : item?.prev?.nilai?.indeks]?.style
                     return (
                         <div
                             className={styles.history}
@@ -553,7 +553,7 @@ export function History({ state, data, universitas, count }) {
                                     <small>{postedAt(item?.last_change_at, 'unix')}</small>
                                 </div>
                                 <div className={styles.history__value}>
-                                    <h5 style={{ color: style ? `var(--${style}-color)` : '' }}>{item?.current?.nilai.indeks ? item?.current?.nilai.indeks : item?.prev?.nilai.indeks}</h5>
+                                    <h5 style={{ color: style ? `var(--${style}-color)` : '' }}>{item?.current?.nilai?.indeks ? item?.current?.nilai?.indeks : item?.prev?.nilai?.indeks}</h5>
                                     <h5>{item?.current?.sks ? item?.current?.sks : item?.prev?.sks} SKS</h5>
                                 </div>
                             </div>
