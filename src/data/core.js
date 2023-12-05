@@ -27,7 +27,7 @@ export function useUser(custom) {
 export function useMatkul(custom) {
     const userIdCookie = useCookies().get('s_user_id');
     const options = custom ? custom : swrOptions;
-    return useSWR(['/api/matkulku', userIdCookie], ([url, id]) => fetchWithUserId(url, id), options)
+    return useSWR(['/api/matkul', userIdCookie], ([url, id]) => fetchWithUserId(url, id), options)
 }
 
 export function useMatkulHistory(custom) {

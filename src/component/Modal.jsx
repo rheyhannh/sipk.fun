@@ -511,7 +511,7 @@ export const PerubahanTerakhirConfirm = () => {
                         context.handleModalClose();
 
                         try {
-                            const response = await fetch(`/api/matkulku?id=${context?.data?.matkul_id}`, {
+                            const response = await fetch(`/api/matkul?id=${context?.data?.matkul_id}`, {
                                 method: 'DELETE',
                             })
 
@@ -529,7 +529,7 @@ export const PerubahanTerakhirConfirm = () => {
                                 try {
                                     const { ref } = await response.json();
                                     if (!ref) { throw new Error('Failed to update cache') }
-                                    mutate(['/api/matkulku', userIdCookie], undefined, {
+                                    mutate(['/api/matkul', userIdCookie], undefined, {
                                         populateCache: (_, currentMatkul) => {
                                             if (currentMatkul.length - 1 === 0) { return [] }
                                             else {
@@ -550,7 +550,7 @@ export const PerubahanTerakhirConfirm = () => {
                                         revalidate: false
                                     })
                                 } catch {
-                                    mutate(['/api/matkulku', userIdCookie]);
+                                    mutate(['/api/matkul', userIdCookie]);
                                     mutate(['/api/matkul-history', userIdCookie]);
                                 }
                             }
@@ -564,7 +564,7 @@ export const PerubahanTerakhirConfirm = () => {
                         context.handleModalClose();
 
                         try {
-                            const response = await fetch(`/api/matkulku?ref=${context?.data?.matkul_id}`, {
+                            const response = await fetch(`/api/matkul?ref=${context?.data?.matkul_id}`, {
                                 method: 'POST',
                                 headers: {
                                     'Content-Type': 'application/json'
@@ -600,7 +600,7 @@ export const PerubahanTerakhirConfirm = () => {
                                 try {
                                     const { matkul, ref } = await response.json();
                                     if (!matkul || !ref) { throw new Error('Failed to update cache') }
-                                    mutate(['/api/matkulku', userIdCookie], matkul, {
+                                    mutate(['/api/matkul', userIdCookie], matkul, {
                                         populateCache: (matkul, currentMatkul) => {
                                             if (currentMatkul.length === 0) { return [matkul] }
                                             else { return [matkul, ...currentMatkul] }
@@ -618,7 +618,7 @@ export const PerubahanTerakhirConfirm = () => {
                                         revalidate: false
                                     })
                                 } catch {
-                                    mutate(['/api/matkulku', userIdCookie]);
+                                    mutate(['/api/matkul', userIdCookie]);
                                     mutate(['/api/matkul-history', userIdCookie]);
                                 }
                             }
@@ -741,7 +741,7 @@ export const TambahMatkul = () => {
                     context.handleModalClose();
 
                     try {
-                        const response = await fetch('/api/matkulku', {
+                        const response = await fetch('/api/matkul', {
                             method: 'POST',
                             headers: {
                                 'Content-Type': 'application/json'
@@ -763,7 +763,7 @@ export const TambahMatkul = () => {
                             try {
                                 const { matkul, ref } = await response.json();
                                 if (!matkul || !ref) { throw new Error('Failed to update cache') }
-                                mutate(['/api/matkulku', userIdCookie], matkul, {
+                                mutate(['/api/matkul', userIdCookie], matkul, {
                                     populateCache: (matkul, currentMatkul) => {
                                         if (currentMatkul.length === 0) { return [matkul] }
                                         else { return [matkul, ...currentMatkul] }
@@ -785,7 +785,7 @@ export const TambahMatkul = () => {
                                     revalidate: false
                                 })
                             } catch {
-                                mutate(['/api/matkulku', userIdCookie]);
+                                mutate(['/api/matkul', userIdCookie]);
                                 mutate(['/api/matkul-history', userIdCookie]);
                             }
                         }

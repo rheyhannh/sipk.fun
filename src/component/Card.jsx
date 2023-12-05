@@ -33,7 +33,7 @@ import { FaInfo, FaUndo } from "react-icons/fa";
 */
 export function Summary({ state, icon, color, title, data }) {
     const handleRetry = () => {
-        mutate('/api/matkulku')
+        mutate('/api/matkul')
         mutate('/api/me')
     }
 
