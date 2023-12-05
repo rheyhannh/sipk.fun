@@ -83,8 +83,9 @@ export const Logout = () => {
             const response = await fetch('/api/logout', {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json'
-                },
+                    'Authorization': `Accesses_Token`,
+                    'Content-Type': 'application/json',
+                }
             })
 
             if (!response.ok) {
@@ -513,6 +514,10 @@ export const PerubahanTerakhirConfirm = () => {
                         try {
                             const response = await fetch(`/api/matkul?id=${context?.data?.matkul_id}`, {
                                 method: 'DELETE',
+                                headers: {
+                                    'Authorization': `Accesses_Token`,
+                                    'Content-Type': 'application/json',
+                                }
                             })
 
                             if (!response.ok) {
@@ -567,7 +572,8 @@ export const PerubahanTerakhirConfirm = () => {
                             const response = await fetch(`/api/matkul?ref=${context?.data?.matkul_id}`, {
                                 method: 'POST',
                                 headers: {
-                                    'Content-Type': 'application/json'
+                                    'Authorization': `Accesses_Token`,
+                                    'Content-Type': 'application/json',
                                 },
                                 body: JSON.stringify({
                                     nama: context?.data?.current?.nama,
@@ -744,7 +750,8 @@ export const TambahMatkul = () => {
                         const response = await fetch('/api/matkul', {
                             method: 'POST',
                             headers: {
-                                'Content-Type': 'application/json'
+                                'Authorization': `Accesses_Token`,
+                                'Content-Type': 'application/json',
                             },
                             body: JSON.stringify(validatedData),
                         })
