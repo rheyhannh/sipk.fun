@@ -64,12 +64,6 @@ export default async function middleware(request) {
                 set(name, value, options) {
                     const encryptedSession = encryptSyncAES(value);
                     if (encryptedSession) {
-                        request.cookies.set({
-                            name: process.env.USER_SESSION_COOKIES_NAME,
-                            value: encryptedSession,
-                            ...cookieAuthOptions
-                        })
-
                         response = NextResponse.next({
                             request: {
                                 headers: request.headers,
@@ -82,12 +76,6 @@ export default async function middleware(request) {
                             ...cookieAuthOptions
                         })
                     } else {
-                        request.cookies.set({
-                            name: process.env.USER_SESSION_COOKIES_NAME,
-                            value: encryptedSession,
-                            ...cookieAuthOptions
-                        })
-
                         response = NextResponse.next({
                             request: {
                                 headers: request.headers,
@@ -102,12 +90,6 @@ export default async function middleware(request) {
                     }
                 },
                 remove(name, options) {
-                    request.cookies.set({
-                        name: process.env.USER_SESSION_COOKIES_NAME,
-                        value: '',
-                        ...cookieAuthDeleteOptions,
-                    })
-
                     const loginUrl = new URL("/users", request.url);
                     loginUrl.searchParams.set('error', 'session');
                     loginUrl.searchParams.set('action', 'login');
@@ -131,12 +113,6 @@ export default async function middleware(request) {
 
     const { data, error } = await supabase.auth.getSession();
     if (error || !data.session) {
-        request.cookies.set({
-            name: process.env.USER_SESSION_COOKIES_NAME,
-            value: '',
-            ...cookieAuthDeleteOptions,
-        })
-
         const loginUrl = new URL("/users", request.url);
         loginUrl.searchParams.set('error', 'session');
         loginUrl.searchParams.set('action', 'login');
