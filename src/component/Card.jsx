@@ -574,6 +574,7 @@ export function History({ state, data, universitas, count }) {
         const errorElement = Array.from({ length: 3 }, (_, index) => (
             <div
                 className={styles.history}
+                key={crypto.randomUUID()}
             >
                 <div className={styles.error__content} onClick={handleRetry}>
                     <h5>Gagal mengambil data</h5>
