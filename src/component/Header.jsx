@@ -9,6 +9,7 @@ import { useContext, useEffect, useState } from 'react'
 
 // ========== COMPONENT DEPEDENCY ========== //
 import { mutate } from 'swr';
+import { useCookies } from 'next-client-cookies';
 import Skeleton from "react-loading-skeleton";
 import toast from 'react-hot-toast';
 import { animateScroll as scroll } from 'react-scroll';
@@ -41,12 +42,14 @@ function Right() {
     const {
         theme, setTheme,
     } = useContext(GlobalContext);
-
+    
+    const userIdCookie = useCookies().get('s_user_id');
+    
     const helloDark = () => toast('Dark Mode', { duration: 2000, icon: <FiMoon size={'17px'} /> });
     const helloLight = () => toast('Light Mode', { duration: 2000, icon: <FiSun size={'17px'} /> });
     
     const handleRetry = () => {
-        mutate('/api/me')
+        mutate(['/api/me', userIdCookie])
     }
 
     const handleChangeTheme = (newTheme) => {
@@ -92,9 +95,9 @@ function Right() {
                     </span>
                 </div>
 
-                <div className={`${styles.dashboard__profile} ${styles.error}`}>
+                <div className={`${styles.dashboard__profile} ${styles.error}`} onClick={handleRetry}>
                     <h5>Gagal mengambil data</h5>
-                    <h2 onClick={handleRetry}>&#x21bb;</h2>
+                    <h2>&#x21bb;</h2>
                 </div>
             </>
         )

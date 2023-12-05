@@ -9,6 +9,7 @@ import { useContext, useEffect, useState } from 'react';
 
 // ========== COMPONENT DEPEDENCY ========== //
 import { mutate } from 'swr';
+import { useCookies } from 'next-client-cookies';
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import CountUp from 'react-countup';
 import { DashboardContext } from "./provider/Dashboard";
@@ -32,9 +33,10 @@ import { FaInfo, FaUndo } from "react-icons/fa";
 ============================== CODE START HERE ==============================
 */
 export function Summary({ state, icon, color, title, data }) {
+    const userIdCookie = useCookies().get('s_user_id');
     const handleRetry = () => {
-        mutate('/api/matkul')
-        mutate('/api/me')
+        mutate(['/api/matkul', userIdCookie])
+        mutate(['/api/me', userIdCookie])
     }
 
     const SkeletonCard = () => (
@@ -401,8 +403,9 @@ export function Notification({ state, data }) {
 }
 
 export function History({ state, data, universitas, count }) {
+    const userIdCookie = useCookies().get('s_user_id');
     const handleRetry = () => {
-        mutate('/api/history')
+        mutate(['/api/matkul-history', userIdCookie])
     }
 
     const {
