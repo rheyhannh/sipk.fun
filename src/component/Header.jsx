@@ -15,6 +15,7 @@ import toast from 'react-hot-toast';
 import { animateScroll as scroll } from 'react-scroll';
 import { GlobalContext } from './provider/Global';
 import { DashboardContext } from './provider/Dashboard';
+import { ModalContext } from './provider/Modal';
 import { Spinner } from "./loader/Loading";
 
 // ========== DATA DEPEDENCY ========== //
@@ -42,12 +43,18 @@ function Right() {
     const {
         theme, setTheme,
     } = useContext(GlobalContext);
-    
+    const {
+        setModal,
+        setActive,
+        setData
+    } = useContext(ModalContext);
+
+
     const userIdCookie = useCookies().get('s_user_id');
-    
+
     const helloDark = () => toast('Dark Mode', { duration: 2000, icon: <FiMoon size={'17px'} /> });
     const helloLight = () => toast('Light Mode', { duration: 2000, icon: <FiSun size={'17px'} /> });
-    
+
     const handleRetry = () => {
         mutate(['/api/me', userIdCookie])
     }
@@ -81,6 +88,14 @@ function Right() {
 
             return truncatedText.trim();
         }
+    }
+
+    const handleProfilModal = () => {
+        setData(data);
+        setModal('profil');
+        setTimeout(() => {
+            setActive(true);
+        }, 50)
     }
 
     if (error) {
@@ -176,7 +191,7 @@ function Right() {
                 </span>
             </div>
 
-            <div className={styles.dashboard__profile}>
+            <div className={styles.dashboard__profile} onClick={() => { handleProfilModal() }}>
                 <div className={`${styles.dashboard__profile_info}`}>
                     <p>
                         <b>

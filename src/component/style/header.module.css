@@ -67,6 +67,7 @@
 
 .dashboard__profile {
     display: none;
+    cursor: pointer;
 }
 
 .dashboard__profile_info {
