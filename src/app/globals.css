@@ -193,7 +193,8 @@ body.disable_scroll {
 
 body,
 input,
-select {
+select,
+button {
     font-family: var(--poppins-font);
 }
 
