@@ -9,7 +9,8 @@ import {
     Logout,
     PerubahanTerakhirDetail,
     PerubahanTerakhirConfirm,
-    TambahMatkul
+    TambahMatkul,
+    Profil
 } from "../Modal"
 
 /*
@@ -53,7 +54,8 @@ export const ModalProvider = ({ children }) => {
             logout: <Logout/>,
             perubahanTerakhirDetail: <PerubahanTerakhirDetail />,
             perubahanTerakhirConfirm: <PerubahanTerakhirConfirm />,
-            tambahMatkul: <TambahMatkul/>
+            tambahMatkul: <TambahMatkul/>,
+            profil: <Profil/>,
         }
     }
 

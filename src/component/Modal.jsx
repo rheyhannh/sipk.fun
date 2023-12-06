@@ -673,6 +673,7 @@ export const PerubahanTerakhirConfirm = () => {
 
 export const TambahMatkul = () => {
     const { data: user } = useUser({ revalidateOnMount: false })
+    const userIdCookie = useCookies().get('s_user_id');
     const penilaian = getPenilaianUniversitas(user[0]?.university_id);
     const penilaianKey = Object.keys(penilaian);
     const [nama, setNama] = useState('');
@@ -682,8 +683,6 @@ export const TambahMatkul = () => {
     const [dapatDiulang, setDapatDiulang] = useState(true);
     const [targetNilai, setTargetNilai] = useState(4);
     const [errorMessage, setErrorMessage] = useState('');
-
-    const userIdCookie = useCookies().get('s_user_id');
 
     const handleNamaChange = (e) => {
         const newNama = e.target.value;
@@ -953,9 +952,294 @@ export const TambahMatkul = () => {
                                 </div>
                             </div>
                             <div className={styles.form__action}>
+                                {/* Use div instead button here */}
                                 <button type='submit' className={styles.btn}>
                                     <h3>Tambah</h3>
                                 </button>
+                            </div>
+                        </form>
+                    </div>
+                )
+            }}
+        </ModalContext.Consumer>
+    )
+}
+
+export const Profil = () => {
+    const userIdCookie = useCookies().get('s_user_id');
+    const [editProfil, setEditProfil] = useState(false);
+    const [nama, setNama] = useState('default');
+    const [nickname, setNickname] = useState('default');
+    const [universitas, setUniversitas] = useState('default');
+    const [jurusan, setJurusan] = useState('default');
+    const [sksTarget, setSksTarget] = useState('-1');
+    const [matkulTarget, setMatkulTarget] = useState('-1');
+    const [ipkTarget, setIpkTarget] = useState('-1');
+    const [errorMessage, setErrorMessage] = useState('');
+
+    const handleNamaChange = (e) => {
+        const newNama = e.target.value;
+        if (newNama.length <= 50) {
+            setNama(newNama);
+        }
+    }
+
+    const handleNicknameChange = (e) => {
+        const newNickname = e.target.value;
+        if (newNickname.length <= 20) {
+            setNickname(newNickname);
+        }
+    }
+
+    const handleJurusanChange = (e) => {
+        const newJurusan = e.target.value;
+        if (newJurusan.length <= 30) {
+            setJurusan(newJurusan);
+        }
+    }
+
+    const handleSksTargetChange = (e) => {
+        const newSksTarget = e.target.value;
+        setSksTarget(newSksTarget);
+    }
+
+    const handleMatkulTargetChange = (e) => {
+        const newMatkulTarget = e.target.value;
+        setMatkulTarget(newMatkulTarget);
+    }
+
+    const handleIpkTargetChange = (e) => {
+        const newIpkTarget = e.target.value;
+        setIpkTarget(newIpkTarget);
+    }
+
+    return (
+        <ModalContext.Consumer>
+            {context => {
+                const resetInputValue = () => {
+                    setNama('default');
+                    setNickname('default');
+                    setUniversitas('default');
+                    setJurusan('default');
+                    setSksTarget('-1');
+                    setMatkulTarget('-1');
+                    setIpkTarget('-1');
+                    setErrorMessage('');
+                }
+
+                return (
+                    <div className={`${styles.backdrop} ${context.active ? styles.active : ''}`}>
+                        <form className={`${styles.profil} ${editProfil ? styles.confirm : ''}`} id='modal'>
+                            <div className={styles.top}>
+                                <div className={styles.title}>
+                                    <h2>{editProfil ? 'Edit Profil' : 'Profil'}</h2>
+                                </div>
+                                <div className={styles.close} onClick={() => { context.handleModalClose() }}>
+                                    <FaTimes />
+                                </div>
+                            </div>
+
+                            <div className={styles.inner}>
+                                <div style={{ marginBottom: '1.5rem', textAlign: 'center', color: 'var(--danger-color)' }}>
+                                    {errorMessage}
+                                </div>
+                                <div className={styles.form__input_field}>
+                                    <div>
+                                        <input
+                                            type="text"
+                                            id="nama"
+                                            placeholder=" "
+                                            className={`${styles.form__input} ${styles.max_length}`}
+                                            value={nama !== 'default' ? nama : context?.data[0]?.fullname || '-'}
+                                            onChange={handleNamaChange}
+                                            onFocus={() => { setErrorMessage('') }}
+                                            disabled={!editProfil}
+                                            required
+                                        />
+                                        <label
+                                            htmlFor="nama"
+                                            className={styles.form__label}
+                                        >
+                                            Nama Lengkap
+                                        </label>
+                                    </div>
+
+                                    <div className={`${styles.form__input_length} ${nama.length >= 50 ? styles.max : ''}`}>
+                                        <small>{nama !== 'default' ? nama.length : context?.data[0]?.fullname?.length || '0'}/50</small>
+                                    </div>
+                                </div>
+                                <div className={styles.nc}>
+                                    <div className={styles.form__input_field}>
+                                        <div>
+                                            <input
+                                                type="text"
+                                                id="nickname"
+                                                placeholder=" "
+                                                className={`${styles.form__input} ${styles.max_length}`}
+                                                value={nickname !== 'default' ? nickname : context?.data[0]?.nickname || ''}
+                                                onChange={handleNicknameChange}
+                                                onFocus={() => { setErrorMessage('') }}
+                                                disabled={!editProfil}
+                                                required
+                                            />
+                                            <label
+                                                htmlFor="nickname"
+                                                className={styles.form__label}
+                                            >
+                                                Nickname
+                                            </label>
+                                        </div>
+
+                                        <div className={`${styles.form__input_length} ${nickname.length >= 20 ? styles.max : ''}`}>
+                                            <small>{nickname !== 'default' ? nickname.length : context?.data[0]?.nickname?.length || '0'}/20</small>
+                                        </div>
+                                    </div>
+
+                                    <div className={styles.form__input_field}>
+                                        <div>
+                                            <input
+                                                type="text"
+                                                id="jurusan"
+                                                placeholder=" "
+                                                className={`${styles.form__input} ${styles.max_length}`}
+                                                value={jurusan !== 'default' ? jurusan : context?.data[0]?.jurusan || ''}
+                                                onChange={handleJurusanChange}
+                                                onFocus={() => { setErrorMessage('') }}
+                                                disabled={!editProfil}
+                                                required
+                                            />
+                                            <label
+                                                htmlFor="jurusan"
+                                                className={styles.form__label}
+                                            >
+                                                Jurusan
+                                            </label>
+                                        </div>
+
+                                        <div className={`${styles.form__input_length} ${jurusan.length >= 30 ? styles.max : ''}`}>
+                                            <small>{jurusan !== 'default' ? jurusan.length : context?.data[0]?.jurusan?.length || '0'}/30</small>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className={styles.form__input_field}>
+                                    <div>
+                                        <input
+                                            type="text"
+                                            id="universitas"
+                                            placeholder=" "
+                                            className={`${styles.form__input}`}
+                                            value={universitas !== 'default' ? universitas : context?.data[0]?.university || '-'}
+                                            disabled={true}
+                                            readOnly={true}
+                                            required
+                                        />
+                                        <label
+                                            htmlFor="universitas"
+                                            className={styles.form__label}
+                                        >
+                                            Universitas
+                                        </label>
+                                    </div>
+                                </div>
+                                <h3 style={{ marginTop: 'var(--m-0-75)', textAlign: 'center' }}>Target</h3>
+                                <div style={{
+                                    display: 'grid',
+                                    gridTemplateColumns: '25% 1fr 25%',
+                                    gap: '1rem'
+                                }}>
+                                    <div className={styles.form__input_field}>
+                                        <div>
+                                            <input
+                                                type="number"
+                                                id="sksTarget"
+                                                placeholder=" "
+                                                className={`${styles.form__input}`}
+                                                value={sksTarget !== '-1' ? sksTarget : context?.data[0]?.sks_target || ''}
+                                                onChange={handleSksTargetChange}
+                                                onFocus={() => { setErrorMessage('') }}
+                                                disabled={!editProfil}
+                                                required
+                                            />
+                                            <label
+                                                htmlFor="sksTarget"
+                                                className={styles.form__label}
+                                            >
+                                                Sks
+                                            </label>
+                                        </div>
+                                    </div>
+
+                                    <div className={styles.form__input_field}>
+                                        <div>
+                                            <input
+                                                type="number"
+                                                id="matkulTarget"
+                                                placeholder=" "
+                                                className={`${styles.form__input}`}
+                                                value={matkulTarget !== '-1' ? matkulTarget : context?.data[0]?.matkul_target || ''}
+                                                onChange={handleMatkulTargetChange}
+                                                onFocus={() => { setErrorMessage('') }}
+                                                disabled={!editProfil}
+                                                required
+                                            />
+                                            <label
+                                                htmlFor="matkulTarget"
+                                                className={styles.form__label}
+                                            >
+                                                Matakuliah
+                                            </label>
+                                        </div>
+                                    </div>
+
+                                    <div className={styles.form__input_field}>
+                                        <div>
+                                            <input
+                                                type="number"
+                                                id="ipkTarget"
+                                                placeholder=" "
+                                                className={`${styles.form__input}`}
+                                                value={ipkTarget !== '-1' ? ipkTarget : context?.data[0]?.ipk_target || ''}
+                                                onChange={handleIpkTargetChange}
+                                                onFocus={() => { setErrorMessage('') }}
+                                                disabled={!editProfil}
+                                                required
+                                            />
+                                            <label
+                                                htmlFor="ipkTarget"
+                                                className={styles.form__label}
+                                            >
+                                                Ipk
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div
+                                style={editProfil ? {
+                                    display: 'grid',
+                                    gridTemplateColumns: 'repeat(2,1fr)',
+                                    gap: '1rem'
+                                } : {}}
+                                className={styles.form__action}
+                            >
+                                {editProfil ?
+                                    <>
+                                        <div style={{ marginTop: '0' }} className={`${styles.btn} ${styles.cancel}`} onClick={() => { setEditProfil(false); resetInputValue(); }}>
+                                            <h3>Batalkan</h3>
+                                        </div>
+                                        <div
+                                            className={`${styles.btn}`}
+                                            type='submit'
+                                            onClick={(e) => { console.log('Submit') }}
+                                        >
+                                            <h3>Simpan</h3>
+                                        </div>
+                                    </>
+                                    :
+                                    <div className={styles.btn} onClick={() => { setEditProfil(true); }}>
+                                        <h3>Edit Profil</h3>
+                                    </div>
+                                }
                             </div>
                         </form>
                     </div>

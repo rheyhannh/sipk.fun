@@ -24,7 +24,8 @@
 .perubahan__terakhir,
 .tambah__matakuliah,
 .panduan__daftar,
-.logout {
+.logout,
+.profil {
     display: grid;
     grid-template-rows: 30px auto 50px;
     gap: 1rem;
@@ -58,6 +59,10 @@
     max-height: 390px;
 }
 
+.profil {
+    max-height: 455px;
+}
+
 .panduan__daftar {
     max-height: 550px;
 }
@@ -65,6 +70,7 @@
 .backdrop.active .perubahan__terakhir,
 .backdrop.active .tambah__matakuliah,
 .backdrop.active .panduan__daftar,
+.backdrop.active .profil,
 .backdrop.active .logout {
     transform: scale(1) translateY(0);
 }
@@ -93,7 +99,7 @@
 }
 
 .inner {
-    padding-right: .6rem;
+    padding: 0 .6rem;
     overflow: auto;
 }
 
@@ -167,6 +173,8 @@
 }
 
 .form__input_length {
+    opacity: 0;
+    visibility: hidden;
     position: absolute;
     right: 1rem;
     display: flex;
@@ -175,6 +183,12 @@
     width: 25px;
     height: 100%;
     color: var(--infoDark-color);
+    transition: opacity var(--transition-default) ease;
+}
+
+.form__input_field:focus-within .form__input_length {
+    opacity: 1;
+    visibility: visible;
 }
 
 .form__input_length.max {
@@ -256,11 +270,13 @@
     color: var(--logo-second-color);
 }
 
-.tambah__matakuliah .form__input:focus+.form__label {
+.tambah__matakuliah .form__input:focus+.form__label,
+.profil .form__input:focus+.form__label {
     color: var(--logo-second-color);
 }
 
-.tambah__matakuliah .form__input:not(:placeholder-shown).form__input:not(:focus)+.form__label {
+.tambah__matakuliah .form__input:not(:placeholder-shown).form__input:not(:focus)+.form__label,
+.profil .form__input:not(:placeholder-shown).form__input:not(:focus)+.form__label {
     color: var(--logo-second-color);
 }
 
@@ -283,7 +299,7 @@
     border-radius: .4rem;
     background: var(--users-btn-alt);
     color: var(--white-color);
-    transition: all var(--transition-default) ease-in-out;
+    /* transition: all var(--transition-default) ease-in-out; */
 }
 
 .form__action .btn.confirm.hapus {
@@ -305,6 +321,12 @@
     color: var(--dark-color);
 }
 
+.nc {
+    display: grid;
+    grid-template-columns: 45% 1fr;
+    gap: 1rem;
+}
+
 @media (hover: hover) and (pointer: fine) {
     .inner::-webkit-scrollbar-thumb:hover {
         border-radius: .25rem;
@@ -313,19 +335,22 @@
 
     .perubahan__terakhir:hover .inner::-webkit-scrollbar,
     .tambah__matakuliah:hover .inner::-webkit-scrollbar,
-    .panduan__daftar:hover .inner::-webkit-scrollbar {
+    .panduan__daftar:hover .inner::-webkit-scrollbar,
+    .profil:hover .inner::-webkit-scrollbar {
         visibility: visible;
     }
 
     .perubahan__terakhir:hover .inner::-webkit-scrollbar-thumb,
     .tambah__matakuliah:hover .inner::-webkit-scrollbar-thumb,
-    .panduan__daftar:hover .inner::-webkit-scrollbar-thumb {
+    .panduan__daftar:hover .inner::-webkit-scrollbar-thumb,
+    .profil:hover .inner::-webkit-scrollbar-thumb {
         visibility: visible;
     }
 
     .perubahan__terakhir:hover .inner::-webkit-scrollbar-thumb:hover,
     .tambah__matakuliah:hover .inner::-webkit-scrollbar-thumb:hover,
-    .panduan__daftar:hover .inner::-webkit-scrollbar-thumb:hover {
+    .panduan__daftar:hover .inner::-webkit-scrollbar-thumb:hover,
+    .profil:hover .inner::-webkit-scrollbar-thumb:hover {
         visibility: visible;
     }
 
@@ -350,12 +375,22 @@
     }
 }
 
+@media screen and (max-width: 425px) {
+    .nc {
+        display: grid;
+        grid-template-columns: none;
+        grid-template-rows: auto;
+        gap: 0;
+    }
+}
+
 @media screen and (max-width: 768px) {
 
     .perubahan__terakhir,
     .perubahan__terakhir.ubah,
     .tambah__matakuliah,
-    .panduan__daftar {
+    .panduan__daftar,
+    .profil {
         max-height: none;
         max-width: none;
         padding: 2rem 1rem;
