@@ -77,13 +77,15 @@ export const PanduanDaftar = () => {
 
 export const Logout = () => {
     const router = useRouter();
+    const accessToken = useCookies().get('s_access_token');
 
     const handleLogout = async () => {
         try {
+            if (!accessToken) { throw new Error('Missing access token') }
             const response = await fetch('/api/logout', {
                 method: 'POST',
                 headers: {
-                    'Authorization': `Accesses_Token`,
+                    'Authorization': `Bearer ${accessToken}`,
                     'Content-Type': 'application/json',
                 }
             })
@@ -484,6 +486,7 @@ export const PerubahanTerakhirDetail = () => {
 
 export const PerubahanTerakhirConfirm = () => {
     const userIdCookie = useCookies().get('s_user_id');
+    const accessToken = useCookies().get('s_access_token');
 
     return (
         <ModalContext.Consumer>
@@ -512,10 +515,12 @@ export const PerubahanTerakhirConfirm = () => {
                         context.handleModalClose();
 
                         try {
+                            if (!accessToken) { throw new Error('Missing access token') }
+                            if (!userIdCookie) { throw new Error('Missing user id')}
                             const response = await fetch(`/api/matkul?id=${context?.data?.matkul_id}`, {
                                 method: 'DELETE',
                                 headers: {
-                                    'Authorization': `Accesses_Token`,
+                                    'Authorization': `Bearer ${accessToken}`,
                                     'Content-Type': 'application/json',
                                 }
                             })
@@ -569,10 +574,12 @@ export const PerubahanTerakhirConfirm = () => {
                         context.handleModalClose();
 
                         try {
+                            if (!accessToken) { throw new Error('Missing access token') }
+                            if (!userIdCookie) { throw new Error('Missing user id')}
                             const response = await fetch(`/api/matkul?ref=${context?.data?.matkul_id}`, {
                                 method: 'POST',
                                 headers: {
-                                    'Authorization': `Accesses_Token`,
+                                    'Authorization': `Bearer ${accessToken}`,
                                     'Content-Type': 'application/json',
                                 },
                                 body: JSON.stringify({
@@ -674,6 +681,7 @@ export const PerubahanTerakhirConfirm = () => {
 export const TambahMatkul = () => {
     const { data: user } = useUser({ revalidateOnMount: false })
     const userIdCookie = useCookies().get('s_user_id');
+    const accessToken = useCookies().get('s_access_token');
     const penilaian = getPenilaianUniversitas(user[0]?.university_id);
     const penilaianKey = Object.keys(penilaian);
     const [nama, setNama] = useState('');
@@ -746,10 +754,12 @@ export const TambahMatkul = () => {
                     context.handleModalClose();
 
                     try {
+                        if (!accessToken) { throw new Error('Missing access token') }
+                        if (!userIdCookie) { throw new Error('Missing user id')}
                         const response = await fetch('/api/matkul', {
                             method: 'POST',
                             headers: {
-                                'Authorization': `Accesses_Token`,
+                                'Authorization': `Bearer ${accessToken}`,
                                 'Content-Type': 'application/json',
                             },
                             body: JSON.stringify(validatedData),
