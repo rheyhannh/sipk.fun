@@ -110,7 +110,7 @@ export function UsersForm() {
 
         // Something Error ? 
         const error = searchParams.get('error');
-        if (error === 'session' && mode === 'login') { setErrorMessage('Silahkan login kembali') }
+        if (error === 'session' && mode === 'login') { router.refresh(); setErrorMessage('Silahkan login kembali'); }
 
         // From Logout ? 
         const logout = searchParams.get('logout');
@@ -296,10 +296,10 @@ export function UsersForm() {
         router.push('/users?action=daftar', undefined, { shallow: true })
         setTimeout(() => { resetFormValue(); }, 1250);
     }
-    const handleModeLogin = () => { 
+    const handleModeLogin = () => {
         setLoginMode(true);
-        router.push('/users?action=login', undefined, { shallow: true }) 
-        setTimeout(() => { resetFormValue(); }, 1250); 
+        router.push('/users?action=login', undefined, { shallow: true })
+        setTimeout(() => { resetFormValue(); }, 1250);
     }
 
     const handleChangeTheme = () => {
