@@ -7,7 +7,8 @@ import {
     decryptSyncAES,
     rateLimit,
     cookieAuthOptions,
-    cookieAuthDeleteOptions
+    cookieAuthDeleteOptions,
+    validateJWT
 } from '@/utils/server_side';
 
 const limitRequest = parseInt(process.env.API_LOGOUT_REQUEST_LIMIT);
@@ -19,17 +20,12 @@ const limiter = rateLimit({
 export async function POST(request) {
     const userAccessToken = request.cookies.get(`${process.env.USER_SESSION_COOKIES_NAME}`)?.value;
     const authorizationHeader = headers().get('Authorization');
+    const authorizationToken = authorizationHeader.split(' ')[1];
     const cookieStore = cookies();
 
-    if (!userAccessToken || !authorizationHeader) {
+    if (!userAccessToken || !authorizationHeader || !authorizationToken) {
         return NextResponse.json({ message: 'Unauthorized - Missing access token' }, {
             status: 401,
-        })
-    }
-
-    if (authorizationHeader !== 'Accesses_Token') {
-        return NextResponse.json({ message: 'Unauthorized - Invalid access token' }, {
-            status: 401
         })
     }
 
@@ -45,8 +41,21 @@ export async function POST(request) {
     }
 
     try {
+        var decoded = validateJWT(authorizationToken, userId);
+        // Log Here, ex: '{TIMESTAMP} decoded.id {METHOD} {ROUTE} {BODY} {PARAMS}'
+    } catch (error) {
+        cookieStore.set({ name: process.env.USER_SESSION_COOKIES_NAME, value: '', ...cookieAuthDeleteOptions })
+        cookieStore.set({ name: 's_user_id', value: '', ...cookieAuthDeleteOptions })
+        return NextResponse.json({ message: error.message || 'Unauthorized - Invalid access token' }, {
+            status: 401
+        })
+    }
+
+    try {
         var currentUsage = await limiter.check(limitRequest, `logout-${userId}`);
+        // Log Here, ex: '{TIMESTAMP} userId {ROUTE} limit {currentUsage}/{limitRequest}'
     } catch {
+        // Log Here, ex: '{TIMESTAMP} userId {ROUTE} limited'
         return NextResponse.json({ message: 'Too many request' }, {
             status: 429,
             headers: {
