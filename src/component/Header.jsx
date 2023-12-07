@@ -49,7 +49,6 @@ function Right() {
         setData
     } = useContext(ModalContext);
 
-
     const userIdCookie = useCookies().get('s_user_id');
 
     const helloDark = () => toast('Dark Mode', { duration: 2000, icon: <FiMoon size={'17px'} /> });
