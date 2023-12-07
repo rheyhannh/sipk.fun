@@ -17,6 +17,7 @@ import {
 export default async function middleware(request) {
     const authSessionToken = request.cookies.get(`${process.env.USER_SESSION_COOKIES_NAME}`)?.value;
     const serviceUserCookie = request.cookies.get('s_user_id')?.value;
+    const serviceAccessTokenCookie = request.cookies.get('s_access_token')?.value;
     const serviceGuestCookie = request.cookies.get('s_guest_id')?.value;
     const { pathname } = request.nextUrl;
 
@@ -32,6 +33,13 @@ export default async function middleware(request) {
             value: '',
             ...cookieAuthDeleteOptions
         })
+
+        response.cookies.set({
+            name: 's_access_token',
+            value: '',
+            ...cookieAuthDeleteOptions
+        })
+
         if (pathname.startsWith('/users')) {
             if (!serviceGuestCookie) {
                 response.cookies.set({
@@ -44,6 +52,7 @@ export default async function middleware(request) {
         }
         const loginUrl = new URL("/users", request.url);
         loginUrl.searchParams.set('action', 'login');
+        loginUrl.searchParams.set('error', 'session');
         response = NextResponse.redirect(loginUrl);
         return response;
     }
@@ -91,12 +100,18 @@ export default async function middleware(request) {
                 },
                 remove(name, options) {
                     const loginUrl = new URL("/users", request.url);
-                    loginUrl.searchParams.set('error', 'session');
                     loginUrl.searchParams.set('action', 'login');
+                    loginUrl.searchParams.set('error', 'session');
                     response = NextResponse.redirect(loginUrl);
 
                     response.cookies.set({
                         name: 's_user_id',
+                        value: '',
+                        ...cookieAuthDeleteOptions
+                    })
+
+                    response.cookies.set({
+                        name: 's_access_token',
                         value: '',
                         ...cookieAuthDeleteOptions
                     })
@@ -114,8 +129,8 @@ export default async function middleware(request) {
     const { data, error } = await supabase.auth.getSession();
     if (error || !data.session) {
         const loginUrl = new URL("/users", request.url);
-        loginUrl.searchParams.set('error', 'session');
         loginUrl.searchParams.set('action', 'login');
+        loginUrl.searchParams.set('error', 'session');
         response = NextResponse.redirect(loginUrl);
 
         response.cookies.set({
@@ -129,6 +144,12 @@ export default async function middleware(request) {
             value: '',
             ...cookieAuthDeleteOptions,
         })
+
+        response.cookies.set({
+            name: 's_access_token',
+            value: '',
+            ...cookieAuthDeleteOptions,
+        })
     } else {
         if (serviceGuestCookie) {
             response.cookies.set({
@@ -137,10 +158,16 @@ export default async function middleware(request) {
                 ...cookieAuthDeleteOptions,
             })
         }
-        if (!serviceUserCookie) {
+        if (!serviceUserCookie || !serviceAccessTokenCookie) {
             response.cookies.set({
                 name: 's_user_id',
                 value: data.session.user.id,
+                ...cookieServiceOptions
+            })
+
+            response.cookies.set({
+                name: 's_access_token',
+                value: data.session.access_token,
                 ...cookieServiceOptions
             })
         } else {
@@ -148,6 +175,13 @@ export default async function middleware(request) {
                 response.cookies.set({
                     name: 's_user_id',
                     value: data.session.user.id,
+                    ...cookieServiceOptions
+                })
+            }
+            if (serviceAccessTokenCookie !== data.session.access_token) {
+                response.cookies.set({
+                    name: 's_access_token',
+                    value: data.session.access_token,
                     ...cookieServiceOptions
                 })
             }

@@ -35,9 +35,10 @@ export async function DELETE(request) {
     const decryptedSession = await decryptAES(userAccessToken, true);
     const userId = decryptedSession?.user?.id;
 
-    if (!userId) {
+    if (!decryptedSession || !userId) {
         cookieStore.set({ name: process.env.USER_SESSION_COOKIES_NAME, value: '', ...cookieAuthDeleteOptions })
         cookieStore.set({ name: 's_user_id', value: '', ...cookieAuthDeleteOptions })
+        cookieStore.set({ name: 's_access_token', value: '', ...cookieAuthDeleteOptions })
         return NextResponse.json({ message: 'Unauthorized - Invalid access token' }, {
             status: 401
         })
@@ -47,8 +48,6 @@ export async function DELETE(request) {
         var decoded = validateJWT(authorizationToken, userId);
         // Log Here, ex: '{TIMESTAMP} decoded.id {METHOD} {ROUTE} {BODY} {PARAMS}'
     } catch (error) {
-        cookieStore.set({ name: process.env.USER_SESSION_COOKIES_NAME, value: '', ...cookieAuthDeleteOptions })
-        cookieStore.set({ name: 's_user_id', value: '', ...cookieAuthDeleteOptions })
         return NextResponse.json({ message: error.message || 'Unauthorized - Invalid access token' }, {
             status: 401
         })
@@ -100,6 +99,8 @@ export async function DELETE(request) {
                 },
                 remove(name, options) {
                     cookieStore.set({ name: process.env.USER_SESSION_COOKIES_NAME, value: '', ...cookieAuthDeleteOptions })
+                    cookieStore.set({ name: 's_user_id', value: '', ...cookieAuthDeleteOptions })
+                    cookieStore.set({ name: 's_access_token', value: '', ...cookieAuthDeleteOptions})
                 },
             },
         }
@@ -165,9 +166,10 @@ export async function POST(request) {
     const decryptedSession = await decryptAES(userAccessToken, true);
     const userId = decryptedSession?.user?.id;
 
-    if (!userId) {
+    if (!decryptedSession || !userId) {
         cookieStore.set({ name: process.env.USER_SESSION_COOKIES_NAME, value: '', ...cookieAuthDeleteOptions })
         cookieStore.set({ name: 's_user_id', value: '', ...cookieAuthDeleteOptions })
+        cookieStore.set({ name: 's_access_token', value: '', ...cookieAuthDeleteOptions })
         return NextResponse.json({ message: 'Unauthorized - Invalid access token' }, {
             status: 401
         })
@@ -177,8 +179,6 @@ export async function POST(request) {
         var decoded = validateJWT(authorizationToken, userId);
         // Log Here, ex: '{TIMESTAMP} decoded.id {METHOD} {ROUTE} {BODY} {PARAMS}'
     } catch (error) {
-        cookieStore.set({ name: process.env.USER_SESSION_COOKIES_NAME, value: '', ...cookieAuthDeleteOptions })
-        cookieStore.set({ name: 's_user_id', value: '', ...cookieAuthDeleteOptions })
         return NextResponse.json({ message: error.message || 'Unauthorized - Invalid access token' }, {
             status: 401
         })
@@ -259,6 +259,8 @@ export async function POST(request) {
                 },
                 remove(name, options) {
                     cookieStore.set({ name: process.env.USER_SESSION_COOKIES_NAME, value: '', ...cookieAuthDeleteOptions })
+                    cookieStore.set({ name: 's_user_id', value: '', ...cookieAuthDeleteOptions })
+                    cookieStore.set({ name: 's_access_token', value: '', ...cookieAuthDeleteOptions})
                 },
             },
         }
@@ -305,9 +307,10 @@ export async function GET(request) {
     const decryptedSession = await decryptAES(userAccessToken, true);
     const userId = decryptedSession?.user?.id;
 
-    if (!userId) {
+    if (!decryptedSession || !userId) {
         cookieStore.set({ name: process.env.USER_SESSION_COOKIES_NAME, value: '', ...cookieAuthDeleteOptions })
         cookieStore.set({ name: 's_user_id', value: '', ...cookieAuthDeleteOptions })
+        cookieStore.set({ name: 's_access_token', value: '', ...cookieAuthDeleteOptions })
         return NextResponse.json({ message: 'Unauthorized - Invalid access token' }, {
             status: 401
         })
@@ -317,8 +320,6 @@ export async function GET(request) {
         var decoded = validateJWT(authorizationToken, userId);
         // Log Here, ex: '{TIMESTAMP} decoded.id {METHOD} {ROUTE} {BODY} {PARAMS}'
     } catch (error) {
-        cookieStore.set({ name: process.env.USER_SESSION_COOKIES_NAME, value: '', ...cookieAuthDeleteOptions })
-        cookieStore.set({ name: 's_user_id', value: '', ...cookieAuthDeleteOptions })
         return NextResponse.json({ message: error.message || 'Unauthorized - Invalid access token' }, {
             status: 401
         })
@@ -361,6 +362,8 @@ export async function GET(request) {
                 },
                 remove(name, options) {
                     cookieStore.set({ name: process.env.USER_SESSION_COOKIES_NAME, value: '', ...cookieAuthDeleteOptions })
+                    cookieStore.set({ name: 's_user_id', value: '', ...cookieAuthDeleteOptions })
+                    cookieStore.set({ name: 's_access_token', value: '', ...cookieAuthDeleteOptions})
                 },
             },
         }

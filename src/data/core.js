@@ -5,10 +5,11 @@ import { useCookies } from 'next-client-cookies';
 /*
 ============================== CODE START HERE ==============================
 */
-const fetchDefault = (url) => {
+const fetchDefault = (url, accessToken) => {
+    if (!accessToken) { throw new Error('Access token required') }
     return fetch(url, {
         headers: {
-            'Authorization': `Accesses_Token`,
+            'Authorization': `Bearer ${accessToken}`,
             'Content-Type': 'application/json',
         }
     })
@@ -33,10 +34,11 @@ const fetchDefault = (url) => {
         });
 }
 
-const fetchWithUserId = (url, id) => {
+const fetchWithUserId = (url, id, accessToken) => {
+    if (!accessToken || !id) { throw new Error('Access token required') }
     return fetch(url, {
         headers: {
-            'Authorization': `Accesses_Token`,
+            'Authorization': `Bearer ${accessToken}`,
             'Content-Type': 'application/json',
         }
     })
@@ -72,24 +74,32 @@ const swrOptions = {
 }
 
 export function useUser(custom) {
+    const url = '/api/me';
     const userIdCookie = useCookies().get('s_user_id');
+    const accessToken = useCookies().get('s_access_token');
     const options = custom ? custom : swrOptions;
-    return useSWR(['/api/me', userIdCookie], ([url, id]) => fetchWithUserId(url, id), options)
+    return useSWR([url, userIdCookie], () => fetchWithUserId(url, userIdCookie, accessToken), options)
 }
 
 export function useMatkul(custom) {
+    const url = '/api/matkul';
     const userIdCookie = useCookies().get('s_user_id');
+    const accessToken = useCookies().get('s_access_token');
     const options = custom ? custom : swrOptions;
-    return useSWR(['/api/matkul', userIdCookie], ([url, id]) => fetchWithUserId(url, id), options)
+    return useSWR([url, userIdCookie], () => fetchWithUserId(url, userIdCookie, accessToken), options)
 }
 
 export function useMatkulHistory(custom) {
+    const url = '/api/matkul-history';
     const userIdCookie = useCookies().get('s_user_id');
+    const accessToken = useCookies().get('s_access_token');
     const options = custom ? custom : swrOptions;
-    return useSWR(['/api/matkul-history', userIdCookie], ([url, id]) => fetchWithUserId(url, id), options)
+    return useSWR([url, userIdCookie], () => fetchWithUserId(url, userIdCookie, accessToken), options)
 }
 
 export function useNotifikasi(custom) {
+    const url = '/api/notifikasi';
     const options = custom ? custom : swrOptions;
-    return useSWR('/api/notifikasi', fetchDefault, options)
+    const accessToken = useCookies().get('s_access_token');
+    return useSWR(url, () => fetchDefault(url, accessToken), options)
 }
