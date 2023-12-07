@@ -1,6 +1,9 @@
 // ========== COMPONENT DEPEDENCY ========== //
 import CryptoJS from 'crypto-js';
 import { LRUCache } from 'lru-cache';
+import jwt from 'jsonwebtoken';
+import isJWT from 'validator/lib/isJWT';
+import isUUID from 'validator/lib/isUUID';
 
 /*
 ============================== CODE START HERE ==============================
@@ -115,7 +118,36 @@ export function rateLimit(options) {
     };
 }
 
-// Validator & Sanitizer
+// Validator, Input Validator, Sanitizer.
+/**
+ * Method untuk validasi token JWT supabase
+ * @param {string} token Token JWT valid (`algorithms=[...env]`, `audience='authenticated'`, `issuer=[...env]`, `subject=userId`)
+ * @param {string} userId User UUID untuk validasi JWT subject.
+ * @returns {object} JWT payload data
+ * @throws Throw error saat token invalid (bukan expired) atau `type(token) !== JWT` atau `type(userId) !== uuid` 
+ */
+export function validateJWT(token, userId) {
+    if (!isUUID(userId) || !userId) { throw new Error(`Unauthorized - Invalid or empty user id`) }
+    if (!isJWT(token) || !token) { throw new Error(`Unauthorized - Invalid or empty access token`) }
+    try {
+        const decoded = jwt.verify(
+            token, process.env.JWT_SECRET_KEY,
+            {
+                algorithms: process.env.JWT_ALGORITHM.split(','),
+                audience: 'authenticated',
+                issuer: process.env.JWT_ISSUER.split(','),
+                ignoreExpiration: true,
+                subject: userId
+            }
+        )
+
+        return decoded;
+    } catch (error) {
+        const { name, message } = error;
+        console.error(name && message ? `${name} - ${message}` : 'Error when validating JWT')
+        throw new Error(`Unauthorized - Invalid access token`);
+    }
+}
 
 // Options
 /**
