@@ -17,7 +17,7 @@ import toast from 'react-hot-toast';
 import { ModalContext } from "./provider/Modal";
 import { UsersContext } from './provider/Users';
 import { Accordion } from '@/component/Accordion';
-import { unixToDate } from "@/utils/client_side";
+import { unixToDate, getLoadingMessage } from "@/utils/client_side";
 
 // ========== DATA DEPEDENCY ========== //
 import { useUser } from "@/data/core";
@@ -81,7 +81,10 @@ export const Logout = () => {
 
     const handleLogout = async () => {
         try {
-            if (!accessToken) { throw new Error('Missing access token') }
+            if (!accessToken) {
+                router.refresh();
+                throw new Error('Terjadi kesalahan, silahkan coba lagi');
+            }
             const response = await fetch('/api/logout', {
                 method: 'POST',
                 headers: {
@@ -485,6 +488,7 @@ export const PerubahanTerakhirDetail = () => {
 }
 
 export const PerubahanTerakhirConfirm = () => {
+    const router = useRouter();
     const userIdCookie = useCookies().get('s_user_id');
     const accessToken = useCookies().get('s_access_token');
 
@@ -511,133 +515,212 @@ export const PerubahanTerakhirConfirm = () => {
                 const handleUndoMatkul = async (e) => {
                     if (type === 'tambah') {
                         e.preventDefault();
-
                         context.handleModalClose();
 
-                        try {
-                            if (!accessToken) { throw new Error('Missing access token') }
-                            if (!userIdCookie) { throw new Error('Missing user id')}
-                            const response = await fetch(`/api/matkul?id=${context?.data?.matkul_id}`, {
-                                method: 'DELETE',
-                                headers: {
-                                    'Authorization': `Bearer ${accessToken}`,
-                                    'Content-Type': 'application/json',
-                                }
-                            })
+                        const deleteMatkul = () => {
+                            return new Promise(async (resolve, reject) => {
+                                try {
+                                    if (!accessToken) {
+                                        router.refresh();
+                                        throw new Error('Terjadi kesalahan, silahkan coba lagi');
+                                    }
+                                    if (!userIdCookie) {
+                                        router.refresh();
+                                        throw new Error('Terjadi kesalahan, silahkan coba lagi');
+                                    }
 
-                            if (!response.ok) {
-                                try {
-                                    const { message } = await response.json();
-                                    if (message) { throw new Error(message); }
-                                    else { throw new Error(`Terjadi kesalahan`); }
+                                    const response = await fetch(`/api/matkul?id=${context?.data?.matkul_id}`, {
+                                        method: 'DELETE',
+                                        headers: {
+                                            'Authorization': `Bearer ${accessToken}`,
+                                            'Content-Type': 'application/json',
+                                        },
+                                    });
+
+                                    if (!response.ok) {
+                                        if (response.status === 401) {
+                                            router.replace('/users?action=login&error=isession', {
+                                                scroll: false
+                                            });
+                                            throw new Error(`Unauthorized`);
+                                        } else {
+                                            try {
+                                                const { message } = await response.json();
+                                                if (message) {
+                                                    throw new Error(message);
+                                                } else {
+                                                    throw new Error(`Terjadi kesalahan`);
+                                                }
+                                            } catch (error) {
+                                                console.error(error);
+                                                reject(error);
+                                            }
+                                        }
+                                    } else {
+                                        try {
+                                            const { ref } = await response.json();
+                                            if (!ref) {
+                                                throw new Error('Failed to update cache');
+                                            }
+                                            mutate(['/api/matkul', userIdCookie], undefined, {
+                                                populateCache: (_, currentMatkul) => {
+                                                    if (currentMatkul.length - 1 === 0) {
+                                                        return [];
+                                                    } else {
+                                                        const filteredMatkul = currentMatkul.filter(matkul => matkul.id !== `${context?.data?.matkul_id}`);
+                                                        return [...filteredMatkul];
+                                                    }
+                                                },
+                                                revalidate: false,
+                                            });
+                                            mutate(['/api/matkul-history', userIdCookie], ref, {
+                                                populateCache: (ref, currentRef) => {
+                                                    if (currentRef.length === 1) {
+                                                        return [ref];
+                                                    } else {
+                                                        const filteredRef = currentRef.filter(refs => refs.id !== ref.id);
+                                                        return [ref, ...filteredRef];
+                                                    }
+                                                },
+                                                revalidate: false,
+                                            });
+                                            resolve();
+                                        } catch {
+                                            mutate(['/api/matkul', userIdCookie]);
+                                            mutate(['/api/matkul-history', userIdCookie]);
+                                            resolve();
+                                        }
+                                    }
                                 } catch (error) {
-                                    console.error(error);
-                                    throw error;
+                                    reject(error);
                                 }
-                            } else {
-                                toast.success(`${context?.data?.current?.nama} berhasil dihapus`, { duration: 4000, position: 'top-left' })
-                                try {
-                                    const { ref } = await response.json();
-                                    if (!ref) { throw new Error('Failed to update cache') }
-                                    mutate(['/api/matkul', userIdCookie], undefined, {
-                                        populateCache: (_, currentMatkul) => {
-                                            if (currentMatkul.length - 1 === 0) { return [] }
-                                            else {
-                                                const filteredMatkul = currentMatkul.filter(matkul => matkul.id !== `${context?.data?.matkul_id}`)
-                                                return [...filteredMatkul]
-                                            }
-                                        },
-                                        revalidate: false
-                                    })
-                                    mutate(['/api/matkul-history', userIdCookie], ref, {
-                                        populateCache: (ref, currentRef) => {
-                                            if (currentRef.length === 1) { return [ref] }
-                                            else {
-                                                const filteredRef = currentRef.filter(refs => refs.id !== ref.id)
-                                                return [ref, ...filteredRef]
-                                            }
-                                        },
-                                        revalidate: false
-                                    })
-                                } catch {
-                                    mutate(['/api/matkul', userIdCookie]);
-                                    mutate(['/api/matkul-history', userIdCookie]);
-                                }
+                            });
+                        };
+
+                        toast.promise(
+                            deleteMatkul(),
+                            {
+                                loading: `${getLoadingMessage(false, 0)} matakuliah`,
+                                success: `${context?.data?.current?.nama} berhasil dihapus`,
+                                error: (error) => `${error.message || 'Terjadi kesalahan'}`
+                            },
+                            {
+                                position: 'top-left',
+                                duration: 4000,
                             }
-                        } catch (error) {
-                            toast.error(error.message ? error.message : 'Terjadi kesalahan', { duration: 4000, position: 'top-left' })
-                        }
+                        )
                     }
                     else if (type === 'hapus') {
                         e.preventDefault();
-
                         context.handleModalClose();
 
-                        try {
-                            if (!accessToken) { throw new Error('Missing access token') }
-                            if (!userIdCookie) { throw new Error('Missing user id')}
-                            const response = await fetch(`/api/matkul?ref=${context?.data?.matkul_id}`, {
-                                method: 'POST',
-                                headers: {
-                                    'Authorization': `Bearer ${accessToken}`,
-                                    'Content-Type': 'application/json',
-                                },
-                                body: JSON.stringify({
-                                    nama: context?.data?.current?.nama,
-                                    semester: context?.data?.current?.semester,
-                                    sks: context?.data?.current?.sks,
-                                    nilai: {
-                                        indeks: context?.data?.current?.nilai?.indeks,
-                                        bobot: context?.data?.current?.nilai?.bobot,
-                                        akhir: context?.data?.current?.nilai?.akhir
-                                    },
-                                    dapat_diulang: context?.data?.current?.dapat_diulang,
-                                    target_nilai: {
-                                        indeks: context?.data?.current?.target_nilai?.indeks,
-                                        bobot: context?.data?.current?.target_nilai?.bobot
+                        const addMatkul = () => {
+                            return new Promise(async (resolve, reject) => {
+                                try {
+                                    if (!accessToken) {
+                                        router.refresh();
+                                        throw new Error('Terjadi kesalahan, silahkan coba lagi');
                                     }
-                                }),
-                            })
+                                    if (!userIdCookie) {
+                                        router.refresh();
+                                        throw new Error('Terjadi kesalahan, silahkan coba lagi');
+                                    }
 
-                            if (!response.ok) {
-                                try {
-                                    const { message } = await response.json();
-                                    if (message) { throw new Error(message); }
-                                    else { throw new Error(`Terjadi kesalahan`); }
-                                } catch (error) {
-                                    console.error(error);
-                                    throw error;
-                                }
-                            } else {
-                                toast.success(`${context?.data?.current?.nama} berhasil ditambah`, { duration: 4000, position: 'top-left' })
-                                try {
-                                    const { matkul, ref } = await response.json();
-                                    if (!matkul || !ref) { throw new Error('Failed to update cache') }
-                                    mutate(['/api/matkul', userIdCookie], matkul, {
-                                        populateCache: (matkul, currentMatkul) => {
-                                            if (currentMatkul.length === 0) { return [matkul] }
-                                            else { return [matkul, ...currentMatkul] }
+                                    const response = await fetch(`/api/matkul?ref=${context?.data?.matkul_id}`, {
+                                        method: 'POST',
+                                        headers: {
+                                            'Authorization': `Bearer ${accessToken}`,
+                                            'Content-Type': 'application/json',
                                         },
-                                        revalidate: false
-                                    })
-                                    mutate(['/api/matkul-history', userIdCookie], ref, {
-                                        populateCache: (ref, currentRef) => {
-                                            if (currentRef.length === 1) { return [ref] }
-                                            else {
-                                                const filteredRef = currentRef.filter(refs => refs.id !== ref.id)
-                                                return [ref, ...filteredRef]
+                                        body: JSON.stringify({
+                                            nama: context?.data?.current?.nama,
+                                            semester: context?.data?.current?.semester,
+                                            sks: context?.data?.current?.sks,
+                                            nilai: {
+                                                indeks: context?.data?.current?.nilai?.indeks,
+                                                bobot: context?.data?.current?.nilai?.bobot,
+                                                akhir: context?.data?.current?.nilai?.akhir,
+                                            },
+                                            dapat_diulang: context?.data?.current?.dapat_diulang,
+                                            target_nilai: {
+                                                indeks: context?.data?.current?.target_nilai?.indeks,
+                                                bobot: context?.data?.current?.target_nilai?.bobot,
+                                            },
+                                        }),
+                                    });
+
+                                    if (!response.ok) {
+                                        if (response.status === 401) {
+                                            router.replace('/users?action=login&error=isession', {
+                                                scroll: false
+                                            });
+                                            throw new Error(`Unauthorized`);
+                                        } else {
+                                            try {
+                                                const { message } = await response.json();
+                                                if (message) {
+                                                    throw new Error(message);
+                                                } else {
+                                                    throw new Error(`Terjadi kesalahan`);
+                                                }
+                                            } catch (error) {
+                                                console.error(error);
+                                                reject(error);
                                             }
-                                        },
-                                        revalidate: false
-                                    })
-                                } catch {
-                                    mutate(['/api/matkul', userIdCookie]);
-                                    mutate(['/api/matkul-history', userIdCookie]);
+                                        }
+                                    } else {
+                                        try {
+                                            const { matkul, ref } = await response.json();
+                                            if (!matkul || !ref) {
+                                                throw new Error('Failed to update cache');
+                                            }
+                                            mutate(['/api/matkul', userIdCookie], matkul, {
+                                                populateCache: (matkul, currentMatkul) => {
+                                                    if (currentMatkul.length === 0) {
+                                                        return [matkul];
+                                                    } else {
+                                                        return [matkul, ...currentMatkul];
+                                                    }
+                                                },
+                                                revalidate: false,
+                                            });
+                                            mutate(['/api/matkul-history', userIdCookie], ref, {
+                                                populateCache: (ref, currentRef) => {
+                                                    if (currentRef.length === 1) {
+                                                        return [ref];
+                                                    } else {
+                                                        const filteredRef = currentRef.filter(refs => refs.id !== ref.id);
+                                                        return [ref, ...filteredRef];
+                                                    }
+                                                },
+                                                revalidate: false,
+                                            });
+                                            resolve();
+                                        } catch {
+                                            mutate(['/api/matkul', userIdCookie]);
+                                            mutate(['/api/matkul-history', userIdCookie]);
+                                            resolve();
+                                        }
+                                    }
+                                } catch (error) {
+                                    reject(error);
                                 }
+                            });
+                        };
+
+                        toast.promise(
+                            addMatkul(),
+                            {
+                                loading: `${getLoadingMessage(false, 0)} matakuliah`,
+                                success: `${context?.data?.current?.nama} berhasil ditambah`,
+                                error: (error) => `${error.message || 'Terjadi kesalahan'}`
+                            },
+                            {
+                                position: 'top-left',
+                                duration: 4000,
                             }
-                        } catch (error) {
-                            toast.error(error.message ? error.message : 'Terjadi kesalahan', { duration: 4000, position: 'top-left' })
-                        }
+                        )
+
                     }
                     else if (type === 'ubah') { console.log(`Ubah Matakuliah ${context?.data?.matkul_id}`) }
                     else { return 0; }
@@ -679,9 +762,10 @@ export const PerubahanTerakhirConfirm = () => {
 }
 
 export const TambahMatkul = () => {
-    const { data: user } = useUser({ revalidateOnMount: false })
+    const router = useRouter();
     const userIdCookie = useCookies().get('s_user_id');
     const accessToken = useCookies().get('s_access_token');
+    const { data: user } = useUser({ revalidateOnMount: false });
     const penilaian = getPenilaianUniversitas(user[0]?.university_id);
     const penilaianKey = Object.keys(penilaian);
     const [nama, setNama] = useState('');
@@ -753,61 +837,102 @@ export const TambahMatkul = () => {
                     if (!validatedData) { return }
                     context.handleModalClose();
 
-                    try {
-                        if (!accessToken) { throw new Error('Missing access token') }
-                        if (!userIdCookie) { throw new Error('Missing user id')}
-                        const response = await fetch('/api/matkul', {
-                            method: 'POST',
-                            headers: {
-                                'Authorization': `Bearer ${accessToken}`,
-                                'Content-Type': 'application/json',
-                            },
-                            body: JSON.stringify(validatedData),
-                        })
+                    const addMatkul = () => {
+                        return new Promise(async (resolve, reject) => {
+                            try {
+                                if (!accessToken) {
+                                    router.refresh();
+                                    throw new Error('Terjadi kesalahan, silahkan coba lagi');
+                                }
+                                if (!userIdCookie) {
+                                    router.refresh();
+                                    throw new Error('Terjadi kesalahan, silahkan coba lagi');
+                                }
 
-                        if (!response.ok) {
-                            try {
-                                const { message } = await response.json();
-                                if (message) { throw new Error(message); }
-                                else { throw new Error(`Terjadi kesalahan`); }
-                            } catch (error) {
-                                console.error(error);
-                                throw error;
-                            }
-                        } else {
-                            toast.success(`${nama} berhasil ditambah`, { duration: 4000, position: 'top-left' })
-                            try {
-                                const { matkul, ref } = await response.json();
-                                if (!matkul || !ref) { throw new Error('Failed to update cache') }
-                                mutate(['/api/matkul', userIdCookie], matkul, {
-                                    populateCache: (matkul, currentMatkul) => {
-                                        if (currentMatkul.length === 0) { return [matkul] }
-                                        else { return [matkul, ...currentMatkul] }
+                                const response = await fetch('/api/matkul', {
+                                    method: 'POST',
+                                    headers: {
+                                        'Authorization': `Bearer ${accessToken}`,
+                                        'Content-Type': 'application/json',
                                     },
-                                    revalidate: false
-                                })
-                                mutate(['/api/matkul-history', userIdCookie], ref, {
-                                    populateCache: (ref, currentRef) => {
-                                        if (currentRef.length === 0) { return [ref] }
-                                        else {
-                                            if (currentRef.length >= 3) {
-                                                const sliceCurrentRef = currentRef.slice(0, -1);
-                                                return [ref, ...sliceCurrentRef]
+                                    body: JSON.stringify(validatedData),
+                                });
+
+                                if (!response.ok) {
+                                    if (response.status === 401) {
+                                        router.replace('/users?action=login&error=isession', {
+                                            scroll: false
+                                        });
+                                        throw new Error(`Unauthorized`);
+                                    } else {
+                                        try {
+                                            const { message } = await response.json();
+                                            if (message) {
+                                                throw new Error(message);
                                             } else {
-                                                return [ref, ...currentRef]
+                                                throw new Error(`Terjadi kesalahan`);
                                             }
+                                        } catch (error) {
+                                            console.error(error);
+                                            reject(error);
                                         }
-                                    },
-                                    revalidate: false
-                                })
-                            } catch {
-                                mutate(['/api/matkul', userIdCookie]);
-                                mutate(['/api/matkul-history', userIdCookie]);
+                                    }
+                                } else {
+                                    try {
+                                        const { matkul, ref } = await response.json();
+                                        if (!matkul || !ref) {
+                                            throw new Error('Failed to update cache');
+                                        }
+                                        mutate(['/api/matkul', userIdCookie], matkul, {
+                                            populateCache: (matkul, currentMatkul) => {
+                                                if (currentMatkul.length === 0) {
+                                                    return [matkul];
+                                                } else {
+                                                    return [matkul, ...currentMatkul];
+                                                }
+                                            },
+                                            revalidate: false,
+                                        });
+                                        mutate(['/api/matkul-history', userIdCookie], ref, {
+                                            populateCache: (ref, currentRef) => {
+                                                if (currentRef.length === 0) {
+                                                    return [ref];
+                                                } else {
+                                                    if (currentRef.length >= 3) {
+                                                        const sliceCurrentRef = currentRef.slice(0, -1);
+                                                        return [ref, ...sliceCurrentRef];
+                                                    } else {
+                                                        return [ref, ...currentRef];
+                                                    }
+                                                }
+                                            },
+                                            revalidate: false,
+                                        });
+                                        resolve();
+                                    } catch {
+                                        mutate(['/api/matkul', userIdCookie]);
+                                        mutate(['/api/matkul-history', userIdCookie]);
+                                        resolve();
+                                    }
+                                }
+                            } catch (error) {
+                                reject(error);
                             }
+                        });
+                    };
+
+                    toast.promise(
+                        addMatkul(),
+                        {
+                            loading: `${getLoadingMessage(false, 1)}`,
+                            success: `${nama} berhasil ditambah`,
+                            error: (error) => `${error.message || 'Terjadi kesalahan'}`
+                        },
+                        {
+                            position: 'top-left',
+                            duration: 4000,
                         }
-                    } catch (error) {
-                        toast.error(error.message ? error.message : 'Terjadi kesalahan', { duration: 4000, position: 'top-left' })
-                    }
+                    )
                 }
                 return (
                     <div className={`${styles.backdrop} ${context.active ? styles.active : ''}`}>
@@ -1138,7 +1263,7 @@ export const Profil = () => {
                                             id="universitas"
                                             placeholder=" "
                                             className={`${styles.form__input}`}
-                                            style={{cursor: editProfil ? 'not-allowed' : 'default'}}
+                                            style={{ cursor: editProfil ? 'not-allowed' : 'default' }}
                                             value={universitas !== 'default' ? universitas : context?.data[0]?.university || '-'}
                                             disabled={true}
                                             readOnly={true}
