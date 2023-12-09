@@ -30,6 +30,12 @@ export default function Notification({ position }) {
                         return (
                             <>
                                 {!isLoading && icon}
+                                {isLoading && (
+                                    <Spinner
+                                        size={'12px'}
+                                        color={'var(--logo-second-color)'}
+                                    />
+                                )}
                                 <span style={
                                     {
                                         fontWeight: isImportant ? 700 : 600,
@@ -42,12 +48,6 @@ export default function Notification({ position }) {
                                     <FaTimes
                                         onClick={() => toast.dismiss(t.id)}
                                         style={{ cursor: 'pointer', color: 'crimson' }} size={'13px'}
-                                    />
-                                )}
-                                {isLoading && (
-                                    <Spinner
-                                        size={'12px'}
-                                        color={'var(--logo-second-color)'}
                                     />
                                 )}
                             </>
