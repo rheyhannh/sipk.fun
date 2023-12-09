@@ -1138,6 +1138,7 @@ export const Profil = () => {
                                             id="universitas"
                                             placeholder=" "
                                             className={`${styles.form__input}`}
+                                            style={{cursor: editProfil ? 'not-allowed' : 'default'}}
                                             value={universitas !== 'default' ? universitas : context?.data[0]?.university || '-'}
                                             disabled={true}
                                             readOnly={true}
