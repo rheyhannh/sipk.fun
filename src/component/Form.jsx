@@ -94,7 +94,8 @@ export function UsersForm() {
 
     // Utils
     const [loading, setLoading] = useState(false);
-    const [errorMessage, setErrorMessage] = useState('');
+    const [errorMessageLogin, setErrorMessageLogin] = useState('');
+    const [errorMessageDaftar, setErrorMessageDaftar] = useState('');
     const [hideLoginPassword, setHideLoginPassword] = useState(true);
     const [hideDaftarPassword, setHideDaftarPassword] = useState(true);
     const [inputValidator, setInputValidator] = useState(initialInputValidator);
@@ -116,7 +117,7 @@ export function UsersForm() {
                 "esession": "Silahkan login terlebih dahulu"
             }
             router.refresh(); 
-            setErrorMessage(errorList[error] || 'Terjadi error, silahkan login kembali'); 
+            setErrorMessageLogin(errorList[error] || 'Terjadi error, silahkan login kembali'); 
         }
 
         // From Logout ? 
@@ -150,11 +151,11 @@ export function UsersForm() {
 
                 if (!response.ok) {
                     if (response.status === 429) {
-                        setErrorMessage(`Terlalu banyak request, coba lagi dalam 1 menit`)
+                        setErrorMessageLogin(`Terlalu banyak request, coba lagi dalam 1 menit`)
                     } else {
                         try {
                             const { message } = await response.json();
-                            if (message) { setErrorMessage(message) }
+                            if (message) { setErrorMessageLogin(message) }
                         } catch {
                             throw new Error(`Terjadi kesalahan saat login`);
                         }
@@ -166,8 +167,8 @@ export function UsersForm() {
                 }
             })
             .catch((error) => {
-                if (error === 'challenge-closed') { setErrorMessage('Captcha dibutuhkan untuk login') }
-                else { setErrorMessage(error.message ? error.message : 'Terjadi kesalahan saat login') }
+                if (error === 'challenge-closed') { setErrorMessageLogin('Captcha dibutuhkan untuk login') }
+                else { setErrorMessageLogin(error.message ? error.message : 'Terjadi kesalahan saat login') }
             })
             .finally(() => {
                 setLoading(false);
@@ -217,7 +218,8 @@ export function UsersForm() {
     }
 
     const handleInputFocus = (index) => {
-        setErrorMessage('');
+        setErrorMessageLogin('');
+        setErrorMessageDaftar('');
         setInputValidator((prevArray) => {
             const newArray = [...prevArray];
             newArray[index] = { state: `${styles.validating}`, message: prevArray[index].message, status: 'validating' };
@@ -320,7 +322,8 @@ export function UsersForm() {
         setUniversitas(0);
         setEmail('');
         setPassword('');
-        setErrorMessage('');
+        setErrorMessageLogin('');
+        setErrorMessageDaftar('');
         setInputValidator(initialInputValidator);
         captcha.current.resetCaptcha();
     }
@@ -342,14 +345,13 @@ export function UsersForm() {
                                 <HCaptcha
                                     ref={captcha}
                                     sitekey="c397ab1e-e96e-4b8a-8bb3-f2fb86e62b47"
-                                    onClose={() => { setErrorMessage('Captcha diperlukan untuk login') }}
                                     size='invisible'
                                 />
 
                                 <form
                                     onSubmit={handleLogin}
                                     onSubmitCapture={(e) => {
-                                        setErrorMessage('');
+                                        setErrorMessageLogin('');
                                         const allInput = e.target.querySelectorAll('input');
                                         allInput.forEach(input => {
                                             input.blur();
@@ -358,7 +360,7 @@ export function UsersForm() {
                                     className={styles.sign_in_form}
                                 >
                                     <h2 className={styles.title}>Login</h2>
-                                    <h3 style={{ margin: '.25rem 0', color: 'var(--danger-color)', fontWeight: 'var(--font-medium)' }}>{errorMessage}</h3>
+                                    <h3 style={{ margin: '.25rem 0', color: 'var(--danger-color)', fontWeight: 'var(--font-medium)' }}>{errorMessageLogin}</h3>
                                     <div className={styles.input_field}>
                                         <i><FaEnvelope /></i>
                                         <input
@@ -424,7 +426,7 @@ export function UsersForm() {
                                 </form>
                                 <form className={styles.sign_up_form}>
                                     <h2 className={styles.title}>Daftar</h2>
-                                    <h3 style={{ margin: '.25rem 0', color: 'var(--danger-color)', fontWeight: 'var(--font-medium)' }}>{errorMessage}</h3>
+                                    <h3 style={{ margin: '.25rem 0', color: 'var(--danger-color)', fontWeight: 'var(--font-medium)' }}>{errorMessageDaftar}</h3>
                                     <div className={styles.input_field}>
                                         <i><FaUser /></i>
                                         <input
