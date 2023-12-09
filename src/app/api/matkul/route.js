@@ -21,7 +21,7 @@ export async function DELETE(request) {
     const newHeaders = {};
     const userAccessToken = request.cookies.get(`${process.env.USER_SESSION_COOKIES_NAME}`)?.value;
     const authorizationHeader = headers().get('Authorization');
-    const authorizationToken = authorizationHeader.split(' ')[1];
+    const authorizationToken = authorizationHeader ? authorizationHeader.split(' ')[1] : null;
     const cookieStore = cookies();
     const searchParams = request.nextUrl.searchParams;
     const matkulId = searchParams.get('id');
@@ -152,7 +152,7 @@ export async function POST(request) {
     const newHeaders = {};
     const userAccessToken = request.cookies.get(`${process.env.USER_SESSION_COOKIES_NAME}`)?.value;
     const authorizationHeader = headers().get('Authorization');
-    const authorizationToken = authorizationHeader.split(' ')[1];
+    const authorizationToken = authorizationHeader ? authorizationHeader.split(' ')[1] : null;
     const cookieStore = cookies();
     const searchParams = request.nextUrl.searchParams;
     const ref = searchParams.get('ref');
@@ -296,7 +296,7 @@ export async function GET(request) {
     const userAccessToken = request.cookies.get(`${process.env.USER_SESSION_COOKIES_NAME}`)?.value;
     const cookieStore = cookies();
     const authorizationHeader = headers().get('Authorization');
-    const authorizationToken = authorizationHeader.split(' ')[1];
+    const authorizationToken = authorizationHeader ? authorizationHeader.split(' ')[1] : null;
 
     if (!userAccessToken || !authorizationHeader || !authorizationToken) {
         return NextResponse.json({ message: 'Unauthorized - Missing access token' }, {

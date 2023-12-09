@@ -20,7 +20,7 @@ const limiter = rateLimit({
 export async function POST(request) {
     const userAccessToken = request.cookies.get(`${process.env.USER_SESSION_COOKIES_NAME}`)?.value;
     const authorizationHeader = headers().get('Authorization');
-    const authorizationToken = authorizationHeader.split(' ')[1];
+    const authorizationToken = authorizationHeader ? authorizationHeader.split(' ')[1] : null;
     const cookieStore = cookies();
 
     if (!userAccessToken || !authorizationHeader || !authorizationToken) {
