@@ -28,31 +28,17 @@ export default async function middleware(request) {
     })
 
     if (!authSessionToken) {
-        response.cookies.set({
-            name: 's_user_id',
-            value: '',
-            ...cookieAuthDeleteOptions
-        })
-
-        response.cookies.set({
-            name: 's_access_token',
-            value: '',
-            ...cookieAuthDeleteOptions
-        })
-
+        const loginUrl = new URL("/users", request.url);
+        if (serviceUserCookie || serviceAccessTokenCookie) {
+            response.cookies.set({ name: 's_user_id', value: '', ...cookieAuthDeleteOptions });
+            response.cookies.set({ name: 's_access_token', value: '', ...cookieAuthDeleteOptions });
+        }
         if (pathname.startsWith('/users')) {
-            if (!serviceGuestCookie) {
-                response.cookies.set({
-                    name: 's_guest_id',
-                    value: crypto.randomUUID(),
-                    ...cookieAuthOptions
-                })
-            }
+            if (!serviceGuestCookie) { response.cookies.set({ name: 's_guest_id', value: crypto.randomUUID(), ...cookieAuthOptions }) }
             return response
         }
-        const loginUrl = new URL("/users", request.url);
         loginUrl.searchParams.set('action', 'login');
-        loginUrl.searchParams.set('error', 'session');
+        loginUrl.searchParams.set('error', 'esession');
         response = NextResponse.redirect(loginUrl);
         return response;
     }
@@ -101,7 +87,7 @@ export default async function middleware(request) {
                 remove(name, options) {
                     const loginUrl = new URL("/users", request.url);
                     loginUrl.searchParams.set('action', 'login');
-                    loginUrl.searchParams.set('error', 'session');
+                    loginUrl.searchParams.set('error', 'isession');
                     response = NextResponse.redirect(loginUrl);
 
                     response.cookies.set({
@@ -128,67 +114,41 @@ export default async function middleware(request) {
 
     const { data, error } = await supabase.auth.getSession();
     if (error || !data.session) {
+        // This block run when session (secure auth token) are invalid.
+        // Handle : redirect user to '/users?action=login&error={isession}' and delete sensitive cookies
         const loginUrl = new URL("/users", request.url);
         loginUrl.searchParams.set('action', 'login');
-        loginUrl.searchParams.set('error', 'session');
+        loginUrl.searchParams.set('error', 'isession');
         response = NextResponse.redirect(loginUrl);
-
-        response.cookies.set({
-            name: process.env.USER_SESSION_COOKIES_NAME,
-            value: '',
-            ...cookieAuthDeleteOptions,
-        })
-
-        response.cookies.set({
-            name: 's_user_id',
-            value: '',
-            ...cookieAuthDeleteOptions,
-        })
-
-        response.cookies.set({
-            name: 's_access_token',
-            value: '',
-            ...cookieAuthDeleteOptions,
-        })
+        response.cookies.set({ name: process.env.USER_SESSION_COOKIES_NAME, value: '', ...cookieAuthDeleteOptions, })
+        response.cookies.set({ name: 's_user_id', value: '', ...cookieAuthDeleteOptions, })
+        response.cookies.set({ name: 's_access_token', value: '', ...cookieAuthDeleteOptions, })
     } else {
+        // This block run when session (secure auth token) are valid or receiving new session
         if (serviceGuestCookie) {
-            response.cookies.set({
-                name: 's_guest_id',
-                value: '',
-                ...cookieAuthDeleteOptions,
-            })
+            // Set cookies (Make sure s_guest_id not exist)
+            response.cookies.set({ name: 's_guest_id', value: '', ...cookieAuthDeleteOptions, })
         }
         if (!serviceUserCookie || !serviceAccessTokenCookie) {
-            response.cookies.set({
-                name: 's_user_id',
-                value: data.session.user.id,
-                ...cookieServiceOptions
-            })
-
-            response.cookies.set({
-                name: 's_access_token',
-                value: data.session.access_token,
-                ...cookieServiceOptions
-            })
+            // Set cookies (Make sure s_user_id and s_access_token exist)
+            response.cookies.set({ name: 's_user_id', value: data.session.user.id, ...cookieServiceOptions })
+            response.cookies.set({ name: 's_access_token', value: data.session.access_token, ...cookieServiceOptions })
         } else {
             if (serviceUserCookie !== data.session.user.id) {
-                response.cookies.set({
-                    name: 's_user_id',
-                    value: data.session.user.id,
-                    ...cookieServiceOptions
-                })
+                // Set cookies (Make sure s_user_id match to valid user id)
+                response.cookies.set({ name: 's_user_id', value: data.session.user.id, ...cookieServiceOptions })
             }
             if (serviceAccessTokenCookie !== data.session.access_token) {
-                response.cookies.set({
-                    name: 's_access_token',
-                    value: data.session.access_token,
-                    ...cookieServiceOptions
-                })
+                // Set cookies (Make sure s_access_token match to valid access token)
+                response.cookies.set({ name: 's_access_token', value: data.session.access_token, ...cookieServiceOptions })
             }
         }
     }
 
     if (pathname.startsWith('/users')) {
+        // This block run when session (secure auth token) are valid or receiving new session ...
+        // ... but user trying to access '/users'
+        // Handle : redirect user to '/dashboard'
         const dashboardUrl = new URL("/dashboard", request.url);
         response = NextResponse.redirect(dashboardUrl);
     }

@@ -110,7 +110,14 @@ export function UsersForm() {
 
         // Something Error ? 
         const error = searchParams.get('error');
-        if (error === 'session' && mode === 'login') { router.refresh(); setErrorMessage('Silahkan login kembali'); }
+        if (error && mode === 'login') { 
+            const errorList = {
+                "isession": "Sesi invalid, silahkan login kembali",
+                "esession": "Silahkan login terlebih dahulu"
+            }
+            router.refresh(); 
+            setErrorMessage(errorList[error] || 'Terjadi error, silahkan login kembali'); 
+        }
 
         // From Logout ? 
         const logout = searchParams.get('logout');
