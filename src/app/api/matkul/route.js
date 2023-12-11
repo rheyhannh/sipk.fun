@@ -10,6 +10,7 @@ import {
     cookieAuthDeleteOptions,
     validateJWT
 } from '@/utils/server_side';
+import isUUID from 'validator/lib/isUUID';
 
 const limitRequest = parseInt(process.env.API_MATKUL_REQUEST_LIMIT);
 const limiter = rateLimit({
@@ -70,7 +71,14 @@ export async function DELETE(request) {
     }
 
     if (!matkulId) {
-        return NextResponse.json({ message: `Gagal menghapus matakuliah` }, {
+        return NextResponse.json({ message: `Gagal menghapus matakuliah, 'id' dibutuhkan` }, {
+            status: 400,
+            headers: newHeaders
+        })
+    }
+
+    if (!isUUID(matkulId)) {
+        return NextResponse.json({ message: `Gagal menghapus matakuliah, 'id' bukan uuid` }, {
             status: 400,
             headers: newHeaders
         })
