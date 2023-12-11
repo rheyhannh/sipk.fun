@@ -140,16 +140,16 @@ function UniversitasJendralSoedirman() {
 
 export function getPenilaianUniversitas(universitasId) {
     const universitasList = [
-        UniversitasBrawijaya(),
-        UniversitasDiponegoro(),
-        UniversitasIndonesia(),
-        InstitutTeknologiBandung(),
-        UniversitasAirlangga(),
-        InstitutPertanianBogor(),
-        InstitutTeknologiSepuluhNovember(),
-        TelkomUniversity(),
-        UniversitasPadjajaran(),
-        UniversitasJendralSoedirman(),
+        UniversitasBrawijaya(), // 0
+        UniversitasDiponegoro(), // 1
+        UniversitasIndonesia(), // 2
+        InstitutTeknologiBandung(), // 3
+        UniversitasAirlangga(), // 4
+        InstitutPertanianBogor(), // 5
+        InstitutTeknologiSepuluhNovember(), // 6
+        TelkomUniversity(), // 7
+        UniversitasPadjajaran(), // 8
+        UniversitasJendralSoedirman(), // 9
     ];
 
     return universitasList[universitasId];
