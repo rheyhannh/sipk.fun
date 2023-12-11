@@ -116,6 +116,9 @@ export async function DELETE(request) {
     }
 
     var { data, error } = await supabase.from('matkul_history').select().eq('matkul_id', matkulId);
+    if (data.length === 0) {
+        return NextResponse.json({ message: `Gagal menghapus matakuliah, id tidak ditemukan` }, { status: 400, headers: newHeaders })
+    }
     const prevHistory = data[0].current;
 
     if (error) {
