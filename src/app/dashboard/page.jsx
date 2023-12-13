@@ -61,7 +61,7 @@ function AcademicCard({ count }) {
                 state='loaded'
                 color='var(--first-color)'
                 icon={{ name: 'IoBookOutline', lib: 'io5' }}
-                data={{ value: x.getUserMatkul(matkul), percentage: x.getUserMatkulPercentage(), lastUpdated: 'Terakhir Diupdate' }}
+                data={{ value: x.getUserMatkul(matkul), percentage: x.getUserMatkulPercentage(user, matkul), lastUpdated: 'Terakhir Diupdate' }}
                 title={'Matakuliah'}
             >
             </Summary>
