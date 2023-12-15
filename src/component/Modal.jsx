@@ -188,7 +188,7 @@ export const PerubahanTerakhirDetail = () => {
                                                     id="nama"
                                                     placeholder=" "
                                                     className={styles.form__input}
-                                                    value={isSebelumForm ? context?.data?.prev?.nama : context?.data?.current?.nama}
+                                                    value={isSebelumForm ? context?.data?.prev?.nama || '-' : context?.data?.current?.nama || '-'}
                                                     autoComplete='off'
                                                     disabled
                                                 />
@@ -210,7 +210,7 @@ export const PerubahanTerakhirDetail = () => {
                                                         id="sks"
                                                         placeholder=" "
                                                         className={styles.form__input}
-                                                        value={isSebelumForm ? context?.data?.prev?.sks : context?.data?.current?.sks}
+                                                        value={isSebelumForm ? context?.data?.prev?.sks || '-1' : context?.data?.current?.sks || '-1'}
                                                         autoComplete='off'
                                                         disabled
                                                     />
@@ -227,7 +227,7 @@ export const PerubahanTerakhirDetail = () => {
                                                         id="nilai"
                                                         placeholder=" "
                                                         className={styles.form__input}
-                                                        value={isSebelumForm ? context?.data?.prev?.nilai?.indeks : context?.data?.current?.nilai?.indeks}
+                                                        value={isSebelumForm ? context?.data?.prev?.nilai?.indeks || '-' : context?.data?.current?.nilai?.indeks || '-'}
                                                         autoComplete='off'
                                                         disabled
                                                     />
@@ -244,7 +244,7 @@ export const PerubahanTerakhirDetail = () => {
                                                         id="semester"
                                                         placeholder=" "
                                                         className={styles.form__input}
-                                                        value={isSebelumForm ? context?.data?.prev?.semester : context?.data?.current?.semester}
+                                                        value={isSebelumForm ? context?.data?.prev?.semester || '-1' : context?.data?.current?.semester || '-1'}
                                                         autoComplete='off'
                                                         disabled
                                                     />
@@ -267,7 +267,7 @@ export const PerubahanTerakhirDetail = () => {
                                                         id="dapatDiulang"
                                                         placeholder=" "
                                                         className={styles.form__input}
-                                                        value={isSebelumForm ? context?.data?.prev?.dapat_diulang : context?.data?.current?.dapat_diulang}
+                                                        value={isSebelumForm ? context?.data?.prev?.dapat_diulang === 'true' ? 'Ya' : 'Tidak' : context?.data?.current?.dapat_diulang === 'true' ? 'Ya' : 'Tidak'}
                                                         autoComplete='off'
                                                         disabled
                                                     />
@@ -284,7 +284,7 @@ export const PerubahanTerakhirDetail = () => {
                                                         id="maxNilai"
                                                         placeholder=" "
                                                         className={styles.form__input}
-                                                        value={isSebelumForm ? context?.data?.prev?.target_nilai?.indeks : context?.data?.current?.target_nilai?.indeks}
+                                                        value={isSebelumForm ? context?.data?.prev?.target_nilai?.indeks || '-' : context?.data?.current?.target_nilai?.indeks || '-'}
                                                         autoComplete='off'
                                                         disabled
                                                     />
@@ -302,7 +302,7 @@ export const PerubahanTerakhirDetail = () => {
                                                     id="date"
                                                     placeholder=" "
                                                     className={styles.form__input}
-                                                    value={unixToDate(isSebelumForm ? context?.data?.prev?.stamp : context?.data?.current?.stamp)}
+                                                    value={isSebelumForm ? context?.data?.prev?.stamp ? unixToDate(context?.data?.prev?.stamp, null, { dateStyle: 'full', timeStyle: 'medium' }) : 'Tidak Diketahui' : context?.data?.current?.stamp ? unixToDate(context?.data?.current?.stamp, null, { dateStyle: 'full', timeStyle: 'medium' }) : 'Tidak Diketahui'}
                                                     autoComplete='off'
                                                     disabled
                                                 />
@@ -343,7 +343,7 @@ export const PerubahanTerakhirDetail = () => {
                                                     id="nama"
                                                     placeholder=" "
                                                     className={styles.form__input}
-                                                    value={context?.data?.current?.nama ? context?.data?.current?.nama : context?.data?.prev?.nama}
+                                                    value={context?.data?.current?.nama || '-'}
                                                     autoComplete='off'
                                                     disabled
                                                 />
@@ -365,7 +365,7 @@ export const PerubahanTerakhirDetail = () => {
                                                         id="sks"
                                                         placeholder=" "
                                                         className={styles.form__input}
-                                                        value={context?.data?.current?.sks ? context?.data?.current?.sks : context?.data?.prev?.sks}
+                                                        value={context?.data?.current?.sks || '-1'}
                                                         autoComplete='off'
                                                         disabled
                                                     />
@@ -382,7 +382,7 @@ export const PerubahanTerakhirDetail = () => {
                                                         id="nilai"
                                                         placeholder=" "
                                                         className={styles.form__input}
-                                                        value={context?.data?.current?.nilai?.indeks ? context?.data?.current?.nilai?.indeks : context?.data?.prev?.nilai?.indeks}
+                                                        value={context?.data?.current?.nilai?.indeks || '-'}
                                                         autoComplete='off'
                                                         disabled
                                                     />
@@ -399,7 +399,7 @@ export const PerubahanTerakhirDetail = () => {
                                                         id="semester"
                                                         placeholder=" "
                                                         className={styles.form__input}
-                                                        value={context?.data?.current?.semester ? context?.data?.current?.semester : context?.data?.prev?.semester}
+                                                        value={context?.data?.current?.semester || '-1'}
                                                         autoComplete='off'
                                                         disabled
                                                     />
@@ -422,7 +422,7 @@ export const PerubahanTerakhirDetail = () => {
                                                         id="dapatDiulang"
                                                         placeholder=" "
                                                         className={styles.form__input}
-                                                        value={context?.data?.current?.dapat_diulang ? `${context?.data?.current?.dapat_diulang === true ? 'Ya' : 'Tidak'}` : `${context?.data?.prev?.dapat_diulang === true ? 'Ya' : 'Tidak'}`}
+                                                        value={context?.data?.current?.dapat_diulang === 'true' ? 'Ya' : 'Tidak'}
                                                         autoComplete='off'
                                                         disabled
                                                     />
@@ -439,7 +439,7 @@ export const PerubahanTerakhirDetail = () => {
                                                         id="maxNilai"
                                                         placeholder=" "
                                                         className={styles.form__input}
-                                                        value={context?.data?.current?.target_nilai?.indeks || context?.data?.prev?.target_nilai?.indeks}
+                                                        value={context?.data?.current?.target_nilai?.indeks || '-'}
                                                         autoComplete='off'
                                                         disabled
                                                     />
@@ -457,7 +457,7 @@ export const PerubahanTerakhirDetail = () => {
                                                     id="date"
                                                     placeholder=" "
                                                     className={styles.form__input}
-                                                    value={unixToDate(context?.data?.current?.stamp || context?.data?.prev?.stamp)}
+                                                    value={context?.data?.current?.stamp ? unixToDate(context?.data?.current?.stamp, null, { dateStyle: 'full', timeStyle: 'medium' }) : 'Tidak Diketahui'}
                                                     autoComplete='off'
                                                     disabled
                                                 />
