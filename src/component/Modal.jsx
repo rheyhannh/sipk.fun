@@ -964,6 +964,8 @@ export const TambahMatkul = () => {
                                         <input
                                             type="text"
                                             id="nama"
+                                            minLength="3"
+                                            maxLength="50"
                                             placeholder=" "
                                             className={`${styles.form__input} ${styles.max_length}`}
                                             value={nama}
@@ -992,6 +994,9 @@ export const TambahMatkul = () => {
                                         <input
                                             type="number"
                                             id="sks"
+                                            step="1"
+                                            min="0"
+                                            max="50"
                                             placeholder=" "
                                             className={styles.form__input}
                                             value={sks}
@@ -1032,6 +1037,9 @@ export const TambahMatkul = () => {
                                         <input
                                             type="number"
                                             id="semester"
+                                            step="1"
+                                            min="0"
+                                            max="50"
                                             placeholder=" "
                                             className={styles.form__input}
                                             value={semester}
