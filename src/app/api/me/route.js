@@ -10,6 +10,7 @@ import {
     cookieAuthDeleteOptions,
     validateJWT
 } from '@/utils/server_side';
+import Joi from 'joi';
 
 const limitRequest = parseInt(process.env.API_ME_REQUEST_LIMIT);
 const limiter = rateLimit({
@@ -88,7 +89,7 @@ export async function GET(request) {
                 remove(name, options) {
                     cookieStore.set({ name: process.env.USER_SESSION_COOKIES_NAME, value: '', ...cookieAuthDeleteOptions })
                     cookieStore.set({ name: 's_user_id', value: '', ...cookieAuthDeleteOptions })
-                    cookieStore.set({ name: 's_access_token', value: '', ...cookieAuthDeleteOptions})
+                    cookieStore.set({ name: 's_access_token', value: '', ...cookieAuthDeleteOptions })
                 },
             },
         }
