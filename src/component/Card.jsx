@@ -155,7 +155,7 @@ export function Summary({ state, icon, color, title, data }) {
                         </CountUp>
                     </div>
                 </div>
-                <small>{data.lastUpdated}</small>
+                <small>{data.keterangan}</small>
             </div>
         )
     }

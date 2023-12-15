@@ -52,7 +52,7 @@ function AcademicCard({ count }) {
                 state='loaded'
                 color='var(--second-color-lighter)'
                 icon={{ name: 'MdOutlineConfirmationNumber', lib: 'md' }}
-                data={{ value: x.getUserSks(matkul), percentage: x.getUserSksPercentage(user, matkul), lastUpdated: "Terakhir Diupdate" }}
+                data={{ value: x.getUserSks(matkul), percentage: x.getUserSksPercentage(user, matkul), keterangan: `${user.length !== 0 ? `Targetmu ${user[0].sks_target}` : `Terakhir diupdate`}` }}
                 title={'SKS'}
             >
             </Summary>
@@ -61,7 +61,7 @@ function AcademicCard({ count }) {
                 state='loaded'
                 color='var(--first-color)'
                 icon={{ name: 'IoBookOutline', lib: 'io5' }}
-                data={{ value: x.getUserMatkul(matkul), percentage: x.getUserMatkulPercentage(user, matkul), lastUpdated: 'Terakhir Diupdate' }}
+                data={{ value: x.getUserMatkul(matkul), percentage: x.getUserMatkulPercentage(user, matkul), keterangan: `${user.length !== 0 ? `Targetmu ${user[0].matkul_target}` : `Terakhir diupdate`}` }}
                 title={'Matakuliah'}
             >
             </Summary>
@@ -70,7 +70,7 @@ function AcademicCard({ count }) {
                 state='loaded'
                 color='var(--success-color)'
                 icon={{ name: 'FaRegStar', lib: 'fa' }}
-                data={{ value: x.getUserIpk(matkul), percentage: x.getUserIpkPercentage(user, matkul), lastUpdated: 'Terakhir Diupdate' }}
+                data={{ value: x.getUserIpk(matkul), percentage: x.getUserIpkPercentage(user, matkul), keterangan: `${user.length !== 0 ? `Targetmu ${parseFloat(user[0].ipk_target).toFixed(2)}` : `Terakhir diupdate`}` }}
                 title={'IPK'}
             >
             </Summary>
