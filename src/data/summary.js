@@ -17,9 +17,9 @@ const getUserIpk = (matkul) => {
 }
 
 const getUserIpkPercentage = (user, matkul) => {
-  if (user) {
+  if (user.length !== 0) {
     const ipk = getUserIpk(matkul);
-    const ipkTarget = user?.ipk_target || null;
+    const ipkTarget = user[0].ipk_target || null;
     const ipkPercentage = ipkTarget ? Math.round((ipk / ipkTarget) * 100) : Math.round((ipk / 4) * 100);
 
     return ipkPercentage > 100 ? 100 : ipkPercentage
@@ -43,9 +43,9 @@ const getUserSks = (matkul) => {
 }
 
 const getUserSksPercentage = (user, matkul) => {
-  if (user) {
+  if (user.length !== 0) {
     const sks = getUserSks(matkul);
-    const sksTarget = user?.sks_target || null;
+    const sksTarget = user[0].sks_target || null;
     const sksPercentage = sksTarget ? Math.round((sks / sksTarget) * 100) : Math.round((sks / 144) * 100);  
 
     return sksPercentage > 100 ? 100 : sksPercentage
@@ -63,9 +63,9 @@ const getUserMatkul = (matkul) => {
 }
 
 const getUserMatkulPercentage = (user, matkul) => {
-  if (user) {
+  if (user.length !== 0) {
     const matkulTotal = matkul.length;
-    const matkulTarget = user?.matkul_target || null;
+    const matkulTarget = user[0].matkul_target || null;
     const matkulPercentage = matkulTarget ? Math.round((matkulTotal / matkulTarget) * 100) : Math.round((matkulTotal / 50) * 100)
 
     return matkulPercentage > 100 ? 100 : matkulPercentage
