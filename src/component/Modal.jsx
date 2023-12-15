@@ -1079,28 +1079,31 @@ export const TambahMatkul = () => {
                                             Bisa Diulang
                                         </label>
                                     </div>
-                                    <div className={styles.form__input_field}>
-                                        <select
-                                            id="maxNilai"
-                                            className={`${styles.form__select} ${targetNilai >= 0 ? styles.filled : ''}`}
-                                            value={targetNilai}
-                                            onChange={(e) => { setTargetNilai(e.target.value) }}
-                                            onFocus={() => { setErrorMessage('') }}
-                                            required
-                                        >
-                                            <option value={-1}></option>
-                                            {penilaianKey.map((nilai) => (
-                                                <option value={penilaian[nilai].weight} key={crypto.randomUUID()}>{nilai}</option>
-                                            ))
-                                            }
-                                        </select>
-                                        <label
-                                            htmlFor="maxNilai"
-                                            className={styles.form__label}
-                                        >
-                                            Target Nilai
-                                        </label>
-                                    </div>
+                                    {dapatDiulang === 'true' ?
+                                        <div className={styles.form__input_field}>
+                                            <select
+                                                id="maxNilai"
+                                                className={`${styles.form__select} ${targetNilai >= 0 ? styles.filled : ''}`}
+                                                value={targetNilai}
+                                                onChange={(e) => { setTargetNilai(e.target.value) }}
+                                                onFocus={() => { setErrorMessage('') }}
+                                                required
+                                            >
+                                                <option value={-1}></option>
+                                                {penilaianKey.map((nilai) => (
+                                                    <option value={penilaian[nilai].weight} key={crypto.randomUUID()}>{nilai}</option>
+                                                ))
+                                                }
+                                            </select>
+                                            <label
+                                                htmlFor="maxNilai"
+                                                className={styles.form__label}
+                                            >
+                                                Target Nilai
+                                            </label>
+                                        </div>
+                                        : <></>
+                                    }
                                 </div>
                             </div>
                             <div className={styles.form__action}>
