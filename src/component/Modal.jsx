@@ -8,7 +8,9 @@ import { useState, useContext } from "react";
 // ========== VALIDATOR/SANITIZER DEPEDENCY ========== //
 import isLength from 'validator/lib/isLength';
 import isInt from 'validator/lib/isInt';
-import isEmpty from "validator/lib/isEmpty";
+import isEmpty from 'validator/lib/isEmpty';
+import isFloat from 'validator/lib/isFloat'
+import isAlpha from 'validator/lib/isAlpha';
 
 // ========== COMPONENTS DEPEDENCY ========== //
 import { mutate } from 'swr';
