@@ -1244,7 +1244,7 @@ export const Profil = () => {
                                 }
 
                                 const response = await fetch('/api/me', {
-                                    method: 'POST',
+                                    method: 'PATCH',
                                     headers: {
                                         'Authorization': `Bearer ${accessToken}`,
                                         'Content-Type': 'application/json',

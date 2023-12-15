@@ -117,7 +117,7 @@ export async function GET(request) {
     });
 }
 
-export async function POST(request) {
+export async function PATCH(request) {
     const newHeaders = {};
     const userAccessToken = request.cookies.get(`${process.env.USER_SESSION_COOKIES_NAME}`)?.value;
     const authorizationHeader = headers().get('Authorization');
