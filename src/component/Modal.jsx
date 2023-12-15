@@ -31,7 +31,6 @@ import { FaTimes } from 'react-icons/fa'
 // ========== STYLE DEPEDENCY ========== //
 import styles from './style/modal.module.css'
 
-
 export const PanduanDaftar = () => {
     const {
         daftarAccordionList
@@ -1107,7 +1106,6 @@ export const TambahMatkul = () => {
                                 </div>
                             </div>
                             <div className={styles.form__action}>
-                                {/* Use div instead button here */}
                                 <button type='submit' className={styles.btn}>
                                     <h3>Tambah</h3>
                                 </button>
@@ -1121,7 +1119,9 @@ export const TambahMatkul = () => {
 }
 
 export const Profil = () => {
+    const router = useRouter();
     const userIdCookie = useCookies().get('s_user_id');
+    const accessToken = useCookies().get('s_access_token');
     const [editProfil, setEditProfil] = useState(false);
     const [nama, setNama] = useState('default');
     const [nickname, setNickname] = useState('default');
@@ -1171,20 +1171,151 @@ export const Profil = () => {
     return (
         <ModalContext.Consumer>
             {context => {
-                const resetInputValue = () => {
-                    setNama('default');
-                    setNickname('default');
-                    setUniversitas('default');
-                    setJurusan('default');
-                    setSksTarget('-1');
-                    setMatkulTarget('-1');
-                    setIpkTarget('-1');
-                    setErrorMessage('');
+                const validateForm = () => {
+                    // Validating 'Nama'
+                    if (isEmpty(nama, { ignore_whitespace: true })) { setErrorMessage('Nama lengkap dibutuhkan'); return false; }
+                    if (!isLength(nama, { min: 6, max: 50 })) { setErrorMessage('Nama lengkap minimal 6 karakter maksimal 50 karakter'); return false; }
+                    if (!isAlpha(nama.replace(/\s/g, ''))) { setErrorMessage('Nama lengkap hanya dapat menggunakan huruf'); return false; }
+                    const fullNameRegex = /^[a-zA-Z]+(\s[a-zA-Z]+)*$/;
+                    if (!fullNameRegex.test(nama)) { setErrorMessage('Nama lengkap hanya dapat menggunakan 1 spasi disetiap kata'); return false; }
+
+                    // Validating 'Nickname'
+                    if (isEmpty(nickname, { ignore_whitespace: true })) { setErrorMessage('Nickname dibutuhkan'); return false; }
+                    if (!isLength(nickname, { min: 6, max: 20 })) { setErrorMessage('Nickname minimal 6 karakter maksimal 20 karakter'); return false; }
+
+                    // Validating 'Jurusan'
+                    if (isEmpty(jurusan, { ignore_whitespace: true })) { setErrorMessage('Jurusan dibutuhkan'); return false; }
+                    if (!isLength(jurusan, { min: 6, max: 30 })) { setErrorMessage('Jurusan minimal 6 karakter maksimal 30 karakter'); return false; }
+
+                    // Validating 'Sks Target'
+                    if (isEmpty(sksTarget, { ignore_whitespace: true })) { setErrorMessage('Sks target dibutuhkan'); return false; }
+                    if (!isInt(sksTarget, { min: 5, max: 1000 })) { setErrorMessage('Sks target harus angka bulat (min: 5, max: 1000)') }
+
+                    // Validating 'Matkul Target
+                    if (isEmpty(matkulTarget, { ignore_whitespace: true })) { setErrorMessage('Matakuliah target dibutuhkan'); return false; }
+                    if (!isInt(matkulTarget, { min: 5, max: 1000 })) { setErrorMessage('Matakuliah target harus angka bulat (min: 5, max: 1000)') }
+
+                    // Validating 'IPK Target'
+                    if (isEmpty(ipkTarget, { ignore_whitespace: true })) { setErrorMessage('Ipk target dibutuhkan'); return false; }
+                    if (!isFloat(ipkTarget, { min: 1.00, max: 4.00 })) { setErrorMessage('Ipk target harus angka (min: 1.00, max: 4.00)') }
+
+                    return {
+                        fullname: nama,
+                        nickname: nickname,
+                        jurusan: jurusan,
+                        sks_target: sksTarget,
+                        matkul_target: matkulTarget,
+                        ipk_target: ipkTarget
+                    }
+                }
+
+                const toggleEditProfil = () => {
+                    if (editProfil) { setEditProfil(false); setErrorMessage(''); }
+                    else {
+                        setNama(`${context?.data[0]?.fullname}`);
+                        setNickname(`${context?.data[0]?.nickname}`);
+                        setUniversitas(`${context?.data[0]?.university}`);
+                        setJurusan(`${context?.data[0]?.jurusan}`);
+                        setSksTarget(`${context?.data[0]?.sks_target}`);
+                        setMatkulTarget(`${context?.data[0]?.matkul_target}`);
+                        setIpkTarget(`${context?.data[0]?.ipk_target}`);
+                        setEditProfil(true);
+                    }
+                }
+
+                const handleEditProfil = async (e) => {
+                    e.preventDefault();
+
+                    // Validate Here, if ErrorValidate then setErrorMessage
+                    const validatedData = validateForm();
+                    if (!validatedData) { return }
+                    context.handleModalClose();
+
+                    const editProfil = () => {
+                        return new Promise(async (resolve, reject) => {
+                            try {
+                                if (!accessToken) {
+                                    router.refresh();
+                                    throw new Error('Terjadi kesalahan, silahkan coba lagi');
+                                }
+                                if (!userIdCookie) {
+                                    router.refresh();
+                                    throw new Error('Terjadi kesalahan, silahkan coba lagi');
+                                }
+
+                                const response = await fetch('/api/me', {
+                                    method: 'POST',
+                                    headers: {
+                                        'Authorization': `Bearer ${accessToken}`,
+                                        'Content-Type': 'application/json',
+                                    },
+                                    body: JSON.stringify(validatedData),
+                                });
+
+                                if (!response.ok) {
+                                    if (response.status === 401) {
+                                        router.replace('/users?action=login&error=isession', {
+                                            scroll: false
+                                        });
+                                        throw new Error(`Unauthorized`);
+                                    } else {
+                                        try {
+                                            const { message } = await response.json();
+                                            if (message) {
+                                                const newMessage =
+                                                    message.includes('alpha only pattern') ? 'Nama lengkap hanya dapat menggunakan huruf'
+                                                        : message.includes('one space each word pattern') ? 'Nama lengkap hanya dapat menggunakan 1 spasi disetiap kata'
+                                                            : message
+                                                throw new Error(newMessage);
+                                            } else {
+                                                throw new Error(`Terjadi kesalahan`);
+                                            }
+                                        } catch (error) {
+                                            console.error(error);
+                                            reject(error);
+                                        }
+                                    }
+                                } else {
+                                    try {
+                                        const { profil } = await response.json();
+                                        if (!profil) {
+                                            throw new Error('Failed to update cache');
+                                        }
+                                        mutate(['/api/me', userIdCookie], profil, {
+                                            populateCache: (profil, _) => {
+                                                return [profil];
+                                            },
+                                            revalidate: false,
+                                        });
+                                        resolve();
+                                    } catch (error) {
+                                        mutate(['/api/me', userIdCookie]);
+                                        resolve();
+                                    }
+                                }
+                            } catch (error) {
+                                reject(error);
+                            }
+                        });
+                    };
+
+                    toast.promise(
+                        editProfil(),
+                        {
+                            loading: `${getLoadingMessage(false, 1)}`,
+                            success: `Profil berhasil diperbarui`,
+                            error: (error) => `${error.message || 'Terjadi kesalahan'}`
+                        },
+                        {
+                            position: 'top-left',
+                            duration: 4000,
+                        }
+                    )
                 }
 
                 return (
                     <div className={`${styles.backdrop} ${context.active ? styles.active : ''}`}>
-                        <form className={`${styles.profil} ${editProfil ? styles.confirm : ''}`} id='modal'>
+                        <form onSubmit={handleEditProfil} className={`${styles.profil} ${editProfil ? styles.confirm : ''}`} id='modal'>
                             <div className={styles.top}>
                                 <div className={styles.title}>
                                     <h2>{editProfil ? 'Edit Profil' : 'Profil'}</h2>
@@ -1205,7 +1336,7 @@ export const Profil = () => {
                                             id="nama"
                                             placeholder=" "
                                             className={`${styles.form__input} ${styles.max_length}`}
-                                            value={nama !== 'default' ? nama : context?.data[0]?.fullname || '-'}
+                                            value={editProfil ? nama : context?.data[0]?.fullname}
                                             onChange={handleNamaChange}
                                             onFocus={() => { setErrorMessage('') }}
                                             disabled={!editProfil}
@@ -1220,7 +1351,7 @@ export const Profil = () => {
                                     </div>
 
                                     <div className={`${styles.form__input_length} ${nama.length >= 50 ? styles.max : ''}`}>
-                                        <small>{nama !== 'default' ? nama.length : context?.data[0]?.fullname?.length || '0'}/50</small>
+                                        <small>{editProfil ? nama.length : context?.data[0]?.fullname?.length}/50</small>
                                     </div>
                                 </div>
                                 <div className={styles.nc}>
@@ -1231,7 +1362,7 @@ export const Profil = () => {
                                                 id="nickname"
                                                 placeholder=" "
                                                 className={`${styles.form__input} ${styles.max_length}`}
-                                                value={nickname !== 'default' ? nickname : context?.data[0]?.nickname || ''}
+                                                value={editProfil ? nickname : context?.data[0]?.nickname}
                                                 onChange={handleNicknameChange}
                                                 onFocus={() => { setErrorMessage('') }}
                                                 disabled={!editProfil}
@@ -1246,7 +1377,7 @@ export const Profil = () => {
                                         </div>
 
                                         <div className={`${styles.form__input_length} ${nickname.length >= 20 ? styles.max : ''}`}>
-                                            <small>{nickname !== 'default' ? nickname.length : context?.data[0]?.nickname?.length || '0'}/20</small>
+                                            <small>{editProfil ? nickname.length : context?.data[0]?.nickname?.length}/20</small>
                                         </div>
                                     </div>
 
@@ -1257,7 +1388,7 @@ export const Profil = () => {
                                                 id="jurusan"
                                                 placeholder=" "
                                                 className={`${styles.form__input} ${styles.max_length}`}
-                                                value={jurusan !== 'default' ? jurusan : context?.data[0]?.jurusan || ''}
+                                                value={editProfil ? jurusan : context?.data[0]?.jurusan}
                                                 onChange={handleJurusanChange}
                                                 onFocus={() => { setErrorMessage('') }}
                                                 disabled={!editProfil}
@@ -1272,7 +1403,7 @@ export const Profil = () => {
                                         </div>
 
                                         <div className={`${styles.form__input_length} ${jurusan.length >= 30 ? styles.max : ''}`}>
-                                            <small>{jurusan !== 'default' ? jurusan.length : context?.data[0]?.jurusan?.length || '0'}/30</small>
+                                            <small>{editProfil ? jurusan.length : context?.data[0]?.jurusan?.length}/30</small>
                                         </div>
                                     </div>
                                 </div>
@@ -1284,7 +1415,7 @@ export const Profil = () => {
                                             placeholder=" "
                                             className={`${styles.form__input}`}
                                             style={{ cursor: editProfil ? 'not-allowed' : 'default' }}
-                                            value={universitas !== 'default' ? universitas : context?.data[0]?.university || '-'}
+                                            value={editProfil ? universitas : context?.data[0]?.university}
                                             disabled={true}
                                             readOnly={true}
                                             required
@@ -1308,9 +1439,12 @@ export const Profil = () => {
                                             <input
                                                 type="number"
                                                 id="sksTarget"
+                                                step="1"
+                                                min="5"
+                                                max="1000"
                                                 placeholder=" "
                                                 className={`${styles.form__input}`}
-                                                value={sksTarget !== '-1' ? sksTarget : context?.data[0]?.sks_target || ''}
+                                                value={editProfil ? sksTarget : context?.data[0]?.sks_target}
                                                 onChange={handleSksTargetChange}
                                                 onFocus={() => { setErrorMessage('') }}
                                                 disabled={!editProfil}
@@ -1330,9 +1464,12 @@ export const Profil = () => {
                                             <input
                                                 type="number"
                                                 id="matkulTarget"
+                                                step="1"
+                                                min="5"
+                                                max="1000"
                                                 placeholder=" "
                                                 className={`${styles.form__input}`}
-                                                value={matkulTarget !== '-1' ? matkulTarget : context?.data[0]?.matkul_target || ''}
+                                                value={editProfil ? matkulTarget : context?.data[0]?.matkul_target}
                                                 onChange={handleMatkulTargetChange}
                                                 onFocus={() => { setErrorMessage('') }}
                                                 disabled={!editProfil}
@@ -1352,9 +1489,12 @@ export const Profil = () => {
                                             <input
                                                 type="number"
                                                 id="ipkTarget"
+                                                step="0.01"
+                                                min="1.00"
+                                                max="4.00"
                                                 placeholder=" "
                                                 className={`${styles.form__input}`}
-                                                value={ipkTarget !== '-1' ? ipkTarget : context?.data[0]?.ipk_target || ''}
+                                                value={editProfil ? ipkTarget : context?.data[0]?.ipk_target}
                                                 onChange={handleIpkTargetChange}
                                                 onFocus={() => { setErrorMessage('') }}
                                                 disabled={!editProfil}
@@ -1380,19 +1520,15 @@ export const Profil = () => {
                             >
                                 {editProfil ?
                                     <>
-                                        <div style={{ marginTop: '0' }} className={`${styles.btn} ${styles.cancel}`} onClick={() => { setEditProfil(false); resetInputValue(); }}>
+                                        <div style={{ marginTop: '0' }} className={`${styles.btn} ${styles.cancel}`} onClick={toggleEditProfil}>
                                             <h3>Batalkan</h3>
                                         </div>
-                                        <div
-                                            className={`${styles.btn}`}
-                                            type='submit'
-                                            onClick={(e) => { console.log('Submit') }}
-                                        >
+                                        <button type='submit' className={styles.btn}>
                                             <h3>Simpan</h3>
-                                        </div>
+                                        </button>
                                     </>
                                     :
-                                    <div className={styles.btn} onClick={() => { setEditProfil(true); }}>
+                                    <div className={styles.btn} onClick={toggleEditProfil}>
                                         <h3>Edit Profil</h3>
                                     </div>
                                 }
