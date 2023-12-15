@@ -774,7 +774,7 @@ export const TambahMatkul = () => {
     const [sks, setSks] = useState('');
     const [nilai, setNilai] = useState(-1);
     const [semester, setSemester] = useState('');
-    const [dapatDiulang, setDapatDiulang] = useState(true);
+    const [dapatDiulang, setDapatDiulang] = useState('true');
     const [targetNilai, setTargetNilai] = useState(4);
     const [errorMessage, setErrorMessage] = useState('');
 
@@ -794,13 +794,13 @@ export const TambahMatkul = () => {
             {context => {
                 const validateForm = () => {
                     // Validating 'Nama'
-                    if (isEmpty(nama)) { setErrorMessage('Nama matakuliah dibutuhkan'); return false; }
+                    if (isEmpty(nama, { ignore_whitespace: true })) { setErrorMessage('Nama matakuliah dibutuhkan'); return false; }
                     else {
                         if (!isLength(nama, { min: 3, max: 50 })) { setErrorMessage('Nama matakuliah minimal 3 karakter maksimal 50 karakter'); return false; }
                     }
 
                     // Validating 'Sks'
-                    if (isEmpty(sks)) { setErrorMessage('Sks matakuliah dibutuhkan'); return false; }
+                    if (isEmpty(sks, { ignore_whitespace: true })) { setErrorMessage('Sks matakuliah dibutuhkan'); return false; }
                     else {
                         if (!isInt(sks, { min: 0, max: 50 })) { setErrorMessage('Sks harus angka (min: 0, max: 50)'); return false; }
                     }
@@ -809,7 +809,7 @@ export const TambahMatkul = () => {
                     if (nilai < 0) { setErrorMessage('Nilai matakuliah dibutuhkan'); return false; }
 
                     // Validating 'Semester'
-                    if (isEmpty(semester)) { setErrorMessage('Semester matakuliah dibutuhkan'); return false; }
+                    if (isEmpty(semester, { ignore_whitespace: true })) { setErrorMessage('Semester matakuliah dibutuhkan'); return false; }
                     else {
                         if (!isInt(semester, { min: 0, max: 50 })) { setErrorMessage('Semester harus angka (min: 0, max: 50)'); return false; }
                     }
@@ -823,11 +823,18 @@ export const TambahMatkul = () => {
                             bobot: nilai,
                             akhir: sks * nilai
                         },
-                        dapat_diulang: dapatDiulang || true,
-                        target_nilai: {
-                            indeks: penilaianKey.find((key) => `${penilaian[key].weight}` === `${targetNilai}`) || 'A',
-                            bobot: targetNilai !== -1 ? targetNilai : 4
-                        }
+                        dapat_diulang: dapatDiulang,
+                        ...(dapatDiulang === 'true'
+                            ? {
+                                target_nilai: {
+                                    indeks:
+                                        penilaianKey.find(
+                                            (key) => `${penilaian[key].weight}` === `${targetNilai}`
+                                        ) || 'A',
+                                    bobot: targetNilai !== -1 ? targetNilai : 4,
+                                },
+                            }
+                            : {})
                     }
                 }
 
