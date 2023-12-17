@@ -17,8 +17,12 @@ import isLength from 'validator/lib/isLength';
 import isStrongPassword from 'validator/lib/isStrongPassword';
 import isAlpha from 'validator/lib/isAlpha';
 import isInt from 'validator/lib/isInt';
+import isUUID from 'validator/lib/isUUID';
 
 // ========== COMPONENTS DEPEDENCY ========== //
+import { useCookies } from 'next-client-cookies';
+import { SHA256, HmacSHA512 } from 'crypto-js';
+import Hex from 'crypto-js/enc-hex';
 import toast from 'react-hot-toast';
 import { GlobalContext } from '@/component/provider/Global'
 import { UsersContext } from './provider/Users';
@@ -71,6 +75,11 @@ export function UsersForm() {
     } = useContext(ModalContext);
 
     /*
+    ========== Cookies ==========
+    */
+    const guestIdCookie = useCookies().get('s_guest_id');
+
+    /*
     ========== States ==========
     */
     // Init
@@ -111,13 +120,13 @@ export function UsersForm() {
 
         // Something Error ? 
         const error = searchParams.get('error');
-        if (error && mode === 'login') { 
+        if (error && mode === 'login') {
             const errorList = {
                 "isession": "Sesi invalid, silahkan login kembali",
                 "esession": "Silahkan login terlebih dahulu"
             }
-            router.refresh(); 
-            setErrorMessageLogin(errorList[error] || 'Terjadi error, silahkan login kembali'); 
+            router.refresh();
+            setErrorMessageLogin(errorList[error] || 'Terjadi error, silahkan login kembali');
         }
 
         // From Logout ? 
@@ -132,7 +141,13 @@ export function UsersForm() {
         e.preventDefault();
 
         if (inputValidator[0].status !== 'success' || inputValidator[1].status !== 'success') {
-            toast.error('Pastikan data terisi dan valid', getToastOptions('login'))
+            toast.error('Pastikan data terisi dan valid', getToastOptions('login'));
+            return;
+        }
+
+        if (!guestIdCookie || !isUUID(guestIdCookie)) {
+            toast.error('Terjadi kesalahan, silahkan coba lagi', getToastOptions('login'));
+            router.refresh();
             return;
         }
 
@@ -141,7 +156,18 @@ export function UsersForm() {
             async: true
         })
             .then(async ({ response: token }) => {
-                const response = await fetch('/api/login', {
+                const unixStamp = Math.round(Date.now() / 1000).toString();
+                const result = Array.from(unixStamp)
+                    .map(Number)
+                    .filter(digit => digit !== 0)
+                    .reduce((acc, digit) => acc * digit, 1);
+
+                const nonce = result.toString();
+                const nonceReverse = nonce.split('').reverse().join('');
+                const hashDigest = SHA256(nonce + guestIdCookie + nonceReverse);
+                const hmacDigest = HmacSHA512(hashDigest, unixStamp);
+                const identifier = Hex.stringify(hmacDigest);
+                const response = await fetch(`/api/login?stamp=${unixStamp}&identifier=${identifier}`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -151,11 +177,16 @@ export function UsersForm() {
 
                 if (!response.ok) {
                     if (response.status === 429) {
-                        setErrorMessageLogin(`Terlalu banyak request, coba lagi dalam 1 menit`)
+                        setErrorMessageLogin(`Terlalu banyak request, coba lagi dalam 1 menit`);
+                    } else if (response.status === 401) {
+                        setErrorMessageLogin(`Terjadi kesalahan, silahkan coba lagi`);
+                        router.refresh();
+                    } else if (response.status === 403) {
+                        setErrorMessageLogin(`Email atau password salah`);
                     } else {
                         try {
                             const { message } = await response.json();
-                            if (message) { setErrorMessageLogin(message) }
+                            if (message) { setErrorMessageLogin(message); }
                         } catch {
                             throw new Error(`Terjadi kesalahan saat login`);
                         }
