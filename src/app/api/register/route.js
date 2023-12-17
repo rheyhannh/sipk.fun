@@ -125,10 +125,10 @@ export async function POST(request) {
                     fullname: Joi.string().required(),
                     university: Joi.string().required(),
                     university_id: Joi.number().min(0).max(9).required(),
-                    token: Joi.string().required(),
+                    token: process.env.NODE_ENV !== 'production' ? Joi.string() : Joi.string().required(),
                 }
             )
-
+            
         await formDataSchema.validateAsync(formData);
     } catch (error) {
         console.error(error);
