@@ -10,12 +10,13 @@ import {
     cookieAuthDeleteOptions,
     cookieServiceOptions
 } from '@/utils/server_side';
+import isUUID from 'validator/lib/isUUID';
 
 /*
 ============================== CODE START HERE ==============================
 */
 export default async function middleware(request) {
-    const authSessionToken = request.cookies.get(`${process.env.USER_SESSION_COOKIES_NAME}`)?.value;
+    const secureAuthSessionToken = request.cookies.get(`${process.env.USER_SESSION_COOKIES_NAME}`)?.value;
     const serviceUserCookie = request.cookies.get('s_user_id')?.value;
     const serviceAccessTokenCookie = request.cookies.get('s_access_token')?.value;
     const serviceGuestCookie = request.cookies.get('s_guest_id')?.value;
@@ -27,14 +28,14 @@ export default async function middleware(request) {
         },
     })
 
-    if (!authSessionToken) {
+    if (!secureAuthSessionToken) {
         const loginUrl = new URL("/users", request.url);
         if (serviceUserCookie || serviceAccessTokenCookie) {
             response.cookies.set({ name: 's_user_id', value: '', ...cookieAuthDeleteOptions });
             response.cookies.set({ name: 's_access_token', value: '', ...cookieAuthDeleteOptions });
         }
         if (pathname.startsWith('/users')) {
-            if (!serviceGuestCookie) { response.cookies.set({ name: 's_guest_id', value: crypto.randomUUID(), ...cookieAuthOptions }) }
+            if (!serviceGuestCookie || !isUUID(serviceGuestCookie) ) { response.cookies.set({ name: 's_guest_id', value: crypto.randomUUID(), ...cookieServiceOptions }) }
             return response
         }
         loginUrl.searchParams.set('action', 'login');
@@ -49,64 +50,16 @@ export default async function middleware(request) {
         {
             cookies: {
                 get(name) {
-                    const encryptedSession = request.cookies.get(process.env.USER_SESSION_COOKIES_NAME)?.value
-                    if (encryptedSession) {
-                        const decryptedSession = decryptSyncAES(encryptedSession) || 'removeMe';
-                        return decryptedSession;
-                    }
-                    return encryptedSession;
+                    const decryptedSession = decryptSyncAES(secureAuthSessionToken) || 'removeMe';
+                    return decryptedSession;
                 },
                 set(name, value, options) {
                     const encryptedSession = encryptSyncAES(value);
                     if (encryptedSession) {
-                        response = NextResponse.next({
-                            request: {
-                                headers: request.headers,
-                            },
-                        })
-
-                        response.cookies.set({
-                            name: process.env.USER_SESSION_COOKIES_NAME,
-                            value: encryptedSession,
-                            ...cookieAuthOptions
-                        })
+                        response.cookies.set({ name: process.env.USER_SESSION_COOKIES_NAME, value: encryptedSession, ...cookieAuthOptions })
                     } else {
-                        response = NextResponse.next({
-                            request: {
-                                headers: request.headers,
-                            },
-                        })
-
-                        response.cookies.set({
-                            name: process.env.USER_SESSION_COOKIES_NAME,
-                            value: encryptedSession,
-                            ...cookieAuthOptions
-                        })
+                        response.cookies.set({ name: process.env.USER_SESSION_COOKIES_NAME, value: value, ...cookieAuthOptions })
                     }
-                },
-                remove(name, options) {
-                    const loginUrl = new URL("/users", request.url);
-                    loginUrl.searchParams.set('action', 'login');
-                    loginUrl.searchParams.set('error', 'isession');
-                    response = NextResponse.redirect(loginUrl);
-
-                    response.cookies.set({
-                        name: 's_user_id',
-                        value: '',
-                        ...cookieAuthDeleteOptions
-                    })
-
-                    response.cookies.set({
-                        name: 's_access_token',
-                        value: '',
-                        ...cookieAuthDeleteOptions
-                    })
-
-                    response.cookies.set({
-                        name: process.env.USER_SESSION_COOKIES_NAME,
-                        value: '',
-                        ...cookieAuthDeleteOptions,
-                    })
                 },
             },
         }
