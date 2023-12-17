@@ -120,7 +120,7 @@ export async function POST(request) {
         const formDataSchema = Joi.object({
             email: Joi.string().min(6).max(100).email().required(),
             password: Joi.string().min(6).max(50).required(),
-            token: Joi.string().required()
+            token: process.env.NODE_ENV !== 'production' ? Joi.string() : Joi.string().required(),
         })
         await formDataSchema.validateAsync(formData);
     } catch (error) {
