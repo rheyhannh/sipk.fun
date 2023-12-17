@@ -207,6 +207,87 @@ export function UsersForm() {
             });
     }
 
+    const handleDaftar = async (e) => {
+        e.preventDefault();
+
+        if (
+            inputValidator[2].status !== 'success' ||
+            inputValidator[3].status !== 'success' ||
+            inputValidator[4].status !== 'success' ||
+            !inputValidator[5].status.includes('success')
+        ) {
+            toast.error('Pastikan data terisi dan valid', getToastOptions('daftar'));
+            return;
+        }
+
+        if (!guestIdCookie || !isUUID(guestIdCookie)) {
+            toast.error('Terjadi kesalahan, silahkan coba lagi', getToastOptions('daftar'));
+            router.refresh();
+            return;
+        }
+
+        setLoading(true);
+        captcha.current.execute({
+            async: true
+        })
+            .then(async ({ response: token }) => {
+                const unixStamp = Math.round(Date.now() / 1000).toString();
+                const result = Array.from(unixStamp)
+                    .map(Number)
+                    .filter(digit => digit !== 0)
+                    .reduce((acc, digit) => acc * digit, 1);
+
+                const nonce = result.toString();
+                const nonceReverse = nonce.split('').reverse().join('');
+                const hashDigest = SHA256(nonce + guestIdCookie + nonceReverse);
+                const hmacDigest = HmacSHA512(hashDigest, unixStamp);
+                const identifier = Hex.stringify(hmacDigest);
+                const response = await fetch(`/api/register?stamp=${unixStamp}&identifier=${identifier}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(
+                        {
+                            email: email,
+                            password: password,
+                            fullname: namaLengkap,
+                            university: listUniversitas[universitas - 1].nama,
+                            university_id: universitas - 1,
+                            token: token,
+                        }
+                    ),
+                })
+
+                if (!response.ok) {
+                    if (response.status === 429) {
+                        setErrorMessageDaftar(`Terlalu banyak request, coba lagi dalam 15 menit`);
+                    } else if (response.status === 401) {
+                        setErrorMessageDaftar(`Terjadi kesalahan, silahkan coba lagi`);
+                        router.refresh();
+                    } else {
+                        try {
+                            const { message } = await response.json();
+                            if (message) { setErrorMessageDaftar(message); }
+                        } catch {
+                            throw new Error(`Terjadi kesalahan saat daftar`);
+                        }
+                    }
+                } else {
+                    // Show Modal
+                    alert('Berhasil daftar, silahkan cek emailmu');
+                }
+            })
+            .catch((error) => {
+                if (error === 'challenge-closed') { setErrorMessageDaftar('Captcha dibutuhkan untuk daftar') }
+                else { setErrorMessageDaftar(error.message ? error.message : 'Terjadi kesalahan saat daftar') }
+            })
+            .finally(() => {
+                setLoading(false);
+                captcha.current.resetCaptcha();
+            });
+    }
+
     const getToastOptions = (form, style, icon) => {
         const duration = 3000;
         if (form === 'login') {
@@ -455,7 +536,17 @@ export function UsersForm() {
                                         <a>Lupa password ? Klik disini.</a>
                                     </p>
                                 </form>
-                                <form className={styles.sign_up_form}>
+                                <form
+                                    onSubmit={handleDaftar}
+                                    onSubmitCapture={(e) => {
+                                        setErrorMessageDaftar('');
+                                        const allInput = e.target.querySelectorAll('input');
+                                        allInput.forEach(input => {
+                                            input.blur();
+                                        });
+                                    }}
+                                    className={styles.sign_up_form}
+                                >
                                     <h2 className={styles.title}>Daftar</h2>
                                     <h3 style={{ margin: '.25rem 0', color: 'var(--danger-color)', fontWeight: 'var(--font-medium)' }}>{errorMessageDaftar}</h3>
                                     <div className={styles.input_field}>
