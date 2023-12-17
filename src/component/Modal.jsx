@@ -1123,13 +1123,13 @@ export const Profil = () => {
     const userIdCookie = useCookies().get('s_user_id');
     const accessToken = useCookies().get('s_access_token');
     const [editProfil, setEditProfil] = useState(false);
-    const [nama, setNama] = useState('default');
-    const [nickname, setNickname] = useState('default');
-    const [universitas, setUniversitas] = useState('default');
-    const [jurusan, setJurusan] = useState('default');
-    const [sksTarget, setSksTarget] = useState('-1');
-    const [matkulTarget, setMatkulTarget] = useState('-1');
-    const [ipkTarget, setIpkTarget] = useState('-1');
+    const [nama, setNama] = useState('');
+    const [nickname, setNickname] = useState('');
+    const [universitas, setUniversitas] = useState('');
+    const [jurusan, setJurusan] = useState('');
+    const [sksTarget, setSksTarget] = useState('');
+    const [matkulTarget, setMatkulTarget] = useState('');
+    const [ipkTarget, setIpkTarget] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
 
     const handleNamaChange = (e) => {
