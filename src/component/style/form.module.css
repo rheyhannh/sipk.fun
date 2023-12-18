@@ -549,15 +549,15 @@
     }
 }
 
-@media screen and (min-width: 1440px) {
+@media screen and (min-width: 1366px), screen and (min-height: 1366px) {
     .container:before {
-        width: 2400px;
-        height: 2400px;
+        width: calc(2000px + 50vw);
+        height: calc(2000px + 100vh);
         right: 44%;
     }
 
     .image {
-        max-width: 600px;
+        max-width: calc(500px + 5vw);
     }
 
     .right_panel .content,
