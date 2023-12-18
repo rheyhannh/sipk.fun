@@ -90,6 +90,7 @@ function Right() {
     }
 
     const handleProfilModal = () => {
+        if (!data || data.length === 0 || error) { return; }
         setData(data);
         setModal('profil');
         setTimeout(() => {
