@@ -26,10 +26,72 @@ import { useUser } from "@/data/core";
 import { getPenilaianUniversitas } from "@/data/universitas";
 
 // ========== ICONS DEPEDENCY ========== //
-import { FaTimes } from 'react-icons/fa'
+import { FaTimes, FaRegTimesCircle } from 'react-icons/fa'
+import { FaRegCircleCheck } from "react-icons/fa6";
 
 // ========== STYLE DEPEDENCY ========== //
 import styles from './style/modal.module.css'
+
+export const Default = () => {
+    return (
+        <ModalContext.Consumer>
+            {context => {
+                return (
+                    <div className={`${styles.backdrop} ${context.active ? styles.active : ''}`}>
+                        <div className={styles.default} id='modal'>
+                            <div className={styles.main}>
+                                {
+                                    context?.data?.image
+                                        ? context?.data?.image
+                                        : context?.data?.isSuccess
+                                            ? <FaRegCircleCheck size={'70px'} color={'var(--logo-second-color)'} />
+                                            : <FaRegTimesCircle size={'70px'} color={'var(--logo-second-color)'} />
+                                }
+                            </div>
+
+                            <div style={{ textAlign: 'center' }} className={styles.title}>
+                                <h2>
+                                    {
+                                        context?.data?.title
+                                            ? context?.data?.title
+                                            : context?.data?.isSuccess
+                                                ? 'Yeaay!'
+                                                : 'Ooops!'
+                                    }
+                                </h2>
+                            </div>
+
+                            <div style={{ textAlign: 'center' }}>
+                                <p>
+                                    {
+                                        context?.data?.message
+                                            ? context?.data?.message
+                                            : context?.data?.isSuccess
+                                                ? 'Berhasil memproses permintaanmu'
+                                                : 'Sepertinya ada yang salah saat memproses permintaanmu.'
+                                    }
+
+                                </p>
+                            </div>
+
+                            <div className={styles.form__action}>
+                                <div className={`${styles.btn} ${styles.confirm}`} onClick={() => { context.handleModalClose() }}>
+                                    <h3>
+                                        {
+                                            context?.data?.actionText
+                                                ? context?.data?.actionText
+                                                : 'Tutup'
+                                        }
+                                    </h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                )
+            }}
+        </ModalContext.Consumer>
+    )
+}
 
 export const PanduanDaftar = () => {
     const {

@@ -5,6 +5,7 @@ import { createContext, useEffect, useState } from "react"
 
 // ========== COMPONENT DEPEDENCY ========== //
 import {
+    Default,
     PanduanDaftar,
     Logout,
     PerubahanTerakhirDetail,
@@ -50,6 +51,7 @@ export const ModalProvider = ({ children }) => {
 
     const modalList = {
         type: {
+            default: <Default/>,
             panduanDaftar: <PanduanDaftar/>,
             logout: <Logout/>,
             perubahanTerakhirDetail: <PerubahanTerakhirDetail />,

@@ -25,7 +25,8 @@
 .tambah__matakuliah,
 .panduan__daftar,
 .logout,
-.profil {
+.profil,
+.default {
     display: grid;
     grid-template-rows: 30px auto 50px;
     gap: 1rem;
@@ -38,6 +39,14 @@
     border-radius: 1rem;
     transition: all .3s ease-in-out;
     transform: scale(.5) translateY(10%);
+}
+
+.default {
+    grid-template-rows: 80px 30px max-content 50px;
+    max-height: 315px;
+    max-width: 345px;
+    padding: 3rem;
+    transform: translateY(10%);
 }
 
 .perubahan__terakhir.ubah {
@@ -73,6 +82,21 @@
 .backdrop.active .profil,
 .backdrop.active .logout {
     transform: scale(1) translateY(0);
+}
+
+.backdrop.active .default {
+    transform: translateY(0);
+}
+
+.main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.main img {
+    width: auto;
+    height: 100%;
 }
 
 .top {
@@ -299,7 +323,6 @@
     border-radius: .4rem;
     background: var(--users-btn-alt);
     color: var(--white-color);
-    /* transition: all var(--transition-default) ease-in-out; */
 }
 
 .form__action .btn.confirm.hapus {
@@ -398,7 +421,8 @@
     }
 
     .perubahan__terakhir.confirm,
-    .logout.confirm {
+    .logout.confirm,
+    .default {
         position: absolute;
         bottom: -100%;
         left: 0;
@@ -408,8 +432,15 @@
         transform: none;
     }
 
+    .default {
+        padding: 2rem;
+        max-height: 285px;
+        grid-template-rows: 80px 30px max-content 50px;
+    }
+
     .backdrop.active .perubahan__terakhir.confirm,
-    .backdrop.active .logout.confirm {
+    .backdrop.active .logout.confirm,
+    .backdrop.active .default {
         bottom: 0;
         transform: none;
     }
