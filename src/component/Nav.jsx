@@ -10,6 +10,10 @@ import { useContext, useEffect } from 'react'
 import { DashboardContext } from './provider/Dashboard';
 import { ModalContext } from './provider/Modal';
 import { Icon } from './loader/ReactIcons';
+import { PiUserCircleLight } from "react-icons/pi";
+
+// ========== DATA DEPEDENCY ========== //
+import { useUser } from '@/data/core';
 
 // ========== STYLE DEPEDENCY ========== //
 import styles from './style/nav.module.css'
@@ -18,6 +22,7 @@ import styles from './style/nav.module.css'
 ============================== CODE START HERE ==============================
 */
 export default function Nav({ children }) {
+    const { data, error } = useUser();
     const {
         isNavbarActive,
         setNavbarActive,
@@ -32,8 +37,7 @@ export default function Nav({ children }) {
 
     const navList = [
         { text: 'Dashboard', href: '/dashboard', icon: 'AiOutlineAppstore', lib: 'ai' },
-        { text: 'Profil', href: '/dashboard/profil', icon: 'AiOutlineIdcard', lib: 'ai' },
-        { text: 'Matakuliah', href: '/dashboard/matkul', icon: 'BsJournalBookmark', lib: 'bs' },
+        { text: 'Matakuliah', href: '/dashboard/matakuliah', icon: 'BsJournalBookmark', lib: 'bs' },
     ]
 
     useEffect(() => {
@@ -62,6 +66,16 @@ export default function Nav({ children }) {
         }, 50)
     }
 
+    const handleProfilModal = () => {
+        if (!data || data.length === 0 || error) { return; }
+        if (!isRichContent) { setNavbarActive(false); }
+        setData(data);
+        setModal('profil');
+        setTimeout(() => {
+            setActive(true);
+        }, 50)
+    }
+
     return (
         <>
             {isRichContent === true ?
@@ -71,6 +85,20 @@ export default function Nav({ children }) {
                             <div className={`${styles.aside} ${isNavbarActive ? styles.active : ''}`} id='aside'>
                                 <div className={styles.sidebar}>
                                     <div>
+                                        {data && data.length !== 0 && !error &&
+                                            <div
+                                                onClick={handleProfilModal}
+                                                className={styles.profile}
+                                            >
+                                                <span className={styles.profile__icon}>
+                                                    <PiUserCircleLight size={'24px'} />
+                                                </span>
+                                                <h4 className={styles.profile__text}>
+                                                    {data[0].nickname}
+                                                </h4>
+
+                                            </div>
+                                        }
                                         {navList.map((item, index) => (
                                             <Link
                                                 href={item.href}
@@ -112,6 +140,20 @@ export default function Nav({ children }) {
                         <div className={`${styles.aside} ${isNavbarActive ? styles.active : ''}`} id='aside'>
                             <div className={styles.sidebar}>
                                 <div>
+                                    {data && data.length !== 0 && !error &&
+                                        <div
+                                            onClick={handleProfilModal}
+                                            className={styles.profile}
+                                        >
+                                            <span className={styles.profile__icon}>
+                                                <PiUserCircleLight size={'24px'} />
+                                            </span>
+                                            <h4 className={styles.profile__text}>
+                                                {data[0].nickname}
+                                            </h4>
+
+                                        </div>
+                                    }
                                     {navList.map((item, index) => (
                                         <Link
                                             href={item.href}
