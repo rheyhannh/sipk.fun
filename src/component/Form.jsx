@@ -110,6 +110,13 @@ export function UsersForm() {
     const [inputValidator, setInputValidator] = useState(initialInputValidator);
 
     /*
+    ========== Images ==========
+    */
+    const emailImg = theme === 'dark' ?
+        <Image src="/check_email_dark.svg" width={100} height={100} alt="Check Email" priority />
+        : <Image src="/check_email.svg" width={100} height={100} alt="Check Email" priority />
+    
+        /*
     ========== useEffect ==========
     */
     useEffect(() => {
@@ -274,8 +281,7 @@ export function UsersForm() {
                         }
                     }
                 } else {
-                    // Show Modal
-                    alert('Berhasil daftar, silahkan cek emailmu');
+                    handleSuksesDaftarModal();
                 }
             })
             .catch((error) => {
@@ -304,6 +310,14 @@ export function UsersForm() {
                 return { duration: duration, position: 'top-center', style: style || '', ...(icon && { icon }) }
             }
         }
+    }
+
+    const handleSuksesDaftarModal = () => {
+        setData({ image: emailImg, message: 'Periksa emailmu termasuk folder spam, untuk langkah selanjutnya.', isSuccess: true });
+        setModal('default');
+        setTimeout(() => {
+            setActive(true);
+        }, 50)
     }
 
     const handleDaftarModal = () => {
