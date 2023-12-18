@@ -310,7 +310,7 @@ main.dashboard {
     }
 }
 
-@media screen and (min-width: 1920px) {
+/* @media screen and (min-width: 1920px) {
     :root {
         --big-font-size: 3rem;
         --h1-font-size: 2rem;
@@ -320,4 +320,4 @@ main.dashboard {
         --small-font-size: 1.075rem;
         --smaller-font-size: .975rem;
     }
-}
+} */
