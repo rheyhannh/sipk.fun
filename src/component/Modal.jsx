@@ -627,7 +627,9 @@ export const PerubahanTerakhirConfirm = () => {
                                             }
                                             mutate(['/api/matkul', userIdCookie], undefined, {
                                                 populateCache: (_, currentMatkul) => {
-                                                    if (currentMatkul.length - 1 === 0) {
+                                                    if (!currentMatkul) {
+                                                        return [];
+                                                    } else if (currentMatkul.length - 1 === 0) {
                                                         return [];
                                                     } else {
                                                         const filteredMatkul = currentMatkul.filter(matkul => matkul.id !== `${context?.data?.matkul_id}`);
@@ -638,7 +640,9 @@ export const PerubahanTerakhirConfirm = () => {
                                             });
                                             mutate(['/api/matkul-history', userIdCookie], ref, {
                                                 populateCache: (ref, currentRef) => {
-                                                    if (currentRef.length === 1) {
+                                                    if (!currentRef) {
+                                                        return [ref]
+                                                    } else if (currentRef.length === 1) {
                                                         return [ref];
                                                     } else {
                                                         const filteredRef = currentRef.filter(refs => refs.id !== ref.id);
@@ -739,7 +743,9 @@ export const PerubahanTerakhirConfirm = () => {
                                             }
                                             mutate(['/api/matkul', userIdCookie], matkul, {
                                                 populateCache: (matkul, currentMatkul) => {
-                                                    if (currentMatkul.length === 0) {
+                                                    if (!currentMatkul) {
+                                                        return [matkul]
+                                                    } else if (currentMatkul.length === 0) {
                                                         return [matkul];
                                                     } else {
                                                         return [matkul, ...currentMatkul];
@@ -749,7 +755,9 @@ export const PerubahanTerakhirConfirm = () => {
                                             });
                                             mutate(['/api/matkul-history', userIdCookie], ref, {
                                                 populateCache: (ref, currentRef) => {
-                                                    if (currentRef.length === 1) {
+                                                    if (!currentRef) {
+                                                        return [ref]
+                                                    } else if (currentRef.length === 1) {
                                                         return [ref];
                                                     } else {
                                                         const filteredRef = currentRef.filter(refs => refs.id !== ref.id);
@@ -955,7 +963,9 @@ export const TambahMatkul = () => {
                                         }
                                         mutate(['/api/matkul', userIdCookie], matkul, {
                                             populateCache: (matkul, currentMatkul) => {
-                                                if (currentMatkul.length === 0) {
+                                                if (!currentMatkul) {
+                                                    return [matkul]
+                                                } else if (currentMatkul.length === 0) {
                                                     return [matkul];
                                                 } else {
                                                     return [matkul, ...currentMatkul];
@@ -965,7 +975,9 @@ export const TambahMatkul = () => {
                                         });
                                         mutate(['/api/matkul-history', userIdCookie], ref, {
                                             populateCache: (ref, currentRef) => {
-                                                if (currentRef.length === 0) {
+                                                if (!currentRef) {
+                                                    return [ref]
+                                                } else if (currentRef.length === 0) {
                                                     return [ref];
                                                 } else {
                                                     if (currentRef.length >= 3) {
