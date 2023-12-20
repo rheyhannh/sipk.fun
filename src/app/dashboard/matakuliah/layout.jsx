@@ -1,7 +1,7 @@
 export const metadata = {
-    title: 'Profil',
-    description: 'SIPK Profil',
-    keywords: 'SIPK, Sistem, Informasi, Prestasi, Kumulatif, Profil',
+    title: 'Matakuliah',
+    description: 'SIPK Matakuliah',
+    keywords: 'SIPK, Sistem, Informasi, Prestasi, Kumulatif, Matakuliah',
     author: '@SIPK',
 }
 
