@@ -20,6 +20,7 @@
     --danger-sec-color: hsla(355, 80%, 47%, 1);
     --success-sec-color: hsla(160, 70%, 44%, 1);
     --warning-sec-color: hsla(36, 80%, 47%, 1);
+    --crimson-sec-color: crimson;
     --whatsapp-color: #25D366;
     --infoDark-color: #7d8da1;
     --infoLight-color: #dce1eb;
@@ -38,7 +39,16 @@
     --logo-first-color: #FF6341;
     --logo-second-color: #1d3263;
     --logo-second-color-lighter: hsla(222, 35%, 30%, .95);
+
     /* === END OF UTILS COLOR === */
+
+    /* === INNER === */
+    --inner-color-bg1: #F8FAFC;
+    /* === END OF INNER === */
+
+    /* === BOX === */
+    --box-color-bg1: #FFFFFF;
+    /* === END OF BOX === */
 
     /* === BORDER-RADIUS === */
     --card-border-radius: 2rem;
@@ -93,6 +103,7 @@
 
     /* === BOX-SHADOW === */
     --box-shadow: 0 1rem 1.5rem var(--light-color);
+    --box-shadow2: 0 0 .1rem .1rem rgba(0, 0, 0, .2);
     /* === END OF BOX-SHADOW === */
 
     /* === TRANSITION === */
@@ -129,6 +140,7 @@
     --danger-sec-color: hsla(355, 100%, 63%, 1);
     --success-sec-color: hsla(160, 86%, 50%, 1);
     --warning-sec-color: hsla(36, 100%, 62%, 1);
+    --crimson-sec-color: crimson;
     --body-color: #181a1e;
     --white-color: #202528;
     --dark-color: #edeffd;
@@ -143,12 +155,22 @@
     --logo-first-color: #f6f6f9;
     --logo-second-color: #FF6341;
     --logo-second-color-lighter: hsla(11, 100%, 62.5%, .95);
+    --inner-custom: #18181B;
     /* === END OF UTILS COLOR === */
+
+    /* === INNER === */
+    --inner-color-bg1: #18181B;
+    /* === END OF INNER === */
+
+    /* === BOX === */
+    --box-color-bg1: #3F3F46;
+    /* === END OF BOX === */
 
     /* === BOX-SHADOW === */
     --box-shadow: 0 1rem 1.5rem var(--light-color);
+    --box-shadow2: none;
     /* === END OF BOX-SHADOW === */
-
+    
     /* === USERS '/users' === */
     --users-big-circle: linear-gradient(-45deg, #FF6341, #FF6341);
     --users-box-shadow: 0 0 .5rem var(--logo-second-color);
@@ -201,12 +223,12 @@ button {
 }
 
 input:-webkit-autofill,
-input:-webkit-autofill:hover, 
-input:-webkit-autofill:focus, 
-input:-webkit-autofill:active  {
-  -webkit-text-fill-color: var(--dark-color) !important;
-  -webkit-background-clip: text !important;
-  background-clip: text !important;
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+    -webkit-text-fill-color: var(--dark-color) !important;
+    -webkit-background-clip: text !important;
+    background-clip: text !important;
 }
 
 input[type="number"]::-webkit-outer-spin-button,
