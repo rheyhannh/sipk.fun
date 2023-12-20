@@ -1,6 +1,49 @@
 .wrapper {
     display: grid;
-    grid-template-columns: 1fr .5fr;
-    gap: 2.5rem;
-    background: rgba(255, 0, 0, 0.2);
+    grid-template-rows: 1fr;
+    margin-top: calc(var(--header-height) + .75rem);
+    padding: 0 1rem;
+}
+
+.top {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 2rem;
+}
+
+.top__right {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    border-radius: .5rem;
+    background: none;
+    gap: .5rem;
+    min-width: 100px;
+    transition: background var(--transition-default) ease;
+}
+
+.top__right_icon svg {
+    display: flex;
+}
+
+.top__right_text {
+    font-weight: 500;
+}
+
+.insight {
+    display: none;
+    margin-bottom: 1rem;
+}
+
+.insight.active {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.6rem;
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .top__right:hover {
+        background: var(--accordion-bg-color);
+    }
 }
