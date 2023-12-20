@@ -1,8 +1,7 @@
 export const metadata = {
-    title: 'Matakuliah',
-    description: 'SIPK Matakuliah',
-    keywords: 'SIPK, Sistem, Informasi, Prestasi, Kumulatif, Matakuliah',
-    author: '@SIPK',
+    title: 'SIPK | Matakuliah',
+    description: 'SIPK Dashboard - Matakuliah',
+    keywords: 'sipk, sistem indeks prestasi kumulatif, kalkulator ipk, kalkulator nilai, kalkulator kuliah, ipk, indeks prestasi kumulatif, kuliah, sipk website, sipk dashboard, dashboard',
 }
 
 export default function DashboardLayout({

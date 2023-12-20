@@ -5,10 +5,9 @@ import { UsersProvider } from "@/component/provider/Users"
 
 // ========== TAG / METADATA ========== //
 export const metadata = {
-  title: 'SIPK',
+  title: 'SIPK | Users',
   description: 'Daftar dan Login SIPK',
-  keywords: 'SIPK, Sistem, Informasi, Prestasi, Kumulatif, Daftar, Masuk, Signin, Signup',
-  author: '@SIPK',
+  keywords: 'sipk, sistem indeks prestasi kumulatif, kalkulator ipk, kalkulator nilai, kalkulator kuliah, ipk, indeks prestasi kumulatif, kuliah, sipk website, sipk daftar, sipk login, daftar akun sipk, login akun sipk, daftar, login',
 }
 
 /*

@@ -12,10 +12,9 @@ import { ModalProvider } from '@/component/provider/Modal';
 
 // ========== TAG / METADATA ========== //
 export const metadata = {
-  title: 'Dashboard',
+  title: 'SIPK | Dashboard',
   description: 'SIPK Dashboard',
-  keywords: 'SIPK, Sistem, Informasi, Prestasi, Kumulatif, Dashboard',
-  author: '@SIPK',
+  keywords: 'sipk, sistem indeks prestasi kumulatif, kalkulator ipk, kalkulator nilai, kalkulator kuliah, ipk, indeks prestasi kumulatif, kuliah, sipk website, sipk dashboard, dashboard',
 }
 
 /*
