@@ -1,13 +1,12 @@
 'use client'
 
 // ========== REACT DEPEDENCY ========== //
-import { useState, useContext } from 'react';
+import { useState } from 'react';
 
 // ========== COMPONENT DEPEDENCY ========== //
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Pagination } from 'swiper/modules';
 import { Total } from '@/component/Card'
-import { DashboardContext } from "@/component/provider/Dashboard";
 
 // ========== DATA DEPEDENCY ========== //
 import { useMatkul, useNotifikasi, useUser, useMatkulHistory } from '@/data/core';
@@ -52,7 +51,6 @@ function TotalCard() {
 
 export default function MatakuliahPage() {
     const [widget, setWidget] = useState(true);
-    const { isTouchDevice } = useContext(DashboardContext);
 
     return (
         <>
@@ -86,7 +84,7 @@ export default function MatakuliahPage() {
                         "--swiper-pagination-color": "var(--logo-second-color)",
                         "--swiper-pagination-bullet-inactive-color": "var(--infoDark-color)",
                     }}
-                    {...(isTouchDevice ? { noSwipingSelector: '#abcde' } : {})}
+                    noSwipingSelector={'#total_data-scroll'}
                     modules={[Pagination]}
                     className={`${styles.insight} ${widget ? styles.active : ''}`}
                 >

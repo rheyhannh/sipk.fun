@@ -497,17 +497,17 @@
     }
 
     .notification:hover .notification__inner::-webkit-scrollbar,
-    .total:hover .total__data::-webkit-scrollbar {
+    .total__data:hover::-webkit-scrollbar {
         visibility: visible;
     }
 
     .notification:hover .notification__inner::-webkit-scrollbar-thumb,
-    .total:hover .total__data::-webkit-scrollbar-thumb {
+    .total__data:hover::-webkit-scrollbar-thumb {
         visibility: visible;
     }
 
     .notification:hover .notification__inner::-webkit-scrollbar-thumb:hover,
-    .total:hover .total__data::-webkit-scrollbar-thumb:hover {
+    .total__data:hover::-webkit-scrollbar-thumb:hover {
         visibility: visible;
     }
 

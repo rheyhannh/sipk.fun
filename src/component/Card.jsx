@@ -35,8 +35,8 @@ import "react-loading-skeleton/dist/skeleton.css";
 import { IoAddOutline } from "react-icons/io5";
 import { CiTrash, CiEdit } from "react-icons/ci";
 import { FaInfo, FaUndo } from "react-icons/fa";
-import { AiOutlineUnorderedList } from "react-icons/ai";
 import { LuBookCopy, LuLineChart, LuBarChartHorizontalBig } from "react-icons/lu";
+import { BsClipboardData } from "react-icons/bs";
 
 /*
 ============================== CODE START HERE ==============================
@@ -801,7 +801,7 @@ export function Total({ state, user, matkul, universitas }) {
                 const semesterCount = getAllSemester(matkul).length;
                 return (
                     <div
-                        id="abcde"
+                        id="total_data-scroll"
                         className={`${styles.total__data_content} ${semesterCount > 8 ? styles.scroll : ''}`}
                         style={semesterCount > 8 ? {} : { gridTemplateColumns: `repeat(${semesterCount > 4 ? 4 : semesterCount},1fr)`, }}
                     >
@@ -828,7 +828,7 @@ export function Total({ state, user, matkul, universitas }) {
                     <div className={styles.total__left}>
                         <div className={styles.total__left_subtitle}>
                             <div style={{ boxShadow: 'var(--box-shadow2)' }} className={styles.total__left_icon}>
-                                <AiOutlineUnorderedList size={'18px'} color={'var(--logo-second-color)'} />
+                                <BsClipboardData size={'16px'} color={'var(--logo-second-color)'} />
                             </div>
                             <h3 style={{ color: 'var(--infoDark-color)', fontWeight: '500' }}>
                                 <span onClick={handleBaseTab}>{baseType[baseTab]}</span>
