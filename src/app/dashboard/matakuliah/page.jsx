@@ -1,10 +1,13 @@
 'use client'
 
 // ========== REACT DEPEDENCY ========== //
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 
 // ========== COMPONENT DEPEDENCY ========== //
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Pagination } from 'swiper/modules';
 import { Total } from '@/component/Card'
+import { DashboardContext } from "@/component/provider/Dashboard";
 
 // ========== DATA DEPEDENCY ========== //
 import { useMatkul, useNotifikasi, useUser, useMatkulHistory } from '@/data/core';
@@ -13,6 +16,8 @@ import * as x from '@/data/summary';
 
 // ========== STYLE DEPEDENCY ========== //
 import styles from './matkul.module.css'
+import 'swiper/css';
+import 'swiper/css/pagination';
 
 // ========== ICONS DEPEDENCY ========== //
 import { AiOutlineAppstore } from "react-icons/ai";
@@ -45,8 +50,9 @@ function TotalCard() {
     )
 }
 
-export default function ProfilPage() {
+export default function MatakuliahPage() {
     const [widget, setWidget] = useState(true);
+    const { isTouchDevice } = useContext(DashboardContext);
 
     return (
         <>
@@ -62,11 +68,45 @@ export default function ProfilPage() {
                         </h3>
                     </div>
                 </div>
-                <div className={`${styles.insight} ${widget ? styles.active : ''}`}>
-                    <Total state={'empty'} />
-                    <Total state={'error'} />
-                    <TotalCard />
-                </div>
+                <Swiper
+                    slidesPerView={1}
+                    spaceBetween={30}
+                    breakpoints={{
+                        768: {
+                            slidesPerView: 2,
+                        },
+                        1280: {
+                            slidesPerView: 3,
+                        }
+                    }}
+                    pagination={{
+                        clickable: true,
+                    }}
+                    style={{
+                        "--swiper-pagination-color": "var(--logo-second-color)",
+                        "--swiper-pagination-bullet-inactive-color": "var(--infoDark-color)",
+                    }}
+                    {...(isTouchDevice ? { noSwipingSelector: '#abcde' } : {})}
+                    modules={[Pagination]}
+                    className={`${styles.insight} ${widget ? styles.active : ''}`}
+                >
+                    <SwiperSlide>
+                        <Total state={'loading'} />
+                    </SwiperSlide>
+                    <SwiperSlide>
+                        <TotalCard />
+                    </SwiperSlide>
+                    <SwiperSlide>
+                        <Total state={'empty'} />
+                    </SwiperSlide>
+                    <SwiperSlide>
+                        <Total state={'error'} />
+                    </SwiperSlide>
+                    <SwiperSlide>
+                        <Total state={'validating'} />
+                    </SwiperSlide>
+                </Swiper>
+
                 <div>
                     <h1>Tabel</h1>
                 </div>

@@ -356,6 +356,7 @@
 
 .total__main {
     display: flex;
+    gap: .75rem;
     justify-content: space-between;
 }
 
@@ -363,7 +364,8 @@
     display: grid;
     grid-template-rows: auto;
     gap: .5rem;
-    min-width: 140px;
+    max-width: 140px;
+    width: 100%;
 }
 
 .total__left_subtitle,

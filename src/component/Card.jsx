@@ -741,9 +741,9 @@ export function Total({ state, user, matkul, universitas }) {
         const [dataTab, setDataTab] = useState(0);
         const [baseTab, setBaseTab] = useState(0);
         const dataType = [
-            { name: 'SKS', short: 'Sks' },
-            { name: 'Matakuliah', short: 'Matkul' },
-            { name: 'IPK', short: '' }
+            { name: 'SKS', short: '•' },
+            { name: 'Matkul', short: '•' },
+            { name: 'IPK', short: '•' }
         ]
 
         const baseType = [
@@ -780,7 +780,7 @@ export function Total({ state, user, matkul, universitas }) {
                         key={crypto.randomUUID()}
                     >
                         <h3 style={{ color: `var(--${item.style}-sec-color)` }}>{item.indeks}</h3>
-                        <span style={{ color: 'var(--dark-color)', fontWeight: '600' }}>{dataTab === 0 ? item.totalSks : dataTab === 1 ? item.totalMatakuliah : -1} {dataType[dataTab].short}</span>
+                        <span style={{ color: 'var(--dark-color)', fontWeight: '600' }}>{dataTab === 0 ? item.totalSks : dataTab === 1 ? item.totalMatakuliah : -1}{dataType[dataTab].short}</span>
                     </div>
                 ))
 
@@ -801,6 +801,7 @@ export function Total({ state, user, matkul, universitas }) {
                 const semesterCount = getAllSemester(matkul).length;
                 return (
                     <div
+                        id="abcde"
                         className={`${styles.total__data_content} ${semesterCount > 8 ? styles.scroll : ''}`}
                         style={semesterCount > 8 ? {} : { gridTemplateColumns: `repeat(${semesterCount > 4 ? 4 : semesterCount},1fr)`, }}
                     >
@@ -810,7 +811,7 @@ export function Total({ state, user, matkul, universitas }) {
                                 key={crypto.randomUUID()}
                             >
                                 <h3>{item.semester}</h3>
-                                <span>{dataTab === 0 ? item.totalSks : dataTab === 1 ? item.count : dataTab === 2 ? (item.totalNilai / item.totalSks).toFixed(2) : -1} {dataType[dataTab].short}</span>
+                                <span>{dataTab === 0 ? item.totalSks : dataTab === 1 ? item.count : dataTab === 2 ? (item.totalNilai / item.totalSks).toFixed(2) : -1}{dataType[dataTab].short}</span>
                             </div>
                         ))
                         }
@@ -830,7 +831,7 @@ export function Total({ state, user, matkul, universitas }) {
                                 <AiOutlineUnorderedList size={'18px'} color={'var(--logo-second-color)'} />
                             </div>
                             <h3 style={{ color: 'var(--infoDark-color)', fontWeight: '500' }}>
-                                Rincian <span onClick={handleBaseTab}>{baseType[baseTab]}</span>
+                                <span onClick={handleBaseTab}>{baseType[baseTab]}</span>
                             </h3>
                         </div>
                         <div className={styles.total__left_title}>
