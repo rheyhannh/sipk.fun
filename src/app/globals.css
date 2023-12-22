@@ -103,7 +103,7 @@
 
     /* === BOX-SHADOW === */
     --box-shadow: 0 1rem 1.5rem var(--light-color);
-    --box-shadow2: 0 0 .1rem .1rem rgba(0, 0, 0, .2);
+    --box-shadow2: 0 0 .2rem .1rem rgba(0, 0, 0, .2);
     /* === END OF BOX-SHADOW === */
 
     /* === TRANSITION === */
