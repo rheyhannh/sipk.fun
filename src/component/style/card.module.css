@@ -41,7 +41,8 @@
 }
 
 .summary .empty__content .image,
-.total .empty__content .image {
+.total .empty__content .image,
+.grafik .empty__content .image {
     max-width: 60px;
     margin-bottom: 1rem;
 }
@@ -57,7 +58,8 @@
 
 .summary,
 .notification,
-.total {
+.total,
+.grafik {
     height: 225px;
     background: var(--white-color);
     padding: var(--card-padding);
@@ -339,22 +341,26 @@
     gap: .6rem;
 }
 
-.total {
+.total,
+.grafik {
     display: grid;
     grid-template-rows: max-content 1fr;
     gap: 1rem;
     margin-top: 0;
 }
 
-.total.flex {
+.total.flex,
+.grafik.flex {
     display: flex;
 }
 
-.total.skeleton {
+.total.skeleton,
+.grafik.skeleton {
     box-shadow: none;
 }
 
-.total__main {
+.total__main,
+.grafik__main {
     display: flex;
     gap: .75rem;
     justify-content: space-between;
@@ -368,19 +374,27 @@
     width: 100%;
 }
 
+.grafik__left {
+    max-width: 100px;
+    width: 100%;
+}
+
 .total__left_subtitle,
-.total__left_title {
+.total__left_title,
+.grafik__left_subtitle {
     display: flex;
     gap: .5rem;
     align-items: center;
 }
 
-.total__left_subtitle.skeleton {
+.total__left_subtitle.skeleton,
+.grafik__left_subtitle.skeleton {
     display: grid;
     grid-template-columns: max-content auto;
 }
 
-.total__left_icon {
+.total__left_icon,
+.grafik__left_icon {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -390,7 +404,8 @@
     height: 25px;
 }
 
-.total__left_icon.skeleton {
+.total__left_icon.skeleton,
+.grafik__left_icon.skeleton {
     border: none;
     background: none;
 }
@@ -413,6 +428,12 @@
 
 .total__right_progress {
     width: 100%;
+}
+
+.grafik__right {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .total__data {
@@ -483,12 +504,36 @@
     font-weight: 600;
 }
 
+.grafik__data {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.grafik__tooltip {
+    background: var(--box-color-bg1);
+    box-shadow: var(--box-shadow2);
+    padding: .7rem;
+    border-radius: .25rem;
+}
+
+.grafik__tooltip p {
+    color: var(--dark-color);
+}
+
+.grafik__tooltip_title {
+    font-weight: 600;
+    margin-bottom: .25rem;
+    border-bottom: 1px solid var(--darkVariant-color);
+}
+
 @media (hover: hover) and (pointer: fine) {
 
     .summary:not(.skeleton):hover,
     .notification:not(.skeleton):hover,
     .history:not(.skeleton):hover,
-    .total:not(.skeleton):hover {
+    .total:not(.skeleton):hover,
+    .grafik:not(.skeleton):hover {
         box-shadow: none;
     }
 

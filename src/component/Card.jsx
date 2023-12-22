@@ -15,6 +15,7 @@ import { ModalContext } from "./provider/Modal";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import CountUp from 'react-countup';
 import ProgressBar from "@ramonak/react-progress-bar";
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import { Icon } from '@/component/loader/ReactIcons'
 import { Spinner } from "./loader/Loading";
 
@@ -32,11 +33,11 @@ import styles from './style/card.module.css'
 import "react-loading-skeleton/dist/skeleton.css";
 
 // ========== ICON DEPEDENCY ========== //
-import { IoAddOutline } from "react-icons/io5";
+
 import { CiTrash, CiEdit } from "react-icons/ci";
 import { FaInfo, FaUndo } from "react-icons/fa";
 import { LuBookCopy, LuLineChart, LuBarChartHorizontalBig } from "react-icons/lu";
-import { BsClipboardData } from "react-icons/bs";
+import { IoAnalyticsOutline, IoServerOutline, IoAddOutline } from "react-icons/io5";
 
 /*
 ============================== CODE START HERE ==============================
@@ -668,14 +669,14 @@ export function Total({ state, user, matkul, universitas }) {
                                 <Skeleton width={"100%"} height={"100%"} containerClassName={`${styles.total__left_icon} ${styles.skeleton}`} />
                             </SkeletonTheme>
                             <div style={{ width: '100%' }}>
-                                <h2>
+                                <h3>
                                     <SkeletonTheme
                                         baseColor="var(--skeleton-base)"
                                         highlightColor="var(--skeleton-highlight)"
                                     >
-                                        <Skeleton width={"100%"} height={"100%"} />
+                                        <Skeleton width={"75%"} height={"100%"} />
                                     </SkeletonTheme>
-                                </h2>
+                                </h3>
                             </div>
                         </div>
                         <div className={styles.total__left_title}>
@@ -685,7 +686,7 @@ export function Total({ state, user, matkul, universitas }) {
                                         baseColor="var(--skeleton-base)"
                                         highlightColor="var(--skeleton-highlight)"
                                     >
-                                        <Skeleton width={"60%"} height={"100%"} />
+                                        <Skeleton width={"75%"} height={"100%"} />
                                     </SkeletonTheme>
                                 </h2>
                             </div>
@@ -828,7 +829,7 @@ export function Total({ state, user, matkul, universitas }) {
                     <div className={styles.total__left}>
                         <div className={styles.total__left_subtitle}>
                             <div style={{ boxShadow: 'var(--box-shadow2)' }} className={styles.total__left_icon}>
-                                <BsClipboardData size={'16px'} color={'var(--logo-second-color)'} />
+                                <IoServerOutline size={'17px'} color={'var(--logo-second-color)'} />
                             </div>
                             <h3 style={{ color: 'var(--infoDark-color)', fontWeight: '500' }}>
                                 <span onClick={handleBaseTab}>{baseType[baseTab]}</span>
@@ -925,6 +926,201 @@ export function Total({ state, user, matkul, universitas }) {
 
         return (
             <div className={`${styles.total} ${styles.flex}`}>
+                <div className={styles.empty__wrapper}>
+                    <div className={styles.empty__content} onClick={() => { handleTambahModal() }}>
+                        <Image
+                            src={'/tambah_matkul.svg'}
+                            width={100}
+                            height={100}
+                            alt='Tambah Matakuliah'
+                            className={styles.image}
+                        />
+                        <h5>Tambah Matakuliah</h5>
+                    </div>
+                </div>
+            </div>
+        )
+    }
+
+    if (state === 'loading') { return (<SkeletonCard />) }
+    else if (state === 'loaded') { return (<LoadedCard />) }
+    else if (state === 'error') { return (<ErrorCard />) }
+    else if (state === 'validating') { return (<ValidatingCard />) }
+    else if (state === 'empty') { return (<EmptyCard />) }
+    else { return 'Unidentified Card State' }
+}
+
+export function Grafik({ state, matkul }) {
+    const userIdCookie = useCookies().get('s_user_id');
+    const handleRetry = () => {
+        mutate(['/api/matkul', userIdCookie])
+    }
+
+    const SkeletonCard = () => {
+        return (
+            <div className={`${styles.grafik} ${styles.skeleton}`}>
+                <div className={styles.grafik__main}>
+                    <div className={styles.grafik__left}>
+                        <div className={`${styles.grafik__left_subtitle} ${styles.skeleton}`}>
+                            <SkeletonTheme
+                                baseColor="var(--skeleton-base)"
+                                highlightColor="var(--skeleton-highlight)"
+                            >
+                                <Skeleton width={"100%"} height={"100%"} containerClassName={`${styles.grafik__left_icon} ${styles.skeleton}`} />
+                            </SkeletonTheme>
+                            <div style={{ width: '100%' }}>
+                                <h3>
+                                    <SkeletonTheme
+                                        baseColor="var(--skeleton-base)"
+                                        highlightColor="var(--skeleton-highlight)"
+                                    >
+                                        <Skeleton width={"100%"} height={"100%"} />
+                                    </SkeletonTheme>
+                                </h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div className={styles.grafik__right}>
+                        <div style={{ width: '70px' }}>
+                            <h3>
+                                <SkeletonTheme
+                                    baseColor="var(--skeleton-base)"
+                                    highlightColor="var(--skeleton-highlight)"
+                                >
+                                    <Skeleton width={"100%"} height={"100%"} />
+                                </SkeletonTheme>
+                            </h3>
+                        </div>
+                    </div>
+                </div>
+                <div className={`${styles.grafik__data}`}>
+                    <SkeletonTheme
+                        baseColor="var(--skeleton-base)"
+                        highlightColor="var(--skeleton-highlight)"
+                    >
+                        <Skeleton width={"100%"} height={"100%"} />
+                    </SkeletonTheme>
+                </div>
+            </div>
+        )
+    }
+
+    const LoadedCard = () => {
+        const [ipGrafik, setIpGrafik] = useState(false);
+        const [matkulGrafik, setMatkulGrafik] = useState(false);
+        const [sksGrafik, setSksGrafik] = useState(false);
+
+        const CustomTooltip = ({ active, payload, label }) => {
+            if (active && payload && payload.length) {
+                return (
+                    <div className={styles.grafik__tooltip}>
+                        <p className={styles.grafik__tooltip_title}>{`Semester ${label}`}</p>
+                        {payload.map((item, index) => (
+                            <p key={`grafik-tooltip-legend-${index}`}>{item?.name && item?.value ? `${item.name} : ${item.value}` : ''}</p>
+                        ))}
+                    </div>
+                )
+            }
+
+            return null;
+        }
+
+        const statsSemester = getStatsSemester(matkul);
+        const data = statsSemester.map(({ totalNilai, totalSks, count, semester }) => ({
+            semester,
+            ip: (totalNilai / totalSks).toFixed(2),
+            matkul: count,
+            sks: totalSks,
+        }));
+
+        return (
+            <div className={styles.grafik}>
+                <div className={styles.grafik__main}>
+                    <div className={styles.grafik__left}>
+                        <div className={styles.grafik__left_subtitle}>
+                            <div style={{ boxShadow: 'var(--box-shadow2)' }} className={styles.total__left_icon}>
+                                <IoAnalyticsOutline size={'17px'} color={'var(--logo-second-color)'} />
+                            </div>
+                            <h3 style={{ color: 'var(--infoDark-color)', fontWeight: '500' }}>
+                                Grafik
+                            </h3>
+                        </div>
+                    </div>
+                    <div className={styles.grafik__right}>
+                        <h3 style={{ color: 'var(--infoDark-color)', fontWeight: '500' }}>
+                            Semua
+                        </h3>
+                    </div>
+                </div>
+                <div className={styles.grafik__data}>
+                    <ResponsiveContainer width={'100%'} height={'100%'}>
+                        <LineChart
+                            id="grafik_data-scroll"
+                            data={data}
+                        >
+                            <XAxis dataKey="semester" axisLine={false} tickLine={false} interval={'equidistantPreserveStart'} />
+                            <Tooltip content={<CustomTooltip />} />
+                            <Legend
+                                verticalAlign="bottom"
+                                onClick={(x) => {
+                                    if (x.dataKey === 'ip') { setIpGrafik(!x.inactive) }
+                                    else if (x.dataKey === 'matkul') { setMatkulGrafik(!x.inactive) }
+                                    else if (x.dataKey === 'sks') { setSksGrafik(!x.inactive) }
+                                    else { return; }
+                                }}
+                            />
+                            <Line name="Ip" type="monotone" dataKey="ip" stroke="var(--danger-color)" dot={false} hide={ipGrafik} />
+                            <Line name="Matakuliah" type="monotone" dataKey="matkul" stroke="var(--warning-color)" dot={false} hide={matkulGrafik} />
+                            <Line name="Sks" type="monotone" dataKey="sks" stroke="var(--success-color)" dot={false} hide={sksGrafik} />
+                        </LineChart>
+                    </ResponsiveContainer>
+                </div>
+            </div>
+        )
+    }
+
+    const ErrorCard = () => {
+        return (
+            <div className={`${styles.grafik} ${styles.flex}`}>
+                <div className={styles.error__wrapper}>
+                    <div className={styles.error__content} onClick={handleRetry}>
+                        <h5>Gagal mengambil data</h5>
+                        <h1>&#x21bb;</h1>
+                    </div>
+                </div>
+            </div>
+        )
+    }
+
+    const ValidatingCard = () => {
+        return (
+            <div className={`${styles.grafik} ${styles.flex}`}>
+                <div className={styles.validating__wrapper}>
+                    <div className={styles.validating__content}>
+                        <Spinner size={'30px'} color={'var(--logo-second-color)'} />
+                    </div>
+                </div>
+            </div>
+        )
+    }
+
+    const EmptyCard = () => {
+        const {
+            setModal,
+            setActive,
+            setData
+        } = useContext(ModalContext);
+
+        const handleTambahModal = () => {
+            setData(null);
+            setModal('tambahMatkul');
+            setTimeout(() => {
+                setActive(true);
+            }, 50)
+        }
+
+        return (
+            <div className={`${styles.grafik} ${styles.flex}`}>
                 <div className={styles.empty__wrapper}>
                     <div className={styles.empty__content} onClick={() => { handleTambahModal() }}>
                         <Image

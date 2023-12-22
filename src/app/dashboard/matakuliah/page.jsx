@@ -6,7 +6,7 @@ import { useState } from 'react';
 // ========== COMPONENT DEPEDENCY ========== //
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Pagination } from 'swiper/modules';
-import { Total } from '@/component/Card'
+import { Total, Grafik } from '@/component/Card'
 
 // ========== DATA DEPEDENCY ========== //
 import { useMatkul, useNotifikasi, useUser, useMatkulHistory } from '@/data/core';
@@ -49,6 +49,30 @@ function TotalCard() {
     )
 }
 
+function GrafikCard() {
+    const { data: matkul, error: matkulError, isLoading: matkulLoading, isValidating: matkulValidating } = useMatkul();
+
+    if (matkulError) {
+        return <Grafik state={'error'} />;
+    }
+
+    if (matkulLoading) {
+        return <Grafik state={'loading'} />;
+    }
+
+    if (matkulValidating) {
+        return <Grafik state={'validating'} />;
+    }
+
+    if (matkul.length === 0) {
+        return <Grafik state={'empty'} />
+    }
+
+    return (
+        <Grafik state={'loaded'} matkul={matkul} />
+    )
+}
+
 export default function MatakuliahPage() {
     const [widget, setWidget] = useState(true);
 
@@ -84,25 +108,12 @@ export default function MatakuliahPage() {
                         "--swiper-pagination-color": "var(--logo-second-color)",
                         "--swiper-pagination-bullet-inactive-color": "var(--infoDark-color)",
                     }}
-                    noSwipingSelector={'#total_data-scroll'}
+                    noSwipingSelector={['#total_data-scroll', '#grafik_data-scroll']}
                     modules={[Pagination]}
                     className={`${styles.insight} ${widget ? styles.active : ''}`}
                 >
-                    <SwiperSlide>
-                        <Total state={'loading'} />
-                    </SwiperSlide>
-                    <SwiperSlide>
-                        <TotalCard />
-                    </SwiperSlide>
-                    <SwiperSlide>
-                        <Total state={'empty'} />
-                    </SwiperSlide>
-                    <SwiperSlide>
-                        <Total state={'error'} />
-                    </SwiperSlide>
-                    <SwiperSlide>
-                        <Total state={'validating'} />
-                    </SwiperSlide>
+                    <SwiperSlide> <GrafikCard/> </SwiperSlide>
+                    <SwiperSlide> <TotalCard /> </SwiperSlide>
                 </Swiper>
 
                 <div>
