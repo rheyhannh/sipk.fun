@@ -11,6 +11,10 @@
     margin-bottom: 2rem;
 }
 
+.top h1 {
+    color: var(--dark-color);
+}
+
 .top__right {
     display: flex;
     align-items: center;
@@ -28,6 +32,7 @@
 
 .top__right_text {
     display: none;
+    color: var(--dark-color);
     font-weight: 500;
 }
 
