@@ -265,7 +265,7 @@ export function UsersForm() {
                             email: email,
                             password: password,
                             fullname: namaLengkap,
-                            university: universitasData[universitas].nama,
+                            university: universitasData[universitas - 1].nama,
                             university_id: universitas,
                             token: token,
                         }
