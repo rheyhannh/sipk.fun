@@ -5,6 +5,33 @@ import { useCookies } from 'next-client-cookies';
 /*
 ============================== CODE START HERE ==============================
 */
+const fetchPublic = (url) => {
+    return fetch(url, {
+        headers: {
+            'Content-Type': 'application/json',
+        }
+    })
+        .then(async (response) => {
+            if (!response.ok) {
+                try {
+                    const { message } = await response.json();
+                    if (message) { throw new Error(`${message} (code: ${response.status})`); }
+                    else { throw new Error(`Terjadi error (code: ${response.status})`); }
+                } catch (error) {
+                    throw error;
+                }
+            }
+            return response.json();
+        })
+        .then(data => {
+            return data;
+        })
+        .catch(error => {
+            console.error('Gagal mengambil data:', error.message);
+            throw error;
+        });
+}
+
 const fetchDefault = (url, accessToken) => {
     if (!accessToken) { throw new Error('Access token required') }
     return fetch(url, {
@@ -67,7 +94,7 @@ const swrOptions = {
     refreshInterval: 0,
     revalidateIfStale: true,
     revalidateOnMount: true,
-    revalidateOnFocus: true,
+    revalidateOnFocus: false,
     revalidateOnReconnect: true,
     dedupingInterval: 5000,
     shouldRetryOnError: false,
@@ -102,4 +129,20 @@ export function useNotifikasi(custom) {
     const options = custom ? custom : swrOptions;
     const accessToken = useCookies().get('s_access_token');
     return useSWR(url, () => fetchDefault(url, accessToken), options)
+}
+
+export function useUniversitas(custom, type, id) {
+    var url = null;
+    if (type && id) {
+        var url = `/api/universitas?type=${type}&id=${id}`
+    }
+    const options = custom ? custom : swrOptions;
+    const accessToken = useCookies().get('s_access_token');
+    return useSWR(url, () => {
+        if (type === 'public') {
+            return fetchPublic(url);
+        } else {
+            return fetchDefault(url, accessToken);
+        }
+    }, options)
 }

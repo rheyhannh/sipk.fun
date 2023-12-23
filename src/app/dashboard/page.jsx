@@ -4,8 +4,7 @@
 import { Summary, Notification, History } from '@/component/Card'
 
 // ========== DATA DEPEDENCY ========== //
-import { useMatkul, useNotifikasi, useUser, useMatkulHistory } from '@/data/core';
-import { getPenilaianUniversitas } from '@/data/universitas';
+import { useMatkul, useNotifikasi, useUser, useMatkulHistory, useUniversitas } from '@/data/core';
 import * as x from '@/data/summary';
 
 // ========== STYLE DEPEDENCY ========== //
@@ -113,20 +112,21 @@ function UpdateCard() {
 function HistoryCard({ count }) {
     const { data: user, error: userError, isLoading: userLoading, isValidating: userValidating } = useUser();
     const { data: matkulHistory, error: matkulHistoryError, isLoading: matkulHistoryLoading, isValidating: matkulHistoryValidating } = useMatkulHistory();
+    const { data: universitas, error: universitasError, isLoading: universitasLoading, isValidating: universitasValidating } = useUniversitas(null, 'user', user ? user[0].university_id : undefined);
 
-    if (userError || matkulHistoryError) {
+    if (userError || matkulHistoryError || universitasError) {
         return (
             <History state={'error'} />
         )
     }
 
-    if (userLoading || matkulHistoryLoading) {
+    if (userLoading || matkulHistoryLoading || universitasLoading) {
         return (
             <History state={'loading'} />
         )
     }
 
-    if (userValidating || matkulHistoryValidating) {
+    if (userValidating || matkulHistoryValidating || universitasValidating) {
         return (
             <History state={'validating'} />
         )
@@ -139,7 +139,7 @@ function HistoryCard({ count }) {
     }
 
     return (
-        <History state={'loaded'} data={matkulHistory} universitas={getPenilaianUniversitas(user[0]?.university_id)} count={count} />
+        <History state={'loaded'} data={matkulHistory} universitas={universitas[0].penilaian} count={count} />
     )
 }
 

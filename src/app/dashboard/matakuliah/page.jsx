@@ -9,8 +9,7 @@ import { Pagination } from 'swiper/modules';
 import { Total, Grafik } from '@/component/Card'
 
 // ========== DATA DEPEDENCY ========== //
-import { useMatkul, useNotifikasi, useUser, useMatkulHistory } from '@/data/core';
-import { getPenilaianUniversitas } from '@/data/universitas';
+import { useMatkul, useNotifikasi, useUser, useMatkulHistory, useUniversitas } from '@/data/core';
 import * as x from '@/data/summary';
 
 // ========== STYLE DEPEDENCY ========== //
@@ -27,16 +26,17 @@ import { AiOutlineAppstore } from "react-icons/ai";
 function TotalCard() {
     const { data: matkul, error: matkulError, isLoading: matkulLoading, isValidating: matkulValidating } = useMatkul();
     const { data: user, error: userError, isLoading: userLoading, isValidating: userValidating } = useUser();
+    const { data: universitas, error: universitasError, isLoading: universitasLoading, isValidating: universitasValidating } = useUniversitas(null, 'user', user ? user[0].university_id : undefined);
 
-    if (matkulError || userError) {
+    if (matkulError || userError || universitasError) {
         return <Total state={'error'} />;
     }
 
-    if (matkulLoading || userLoading) {
+    if (matkulLoading || userLoading || universitasLoading) {
         return <Total state={'loading'} />;
     }
 
-    if (matkulValidating || userValidating) {
+    if (matkulValidating || userValidating || universitasValidating) {
         return <Total state={'validating'} />;
     }
 
@@ -45,7 +45,7 @@ function TotalCard() {
     }
 
     return (
-        <Total state={'loaded'} user={user} matkul={matkul} universitas={getPenilaianUniversitas(user[0]?.university_id)} />
+        <Total state={'loaded'} user={user} matkul={matkul} universitas={universitas[0].penilaian} />
     )
 }
 

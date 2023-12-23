@@ -22,8 +22,7 @@ import { Accordion } from '@/component/Accordion';
 import { unixToDate, getLoadingMessage } from "@/utils/client_side";
 
 // ========== DATA DEPEDENCY ========== //
-import { useUser } from "@/data/core";
-import { getPenilaianUniversitas } from "@/data/universitas";
+import { useUser, useUniversitas } from "@/data/core";
 
 // ========== ICONS DEPEDENCY ========== //
 import { FaTimes, FaRegTimesCircle } from 'react-icons/fa'
@@ -837,7 +836,8 @@ export const TambahMatkul = () => {
     const userIdCookie = useCookies().get('s_user_id');
     const accessToken = useCookies().get('s_access_token');
     const { data: user } = useUser({ revalidateOnMount: false });
-    const penilaian = getPenilaianUniversitas(user[0]?.university_id);
+    const { data: universitas } = useUniversitas({ revalidateOnMount: false }, 'user', user ? user[0].university_id : undefined);
+    const penilaian = universitas[0].penilaian;
     const penilaianKey = Object.keys(penilaian);
     const [nama, setNama] = useState('');
     const [sks, setSks] = useState('');

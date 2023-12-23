@@ -47,6 +47,7 @@ import {
 import { FaCircleInfo, FaGear } from "react-icons/fa6";
 import { FiSun } from 'react-icons/fi';
 import { BiMoon } from 'react-icons/bi';
+import { useUniversitas } from '@/data/core';
 
 /*
 ============================== CODE START HERE ==============================
@@ -66,7 +67,6 @@ export function UsersForm() {
     const {
         loginMode, setLoginMode,
         isBigContent,
-        listUniversitas
     } = useContext(UsersContext);
     const {
         setModal,
@@ -110,15 +110,20 @@ export function UsersForm() {
     const [inputValidator, setInputValidator] = useState(initialInputValidator);
 
     /*
+    ========== Data ==========
+    */
+    const { data: universitasData, error: universitasError, isLoading: universitasLoading, isValidating: universitasValidating } = useUniversitas(null, 'public', 'all');
+
+    /*
     ========== Images ==========
     */
     const emailImg = theme === 'dark' ?
         <Image src="/check_email_dark.svg" width={100} height={100} alt="Check Email" priority />
         : <Image src="/check_email.svg" width={100} height={100} alt="Check Email" priority />
-    
-        /*
-    ========== useEffect ==========
-    */
+
+    /*
+========== useEffect ==========
+*/
     useEffect(() => {
         // Login Mode or Daftar Mode ?
         const mode = searchParams.get('action');
@@ -139,6 +144,7 @@ export function UsersForm() {
         // From Logout ? 
         const logout = searchParams.get('logout');
         if (logout) { router.refresh(); }
+
     }, [searchParams])
 
     /*
@@ -259,8 +265,8 @@ export function UsersForm() {
                             email: email,
                             password: password,
                             fullname: namaLengkap,
-                            university: listUniversitas[universitas - 1].nama,
-                            university_id: universitas - 1,
+                            university: universitasData[universitas].nama,
+                            university_id: universitas,
                             token: token,
                         }
                     ),
@@ -606,9 +612,13 @@ export function UsersForm() {
                                             onBlur={(e) => { handleInputBlur(e, 3, 'universitas', 'daftar') }}
                                             required
                                         >
-                                            <option style={{ color: 'var(--infoDark-color)' }} value={0}>Pilih Universitas</option>
+                                            <option style={{ color: 'var(--infoDark-color)' }} value={0}>
+                                                {universitasLoading && 'Loading...'}
+                                                {universitasError && 'Gagal memuat universitas'}
+                                                {universitasData && 'Pilih Universitas'}
+                                            </option>
                                             {
-                                                listUniversitas.map((item, index) => (
+                                                universitasData && universitasData.map((item, index) => (
                                                     <option style={{ color: '#000' }} value={item.id} key={crypto.randomUUID()}>{item.nama}</option>
                                                 ))
                                             }
