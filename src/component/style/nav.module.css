@@ -112,7 +112,6 @@
     display: grid;
     grid-template-columns: 1fr;
     width: 100%;
-    /* height: 100%; */
     padding-left: 0;
     transition: var(--transition-default);
 }
@@ -156,6 +155,22 @@
 
     .sidebar {
         padding-top: 0;
+    }
+}
+
+@media screen and (min-width: 2048px) {
+    .content {
+        display: initial;
+    }
+
+    .content aside {
+        display: fixed;
+    }
+
+    .content .container {
+        max-width: 1920px;
+        width: calc(100vw - 400px);
+        margin: 0 auto;
     }
 }
 

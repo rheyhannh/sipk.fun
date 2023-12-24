@@ -99,6 +99,9 @@ export default function MatakuliahPage() {
                         },
                         1280: {
                             slidesPerView: 3,
+                        },
+                        1920: {
+                            slidesPerView: 4,
                         }
                     }}
                     pagination={{

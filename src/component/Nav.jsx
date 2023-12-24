@@ -131,8 +131,9 @@ export default function Nav({ children }) {
                                 </div>
                             </div>
                         </aside>
-
-                        {children}
+                        <div className={styles.container}>
+                            {children}
+                        </div>
                     </div>
                 </>
                 : isRichContent === false ?
