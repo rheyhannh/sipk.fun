@@ -124,11 +124,11 @@ export async function POST(request) {
                     password: Joi.string().min(6).max(50).required(),
                     fullname: Joi.string().required(),
                     university: Joi.string().required(),
-                    university_id: Joi.number().min(0).max(9).required(),
+                    university_id: Joi.number().min(0).max(parseInt(process.env.DATA_UNIVERSITAS_LENGTH)).required(),
                     token: process.env.NODE_ENV !== 'production' ? Joi.string() : Joi.string().required(),
                 }
             )
-            
+
         await formDataSchema.validateAsync(formData);
     } catch (error) {
         console.error(error);
