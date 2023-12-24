@@ -4,17 +4,18 @@ import { NextResponse } from 'next/server'
 // ========== COMPONENT DEPEDENCY ========== //
 import { createServerClient } from '@supabase/ssr'
 import {
-    encryptSyncAES,
-    decryptSyncAES,
-    cookieAuthOptions,
-    cookieAuthDeleteOptions,
-    cookieServiceOptions
+    encryptAES,
+    decryptAES,
 } from '@/utils/server_side';
 import isUUID from 'validator/lib/isUUID';
 
 /*
 ============================== CODE START HERE ==============================
 */
+const cookieAuthOptions = { secure: true, httpOnly: true, maxAge: 2592000, sameSite: 'lax' };
+const cookieAuthDeleteOptions = { secure: true, httpOnly: true, maxAge: -2592000, sameSite: 'lax' };
+const cookieServiceOptions = { secure: false, httpOnly: false, maxAge: 2592000, sameSite: 'lax' };
+
 export default async function middleware(request) {
     const secureAuthSessionToken = request.cookies.get(`${process.env.USER_SESSION_COOKIES_NAME}`)?.value;
     const serviceUserCookie = request.cookies.get('s_user_id')?.value;
@@ -49,12 +50,12 @@ export default async function middleware(request) {
         process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
         {
             cookies: {
-                get(name) {
-                    const decryptedSession = decryptSyncAES(secureAuthSessionToken) || 'removeMe';
+                async get(name) {
+                    const decryptedSession = await decryptAES(secureAuthSessionToken) || 'removeMe';
                     return decryptedSession;
                 },
-                set(name, value, options) {
-                    const encryptedSession = encryptSyncAES(value);
+                async set(name, value, options) {
+                    const encryptedSession = await encryptAES(value);
                     if (encryptedSession) {
                         response.cookies.set({ name: process.env.USER_SESSION_COOKIES_NAME, value: encryptedSession, ...cookieAuthOptions })
                     } else {

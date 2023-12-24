@@ -2,17 +2,16 @@ import { NextResponse } from 'next/server';
 import { cookies, headers } from 'next/headers';
 import { createServerClient } from '@supabase/ssr';
 import {
-    encryptSyncAES,
+    encryptAES,
     decryptAES,
-    decryptSyncAES,
     rateLimit,
-    cookieAuthOptions,
-    cookieAuthDeleteOptions,
     validateJWT
 } from '@/utils/server_side';
 
+const cookieAuthOptions = { secure: true, httpOnly: true, maxAge: 2592000, sameSite: 'lax' };
+const cookieAuthDeleteOptions = { secure: true, httpOnly: true, maxAge: -2592000, sameSite: 'lax' };
 const limitRequest = parseInt(process.env.API_MATKULHISTORY_REQUEST_LIMIT);
-const limiter = rateLimit({
+const limiter = await rateLimit({
     interval: parseInt(process.env.API_MATKULHISTORY_TOKEN_INTERVAL_SECONDS) * 1000,
     uniqueTokenPerInterval: parseInt(process.env.API_MATKULHISTORY_MAX_TOKEN_PERINTERVAL),
 })
@@ -42,7 +41,7 @@ export async function GET(request) {
     }
 
     try {
-        var decoded = validateJWT(authorizationToken, userId);
+        var decoded = await validateJWT(authorizationToken, userId);
         // Log Here, ex: '{TIMESTAMP} decoded.id {METHOD} {ROUTE} {BODY} {PARAMS}'
     } catch (error) {
         return NextResponse.json({ message: error.message || 'Unauthorized - Invalid access token' }, {
@@ -69,16 +68,16 @@ export async function GET(request) {
         process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
         {
             cookies: {
-                get(name) {
+                async get(name) {
                     const encryptedSession = cookieStore.get(process.env.USER_SESSION_COOKIES_NAME)?.value
                     if (encryptedSession) {
-                        const decryptedSession = decryptSyncAES(encryptedSession) || 'removeMe';
+                        const decryptedSession = await decryptAES(encryptedSession) || 'removeMe';
                         return decryptedSession;
                     }
                     return encryptedSession;
                 },
-                set(name, value, options) {
-                    const encryptedSession = encryptSyncAES(value);
+                async set(name, value, options) {
+                    const encryptedSession = await encryptAES(value);
                     if (encryptedSession) {
                         cookieStore.set({ name: process.env.USER_SESSION_COOKIES_NAME, value: encryptedSession, ...cookieAuthOptions })
                     } else {

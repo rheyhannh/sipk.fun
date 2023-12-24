@@ -2,16 +2,17 @@ import { NextResponse } from 'next/server';
 import { cookies, headers } from 'next/headers';
 import { createServerClient } from '@supabase/ssr';
 import {
-    encryptSyncAES,
-    decryptSyncAES,
+    encryptAES,
+    decryptAES,
     rateLimit,
-    cookieAuthOptions,
-    cookieAuthDeleteOptions,
-    cookieServiceOptions,
 } from '@/utils/server_side';
 
+
+const cookieAuthOptions = { secure: true, httpOnly: true, maxAge: 2592000, sameSite: 'lax' };
+const cookieAuthDeleteOptions = { secure: true, httpOnly: true, maxAge: -2592000, sameSite: 'lax' };
+const cookieServiceOptions = { secure: false, httpOnly: false, maxAge: 2592000, sameSite: 'lax' };
 const limitRequest = parseInt(process.env.API_AUTH_REQUEST_LIMIT);
-const limiter = rateLimit({
+const limiter = await rateLimit({
     interval: parseInt(process.env.API_AUTH_TOKEN_INTERVAL_SECONDS) * 1000,
     uniqueTokenPerInterval: parseInt(process.env.API_AUTH_MAX_TOKEN_PERINTERVAL),
 })
@@ -69,16 +70,16 @@ export async function GET(request) {
         process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
         {
             cookies: {
-                get(name) {
+                async get(name) {
                     const encryptedSession = cookieStore.get(process.env.USER_SESSION_COOKIES_NAME)?.value
                     if (encryptedSession) {
-                        const decryptedSession = decryptSyncAES(encryptedSession) || 'removeMe';
+                        const decryptedSession = await decryptAES(encryptedSession) || 'removeMe';
                         return decryptedSession;
                     }
                     return encryptedSession;
                 },
-                set(name, value, options) {
-                    const encryptedSession = encryptSyncAES(value);
+                async set(name, value, options) {
+                    const encryptedSession = await encryptAES(value);
                     if (encryptedSession) {
                         cookieStore.set({ name: process.env.USER_SESSION_COOKIES_NAME, value: encryptedSession, ...cookieAuthOptions })
                     } else {

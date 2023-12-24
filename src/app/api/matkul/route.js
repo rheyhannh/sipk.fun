@@ -2,18 +2,18 @@ import { NextResponse } from 'next/server';
 import { cookies, headers } from 'next/headers';
 import { createServerClient } from '@supabase/ssr';
 import {
-    encryptSyncAES,
+    encryptAES,
     decryptAES,
-    decryptSyncAES,
     rateLimit,
-    cookieAuthOptions,
-    cookieAuthDeleteOptions,
     validateJWT
 } from '@/utils/server_side';
 import isUUID from 'validator/lib/isUUID';
+import Joi from 'joi';
 
+const cookieAuthOptions = { secure: true, httpOnly: true, maxAge: 2592000, sameSite: 'lax' };
+const cookieAuthDeleteOptions = { secure: true, httpOnly: true, maxAge: -2592000, sameSite: 'lax' };
 const limitRequest = parseInt(process.env.API_MATKUL_REQUEST_LIMIT);
-const limiter = rateLimit({
+const limiter = await rateLimit({
     interval: parseInt(process.env.API_MATKUL_TOKEN_INTERVAL_SECONDS) * 1000,
     uniqueTokenPerInterval: parseInt(process.env.API_MATKUL_MAX_TOKEN_PERINTERVAL),
 })
@@ -46,7 +46,7 @@ export async function DELETE(request) {
     }
 
     try {
-        var decoded = validateJWT(authorizationToken, userId);
+        var decoded = await validateJWT(authorizationToken, userId);
         // Log Here, ex: '{TIMESTAMP} decoded.id {METHOD} {ROUTE} {BODY} {PARAMS}'
     } catch (error) {
         return NextResponse.json({ message: error.message || 'Unauthorized - Invalid access token' }, {
@@ -89,16 +89,16 @@ export async function DELETE(request) {
         process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
         {
             cookies: {
-                get(name) {
+                async get(name) {
                     const encryptedSession = cookieStore.get(process.env.USER_SESSION_COOKIES_NAME)?.value
                     if (encryptedSession) {
-                        const decryptedSession = decryptSyncAES(encryptedSession) || 'removeMe';
+                        const decryptedSession = await decryptAES(encryptedSession) || 'removeMe';
                         return decryptedSession;
                     }
                     return encryptedSession;
                 },
-                set(name, value, options) {
-                    const encryptedSession = encryptSyncAES(value);
+                async set(name, value, options) {
+                    const encryptedSession = await encryptAES(value);
                     if (encryptedSession) {
                         cookieStore.set({ name: process.env.USER_SESSION_COOKIES_NAME, value: encryptedSession, ...cookieAuthOptions })
                     } else {
@@ -187,7 +187,7 @@ export async function POST(request) {
     }
 
     try {
-        var decoded = validateJWT(authorizationToken, userId);
+        var decoded = await validateJWT(authorizationToken, userId);
         // Log Here, ex: '{TIMESTAMP} decoded.id {METHOD} {ROUTE} {BODY} {PARAMS}'
     } catch (error) {
         return NextResponse.json({ message: error.message || 'Unauthorized - Invalid access token' }, {
@@ -215,11 +215,18 @@ export async function POST(request) {
     const formData = await request.json();
     // const formDataSchema = Joi.object({
     //     nama: Joi.string().min(3).max(50).required(),
-    //     sks: Joi.number().min(1).max(50).required(),
-    //     nilai_indeks: Joi.string().allow('A', 'B+', 'B', 'C+', 'C', 'D+', 'D', 'E').required(),
-    //     semester: Joi.number().min(1).max(50).required(),
+    //     semester: Joi.number().min(0).max(50).required(),
+    //     sks: Joi.number().min(0).max(50).required(),
+    //     nilai: Joi.object({
+    //         indeks: Joi.string().allow('A', 'B+', 'B', 'C+', 'C', 'D+', 'D', 'E').required(),
+    //         bobot: Joi.string().allow('4', '3.5', '3', '2.5', '2', '1.5', '1', '0').required(),
+    //         akhir: Joi.number()
+    //     }),
     //     dapat_diulang: Joi.boolean(),
-    //     bobot_maksimum: Joi.number().allow(4, 3.5, 3, 2.5, 2, 1.5, 1, 0)
+    //     target_nilai: Joi.object({
+    //         indeks: Joi.string().allow('A', 'B+', 'B', 'C+', 'C', 'D+', 'D', 'E').required(),
+    //         bobot: Joi.string().allow('4', '3.5', '3', '2.5', '2', '1.5', '1', '0').required(),
+    //     })
     // })
 
     // try {
@@ -229,39 +236,21 @@ export async function POST(request) {
     //     return NextResponse.json({ message: error.message }, { status: 400, headers: newHeaders })
     // }
 
-    // const getMatkulData = async (formData) => {
-    //     const penilaian = {
-    //         'A': 4, 'B+': 3.5, 'B': 3, 'C+': 2.5, 'C': 2, 'D+': 1.5, 'D': 1, 'E': 0
-    //     }
-
-    //     return {
-    //         nama: formData.nama,
-    //         sks: formData.sks,
-    //         nilai_indeks: formData.nilai_indeks,
-    //         semester: formData.semester,
-    //         dapat_diulang: formData.dapat_diulang,
-    //         bobot_maksimum: formData.bobot_maksimum,
-    //         bobot_indeks: penilaian[formData.nilai_indeks],
-    //         nilai_akhir: formData.sks * penilaian[formData.nilai_indeks]
-    //     }
-    // }
-
-    // const matkulData = await getMatkulData(formData);
     const supabase = createServerClient(
         process.env.NEXT_PUBLIC_SUPABASE_URL,
         process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
         {
             cookies: {
-                get(name) {
+                async get(name) {
                     const encryptedSession = cookieStore.get(process.env.USER_SESSION_COOKIES_NAME)?.value
                     if (encryptedSession) {
-                        const decryptedSession = decryptSyncAES(encryptedSession) || 'removeMe';
+                        const decryptedSession = await decryptAES(encryptedSession) || 'removeMe';
                         return decryptedSession;
                     }
                     return encryptedSession;
                 },
-                set(name, value, options) {
-                    const encryptedSession = encryptSyncAES(value);
+                async set(name, value, options) {
+                    const encryptedSession = await encryptAES(value);
                     if (encryptedSession) {
                         cookieStore.set({ name: process.env.USER_SESSION_COOKIES_NAME, value: encryptedSession, ...cookieAuthOptions })
                     } else {
@@ -328,7 +317,7 @@ export async function GET(request) {
     }
 
     try {
-        var decoded = validateJWT(authorizationToken, userId);
+        var decoded = await validateJWT(authorizationToken, userId);
         // Log Here, ex: '{TIMESTAMP} decoded.id {METHOD} {ROUTE} {BODY} {PARAMS}'
     } catch (error) {
         return NextResponse.json({ message: error.message || 'Unauthorized - Invalid access token' }, {
@@ -355,16 +344,16 @@ export async function GET(request) {
         process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
         {
             cookies: {
-                get(name) {
+                async get(name) {
                     const encryptedSession = cookieStore.get(process.env.USER_SESSION_COOKIES_NAME)?.value
                     if (encryptedSession) {
-                        const decryptedSession = decryptSyncAES(encryptedSession) || 'removeMe';
+                        const decryptedSession = await decryptAES(encryptedSession) || 'removeMe';
                         return decryptedSession;
                     }
                     return encryptedSession;
                 },
-                set(name, value, options) {
-                    const encryptedSession = encryptSyncAES(value);
+                async set(name, value, options) {
+                    const encryptedSession = await encryptAES(value);
                     if (encryptedSession) {
                         cookieStore.set({ name: process.env.USER_SESSION_COOKIES_NAME, value: encryptedSession, ...cookieAuthOptions })
                     } else {
