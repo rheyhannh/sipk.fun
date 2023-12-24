@@ -1,3 +1,5 @@
+'use client'
+
 // ========== STYLE DEPEDENCY ========== //
 import styles from './page.module.css'
 
