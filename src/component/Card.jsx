@@ -211,7 +211,7 @@ export function Summary({ state, icon, color, title, data }) {
                 <div className={styles.empty__wrapper}>
                     <div className={styles.empty__content} onClick={() => { handleTambahModal() }}>
                         <Image
-                            src={'/tambah_matkul.svg'}
+                            src={'https://storage.googleapis.com/sipk_assets/tambah_matkul.svg'}
                             width={100}
                             height={100}
                             alt='Tambah Matakuliah'
@@ -384,7 +384,7 @@ export function Notification({ state, data }) {
                     <div className={styles.empty__wrapper}>
                         <div className={styles.empty__content}>
                             <Image
-                                src={'/notifikasi_kosong.svg'}
+                                src={'https://storage.googleapis.com/sipk_assets/tambah_matkul.svg'}
                                 width={100}
                                 height={100}
                                 alt='Notifikasi Kosong'
@@ -929,7 +929,7 @@ export function Total({ state, user, matkul, universitas }) {
                 <div className={styles.empty__wrapper}>
                     <div className={styles.empty__content} onClick={() => { handleTambahModal() }}>
                         <Image
-                            src={'/tambah_matkul.svg'}
+                            src={'https://storage.googleapis.com/sipk_assets/tambah_matkul.svg'}
                             width={100}
                             height={100}
                             alt='Tambah Matakuliah'
@@ -1124,7 +1124,7 @@ export function Grafik({ state, matkul }) {
                 <div className={styles.empty__wrapper}>
                     <div className={styles.empty__content} onClick={() => { handleTambahModal() }}>
                         <Image
-                            src={'/tambah_matkul.svg'}
+                            src={'https://storage.googleapis.com/sipk_assets/tambah_matkul.svg'}
                             width={100}
                             height={100}
                             alt='Tambah Matakuliah'
