@@ -20,7 +20,16 @@ const nextConfig = {
     },
     experimental: {
         serverActions: true,
-    }
+    },
+    images: {
+        remotePatterns: [
+            {
+                protocol: 'https',
+                hostname: 'storage.googleapis.com',
+                pathname: '/sipk_assets/**',
+            },
+        ],
+    },
 }
 
 module.exports = withBundleAnalyzer(nextConfig)
