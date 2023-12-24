@@ -553,6 +553,7 @@
     .container:before {
         width: calc(2000px + 50vw);
         height: calc(2000px + 100vh);
+        top: -5%;
         right: 44%;
     }
 
