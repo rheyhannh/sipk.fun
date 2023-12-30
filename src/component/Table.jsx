@@ -1,0 +1,387 @@
+'use client'
+
+// ========== NEXT DEPEDENCY ========== //
+
+
+// ========== REACT DEPEDENCY ========== //
+import { useContext, useEffect, useState, useReducer, useMemo } from 'react';
+
+// ========== COMPONENT DEPEDENCY ========== //
+import {
+    createColumnHelper,
+    flexRender,
+    getCoreRowModel,
+    getFilteredRowModel,
+    getSortedRowModel,
+    getPaginationRowModel,
+    useReactTable,
+} from '@tanstack/react-table'
+import { ModalContext } from "./provider/Modal";
+
+// ========== DATA DEPEDENCY ========== //
+
+// ========== STYLE DEPEDENCY ========== //
+import styles from './style/table.module.css'
+
+// ========== ICON DEPEDENCY ========== //
+import {
+    IoSearchCircle,
+    IoAdd,
+    IoSettingsOutline,
+    IoFilter,
+    IoClose,
+    IoCheckmark,
+    IoCaretForward,
+    IoCaretBack,
+    IoPlayForward,
+    IoPlayBack,
+}
+    from "react-icons/io5";
+/*
+============================== CODE START HERE ==============================
+*/
+export function Table({ state, matkul, universitas }) {
+    const SkeletonTable = () => {
+        return (
+            <div>Skeleton Table</div>
+        )
+    }
+
+    const LoadedTable = () => {
+        const [data, setData] = useState(matkul);
+        const [dataType, setDataType] = useState(0);
+        const [columnFilters, setColumnFilters] = useState([]);
+        const {
+            setModal,
+            setActive,
+            setData: setModalData
+        } = useContext(ModalContext);
+
+        const handleTambahModal = () => {
+            setModalData(null);
+            setModal('tambahMatkul');
+            setTimeout(() => {
+                setActive(true);
+            }, 50)
+        }
+
+        const columnHelper = createColumnHelper();
+        const columns = useMemo(
+            () => [
+                columnHelper.accessor('id', {
+                    id: 'nomor',
+                    cell: info => info.row.index + 1,
+                    header: () => <span>#</span>,
+                    footer: info => info.column.id,
+                }),
+                columnHelper.accessor('nama', {
+                    id: 'matakuliah',
+                    cell: info => info.getValue(),
+                    header: () => <span>Matakuliah</span>,
+                    footer: info => info.column.id,
+                }),
+                columnHelper.accessor(row => row.semester, {
+                    id: 'semester',
+                    cell: info => info.getValue(),
+                    header: () => <span>Semester</span>,
+                    footer: info => info.column.id,
+                }),
+                columnHelper.accessor('sks', {
+                    id: 'sks',
+                    cell: info => info.getValue(),
+                    header: () => <span>Sks</span>,
+                    footer: info => info.column.id,
+                }),
+                columnHelper.accessor(row => row.nilai.indeks, {
+                    id: 'nilai',
+                    cell: info => info.getValue(),
+                    header: () => <span>Nilai</span>,
+                    footer: info => info.column.id,
+                }),
+                columnHelper.accessor(row => row.dapat_diulang ? <IoCheckmark size={'15px'} color={'var(--success-color)'} /> : <IoClose size={'15px'} color={'var(--danger-color)'} />, {
+                    id: 'diulang',
+                    cell: info => info.getValue(),
+                    header: () => <span>Bisa Diulang</span>,
+                    footer: info => info.column.id,
+                }),
+                columnHelper.accessor(row => row.dapat_diulang ? row.target_nilai.indeks : '-', {
+                    id: 'target',
+                    cell: info => info.getValue(),
+                    header: () => <span>Target Nilai</span>,
+                    footer: info => info.column.id,
+                }),
+            ],
+            []
+        )
+
+        const table = useReactTable({
+            data,
+            columns,
+            state: {
+                columnFilters,
+            },
+            getCoreRowModel: getCoreRowModel(),
+            getFilteredRowModel: getFilteredRowModel(),
+            getSortedRowModel: getSortedRowModel(),
+            getPaginationRowModel: getPaginationRowModel(),
+            onColumnFiltersChange: setColumnFilters,
+            debugAll: true,
+        })
+
+        useEffect(() => {
+            if (table.getState().columnFilters[0]?.id === 'matakuliah') {
+                if (table.getState().sorting[0]?.id !== 'matakuliah') {
+                    table.setSorting([]);
+                }
+            }
+        }, [table.getState().columnFilters[0]?.id])
+
+        return (
+            <div className={styles.container}>
+                <div className={styles.tools}>
+                    <div className={styles.tools__tabs}>
+                        <div className={`${styles.btn} ${dataType === 0 ? styles.active : ''}`} >Semua Matakuliah</div>
+                        <div className={`${styles.btn} ${dataType === 1 ? styles.active : ''}`} >Matakuliah Favorit</div>
+                        <div className={`${styles.btn} ${dataType === 2 ? styles.active : ''}`} >Matakuliah Dihapus</div>
+                    </div>
+                    <div className={styles.tools__right}>
+                        <div className={styles.tools__search}>
+                            <div className={styles.search}>
+                                <Filter column={table.getHeaderGroups()[0].headers[1].column} table={table} />
+                                <div
+                                    className={`${styles.search__icon} ${styles.times} ${table.getState().columnFilters[0]?.id === 'matakuliah' ? '' : styles.hide}`}
+                                    onClick={() => {
+                                        table.resetColumnFilters();
+                                    }}
+                                >
+                                    <IoClose size={'18px'} />
+                                </div>
+                                <div
+                                    className={`${styles.search__icon} ${table.getState().columnFilters[0]?.id === 'matakuliah' ? styles.active : ''}`}
+                                >
+                                    <IoSearchCircle size={'24px'} />
+                                </div>
+                            </div>
+                        </div>
+                        <div className={styles.tools__shorcut}>
+                            <div className={styles.tools__shorcut_box} onClick={() => { handleTambahModal() }}>
+                                <IoAdd size={'22px'} />
+                            </div>
+                            <div className={styles.tools__shorcut_box}>
+                                <IoSettingsOutline size={'18px'} />
+                            </div>
+                            <div className={styles.tools__shorcut_box}>
+                                <IoFilter size={'20px'} />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div className={styles.data}>
+                    <table>
+                        <thead>
+                            {table.getHeaderGroups().map(headerGroup => (
+                                <tr key={headerGroup.id}>
+                                    {headerGroup.headers.map(header => (
+                                        <th key={header.id}>
+                                            {header.isPlaceholder
+                                                ? null
+                                                : flexRender(
+                                                    header.column.columnDef.header,
+                                                    header.getContext()
+                                                )}
+                                        </th>
+                                    ))}
+                                </tr>
+                            ))}
+                        </thead>
+                        <tbody>
+                            {table.getRowModel().rows.map(row => (
+                                <tr key={row.id} >
+                                    {row.getVisibleCells().map(cell => {
+                                        const cellType = cell.id.split('_')[1];
+                                        const isNilaiCell = cellType === 'nilai';
+                                        const isTargetCell = cellType === 'target';
+                                        const nilaiColor = isNilaiCell || isTargetCell ? universitas[`${cell.getValue()}`]?.style : '';
+
+                                        return (
+                                            <td
+                                                key={cell.id}
+                                                className={`${styles[cellType]}`}
+                                                {...isNilaiCell || isTargetCell ? { style: { color: nilaiColor ? `var(--${nilaiColor}-color)` : '' } } : {}}
+                                            >
+                                                <span
+                                                    {...isNilaiCell || isTargetCell ? {
+                                                        style:
+                                                        {
+                                                            display: 'inline-block',
+                                                            fontWeight: '500',
+                                                            lineHeight: '28px',
+                                                            minWidth: '28px',
+                                                            minHeight: '28px',
+                                                            background: nilaiColor ? `var(--box-color-${nilaiColor})` : 'var(--box-color-bg2)',
+                                                            borderRadius: '50%'
+                                                        }
+                                                    } :
+                                                        {}}
+                                                >
+                                                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                                                </span>
+                                            </td>
+                                        )
+                                    })}
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+
+                    <div className={styles.pagination}>
+                        <div className={styles.pagination__pages}>
+                            <div className={styles.pagination__pages_number}>
+                                <select
+                                    value={table.getState().pagination.pageSize}
+                                    onChange={e => {
+                                        table.setPageSize(Number(e.target.value))
+                                    }}
+                                >
+                                    {[5, 10, 20, 50, 100, 500].map(pageSize => (
+                                        <option key={pageSize} value={pageSize}>
+                                            {pageSize}
+                                        </option>
+                                    ))}
+                                </select>
+                            </div>
+                            <div className={styles.pagination__pages_details}>
+                                Halaman {table.getState().pagination.pageIndex + 1} dari {table.getPageCount()}
+                            </div>
+                        </div>
+                        <div className={styles.pagination__control}>
+                            <div
+                                onClick={table.getCanPreviousPage() ? () => table.setPageIndex(0) : null}
+                                className={`${styles.pagination__navs} ${!table.getCanPreviousPage() ? styles.disabled : ''}`}
+                            >
+                                <IoPlayBack size={'16px'} />
+                            </div>
+                            <div
+                                onClick={table.getCanPreviousPage() ? () => table.previousPage() : null}
+                                className={`${styles.pagination__navs} ${!table.getCanPreviousPage() ? styles.disabled : ''}`}
+                            >
+                                <IoCaretBack size={'16px'} />
+                            </div>
+                            <div className={styles.pagination__input}>
+                                <input
+                                    type="number"
+                                    min={1}
+                                    value={table.getState().pagination.pageIndex + 1}
+                                    onChange={e => {
+                                        const page = e.target.value ? Number(e.target.value) - 1 : 0
+                                        table.setPageIndex(page)
+                                    }}
+                                />
+                            </div>
+                            <div
+                                onClick={table.getCanNextPage() ? () => table.nextPage() : null}
+                                className={`${styles.pagination__navs} ${!table.getCanNextPage() ? styles.disabled : ''}`}
+                            >
+                                <IoCaretForward size={'16px'} />
+                            </div>
+                            <div
+                                onClick={table.getCanNextPage() ? () => table.setPageIndex(table.getPageCount() - 1) : null}
+                                className={`${styles.pagination__navs} ${!table.getCanNextPage() ? styles.disabled : ''}`}
+                            >
+                                <IoPlayForward size={'16px'} />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        )
+    }
+
+    const ErrorTable = () => {
+        return (
+            <div>Error Table</div>
+        )
+    }
+
+    const ValidatingTable = () => {
+        return (
+            <div>Validating Table</div>
+        )
+    }
+
+    const EmptyTable = () => {
+        return (
+            <div>Loaded Table</div>
+        )
+    }
+
+    if (state === 'loading') { return (<SkeletonTable />) }
+    else if (state === 'loaded') { return (<LoadedTable />) }
+    else if (state === 'error') { return (<ErrorTable />) }
+    else if (state === 'validating') { return (<ValidatingTable />) }
+    else if (state === 'empty') { return (<EmptyTable />) }
+    else { return 'Unidentified Table State' }
+}
+
+function Filter({ column, table }) {
+    const firstValue = table.getPreFilteredRowModel().flatRows[0]?.getValue(column.id);
+    const columnFilterValue = column.getFilterValue();
+
+    return typeof firstValue === 'number' ? (
+        <>
+            <DebouncedInput
+                type="number"
+                min={Number(column.getFacetedMinMaxValues()?.[0] ?? '')}
+                max={Number(column.getFacetedMinMaxValues()?.[1] ?? '')}
+                value={(columnFilterValue[0] ?? '')}
+                onChange={(value) =>
+                    column.setFilterValue((old) => [value, old?.[1]])
+                }
+                placeholder={`Min ${column.getFacetedMinMaxValues()?.[0] ? `(${column.getFacetedMinMaxValues()?.[0]})` : ''}`}
+            />
+            <DebouncedInput
+                type="number"
+                min={Number(column.getFacetedMinMaxValues()?.[0] ?? '')}
+                max={Number(column.getFacetedMinMaxValues()?.[1] ?? '')}
+                value={(columnFilterValue[1] ?? '')}
+                onChange={(value) =>
+                    column.setFilterValue((old) => [old?.[0], value])
+                }
+                placeholder={`Max ${column.getFacetedMinMaxValues()?.[1] ? `(${column.getFacetedMinMaxValues()?.[1]})` : ''}`}
+            />
+        </>
+    ) : (
+        <DebouncedInput
+            type="text"
+            value={(columnFilterValue ?? '')}
+            onChange={value => column.setFilterValue(value)}
+            placeholder={`Cari ${column.id}`}
+        />
+    );
+}
+
+function DebouncedInput({
+    value: initialValue,
+    onChange,
+    debounce = 500,
+    ...props
+}) {
+    const [value, setValue] = useState(initialValue);
+
+    useEffect(() => {
+        setValue(initialValue);
+    }, [initialValue]);
+
+    useEffect(() => {
+        const timeout = setTimeout(() => {
+            onChange(value);
+        }, debounce);
+
+        return () => clearTimeout(timeout);
+    }, [value, onChange, debounce]);
+
+    return (
+        <input {...props} value={value} onChange={(e) => setValue(e.target.value)} />
+    );
+}
+

@@ -1,0 +1,450 @@
+.container {
+    overflow: hidden;
+    background: var(--white-color);
+    padding: var(--card-padding);
+    border-radius: var(--card-border-radius);
+    box-shadow: var(--box-shadow);
+    transition: all var(--transition-default) ease;
+}
+
+.tools {
+    display: grid;
+    grid-template-columns: 1fr max-content;
+    gap: 2rem;
+    margin-bottom: 1.5rem;
+}
+
+.btn,
+.search {
+    border: none;
+    outline: none;
+    border-radius: 35px;
+    cursor: pointer;
+    background-color: var(--accordion-bg-color);
+    color: var(--dark-color);
+    padding: .5rem .75rem;
+    white-space: nowrap;
+    font-size: .85rem;
+    font-weight: 500;
+}
+
+.btn {
+    transition: all var(--transition-default) ease;
+}
+
+.btn.active {
+    cursor: auto;
+    background-color: var(--users-btn-sec);
+    color: var(--logo-second-color);
+}
+
+.tools__right {
+    display: flex;
+    flex-direction: column-reverse;
+    gap: 1rem;
+}
+
+.search {
+    display: grid;
+    grid-template-columns: 1fr 24px 24px;
+    justify-content: center;
+    align-items: center;
+    gap: .25rem;
+    width: 300px;
+    height: 31px;
+    padding: 0 .5rem;
+    cursor: auto;
+}
+
+.search input {
+    height: 80%;
+    padding: 0 .25rem 0 .5rem;
+    background: none;
+    outline: none;
+    border: none;
+    line-height: 1;
+    color: var(--dark-color);
+    font-size: .85rem;
+    font-weight: 500;
+}
+
+.search input::placeholder {
+    color: var(--infoDark-color);
+}
+
+.search__icon,
+.search__icon.times {
+    display: flex;
+    color: var(--accordion-bg2-color);
+    transition: all var(--transition-default) ease;
+}
+
+.search__icon.times {
+    justify-content: flex-end;
+    cursor: pointer;
+    color: var(--danger-sec-color);
+}
+
+.search__icon.times.hide {
+    visibility: hidden;
+    opacity: 0;
+}
+
+.search__icon.active {
+    color: var(--logo-second-color);
+}
+
+.search:focus-within .search__icon:not(.times) {
+    color: var(--logo-second-color);
+}
+
+.tools__tabs,
+.tools__search {
+    display: flex;
+    gap: 1rem;
+}
+
+.tools__tabs {
+    height: 46px;
+    justify-content: flex-start;
+    align-items: baseline;
+    overflow-y: hidden;
+    overflow-x: auto;
+}
+
+.tools__tabs::-webkit-scrollbar {
+    visibility: hidden;
+    height: .4rem;
+    border-radius: .25rem;
+}
+
+.tools__tabs::-webkit-scrollbar-thumb {
+    border-radius: .25rem;
+    visibility: hidden;
+}
+
+.tools__search {
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.tools__shorcut {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    height: 31px;
+}
+
+.tools__shorcut_box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    border-radius: 2rem;
+    background-color: var(--accordion-bg-color);
+    color: var(--dark-color);
+    transition: all var(--transition-default) ease-in-out;
+}
+
+.data {
+    display: grid;
+    grid-template-rows: max-content 50px;
+    gap: 1rem;
+    overflow-x: auto;
+}
+
+.data table {
+    width: 100%;
+    border-collapse: collapse;
+    color: var(--dark-color);
+    font-size: .8rem;
+    text-align: center;
+}
+
+.data th {
+    font-weight: 400;
+    color: var(--infoDark-color);
+    padding: .5rem 0;
+    border-top: 1px solid var(--skeleton-base);
+    border-bottom: 1px solid var(--skeleton-base);
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+.data tr {
+    border-bottom: 1px solid var(--skeleton-base);
+}
+
+.data tr:last-child {
+    border-bottom: none;
+}
+
+.data td {
+    height: 50px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+.data td.nomor {
+    min-width: 25px;
+    max-width: 50px;
+}
+
+.data td.matakuliah {
+    min-width: 200px;
+    max-width: 400px;
+}
+
+.data td.semester {
+    min-width: 80px;
+    max-width: 100px;
+}
+
+.data td.nilai,
+.data td.sks {
+    min-width: 50px;
+    max-width: 70px;
+}
+
+.data td.diulang {
+    min-width: 95px;
+    max-width: 115px;
+}
+
+.data td.target {
+    min-width: 90px;
+    max-width: 110px;
+}
+
+.pagination {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid var(--skeleton-base2);
+    border-bottom: 1px solid var(--skeleton-base2);
+}
+
+.pagination__control {
+    display: flex;
+    gap: .15rem;
+    margin-right: .75rem;
+}
+
+.pagination__navs {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    padding: .5rem;
+    border-radius: 50%;
+    color: var(--infoDark-color);
+    transition: all var(--transition-default) ease-in-out;
+}
+
+.pagination__navs.disabled {
+    color: var(--skeleton-base);
+    cursor: auto;
+}
+
+.pagination__input {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 .25rem;
+}
+
+.pagination__input input {
+    width: 40px;
+    height: 30px;
+    text-align: center;
+    background: var(--accordion-bg-color);
+    outline: none;
+    border: none;
+    line-height: 1;
+    color: var(--dark-color);
+    font-size: .85rem;
+    border-radius: .5rem;
+}
+
+.pagination__pages {
+    display: flex;
+    justify-content: space-between;
+    margin-left: .75rem;
+}
+
+.pagination__pages_number {
+    color: var(--dark-color);
+}
+
+.pagination__pages_number select {
+    padding: 0 .5rem;
+    height: 30px;
+    text-align: center;
+    outline: none;
+    appearance: none;
+    background: var(--accordion-bg-color);
+    color: var(--dark-color);
+    user-select: none;
+    cursor: pointer;
+    font-weight: 400;
+    font-size: .85rem;
+    border-radius: .5rem;
+}
+
+.pagination__pages_details {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 1rem;
+    padding-left: .75rem;
+    border-left: 1px solid var(--infoDark-color);
+    color: var(--infoDark-color);
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .btn:hover {
+        background-color: var(--users-btn-sec-hov);
+        color: var(--logo-second-color);
+    }
+
+    .tools__shorcut_box:hover {
+        background: var(--users-btn-sec);
+        color: var(--logo-second-color);
+    }
+
+    .tools__tabs::-webkit-scrollbar-thumb:hover {
+        border-radius: .25rem;
+        visibility: hidden;
+    }
+
+    .tools__tabs:hover::-webkit-scrollbar {
+        visibility: visible;
+    }
+
+    .tools__tabs:hover::-webkit-scrollbar-thumb {
+        visibility: visible;
+    }
+
+    .tools__tabs:hover::-webkit-scrollbar-thumb:hover {
+        visibility: visible;
+    }
+
+    .pagination__navs:not(.disabled):hover {
+        color: var(--logo-second-color);
+        background: var(--accordion-bg-color);
+    }
+}
+
+@media screen and (max-width: 1023px) {
+    .tools {
+        display: grid;
+        grid-template-columns: none;
+        grid-template-rows: 46px 31px;
+        gap: .5rem;
+    }
+
+    .tools__right {
+        display: flex;
+        flex-direction: initial;
+        justify-content: space-between;
+        gap: 1rem;
+    }
+
+    .search {
+        width: 250px;
+    }
+
+    .tools__shorcut {
+        width: 250px;
+    }
+}
+
+@media screen and (max-width: 967px) {
+    .pagination {
+        justify-content: flex-start;
+        margin-bottom: 1rem;
+    }
+}
+
+@media screen and (max-width: 767px) {
+    .tools__search {
+        display: none;
+        visibility: hidden;
+        opacity: 0;
+    }
+
+    .tools {
+        display: grid;
+        grid-template-columns: none;
+        grid-template-rows: 46px 31px;
+        gap: .75rem;
+    }
+
+    .tools__right {
+        justify-content: flex-end;
+        gap: 0;
+    }
+
+    .tools__shorcut {
+        width: 200px;
+    }
+
+    .data td.nomor {
+        max-width: 35px;
+    }
+
+    .data td.matakuliah {
+        max-width: 300px;
+    }
+
+    .data td.semester {
+        max-width: 90px;
+    }
+
+    .data td.nilai,
+    .data td.sks {
+        max-width: 65px;
+    }
+
+    .data td.diulang {
+        min-width: 95px;
+        max-width: 110px;
+    }
+
+    .data td.target {
+        max-width: 100px;
+    }
+}
+
+@media screen and (max-width: 374px) {
+    .tools__right {
+        justify-content: center;
+    }
+
+    .data td.nomor {
+        max-width: 30px;
+    }
+
+    .data td.matakuliah {
+        max-width: 250px;
+    }
+
+    .data td.semester {
+        max-width: 85px;
+    }
+
+    .data td.nilai,
+    .data td.sks {
+        max-width: 55px;
+    }
+
+    .data td.diulang {
+        max-width: 100px;
+    }
+
+    .data td.target {
+        max-width: 95px;
+    }
+}
