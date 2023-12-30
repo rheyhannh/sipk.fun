@@ -12,12 +12,12 @@
 
     /* === UTILS COLOR === */
     --primary-color: hsla(234, 86%, 65%, 1);
-    --danger-color: hsla(355, 80%, 57%, 1);
+    --danger-color: hsla(340, 80%, 57%, 1);
     --success-color: hsla(160, 70%, 47%, 1);
     --warning-color: hsla(36, 80%, 57%, 1);
     --crimson-color: crimson;
     --primary-sec-color: hsla(234, 86%, 60%, 1);
-    --danger-sec-color: hsla(355, 80%, 47%, 1);
+    --danger-sec-color: hsla(340, 80%, 47%, 1);
     --success-sec-color: hsla(160, 70%, 44%, 1);
     --warning-sec-color: hsla(36, 80%, 47%, 1);
     --crimson-sec-color: crimson;
@@ -35,6 +35,7 @@
     --scroll-thumb-color: hsl(222, 12%, 80%);
     --scroll-thumbHover-color: hsla(222, 40%, 30%, .75);
     --skeleton-base: hsl(11, 8%, 92%);
+    --skeleton-base2: hsl(11, 8%, 82%);
     --skeleton-highlight: hsl(11, 8%, 99%);
     --logo-first-color: #FF6341;
     --logo-second-color: #1d3263;
@@ -48,6 +49,11 @@
 
     /* === BOX === */
     --box-color-bg1: #FFFFFF;
+    --box-color-bg2: var(--inner-color-bg1);
+    --box-color-success: hsl(160, 100%, 95%);
+    --box-color-warning: hsl(36, 100%, 95%);
+    --box-color-danger: hsl(340, 100%, 95%);
+    --box-color-crimson: hsl(0, 100%, 95%);
     /* === END OF BOX === */
 
     /* === BORDER-RADIUS === */
@@ -116,6 +122,8 @@
     --users-box-shadow-lighter: 0 0 .5rem rgba(29, 50, 99, .5);
     --users-btn-alt: var(--second-color-lighter);
     --users-btn-hov: var(--second-color);
+    --users-btn-sec: hsl(222, 100%, 95%);
+    --users-btn-sec-hov: hsl(222, 100%, 95%);
     --users-loader-prim: #edeffd;
     --users-loader-sec: #1d3263;
     --accordion-bg-color: hsl(222, 42%, 95%);
@@ -132,12 +140,12 @@
 
     /* === UTILS COLOR === */
     --primary-color: hsla(234, 76%, 69%, 1);
-    --danger-color: hsla(355, 100%, 68%, 1);
+    --danger-color: hsla(340, 100%, 68%, 1);
     --success-color: hsla(160, 86%, 60%, 1);
     --warning-color: hsla(36, 100%, 67%, 1);
     --crimson-color: crimson;
     --primary-sec-color: hsla(234, 76%, 64%, 1);
-    --danger-sec-color: hsla(355, 100%, 63%, 1);
+    --danger-sec-color: hsla(340, 100%, 63%, 1);
     --success-sec-color: hsla(160, 86%, 50%, 1);
     --warning-sec-color: hsla(36, 100%, 62%, 1);
     --crimson-sec-color: crimson;
@@ -151,6 +159,7 @@
     --scroll-thumb-color: rgba(0, 0, 0, 0.5);
     --scroll-thumbHover-color: hsla(11, 75%, 35%, .5);
     --skeleton-base: rgba(132, 139, 200, 0.1);
+    --skeleton-base2: rgba(132, 139, 200, 0.2);
     --skeleton-highlight: #677483;
     --logo-first-color: #f6f6f9;
     --logo-second-color: #FF6341;
@@ -164,6 +173,11 @@
 
     /* === BOX === */
     --box-color-bg1: #3F3F46;
+    --box-color-bg2: #3F3F46;
+    --box-color-success: hsl(160, 25%, 21%);
+    --box-color-warning: hsl(36, 25%, 21%);
+    --box-color-danger: hsl(340, 25%, 21%);
+    --box-color-crimson: hsl(0, 25%, 21%);
     /* === END OF BOX === */
 
     /* === BOX-SHADOW === */
@@ -177,6 +191,8 @@
     --users-box-shadow-lighter: 0 0 .5rem rgba(255, 99, 65, .75);
     --users-btn-alt: var(--first-color-lighter);
     --users-btn-hov: var(--first-color);
+    --users-btn-sec: hsl(11, 25%, 21%);
+    --users-btn-sec-hov: hsl(11, 25%, 21%);
     --users-loader-prim: #FF6341;
     --users-loader-sec: #1d3263;
     --accordion-bg-color: hsl(200, 6%, 32%);
