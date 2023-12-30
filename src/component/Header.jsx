@@ -13,13 +13,12 @@ import { useCookies } from 'next-client-cookies';
 import Skeleton from "react-loading-skeleton";
 import toast from 'react-hot-toast';
 import { animateScroll as scroll } from 'react-scroll';
-import { GlobalContext } from './provider/Global';
 import { DashboardContext } from './provider/Dashboard';
 import { ModalContext } from './provider/Modal';
 import { Spinner } from "./loader/Loading";
 
 // ========== DATA DEPEDENCY ========== //
-import { useUser } from '@/data/core';
+import { useUser, useLocalTheme } from '@/data/core';
 
 // ========== STYLE DEPEDENCY ========== //
 import styles from './style/header.module.css'
@@ -40,9 +39,10 @@ import { FiSun, FiMoon } from 'react-icons/fi';
 */
 function Right() {
     const { data, error, isLoading, isValidating } = useUser();
-    const {
-        theme, setTheme,
-    } = useContext(GlobalContext);
+    const { data: theme } = useLocalTheme();
+    // const {
+    //     theme, setTheme,
+    // } = useContext(GlobalContext);
     const {
         setModal,
         setActive,
@@ -60,9 +60,8 @@ function Right() {
 
     const handleChangeTheme = (newTheme) => {
         if (theme === newTheme) { return }
-        setTheme(newTheme);
-        document.body.classList.toggle('dark-theme', theme !== 'dark');
         localStorage.setItem('_theme', theme === 'dark' ? 'light' : 'dark')
+        mutate('localUserTheme');
         if (theme === 'dark') { helloLight() }
         else { helloDark() }
     }

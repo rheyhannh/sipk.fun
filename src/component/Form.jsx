@@ -20,14 +20,17 @@ import isInt from 'validator/lib/isInt';
 import isUUID from 'validator/lib/isUUID';
 
 // ========== COMPONENTS DEPEDENCY ========== //
+import { mutate } from 'swr';
 import { useCookies } from 'next-client-cookies';
 import { SHA256, HmacSHA512 } from 'crypto-js';
 import Hex from 'crypto-js/enc-hex';
 import toast from 'react-hot-toast';
-import { GlobalContext } from '@/component/provider/Global'
 import { UsersContext } from './provider/Users';
 import { ModalContext } from "./provider/Modal";
 import { Ball } from '@/component/loader/Loading';
+
+// ========== DATA DEPEDENCY ========== //
+import { useLocalTheme } from '@/data/core';
 
 // ========== STYLE DEPEDENCY ========== //
 import styles from './style/form.module.css'
@@ -63,7 +66,7 @@ export function UsersForm() {
     /*
     ========== Context ==========
     */
-    const { theme, setTheme } = useContext(GlobalContext);
+    const { data: theme } = useLocalTheme();
     const {
         loginMode, setLoginMode,
         isBigContent,
@@ -444,9 +447,8 @@ export function UsersForm() {
     }
 
     const handleChangeTheme = () => {
-        setTheme((currentTheme) => (currentTheme === 'light' ? 'dark' : 'light'));
-        document.body.classList.toggle('dark-theme', theme !== 'dark');
-        localStorage.setItem('_theme', theme === 'dark' ? 'light' : 'dark')
+        localStorage.setItem('_theme', theme === 'dark' ? 'light' : 'dark');
+        mutate('localUserTheme');
     }
 
     const resetFormValue = () => {
