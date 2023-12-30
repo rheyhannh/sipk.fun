@@ -1,6 +1,7 @@
 // ========== COMPONENT DEPEDENCY ========== //
 import useSWR from 'swr'
 import { useCookies } from 'next-client-cookies';
+import { getLocalTheme } from '@/utils/client_side';
 
 /*
 ============================== CODE START HERE ==============================
@@ -145,4 +146,8 @@ export function useUniversitas(custom, type, id) {
             return fetchDefault(url, accessToken);
         }
     }, options)
+}
+
+export function useLocalTheme(custom) {
+    return useSWR('localUserTheme', getLocalTheme);
 }
