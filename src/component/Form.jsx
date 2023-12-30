@@ -66,7 +66,6 @@ export function UsersForm() {
     /*
     ========== Context ==========
     */
-    const { data: theme } = useLocalTheme();
     const {
         loginMode, setLoginMode,
         isBigContent,
@@ -116,7 +115,8 @@ export function UsersForm() {
     ========== Data ==========
     */
     const { data: universitasData, error: universitasError, isLoading: universitasLoading, isValidating: universitasValidating } = useUniversitas(null, 'public', 'all');
-
+    const { data: theme } = useLocalTheme();
+    
     /*
     ========== Images ==========
     */
