@@ -747,7 +747,7 @@ export const PerubahanTerakhirConfirm = () => {
                                                     } else if (currentMatkul.length === 0) {
                                                         return [matkul];
                                                     } else {
-                                                        return [matkul, ...currentMatkul];
+                                                        return [...currentMatkul, matkul];
                                                     }
                                                 },
                                                 revalidate: false,
@@ -968,7 +968,7 @@ export const TambahMatkul = () => {
                                                 } else if (currentMatkul.length === 0) {
                                                     return [matkul];
                                                 } else {
-                                                    return [matkul, ...currentMatkul];
+                                                    return [...currentMatkul, matkul];
                                                 }
                                             },
                                             revalidate: false,
