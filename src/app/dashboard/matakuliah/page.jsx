@@ -7,10 +7,10 @@ import { useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Pagination } from 'swiper/modules';
 import { Total, Grafik } from '@/component/Card'
+import { Table } from '@/component/Table';
 
 // ========== DATA DEPEDENCY ========== //
-import { useMatkul, useNotifikasi, useUser, useMatkulHistory, useUniversitas } from '@/data/core';
-import * as x from '@/data/summary';
+import { useMatkul, useUser, useUniversitas } from '@/data/core';
 
 // ========== STYLE DEPEDENCY ========== //
 import styles from './matkul.module.css'
@@ -73,6 +73,32 @@ function GrafikCard() {
     )
 }
 
+function TabelSection() {
+    const { data: matkul, error: matkulError, isLoading: matkulLoading, isValidating: matkulValidating } = useMatkul();
+    const { data: user, error: userError, isLoading: userLoading, isValidating: userValidating } = useUser();
+    const { data: universitas, error: universitasError, isLoading: universitasLoading, isValidating: universitasValidating } = useUniversitas(null, 'user', user ? user[0].university_id : undefined);
+
+    if (matkulError || userError || universitasError) {
+        return <Table state={'error'} />;
+    }
+
+    if (matkulLoading || userLoading || universitasLoading) {
+        return <Table state={'loading'} />;
+    }
+
+    if (matkulValidating || userValidating || universitasValidating) {
+        return <Table state={'validating'} />;
+    }
+
+    if (matkul.length === 0) {
+        return <Table state={'empty'} />
+    }
+
+    return (
+        <Table state={'loaded'} matkul={matkul} universitas={universitas[0].penilaian} />
+    )
+}
+
 export default function MatakuliahPage() {
     const [widget, setWidget] = useState(true);
 
@@ -115,13 +141,12 @@ export default function MatakuliahPage() {
                     modules={[Pagination]}
                     className={`${styles.insight} ${widget ? styles.active : ''}`}
                 >
-                    <SwiperSlide> <GrafikCard/> </SwiperSlide>
+                    <SwiperSlide> <GrafikCard /> </SwiperSlide>
                     <SwiperSlide> <TotalCard /> </SwiperSlide>
+                    <SwiperSlide> <Grafik state={'empty'} /> </SwiperSlide>
                 </Swiper>
 
-                <div>
-                    <h1>Tabel</h1>
-                </div>
+                <TabelSection />
             </div>
         </>
     )
