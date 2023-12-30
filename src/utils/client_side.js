@@ -42,3 +42,12 @@ export const getLoadingMessage = (funWord = false, index = true) => {
     const usedIndex = index === true ? Math.floor(Math.random() * maximumIndex) : index === 0 ? 0 : index;
     return funWord ? message.fun[usedIndex] || 'Memproses Keajaiban' : message.default[usedIndex] || 'Memproses permintaanmu';
 }
+
+// Settings or Preferences Utility
+export const getLocalTheme = () => {
+    const localTheme = localStorage.getItem('_theme');
+    if (!localTheme) { localStorage.setItem('_theme', 'light'); }
+    document.body.classList.toggle('dark-theme', localTheme === 'dark');
+    const isDarkTheme = localTheme ? localTheme === 'dark' : false;
+    return isDarkTheme ? 'dark' : 'light';
+}
