@@ -17,6 +17,7 @@ import {
     useReactTable,
 } from '@tanstack/react-table'
 import { ModalContext } from "./provider/Modal";
+import { Spinner } from "./loader/Loading";
 
 // ========== DATA DEPEDENCY ========== //
 
@@ -40,7 +41,7 @@ import {
 /*
 ============================== CODE START HERE ==============================
 */
-export function Table({ state, matkul, universitas }) {
+export function Table({ state, validating, user, matkul, universitas }) {
     const SkeletonTable = () => {
         return (
             <div>Skeleton Table</div>
@@ -50,12 +51,20 @@ export function Table({ state, matkul, universitas }) {
     const LoadedTable = () => {
         const [data, setData] = useState(matkul);
         const [dataType, setDataType] = useState(0);
+        const [isValidating, setIsValidating] = useState(validating);
         const [columnFilters, setColumnFilters] = useState([]);
+        const [pageControlPosition, setPageControlPosition] = useState(0);
         const {
             setModal,
             setActive,
             setData: setModalData
         } = useContext(ModalContext);
+
+        const pageControlCSS = [
+            styles.page_control_bottom,
+            styles.page_control_top,
+            styles.page_control_both
+        ]
 
         const handleTambahModal = () => {
             setModalData(null);
@@ -114,9 +123,27 @@ export function Table({ state, matkul, universitas }) {
             []
         )
 
+        const localStorageSettings = {
+            "userId": {
+                tabel: {
+                    current: {
+                        page: 1,
+                        pageSize: 5,
+                        pageControlPosition: 'bottom', // bottom, top, or both
+                    }
+                }
+            }
+        }
+
         const table = useReactTable({
             data,
             columns,
+            initialState: {
+                pagination: {
+                    pageIndex: 0,
+                    pageSize: 5,
+                }
+            },
             state: {
                 columnFilters,
             },
@@ -125,7 +152,8 @@ export function Table({ state, matkul, universitas }) {
             getSortedRowModel: getSortedRowModel(),
             getPaginationRowModel: getPaginationRowModel(),
             onColumnFiltersChange: setColumnFilters,
-            debugAll: true,
+            autoResetAll: false,
+            // debugAll: true,
         })
 
         useEffect(() => {
@@ -138,6 +166,9 @@ export function Table({ state, matkul, universitas }) {
 
         return (
             <div className={styles.container}>
+                <div className={`${styles.validating} ${isValidating ? '' : styles.hide}`}>
+                    <Spinner size={'35px'} color={'var(--logo-second-color)'} />
+                </div>
                 <div className={styles.tools}>
                     <div className={styles.tools__tabs}>
                         <div className={`${styles.btn} ${dataType === 0 ? styles.active : ''}`} >Semua Matakuliah</div>
@@ -176,7 +207,68 @@ export function Table({ state, matkul, universitas }) {
                         </div>
                     </div>
                 </div>
-                <div className={styles.data}>
+                <div
+                    className={`${styles.data} ${pageControlCSS[pageControlPosition]}`}
+                >
+                    <div className={styles.pagination}>
+                        <div className={styles.pagination__pages}>
+                            <div className={styles.pagination__pages_number}>
+                                <select
+                                    value={table.getState().pagination.pageSize}
+                                    onChange={e => {
+                                        table.setPageSize(Number(e.target.value))
+                                    }}
+                                >
+                                    {[5, 10, 25, 50, 100, matkul.length + 1].map((pageSize, index) => (
+                                        <option key={pageSize} value={pageSize}>
+                                            {index === 5 ? 'Semua' : pageSize}
+                                        </option>
+                                    ))}
+                                </select>
+                            </div>
+                            <div className={styles.pagination__pages_details}>
+                                Halaman {table.getState().pagination.pageIndex + 1} dari {table.getPageCount()}
+                            </div>
+                        </div>
+                        <div className={styles.pagination__control}>
+                            <div
+                                onClick={table.getCanPreviousPage() ? () => table.setPageIndex(0) : null}
+                                className={`${styles.pagination__navs} ${!table.getCanPreviousPage() ? styles.disabled : ''}`}
+                            >
+                                <IoPlayBack size={'16px'} />
+                            </div>
+                            <div
+                                onClick={table.getCanPreviousPage() ? () => table.previousPage() : null}
+                                className={`${styles.pagination__navs} ${!table.getCanPreviousPage() ? styles.disabled : ''}`}
+                            >
+                                <IoCaretBack size={'16px'} />
+                            </div>
+                            <div className={styles.pagination__input}>
+                                <input
+                                    type="number"
+                                    min={1}
+                                    value={table.getState().pagination.pageIndex + 1}
+                                    onChange={e => {
+                                        const page = e.target.value ? Number(e.target.value) - 1 : 0
+                                        table.setPageIndex(page)
+                                    }}
+                                />
+                            </div>
+                            <div
+                                onClick={table.getCanNextPage() ? () => table.nextPage() : null}
+                                className={`${styles.pagination__navs} ${!table.getCanNextPage() ? styles.disabled : ''}`}
+                            >
+                                <IoCaretForward size={'16px'} />
+                            </div>
+                            <div
+                                onClick={table.getCanNextPage() ? () => table.setPageIndex(table.getPageCount() - 1) : null}
+                                className={`${styles.pagination__navs} ${!table.getCanNextPage() ? styles.disabled : ''}`}
+                            >
+                                <IoPlayForward size={'16px'} />
+                            </div>
+                        </div>
+                    </div>
+
                     <table>
                         <thead>
                             {table.getHeaderGroups().map(headerGroup => (
@@ -243,9 +335,9 @@ export function Table({ state, matkul, universitas }) {
                                         table.setPageSize(Number(e.target.value))
                                     }}
                                 >
-                                    {[5, 10, 20, 50, 100, 500].map(pageSize => (
+                                    {[5, 10, 25, 50, 100, matkul.length + 1].map((pageSize, index) => (
                                         <option key={pageSize} value={pageSize}>
-                                            {pageSize}
+                                            {index === 5 ? 'Semua' : pageSize}
                                         </option>
                                     ))}
                                 </select>

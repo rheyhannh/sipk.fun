@@ -77,25 +77,25 @@ function TabelSection() {
     const { data: matkul, error: matkulError, isLoading: matkulLoading, isValidating: matkulValidating } = useMatkul();
     const { data: user, error: userError, isLoading: userLoading, isValidating: userValidating } = useUser();
     const { data: universitas, error: universitasError, isLoading: universitasLoading, isValidating: universitasValidating } = useUniversitas(null, 'user', user ? user[0].university_id : undefined);
+    const isLoading = matkulLoading || userLoading || universitasLoading;
+    const isValidating = matkulValidating || userValidating || universitasValidating;
+    const isError = matkulError || userError || universitasError;
+    const isEmpty = !matkul || matkul.length === 0;
 
-    if (matkulError || userError || universitasError) {
+    if (isError) {
         return <Table state={'error'} />;
     }
 
-    if (matkulLoading || userLoading || universitasLoading) {
+    if (isLoading) {
         return <Table state={'loading'} />;
     }
 
-    if (matkulValidating || userValidating || universitasValidating) {
-        return <Table state={'validating'} />;
-    }
-
-    if (matkul.length === 0) {
+    if (isEmpty) {
         return <Table state={'empty'} />
     }
 
     return (
-        <Table state={'loaded'} matkul={matkul} universitas={universitas[0].penilaian} />
+        <Table state={'loaded'} validating={isValidating} user={user[0]} matkul={matkul} universitas={universitas[0].penilaian} />
     )
 }
 
