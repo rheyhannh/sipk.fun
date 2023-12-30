@@ -117,14 +117,22 @@ export async function validateJWT(token, userId) {
     }
 }
 
-export async function getEtag(data, algorithm = 'SHA128') {
+/**
+ * Method untuk generate Etag atau hash data identifier
+ * @param {string|object} data Data yang ingin dihash. Dapat berupa object atau JSON string format (stringified)
+ * @param {string} algorithm Algoritma HMAC (case insensitive) yang tersedia pada library `crypto-js`. Contoh 'SHA256', 'sha512', etc. Default: `MD5`
+ * @param {boolean} etagFormat Boolean untuk menggunakan format Etag ("..."). Default: `true`
+ * @returns {Promise<string>} Etag atau Hash Identifier dengan encoder `Hex`
+ * @throws Throw error (return null) saat `!data`
+ */
+export async function getEtag(data, algorithm = 'MD5', etagFormat = true) {
     try {
         if (!data) { throw new Error('Error generating Etag: No data provided') }
         const hmacFunction = CryptoJS[`Hmac${algorithm.toUpperCase()}`] || CryptoJS.HmacMD5;
         const dataString = typeof data === 'string' ? data : JSON.stringify(data);
         const hash = hmacFunction(dataString, process.env.SECRET_KEY);
         const hexHash = hash.toString(CryptoJS.enc.Hex);
-        const etag = `"${hexHash}"`;
+        const etag = etagFormat ? `"${hexHash}"` : `${hexHash}`;
         return etag;
     } catch (error) {
         console.error(`Error generating ETag: ${error.message}`);
