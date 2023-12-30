@@ -1,5 +1,4 @@
 // ========== COMPONENT DEPEDENCY ========== //
-import { GlobalProvider } from '@/component/provider/Global'
 import { ModalProvider } from '@/component/provider/Modal';
 import { UsersProvider } from "@/component/provider/Users"
 
@@ -18,13 +17,11 @@ export default function UsersLayout({
 }) {
   return (
     <>
-      <GlobalProvider>
-        <UsersProvider>
-          <ModalProvider>
-            {children}
-          </ModalProvider>
-        </UsersProvider>
-      </GlobalProvider>
+      <UsersProvider>
+        <ModalProvider>
+          {children}
+        </ModalProvider>
+      </UsersProvider>
     </>
   )
 }

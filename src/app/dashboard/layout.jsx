@@ -5,7 +5,6 @@ import Navbar from '@/component/Nav'
 
 // ========== COMPONENT DEPEDENCY ========== //
 import { NavigationEvents } from '@/component/NavigationEvents';
-import { GlobalProvider } from '@/component/provider/Global'
 import { DashboardProvider } from '@/component/provider/Dashboard';
 import { ModalProvider } from '@/component/provider/Modal';
 
@@ -25,21 +24,19 @@ export default function DashboardLayout({
 }) {
   return (
     <>
-      <GlobalProvider>
-        <DashboardProvider>
-          <ModalProvider>
-            <Header />
-            <main className={`dashboard`}>
-              <Navbar>
-                {children}
-              </Navbar>
-              <Suspense fallback={null}>
-                <NavigationEvents />
-              </Suspense>
-            </main>
-          </ModalProvider>
-        </DashboardProvider>
-      </GlobalProvider>
+      <DashboardProvider>
+        <ModalProvider>
+          <Header />
+          <main className={`dashboard`}>
+            <Navbar>
+              {children}
+            </Navbar>
+            <Suspense fallback={null}>
+              <NavigationEvents />
+            </Suspense>
+          </main>
+        </ModalProvider>
+      </DashboardProvider>
     </>
   )
 }
