@@ -2,6 +2,7 @@
     display: grid;
     grid-template-rows: 1fr;
     margin-top: calc(var(--header-height) + .75rem);
+    margin-bottom: 2rem;
     padding: .75rem;
 }
 
