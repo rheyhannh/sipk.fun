@@ -117,4 +117,19 @@ export async function validateJWT(token, userId) {
     }
 }
 
+export async function getEtag(data, algorithm = 'SHA128') {
+    try {
+        if (!data) { throw new Error('Error generating Etag: No data provided') }
+        const hmacFunction = CryptoJS[`Hmac${algorithm.toUpperCase()}`] || CryptoJS.HmacMD5;
+        const dataString = typeof data === 'string' ? data : JSON.stringify(data);
+        const hash = hmacFunction(dataString, process.env.SECRET_KEY);
+        const hexHash = hash.toString(CryptoJS.enc.Hex);
+        const etag = `"${hexHash}"`;
+        return etag;
+    } catch (error) {
+        console.error(`Error generating ETag: ${error.message}`);
+        return null;
+    }
+}
+
 // Options
