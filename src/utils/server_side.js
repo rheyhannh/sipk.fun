@@ -131,6 +131,11 @@ export async function validateIdentifier(id, stamp, identifier) {
         if (stamp.length < 10) { throw new Error('Invalid stamp format'); }
         if (!isNumeric(stamp)) { throw new Error('Invalid stamp type'); }
 
+        const expiredAt = Number(stamp) + 30;
+        const now = Math.round(Date.now() / 1000);
+        const isExpired = now > expiredAt;
+        if (isExpired) { throw new Error('Expired stamp')}
+        
         const result = Array.from(stamp)
             .map(Number)
             .filter(digit => digit !== 0)
