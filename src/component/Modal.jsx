@@ -1502,7 +1502,7 @@ export const Profil = () => {
                                         </label>
                                     </div>
                                 </div>
-                                <h3 style={{ marginTop: 'var(--m-0-75)', textAlign: 'center' }}>Target</h3>
+                                <h3 style={{ marginTop: 'var(--m-0-75)', marginBottom: 'var(--m-0-5)', textAlign: 'center' }}>Target</h3>
                                 <div style={{
                                     display: 'grid',
                                     gridTemplateColumns: '25% 1fr 25%',
