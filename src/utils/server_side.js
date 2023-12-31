@@ -6,6 +6,7 @@ import { LRUCache } from 'lru-cache';
 import jwt from 'jsonwebtoken';
 import isJWT from 'validator/lib/isJWT';
 import isUUID from 'validator/lib/isUUID';
+import isNumeric from 'validator/lib/isNumeric'
 
 /*
 ============================== CODE START HERE ==============================
@@ -114,6 +115,29 @@ export async function validateJWT(token, userId) {
         const { name, message } = error;
         console.error(name && message ? `${name} - ${message}` : 'Error when validating JWT')
         throw new Error(`Unauthorized - Invalid access token`);
+    }
+}
+
+export async function validateIdentifier(id, stamp, identifier) {
+    try {
+        if (stamp.length < 10) { throw new Error('Invalid stamp format'); }
+        if (!isNumeric(stamp)) { throw new Error('Invalid stamp type'); }
+
+        const result = Array.from(stamp)
+            .map(Number)
+            .filter(digit => digit !== 0)
+            .reduce((acc, digit) => acc * digit, 1);
+
+        const nonce = result.toString();
+        const nonceReverse = nonce.split('').reverse().join('');
+        const hashDigest = CryptoJS.SHA256(nonce + id + nonceReverse);
+        const hmacDigest = CryptoJS.HmacSHA512(hashDigest, stamp);
+        const hmacDigestStr = CryptoJS.enc.Hex.stringify(hmacDigest);
+
+        if (hmacDigestStr !== identifier) { throw new Error('Identifier not match'); }
+    } catch (error) {
+        console.error(error);
+        throw error;
     }
 }
 

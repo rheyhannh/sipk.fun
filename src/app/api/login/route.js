@@ -5,12 +5,10 @@ import {
     encryptAES,
     decryptAES,
     rateLimit,
+    validateIdentifier,
 } from '@/utils/server_side';
 import Joi from 'joi'
 import isUUID from 'validator/lib/isUUID';
-import isNumber from 'validator/lib/isNumeric';
-import { SHA256, HmacSHA512 } from 'crypto-js';
-import Hex from 'crypto-js/enc-hex';
 
 const cookieAuthOptions = { secure: true, httpOnly: true, maxAge: 2592000, sameSite: 'lax' };
 const cookieAuthDeleteOptions = { secure: true, httpOnly: true, maxAge: -2592000, sameSite: 'lax' };
@@ -20,29 +18,6 @@ const limiter = await rateLimit({
     interval: parseInt(process.env.API_LOGIN_TOKEN_INTERVAL_SECONDS) * 1000,
     uniqueTokenPerInterval: parseInt(process.env.API_LOGIN_MAX_TOKEN_PERINTERVAL),
 })
-
-const verifyIdentifier = async (id, stamp, identifier) => {
-    try {
-        if (stamp.length < 10) { throw new Error('Invalid stamp format'); }
-        if (!isNumber(stamp)) { throw new Error('Invalid stamp type'); }
-
-        const result = Array.from(stamp)
-            .map(Number)
-            .filter(digit => digit !== 0)
-            .reduce((acc, digit) => acc * digit, 1);
-
-        const nonce = result.toString();
-        const nonceReverse = nonce.split('').reverse().join('');
-        const hashDigest = SHA256(nonce + id + nonceReverse);
-        const hmacDigest = HmacSHA512(hashDigest, stamp);
-        const hmacDigestStr = Hex.stringify(hmacDigest);
-
-        if (hmacDigestStr !== identifier) { throw new Error('Identifier not valid'); }
-    } catch (error) {
-        console.error(error);
-        throw error;
-    }
-};
 
 export async function POST(request) {
     const newHeaders = {};
@@ -96,7 +71,7 @@ export async function POST(request) {
 
     // Verify 'identifier'
     try {
-        await verifyIdentifier(serviceGuestCookie, stamp, identifier);
+        await validateIdentifier(serviceGuestCookie, stamp, identifier);
     } catch (error) {
         return NextResponse.json({ message: 'Unauthorized - Invalid identifier' }, {
             status: 401,
