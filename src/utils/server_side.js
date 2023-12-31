@@ -118,6 +118,14 @@ export async function validateJWT(token, userId) {
     }
 }
 
+/**
+ * Method untuk validasi hash identifier
+ * @param {string} id Salt string atau user id / guest id.
+ * @param {string} stamp Timestamp hash dibuat berformat unix
+ * @param {string} identifier Hmac string dengan algoritma SHA512
+ * @throws Throw error saat `stamp.length < 10`, `!isNumeric(stamp)`, `stamp lebih dari 30 detik` atau `hash tidak match`
+ * @returns {Promise<void>} void
+ */
 export async function validateIdentifier(id, stamp, identifier) {
     try {
         if (stamp.length < 10) { throw new Error('Invalid stamp format'); }
