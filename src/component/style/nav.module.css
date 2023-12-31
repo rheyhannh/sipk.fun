@@ -88,6 +88,7 @@
 }
 
 .link.active {
+    cursor: default;
     color: var(--logo-second-color);
     background: var(--light-color);
 }
@@ -185,10 +186,6 @@
         visibility: visible;
     }
 
-    .aside.active .link:hover .link__icon {
-        margin-left: .25rem;
-    }
-
     .aside.active .link:hover {
         color: var(--logo-second-color);
     }
@@ -205,10 +202,6 @@
         .aside:hover {
             width: 185px;
             /* box-shadow: .5rem 2.25rem 2.25rem var(--light-color); */
-        }
-
-        .aside:hover .link:hover .link__icon {
-            margin-left: .25rem;
         }
 
         .aside:hover .link:hover {
