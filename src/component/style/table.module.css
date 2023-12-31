@@ -364,6 +364,10 @@
 }
 
 @media (hover: hover) and (pointer: fine) {
+    .container:hover {
+        box-shadow: none;
+    }
+
     .btn:hover {
         background: var(--users-btn-sec-hov);
         color: var(--logo-second-color);
