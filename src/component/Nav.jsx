@@ -99,6 +99,20 @@ export default function Nav({ children }) {
 
                                             </div>
                                         }
+
+                                        <span
+                                            className={styles.link}
+                                            onClick={() => { console.log('Show Modal Ganti Email dan Password') }}
+                                        >
+                                            <span className={styles.link__icon}>
+                                                <Icon name={'RiUserSettingsLine'} lib={'ri'} props={{ size: '24px' }} />
+                                            </span>
+
+                                            <h4 className={styles.link__text} >
+                                                {'Akun'}
+                                            </h4>
+                                        </span>
+
                                         {navList.map((item, index) => (
                                             <Link
                                                 href={item.href}
@@ -115,6 +129,33 @@ export default function Nav({ children }) {
                                                 </h4>
                                             </Link>
                                         ))}
+
+                                        <span
+                                            className={styles.link}
+                                            onClick={() => { console.log('Show Modal Feedback') }}
+                                        >
+                                            <span className={styles.link__icon}>
+                                                <Icon name={'GoReport'} lib={'go'} props={{ size: '24px' }} />
+                                            </span>
+
+                                            <h4 className={styles.link__text} >
+                                                {'Feedback'}
+                                            </h4>
+                                        </span>
+
+                                        <span
+                                            className={styles.link}
+                                            onClick={() => { console.log('Show Modal Informasi') }}
+                                        >
+                                            <span className={styles.link__icon}>
+                                                <Icon name={'AiOutlineInfoCircle'} lib={'ai'} props={{ size: '24px' }} />
+                                            </span>
+
+                                            <h4 className={styles.link__text} >
+                                                {'Informasi'}
+                                            </h4>
+                                        </span>
+
                                         <span
                                             className={styles.link}
                                             onClick={() => { handleLogoutModal() }}
@@ -155,6 +196,20 @@ export default function Nav({ children }) {
 
                                         </div>
                                     }
+
+                                    <span
+                                        className={styles.link}
+                                        onClick={() => { console.log('Show Modal Ganti Email dan Password') }}
+                                    >
+                                        <span className={styles.link__icon}>
+                                            <Icon name={'RiUserSettingsLine'} lib={'ri'} props={{ size: '24px' }} />
+                                        </span>
+
+                                        <h4 className={styles.link__text} >
+                                            {'Akun'}
+                                        </h4>
+                                    </span>
+
                                     {navList.map((item, index) => (
                                         <Link
                                             href={item.href}
@@ -171,6 +226,33 @@ export default function Nav({ children }) {
                                             </h4>
                                         </Link>
                                     ))}
+
+                                    <span
+                                        className={styles.link}
+                                        onClick={() => { console.log('Show Modal Feedback') }}
+                                    >
+                                        <span className={styles.link__icon}>
+                                            <Icon name={'GoReport'} lib={'go'} props={{ size: '24px' }} />
+                                        </span>
+
+                                        <h4 className={styles.link__text} >
+                                            {'Feedback'}
+                                        </h4>
+                                    </span>
+
+                                    <span
+                                        className={styles.link}
+                                        onClick={() => { console.log('Show Modal Informasi') }}
+                                    >
+                                        <span className={styles.link__icon}>
+                                            <Icon name={'AiOutlineInfoCircle'} lib={'ai'} props={{ size: '24px' }} />
+                                        </span>
+
+                                        <h4 className={styles.link__text} >
+                                            {'Informasi'}
+                                        </h4>
+                                    </span>
+
                                     <span
                                         className={styles.link}
                                         onClick={() => { handleLogoutModal() }}
