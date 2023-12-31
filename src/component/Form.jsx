@@ -116,7 +116,7 @@ export function UsersForm() {
     */
     const { data: universitasData, error: universitasError, isLoading: universitasLoading, isValidating: universitasValidating } = useUniversitas(null, 'public', 'all');
     const { data: theme } = useLocalTheme();
-    
+
     /*
     ========== Images ==========
     */
@@ -471,7 +471,7 @@ export function UsersForm() {
                 <>
                 </>
                 :
-                <>
+                <div>
                     <Ball active={loading} backdrop={true} />
                     <div className={`${styles.container} ${loginMode ? '' : styles.sign_up_mode}`}>
                         <div className={styles.forms_container}>
@@ -740,7 +740,7 @@ export function UsersForm() {
                             </i>
                         </div>
                     </div>
-                </>
+                </div>
             }
         </>
     )
