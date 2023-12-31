@@ -260,11 +260,10 @@ export default function Header() {
     return (
         <>
             <div className={`${styles.dashboard} ${!showHeader ? styles.hide : ''}`} id='header'>
-                <div className={styles.dashboard__nav}>
-                    {isNavbarActive ?
-                        <LiaTimesSolid onClick={handleNavbarClick} size={'24px'} />
-                        : <RxHamburgerMenu onClick={handleNavbarClick} size={'24px'} />
-                    }
+                <div onClick={handleNavbarClick} className={`${styles.hamburger} ${isNavbarActive ? styles.active : ''}`}>
+                    <div className={styles.hamburger__box}>
+                        <div className={styles.hamburger__inner} />
+                    </div>
                 </div>
 
                 <div onClick={scrollToTop} className={styles.dashboard__logo}>
