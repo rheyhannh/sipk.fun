@@ -192,7 +192,6 @@
     font-weight: var(--font-semi-bold);
     font-size: var(--small-font-size);
     margin: var(--m-0-5) 0;
-    transition: .25s ease-in-out;
 }
 
 .btn.transparent {
@@ -375,7 +374,7 @@
 }
 
 @media (hover: hover) and (pointer: fine) {
-    .btn:hover {
+    .btn:not(.transparent):hover {
         background-color: var(--users-btn-hov);
     }
 

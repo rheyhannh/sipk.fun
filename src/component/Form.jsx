@@ -552,7 +552,7 @@ export function UsersForm() {
                                         </i>
                                     </div>
 
-                                    <button type='submit' className={`${styles.btn} ${styles.solid}`}>Login</button>
+                                    <button type='submit' className={`${styles.btn}`}>Login</button>
 
                                     <p className={styles.social_text}>
                                         <a>Lupa password ? Klik disini.</a>
@@ -690,7 +690,7 @@ export function UsersForm() {
                                         </i>
                                     </div>
 
-                                    <input type="submit" value={'daftar'} className={`${styles.btn} ${styles.solid}`} />
+                                    <input type="submit" value={'daftar'} className={`${styles.btn}`} />
 
                                     <p className={styles.social_text}>
                                         <a onClick={() => { handleDaftarModal() }}>Butuh bantuan ? Klik disini.</a>
