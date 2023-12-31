@@ -68,12 +68,18 @@ export default async function middleware(request) {
 
     const { data, error } = await supabase.auth.getSession();
     if (error || !data.session) {
-        // This block run when session (secure auth token) are invalid.
-        // Handle : redirect user to '/users?action=login&error={isession}' and delete sensitive cookies
+        // This block run when session (secure auth token) are invalid [1].
+        // Handle : redirect user to '/users?action=login'
         const loginUrl = new URL("/users", request.url);
         loginUrl.searchParams.set('action', 'login');
-        loginUrl.searchParams.set('error', 'isession');
+        if (pathname.startsWith('/dashboard')) {
+            // This block run when [1] and user try access '/dashboard/*'
+            // Handle : redirect user to '/users?action=login&error=isession'
+            loginUrl.searchParams.set('error', 'isession');
+        }
         response = NextResponse.redirect(loginUrl);
+        
+        // Reset sensitive cookies
         response.cookies.set({ name: process.env.USER_SESSION_COOKIES_NAME, value: '', ...cookieAuthDeleteOptions, })
         response.cookies.set({ name: 's_user_id', value: '', ...cookieAuthDeleteOptions, })
         response.cookies.set({ name: 's_access_token', value: '', ...cookieAuthDeleteOptions, })
