@@ -66,7 +66,7 @@
     border-radius: var(--card-border-radius);
     box-shadow: var(--box-shadow);
     margin-top: 1rem;
-    transition: all var(--transition-default) ease;
+    transition: all var(--transition-default) ease-in-out, background 0s;
 }
 
 .summary.skeleton {
@@ -216,7 +216,7 @@
     padding: 1.4rem var(--card-padding);
     border-radius: 1.2rem;
     box-shadow: var(--box-shadow);
-    transition: all var(--transition-default) ease;
+    transition: all var(--transition-default) ease-in-out, background 0s;
 }
 
 .history.skeleton {
@@ -270,6 +270,10 @@
     gap: 1rem;
     color: var(--dark-color);
     transition: all var(--transition-default) ease;
+}
+
+.history__content h3, .history__content h5 {
+    color: var(--dark-color);
 }
 
 .history__icon {

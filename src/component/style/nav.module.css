@@ -7,8 +7,8 @@
     overflow: auto;
     position: fixed;
     z-index: var(--z-fixed);
-    transition: var(--transition-default) ease-in-out;
     background: var(--white-color);
+    transition: all var(--transition-default) ease-in-out, background 0s;
     /* box-shadow: .25rem 1.25rem 1.25rem var(--light-color); */
 }
 
@@ -60,7 +60,6 @@
     cursor: pointer;
     color: var(--dark-color);
     background: none;
-    transition: margin var(--transition-default) ease-in-out;
 }
 
 .profile {
@@ -72,7 +71,7 @@
 .profile__icon {
     width: 24px;
     height: 24px;
-    transition: var(--transition-default) ease;
+    /* transition: var(--transition-default) ease; */
 }
 
 .profile__icon svg {
@@ -96,7 +95,8 @@
 .link__icon {
     width: 24px;
     height: 24px;
-    transition: var(--transition-default) ease;
+    transition: margin var(--transition-default) ease-in-out;
+    /* transition: var(--transition-default) ease; */
 }
 
 .link__icon svg {

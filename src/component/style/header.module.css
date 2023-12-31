@@ -9,7 +9,7 @@
     width: 100%;
     z-index: calc(var(--z-fixed) + 1);
     background: var(--white-color);
-    transition: var(--transition-default) ease-in-out;
+    transition: all var(--transition-default) ease-in-out, background 0s;
 }
 
 .dashboard.hide {
@@ -23,6 +23,10 @@
     align-items: center;
     justify-content: center;
     cursor: pointer;
+}
+
+.dashboard__nav {
+    color: var(--dark-color);
 }
 
 .dashboard__right {

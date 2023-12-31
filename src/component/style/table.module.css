@@ -5,7 +5,7 @@
     padding: var(--card-padding);
     border-radius: var(--card-border-radius);
     box-shadow: var(--box-shadow);
-    transition: all var(--transition-default) ease;
+    transition: all var(--transition-default) ease-in-out, background 0s;
 }
 
 .validating {
@@ -43,7 +43,7 @@
     outline: none;
     border-radius: 35px;
     cursor: pointer;
-    background-color: var(--accordion-bg-color);
+    background: var(--accordion-bg-color);
     color: var(--dark-color);
     padding: .5rem .75rem;
     white-space: nowrap;
@@ -51,13 +51,9 @@
     font-weight: 500;
 }
 
-.btn {
-    transition: all var(--transition-default) ease;
-}
-
 .btn.active {
     cursor: auto;
-    background-color: var(--users-btn-sec);
+    background: var(--users-btn-sec);
     color: var(--logo-second-color);
 }
 
@@ -99,7 +95,6 @@
 .search__icon.times {
     display: flex;
     color: var(--accordion-bg2-color);
-    transition: all var(--transition-default) ease;
 }
 
 .search__icon.times {
@@ -164,9 +159,8 @@
     align-items: center;
     cursor: pointer;
     border-radius: 2rem;
-    background-color: var(--accordion-bg-color);
+    background: var(--accordion-bg-color);
     color: var(--dark-color);
-    transition: all var(--transition-default) ease-in-out;
 }
 
 .data {
@@ -307,7 +301,6 @@
     padding: .5rem;
     border-radius: 50%;
     color: var(--infoDark-color);
-    transition: all var(--transition-default) ease-in-out;
 }
 
 .pagination__navs.disabled {
@@ -372,7 +365,7 @@
 
 @media (hover: hover) and (pointer: fine) {
     .btn:hover {
-        background-color: var(--users-btn-sec-hov);
+        background: var(--users-btn-sec-hov);
         color: var(--logo-second-color);
     }
 
