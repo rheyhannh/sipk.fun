@@ -440,6 +440,20 @@
     align-items: center;
 }
 
+.grafik__right select {
+    padding: 0 .5rem;
+    height: 25px;
+    text-align: center;
+    outline: none;
+    appearance: none;
+    background: var(--accordion-bg-color);
+    color: var(--dark-color);
+    user-select: none;
+    cursor: pointer;
+    border-radius: 1rem;
+    font-size: .8rem;
+}
+
 .total__data {
     overflow: auto;
     background: var(--inner-color-bg1);

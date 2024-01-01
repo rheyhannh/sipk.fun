@@ -1010,6 +1010,26 @@ export function Grafik({ state, matkul }) {
         const [matkulGrafik, setMatkulGrafik] = useState(false);
         const [sksGrafik, setSksGrafik] = useState(false);
 
+        const getLineState = () => {
+            if (!ipGrafik && !matkulGrafik && !sksGrafik) {
+                return 0;
+            } else if (!ipGrafik && !matkulGrafik && sksGrafik) {
+                return 4;
+            } else if (!ipGrafik && !sksGrafik && matkulGrafik) {
+                return 4;
+            } else if (!sksGrafik && !matkulGrafik && ipGrafik) {
+                return 4;
+            } else {
+                return !ipGrafik ? 1 : !matkulGrafik ? 2 : !sksGrafik ? 3 : -1;
+            }
+        }
+
+        const setLineState = (value) => {
+            setIpGrafik(value !== 0 && value !== 1);
+            setMatkulGrafik(value !== 0 && value !== 2);
+            setSksGrafik(value !== 0 && value !== 3);
+        };
+
         const customLegendText = (value, entry, index) => {
             return <span style={{ cursor: 'pointer' }}>{value}</span>
         }
@@ -1051,9 +1071,23 @@ export function Grafik({ state, matkul }) {
                         </div>
                     </div>
                     <div className={styles.grafik__right}>
-                        <h3 style={{ color: 'var(--infoDark-color)', fontWeight: '500' }}>
-                            Semua
-                        </h3>
+                        <select
+                            value={getLineState()}
+                            onChange={e => {
+                                const x = Number(e.target.value);
+                                if (x === 4) { return };
+                                setLineState(x);
+                            }}
+                        >
+                            <option value={-1}>
+                                Hide
+                            </option>
+                            {['Semua', 'Ip', 'Matakuliah', 'Sks', 'Kustom'].map((type, index) => (
+                                <option key={crypto.randomUUID()} value={index}>
+                                    {type}
+                                </option>
+                            ))}
+                        </select>
                     </div>
                 </div>
                 <div className={styles.grafik__data}>
@@ -1073,9 +1107,9 @@ export function Grafik({ state, matkul }) {
                                     else { return; }
                                 }}
                             />
-                            <Line name="Ip" type="monotone" dataKey="ip" stroke="var(--danger-color)" dot={{fill: 'var(--danger-color)'}} hide={ipGrafik} />
-                            <Line name="Matakuliah" type="monotone" dataKey="matkul" stroke="var(--warning-color)" dot={{fill: 'var(--warning-color)'}} hide={matkulGrafik} />
-                            <Line name="Sks" type="monotone" dataKey="sks" stroke="var(--success-color)" dot={{fill: 'var(--success-color)'}} hide={sksGrafik} />
+                            <Line name="Ip" type="monotone" dataKey="ip" stroke="var(--danger-color)" dot={{ fill: 'var(--danger-color)' }} hide={ipGrafik} />
+                            <Line name="Matakuliah" type="monotone" dataKey="matkul" stroke="var(--warning-color)" dot={{ fill: 'var(--warning-color)' }} hide={matkulGrafik} />
+                            <Line name="Sks" type="monotone" dataKey="sks" stroke="var(--success-color)" dot={{ fill: 'var(--success-color)' }} hide={sksGrafik} />
                         </LineChart>
                     </ResponsiveContainer>
                 </div>
