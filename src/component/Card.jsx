@@ -1010,6 +1010,10 @@ export function Grafik({ state, matkul }) {
         const [matkulGrafik, setMatkulGrafik] = useState(false);
         const [sksGrafik, setSksGrafik] = useState(false);
 
+        const customLegendText = (value, entry, index) => {
+            return <span style={{ cursor: 'pointer' }}>{value}</span>
+        }
+
         const CustomTooltip = ({ active, payload, label }) => {
             if (active && payload && payload.length) {
                 return (
@@ -1061,7 +1065,7 @@ export function Grafik({ state, matkul }) {
                             <XAxis dataKey="semester" axisLine={false} tickLine={false} interval={'equidistantPreserveStart'} />
                             <Tooltip content={<CustomTooltip />} />
                             <Legend
-                                verticalAlign="bottom"
+                                formatter={customLegendText}
                                 onClick={(x) => {
                                     if (x.dataKey === 'ip') { setIpGrafik(!x.inactive) }
                                     else if (x.dataKey === 'matkul') { setMatkulGrafik(!x.inactive) }
@@ -1069,9 +1073,9 @@ export function Grafik({ state, matkul }) {
                                     else { return; }
                                 }}
                             />
-                            <Line name="Ip" type="monotone" dataKey="ip" stroke="var(--danger-color)" dot={false} hide={ipGrafik} />
-                            <Line name="Matakuliah" type="monotone" dataKey="matkul" stroke="var(--warning-color)" dot={false} hide={matkulGrafik} />
-                            <Line name="Sks" type="monotone" dataKey="sks" stroke="var(--success-color)" dot={false} hide={sksGrafik} />
+                            <Line name="Ip" type="monotone" dataKey="ip" stroke="var(--danger-color)" dot={{fill: 'var(--danger-color)'}} hide={ipGrafik} />
+                            <Line name="Matakuliah" type="monotone" dataKey="matkul" stroke="var(--warning-color)" dot={{fill: 'var(--warning-color)'}} hide={matkulGrafik} />
+                            <Line name="Sks" type="monotone" dataKey="sks" stroke="var(--success-color)" dot={{fill: 'var(--success-color)'}} hide={sksGrafik} />
                         </LineChart>
                     </ResponsiveContainer>
                 </div>
