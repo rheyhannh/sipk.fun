@@ -106,3 +106,59 @@
         transform: rotate(360deg);
     }
 }
+
+@media screen and (max-width: 374px) {
+    .ball {
+        height: 40px;
+        width: 40px;
+    }
+    
+    .ball:before,
+    .ball:after {
+        height: 16px;
+        width: 16px;
+    }
+    
+    .ball:before {
+        box-shadow: 24px 0 0 var(--users-loader-prim);
+        margin-bottom: 8px;
+    }
+    
+    .ball:after {
+        box-shadow: 24px 0 0 var(--users-background);
+    }
+
+    @keyframes ball1 {
+        0% {
+            box-shadow: 24px 0 0 var(--users-loader-prim);
+        }
+    
+        50% {
+            box-shadow: 0 0 0 var(--users-loader-prim);
+            margin-bottom: 0;
+            transform: translate(12px, 12px);
+        }
+    
+        100% {
+            box-shadow: 24px 0 0 var(--users-loader-prim);
+            margin-bottom: 8px;
+        }
+    }
+    
+    @keyframes ball2 {
+        0% {
+            box-shadow: 24px 0 0 var(--users-loader-sec);
+        }
+    
+        50% {
+            box-shadow: 0 0 0 var(--users-loader-sec);
+            margin-top: -16px;
+            transform: translate(12px, 12px);
+        }
+    
+        100% {
+            margin-top: 0;
+            box-shadow: 24px 0 0 var(--users-loader-sec);
+        }
+    }
+}
