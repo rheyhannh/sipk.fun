@@ -41,7 +41,7 @@ import {
 /*
 ============================== CODE START HERE ==============================
 */
-export function Table({ state, validating, user, matkul, universitas }) {
+export function Table({ state, validating, user, matkul, matkulHistory, universitas }) {
     const SkeletonTable = () => {
         return (
             <div>Skeleton Table</div>
@@ -50,7 +50,7 @@ export function Table({ state, validating, user, matkul, universitas }) {
 
     const LoadedTable = () => {
         const [data, setData] = useState(matkul);
-        const [dataType, setDataType] = useState(0);
+        const [activeTab, setActiveTab] = useState(0);
         const [isValidating, setIsValidating] = useState(validating);
         const [columnFilters, setColumnFilters] = useState([]);
         const [pageControlPosition, setPageControlPosition] = useState(0);
@@ -65,6 +65,30 @@ export function Table({ state, validating, user, matkul, universitas }) {
             styles.page_control_top,
             styles.page_control_both
         ]
+
+        const handleAllMatakuliahTab = () => {
+            setData(matkul);
+            setActiveTab(0);
+        }
+
+        const handleDeletedMatakuliahTab = () => {
+            const historyHapus = matkulHistory.length ?
+                matkulHistory
+                    .filter(history => history.current.type === 'hapus')
+                    .map(matkulDihapus => ({
+                        id: matkulDihapus.id,
+                        nama: matkulDihapus.current.nama,
+                        semester: matkulDihapus.current.semester,
+                        sks: matkulDihapus.current.sks,
+                        nilai: matkulDihapus.current.nilai,
+                        dapat_diulang: matkulDihapus.current.dapat_diulang,
+                        target_nilai: matkulDihapus.current.target_nilai,
+                    }))
+                : [];
+
+            setData(historyHapus);
+            setActiveTab(1);
+        }
 
         const handleTambahModal = () => {
             setModalData(null);
@@ -171,9 +195,18 @@ export function Table({ state, validating, user, matkul, universitas }) {
                 </div>
                 <div className={styles.tools}>
                     <div className={styles.tools__tabs}>
-                        <div className={`${styles.btn} ${dataType === 0 ? styles.active : ''}`} >Semua Matakuliah</div>
-                        <div className={`${styles.btn} ${dataType === 1 ? styles.active : ''}`} >Matakuliah Favorit</div>
-                        <div className={`${styles.btn} ${dataType === 2 ? styles.active : ''}`} >Matakuliah Dihapus</div>
+                        <div
+                            className={`${styles.btn} ${activeTab === 0 ? styles.active : ''}`}
+                            onClick={activeTab !== 0 ? () => handleAllMatakuliahTab() : null}
+                        >
+                            Semua Matakuliah
+                        </div>
+                        <div
+                            className={`${styles.btn} ${activeTab === 1 ? styles.active : ''}`}
+                            onClick={activeTab !== 1 ? () => handleDeletedMatakuliahTab() : null}
+                        >
+                            Matakuliah Dihapus
+                        </div>
                     </div>
                     <div className={styles.tools__right}>
                         <div className={styles.tools__search}>
