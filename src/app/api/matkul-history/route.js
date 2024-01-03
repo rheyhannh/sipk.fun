@@ -93,7 +93,7 @@ export async function GET(request) {
         }
     )
 
-    let { data, error } = await supabase.from('matkul_history').select('*').limit(10).order('last_change_at', { ascending: false });
+    let { data, error } = await supabase.from('matkul_history').select('*').order('last_change_at', { ascending: false });
 
     if (error) {
         console.error(error);
