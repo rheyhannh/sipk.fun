@@ -417,9 +417,14 @@ export function Notification({ state, data }) {
             )
         } else if (isPhoneContent === true) {
             return (
-                <>
-                    Swiper Error Notification
-                </>
+                <div className={`${styles.notification} ${styles.swiper}`}>
+                    <div className={styles.error__wrapper}>
+                        <div className={styles.error__content} onClick={handleRetry}>
+                            <h5>Gagal mengambil data</h5>
+                            <h1>&#x21bb;</h1>
+                        </div>
+                    </div>
+                </div>
             )
         }
     }
