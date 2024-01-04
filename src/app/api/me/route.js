@@ -66,7 +66,7 @@ export async function GET(request) {
 
     const supabase = createServerClient(
         process.env.SUPABASE_URL,
-        process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
+        process.env.SUPABASE_ANON_KEY,
         {
             cookies: {
                 async get(name) {
@@ -186,7 +186,7 @@ export async function PATCH(request) {
 
     const supabase = createServerClient(
         process.env.SUPABASE_URL,
-        process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
+        process.env.SUPABASE_ANON_KEY,
         {
             cookies: {
                 async get(name) {
