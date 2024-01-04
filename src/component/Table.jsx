@@ -340,7 +340,7 @@ export function Table({ state, validating, user, matkul, matkulHistory, universi
                                     }}
                                 >
                                     {[5, 10, 25, 50, 100, matkul.length + 1].map((pageSize, index) => (
-                                        <option key={pageSize} value={pageSize}>
+                                        <option key={crypto.randomUUID()} value={pageSize}>
                                             {index === 5 ? 'Semua' : pageSize}
                                         </option>
                                     ))}
@@ -456,7 +456,7 @@ export function Table({ state, validating, user, matkul, matkulHistory, universi
                                     }}
                                 >
                                     {[5, 10, 25, 50, 100, matkul.length + 1].map((pageSize, index) => (
-                                        <option key={pageSize} value={pageSize}>
+                                        <option key={crypto.randomUUID()} value={pageSize}>
                                             {index === 5 ? 'Semua' : pageSize}
                                         </option>
                                     ))}
