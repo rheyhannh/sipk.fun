@@ -95,6 +95,26 @@ export function Table({ state, validating, user, matkul, matkulHistory, universi
             table.setPageIndex(0);
         }
 
+        const handleEditedMatakuliahTab = () => {
+            const historyEdit = matkulHistory.length ?
+                matkulHistory
+                    .filter(history => history.current.type === 'ubah')
+                    .map(matkulDiubah => ({
+                        id: matkulDiubah.id,
+                        nama: matkulDiubah.current.nama,
+                        semester: matkulDiubah.current.semester,
+                        sks: matkulDiubah.current.sks,
+                        nilai: matkulDiubah.current.nilai,
+                        dapat_diulang: matkulDiubah.current.dapat_diulang,
+                        target_nilai: matkulDiubah.current.target_nilai,
+                    }))
+                : [];
+
+            setData(historyEdit);
+            setActiveTab(2);
+            table.setPageIndex(0);
+        }
+
         const handleTambahModal = () => {
             setModalData(null);
             setModal('tambahMatkul');
@@ -196,7 +216,7 @@ export function Table({ state, validating, user, matkul, matkulHistory, universi
                         'pageIndex' in state && typeof state.pageIndex === 'number' &&
                         'pageControlPosition' in state && typeof state.pageControlPosition === 'number'
                     ) {
-                        const allowedTab = [0, 1];
+                        const allowedTab = [0, 1, 2];
                         const allowedPageControlPosition = [0, 1, 2];
                         const allowedPageSize = [5, 10, 25, 50, 100, matkul.length + 1];
                         setActiveTab(allowedTab.includes(state.tab) ? state.tab : 0);
@@ -255,6 +275,12 @@ export function Table({ state, validating, user, matkul, matkulHistory, universi
                             onClick={activeTab !== 1 ? () => handleDeletedMatakuliahTab() : null}
                         >
                             Matakuliah Dihapus
+                        </div>
+                        <div
+                            className={`${styles.btn} ${activeTab === 2 ? styles.active : ''}`}
+                            onClick={activeTab !== 2 ? () => handleEditedMatakuliahTab() : null}
+                        >
+                            Matakuliah Diedit
                         </div>
                     </div>
                     <div className={styles.tools__right}>
