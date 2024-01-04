@@ -291,7 +291,7 @@ export function Table({ state, validating, user, matkul, matkulHistory, universi
                     <div className={styles.tools__right}>
                         <div className={styles.tools__search}>
                             <div className={styles.search}>
-                                <Filter column={table.getHeaderGroups()[0].headers[1].column} table={table} />
+                                <Filter column={table.getColumn('matakuliah')} table={table} />
                                 <div
                                     className={`${styles.search__icon} ${styles.times} ${table.getState().columnFilters[0]?.id === 'matakuliah' ? '' : styles.hide}`}
                                     onClick={() => {
