@@ -153,6 +153,12 @@
     padding: 1.25rem;
 }
 
+.notification.swiper {
+    display: grid;
+    grid-template-columns: auto;
+    max-height: 210px;
+}
+
 .notification.skeleton {
     box-shadow: none;
 }
@@ -186,6 +192,10 @@
     padding: .75rem;
     margin: .35rem;
     border-radius: .5rem;
+}
+
+.notification__post.swiper {
+    line-height: 1.75;
 }
 
 .notification__post.skeleton {
@@ -589,4 +599,20 @@
     }
 }
 
-@media screen and (max-width: 360px) {}
+@media screen and (min-width: 320px) {
+    .notification.swiper {
+        max-height: 190px;
+    }
+}
+
+@media screen and (min-width: 475px) {
+    .notification.swiper {
+        max-height: 225px;
+    }
+}
+
+@media screen and (min-width: 550px) {
+    .notification.swiper {
+        max-height: 200px;
+    }
+}

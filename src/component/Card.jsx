@@ -8,6 +8,8 @@ import Link from "next/link";
 import { useContext, useEffect, useState } from 'react';
 
 // ========== COMPONENT DEPEDENCY ========== //
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Pagination, Autoplay } from 'swiper/modules';
 import { mutate } from 'swr';
 import { useCookies } from 'next-client-cookies';
 import { DashboardContext } from "./provider/Dashboard";
@@ -30,6 +32,8 @@ import {
 
 // ========== STYLE DEPEDENCY ========== //
 import styles from './style/card.module.css'
+import 'swiper/css';
+import 'swiper/css/pagination';
 import "react-loading-skeleton/dist/skeleton.css";
 
 // ========== ICON DEPEDENCY ========== //
@@ -329,9 +333,72 @@ export function Notification({ state, data }) {
             )
         } else if (isPhoneContent === true) {
             return (
-                <>
-                    Swiper Notification
-                </>
+                <div className={`${styles.notification} ${styles.swiper}`}>
+                    <Swiper
+                        slidesPerView={1}
+                        autoplay={{
+                            delay: 3000,
+                            disableOnInteraction: false,
+                        }}
+                        spaceBetween={10}
+                        breakpoints={{
+                            475: {
+                                slidesPerView: 2,
+                                spaceBetween: 0,
+                            }
+                        }}
+                        pagination={{
+                            clickable: true,
+                        }}
+                        style={{
+                            "width": "100%",
+                            "height": "100%",
+                            "--swiper-pagination-color": "var(--logo-second-color)",
+                            "--swiper-pagination-bullet-inactive-color": "var(--infoDark-color)",
+                            "--swiper-pagination-bottom": "1px",
+                        }}
+                        modules={[Pagination, Autoplay]}
+                    >
+                        {data.map((item, index) => {
+                            const postedAt = (created_at, type) => {
+                                const postedAt = type === 'unix' ? new Date(created_at * 1000) : new Date(created_at);
+                                const currentDate = new Date();
+                                if (postedAt.toDateString() === currentDate.toDateString()) {
+                                    const timeOnly = new Intl.DateTimeFormat('en-US', { hour: '2-digit', minute: '2-digit', hour12: false }).format(postedAt);
+                                    return timeOnly;
+                                } else if (postedAt.toDateString() == new Date(currentDate - 86400000).toDateString()) {
+                                    return 'Kemarin';
+                                } else {
+                                    const dateMonth = new Intl.DateTimeFormat('id-ID', { day: 'numeric', month: 'short' }).format(postedAt);
+                                    return dateMonth;
+                                }
+                            }
+
+                            return (
+                                <SwiperSlide>
+                                    <Link href={item.href} target={'_blank'} className={`${styles.notification__post} ${styles.swiper}`} prefetch={false} key={crypto.randomUUID()}>
+                                        <div className={styles.notification__main}>
+                                            <span style={{ color: item.color }}>
+                                                <Icon name={item.icon.name} lib={item.icon.lib} />
+                                            </span>
+                                            <p>
+                                                <b style={{ color: item.color }}>
+                                                    {item.title}
+                                                </b>
+                                            </p>
+                                            <small>
+                                                ○ {postedAt(item.unix_created_at, 'unix')}
+                                            </small>
+                                        </div>
+                                        <div className={styles.notification__details}>
+                                            {item.description}
+                                        </div>
+                                    </Link>
+                                </SwiperSlide>
+                            )
+                        })}
+                    </Swiper>
+                </div>
             )
         }
     }
