@@ -239,14 +239,21 @@ export function Table({ state, validating, user, matkul, matkulHistory, universi
         //     }
         // }, [])
 
-        useEffect(() => {
-            if (table.getState().columnFilters[0]?.id === 'matakuliah') {
-                if (table.getState().sorting[0]?.id !== 'matakuliah') {
-                    table.setSorting([]);
-                }
-            }
-        }, [table.getState().columnFilters[0]?.id]);
+        // useEffect(() => {
+        //     if (table.getState().columnFilters[0]?.id === 'matakuliah') {
+        //         if (table.getState().sorting[0]?.id !== 'matakuliah') {
+        //             console.log('called')
+        //             // table.setSorting([]);
+        //         }
+        //     }
+        // }, [table.getState().columnFilters[0]?.id]);
 
+        useEffect(() => {
+            if (table.getState().pagination.pageIndex !== 0) {
+                table.setPageIndex(0);
+            }
+        }, [columnFilters.filter(item => item.id === 'matakuliah')[0]?.value])
+ 
         // useEffect(() => {
         //     if (initialRender.current) {
         //         initialRender.current = false;
