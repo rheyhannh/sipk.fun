@@ -56,6 +56,7 @@ export function Table({ state, validating, user, matkul, matkulHistory, universi
         const [activeTab, setActiveTab] = useState(0);
         const [isValidating, setIsValidating] = useState(validating);
         const [columnFilters, setColumnFilters] = useState([]);
+        const [columnOrder, setColumnOrder] = useState(user?.preferences?.table?.columnOrder.length || []);
         const [pageControlPosition, setPageControlPosition] = useState(user?.preferences?.table?.controlPosition || 0);
         const {
             setModal,
@@ -198,6 +199,7 @@ export function Table({ state, validating, user, matkul, matkulHistory, universi
             },
             state: {
                 columnFilters,
+                columnOrder,
             },
             getCoreRowModel: getCoreRowModel(),
             getFilteredRowModel: getFilteredRowModel(),
