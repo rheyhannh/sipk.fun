@@ -210,43 +210,34 @@ export function Table({ state, validating, user, matkul, matkulHistory, universi
             // debugAll: true,
         })
 
-        // useEffect(() => {
-        //     const savedState = localStorage.getItem('_table');
-        //     if (savedState) {
-        //         try {
-        //             const state = JSON.parse(savedState);
-        //             if (
-        //                 'tab' in state && typeof state.tab === 'number' &&
-        //                 'pageSize' in state && typeof state.pageSize === 'number' &&
-        //                 'pageIndex' in state && typeof state.pageIndex === 'number' &&
-        //                 'pageControlPosition' in state && typeof state.pageControlPosition === 'number'
-        //             ) {
-        //                 const allowedTab = [0, 1, 2];
-        //                 const allowedPageControlPosition = [0, 1, 2];
-        //                 const allowedPageSize = [5, 10, 25, 50, 100, matkul.length + 1];
-        //                 setActiveTab(allowedTab.includes(state.tab) ? state.tab : 0);
-        //                 if (state.tab === 1) { handleDeletedMatakuliahTab(); }
-        //                 setPageControlPosition(allowedPageControlPosition.includes(state.pageControlPosition) ? state.pageControlPosition : 0);
-        //                 table.setPageSize(allowedPageSize.includes(state.pageSize) ? state.pageSize : 5);
-        //                 table.setPageIndex(state.pageIndex);
-        //             } else {
-        //                 throw new Error('Invalid table state');
-        //             }
-        //         } catch (error) {
-        //             localStorage.removeItem('_table');
-        //             console.error('Failed load table state');
-        //         }
-        //     }
-        // }, [])
-
-        // useEffect(() => {
-        //     if (table.getState().columnFilters[0]?.id === 'matakuliah') {
-        //         if (table.getState().sorting[0]?.id !== 'matakuliah') {
-        //             console.log('called')
-        //             // table.setSorting([]);
-        //         }
-        //     }
-        // }, [table.getState().columnFilters[0]?.id]);
+        useEffect(() => {
+            const savedState = localStorage.getItem('_table');
+            if (savedState) {
+                try {
+                    const state = JSON.parse(savedState);
+                    if (
+                        'tab' in state && typeof state.tab === 'number' &&
+                        'pageSize' in state && typeof state.pageSize === 'number' &&
+                        'pageIndex' in state && typeof state.pageIndex === 'number' &&
+                        'pageControlPosition' in state && typeof state.pageControlPosition === 'number'
+                    ) {
+                        const allowedTab = [0, 1, 2];
+                        const allowedPageControlPosition = [0, 1, 2];
+                        const allowedPageSize = [5, 10, 25, 50, 100, matkul.length + 1];
+                        setActiveTab(allowedTab.includes(state.tab) ? state.tab : 0);
+                        if (state.tab === 1) { handleDeletedMatakuliahTab(); }
+                        setPageControlPosition(allowedPageControlPosition.includes(state.pageControlPosition) ? state.pageControlPosition : 0);
+                        table.setPageSize(allowedPageSize.includes(state.pageSize) ? state.pageSize : 5);
+                        table.setPageIndex(state.pageIndex);
+                    } else {
+                        throw new Error('Invalid table state');
+                    }
+                } catch (error) {
+                    localStorage.removeItem('_table');
+                    console.error('Failed load table state');
+                }
+            }
+        }, [])
 
         useEffect(() => {
             if (table.getState().pagination.pageIndex !== 0) {
@@ -254,20 +245,20 @@ export function Table({ state, validating, user, matkul, matkulHistory, universi
             }
         }, [columnFilters.filter(item => item.id === 'matakuliah')[0]?.value])
  
-        // useEffect(() => {
-        //     if (initialRender.current) {
-        //         initialRender.current = false;
-        //         return;
-        //     }
+        useEffect(() => {
+            if (initialRender.current) {
+                initialRender.current = false;
+                return;
+            }
 
-        //     const currentState = {
-        //         tab: activeTab,
-        //         pageSize: table.getState().pagination.pageSize,
-        //         pageIndex: table.getState().pagination.pageIndex,
-        //         pageControlPosition: pageControlPosition
-        //     }
-        //     localStorage.setItem('_table', JSON.stringify(currentState));
-        // }, [activeTab, pageControlPosition, table.getState().pagination.pageSize, table.getState().pagination.pageIndex])
+            const currentState = {
+                tab: activeTab,
+                pageSize: table.getState().pagination.pageSize,
+                pageIndex: table.getState().pagination.pageIndex,
+                pageControlPosition: pageControlPosition
+            }
+            localStorage.setItem('_table', JSON.stringify(currentState));
+        }, [activeTab, pageControlPosition, table.getState().pagination.pageSize, table.getState().pagination.pageIndex])
 
         return (
             <div className={styles.container}>
