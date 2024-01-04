@@ -72,6 +72,7 @@ export function Table({ state, validating, user, matkul, matkulHistory, universi
         const handleAllMatakuliahTab = () => {
             setData(matkul);
             setActiveTab(0);
+            table.setPageIndex(0);
         }
 
         const handleDeletedMatakuliahTab = () => {
@@ -91,6 +92,7 @@ export function Table({ state, validating, user, matkul, matkulHistory, universi
 
             setData(historyHapus);
             setActiveTab(1);
+            table.setPageIndex(0);
         }
 
         const handleTambahModal = () => {
