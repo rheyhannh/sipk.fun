@@ -160,7 +160,30 @@
 .notification.swiper {
     display: grid;
     grid-template-columns: auto;
-    max-height: 210px;
+    height: 210px;
+}
+
+.notification.swiper.skeleton {
+    grid-template-columns: none;
+    grid-template-rows: 1fr 1fr;
+}
+
+.notification.swiper.skeleton .notification__post.swiper.skeleton:first-child{
+    display: none;
+}
+
+.notification__pagination.skeleton {
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(5, 9px);
+    gap: .5rem;
+}
+
+.notification__pagination_dot {
+    align-self: center;
+    height: 9px;
+    border-radius: 50%;
+    background: var(--skeleton-base);
 }
 
 .notification.skeleton {
@@ -202,7 +225,8 @@
     line-height: 1.75;
 }
 
-.notification__post.skeleton {
+.notification__post.skeleton,
+.notification__post.swiper.skeleton {
     cursor: auto;
 }
 
@@ -570,7 +594,8 @@
         box-shadow: none;
     }
 
-    .notification__post:not(.skeleton):hover {
+    .notification__post:not(.skeleton):hover,
+    .notification__post.swiper:not(.skeleton):hover {
         background: var(--accordion-bg-color);
     }
 
@@ -606,18 +631,27 @@
 
 @media screen and (min-width: 320px) {
     .notification.swiper {
-        max-height: 190px;
+        height: 190px;
     }
 }
 
 @media screen and (min-width: 475px) {
     .notification.swiper {
-        max-height: 225px;
+        height: 225px;
+    }
+
+    .notification.swiper.skeleton .skeleton__wrapper {
+        display: grid;
+        grid-template-columns: repeat(2,1fr);
+    }
+
+    .notification.swiper.skeleton .notification__post.swiper.skeleton:first-child{
+        display: grid;
     }
 }
 
 @media screen and (min-width: 550px) {
     .notification.swiper {
-        max-height: 200px;
+        height: 200px;
     }
 }

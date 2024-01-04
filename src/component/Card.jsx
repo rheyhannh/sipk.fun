@@ -280,9 +280,46 @@ export function Notification({ state, data }) {
             )
         } else if (isPhoneContent === true) {
             return (
-                <>
-                    Swiper Skeleton Notification
-                </>
+                <div className={`${styles.notification} ${styles.swiper} ${styles.skeleton}`}>
+                    <div className={styles.skeleton__wrapper}>
+                        {
+                            Array.from({ length: 2 }, (_, index) => (
+                                <div
+                                    className={`${styles.notification__post} ${styles.swiper} ${styles.skeleton}`}
+                                    key={crypto.randomUUID()}
+                                >
+                                    <div className={styles.notification__main}>
+                                        <div style={{ width: '100%' }}>
+                                            <SkeletonTheme
+                                                baseColor="var(--skeleton-base)"
+                                                highlightColor="var(--skeleton-highlight)"
+                                            >
+                                                <Skeleton width={"70%"} height={"100%"} />
+                                            </SkeletonTheme>
+                                        </div>
+                                    </div>
+                                    <div className={styles.notification__details}>
+                                        <p>
+                                            <SkeletonTheme
+                                                baseColor="var(--skeleton-base)"
+                                                highlightColor="var(--skeleton-highlight)"
+                                            >
+                                                <Skeleton width={"100%"} height={"100%"} count={4} />
+                                            </SkeletonTheme>
+                                        </p>
+                                    </div>
+                                </div>
+                            ))
+                        }
+                    </div>
+                    <div className={`${styles.notification__pagination} ${styles.skeleton}`}>
+                        {
+                            Array.from({ length: 5 }, (_, index) => (
+                                <div className={styles.notification__pagination_dot} key={crypto.randomUUID()} />
+                            ))
+                        }
+                    </div>
+                </div>
             )
         }
     }
