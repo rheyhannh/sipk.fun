@@ -337,7 +337,7 @@ export function Notification({ state, data }) {
                     <Swiper
                         slidesPerView={1}
                         autoplay={{
-                            delay: 3000,
+                            delay: 4500,
                             disableOnInteraction: false,
                         }}
                         spaceBetween={10}
