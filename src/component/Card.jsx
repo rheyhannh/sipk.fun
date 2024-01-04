@@ -442,9 +442,13 @@ export function Notification({ state, data }) {
             )
         } else if (isPhoneContent === true) {
             return (
-                <>
-                    Swiper Validating Notification
-                </>
+                <div className={`${styles.notification} ${styles.swiper}`}>
+                    <div className={styles.validating__wrapper}>
+                        <div className={styles.validating__content}>
+                            <Spinner size={'30px'} color={'var(--logo-second-color)'} />
+                        </div>
+                    </div>
+                </div>
             )
         }
     }
