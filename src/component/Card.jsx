@@ -459,23 +459,20 @@ export function Notification({ state, data }) {
                 <div className={styles.notification}>
                     <div className={styles.empty__wrapper}>
                         <div className={styles.empty__content}>
-                            <Image
-                                src={'https://storage.googleapis.com/sipk_assets/tambah_matkul.svg'}
-                                width={100}
-                                height={100}
-                                alt='Notifikasi Kosong'
-                                className={styles.image}
-                            />
-                            <h5>Belum Ada Notifikasi</h5>
+                            <h5>Belum Ada Update</h5>
                         </div>
                     </div>
                 </div>
             )
         } else if (isPhoneContent === true) {
             return (
-                <>
-                    Swiper Empty Notification
-                </>
+                <div className={`${styles.notification} ${styles.swiper}`}>
+                    <div className={styles.empty__wrapper}>
+                        <div className={styles.empty__content}>
+                            <h5>Belum Ada Update</h5>
+                        </div>
+                    </div>
+                </div>
             )
         }
     }
