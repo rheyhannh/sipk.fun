@@ -56,7 +56,7 @@ export function Table({ state, validating, user, matkul, matkulHistory, universi
         const [activeTab, setActiveTab] = useState(0);
         const [isValidating, setIsValidating] = useState(validating);
         const [columnFilters, setColumnFilters] = useState([]);
-        const [pageControlPosition, setPageControlPosition] = useState(0);
+        const [pageControlPosition, setPageControlPosition] = useState(user?.preferences?.table?.controlPosition || 0);
         const {
             setModal,
             setActive,
@@ -68,6 +68,21 @@ export function Table({ state, validating, user, matkul, matkulHistory, universi
             styles.page_control_top,
             styles.page_control_both
         ]
+
+        const getInitPageSize = () => {
+            const initPageSize = user?.preferences?.table?.size;
+            if (!initPageSize || !matkul || !matkul.length) {
+                return 5;
+            }
+            else {
+                const semua = matkul.length + 1;
+                if (initPageSize === -1) {
+                    return semua;
+                } else if ([5, 10, 25, 50, 100, semua].includes(initPageSize)) {
+                    return initPageSize
+                } else { return 5 }
+            }
+        }
 
         const handleAllMatakuliahTab = () => {
             setData(matkul);
@@ -172,25 +187,13 @@ export function Table({ state, validating, user, matkul, matkulHistory, universi
             []
         )
 
-        const localStorageSettings = {
-            "userId": {
-                tabel: {
-                    current: {
-                        page: 1,
-                        pageSize: 5,
-                        pageControlPosition: 'bottom', // bottom, top, or both
-                    }
-                }
-            }
-        }
-
         const table = useReactTable({
             data,
             columns,
             initialState: {
                 pagination: {
                     pageIndex: 0,
-                    pageSize: 5,
+                    pageSize: getInitPageSize(),
                 }
             },
             state: {
@@ -205,34 +208,34 @@ export function Table({ state, validating, user, matkul, matkulHistory, universi
             // debugAll: true,
         })
 
-        useEffect(() => {
-            const savedState = localStorage.getItem('_table');
-            if (savedState) {
-                try {
-                    const state = JSON.parse(savedState);
-                    if (
-                        'tab' in state && typeof state.tab === 'number' &&
-                        'pageSize' in state && typeof state.pageSize === 'number' &&
-                        'pageIndex' in state && typeof state.pageIndex === 'number' &&
-                        'pageControlPosition' in state && typeof state.pageControlPosition === 'number'
-                    ) {
-                        const allowedTab = [0, 1, 2];
-                        const allowedPageControlPosition = [0, 1, 2];
-                        const allowedPageSize = [5, 10, 25, 50, 100, matkul.length + 1];
-                        setActiveTab(allowedTab.includes(state.tab) ? state.tab : 0);
-                        if (state.tab === 1) { handleDeletedMatakuliahTab(); }
-                        setPageControlPosition(allowedPageControlPosition.includes(state.pageControlPosition) ? state.pageControlPosition : 0);
-                        table.setPageSize(allowedPageSize.includes(state.pageSize) ? state.pageSize : 5);
-                        table.setPageIndex(state.pageIndex);
-                    } else {
-                        throw new Error('Invalid table state');
-                    }
-                } catch (error) {
-                    localStorage.removeItem('_table');
-                    console.error('Failed load table state');
-                }
-            }
-        }, [])
+        // useEffect(() => {
+        //     const savedState = localStorage.getItem('_table');
+        //     if (savedState) {
+        //         try {
+        //             const state = JSON.parse(savedState);
+        //             if (
+        //                 'tab' in state && typeof state.tab === 'number' &&
+        //                 'pageSize' in state && typeof state.pageSize === 'number' &&
+        //                 'pageIndex' in state && typeof state.pageIndex === 'number' &&
+        //                 'pageControlPosition' in state && typeof state.pageControlPosition === 'number'
+        //             ) {
+        //                 const allowedTab = [0, 1, 2];
+        //                 const allowedPageControlPosition = [0, 1, 2];
+        //                 const allowedPageSize = [5, 10, 25, 50, 100, matkul.length + 1];
+        //                 setActiveTab(allowedTab.includes(state.tab) ? state.tab : 0);
+        //                 if (state.tab === 1) { handleDeletedMatakuliahTab(); }
+        //                 setPageControlPosition(allowedPageControlPosition.includes(state.pageControlPosition) ? state.pageControlPosition : 0);
+        //                 table.setPageSize(allowedPageSize.includes(state.pageSize) ? state.pageSize : 5);
+        //                 table.setPageIndex(state.pageIndex);
+        //             } else {
+        //                 throw new Error('Invalid table state');
+        //             }
+        //         } catch (error) {
+        //             localStorage.removeItem('_table');
+        //             console.error('Failed load table state');
+        //         }
+        //     }
+        // }, [])
 
         useEffect(() => {
             if (table.getState().columnFilters[0]?.id === 'matakuliah') {
@@ -242,20 +245,20 @@ export function Table({ state, validating, user, matkul, matkulHistory, universi
             }
         }, [table.getState().columnFilters[0]?.id]);
 
-        useEffect(() => {
-            if (initialRender.current) {
-                initialRender.current = false;
-                return;
-            }
+        // useEffect(() => {
+        //     if (initialRender.current) {
+        //         initialRender.current = false;
+        //         return;
+        //     }
 
-            const currentState = {
-                tab: activeTab,
-                pageSize: table.getState().pagination.pageSize,
-                pageIndex: table.getState().pagination.pageIndex,
-                pageControlPosition: pageControlPosition
-            }
-            localStorage.setItem('_table', JSON.stringify(currentState));
-        }, [activeTab, pageControlPosition, table.getState().pagination.pageSize, table.getState().pagination.pageIndex])
+        //     const currentState = {
+        //         tab: activeTab,
+        //         pageSize: table.getState().pagination.pageSize,
+        //         pageIndex: table.getState().pagination.pageIndex,
+        //         pageControlPosition: pageControlPosition
+        //     }
+        //     localStorage.setItem('_table', JSON.stringify(currentState));
+        // }, [activeTab, pageControlPosition, table.getState().pagination.pageSize, table.getState().pagination.pageIndex])
 
         return (
             <div className={styles.container}>
