@@ -9,6 +9,27 @@
     margin: 0 1rem;
 }
 
+.container.error {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 300px;
+}
+
+.error__content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    cursor: pointer;
+}
+
+.error__content h5,
+.error__content h1 {
+    color: var(--infoDark-color);
+    font-weight: var(--font-medium);
+}
+
 .validating {
     display: flex;
     justify-content: center;

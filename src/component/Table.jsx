@@ -7,6 +7,8 @@ import Image from 'next/image';
 import { useContext, useEffect, useState, useRef, useMemo } from 'react';
 
 // ========== COMPONENT DEPEDENCY ========== //
+import { mutate } from 'swr';
+import { useCookies } from 'next-client-cookies';
 import {
     createColumnHelper,
     flexRender,
@@ -45,6 +47,13 @@ import {
 ============================== CODE START HERE ==============================
 */
 export function Table({ state, validating, user, matkul, matkulHistory, universitas }) {
+    const userIdCookie = useCookies().get('s_user_id');
+    const handleRetry = () => {
+        mutate(['/api/me', userIdCookie])
+        mutate(['/api/matkul', userIdCookie])
+        mutate(['/api/matkul-history', userIdCookie])
+        // Mutate universitas
+    }
 
     const SkeletonTable = () => {
         return (
@@ -527,7 +536,12 @@ export function Table({ state, validating, user, matkul, matkulHistory, universi
 
     const ErrorTable = () => {
         return (
-            <div>Error Table</div>
+            <div className={`${styles.container} ${styles.error}`}>
+                <div className={styles.error__content} onClick={handleRetry}>
+                    <h5>Gagal mengambil data</h5>
+                    <h1>&#x21bb;</h1>
+                </div>
+            </div>
         )
     }
 
