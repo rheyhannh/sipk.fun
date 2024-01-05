@@ -893,7 +893,7 @@ export const TambahMatkul = () => {
                             bobot: nilai,
                             akhir: sks * nilai
                         },
-                        dapat_diulang: dapatDiulang,
+                        dapat_diulang: dapatDiulang === 'true' ? true : false,
                         ...(dapatDiulang === 'true'
                             ? {
                                 target_nilai: {
