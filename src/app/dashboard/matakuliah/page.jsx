@@ -81,7 +81,6 @@ function TabelSection() {
     const isLoading = matkulLoading || userLoading || universitasLoading || matkulHistoryLoading;
     const isValidating = matkulValidating || userValidating || universitasValidating || matkulHistoryValidating;
     const isError = matkulError || userError || universitasError || matkulHistoryError;
-    const isEmpty = !matkul || matkul.length === 0;
 
     if (isError) {
         return <Table state={'error'} />;
@@ -89,10 +88,6 @@ function TabelSection() {
 
     if (isLoading) {
         return <Table state={'loading'} />;
-    }
-
-    if (isEmpty) {
-        return <Table state={'empty'} />
     }
 
     return (
