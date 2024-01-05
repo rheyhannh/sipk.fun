@@ -6,6 +6,7 @@
     border-radius: var(--card-border-radius);
     box-shadow: var(--box-shadow);
     transition: all var(--transition-default) ease-in-out, background 0s;
+    margin: 0 1rem;
 }
 
 .validating {
@@ -523,6 +524,12 @@
 
     .data td.target {
         max-width: 100px;
+    }
+}
+
+@media screen and (max-width: 479px) {
+    .container {
+        margin: 0 .5rem;
     }
 }
 
