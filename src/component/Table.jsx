@@ -531,23 +531,9 @@ export function Table({ state, validating, user, matkul, matkulHistory, universi
         )
     }
 
-    const ValidatingTable = () => {
-        return (
-            <div>Validating Table</div>
-        )
-    }
-
-    const EmptyTable = () => {
-        return (
-            <div>Loaded Table</div>
-        )
-    }
-
     if (state === 'loading') { return (<SkeletonTable />) }
     else if (state === 'loaded') { return (<LoadedTable />) }
     else if (state === 'error') { return (<ErrorTable />) }
-    else if (state === 'validating') { return (<ValidatingTable />) }
-    else if (state === 'empty') { return (<EmptyTable />) }
     else { return 'Unidentified Table State' }
 }
 
