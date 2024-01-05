@@ -1,7 +1,7 @@
 'use client'
 
 // ========== NEXT DEPEDENCY ========== //
-
+import Image from 'next/image';
 
 // ========== REACT DEPEDENCY ========== //
 import { useContext, useEffect, useState, useRef, useMemo } from 'react';
@@ -21,6 +21,7 @@ import { Spinner } from "./loader/Loading";
 import isNumeric from 'validator/lib/isnumeric';
 
 // ========== DATA DEPEDENCY ========== //
+import { getLocalTheme } from '@/utils/client_side';
 
 // ========== STYLE DEPEDENCY ========== //
 import styles from './style/table.module.css'
@@ -44,6 +45,7 @@ import {
 ============================== CODE START HERE ==============================
 */
 export function Table({ state, validating, user, matkul, matkulHistory, universitas }) {
+
     const SkeletonTable = () => {
         return (
             <div>Skeleton Table</div>
@@ -57,6 +59,7 @@ export function Table({ state, validating, user, matkul, matkulHistory, universi
         const [isValidating, setIsValidating] = useState(validating);
         const [columnFilters, setColumnFilters] = useState([]);
         const [columnOrder, setColumnOrder] = useState(user?.preferences?.table?.columnOrder.length || []);
+        const [tableEmptyImg, setTableEmptyImg] = useState(getLocalTheme() === 'dark' ? <Image src="https://storage.googleapis.com/sipk_assets/table_kosong_dark.svg" width={100} height={100} alt="Table Empty" /> : <Image src="https://storage.googleapis.com/sipk_assets/table_kosong.svg" width={100} height={100} alt="Table Empty" />)
         const [pageControlPosition, setPageControlPosition] = useState(user?.preferences?.table?.controlPosition || 0);
         const {
             setModal,
@@ -102,7 +105,7 @@ export function Table({ state, validating, user, matkul, matkulHistory, universi
                         sks: matkulDihapus.current.sks,
                         nilai: matkulDihapus.current.nilai,
                         dapat_diulang: matkulDihapus.current.dapat_diulang,
-                        target_nilai: matkulDihapus.current.target_nilai,
+                        target_nilai: matkulDihapus.current.dapat_diulang ? matkulDihapus.current.target_nilai : null,
                     }))
                 : [];
 
@@ -122,7 +125,7 @@ export function Table({ state, validating, user, matkul, matkulHistory, universi
                         sks: matkulDiubah.current.sks,
                         nilai: matkulDiubah.current.nilai,
                         dapat_diulang: matkulDiubah.current.dapat_diulang,
-                        target_nilai: matkulDiubah.current.target_nilai,
+                        target_nilai: matkulDihapus.current.dapat_diulang ? matkulDihapus.current.target_nilai : null,
                     }))
                 : [];
 
@@ -240,11 +243,19 @@ export function Table({ state, validating, user, matkul, matkulHistory, universi
         }, [])
 
         useEffect(() => {
+            if (getLocalTheme() === 'dark') {
+                setTableEmptyImg(<Image src="https://storage.googleapis.com/sipk_assets/table_kosong_dark.svg" width={100} height={100} alt="Table Empty" />);
+            } else {
+                setTableEmptyImg(<Image src="https://storage.googleapis.com/sipk_assets/table_kosong.svg" width={100} height={100} alt="Table Empty" />);
+            }
+        }, [getLocalTheme()])
+
+        useEffect(() => {
             if (table.getState().pagination.pageIndex !== 0) {
                 table.setPageIndex(0);
             }
         }, [columnFilters.filter(item => item.id === 'matakuliah')[0]?.value])
- 
+
         useEffect(() => {
             if (initialRender.current) {
                 initialRender.current = false;
@@ -261,7 +272,7 @@ export function Table({ state, validating, user, matkul, matkulHistory, universi
         }, [activeTab, pageControlPosition, table.getState().pagination.pageSize, table.getState().pagination.pageIndex])
 
         return (
-            <div className={styles.container}>
+            <div className={`${styles.container} ${pageControlCSS[pageControlPosition]}`}>
                 <div className={`${styles.validating} ${isValidating ? '' : styles.hide}`}>
                     <Spinner size={'35px'} color={'var(--logo-second-color)'} />
                 </div>
@@ -318,184 +329,198 @@ export function Table({ state, validating, user, matkul, matkulHistory, universi
                         </div>
                     </div>
                 </div>
-                <div
-                    className={`${styles.data} ${pageControlCSS[pageControlPosition]}`}
-                >
-                    <div className={styles.pagination}>
-                        <div className={styles.pagination__pages}>
-                            <div className={styles.pagination__pages_number}>
-                                <select
-                                    value={table.getState().pagination.pageSize}
-                                    onChange={e => {
-                                        table.setPageSize(Number(e.target.value))
-                                    }}
-                                >
-                                    {[5, 10, 25, 50, 100, matkul.length + 1].map((pageSize, index) => (
-                                        <option key={crypto.randomUUID()} value={pageSize}>
-                                            {index === 5 ? 'Semua' : pageSize}
-                                        </option>
-                                    ))}
-                                </select>
+
+                {data.length ?
+                    <>
+                        <div className={styles.pagination}>
+                            <div className={styles.pagination__pages}>
+                                <div className={styles.pagination__pages_number}>
+                                    <select
+                                        value={table.getState().pagination.pageSize}
+                                        onChange={e => {
+                                            table.setPageSize(Number(e.target.value))
+                                        }}
+                                    >
+                                        {[5, 10, 25, 50, 100, matkul.length + 1].map((pageSize, index) => (
+                                            <option key={crypto.randomUUID()} value={pageSize}>
+                                                {index === 5 ? 'Semua' : pageSize}
+                                            </option>
+                                        ))}
+                                    </select>
+                                </div>
+                                <div className={styles.pagination__pages_details}>
+                                    Halaman {table.getState().pagination.pageIndex + 1} dari {table.getPageCount()}
+                                </div>
                             </div>
-                            <div className={styles.pagination__pages_details}>
+                            <div className={styles.pagination__control}>
+                                <div
+                                    onClick={table.getCanPreviousPage() ? () => table.setPageIndex(0) : null}
+                                    className={`${styles.pagination__navs} ${!table.getCanPreviousPage() ? styles.disabled : ''}`}
+                                >
+                                    <IoPlayBack size={'16px'} />
+                                </div>
+                                <div
+                                    onClick={table.getCanPreviousPage() ? () => table.previousPage() : null}
+                                    className={`${styles.pagination__navs} ${!table.getCanPreviousPage() ? styles.disabled : ''}`}
+                                >
+                                    <IoCaretBack size={'16px'} />
+                                </div>
+                                <div className={styles.pagination__input}>
+                                    <input
+                                        type="number"
+                                        min={1}
+                                        value={table.getState().pagination.pageIndex + 1}
+                                        onChange={e => {
+                                            const page = e.target.value ? Number(e.target.value) - 1 : 0
+                                            table.setPageIndex(page)
+                                        }}
+                                    />
+                                </div>
+                                <div
+                                    onClick={table.getCanNextPage() ? () => table.nextPage() : null}
+                                    className={`${styles.pagination__navs} ${!table.getCanNextPage() ? styles.disabled : ''}`}
+                                >
+                                    <IoCaretForward size={'16px'} />
+                                </div>
+                                <div
+                                    onClick={table.getCanNextPage() ? () => table.setPageIndex(table.getPageCount() - 1) : null}
+                                    className={`${styles.pagination__navs} ${!table.getCanNextPage() ? styles.disabled : ''}`}
+                                >
+                                    <IoPlayForward size={'16px'} />
+                                </div>
+                            </div>
+                            <div className={styles.pagination__control_details}>
                                 Halaman {table.getState().pagination.pageIndex + 1} dari {table.getPageCount()}
                             </div>
                         </div>
-                        <div className={styles.pagination__control}>
-                            <div
-                                onClick={table.getCanPreviousPage() ? () => table.setPageIndex(0) : null}
-                                className={`${styles.pagination__navs} ${!table.getCanPreviousPage() ? styles.disabled : ''}`}
-                            >
-                                <IoPlayBack size={'16px'} />
-                            </div>
-                            <div
-                                onClick={table.getCanPreviousPage() ? () => table.previousPage() : null}
-                                className={`${styles.pagination__navs} ${!table.getCanPreviousPage() ? styles.disabled : ''}`}
-                            >
-                                <IoCaretBack size={'16px'} />
-                            </div>
-                            <div className={styles.pagination__input}>
-                                <input
-                                    type="number"
-                                    min={1}
-                                    value={table.getState().pagination.pageIndex + 1}
-                                    onChange={e => {
-                                        const page = e.target.value ? Number(e.target.value) - 1 : 0
-                                        table.setPageIndex(page)
-                                    }}
-                                />
-                            </div>
-                            <div
-                                onClick={table.getCanNextPage() ? () => table.nextPage() : null}
-                                className={`${styles.pagination__navs} ${!table.getCanNextPage() ? styles.disabled : ''}`}
-                            >
-                                <IoCaretForward size={'16px'} />
-                            </div>
-                            <div
-                                onClick={table.getCanNextPage() ? () => table.setPageIndex(table.getPageCount() - 1) : null}
-                                className={`${styles.pagination__navs} ${!table.getCanNextPage() ? styles.disabled : ''}`}
-                            >
-                                <IoPlayForward size={'16px'} />
-                            </div>
+
+                        <div className={`${styles.data}`}
+                        >
+                            <table>
+                                <thead>
+                                    {table.getHeaderGroups().map(headerGroup => (
+                                        <tr key={headerGroup.id}>
+                                            {headerGroup.headers.map(header => (
+                                                <th key={header.id}>
+                                                    {header.isPlaceholder
+                                                        ? null
+                                                        : flexRender(
+                                                            header.column.columnDef.header,
+                                                            header.getContext()
+                                                        )}
+                                                </th>
+                                            ))}
+                                        </tr>
+                                    ))}
+                                </thead>
+                                <tbody>
+                                    {table.getRowModel().rows.map(row => (
+                                        <tr key={row.id} >
+                                            {row.getVisibleCells().map(cell => {
+                                                const cellType = cell.id.split('_')[1];
+                                                const isNilaiCell = cellType === 'nilai';
+                                                const isTargetCell = cellType === 'target';
+                                                const nilaiColor = isNilaiCell || isTargetCell ? universitas[`${cell.getValue()}`]?.style : '';
+
+                                                return (
+                                                    <td
+                                                        key={cell.id}
+                                                        className={`${styles[cellType]}`}
+                                                        {...isNilaiCell || isTargetCell ? { style: { color: nilaiColor ? `var(--${nilaiColor}-color)` : '' } } : {}}
+                                                    >
+                                                        <span
+                                                            {...isNilaiCell || isTargetCell ? {
+                                                                style:
+                                                                {
+                                                                    display: 'inline-block',
+                                                                    fontWeight: '500',
+                                                                    lineHeight: '28px',
+                                                                    minWidth: '28px',
+                                                                    minHeight: '28px',
+                                                                    background: nilaiColor ? `var(--box-color-${nilaiColor})` : 'var(--box-color-bg2)',
+                                                                    borderRadius: '50%'
+                                                                }
+                                                            } :
+                                                                {}}
+                                                        >
+                                                            {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                                                        </span>
+                                                    </td>
+                                                )
+                                            })}
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
                         </div>
-                    </div>
 
-                    <table>
-                        <thead>
-                            {table.getHeaderGroups().map(headerGroup => (
-                                <tr key={headerGroup.id}>
-                                    {headerGroup.headers.map(header => (
-                                        <th key={header.id}>
-                                            {header.isPlaceholder
-                                                ? null
-                                                : flexRender(
-                                                    header.column.columnDef.header,
-                                                    header.getContext()
-                                                )}
-                                        </th>
-                                    ))}
-                                </tr>
-                            ))}
-                        </thead>
-                        <tbody>
-                            {table.getRowModel().rows.map(row => (
-                                <tr key={row.id} >
-                                    {row.getVisibleCells().map(cell => {
-                                        const cellType = cell.id.split('_')[1];
-                                        const isNilaiCell = cellType === 'nilai';
-                                        const isTargetCell = cellType === 'target';
-                                        const nilaiColor = isNilaiCell || isTargetCell ? universitas[`${cell.getValue()}`]?.style : '';
-
-                                        return (
-                                            <td
-                                                key={cell.id}
-                                                className={`${styles[cellType]}`}
-                                                {...isNilaiCell || isTargetCell ? { style: { color: nilaiColor ? `var(--${nilaiColor}-color)` : '' } } : {}}
-                                            >
-                                                <span
-                                                    {...isNilaiCell || isTargetCell ? {
-                                                        style:
-                                                        {
-                                                            display: 'inline-block',
-                                                            fontWeight: '500',
-                                                            lineHeight: '28px',
-                                                            minWidth: '28px',
-                                                            minHeight: '28px',
-                                                            background: nilaiColor ? `var(--box-color-${nilaiColor})` : 'var(--box-color-bg2)',
-                                                            borderRadius: '50%'
-                                                        }
-                                                    } :
-                                                        {}}
-                                                >
-                                                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                                                </span>
-                                            </td>
-                                        )
-                                    })}
-                                </tr>
-                            ))}
-                        </tbody>
-                    </table>
-
-                    <div className={styles.pagination}>
-                        <div className={styles.pagination__pages}>
-                            <div className={styles.pagination__pages_number}>
-                                <select
-                                    value={table.getState().pagination.pageSize}
-                                    onChange={e => {
-                                        table.setPageSize(Number(e.target.value))
-                                    }}
-                                >
-                                    {[5, 10, 25, 50, 100, matkul.length + 1].map((pageSize, index) => (
-                                        <option key={crypto.randomUUID()} value={pageSize}>
-                                            {index === 5 ? 'Semua' : pageSize}
-                                        </option>
-                                    ))}
-                                </select>
+                        <div className={styles.pagination}>
+                            <div className={styles.pagination__pages}>
+                                <div className={styles.pagination__pages_number}>
+                                    <select
+                                        value={table.getState().pagination.pageSize}
+                                        onChange={e => {
+                                            table.setPageSize(Number(e.target.value))
+                                        }}
+                                    >
+                                        {[5, 10, 25, 50, 100, matkul.length + 1].map((pageSize, index) => (
+                                            <option key={crypto.randomUUID()} value={pageSize}>
+                                                {index === 5 ? 'Semua' : pageSize}
+                                            </option>
+                                        ))}
+                                    </select>
+                                </div>
+                                <div className={styles.pagination__pages_details}>
+                                    Halaman {table.getState().pagination.pageIndex + 1} dari {table.getPageCount()}
+                                </div>
                             </div>
-                            <div className={styles.pagination__pages_details}>
+                            <div className={styles.pagination__control}>
+                                <div
+                                    onClick={table.getCanPreviousPage() ? () => table.setPageIndex(0) : null}
+                                    className={`${styles.pagination__navs} ${!table.getCanPreviousPage() ? styles.disabled : ''}`}
+                                >
+                                    <IoPlayBack size={'16px'} />
+                                </div>
+                                <div
+                                    onClick={table.getCanPreviousPage() ? () => table.previousPage() : null}
+                                    className={`${styles.pagination__navs} ${!table.getCanPreviousPage() ? styles.disabled : ''}`}
+                                >
+                                    <IoCaretBack size={'16px'} />
+                                </div>
+                                <div className={styles.pagination__input}>
+                                    <input
+                                        type="number"
+                                        min={1}
+                                        value={table.getState().pagination.pageIndex + 1}
+                                        onChange={e => {
+                                            const page = e.target.value ? Number(e.target.value) - 1 : 0
+                                            table.setPageIndex(page)
+                                        }}
+                                    />
+                                </div>
+                                <div
+                                    onClick={table.getCanNextPage() ? () => table.nextPage() : null}
+                                    className={`${styles.pagination__navs} ${!table.getCanNextPage() ? styles.disabled : ''}`}
+                                >
+                                    <IoCaretForward size={'16px'} />
+                                </div>
+                                <div
+                                    onClick={table.getCanNextPage() ? () => table.setPageIndex(table.getPageCount() - 1) : null}
+                                    className={`${styles.pagination__navs} ${!table.getCanNextPage() ? styles.disabled : ''}`}
+                                >
+                                    <IoPlayForward size={'16px'} />
+                                </div>
+                            </div>
+                            <div className={styles.pagination__control_details}>
                                 Halaman {table.getState().pagination.pageIndex + 1} dari {table.getPageCount()}
                             </div>
                         </div>
-                        <div className={styles.pagination__control}>
-                            <div
-                                onClick={table.getCanPreviousPage() ? () => table.setPageIndex(0) : null}
-                                className={`${styles.pagination__navs} ${!table.getCanPreviousPage() ? styles.disabled : ''}`}
-                            >
-                                <IoPlayBack size={'16px'} />
-                            </div>
-                            <div
-                                onClick={table.getCanPreviousPage() ? () => table.previousPage() : null}
-                                className={`${styles.pagination__navs} ${!table.getCanPreviousPage() ? styles.disabled : ''}`}
-                            >
-                                <IoCaretBack size={'16px'} />
-                            </div>
-                            <div className={styles.pagination__input}>
-                                <input
-                                    type="number"
-                                    min={1}
-                                    value={table.getState().pagination.pageIndex + 1}
-                                    onChange={e => {
-                                        const page = e.target.value ? Number(e.target.value) - 1 : 0
-                                        table.setPageIndex(page)
-                                    }}
-                                />
-                            </div>
-                            <div
-                                onClick={table.getCanNextPage() ? () => table.nextPage() : null}
-                                className={`${styles.pagination__navs} ${!table.getCanNextPage() ? styles.disabled : ''}`}
-                            >
-                                <IoCaretForward size={'16px'} />
-                            </div>
-                            <div
-                                onClick={table.getCanNextPage() ? () => table.setPageIndex(table.getPageCount() - 1) : null}
-                                className={`${styles.pagination__navs} ${!table.getCanNextPage() ? styles.disabled : ''}`}
-                            >
-                                <IoPlayForward size={'16px'} />
-                            </div>
-                        </div>
+                    </> :
+                    <div className={styles.empty}>
+                        <div className={styles.image}>{tableEmptyImg}</div>
+                        <h5>Tabel Kosong</h5>
                     </div>
-                </div>
+                }
             </div>
         )
     }
