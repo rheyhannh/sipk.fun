@@ -13,7 +13,7 @@ import { Icon } from './loader/ReactIcons';
 import { PiUserCircleLight } from "react-icons/pi";
 
 // ========== DATA DEPEDENCY ========== //
-import { useUser } from '@/data/core';
+import { useUser, useRating } from '@/data/core';
 
 // ========== STYLE DEPEDENCY ========== //
 import styles from './style/nav.module.css'
@@ -23,6 +23,7 @@ import styles from './style/nav.module.css'
 */
 export default function Nav({ children }) {
     const { data, error } = useUser();
+    const { data: rating, error: ratingError, isLoading: ratingLoading, isValidating: ratingValidating} = useRating();
     const {
         isNavbarActive,
         setNavbarActive,
@@ -71,6 +72,16 @@ export default function Nav({ children }) {
         if (!isRichContent) { setNavbarActive(false); }
         setData(data);
         setModal('profil');
+        setTimeout(() => {
+            setActive(true);
+        }, 50)
+    }
+
+    const handleRatingModal = () => {
+        if (ratingLoading || ratingValidating || ratingError) { return; }
+        if (!isRichContent) { setNavbarActive(false); }
+        setData(rating.length ? rating[0] : null);
+        setModal('rating');
         setTimeout(() => {
             setActive(true);
         }, 50)
@@ -132,6 +143,19 @@ export default function Nav({ children }) {
 
                                         <span
                                             className={styles.link}
+                                            onClick={handleRatingModal}
+                                        >
+                                            <span className={styles.link__icon}>
+                                                <Icon name={'AiOutlineStar'} lib={'ai'} props={{ size: '24px' }} />
+                                            </span>
+
+                                            <h4 className={styles.link__text} >
+                                                {'Rating'}
+                                            </h4>
+                                        </span>
+
+                                        <span
+                                            className={styles.link}
                                             onClick={() => { console.log('Show Modal Feedback') }}
                                         >
                                             <span className={styles.link__icon}>
@@ -140,19 +164,6 @@ export default function Nav({ children }) {
 
                                             <h4 className={styles.link__text} >
                                                 {'Feedback'}
-                                            </h4>
-                                        </span>
-
-                                        <span
-                                            className={styles.link}
-                                            onClick={() => { console.log('Show Modal Informasi') }}
-                                        >
-                                            <span className={styles.link__icon}>
-                                                <Icon name={'AiOutlineInfoCircle'} lib={'ai'} props={{ size: '24px' }} />
-                                            </span>
-
-                                            <h4 className={styles.link__text} >
-                                                {'Informasi'}
                                             </h4>
                                         </span>
 
@@ -229,6 +240,19 @@ export default function Nav({ children }) {
 
                                     <span
                                         className={styles.link}
+                                        onClick={handleRatingModal}
+                                    >
+                                        <span className={styles.link__icon}>
+                                            <Icon name={'AiOutlineStar'} lib={'ai'} props={{ size: '24px' }} />
+                                        </span>
+
+                                        <h4 className={styles.link__text} >
+                                            {'Rating'}
+                                        </h4>
+                                    </span>
+
+                                    <span
+                                        className={styles.link}
                                         onClick={() => { console.log('Show Modal Feedback') }}
                                     >
                                         <span className={styles.link__icon}>
@@ -237,19 +261,6 @@ export default function Nav({ children }) {
 
                                         <h4 className={styles.link__text} >
                                             {'Feedback'}
-                                        </h4>
-                                    </span>
-
-                                    <span
-                                        className={styles.link}
-                                        onClick={() => { console.log('Show Modal Informasi') }}
-                                    >
-                                        <span className={styles.link__icon}>
-                                            <Icon name={'AiOutlineInfoCircle'} lib={'ai'} props={{ size: '24px' }} />
-                                        </span>
-
-                                        <h4 className={styles.link__text} >
-                                            {'Informasi'}
                                         </h4>
                                     </span>
 
