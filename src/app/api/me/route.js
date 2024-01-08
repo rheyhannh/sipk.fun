@@ -167,7 +167,15 @@ export async function PATCH(request) {
     }
 
     // Check are formData equal to schema using 'Joi'
-    const formData = await request.json();
+    try {
+        var formData = await request.json();
+    } catch (error) {
+        console.error(error);
+        return NextResponse.json({ message: 'Invalid JSON Format' }, {
+            status: 400,
+            headers: newHeaders
+        })
+    }
     const formDataSchema = Joi.object({
         fullname: Joi.string().pattern(/^[A-Za-z\s]*$/, 'alpha only').pattern(/^[a-zA-Z]+(\s[a-zA-Z]+)*$/, 'one space each word').min(6).max(50),
         nickname: Joi.string().min(6).max(20),
