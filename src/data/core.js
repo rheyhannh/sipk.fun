@@ -125,6 +125,14 @@ export function useMatkulHistory(custom) {
     return useSWR([url, userIdCookie], () => fetchWithUserId(url, userIdCookie, accessToken), options)
 }
 
+export function useRating(custom) {
+    const url = '/api/rating';
+    const userIdCookie = useCookies().get('s_user_id');
+    const accessToken = useCookies().get('s_access_token');
+    const options = custom ? custom : swrOptions;
+    return useSWR([url, userIdCookie], () => fetchWithUserId(url, userIdCookie, accessToken), options)
+}
+
 export function useNotifikasi(custom) {
     const url = '/api/notifikasi';
     const options = custom ? custom : swrOptions;
