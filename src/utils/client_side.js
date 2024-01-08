@@ -35,6 +35,8 @@ export const getLoadingMessage = (funWord = false, index = true) => {
             'Memproses',
             'Memproses permintaanmu',
             'Tunggu sebentar',
+            'Membuat',
+            'Memperbarui',
         ]
     }
 
