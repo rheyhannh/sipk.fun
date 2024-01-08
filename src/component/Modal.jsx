@@ -27,6 +27,7 @@ import { useUser, useUniversitas } from "@/data/core";
 // ========== ICONS DEPEDENCY ========== //
 import { FaTimes, FaRegTimesCircle } from 'react-icons/fa'
 import { FaRegCircleCheck } from "react-icons/fa6";
+import { AiOutlineStar, AiFillStar } from "react-icons/ai";
 
 // ========== STYLE DEPEDENCY ========== //
 import styles from './style/modal.module.css'
@@ -1612,6 +1613,427 @@ export const Profil = () => {
                     </div>
                 )
             }}
+        </ModalContext.Consumer>
+    )
+}
+
+export const Rating = () => {
+    const router = useRouter();
+    const userIdCookie = useCookies().get('s_user_id');
+    const accessToken = useCookies().get('s_access_token');
+    const { data: user } = useUser({ revalidateOnMount: false });
+    const { data: universitas } = useUniversitas({ revalidateOnMount: false }, 'user', user ? user[0].university_id : undefined);
+    const [stars, setStars] = useState(0);
+    const [review, setReview] = useState('');
+    const [author, setAuthor] = useState(0);
+    const [editRating, setEditRating] = useState(false);
+    const [errorMessage, setErrorMessage] = useState('');
+    const starsMessage = [
+        'Berapa bintang yang kamu kasih untuk SIPK',
+        'Mohon maaf atas pengalamanmu yang sangat kurang di SIPK, Boleh cerita apa yang perlu SIPK perbaiki?',
+        'Mohon maaf atas pengalamanmu yang kurang di SIPK, Boleh cerita apa yang kurang di SIPK?',
+        'Menurut kamu, apa yang SIPK perlu benahin',
+        'Bintangnya engga lengkap, kaya mimin tanpa dia. Yuk ceritain kenapa kamu suka pakai SIPK. Dan jangan lupa rekomendasiin SIPK keteman kamu ya.',
+        'Yuhuu, bintangnya lengkap. Yuk spill kenapa kamu suka pakai SIPK. Dan jangan lupa rekomendasiin SIPK keteman kamu ya.'
+    ]
+
+    const handleReviewChange = (e) => {
+        const newReview = e.target.value;
+        if (newReview.length <= 200) {
+            setReview(newReview);
+        }
+    }
+
+    return (
+        <ModalContext.Consumer>
+            {context => {
+                const toggleEditRating = () => {
+                    if (editRating) { setEditRating(false); setErrorMessage(''); }
+                    else {
+                        setStars(context?.data?.rating || 0);
+                        setReview(context?.data?.review || '');
+                        setAuthor(context?.data?.details?.authorType || 0);
+                        setEditRating(true);
+                    }
+                }
+
+                const validateForm = () => {
+                    return new Promise(async (resolve, reject) => {
+                        try {
+                            if (!accessToken) { throw new Error('Missing user access token'); }
+                            if (!userIdCookie) { throw new Error('Missing user id'); }
+
+                            const unallowedWords = ['http', 'https', 'www'];
+                            const unallowedSymbols = ['<', '>', '&', '/', `'`, `"`];
+
+                            // Validating & Sanitize 'Stars'
+                            if (stars <= 0) { setErrorMessage('Kamu harus pilih bintang 1 - 5'); resolve(null); }
+                            if (stars > 5) { setStars(5); }
+
+                            // Validating & Sanitize 'Review'
+                            if (review.length > 200) { setErrorMessage('Pesan maksimal 200 karakter'); resolve(null); }
+                            if (unallowedWords.some(word => review.includes(word))) { setErrorMessage('Pesan tidak dapat mengandung URL'); resolve(null); }
+                            if (unallowedSymbols.some(symbol => review.includes(symbol))) { setErrorMessage(`Pesan tidak dapat mengandung simbol > , < , & , ' , " dan /`); return false; }
+
+                            resolve({
+                                rating: stars,
+                                review: review,
+                                details: {
+                                    author: author === 0 ? user[0].fullname : author === 1 ? user[0].nickname : 'Anonim',
+                                    authorType: author,
+                                    universitas: universitas[0].nama
+                                }
+                            })
+                        } catch (error) { reject(error); }
+                    })
+                }
+
+                const handleTambahRating = async (e) => {
+                    e.preventDefault();
+
+                    // Validate Here, if ErrorValidate then setErrorMessage, if ErrorCookies then router.refresh()
+                    try {
+                        var validatedData = await validateForm();
+                        if (!validatedData) { return }
+                        context.handleModalClose();
+                    } catch (error) {
+                        context.handleModalClose();
+                        console.error(error.message || 'Terjadi kesalahan');
+                        toast.error('Terjadi kesalahan, silahkan coba lagi', { position: 'top-left', duration: 4000 });
+                        router.refresh();
+                        return;
+                    }
+
+                    const addRating = () => {
+                        return new Promise(async (resolve, reject) => {
+                            try {
+                                if (!accessToken) {
+                                    router.refresh();
+                                    throw new Error('Terjadi kesalahan, silahkan coba lagi');
+                                }
+                                if (!userIdCookie) {
+                                    router.refresh();
+                                    throw new Error('Terjadi kesalahan, silahkan coba lagi');
+                                }
+
+                                const response = await fetch('/api/rating', {
+                                    method: 'POST',
+                                    headers: {
+                                        'Authorization': `Bearer ${accessToken}`,
+                                        'Content-Type': 'application/json',
+                                    },
+                                    body: JSON.stringify(validatedData),
+                                });
+
+                                if (!response.ok) {
+                                    if (response.status === 401) {
+                                        router.replace('/users?action=login&error=isession', {
+                                            scroll: false
+                                        });
+                                        throw new Error(`Unauthorized`);
+                                    } else {
+                                        try {
+                                            const { message } = await response.json();
+                                            if (message) {
+                                                throw new Error(message);
+                                            } else {
+                                                throw new Error(`Terjadi kesalahan`);
+                                            }
+                                        } catch (error) {
+                                            console.error(error);
+                                            reject(error);
+                                        }
+                                    }
+                                } else {
+                                    try {
+                                        const { rating } = await response.json();
+                                        if (!rating) {
+                                            throw new Error('Failed to update cache');
+                                        }
+                                        mutate(['/api/rating', userIdCookie], rating, {
+                                            populateCache: (rating, current) => {
+                                                return [rating]
+                                            },
+                                            revalidate: false,
+                                        });
+                                        resolve();
+                                    } catch {
+                                        mutate(['/api/rating', userIdCookie]);
+                                        resolve();
+                                    }
+                                }
+                            } catch (error) {
+                                reject(error);
+                            }
+                        });
+                    };
+
+                    toast.promise(
+                        addRating(),
+                        {
+                            loading: `${getLoadingMessage(false, 3)} rating`,
+                            success: `Rating berhasil dibuat`,
+                            error: (error) => `${error.message || 'Terjadi kesalahan'}`
+                        },
+                        {
+                            position: 'top-left',
+                            duration: 4000,
+                        }
+                    )
+                }
+
+                const handleEditRating = async (e) => {
+                    e.preventDefault();
+
+                    // Validate Here, if ErrorValidate then setErrorMessage, if ErrorCookies then router.refresh()                    const validatedData = validateForm();
+                    try {
+                        var validatedData = await validateForm();
+                        if (!validatedData) { return }
+                        context.handleModalClose();
+                    } catch (error) {
+                        context.handleModalClose();
+                        console.error(error.message || 'Terjadi kesalahan');
+                        toast.error('Terjadi kesalahan, silahkan coba lagi', { position: 'top-left', duration: 4000 });
+                        router.refresh();
+                        return;
+                    }
+
+                    const editRating = () => {
+                        return new Promise(async (resolve, reject) => {
+                            try {
+                                const ratingId = context?.data?.id;
+
+                                if (!accessToken) {
+                                    router.refresh();
+                                    throw new Error('Terjadi kesalahan, silahkan coba lagi');
+                                }
+                                if (!userIdCookie) {
+                                    router.refresh();
+                                    throw new Error('Terjadi kesalahan, silahkan coba lagi');
+                                }
+                                if (!ratingId) {
+                                    router.refresh();
+                                    throw new Error('Terjadi kesahalan, silahkan coba lagi');
+                                }
+
+                                const response = await fetch(`/api/rating?id=${ratingId}`, {
+                                    method: 'PATCH',
+                                    headers: {
+                                        'Authorization': `Bearer ${accessToken}`,
+                                        'Content-Type': 'application/json',
+                                    },
+                                    body: JSON.stringify(validatedData),
+                                });
+
+                                if (!response.ok) {
+                                    if (response.status === 401) {
+                                        router.replace('/users?action=login&error=isession', {
+                                            scroll: false
+                                        });
+                                        throw new Error(`Unauthorized`);
+                                    } else {
+                                        try {
+                                            const { message } = await response.json();
+                                            if (message) {
+                                                throw new Error(message);
+                                            } else {
+                                                throw new Error(`Terjadi kesalahan`);
+                                            }
+                                        } catch (error) {
+                                            console.error(error);
+                                            reject(error);
+                                        }
+                                    }
+                                } else {
+                                    try {
+                                        const { rating } = await response.json();
+                                        if (!rating) {
+                                            throw new Error('Failed to update cache');
+                                        }
+                                        mutate(['/api/rating', userIdCookie], rating, {
+                                            populateCache: (rating, current) => {
+                                                return [rating]
+                                            },
+                                            revalidate: false,
+                                        });
+                                        resolve();
+                                    } catch {
+                                        mutate(['/api/rating', userIdCookie]);
+                                        resolve();
+                                    }
+                                }
+                            } catch (error) {
+                                reject(error);
+                            }
+                        });
+                    };
+
+                    toast.promise(
+                        editRating(),
+                        {
+                            loading: `${getLoadingMessage(false, 4)} rating`,
+                            success: `Rating berhasil diperbarui`,
+                            error: (error) => `${error.message || 'Terjadi kesalahan'}`
+                        },
+                        {
+                            position: 'top-left',
+                            duration: 4000,
+                        }
+                    )
+                }
+
+                return (
+                    <div className={`${styles.backdrop} ${context.active ? styles.active : ''}`}>
+                        <form onSubmit={editRating ? handleEditRating : handleTambahRating} className={`${styles.rating}`} id='modal'>
+                            <div className={styles.top}>
+                                <div className={styles.title}>
+                                    <h2>{editRating ? 'Edit Rating' : 'Rating'}</h2>
+                                </div>
+                                <div className={styles.close} onClick={() => { context.handleModalClose() }}>
+                                    <FaTimes />
+                                </div>
+                            </div>
+
+                            <div className={styles.inner}>
+                                <div style={{ marginBottom: '1rem', textAlign: 'center', color: 'var(--danger-color)' }}>
+                                    {errorMessage}
+                                </div>
+                                {
+                                    context.data ?
+                                        <>
+                                            <div className={styles.stars}>
+                                                {
+                                                    Array.from({ length: 5 }, (_, index) => (
+                                                        <div
+                                                            className={`${styles.star} ${editRating ? stars >= index + 1 ? styles.filled : '' : context.data.rating >= index + 1 ? styles.filled : ''} ${editRating ? '' : styles.disabled}`}
+                                                            onClick={editRating ? () => { setStars(index + 1); setErrorMessage(''); } : null}
+                                                            key={crypto.randomUUID()}
+                                                        >
+                                                            {editRating ? stars >= index + 1 ? <AiFillStar size={'100%'} /> : <AiOutlineStar size={'100%'} /> : context.data.rating >= index + 1 ? <AiFillStar size={'100%'} /> : <AiOutlineStar size={'100%'} />}
+                                                        </div>
+                                                    ))
+                                                }
+                                            </div>
+                                            <textarea
+                                                placeholder={editRating ? starsMessage[stars] : ''}
+                                                value={editRating ? review : context.data.review}
+                                                onChange={editRating ? handleReviewChange : null}
+                                                onFocus={editRating ? () => { setErrorMessage(''); } : null}
+                                                disabled={!editRating}
+                                            />
+                                            <div style={{
+                                                display: 'flex',
+                                                justifyContent: 'space-between',
+                                                alignItems: 'center',
+                                                marginBottom: '1rem'
+                                            }}>
+                                                <div className={`${styles.review} ${editRating ? review.length >= 200 ? styles.max : '' : context.data.review.length >= 200 ? styles.max : ''}`}>
+                                                    {editRating ? 200 - review.length + ' karakter tersisa' : ''}
+                                                </div>
+                                                <select
+                                                    id="authorRating"
+                                                    value={editRating ? author : context.data.details.authorType}
+                                                    onChange={editRating ? (e) => { setAuthor(Number(e.target.value)) } : null}
+                                                    onFocus={editRating ? () => { setErrorMessage('') } : null}
+                                                    disabled={!editRating}
+                                                    style={editRating ? {} : { cursor: 'auto' }}
+                                                >
+                                                    <option value={0}>Fullname</option>
+                                                    <option value={1}>Nickname</option>
+                                                    <option value={2}>Anonim</option>
+                                                </select>
+                                            </div>
+                                        </>
+                                        :
+                                        <>
+                                            <div className={styles.stars}>
+                                                {
+                                                    Array.from({ length: 5 }, (_, index) => (
+                                                        <div
+                                                            className={`${styles.star} ${stars >= index + 1 ? styles.filled : ''}`}
+                                                            onClick={() => { setStars(index + 1); setErrorMessage(''); }}
+                                                            key={crypto.randomUUID()}
+                                                        >
+                                                            {stars >= index + 1 ? <AiFillStar size={'100%'} /> : <AiOutlineStar size={'100%'} />}
+                                                        </div>
+                                                    ))
+                                                }
+                                            </div>
+                                            <textarea
+                                                maxLength={200}
+                                                placeholder={starsMessage[stars]}
+                                                value={review}
+                                                onChange={handleReviewChange}
+                                                onFocus={() => { setErrorMessage('') }}
+                                            />
+                                            <div style={{
+                                                display: 'flex',
+                                                justifyContent: 'space-between',
+                                                alignItems: 'center',
+                                                marginBottom: '1rem'
+                                            }}>
+                                                <div className={`${styles.review} ${review.length >= 200 ? styles.max : ''}`}>
+                                                    {review.length > 0 ? 200 - review.length + ' karakter tersisa' : ''}
+                                                </div>
+                                                <select
+                                                    id="authorRating"
+                                                    value={author}
+                                                    onChange={(e) => { setAuthor(Number(e.target.value)) }}
+                                                    onFocus={() => { setErrorMessage('') }}
+                                                >
+                                                    <option value={0}>Fullname</option>
+                                                    <option value={1}>Nickname</option>
+                                                    <option value={2}>Anonim</option>
+                                                </select>
+                                            </div>
+                                        </>
+                                }
+                            </div>
+
+                            {
+                                context.data ?
+                                    <>
+                                        <div
+                                            style={editRating ? {
+                                                display: 'grid',
+                                                gridTemplateColumns: 'repeat(2,1fr)',
+                                                gap: '1rem'
+                                            } : {}}
+                                            className={styles.form__action}
+                                        >
+                                            {editRating ?
+                                                <>
+                                                    <div style={{ marginTop: '0' }} className={`${styles.btn} ${styles.cancel}`} onClick={toggleEditRating}>
+                                                        <h3>Batalkan</h3>
+                                                    </div>
+                                                    <button type='submit' className={styles.btn}>
+                                                        <h3>Simpan</h3>
+                                                    </button>
+                                                </>
+                                                :
+                                                <div className={styles.btn} onClick={toggleEditRating}>
+                                                    <h3>Edit Rating</h3>
+                                                </div>
+                                            }
+                                        </div>
+                                    </>
+                                    :
+                                    <>
+                                        <div
+                                            className={styles.form__action}
+                                        >
+                                            <button type='submit' className={styles.btn}>
+                                                <h3>Submit</h3>
+                                            </button>
+                                        </div>
+                                    </>
+                            }
+                        </form>
+                    </div>
+                )
+            }
+
+            }
         </ModalContext.Consumer>
     )
 }

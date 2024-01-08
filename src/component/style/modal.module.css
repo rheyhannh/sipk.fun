@@ -25,6 +25,7 @@
 .tambah__matakuliah,
 .panduan__daftar,
 .logout,
+.rating,
 .profil,
 .default {
     display: grid;
@@ -68,6 +69,10 @@
     max-height: 390px;
 }
 
+.rating {
+    max-height: 420px;
+}
+
 .profil {
     max-height: 455px;
 }
@@ -79,6 +84,7 @@
 .backdrop.active .perubahan__terakhir,
 .backdrop.active .tambah__matakuliah,
 .backdrop.active .panduan__daftar,
+.backdrop.active .rating,
 .backdrop.active .profil,
 .backdrop.active .logout {
     transform: scale(1) translateY(0);
@@ -215,7 +221,8 @@
     visibility: visible;
 }
 
-.form__input_length.max {
+.form__input_length.max,
+.review.max {
     color: crimson;
 }
 
@@ -254,12 +261,14 @@
     appearance: none;
 }
 
-.form__select option {
+.form__select option,
+.rating option {
     background-color: var(--white-color);
     color: var(--dark-color);
 }
 
-.form__select option:checked {
+.form__select option:checked,
+.rating option:checked {
     background-color: var(--logo-second-color);
     color: var(--white-color);
 }
@@ -350,6 +359,63 @@
     gap: 1rem;
 }
 
+.stars {
+    display: grid;
+    justify-content: center;
+    align-items: center;
+    grid-template-columns: 37.5px 42.5px 50px 42.5px 37.5px;
+    height: 50px;
+    gap: .75rem;
+    margin-bottom: 1rem;
+}
+
+.star {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--skeleton-base);
+    cursor: pointer;
+}
+
+.star.disabled {
+    cursor: auto;
+}
+
+.star.filled {
+    color: gold;
+}
+
+.rating textarea {
+    width: 100%;
+    min-height: 100px;
+    border: none;
+    outline: none;
+    background: var(--light-color);
+    border-radius: .4rem;
+    color: var(--dark-color);
+    line-height: 1.25;
+    text-align: justify;
+    padding: .5rem;
+    margin-bottom: .25rem;
+    resize: none;
+}
+
+.rating select {
+    border: none;
+    outline: none;
+    border-radius: .4rem;
+    background: var(--light-color);
+    color: var(--dark-color);
+    font-size: .8rem;
+    text-align: center;
+    padding: .5rem;
+    cursor: pointer;
+}
+
+.review {
+    color: var(--infoDark-color);
+}
+
 @media (hover: hover) and (pointer: fine) {
     .inner::-webkit-scrollbar-thumb:hover {
         border-radius: .25rem;
@@ -359,21 +425,24 @@
     .perubahan__terakhir:hover .inner::-webkit-scrollbar,
     .tambah__matakuliah:hover .inner::-webkit-scrollbar,
     .panduan__daftar:hover .inner::-webkit-scrollbar,
-    .profil:hover .inner::-webkit-scrollbar {
+    .profil:hover .inner::-webkit-scrollbar,
+    .rating:hover .inner::-webkit-scrollbar {
         visibility: visible;
     }
 
     .perubahan__terakhir:hover .inner::-webkit-scrollbar-thumb,
     .tambah__matakuliah:hover .inner::-webkit-scrollbar-thumb,
     .panduan__daftar:hover .inner::-webkit-scrollbar-thumb,
-    .profil:hover .inner::-webkit-scrollbar-thumb {
+    .profil:hover .inner::-webkit-scrollbar-thumb,
+    .rating:hover .inner::-webkit-scrollbar-thumb {
         visibility: visible;
     }
 
     .perubahan__terakhir:hover .inner::-webkit-scrollbar-thumb:hover,
     .tambah__matakuliah:hover .inner::-webkit-scrollbar-thumb:hover,
     .panduan__daftar:hover .inner::-webkit-scrollbar-thumb:hover,
-    .profil:hover .inner::-webkit-scrollbar-thumb:hover {
+    .profil:hover .inner::-webkit-scrollbar-thumb:hover,
+    .rating:hover .inner::-webkit-scrollbar-thumb:hover {
         visibility: visible;
     }
 
@@ -396,6 +465,21 @@
     .form__action .btn.confirm.ubah:hover {
         background: var(--success-color);
     }
+
+    .star:not(.disabled):hover {
+        color: gold;
+    }
+}
+
+@media screen and (max-width: 400px) {
+    .stars {
+        grid-template-columns: 27.5px 32.5px 40px 32.5px 27.5px;
+        height: 40px;
+    }
+
+    .rating textarea {
+        min-height: 150px;
+    }
 }
 
 @media screen and (max-width: 425px) {
@@ -413,7 +497,8 @@
     .perubahan__terakhir.ubah,
     .tambah__matakuliah,
     .panduan__daftar,
-    .profil {
+    .profil,
+    .rating {
         max-height: none;
         max-width: none;
         padding: 2rem 1rem;
