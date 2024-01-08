@@ -212,7 +212,15 @@ export async function POST(request) {
     }
 
     // Check are formData equal to schema using 'Joi'
-    const formData = await request.json();
+    try {
+        var formData = await request.json();
+    } catch (error) {
+        console.error(error);
+        return NextResponse.json({ message: 'Invalid JSON Format' }, {
+            status: 400,
+            headers: newHeaders
+        })
+    }
     // const formDataSchema = Joi.object({
     //     nama: Joi.string().min(3).max(50).required(),
     //     semester: Joi.number().min(0).max(50).required(),
