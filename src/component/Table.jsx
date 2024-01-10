@@ -159,6 +159,7 @@ export function Table({ state, validating, user, matkul, matkulHistory, penilaia
                     cell: info => info.row.index + 1,
                     header: () => <span>#</span>,
                     footer: info => info.column.id,
+                    enableSorting: false,
                 }),
                 columnHelper.accessor('nama', {
                     id: 'matakuliah',
@@ -184,17 +185,17 @@ export function Table({ state, validating, user, matkul, matkulHistory, penilaia
                     header: () => <span>Nilai</span>,
                     footer: info => info.column.id,
                 }),
-                columnHelper.accessor(row => row.dapat_diulang ? <IoCheckmark size={'15px'} color={'var(--success-color)'} /> : <IoClose size={'15px'} color={'var(--danger-color)'} />, {
+                columnHelper.accessor(row => row.dapat_diulang, {
                     id: 'diulang',
-                    cell: info => info.getValue(),
+                    cell: info => info.getValue() ? <IoCheckmark size={'15px'} color={'var(--success-color)'} /> : <IoClose size={'15px'} color={'var(--danger-color)'} />,
                     header: () => <span>Bisa Diulang</span>,
                     footer: info => info.column.id,
+                    invertSorting: true,
                 }),
                 columnHelper.accessor(row => row.dapat_diulang ? row.target_nilai.indeks : '-', {
                     id: 'target',
                     cell: info => info.getValue(),
                     header: () => <span>Target Nilai</span>,
-                    footer: info => info.column.id,
                 }),
             ],
             []
@@ -413,9 +414,23 @@ export function Table({ state, validating, user, matkul, matkulHistory, penilaia
                                                 <th key={header.id}>
                                                     {header.isPlaceholder
                                                         ? null
-                                                        : flexRender(
-                                                            header.column.columnDef.header,
-                                                            header.getContext()
+                                                        : (
+                                                            <div
+                                                            >
+                                                                <span
+                                                                    style={{ cursor: header.column.getCanSort() ? 'pointer' : 'auto' }}
+                                                                    onClick={header.column.getToggleSortingHandler()}
+                                                                >
+                                                                    {flexRender(
+                                                                        header.column.columnDef.header,
+                                                                        header.getContext()
+                                                                    )}
+                                                                    {{
+                                                                        asc: header.column.id === 'diulang' ? ' ✔️' : ' 🔼',
+                                                                        desc: header.column.id === 'diulang' ? ' ❌' : ' 🔽',
+                                                                    }[header.column.getIsSorted()] ?? null}
+                                                                </span>
+                                                            </div>
                                                         )}
                                                 </th>
                                             ))}
