@@ -400,6 +400,10 @@
     resize: none;
 }
 
+.rating textarea::placeholder {
+    color: var(--infoDark-color);
+}
+
 .rating select {
     border: none;
     outline: none;
