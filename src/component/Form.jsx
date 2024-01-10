@@ -575,6 +575,7 @@ export function UsersForm() {
                                         <i><FaUser /></i>
                                         <input
                                             type="text"
+                                            name='fullname'
                                             placeholder="Nama Lengkap"
                                             autoComplete='off'
                                             value={namaLengkap}
@@ -640,6 +641,7 @@ export function UsersForm() {
                                         <i><FaEnvelope /></i>
                                         <input
                                             type="email"
+                                            name='email'
                                             placeholder="Email"
                                             autoComplete='off'
                                             value={email}
@@ -663,6 +665,7 @@ export function UsersForm() {
                                         <i><FaLock /></i>
                                         <input
                                             type={hideDaftarPassword ? 'password' : 'text'}
+                                            name='password'
                                             placeholder="Password"
                                             autoComplete='off'
                                             value={password}
