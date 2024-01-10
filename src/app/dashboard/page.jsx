@@ -16,31 +16,35 @@ import styles from './home.module.css'
 function AcademicCard({ count }) {
     const { data: user, error: userError, isLoading: userLoading, isValidating: userValidating } = useUser();
     const { data: matkul, error: matkulError, isLoading: matkulLoading, isValidating: matkulValidating } = useMatkul();
+    const { data: universitas, error: universitasError, isLoading: universitasLoading, isValidating: universitasValidating } = useUniversitas(null, 'user', user ? user[0].university_id : undefined);
+    const isError = userError || matkulError || universitasError;
+    const isLoading = userLoading || matkulLoading || universitasLoading;
+    const isValidating = userValidating || matkulValidating || universitasValidating;
 
-    if (userError || matkulError) {
+    if (isError) {
         const errorCount = Array.from({ length: count }, (_, index) => (
             <Summary state='error' key={crypto.randomUUID()} error={matkul} />
         ));
         return <>{errorCount}</>;
     }
 
-    if (userLoading || matkulLoading) {
+    if (isLoading) {
         const loadingCount = Array.from({ length: count }, (_, index) => (
             <Summary state='loading' key={crypto.randomUUID()} />
         ));
         return <>{loadingCount}</>;
     }
 
-    if (userValidating || matkulValidating) {
+    if (isValidating) {
         const validatingCount = Array.from({ length: count }, (_, index) => (
             <Summary state='validating' key={crypto.randomUUID()} />
         ));
         return <>{validatingCount}</>;
     }
 
-    if (matkul.length === 0) {
+    if (!matkul.length) {
         const emptyCount = Array.from({ length: count }, (_, index) => (
-            <Summary state='empty' key={crypto.randomUUID()} />
+            <Summary state='empty' penilaian={universitas[0].penilaian} key={crypto.randomUUID()} />
         ));
         return <>{emptyCount}</>;
     }
@@ -53,6 +57,7 @@ function AcademicCard({ count }) {
                 icon={{ name: 'MdOutlineConfirmationNumber', lib: 'md' }}
                 data={{ value: x.getUserSks(matkul), percentage: x.getUserSksPercentage(user, matkul), keterangan: `${user.length !== 0 ? `Targetmu ${user[0].sks_target}` : `Terakhir diupdate`}` }}
                 title={'SKS'}
+                penilaian={universitas[0].penilaian}
             >
             </Summary>
 
@@ -62,6 +67,7 @@ function AcademicCard({ count }) {
                 icon={{ name: 'IoBookOutline', lib: 'io5' }}
                 data={{ value: x.getUserMatkul(matkul), percentage: x.getUserMatkulPercentage(user, matkul), keterangan: `${user.length !== 0 ? `Targetmu ${user[0].matkul_target}` : `Terakhir diupdate`}` }}
                 title={'Matakuliah'}
+                penilaian={universitas[0].penilaian}
             >
             </Summary>
 
@@ -71,6 +77,7 @@ function AcademicCard({ count }) {
                 icon={{ name: 'FaRegStar', lib: 'fa' }}
                 data={{ value: x.getUserIpk(matkul), percentage: x.getUserIpkPercentage(user, matkul), keterangan: `${user.length !== 0 ? `Targetmu ${parseFloat(user[0].ipk_target).toFixed(2)}` : `Terakhir diupdate`}` }}
                 title={'IPK'}
+                penilaian={universitas[0].penilaian}
             >
             </Summary>
         </>
@@ -113,33 +120,36 @@ function HistoryCard({ count }) {
     const { data: user, error: userError, isLoading: userLoading, isValidating: userValidating } = useUser();
     const { data: matkulHistory, error: matkulHistoryError, isLoading: matkulHistoryLoading, isValidating: matkulHistoryValidating } = useMatkulHistory();
     const { data: universitas, error: universitasError, isLoading: universitasLoading, isValidating: universitasValidating } = useUniversitas(null, 'user', user ? user[0].university_id : undefined);
+    const isError = userError || matkulHistoryError || universitasError;
+    const isLoading = userLoading || matkulHistoryLoading || universitasLoading;
+    const isValidating = userValidating || matkulHistoryValidating || universitasValidating;
 
-    if (userError || matkulHistoryError || universitasError) {
+    if (isError) {
         return (
             <History state={'error'} />
         )
     }
 
-    if (userLoading || matkulHistoryLoading || universitasLoading) {
+    if (isLoading) {
         return (
             <History state={'loading'} />
         )
     }
 
-    if (userValidating || matkulHistoryValidating || universitasValidating) {
+    if (isValidating) {
         return (
             <History state={'validating'} />
         )
     }
 
-    if (matkulHistory.length === 0) {
+    if (!matkulHistory.length) {
         return (
-            <History state={'empty'} />
+            <History state={'empty'} penilaian={universitas[0].penilaian} />
         )
     }
 
     return (
-        <History state={'loaded'} data={matkulHistory} universitas={universitas[0].penilaian} count={count} />
+        <History state={'loaded'} data={matkulHistory} penilaian={universitas[0].penilaian} count={count} />
     )
 }
 

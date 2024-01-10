@@ -46,7 +46,7 @@ import { IoAnalyticsOutline, IoServerOutline, IoAddOutline } from "react-icons/i
 /*
 ============================== CODE START HERE ==============================
 */
-export function Summary({ state, icon, color, title, data }) {
+export function Summary({ state, icon, color, title, data, penilaian }) {
     const userIdCookie = useCookies().get('s_user_id');
     const handleRetry = () => {
         mutate(['/api/matkul', userIdCookie])
@@ -203,7 +203,8 @@ export function Summary({ state, icon, color, title, data }) {
         } = useContext(ModalContext);
 
         const handleTambahModal = () => {
-            setData(null);
+            if (!penilaian) { return; }
+            setData({ penilaian });
             setModal('tambahMatkul');
             setTimeout(() => {
                 setActive(true);
@@ -522,8 +523,9 @@ export function Notification({ state, data }) {
     else { return 'Unidentified Card State' }
 }
 
-export function History({ state, data, universitas, count }) {
+export function History({ state, data, penilaian, count }) {
     const userIdCookie = useCookies().get('s_user_id');
+
     const handleRetry = () => {
         mutate(['/api/matkul-history', userIdCookie])
     }
@@ -538,7 +540,8 @@ export function History({ state, data, universitas, count }) {
     } = useContext(ModalContext);
 
     const handleTambahModal = () => {
-        setData(null);
+        if (!penilaian) { return; }
+        setData({ penilaian });
         setModal('tambahMatkul');
         setTimeout(() => {
             setActive(true);
@@ -650,7 +653,7 @@ export function History({ state, data, universitas, count }) {
         return (
             <>
                 {getArrayLength().map((item, index) => {
-                    const style = universitas[item?.current?.nilai?.indeks ? item?.current?.nilai?.indeks : item?.prev?.nilai?.indeks]?.style
+                    const style = penilaian[item?.current?.nilai?.indeks ? item?.current?.nilai?.indeks : item?.prev?.nilai?.indeks]?.style
                     return (
                         <div
                             className={styles.history}
@@ -759,7 +762,7 @@ export function History({ state, data, universitas, count }) {
     else { return 'Unidentified Card State' }
 }
 
-export function Total({ state, user, matkul, universitas }) {
+export function Total({ state, user, matkul, penilaian }) {
     const userIdCookie = useCookies().get('s_user_id');
     const handleRetry = () => {
         mutate(['/api/matkul', userIdCookie])
@@ -875,9 +878,9 @@ export function Total({ state, user, matkul, universitas }) {
             }
         }
 
-        const getData = (data, base) => {
+        const getData = () => {
             if (baseTab === 1) {
-                const nilaiStats = getStatsByNilai(matkul, universitas);
+                const nilaiStats = getStatsByNilai(matkul, penilaian);
                 const element = nilaiStats.map((item, index) => (
                     <div
                         style={{
@@ -1027,7 +1030,8 @@ export function Total({ state, user, matkul, universitas }) {
         } = useContext(ModalContext);
 
         const handleTambahModal = () => {
-            setData(null);
+            if (!penilaian) { return; }
+            setData({ penilaian });
             setModal('tambahMatkul');
             setTimeout(() => {
                 setActive(true);
@@ -1060,7 +1064,7 @@ export function Total({ state, user, matkul, universitas }) {
     else { return 'Unidentified Card State' }
 }
 
-export function Grafik({ state, matkul }) {
+export function Grafik({ state, matkul, penilaian }) {
     const userIdCookie = useCookies().get('s_user_id');
     const handleRetry = () => {
         mutate(['/api/matkul', userIdCookie])
@@ -1260,7 +1264,8 @@ export function Grafik({ state, matkul }) {
         } = useContext(ModalContext);
 
         const handleTambahModal = () => {
-            setData(null);
+            if (!penilaian) { return; }
+            setData({ penilaian });
             setModal('tambahMatkul');
             setTimeout(() => {
                 setActive(true);

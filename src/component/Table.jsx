@@ -46,7 +46,7 @@ import {
 /*
 ============================== CODE START HERE ==============================
 */
-export function Table({ state, validating, user, matkul, matkulHistory, universitas }) {
+export function Table({ state, validating, user, matkul, matkulHistory, penilaian }) {
     const userIdCookie = useCookies().get('s_user_id');
     const handleRetry = () => {
         mutate(['/api/me', userIdCookie])
@@ -144,7 +144,8 @@ export function Table({ state, validating, user, matkul, matkulHistory, universi
         }
 
         const handleTambahModal = () => {
-            setModalData(null);
+            if (!penilaian) { return; }
+            setModalData({ penilaian });
             setModal('tambahMatkul');
             setTimeout(() => {
                 setActive(true);
@@ -429,7 +430,7 @@ export function Table({ state, validating, user, matkul, matkulHistory, universi
                                                 const cellType = cell.id.split('_')[1];
                                                 const isNilaiCell = cellType === 'nilai';
                                                 const isTargetCell = cellType === 'target';
-                                                const nilaiColor = isNilaiCell || isTargetCell ? universitas[`${cell.getValue()}`]?.style : '';
+                                                const nilaiColor = isNilaiCell || isTargetCell ? penilaian[`${cell.getValue()}`]?.style : '';
 
                                                 return (
                                                     <td

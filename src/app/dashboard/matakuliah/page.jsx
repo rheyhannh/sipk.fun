@@ -27,49 +27,57 @@ function TotalCard() {
     const { data: matkul, error: matkulError, isLoading: matkulLoading, isValidating: matkulValidating } = useMatkul();
     const { data: user, error: userError, isLoading: userLoading, isValidating: userValidating } = useUser();
     const { data: universitas, error: universitasError, isLoading: universitasLoading, isValidating: universitasValidating } = useUniversitas(null, 'user', user ? user[0].university_id : undefined);
+    const isError = matkulError || userError || universitasError;
+    const isLoading = matkulLoading || userLoading || universitasLoading;
+    const isValidating = matkulValidating || userValidating || universitasValidating;
 
-    if (matkulError || userError || universitasError) {
+    if (isError) {
         return <Total state={'error'} />;
     }
 
-    if (matkulLoading || userLoading || universitasLoading) {
+    if (isLoading) {
         return <Total state={'loading'} />;
     }
 
-    if (matkulValidating || userValidating || universitasValidating) {
+    if (isValidating) {
         return <Total state={'validating'} />;
     }
 
-    if (matkul.length === 0) {
-        return <Total state={'empty'} />
+    if (!matkul.length) {
+        return <Total state={'empty'} penilaian={universitas[0].penilaian} />
     }
 
     return (
-        <Total state={'loaded'} user={user} matkul={matkul} universitas={universitas[0].penilaian} />
+        <Total state={'loaded'} user={user} matkul={matkul} penilaian={universitas[0].penilaian} />
     )
 }
 
 function GrafikCard() {
+    const { data: user, error: userError, isLoading: userLoading, isValidating: userValidating } = useUser();
     const { data: matkul, error: matkulError, isLoading: matkulLoading, isValidating: matkulValidating } = useMatkul();
+    const { data: universitas, error: universitasError, isLoading: universitasLoading, isValidating: universitasValidating } = useUniversitas(null, 'user', user ? user[0].university_id : undefined);
+    const isError = userError || matkulError || universitasError;
+    const isLoading = userLoading || matkulLoading || universitasLoading;
+    const isValidating = userValidating || matkulValidating || universitasValidating;
 
-    if (matkulError) {
+    if (isError) {
         return <Grafik state={'error'} />;
     }
 
-    if (matkulLoading) {
+    if (isLoading) {
         return <Grafik state={'loading'} />;
     }
 
-    if (matkulValidating) {
+    if (isValidating) {
         return <Grafik state={'validating'} />;
     }
 
-    if (matkul.length === 0) {
-        return <Grafik state={'empty'} />
+    if (!matkul.length) {
+        return <Grafik state={'empty'} penilaian={universitas[0].penilaian} />
     }
 
     return (
-        <Grafik state={'loaded'} matkul={matkul} />
+        <Grafik state={'loaded'} matkul={matkul} penilaian={universitas[0].penilaian} />
     )
 }
 
@@ -91,7 +99,7 @@ function TabelSection() {
     }
 
     return (
-        <Table state={'loaded'} validating={isValidating} user={user[0]} matkul={matkul} matkulHistory={matkulHistory} universitas={universitas[0].penilaian} />
+        <Table state={'loaded'} validating={isValidating} user={user[0]} matkul={matkul} matkulHistory={matkulHistory} penilaian={universitas[0].penilaian} />
     )
 }
 

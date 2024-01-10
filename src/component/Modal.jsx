@@ -836,11 +836,7 @@ export const PerubahanTerakhirConfirm = () => {
 export const TambahMatkul = () => {
     const router = useRouter();
     const userIdCookie = useCookies().get('s_user_id');
-    const accessToken = useCookies().get('s_access_token');
-    const { data: user } = useUser({ revalidateOnMount: false });
-    const { data: universitas } = useUniversitas({ revalidateOnMount: false }, 'user', user ? user[0].university_id : undefined);
-    const penilaian = universitas[0].penilaian;
-    const penilaianKey = Object.keys(penilaian);
+    const accessToken = useCookies().get('s_access_token');    
     const [nama, setNama] = useState('');
     const [sks, setSks] = useState('');
     const [nilai, setNilai] = useState(-1);
@@ -863,6 +859,9 @@ export const TambahMatkul = () => {
     return (
         <ModalContext.Consumer>
             {context => {
+                const penilaian = context.data.penilaian;
+                const penilaianKey = Object.keys(penilaian);
+
                 const validateForm = () => {
                     // Validating 'Nama'
                     if (isEmpty(nama, { ignore_whitespace: true })) { setErrorMessage('Nama matakuliah dibutuhkan'); return false; }
