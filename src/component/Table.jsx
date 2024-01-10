@@ -20,7 +20,6 @@ import {
 } from '@tanstack/react-table'
 import { ModalContext } from "./provider/Modal";
 import { Spinner } from "./loader/Loading";
-import isNumeric from 'validator/lib/isnumeric';
 
 // ========== DATA DEPEDENCY ========== //
 import { getLocalTheme } from '@/utils/client_side';
