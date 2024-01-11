@@ -566,7 +566,7 @@
     }
 }
 
-@media screen and (max-width: 374px) {
+@media screen and (max-width: 424px) {
     .tools__right {
         justify-content: center;
     }
