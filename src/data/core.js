@@ -157,5 +157,5 @@ export function useUniversitas(custom, type, id) {
 }
 
 export function useLocalTheme(custom) {
-    return useSWR('localUserTheme', getLocalTheme);
+    return useSWR('localUserTheme', getLocalTheme, {...swrOptions, revalidateOnFocus: true, ...custom});
 }
