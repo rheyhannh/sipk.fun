@@ -250,7 +250,7 @@ export function Table({ state, validating, user, matkul, matkulHistory, penilaia
                     console.error('Failed load table state');
                 }
             }
-        }, [])
+        }, [localStorage.getItem('_table')])
 
         useEffect(() => {
             if (getLocalTheme() === 'dark') {
