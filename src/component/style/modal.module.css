@@ -13,7 +13,7 @@
     width: 100%;
     height: 100%;
     z-index: 9999;
-    transition: all .3s ease-in-out;
+    transition: all var(--transition-default) ease-in-out, background 0s;
 }
 
 .backdrop.active {
@@ -38,7 +38,7 @@
     background: var(--white-color);
     padding: 2rem;
     border-radius: 1rem;
-    transition: all .3s ease-in-out;
+    transition: all var(--transition-default) ease-in-out, background 0s;
     transform: scale(.5) translateY(10%);
 }
 
@@ -111,6 +111,7 @@
 }
 
 .title {
+    color: var(--dark-color);
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
@@ -237,7 +238,7 @@
     color: var(--dark-color);
     font-weight: var(--font-semi-bold);
     font-size: var(--small-font-size);
-    transition: all var(--transition-default) ease-in-out;
+    transition: all var(--transition-default) ease-in-out, background 0s, color 0s;
 }
 
 .form__select {
