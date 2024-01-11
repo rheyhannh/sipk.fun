@@ -30,8 +30,6 @@ const league_spartan = League_Spartan({
 })
 
 // ========== ICON DEPEDENCY ========== //
-import { RxHamburgerMenu } from 'react-icons/rx';
-import { LiaTimesSolid } from 'react-icons/lia';
 import { FiSun, FiMoon } from 'react-icons/fi';
 
 /*
@@ -40,9 +38,6 @@ import { FiSun, FiMoon } from 'react-icons/fi';
 function Right() {
     const { data, error, isLoading, isValidating } = useUser();
     const { data: theme } = useLocalTheme();
-    // const {
-    //     theme, setTheme,
-    // } = useContext(GlobalContext);
     const {
         setModal,
         setActive,
