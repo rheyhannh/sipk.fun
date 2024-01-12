@@ -8,7 +8,7 @@
     color: var(--dark-color);
     border-radius: .25rem;
     position: relative;
-    transition: all var(--transition-default) ease-in-out;
+    transition: all var(--transition-default) ease-in-out, background 0s, color 0s;
 }
 
 .item::after {
@@ -33,7 +33,7 @@
 .header i {
     display: flex;
     font-size: var(--h2-font-size);
-    transition: all var(--transition-default) ease-in-out;
+    transition: all var(--transition-default) ease-in-out, color 0s;
 }
 
 .header i.active {
@@ -42,7 +42,8 @@
 }
 
 .header h3 {
-    transition: all var(--transition-default) ease-in-out;
+    color: var(--dark-color);
+    transition: all var(--transition-default) ease-in-out, color 0s;
 }
 
 .header h3.active {
@@ -52,9 +53,10 @@
 .content {
     height: 0px;
     overflow: hidden;
-    transition: all var(--transition-default) ease-in-out;
+    transition: all var(--transition-default) ease-in-out, background 0s;
 }
 
 .description {
+    color: var(--dark-color);
     padding: 0 1.25rem 1.25rem 2.7rem;
 }
