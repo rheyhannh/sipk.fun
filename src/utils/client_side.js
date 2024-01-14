@@ -37,6 +37,7 @@ export const getLoadingMessage = (funWord = false, index = true) => {
             'Tunggu sebentar',
             'Membuat',
             'Memperbarui',
+            'Menyimpan',
         ]
     }
 
