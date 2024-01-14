@@ -243,6 +243,10 @@ export function Table({ state, validating, user, matkul, matkulHistory, penilaia
             return {size: currentPageSize === matkul.length + 1 ? -1 : currentPageSize, controlPosition: pageControlPosition, state: columnState};
         }
 
+        const isSearchActive = () => {
+            return columnFilters.some(filter => filter.id === 'matakuliah');
+        };
+
         const handleTambahModal = () => {
             if (!penilaian) { return; }
             setModalData({ penilaian });
@@ -401,7 +405,7 @@ export function Table({ state, validating, user, matkul, matkulHistory, penilaia
                             <div className={styles.search}>
                                 <Filter column={table.getColumn('matakuliah')} table={table} />
                                 <div
-                                    className={`${styles.search__icon} ${styles.times} ${table.getState().columnFilters[0]?.id === 'matakuliah' ? '' : styles.hide}`}
+                                    className={`${styles.search__icon} ${styles.times} ${isSearchActive() ? '' : styles.hide}`}
                                     onClick={() => {
                                         table.resetColumnFilters();
                                     }}
@@ -409,7 +413,7 @@ export function Table({ state, validating, user, matkul, matkulHistory, penilaia
                                     <IoClose size={'18px'} />
                                 </div>
                                 <div
-                                    className={`${styles.search__icon} ${table.getState().columnFilters[0]?.id === 'matakuliah' ? styles.active : ''}`}
+                                    className={`${styles.search__icon} ${isSearchActive() ? styles.active : ''}`}
                                 >
                                     <IoSearchCircle size={'24px'} />
                                 </div>
@@ -422,7 +426,7 @@ export function Table({ state, validating, user, matkul, matkulHistory, penilaia
                             <div className={styles.tools__shorcut_box} onClick={() => { handleSettingModal() }}>
                                 <IoSettingsOutline size={'18px'} />
                             </div>
-                            <div className={styles.tools__shorcut_box}>
+                            <div className={styles.tools__shorcut_box} onClick={() => { console.log(columnFilters); console.log(isSearchActive()); }}>
                                 <IoFilter size={'20px'} />
                             </div>
                         </div>
