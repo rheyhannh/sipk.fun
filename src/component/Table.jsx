@@ -320,6 +320,18 @@ export function Table({ state, validating, user, matkul, matkulHistory, penilaia
 
                         return true;
                     }
+                    const validateColumnFilters = (arr) => {
+                        const validId = ['matakuliah', 'semester', 'sks', 'nilai', 'diulang', 'target'];
+                        return arr.every(obj => {
+                            if (Object.keys(obj).length !== 2 || !obj.hasOwnProperty('id') || !obj.hasOwnProperty('value')) {
+                                return false;
+                            }
+                            if (!validId.includes(obj.id)) {
+                                return false;
+                            }
+                            return true;
+                        })
+                    }
 
                     if (
                         'tab' in state && typeof state.tab === 'number' &&
@@ -327,7 +339,8 @@ export function Table({ state, validating, user, matkul, matkulHistory, penilaia
                         'pageIndex' in state && typeof state.pageIndex === 'number' &&
                         'pageControlPosition' in state && typeof state.pageControlPosition === 'number' &&
                         'columnOrder' in state && Array.isArray(state.columnOrder) &&
-                        'columnVisibility' in state && typeof state.columnVisibility === 'object' && state.columnVisibility !== null && !Array.isArray(state.columnVisibility)
+                        'columnVisibility' in state && typeof state.columnVisibility === 'object' && state.columnVisibility !== null && !Array.isArray(state.columnVisibility) &&
+                        'columnFilters' in state && Array.isArray(state.columnFilters)
                     ) {
                         setActiveTab(validateTab(state.tab) ? state.tab : 0);
                         table.setPageSize(validatePageSize(state.pageSize) ? state.pageSize === -1 ? matkul.length + 1 : state.pageSize : 5);
@@ -335,6 +348,7 @@ export function Table({ state, validating, user, matkul, matkulHistory, penilaia
                         setPageControlPosition(validatePageControlPosition(state.pageControlPosition) ? state.pageControlPosition : 0);
                         setColumnOrder(validateColumnOrder(state.columnOrder) ? state.columnOrder : []);
                         setColumnVisibility(validateColumnVisibility(state.columnVisibility) ? state.columnVisibility : {});
+                        setColumnFilters(validateColumnFilters(state.columnFilters) ? state.columnFilters : []);
                     } else {
                         throw new Error('Invalid table state');
                     }
@@ -373,10 +387,11 @@ export function Table({ state, validating, user, matkul, matkulHistory, penilaia
                 pageIndex: table.getState().pagination.pageIndex,
                 pageControlPosition,
                 columnOrder,
-                columnVisibility
+                columnVisibility,
+                columnFilters
             }
             localStorage.setItem('_table', JSON.stringify(currentState));
-        }, [activeTab, columnOrder, columnVisibility, pageControlPosition, table.getState().pagination.pageSize, table.getState().pagination.pageIndex])
+        }, [activeTab, columnOrder, columnVisibility, columnFilters, pageControlPosition, table.getState().pagination.pageSize, table.getState().pagination.pageIndex])
 
         return (
             <div className={`${styles.container} ${pageControlCSS[pageControlPosition]}`}>
