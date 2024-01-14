@@ -39,8 +39,9 @@ import {
     IoCaretBack,
     IoPlayForward,
     IoPlayBack,
-}
-    from "react-icons/io5";
+    IoArrowDownSharp,
+    IoArrowUpSharp
+} from "react-icons/io5";
 
 /*
 ============================== CODE START HERE ==============================
@@ -65,8 +66,13 @@ export function Table({ state, validating, user, matkul, matkulHistory, penilaia
         const [data, setData] = useState(matkul);
         const [activeTab, setActiveTab] = useState(0);
         const [isValidating, setIsValidating] = useState(validating);
+        const [columnVisibility, setColumnVisibility] = useState(user?.preferences?.table?.columnVisibility || {
+            nomor: true, matakuliah: true, semester: true, sks: true, nilai: true, diulang: true, target: true
+        });
         const [columnFilters, setColumnFilters] = useState([]);
-        const [columnOrder, setColumnOrder] = useState(user?.preferences?.table?.columnOrder.length || []);
+        const [columnOrder, setColumnOrder] = useState(user?.preferences?.table?.columnOrder || [
+            'nomor', 'matakuliah', 'semester', 'sks', 'nilai', 'diulang', 'target'
+        ]);
         const [tableEmptyImg, setTableEmptyImg] = useState(getLocalTheme() === 'dark' ? <Image src="https://storage.googleapis.com/sipk_assets/table_kosong_dark.svg" width={100} height={100} alt="Table Empty" /> : <Image src="https://storage.googleapis.com/sipk_assets/table_kosong.svg" width={100} height={100} alt="Table Empty" />)
         const [pageControlPosition, setPageControlPosition] = useState(user?.preferences?.table?.controlPosition || 0);
         const {
@@ -142,15 +148,6 @@ export function Table({ state, validating, user, matkul, matkulHistory, penilaia
             table.setPageIndex(0);
         }
 
-        const handleTambahModal = () => {
-            if (!penilaian) { return; }
-            setModalData({ penilaian });
-            setModal('tambahMatkul');
-            setTimeout(() => {
-                setActive(true);
-            }, 50)
-        }
-
         const columnHelper = createColumnHelper();
         const columns = useMemo(
             () => [
@@ -213,44 +210,133 @@ export function Table({ state, validating, user, matkul, matkulHistory, penilaia
             state: {
                 columnFilters,
                 columnOrder,
+                columnVisibility,
             },
             getCoreRowModel: getCoreRowModel(),
             getFilteredRowModel: getFilteredRowModel(),
             getSortedRowModel: getSortedRowModel(),
             getPaginationRowModel: getPaginationRowModel(),
             onColumnFiltersChange: setColumnFilters,
+            onColumnVisibilityChange: setColumnVisibility,
             autoResetAll: false,
             // debugAll: true,
         })
+
+        const setPageSize = (size) => {
+            if (size === -1) {
+                table.setPageSize(matkul.length + 1);
+            } else {
+                table.setPageSize(size);
+            }
+        }
+
+        const getTablePreferences = () => {
+            const currentPageSize = table.getState().pagination.pageSize;
+            const titleKey = {
+                nomor: "Nomor", matakuliah: "Matakuliah", semester: "Semester", sks: "Sks", nilai: "Nilai", diulang: "Bisa Diulang", target: "Target Nilai"
+            }
+            const columnState = columnOrder.map((id, index) => {
+                const title = titleKey[id];
+                const visible = columnVisibility[id];
+                return { title, id, visible };
+            })
+            return {size: currentPageSize === matkul.length + 1 ? -1 : currentPageSize, controlPosition: pageControlPosition, state: columnState};
+        }
+
+        const handleTambahModal = () => {
+            if (!penilaian) { return; }
+            setModalData({ penilaian });
+            setModal('tambahMatkul');
+            setTimeout(() => {
+                setActive(true);
+            }, 50)
+        }
+
+        const handleSettingModal = () => {
+            setModalData({ setPageSize, setColumnOrder, setPageControlPosition, setColumnVisibility, table: getTablePreferences() });
+            setModal('tabelSetting');
+            setTimeout(() => {
+                setActive(true);
+            }, 50)
+        }
 
         useEffect(() => {
             const savedState = localStorage.getItem('_table');
             if (savedState) {
                 try {
+                    const allowedKeys = ['nomor', 'matakuliah', 'semester', 'sks', 'nilai', 'diulang', 'target'];
                     const state = JSON.parse(savedState);
+                    const validateTab = (tab) => {
+                        const allowedTab = [0, 1, 2];
+                        if (allowedTab.includes(tab)) {
+                            if (tab === 1) { handleDeletedMatakuliahTab(); }
+                            return true;
+                        }
+                        return false;
+                    }
+                    const validatePageSize = (size) => {
+                        const allowedPageSize = [5, 10, 25, 50, 100, matkul.length + 1, -1];
+                        if (allowedPageSize.includes(size)) {
+                            return true;
+                        }
+                        return false;
+                    }
+                    const validatePageControlPosition = (state) => {
+                        const allowedPageControlPosition = [0, 1, 2];
+                        if (allowedPageControlPosition.includes(state)) {
+                            return true;
+                        }
+                        return false;
+                    }
+                    const validateColumnOrder = (arr) => {
+                        if (arr.length !== 7) {
+                            return false;
+                        }
+                        for (const str of allowedKeys) {
+                            if (!arr.includes(str)) {
+                                return false;
+                            }
+                        }
+                        return true;
+                    }
+                    const validateColumnVisibility = (obj) => {
+                        const keys = Object.keys(obj);
+                        if (keys.length !== 7 || !keys.every(key => allowedKeys.includes(key))) {
+                            return false;
+                        }
+
+                        const values = Object.values(obj);
+                        if (!values.every(value => typeof value === 'boolean')) {
+                            return false;
+                        }
+
+                        return true;
+                    }
+
                     if (
                         'tab' in state && typeof state.tab === 'number' &&
                         'pageSize' in state && typeof state.pageSize === 'number' &&
                         'pageIndex' in state && typeof state.pageIndex === 'number' &&
-                        'pageControlPosition' in state && typeof state.pageControlPosition === 'number'
+                        'pageControlPosition' in state && typeof state.pageControlPosition === 'number' &&
+                        'columnOrder' in state && Array.isArray(state.columnOrder) &&
+                        'columnVisibility' in state && typeof state.columnVisibility === 'object' && state.columnVisibility !== null && !Array.isArray(state.columnVisibility)
                     ) {
-                        const allowedTab = [0, 1, 2];
-                        const allowedPageControlPosition = [0, 1, 2];
-                        const allowedPageSize = [5, 10, 25, 50, 100, matkul.length + 1];
-                        setActiveTab(allowedTab.includes(state.tab) ? state.tab : 0);
-                        if (state.tab === 1) { handleDeletedMatakuliahTab(); }
-                        setPageControlPosition(allowedPageControlPosition.includes(state.pageControlPosition) ? state.pageControlPosition : 0);
-                        table.setPageSize(allowedPageSize.includes(state.pageSize) ? state.pageSize : 5);
+                        setActiveTab(validateTab(state.tab) ? state.tab : 0);
+                        table.setPageSize(validatePageSize(state.pageSize) ? state.pageSize === -1 ? matkul.length + 1 : state.pageSize : 5);
                         table.setPageIndex(state.pageIndex);
+                        setPageControlPosition(validatePageControlPosition(state.pageControlPosition) ? state.pageControlPosition : 0);
+                        setColumnOrder(validateColumnOrder(state.columnOrder) ? state.columnOrder : []);
+                        setColumnVisibility(validateColumnVisibility(state.columnVisibility) ? state.columnVisibility : {});
                     } else {
                         throw new Error('Invalid table state');
                     }
                 } catch (error) {
                     localStorage.removeItem('_table');
-                    console.error('Failed load table state');
+                    console.error(error?.message || 'Something went wrong');
+                    console.error('Failed to load table state');
                 }
             }
-        }, [localStorage.getItem('_table')])
+        }, [])
 
         useEffect(() => {
             if (getLocalTheme() === 'dark') {
@@ -272,14 +358,17 @@ export function Table({ state, validating, user, matkul, matkulHistory, penilaia
                 return;
             }
 
+            const currentPageSize = table.getState().pagination.pageSize;
             const currentState = {
                 tab: activeTab,
-                pageSize: table.getState().pagination.pageSize,
+                pageSize: currentPageSize === matkul.length + 1 ? -1 : currentPageSize,
                 pageIndex: table.getState().pagination.pageIndex,
-                pageControlPosition: pageControlPosition
+                pageControlPosition,
+                columnOrder,
+                columnVisibility
             }
             localStorage.setItem('_table', JSON.stringify(currentState));
-        }, [activeTab, pageControlPosition, table.getState().pagination.pageSize, table.getState().pagination.pageIndex])
+        }, [activeTab, columnOrder, columnVisibility, pageControlPosition, table.getState().pagination.pageSize, table.getState().pagination.pageIndex])
 
         return (
             <div className={`${styles.container} ${pageControlCSS[pageControlPosition]}`}>
@@ -292,19 +381,19 @@ export function Table({ state, validating, user, matkul, matkulHistory, penilaia
                             className={`${styles.btn} ${activeTab === 0 ? styles.active : ''}`}
                             onClick={activeTab !== 0 ? () => handleAllMatakuliahTab() : null}
                         >
-                            Semua Matakuliah
+                            Ditambah
                         </div>
                         <div
                             className={`${styles.btn} ${activeTab === 1 ? styles.active : ''}`}
                             onClick={activeTab !== 1 ? () => handleDeletedMatakuliahTab() : null}
                         >
-                            Matakuliah Dihapus
+                            Dihapus
                         </div>
                         <div
                             className={`${styles.btn} ${activeTab === 2 ? styles.active : ''}`}
                             onClick={activeTab !== 2 ? () => handleEditedMatakuliahTab() : null}
                         >
-                            Matakuliah Diedit
+                            Diedit
                         </div>
                     </div>
                     <div className={styles.tools__right}>
@@ -330,7 +419,7 @@ export function Table({ state, validating, user, matkul, matkulHistory, penilaia
                             <div className={styles.tools__shorcut_box} onClick={() => { handleTambahModal() }}>
                                 <IoAdd size={'22px'} />
                             </div>
-                            <div className={styles.tools__shorcut_box}>
+                            <div className={styles.tools__shorcut_box} onClick={() => { handleSettingModal() }}>
                                 <IoSettingsOutline size={'18px'} />
                             </div>
                             <div className={styles.tools__shorcut_box}>
@@ -418,6 +507,7 @@ export function Table({ state, validating, user, matkul, matkulHistory, penilaia
                                                             <div
                                                             >
                                                                 <span
+                                                                    className={`${styles.head} ${header.column.getIsSorted() ? styles.sorted : ''}`}
                                                                     style={{ cursor: header.column.getCanSort() ? 'pointer' : 'auto' }}
                                                                     onClick={header.column.getToggleSortingHandler()}
                                                                 >
@@ -426,8 +516,8 @@ export function Table({ state, validating, user, matkul, matkulHistory, penilaia
                                                                         header.getContext()
                                                                     )}
                                                                     {{
-                                                                        asc: header.column.id === 'diulang' ? ' ✔️' : ' 🔼',
-                                                                        desc: header.column.id === 'diulang' ? ' ❌' : ' 🔽',
+                                                                        asc: header.column.id === 'diulang' ? <IoCheckmark /> : <IoArrowDownSharp />,
+                                                                        desc: header.column.id === 'diulang' ? <IoClose /> : <IoArrowUpSharp />,
                                                                     }[header.column.getIsSorted()] ?? null}
                                                                 </span>
                                                             </div>

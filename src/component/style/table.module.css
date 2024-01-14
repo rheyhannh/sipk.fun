@@ -231,6 +231,18 @@
     text-align: center;
 }
 
+.data .head {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    gap: .2rem;
+}
+
+.data .head.sorted {
+    color: var(--logo-second-color);
+}
+
 .data th {
     font-weight: 400;
     color: var(--infoDark-color);
