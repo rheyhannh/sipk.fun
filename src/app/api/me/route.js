@@ -166,6 +166,14 @@ export async function PATCH(request) {
         })
     }
 
+    const searchParams = request.nextUrl.searchParams;
+    const type = searchParams.get('type');
+    const allowedType = ['preferences'];
+
+    if (type && !allowedType.includes(type)) {
+        return NextResponse.json({ message: 'Bad Request - Invalid type' }, { status: 400, headers: newHeaders })
+    }
+
     // Check are formData equal to schema using 'Joi'
     try {
         var formData = await request.json();
@@ -176,14 +184,44 @@ export async function PATCH(request) {
             headers: newHeaders
         })
     }
-    const formDataSchema = Joi.object({
-        fullname: Joi.string().pattern(/^[A-Za-z\s]*$/, 'alpha only').pattern(/^[a-zA-Z]+(\s[a-zA-Z]+)*$/, 'one space each word').min(6).max(50),
-        nickname: Joi.string().min(6).max(20),
-        jurusan: Joi.string().min(6).max(30),
-        sks_target: Joi.number().integer().min(5).max(1000),
-        matkul_target: Joi.number().integer().min(5).max(1000),
-        ipk_target: Joi.number().min(1).max(4)
-    })
+
+    const allowedColumn = ['nomor', 'matakuliah', 'semester', 'sks', 'nilai', 'diulang', 'target'];
+    const formDataSchema =
+        type === 'preferences' ?
+            Joi.object({
+                table: Joi.object({
+                    size: Joi.number().valid(-1, 5, 10, 25, 50, 100).required().options({ convert: false }),
+                    controlPosition: Joi.number().min(0).max(2).required().options({ convert: false }),
+                    columnOrder: Joi.array()
+                        .items(Joi.string().valid(...allowedColumn))
+                        .unique()
+                        .length(7)
+                        .required(),
+                    columnVisibility: Joi.object()
+                        .keys({
+                            nomor: Joi.boolean().required(),
+                            matakuliah: Joi.boolean().required(),
+                            semester: Joi.boolean().required(),
+                            sks: Joi.boolean().required(),
+                            nilai: Joi.boolean().required(),
+                            diulang: Joi.boolean().required(),
+                            target: Joi.boolean().required(),
+                        })
+                        .required()
+                        .length(allowedColumn.length)
+                        .unknown(false)
+                        .options({ convert: false })
+                }).required()
+            }).required()
+            :
+            Joi.object({
+                fullname: Joi.string().pattern(/^[A-Za-z\s]*$/, 'alpha only').pattern(/^[a-zA-Z]+(\s[a-zA-Z]+)*$/, 'one space each word').min(6).max(50),
+                nickname: Joi.string().min(6).max(20),
+                jurusan: Joi.string().min(6).max(30),
+                sks_target: Joi.number().integer().min(5).max(1000),
+                matkul_target: Joi.number().integer().min(5).max(1000),
+                ipk_target: Joi.number().min(1).max(4)
+            })
 
     try {
         await formDataSchema.validateAsync(formData);
@@ -222,11 +260,16 @@ export async function PATCH(request) {
         }
     )
 
-    var { data: profilBaru, error } = await supabase.from('user').update({ ...formData }).eq('id', userId).select();
+    var { data: profilBaru, error } =
+        type === 'preferences' ?
+            await supabase.from('user').update({ preferences: formData }).eq('id', userId).select()
+            :
+            await supabase.from('user').update({ ...formData }).eq('id', userId).select()
+
 
     if (error) {
         console.error(error);
-        return NextResponse.json({ message: `Gagal memperbarui profil` }, { status: 500, headers: newHeaders })
+        return NextResponse.json({ message: `Gagal memperbarui data` }, { status: 500, headers: newHeaders })
     }
 
     return NextResponse.json({ profil: profilBaru[0] }, { status: 200, headers: newHeaders })
