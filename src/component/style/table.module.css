@@ -185,6 +185,11 @@
     color: var(--dark-color);
 }
 
+.tools__shorcut_box.active {
+    background: var(--users-btn-sec);
+    color: var(--logo-second-color);
+}
+
 .empty {
     display: flex;
     flex-direction: column;

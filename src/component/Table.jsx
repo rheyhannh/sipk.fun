@@ -247,6 +247,10 @@ export function Table({ state, validating, user, matkul, matkulHistory, penilaia
             return columnFilters.some(filter => filter.id === 'matakuliah');
         };
 
+        const isTableFiltered = () => {
+            return columnFilters.length > 0;
+        }
+
         const handleTambahModal = () => {
             if (!penilaian) { return; }
             setModalData({ penilaian });
@@ -426,7 +430,7 @@ export function Table({ state, validating, user, matkul, matkulHistory, penilaia
                             <div className={styles.tools__shorcut_box} onClick={() => { handleSettingModal() }}>
                                 <IoSettingsOutline size={'18px'} />
                             </div>
-                            <div className={styles.tools__shorcut_box} onClick={() => { console.log(columnFilters); console.log(isSearchActive()); }}>
+                            <div className={`${styles.tools__shorcut_box} ${isTableFiltered() ? styles.active : ''}`}>
                                 <IoFilter size={'20px'} />
                             </div>
                         </div>
