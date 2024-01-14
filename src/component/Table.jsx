@@ -230,6 +230,11 @@ export function Table({ state, validating, user, matkul, matkulHistory, penilaia
             }
         }
 
+        const setPageIndex = (reset = false, index) => {
+            if (reset) { table.setPageIndex(0) }
+            else { table.setPageIndex(index) }
+        }
+
         const getTablePreferences = () => {
             const currentPageSize = table.getState().pagination.pageSize;
             const titleKey = {
@@ -240,7 +245,7 @@ export function Table({ state, validating, user, matkul, matkulHistory, penilaia
                 const visible = columnVisibility[id];
                 return { title, id, visible };
             })
-            return {size: currentPageSize === matkul.length + 1 ? -1 : currentPageSize, controlPosition: pageControlPosition, state: columnState};
+            return { size: currentPageSize === matkul.length + 1 ? -1 : currentPageSize, controlPosition: pageControlPosition, state: columnState };
         }
 
         const isSearchActive = () => {
