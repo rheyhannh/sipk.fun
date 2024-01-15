@@ -27,6 +27,7 @@
 .logout,
 .rating,
 .tabel__setting,
+.tabel__filter,
 .profil,
 .default {
     display: grid;
@@ -86,11 +87,16 @@
     max-height: 465px;
 }
 
+.tabel__filter {
+    max-height: 455px;
+}
+
 .backdrop.active .perubahan__terakhir,
 .backdrop.active .tambah__matakuliah,
 .backdrop.active .panduan__daftar,
 .backdrop.active .rating,
 .backdrop.active .tabel__setting,
+.backdrop.active .tabel__filter,
 .backdrop.active .profil,
 .backdrop.active .logout {
     transform: scale(1) translateY(0);
@@ -311,12 +317,14 @@
 }
 
 .tambah__matakuliah .form__input:focus+.form__label,
-.profil .form__input:focus+.form__label {
+.profil .form__input:focus+.form__label,
+.tabel__filter .form__input:focus+.form__label {
     color: var(--logo-second-color);
 }
 
 .tambah__matakuliah .form__input:not(:placeholder-shown).form__input:not(:focus)+.form__label,
-.profil .form__input:not(:placeholder-shown).form__input:not(:focus)+.form__label {
+.profil .form__input:not(:placeholder-shown).form__input:not(:focus)+.form__label,
+.tabel__filter .form__input:not(:placeholder-shown).form__input:not(:focus)+.form__label {
     color: var(--logo-second-color);
 }
 
@@ -345,7 +353,8 @@
     background: var(--primary-sec-color);
 }
 
-.form__action .btn.confirm.tambah {
+.form__action .btn.confirm.tambah,
+.form__action .btn.confirm.reset {
     background: var(--danger-sec-color);
 }
 
@@ -539,6 +548,41 @@
     border-radius: .5rem;
 }
 
+.tabel__filter_title {
+    text-align: center;
+    font-size: .85rem;
+    font-weight: 600;
+    color: var(--dark-color);
+    margin-bottom: .75rem;
+}
+
+.tabel__filter .form__input_field {
+    height: 42.5px;
+    margin: 0;
+}
+
+.tabel__filter .form__input {
+    line-height: 42.5px;
+    font-weight: 500;
+}
+
+.tabel__filter .form__label {
+    line-height: 42.5px;
+    color: var(--infoDark-color);
+    font-weight: 500;
+}
+
+.tabel__filter .form__select {
+    line-height: 42.5px;
+    font-weight: 500;
+}
+
+.tabel__filter_range {
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    gap: .5rem;
+}
+
 @media (hover: hover) and (pointer: fine) {
     .inner::-webkit-scrollbar-thumb:hover {
         border-radius: .25rem;
@@ -550,7 +594,8 @@
     .panduan__daftar:hover .inner::-webkit-scrollbar,
     .profil:hover .inner::-webkit-scrollbar,
     .rating:hover .inner::-webkit-scrollbar,
-    .tabel__setting:hover .inner::-webkit-scrollbar {
+    .tabel__setting:hover .inner::-webkit-scrollbar,
+    .tabel__filter:hover .inner::-webkit-scrollbar {
         visibility: visible;
     }
 
@@ -559,7 +604,8 @@
     .panduan__daftar:hover .inner::-webkit-scrollbar-thumb,
     .profil:hover .inner::-webkit-scrollbar-thumb,
     .rating:hover .inner::-webkit-scrollbar-thumb,
-    .tabel__setting:hover .inner::-webkit-scrollbar-thumb {
+    .tabel__setting:hover .inner::-webkit-scrollbar-thumb,
+    .tabel__filter:hover .inner::-webkit-scrollbar-thumb {
         visibility: visible;
     }
 
@@ -568,7 +614,8 @@
     .panduan__daftar:hover .inner::-webkit-scrollbar-thumb:hover,
     .profil:hover .inner::-webkit-scrollbar-thumb:hover,
     .rating:hover .inner::-webkit-scrollbar-thumb:hover,
-    .tabel__setting:hover .inner::-webkit-scrollbar-thumb:hover {
+    .tabel__setting:hover .inner::-webkit-scrollbar-thumb:hover,
+    .tabel__filter:hover .inner::-webkit-scrollbar-thumb:hover {
         visibility: visible;
     }
 
@@ -584,7 +631,8 @@
         background: var(--primary-color);
     }
 
-    .form__action .btn.confirm.tambah:hover {
+    .form__action .btn.confirm.tambah:hover,
+    .form__action .btn.confirm.reset:hover {
         background: var(--danger-color);
     }
 
@@ -652,7 +700,8 @@
     .panduan__daftar,
     .profil,
     .rating,
-    .tabel__setting {
+    .tabel__setting,
+    .tabel__filter {
         max-height: none;
         max-width: none;
         padding: 2rem 1rem;

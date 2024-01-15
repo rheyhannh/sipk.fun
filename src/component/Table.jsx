@@ -273,6 +273,13 @@ export function Table({ state, validating, user, matkul, matkulHistory, penilaia
             }, 50)
         }
 
+        const handleFilterModal = () => {
+            setModalData({ setPageIndex, setColumnFilters, columnFilters, penilaian });
+            setModal('tabelFilter');
+            setTimeout(() => {
+                setActive(true);
+            }, 50)
+        }
         useEffect(() => {
             const savedState = localStorage.getItem('_table');
             if (savedState) {
@@ -450,7 +457,7 @@ export function Table({ state, validating, user, matkul, matkulHistory, penilaia
                             <div className={styles.tools__shorcut_box} onClick={() => { handleSettingModal() }}>
                                 <IoSettingsOutline size={'18px'} />
                             </div>
-                            <div className={`${styles.tools__shorcut_box} ${isTableFiltered() ? styles.active : ''}`}>
+                            <div className={`${styles.tools__shorcut_box} ${isTableFiltered() ? styles.active : ''}`} onClick={() => { handleFilterModal() }}>
                                 <IoFilter size={'20px'} />
                             </div>
                         </div>

@@ -842,7 +842,7 @@ export const PerubahanTerakhirConfirm = () => {
 export const TambahMatkul = () => {
     const router = useRouter();
     const userIdCookie = useCookies().get('s_user_id');
-    const accessToken = useCookies().get('s_access_token');    
+    const accessToken = useCookies().get('s_access_token');
     const [nama, setNama] = useState('');
     const [sks, setSks] = useState('');
     const [nilai, setNilai] = useState(-1);
@@ -2492,6 +2492,365 @@ export const TabelSetting = () => {
                                     </div>
                                 }
                             </div>
+                        </form>
+                    </div>
+                )
+            }
+            }
+        </ModalContext.Consumer>
+    )
+}
+
+export const TabelFilter = () => {
+    const [editFilter, setEditFilter] = useState(false);
+    const [errorMessage, setErrorMessage] = useState('');
+    const [nama, setNama] = useState('');
+    const [sksMin, setSksMin] = useState('');
+    const [sksMaks, setSksMaks] = useState('');
+    const [semesterMin, setSemesterMin] = useState('');
+    const [semesterMaks, setSemesterMaks] = useState('');
+    const [nilai, setNilai] = useState('');
+    const [targetNilai, setTargetNilai] = useState('');
+    const [dapatDiulang, setDapatDiulang] = useState('');
+
+    const handleNamaChange = (e) => {
+        const newNama = e.target.value;
+        if (newNama.length <= 50) {
+            setNama(newNama);
+        }
+    }
+
+    const getValueById = (id, arr) => {
+        const item = arr.find(x => x.id === id);
+        if (!item) { return '' }
+        if (id === 'diulang') {
+            return item.value ? 'ya' : 'tidak';
+        }
+        else if (['sks', 'semester'].includes(id)) {
+            return [item.value[0] ?? '', item.value[1] ?? ''];
+        } else {
+            return item.value ?? '';
+        }
+    }
+
+    return (
+        <ModalContext.Consumer>
+            {context => {
+                const penilaian = context.data.penilaian;
+                const penilaianKey = Object.keys(penilaian);
+
+                const validateForm = () => {
+
+                }
+
+                const toggleEditFilter = () => {
+                    setNama(getValueById('matakuliah', context?.data?.columnFilters))
+                    setSksMin(getValueById('sks', context?.data?.columnFilters)[0])
+                    setSksMaks(getValueById('sks', context?.data?.columnFilters)[1])
+                    setSemesterMin(getValueById('semester', context?.data?.columnFilters)[0])
+                    setSemesterMaks(getValueById('semester', context?.data?.columnFilters)[1])
+                    setNilai(getValueById('nilai', context?.data?.columnFilters));
+                    setTargetNilai(getValueById('target', context?.data?.columnFilters));
+                    setDapatDiulang(getValueById('diulang', context?.data?.columnFilters));
+                    if (editFilter) {
+                        setEditFilter(false);
+                        setErrorMessage('');
+                    } else {
+                        setEditFilter(true);
+                    }
+                }
+
+                const handleResetFilter = () => {
+                    setNama('');
+                    setSksMin('');
+                    setSksMaks('');
+                    setSemesterMin('');
+                    setSemesterMaks('');
+                    setNilai('');
+                    setTargetNilai('');
+                    setDapatDiulang('');
+                }
+
+                const handleApplyFilter = () => {
+
+                }
+
+                return (
+                    <div className={`${styles.backdrop} ${context.active ? styles.active : ''}`}>
+                        <form
+                            style={editFilter ? {
+                                gridTemplateRows: '30px auto 100px',
+                                overflow: 'hidden'
+                            } : {}}
+                            onSubmit={handleApplyFilter}
+                            className={`${styles.tabel__filter}`}
+                            id='modal'
+                        >
+                            <div className={styles.top}>
+                                <div className={styles.title}>
+                                    <h2>{editFilter ? 'Atur Filter' : 'Filter Tabel'}</h2>
+                                </div>
+                                <div className={styles.close} onClick={() => { context.handleModalClose() }}>
+                                    <FaTimes />
+                                </div>
+                            </div>
+
+                            <div className={styles.inner}>
+                                <div style={{ marginBottom: '1.5rem', textAlign: 'center', color: 'var(--danger-color)' }}>
+                                    {errorMessage}
+                                </div>
+
+                                <div style={{ marginBottom: '.75rem' }}>
+                                    <div className={styles.form__input_field}>
+                                        <div>
+                                            <input
+                                                type="text"
+                                                id="nama"
+                                                maxLength="50"
+                                                placeholder=" "
+                                                className={`${styles.form__input} ${styles.max_length}`}
+                                                value={nama}
+                                                onChange={handleNamaChange}
+                                                onFocus={() => { setErrorMessage('') }}
+                                                disabled={!editFilter}
+                                            />
+                                            <label
+                                                htmlFor="nama"
+                                                className={styles.form__label}
+                                            >
+                                                Nama
+                                            </label>
+                                        </div>
+
+                                        <div className={`${styles.form__input_length} ${nama.length >= 50 ? styles.max : ''}`}>
+                                            <small>{nama.length}/50</small>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div
+                                    style={{
+                                        display: 'grid',
+                                        gridTemplateColumns: 'repeat(2,1fr)',
+                                        gap: '1rem',
+                                        marginBottom: '1.25rem'
+                                    }}
+                                >
+                                    <div>
+                                        <h3 className={styles.tabel__filter_title}>Sks</h3>
+                                        <div className={styles.tabel__filter_range}>
+                                            <div className={styles.form__input_field}>
+                                                <input
+                                                    type="number"
+                                                    id="sksMin"
+                                                    step="1"
+                                                    max="50"
+                                                    placeholder=" "
+                                                    className={styles.form__input}
+                                                    value={sksMin}
+                                                    onChange={(e) => { setSksMin(e.target.value) }}
+                                                    onFocus={() => { setErrorMessage('') }}
+                                                    disabled={!editFilter}
+                                                />
+                                                <label
+                                                    htmlFor="sksMin"
+                                                    className={styles.form__label}
+                                                >
+                                                    Min
+                                                </label>
+                                            </div>
+
+                                            <div className={styles.form__input_field}>
+                                                <input
+                                                    type="number"
+                                                    id="sksMaks"
+                                                    step="1"
+                                                    max="50"
+                                                    placeholder=" "
+                                                    className={styles.form__input}
+                                                    value={sksMaks}
+                                                    onChange={(e) => { setSksMaks(e.target.value) }}
+                                                    onFocus={() => { setErrorMessage('') }}
+                                                    disabled={!editFilter}
+                                                />
+                                                <label
+                                                    htmlFor="sksMaks"
+                                                    className={styles.form__label}
+                                                >
+                                                    Maks
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div>
+                                        <h3 className={styles.tabel__filter_title}>Semester</h3>
+                                        <div className={styles.tabel__filter_range}>
+                                            <div className={styles.form__input_field}>
+                                                <input
+                                                    type="number"
+                                                    id="semesterMin"
+                                                    step="1"
+                                                    max="50"
+                                                    placeholder=" "
+                                                    className={styles.form__input}
+                                                    value={semesterMin}
+                                                    onChange={(e) => { setSemesterMin(e.target.value) }}
+                                                    onFocus={() => { setErrorMessage('') }}
+                                                    disabled={!editFilter}
+                                                />
+                                                <label
+                                                    htmlFor="semesterMin"
+                                                    className={styles.form__label}
+                                                >
+                                                    Min
+                                                </label>
+                                            </div>
+
+                                            <div className={styles.form__input_field}>
+                                                <input
+                                                    type="number"
+                                                    id="semesterMaks"
+                                                    step="1"
+                                                    max="50"
+                                                    placeholder=" "
+                                                    className={styles.form__input}
+                                                    value={semesterMaks}
+                                                    onChange={(e) => { setSemesterMaks(e.target.value) }}
+                                                    onFocus={() => { setErrorMessage('') }}
+                                                    disabled={!editFilter}
+                                                />
+                                                <label
+                                                    htmlFor="semesterMaks"
+                                                    className={styles.form__label}
+                                                >
+                                                    Maks
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div
+                                    style={{
+                                        display: 'grid',
+                                        gridTemplateColumns: 'repeat(3,1fr)',
+                                        gap: '1rem',
+                                        marginBottom: '1.25rem'
+                                    }}
+                                >
+                                    <div className={styles.form__input_field}>
+                                        <select
+                                            id="nilai"
+                                            className={`${styles.form__select} ${nilai ? styles.filled : ''}`}
+                                            value={nilai}
+                                            onChange={(e) => { setNilai(e.target.value) }}
+                                            onFocus={() => { setErrorMessage('') }}
+                                            style={editFilter ? {} : { cursor: 'auto' }}
+                                            disabled={!editFilter}
+                                        >
+                                            <option value={''}></option>
+                                            <option value={-1}>Semua</option>
+                                            {penilaianKey.map((nilai) => (
+                                                <option value={nilai} key={crypto.randomUUID()}>{nilai}</option>
+                                            ))
+                                            }
+                                        </select>
+
+                                        <label
+                                            htmlFor="nilai"
+                                            className={styles.form__label}
+                                        >
+                                            Nilai
+                                        </label>
+                                    </div>
+
+                                    <div className={styles.form__input_field}>
+                                        <select
+                                            id="targetNilai"
+                                            className={`${styles.form__select} ${targetNilai ? styles.filled : ''}`}
+                                            value={targetNilai}
+                                            onChange={(e) => { setTargetNilai(e.target.value) }}
+                                            onFocus={() => { setErrorMessage('') }}
+                                            style={editFilter ? {} : { cursor: 'auto' }}
+                                            disabled={!editFilter}
+                                        >
+                                            <option value={''}></option>
+                                            <option value={-1}>Semua</option>
+                                            {penilaianKey.map((nilai) => (
+                                                <option value={nilai} key={crypto.randomUUID()}>{nilai}</option>
+                                            ))
+                                            }
+                                        </select>
+
+                                        <label
+                                            htmlFor="targetNilai"
+                                            className={styles.form__label}
+                                        >
+                                            Target Nilai
+                                        </label>
+                                    </div>
+
+                                    <div className={styles.form__input_field}>
+                                        <select
+                                            id="dapatDiulang"
+                                            className={`${styles.form__select} ${dapatDiulang ? styles.filled : ''}`}
+                                            value={dapatDiulang}
+                                            onChange={(e) => { setDapatDiulang(e.target.value) }}
+                                            onFocus={() => { setErrorMessage('') }}
+                                            style={editFilter ? {} : { cursor: 'auto' }}
+                                            disabled={!editFilter}
+                                        >
+                                            <option value={''}></option>
+                                            <option value={-1}>Semua</option>
+                                            <option value={'ya'}>Ya</option>
+                                            <option value={'tidak'}>Tidak</option>
+                                        </select>
+
+                                        <label
+                                            htmlFor="dapatDiulang"
+                                            className={styles.form__label}
+                                        >
+                                            Bisa Diulang
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {editFilter ?
+                                <div
+                                    className={styles.form__action}
+                                >
+                                    <div
+                                        style={{
+                                            display: 'grid',
+                                            gridTemplateColumns: 'repeat(2,1fr)',
+                                            gap: '1rem',
+                                            height: '100%'
+                                        }}
+                                    >
+                                        <div style={{ marginTop: '0' }} className={`${styles.btn} ${styles.confirm} ${styles.reset}`} onClick={handleResetFilter}>
+                                            <h3>Reset</h3>
+                                        </div>
+                                        <button type='submit' className={styles.btn}>
+                                            <h3>Simpan</h3>
+                                        </button>
+                                    </div>
+
+                                    <div style={{ marginTop: '1rem' }} className={`${styles.btn} ${styles.cancel}`} onClick={toggleEditFilter}>
+                                        <h3>Batalkan</h3>
+                                    </div>
+
+                                </div>
+                                :
+                                <div
+                                    className={styles.form__action}
+                                >
+                                    <div className={styles.btn} onClick={toggleEditFilter}>
+                                        <h3>Atur Filter</h3>
+                                    </div>
+                                </div>
+                            }
                         </form>
                     </div>
                 )

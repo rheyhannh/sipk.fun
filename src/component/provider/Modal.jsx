@@ -13,7 +13,8 @@ import {
     TambahMatkul,
     Profil,
     Rating,
-    TabelSetting
+    TabelSetting,
+    TabelFilter
 } from "../Modal"
 
 /*
@@ -61,7 +62,8 @@ export const ModalProvider = ({ children }) => {
             tambahMatkul: <TambahMatkul/>,
             profil: <Profil/>,
             rating: <Rating/>,
-            tabelSetting: <TabelSetting/>
+            tabelSetting: <TabelSetting/>,
+            tabelFilter: <TabelFilter/>
         }
     }
 
