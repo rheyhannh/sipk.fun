@@ -105,7 +105,7 @@ export function useUser(custom) {
     const url = '/api/me';
     const userIdCookie = useCookies().get('s_user_id');
     const accessToken = useCookies().get('s_access_token');
-    return useSWR([url, userIdCookie], () => fetchWithUserId(url, userIdCookie, accessToken), {...swrOptions, ...custom})
+    return useSWR([url, userIdCookie], () => fetchWithUserId(url, userIdCookie, accessToken), { ...swrOptions, ...custom })
 }
 
 export function useMatkul(custom) {
@@ -119,14 +119,14 @@ export function useMatkulHistory(custom) {
     const url = '/api/matkul-history';
     const userIdCookie = useCookies().get('s_user_id');
     const accessToken = useCookies().get('s_access_token');
-    return useSWR([url, userIdCookie], () => fetchWithUserId(url, userIdCookie, accessToken), {...swrOptions, ...custom})
+    return useSWR([url, userIdCookie], () => fetchWithUserId(url, userIdCookie, accessToken), { ...swrOptions, ...custom })
 }
 
 export function useRating(custom) {
     const url = '/api/rating';
     const userIdCookie = useCookies().get('s_user_id');
     const accessToken = useCookies().get('s_access_token');
-    return useSWR([url, userIdCookie], () => fetchWithUserId(url, userIdCookie, accessToken), {...swrOptions, ...custom})
+    return useSWR([url, userIdCookie], () => fetchWithUserId(url, userIdCookie, accessToken), { ...swrOptions, ...custom })
 }
 
 export function useNotifikasi(custom) {
@@ -147,9 +147,10 @@ export function useUniversitas(custom, type, id) {
         } else {
             return fetchDefault(url, accessToken);
         }
-    }, {...swrOptions, ...custom})
+    }, { ...swrOptions, ...custom })
 }
 
 export function useLocalTheme(custom) {
-    return useSWR('localUserTheme', getLocalTheme, {...swrOptions, revalidateOnFocus: true, ...custom});
+    return useSWR('localUserTheme', getLocalTheme, { ...swrOptions, revalidateOnFocus: true, ...custom });
+}
 }
