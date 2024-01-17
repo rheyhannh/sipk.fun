@@ -1,7 +1,7 @@
 // ========== COMPONENT DEPEDENCY ========== //
 import useSWR from 'swr'
 import { useCookies } from 'next-client-cookies';
-import { getLocalTheme } from '@/utils/client_side';
+import { getLocalTheme, getSessionTable } from '@/utils/client_side';
 
 /*
 ============================== CODE START HERE ==============================
@@ -112,7 +112,7 @@ export function useMatkul(custom) {
     const url = '/api/matkul';
     const userIdCookie = useCookies().get('s_user_id');
     const accessToken = useCookies().get('s_access_token');
-    return useSWR([url, userIdCookie], () => fetchWithUserId(url, userIdCookie, accessToken), {...swrOptions, ...custom})
+    return useSWR([url, userIdCookie], () => fetchWithUserId(url, userIdCookie, accessToken), { ...swrOptions, ...custom })
 }
 
 export function useMatkulHistory(custom) {
@@ -132,7 +132,7 @@ export function useRating(custom) {
 export function useNotifikasi(custom) {
     const url = '/api/notifikasi';
     const accessToken = useCookies().get('s_access_token');
-    return useSWR(url, () => fetchDefault(url, accessToken), {...swrOptions, ...custom})
+    return useSWR(url, () => fetchDefault(url, accessToken), { ...swrOptions, ...custom })
 }
 
 export function useUniversitas(custom, type, id) {
@@ -153,4 +153,7 @@ export function useUniversitas(custom, type, id) {
 export function useLocalTheme(custom) {
     return useSWR('localUserTheme', getLocalTheme, { ...swrOptions, revalidateOnFocus: true, ...custom });
 }
+
+export function useSessionTable(custom) {
+    return useSWR('sessionUserTable', getSessionTable, { ...swrOptions, ...custom });
 }
