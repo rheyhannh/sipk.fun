@@ -869,58 +869,72 @@ export const TambahMatkul = () => {
                 const penilaianKey = Object.keys(penilaian);
 
                 const validateForm = () => {
-                    // Validating 'Nama'
-                    if (isEmpty(nama, { ignore_whitespace: true })) { setErrorMessage('Nama matakuliah dibutuhkan'); return false; }
-                    else {
-                        if (!isLength(nama, { min: 3, max: 50 })) { setErrorMessage('Nama matakuliah minimal 3 karakter maksimal 50 karakter'); return false; }
-                    }
+                    return new Promise(async (resolve, reject) => {
+                        try {
+                            if (!accessToken) { throw new Error('Missing user access token'); }
+                            if (!userIdCookie) { throw new Error('Missing user id'); }
 
-                    // Validating 'Sks'
-                    if (isEmpty(sks, { ignore_whitespace: true })) { setErrorMessage('Sks matakuliah dibutuhkan'); return false; }
-                    else {
-                        if (!isInt(sks, { min: 0, max: 50 })) { setErrorMessage('Sks harus angka (min: 0, max: 50)'); return false; }
-                    }
+                            // Validating 'Nama'
+                            if (isEmpty(nama, { ignore_whitespace: true })) { setErrorMessage('Nama matakuliah dibutuhkan'); resolve(null); }
+                            else {
+                                if (!isLength(nama, { min: 3, max: 50 })) { setErrorMessage('Nama matakuliah minimal 3 karakter maksimal 50 karakter'); resolve(null); }
+                            }
 
-                    // Validating 'Nilai'
-                    if (nilai < 0) { setErrorMessage('Nilai matakuliah dibutuhkan'); return false; }
+                            // Validating 'Sks'
+                            if (isEmpty(sks, { ignore_whitespace: true })) { setErrorMessage('Sks matakuliah dibutuhkan'); resolve(null); }
+                            else {
+                                if (!isInt(sks, { min: 0, max: 50 })) { setErrorMessage('Sks harus angka (min: 0, max: 50)'); resolve(null); }
+                            }
 
-                    // Validating 'Semester'
-                    if (isEmpty(semester, { ignore_whitespace: true })) { setErrorMessage('Semester matakuliah dibutuhkan'); return false; }
-                    else {
-                        if (!isInt(semester, { min: 0, max: 50 })) { setErrorMessage('Semester harus angka (min: 0, max: 50)'); return false; }
-                    }
+                            // Validating 'Nilai'
+                            if (nilai < 0) { setErrorMessage('Nilai matakuliah dibutuhkan'); resolve(null); }
+                            else {
+                                if (!isInt(nilai, { min: 0, max: 4 })) { setErrorMessage('Nilai tidak valid'); resolve(null); }
+                            }
 
-                    return {
-                        nama: nama,
-                        semester: semester,
-                        sks: sks,
-                        nilai: {
-                            indeks: penilaianKey.find((key) => `${penilaian[key].weight}` === `${nilai}`),
-                            bobot: nilai,
-                            akhir: sks * nilai
-                        },
-                        dapat_diulang: dapatDiulang === 'true' ? true : false,
-                        ...(dapatDiulang === 'true'
-                            ? {
+                            // Validating 'Semester'
+                            if (isEmpty(semester, { ignore_whitespace: true })) { setErrorMessage('Semester matakuliah dibutuhkan'); resolve(null); }
+                            else {
+                                if (!isInt(semester, { min: 0, max: 50 })) { setErrorMessage('Semester harus angka (min: 0, max: 50)'); resolve(null); }
+                            }
+
+                            resolve({
+                                nama: nama,
+                                semester: Number(semester),
+                                sks: Number(sks),
+                                nilai: {
+                                    indeks: penilaianKey.find((key) => `${penilaian[key].weight}` === `${nilai}`),
+                                    bobot: Number(nilai),
+                                    akhir: Number(sks) * Number(nilai)
+                                },
+                                dapat_diulang: dapatDiulang === 'true' ? true : false,
                                 target_nilai: {
                                     indeks:
                                         penilaianKey.find(
                                             (key) => `${penilaian[key].weight}` === `${targetNilai}`
                                         ) || 'A',
-                                    bobot: targetNilai !== -1 ? targetNilai : 4,
-                                },
-                            }
-                            : {})
-                    }
+                                    bobot: targetNilai >= 0 ? Number(targetNilai) : 4,
+                                }
+                            })
+                        } catch (error) { reject(error); }
+                    })
                 }
 
                 const handleTambahMatkul = async (e) => {
                     e.preventDefault();
 
                     // Validate Here, if ErrorValidate then setErrorMessage
-                    const validatedData = validateForm();
-                    if (!validatedData) { return }
-                    context.handleModalClose();
+                    try {
+                        var validatedData = await validateForm();
+                        if (!validatedData) { return }
+                        context.handleModalClose();
+                    } catch (error) {
+                        context.handleModalClose();
+                        console.error(error.message || 'Terjadi kesalahan');
+                        toast.error('Terjadi kesalahan, silahkan coba lagi', { position: 'top-left', duration: 4000 });
+                        router.refresh();
+                        return;
+                    }
 
                     const addMatkul = () => {
                         return new Promise(async (resolve, reject) => {
