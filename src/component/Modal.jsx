@@ -1114,7 +1114,7 @@ export const TambahMatkul = () => {
                                             onFocus={() => { setErrorMessage('') }}
                                             required
                                         >
-                                            <option value={-1}></option>
+                                            <option value={-1} disabled hidden></option>
                                             {penilaianKey.map((nilai) => (
                                                 <option value={penilaian[nilai].weight} key={crypto.randomUUID()}>{nilai}</option>
                                             ))
@@ -1183,7 +1183,7 @@ export const TambahMatkul = () => {
                                             onFocus={() => { setErrorMessage('') }}
                                             required
                                         >
-                                            <option value={-1}></option>
+                                            <option value={-1} disabled hidden></option>
                                             {penilaianKey.map((nilai) => (
                                                 <option value={penilaian[nilai].weight} key={crypto.randomUUID()}>{nilai}</option>
                                             ))
