@@ -25,6 +25,7 @@
     --infoDark-color: #7d8da1;
     --infoLight-color: #dce1eb;
     --body-color: #f6f6f9;
+    --body2-color: #ffffff;
     --white-color: #fff;
     --alwaysWhite-color: #ffffff;
     --dark-color: #363949;
@@ -150,6 +151,7 @@
     --warning-sec-color: hsla(36, 100%, 62%, 1);
     --crimson-sec-color: crimson;
     --body-color: #181a1e;
+    --body2-color: #181a1e;
     --white-color: #202528;
     --dark-color: #edeffd;
     --darkVariant-color: #a3bdcc;
