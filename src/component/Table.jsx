@@ -347,7 +347,7 @@ export function Table({ state, validating, user, sessionTable, matkul, matkulHis
                             className={`${styles.btn} ${activeTab === 0 ? styles.active : ''}`}
                             onClick={activeTab !== 0 ? () => handleAllMatakuliahTab() : null}
                         >
-                            Ditambah
+                            Semua Matakuliah
                         </div>
                         <div
                             className={`${styles.btn} ${activeTab === 1 ? styles.active : ''}`}
