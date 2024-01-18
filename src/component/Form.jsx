@@ -208,6 +208,7 @@ export function UsersForm() {
                         }
                     }
                 } else {
+                    sessionStorage.removeItem('_table');
                     router.replace('/dashboard', {
                         scroll: false
                     });
