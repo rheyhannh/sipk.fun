@@ -2515,6 +2515,7 @@ export const TabelSetting = () => {
 }
 
 export const TabelFilter = () => {
+    const router = useRouter();
     const [editFilter, setEditFilter] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
     const [nama, setNama] = useState('');
@@ -2533,42 +2534,96 @@ export const TabelFilter = () => {
         }
     }
 
-    const getValueById = (id, arr) => {
-        const item = arr.find(x => x.id === id);
-        if (!item) { return '' }
-        if (id === 'diulang') {
-            return item.value ? 'ya' : 'tidak';
-        }
-        else if (['sks', 'semester'].includes(id)) {
-            return [item.value[0] ?? '', item.value[1] ?? ''];
-        } else {
-            return item.value ?? '';
-        }
-    }
-
     return (
         <ModalContext.Consumer>
             {context => {
                 const penilaian = context.data.penilaian;
                 const penilaianKey = Object.keys(penilaian);
 
-                const validateForm = () => {
 
+                const validateForm = () => {
+                    return new Promise(async (resolve, reject) => {
+                        try {
+                            const allValue = [-1, '-1'];
+                            if (nama) {
+                                if (!isLength(nama, { max: 50 })) { setErrorMessage('Nama matakuliah maksimal 50 karakter'); resolve(null); }
+                            }
+                            if (sksMin && sksMaks) {
+                                if (!isInt(sksMin, { min: 0, max: 50 })) {
+                                    setErrorMessage('Sks minimal harus angka 0 - 50'); resolve(null);
+                                }
+                                if (!isInt(sksMaks, { min: 0, max: 50 })) {
+                                    setErrorMessage('Sks maksimal harus angka 0 - 50'); resolve(null);
+                                }
+                                if (sksMin > sksMaks) {
+                                    setErrorMessage('Sks maksimal harus lebih besar dari sks minimal'); resolve(null);
+                                }
+                            }
+                            if (sksMin) {
+                                if (!isInt(sksMin, { min: 0, max: 50 })) {
+                                    setErrorMessage('Sks minimal harus angka 0 - 50'); resolve(null);
+                                }
+                            }
+                            if (sksMaks) {
+                                if (!isInt(sksMaks, { min: 0, max: 50 })) {
+                                    setErrorMessage('Sks maksimal harus angka 0 - 50'); resolve(null);
+                                }
+                            }
+                            if (semesterMin && semesterMaks) {
+                                if (!isInt(semesterMin, { min: 0, max: 50 })) {
+                                    setErrorMessage('Semester minimal harus angka 0 - 50'); resolve(null);
+                                }
+                                if (!isInt(semesterMaks, { min: 0, max: 50 })) {
+                                    setErrorMessage('Semester maksimal harus angka 0 - 50'); resolve(null);
+                                }
+                                if (semesterMin > semesterMaks) {
+                                    setErrorMessage('Semester maksimal harus lebih besar dari minimal semester'); resolve(null);
+                                }
+                            }
+                            if (semesterMin) {
+                                if (!isInt(semesterMin, { min: 0, max: 50 })) {
+                                    setErrorMessage('Semester minimal harus angka 0 - 50'); resolve(null);
+                                }
+                            }
+                            if (semesterMaks) {
+                                if (!isInt(semesterMaks, { min: 0, max: 50 })) {
+                                    setErrorMessage('Semester maksimal harus angka 0 - 50'); resolve(null);
+                                }
+                            }
+                            if (nilai && !allValue.includes(nilai)) {
+                                if (!penilaianKey.some(grade => grade.toLowerCase() === nilai.toLowerCase())) {
+                                    setErrorMessage('Nilai tidak diizinkan'); resolve(null);
+                                }
+                            }
+                            if (targetNilai && !allValue.includes(targetNilai)) {
+                                if (!penilaianKey.some(grade => grade.toLowerCase() === targetNilai.toLowerCase())) {
+                                    setErrorMessage('Target nilai tidak diizinkan'); resolve(null);
+                                }
+                            }
+
+                            const filters = [];
+                            if (nama) { filters.push({ id: 'matakuliah', value: nama }) }
+                            if (sksMin || sksMaks) { filters.push({ id: 'sks', value: [sksMin, sksMaks] }) }
+                            if (semesterMin || semesterMaks) { filters.push({ id: 'semester', value: [semesterMin, semesterMaks] }) }
+                            if (nilai && !allValue.includes(nilai)) { filters.push({ id: 'nilai', value: nilai }) }
+                            if (targetNilai && !allValue.includes(targetNilai)) { filters.push({ id: 'target', value: targetNilai }) }
+                            if (dapatDiulang && !allValue.includes(dapatDiulang)) { filters.push({ id: 'diulang', value: dapatDiulang === 'ya' ? true : false }) }
+                            resolve(filters);
+                        } catch (error) { reject(error) }
+                    })
                 }
 
                 const toggleEditFilter = () => {
-                    setNama(getValueById('matakuliah', context?.data?.columnFilters))
-                    setSksMin(getValueById('sks', context?.data?.columnFilters)[0])
-                    setSksMaks(getValueById('sks', context?.data?.columnFilters)[1])
-                    setSemesterMin(getValueById('semester', context?.data?.columnFilters)[0])
-                    setSemesterMaks(getValueById('semester', context?.data?.columnFilters)[1])
-                    setNilai(getValueById('nilai', context?.data?.columnFilters));
-                    setTargetNilai(getValueById('target', context?.data?.columnFilters));
-                    setDapatDiulang(getValueById('diulang', context?.data?.columnFilters));
-                    if (editFilter) {
-                        setEditFilter(false);
-                        setErrorMessage('');
-                    } else {
+                    if (editFilter) { setEditFilter(false); setErrorMessage(''); }
+                    else {
+                        setNama(context?.data?.currentFilters?.matakuliah || '');
+                        setSksMin(context?.data?.currentFilters?.sks[0] || '');
+                        setSksMaks(context?.data?.currentFilters?.sks[1] || '');
+                        setSemesterMin(context?.data?.currentFilters?.semester[0] || '');
+                        setSemesterMaks(context?.data?.currentFilters?.semester[1] || '');
+                        setNilai(context?.data?.currentFilters?.nilai || '');
+                        setTargetNilai(context?.data?.currentFilters?.target || '');
+                        setDapatDiulang(context?.data?.currentFilters?.diulang || '');
                         setEditFilter(true);
                     }
                 }
@@ -2584,8 +2639,24 @@ export const TabelFilter = () => {
                     setDapatDiulang('');
                 }
 
-                const handleApplyFilter = () => {
+                const handleApplyFilter = async (e) => {
+                    e.preventDefault();
 
+                    // Validate Here, if ErrorValidate then setErrorMessage, if ErrorCookies then router.refresh()
+                    try {
+                        var validatedData = await validateForm();
+                        if (!validatedData) { return }
+                        context.handleModalClose();
+                        context.data.setColumnFilters(validatedData);
+                        context.data.setPageIndex(true);
+                        toast.success('Filter berhasil diterapkan', { position: 'top-left', duration: 4000 });
+                    } catch (error) {
+                        context.handleModalClose();
+                        console.error(error.message || 'Terjadi kesalahan');
+                        toast.error('Terjadi kesalahan, silahkan coba lagi', { position: 'top-left', duration: 4000 });
+                        router.refresh();
+                        return;
+                    }
                 }
 
                 return (
@@ -2622,7 +2693,7 @@ export const TabelFilter = () => {
                                                 maxLength="50"
                                                 placeholder=" "
                                                 className={`${styles.form__input} ${styles.max_length}`}
-                                                value={nama}
+                                                value={editFilter ? nama : context?.data?.currentFilters?.matakuliah || ''}
                                                 onChange={handleNamaChange}
                                                 onFocus={() => { setErrorMessage('') }}
                                                 disabled={!editFilter}
@@ -2660,7 +2731,7 @@ export const TabelFilter = () => {
                                                     max="50"
                                                     placeholder=" "
                                                     className={styles.form__input}
-                                                    value={sksMin}
+                                                    value={editFilter ? sksMin : context?.data?.currentFilters?.sks[0] || ''}
                                                     onChange={(e) => { setSksMin(e.target.value) }}
                                                     onFocus={() => { setErrorMessage('') }}
                                                     disabled={!editFilter}
@@ -2681,7 +2752,7 @@ export const TabelFilter = () => {
                                                     max="50"
                                                     placeholder=" "
                                                     className={styles.form__input}
-                                                    value={sksMaks}
+                                                    value={editFilter ? sksMaks : context?.data?.currentFilters?.sks[1] || ''}
                                                     onChange={(e) => { setSksMaks(e.target.value) }}
                                                     onFocus={() => { setErrorMessage('') }}
                                                     disabled={!editFilter}
@@ -2707,7 +2778,7 @@ export const TabelFilter = () => {
                                                     max="50"
                                                     placeholder=" "
                                                     className={styles.form__input}
-                                                    value={semesterMin}
+                                                    value={editFilter ? semesterMin : context?.data?.currentFilters?.semester[0] || ''}
                                                     onChange={(e) => { setSemesterMin(e.target.value) }}
                                                     onFocus={() => { setErrorMessage('') }}
                                                     disabled={!editFilter}
@@ -2728,7 +2799,7 @@ export const TabelFilter = () => {
                                                     max="50"
                                                     placeholder=" "
                                                     className={styles.form__input}
-                                                    value={semesterMaks}
+                                                    value={editFilter ? semesterMaks : context?.data?.currentFilters?.semester[1] || ''}
                                                     onChange={(e) => { setSemesterMaks(e.target.value) }}
                                                     onFocus={() => { setErrorMessage('') }}
                                                     disabled={!editFilter}
@@ -2755,14 +2826,14 @@ export const TabelFilter = () => {
                                     <div className={styles.form__input_field}>
                                         <select
                                             id="nilai"
-                                            className={`${styles.form__select} ${nilai ? styles.filled : ''}`}
-                                            value={nilai}
+                                            className={`${styles.form__select} ${nilai || context?.data?.currentFilters?.nilai ? styles.filled : ''}`}
+                                            value={editFilter ? nilai : context?.data?.currentFilters?.nilai || ''}
                                             onChange={(e) => { setNilai(e.target.value) }}
                                             onFocus={() => { setErrorMessage('') }}
-                                            style={editFilter ? {} : { cursor: 'auto' }}
                                             disabled={!editFilter}
+                                            style={editFilter ? {} : { cursor: 'auto' }}
                                         >
-                                            <option value={''}></option>
+                                            <option value={''} disabled hidden></option>
                                             <option value={-1}>Semua</option>
                                             {penilaianKey.map((nilai) => (
                                                 <option value={nilai} key={crypto.randomUUID()}>{nilai}</option>
@@ -2781,14 +2852,14 @@ export const TabelFilter = () => {
                                     <div className={styles.form__input_field}>
                                         <select
                                             id="targetNilai"
-                                            className={`${styles.form__select} ${targetNilai ? styles.filled : ''}`}
-                                            value={targetNilai}
+                                            className={`${styles.form__select} ${targetNilai || context?.data?.currentFilters?.target ? styles.filled : ''}`}
+                                            value={editFilter ? targetNilai : context?.data?.currentFilters?.target || ''}
                                             onChange={(e) => { setTargetNilai(e.target.value) }}
                                             onFocus={() => { setErrorMessage('') }}
-                                            style={editFilter ? {} : { cursor: 'auto' }}
                                             disabled={!editFilter}
+                                            style={editFilter ? {} : { cursor: 'auto' }}
                                         >
-                                            <option value={''}></option>
+                                            <option value={''} disabled hidden></option>
                                             <option value={-1}>Semua</option>
                                             {penilaianKey.map((nilai) => (
                                                 <option value={nilai} key={crypto.randomUUID()}>{nilai}</option>
@@ -2807,14 +2878,14 @@ export const TabelFilter = () => {
                                     <div className={styles.form__input_field}>
                                         <select
                                             id="dapatDiulang"
-                                            className={`${styles.form__select} ${dapatDiulang ? styles.filled : ''}`}
-                                            value={dapatDiulang}
+                                            className={`${styles.form__select} ${dapatDiulang || context?.data?.currentFilters?.diulang ? styles.filled : ''}`}
+                                            value={editFilter ? dapatDiulang : context?.data?.currentFilters?.diulang || ''}
                                             onChange={(e) => { setDapatDiulang(e.target.value) }}
                                             onFocus={() => { setErrorMessage('') }}
-                                            style={editFilter ? {} : { cursor: 'auto' }}
                                             disabled={!editFilter}
+                                            style={editFilter ? {} : { cursor: 'auto' }}
                                         >
-                                            <option value={''}></option>
+                                            <option value={''} disabled hidden></option>
                                             <option value={-1}>Semua</option>
                                             <option value={'ya'}>Ya</option>
                                             <option value={'tidak'}>Tidak</option>

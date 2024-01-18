@@ -2,6 +2,7 @@
 
 // ========== NEXT DEPEDENCY ========== //
 import Image from 'next/image';
+import { usePathname, useSearchParams, useRouter } from 'next/navigation';
 
 // ========== REACT DEPEDENCY ========== //
 import { useContext, useEffect, useState, useRef, useMemo } from 'react';
@@ -46,7 +47,7 @@ import {
 /*
 ============================== CODE START HERE ==============================
 */
-export function Table({ state, validating, user, matkul, matkulHistory, penilaian }) {
+export function Table({ state, validating, user, sessionTable, matkul, matkulHistory, penilaian }) {
     const userIdCookie = useCookies().get('s_user_id');
     const handleRetry = () => {
         mutate(['/api/me', userIdCookie])
@@ -63,18 +64,50 @@ export function Table({ state, validating, user, matkul, matkulHistory, penilaia
 
     const LoadedTable = () => {
         const initialRender = useRef(true);
-        const [data, setData] = useState(matkul);
-        const [activeTab, setActiveTab] = useState(0);
+        const [activeTab, setActiveTab] = useState(sessionTable.tab ?? 0);
+        const [data, setData] = useState(() => {
+            if (activeTab === 1) {
+                return matkulHistory.length ?
+                    matkulHistory
+                        .filter(history => history.current.type === 'hapus')
+                        .map(matkulDihapus => ({
+                            id: matkulDihapus.id,
+                            nama: matkulDihapus.current.nama,
+                            semester: matkulDihapus.current.semester,
+                            sks: matkulDihapus.current.sks,
+                            nilai: matkulDihapus.current.nilai,
+                            dapat_diulang: matkulDihapus.current.dapat_diulang,
+                            target_nilai: matkulDihapus.current.target_nilai,
+                        }))
+                    : [];
+            } else if (activeTab === 2) {
+                return matkulHistory.length ?
+                    matkulHistory
+                        .filter(history => history.current.type === 'ubah')
+                        .map(matkulDiubah => ({
+                            id: matkulDiubah.id,
+                            nama: matkulDiubah.current.nama,
+                            semester: matkulDiubah.current.semester,
+                            sks: matkulDiubah.current.sks,
+                            nilai: matkulDiubah.current.nilai,
+                            dapat_diulang: matkulDiubah.current.dapat_diulang,
+                            target_nilai: matkulDihapus.current.target_nilai,
+                        }))
+                    : [];
+            } else {
+                return matkul;
+            }
+        });
         const [isValidating, setIsValidating] = useState(validating);
-        const [columnVisibility, setColumnVisibility] = useState(user?.preferences?.table?.columnVisibility || {
+        const [columnVisibility, setColumnVisibility] = useState(sessionTable.columnVisibility ?? user?.preferences?.table?.columnVisibility ?? {
             nomor: true, matakuliah: true, semester: true, sks: true, nilai: true, diulang: true, target: true
         });
-        const [columnFilters, setColumnFilters] = useState([]);
-        const [columnOrder, setColumnOrder] = useState(user?.preferences?.table?.columnOrder || [
+        const [columnFilters, setColumnFilters] = useState(sessionTable.columnFilters ?? []);
+        const [columnOrder, setColumnOrder] = useState(sessionTable.columnOrder ?? user.preferences.table.columnOrder ?? [
             'nomor', 'matakuliah', 'semester', 'sks', 'nilai', 'diulang', 'target'
         ]);
         const [tableEmptyImg, setTableEmptyImg] = useState(getLocalTheme() === 'dark' ? <Image src="https://storage.googleapis.com/sipk_assets/table_kosong_dark.svg" width={100} height={100} alt="Table Empty" /> : <Image src="https://storage.googleapis.com/sipk_assets/table_kosong.svg" width={100} height={100} alt="Table Empty" />)
-        const [pageControlPosition, setPageControlPosition] = useState(user?.preferences?.table?.controlPosition || 0);
+        const [pageControlPosition, setPageControlPosition] = useState(sessionTable.pageControlPosition ?? user.preferences.table.controlPosition ?? 0);
         const {
             setModal,
             setActive,
@@ -87,24 +120,9 @@ export function Table({ state, validating, user, matkul, matkulHistory, penilaia
             styles.page_control_both
         ]
 
-        const getInitPageSize = () => {
-            const initPageSize = user?.preferences?.table?.size;
-            if (!initPageSize || !matkul || !matkul.length) {
-                return 5;
-            }
-            else {
-                const semua = matkul.length + 1;
-                if (initPageSize === -1) {
-                    return semua;
-                } else if ([5, 10, 25, 50, 100, semua].includes(initPageSize)) {
-                    return initPageSize
-                } else { return 5 }
-            }
-        }
-
         const handleAllMatakuliahTab = () => {
-            setData(matkul);
             setActiveTab(0);
+            setData(matkul);
             table.setPageIndex(0);
         }
 
@@ -119,12 +137,11 @@ export function Table({ state, validating, user, matkul, matkulHistory, penilaia
                         sks: matkulDihapus.current.sks,
                         nilai: matkulDihapus.current.nilai,
                         dapat_diulang: matkulDihapus.current.dapat_diulang,
-                        target_nilai: matkulDihapus.current.dapat_diulang ? matkulDihapus.current.target_nilai : null,
+                        target_nilai: matkulDihapus.current.target_nilai,
                     }))
                 : [];
-
-            setData(historyHapus);
             setActiveTab(1);
+            setData(historyHapus);
             table.setPageIndex(0);
         }
 
@@ -139,12 +156,11 @@ export function Table({ state, validating, user, matkul, matkulHistory, penilaia
                         sks: matkulDiubah.current.sks,
                         nilai: matkulDiubah.current.nilai,
                         dapat_diulang: matkulDiubah.current.dapat_diulang,
-                        target_nilai: matkulDihapus.current.dapat_diulang ? matkulDihapus.current.target_nilai : null,
+                        target_nilai: matkulDihapus.current.target_nilai,
                     }))
                 : [];
-
-            setData(historyEdit);
             setActiveTab(2);
+            setData(historyEdit);
             table.setPageIndex(0);
         }
 
@@ -189,7 +205,7 @@ export function Table({ state, validating, user, matkul, matkulHistory, penilaia
                     footer: info => info.column.id,
                     invertSorting: true,
                 }),
-                columnHelper.accessor(row => row.dapat_diulang ? row.target_nilai.indeks : '-', {
+                columnHelper.accessor(row => row.target_nilai.indeks, {
                     id: 'target',
                     cell: info => info.getValue(),
                     header: () => <span>Target Nilai</span>,
@@ -202,9 +218,13 @@ export function Table({ state, validating, user, matkul, matkulHistory, penilaia
             data,
             columns,
             initialState: {
+                sorting: sessionTable.columnSorting ?? [],
                 pagination: {
-                    pageIndex: 0,
-                    pageSize: getInitPageSize(),
+                    pageIndex: sessionTable.pageIndex ?? 0,
+                    pageSize:
+                        (sessionTable.pageSize ?? user?.preferences?.table?.size) === -1
+                            ? matkul.length + 1
+                            : (sessionTable.pageSize ?? user?.preferences?.table?.size) ?? 5,
                 }
             },
             state: {
@@ -218,6 +238,7 @@ export function Table({ state, validating, user, matkul, matkulHistory, penilaia
             getPaginationRowModel: getPaginationRowModel(),
             onColumnFiltersChange: setColumnFilters,
             onColumnVisibilityChange: setColumnVisibility,
+            onColumnOrderChange: setColumnOrder,
             autoResetAll: false,
             // debugAll: true,
         })
@@ -248,6 +269,20 @@ export function Table({ state, validating, user, matkul, matkulHistory, penilaia
             return { size: currentPageSize === matkul.length + 1 ? -1 : currentPageSize, controlPosition: pageControlPosition, state: columnState };
         }
 
+        const getTableFilters = () => {
+            const searchId = ['matakuliah', 'semester', 'sks', 'nilai', 'diulang', 'target'];
+            const result = {};
+            searchId.forEach((id) => {
+                const item = columnFilters.find((item) => item.id === id);
+                if (id === 'diulang') {
+                    result[id] = item ? item.value ? 'ya' : 'tidak' : '';
+                } else {
+                    result[id] = item ? item.value : '';
+                }
+            })
+            return result;
+        }
+
         const isSearchActive = () => {
             return columnFilters.some(filter => filter.id === 'matakuliah');
         };
@@ -274,103 +309,12 @@ export function Table({ state, validating, user, matkul, matkulHistory, penilaia
         }
 
         const handleFilterModal = () => {
-            setModalData({ setPageIndex, setColumnFilters, columnFilters, penilaian });
+            setModalData({ setPageIndex, setColumnFilters, currentFilters: getTableFilters(), penilaian });
             setModal('tabelFilter');
             setTimeout(() => {
                 setActive(true);
             }, 50)
         }
-        useEffect(() => {
-            const savedState = localStorage.getItem('_table');
-            if (savedState) {
-                try {
-                    const allowedKeys = ['nomor', 'matakuliah', 'semester', 'sks', 'nilai', 'diulang', 'target'];
-                    const state = JSON.parse(savedState);
-                    const validateTab = (tab) => {
-                        const allowedTab = [0, 1, 2];
-                        if (allowedTab.includes(tab)) {
-                            if (tab === 1) { handleDeletedMatakuliahTab(); }
-                            return true;
-                        }
-                        return false;
-                    }
-                    const validatePageSize = (size) => {
-                        const allowedPageSize = [5, 10, 25, 50, 100, matkul.length + 1, -1];
-                        if (allowedPageSize.includes(size)) {
-                            return true;
-                        }
-                        return false;
-                    }
-                    const validatePageControlPosition = (state) => {
-                        const allowedPageControlPosition = [0, 1, 2];
-                        if (allowedPageControlPosition.includes(state)) {
-                            return true;
-                        }
-                        return false;
-                    }
-                    const validateColumnOrder = (arr) => {
-                        if (arr.length !== 7) {
-                            return false;
-                        }
-                        for (const str of allowedKeys) {
-                            if (!arr.includes(str)) {
-                                return false;
-                            }
-                        }
-                        return true;
-                    }
-                    const validateColumnVisibility = (obj) => {
-                        const keys = Object.keys(obj);
-                        if (keys.length !== 7 || !keys.every(key => allowedKeys.includes(key))) {
-                            return false;
-                        }
-
-                        const values = Object.values(obj);
-                        if (!values.every(value => typeof value === 'boolean')) {
-                            return false;
-                        }
-
-                        return true;
-                    }
-                    const validateColumnFilters = (arr) => {
-                        const validId = ['matakuliah', 'semester', 'sks', 'nilai', 'diulang', 'target'];
-                        return arr.every(obj => {
-                            if (Object.keys(obj).length !== 2 || !obj.hasOwnProperty('id') || !obj.hasOwnProperty('value')) {
-                                return false;
-                            }
-                            if (!validId.includes(obj.id)) {
-                                return false;
-                            }
-                            return true;
-                        })
-                    }
-
-                    if (
-                        'tab' in state && typeof state.tab === 'number' &&
-                        'pageSize' in state && typeof state.pageSize === 'number' &&
-                        'pageIndex' in state && typeof state.pageIndex === 'number' &&
-                        'pageControlPosition' in state && typeof state.pageControlPosition === 'number' &&
-                        'columnOrder' in state && Array.isArray(state.columnOrder) &&
-                        'columnVisibility' in state && typeof state.columnVisibility === 'object' && state.columnVisibility !== null && !Array.isArray(state.columnVisibility) &&
-                        'columnFilters' in state && Array.isArray(state.columnFilters)
-                    ) {
-                        setActiveTab(validateTab(state.tab) ? state.tab : 0);
-                        table.setPageSize(validatePageSize(state.pageSize) ? state.pageSize === -1 ? matkul.length + 1 : state.pageSize : 5);
-                        table.setPageIndex(state.pageIndex);
-                        setPageControlPosition(validatePageControlPosition(state.pageControlPosition) ? state.pageControlPosition : 0);
-                        setColumnOrder(validateColumnOrder(state.columnOrder) ? state.columnOrder : []);
-                        setColumnVisibility(validateColumnVisibility(state.columnVisibility) ? state.columnVisibility : {});
-                        setColumnFilters(validateColumnFilters(state.columnFilters) ? state.columnFilters : []);
-                    } else {
-                        throw new Error('Invalid table state');
-                    }
-                } catch (error) {
-                    localStorage.removeItem('_table');
-                    console.error(error?.message || 'Something went wrong');
-                    console.error('Failed to load table state');
-                }
-            }
-        }, [])
 
         useEffect(() => {
             if (getLocalTheme() === 'dark') {
@@ -379,12 +323,6 @@ export function Table({ state, validating, user, matkul, matkulHistory, penilaia
                 setTableEmptyImg(<Image src="https://storage.googleapis.com/sipk_assets/table_kosong.svg" width={100} height={100} alt="Table Empty" />);
             }
         }, [getLocalTheme()])
-
-        useEffect(() => {
-            if (table.getState().pagination.pageIndex !== 0) {
-                table.setPageIndex(0);
-            }
-        }, [columnFilters.filter(item => item.id === 'matakuliah')[0]?.value])
 
         useEffect(() => {
             if (initialRender.current) {
@@ -400,10 +338,11 @@ export function Table({ state, validating, user, matkul, matkulHistory, penilaia
                 pageControlPosition,
                 columnOrder,
                 columnVisibility,
-                columnFilters
+                columnFilters,
+                columnSorting: table.getState().sorting,
             }
-            localStorage.setItem('_table', JSON.stringify(currentState));
-        }, [activeTab, columnOrder, columnVisibility, columnFilters, pageControlPosition, table.getState().pagination.pageSize, table.getState().pagination.pageIndex])
+            sessionStorage.setItem('_table', JSON.stringify(currentState));
+        }, [activeTab, columnOrder, columnVisibility, columnFilters, pageControlPosition, table.getState().pagination.pageSize, table.getState().pagination.pageIndex, table.getState().sorting])
 
         return (
             <div className={`${styles.container} ${pageControlCSS[pageControlPosition]}`}>
@@ -433,22 +372,7 @@ export function Table({ state, validating, user, matkul, matkulHistory, penilaia
                     </div>
                     <div className={styles.tools__right}>
                         <div className={styles.tools__search}>
-                            <div className={styles.search}>
-                                <Filter column={table.getColumn('matakuliah')} table={table} />
-                                <div
-                                    className={`${styles.search__icon} ${styles.times} ${isSearchActive() ? '' : styles.hide}`}
-                                    onClick={() => {
-                                        table.resetColumnFilters();
-                                    }}
-                                >
-                                    <IoClose size={'18px'} />
-                                </div>
-                                <div
-                                    className={`${styles.search__icon} ${isSearchActive() ? styles.active : ''}`}
-                                >
-                                    <IoSearchCircle size={'24px'} />
-                                </div>
-                            </div>
+                            <CariMatakuliah initValue={table.getColumn('matakuliah').getFilterValue()} column={table.getColumn('matakuliah')} table={table} isSearchActive={isSearchActive} />
                         </div>
                         <div className={styles.tools__shorcut}>
                             <div className={styles.tools__shorcut_box} onClick={() => { handleTambahModal() }}>
@@ -691,41 +615,32 @@ export function Table({ state, validating, user, matkul, matkulHistory, penilaia
     else { return 'Unidentified Table State' }
 }
 
-function Filter({ column, table }) {
-    const firstValue = table.getPreFilteredRowModel().flatRows[0]?.getValue(column.id);
-    const columnFilterValue = column.getFilterValue();
+function CariMatakuliah({
+    column, table, isSearchActive
+}) {
+    const matakuliahFilterValue = column.getFilterValue();
 
-    return typeof firstValue === 'number' ? (
-        <>
+    return (
+        <div className={styles.search}>
             <DebouncedInput
-                type="number"
-                min={Number(column.getFacetedMinMaxValues()?.[0] ?? '')}
-                max={Number(column.getFacetedMinMaxValues()?.[1] ?? '')}
-                value={(columnFilterValue[0] ?? '')}
-                onChange={(value) =>
-                    column.setFilterValue((old) => [value, old?.[1]])
-                }
-                placeholder={`Min ${column.getFacetedMinMaxValues()?.[0] ? `(${column.getFacetedMinMaxValues()?.[0]})` : ''}`}
+                type='text'
+                value={(matakuliahFilterValue ?? '')}
+                onChange={value => { column.setFilterValue(value); table.setPageIndex(0); }}
+                placeholder={'Cari matakuliah'}
             />
-            <DebouncedInput
-                type="number"
-                min={Number(column.getFacetedMinMaxValues()?.[0] ?? '')}
-                max={Number(column.getFacetedMinMaxValues()?.[1] ?? '')}
-                value={(columnFilterValue[1] ?? '')}
-                onChange={(value) =>
-                    column.setFilterValue((old) => [old?.[0], value])
-                }
-                placeholder={`Max ${column.getFacetedMinMaxValues()?.[1] ? `(${column.getFacetedMinMaxValues()?.[1]})` : ''}`}
-            />
-        </>
-    ) : (
-        <DebouncedInput
-            type="text"
-            value={(columnFilterValue ?? '')}
-            onChange={value => column.setFilterValue(value)}
-            placeholder={`Cari ${column.id}`}
-        />
-    );
+            <div
+                className={`${styles.search__icon} ${styles.times} ${isSearchActive() ? '' : styles.hide}`}
+                onClick={() => { column.setFilterValue('') }}
+            >
+                <IoClose size={'18px'} />
+            </div>
+            <div
+                className={`${styles.search__icon} ${isSearchActive() ? styles.active : ''}`}
+            >
+                <IoSearchCircle size={'24px'} />
+            </div>
+        </div>
+    )
 }
 
 function DebouncedInput({
@@ -738,7 +653,7 @@ function DebouncedInput({
 
     useEffect(() => {
         setValue(initialValue);
-    }, [initialValue]);
+    }, [initialValue])
 
     useEffect(() => {
         const timeout = setTimeout(() => {
@@ -746,10 +661,10 @@ function DebouncedInput({
         }, debounce);
 
         return () => clearTimeout(timeout);
-    }, [value, onChange, debounce]);
+    }, [value, onChange, debounce])
 
     return (
         <input {...props} value={value} onChange={(e) => setValue(e.target.value)} />
-    );
+    )
 }
 

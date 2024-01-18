@@ -10,7 +10,7 @@ import { Total, Grafik } from '@/component/Card'
 import { Table } from '@/component/Table';
 
 // ========== DATA DEPEDENCY ========== //
-import { useMatkul, useUser, useUniversitas, useMatkulHistory } from '@/data/core';
+import { useMatkul, useUser, useUniversitas, useMatkulHistory, useSessionTable } from '@/data/core';
 
 // ========== STYLE DEPEDENCY ========== //
 import styles from './matkul.module.css'
@@ -86,9 +86,10 @@ function TabelSection() {
     const { data: matkulHistory, error: matkulHistoryError, isLoading: matkulHistoryLoading, isValidating: matkulHistoryValidating } = useMatkulHistory();
     const { data: user, error: userError, isLoading: userLoading, isValidating: userValidating } = useUser();
     const { data: universitas, error: universitasError, isLoading: universitasLoading, isValidating: universitasValidating } = useUniversitas(null, 'user', user ? user[0].university_id : undefined);
-    const isLoading = matkulLoading || userLoading || universitasLoading || matkulHistoryLoading;
-    const isValidating = matkulValidating || userValidating || universitasValidating || matkulHistoryValidating;
-    const isError = matkulError || userError || universitasError || matkulHistoryError;
+    const { data: sessionTable, error: sessionTableError, isLoading: sessionTableLoading, isValidating: sessionTableValidating } = useSessionTable();
+    const isLoading = matkulLoading || userLoading || universitasLoading || matkulHistoryLoading || sessionTableLoading;
+    const isValidating = matkulValidating || userValidating || universitasValidating || matkulHistoryValidating || sessionTableValidating;
+    const isError = matkulError || userError || universitasError || matkulHistoryError || sessionTableError;
 
     if (isError) {
         return <Table state={'error'} />;
@@ -99,7 +100,14 @@ function TabelSection() {
     }
 
     return (
-        <Table state={'loaded'} validating={isValidating} user={user[0]} matkul={matkul} matkulHistory={matkulHistory} penilaian={universitas[0].penilaian} />
+        <Table
+            state={'loaded'}
+            validating={isValidating}
+            user={user[0]} matkul={matkul}
+            sessionTable={sessionTable}
+            matkulHistory={matkulHistory}
+            penilaian={universitas[0].penilaian}
+        />
     )
 }
 
