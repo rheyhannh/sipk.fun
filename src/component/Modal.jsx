@@ -2684,7 +2684,7 @@ export const TabelFilter = () => {
                                     {errorMessage}
                                 </div>
 
-                                <div style={{ marginBottom: '.75rem' }}>
+                                <div className={styles.ftmn}>
                                     <div className={styles.form__input_field}>
                                         <div>
                                             <input
@@ -2712,14 +2712,7 @@ export const TabelFilter = () => {
                                     </div>
                                 </div>
 
-                                <div
-                                    style={{
-                                        display: 'grid',
-                                        gridTemplateColumns: 'repeat(2,1fr)',
-                                        gap: '1rem',
-                                        marginBottom: '1.25rem'
-                                    }}
-                                >
+                                <div className={styles.ftmss}>
                                     <div>
                                         <h3 className={styles.tabel__filter_title}>Sks</h3>
                                         <div className={styles.tabel__filter_range}>
@@ -2815,14 +2808,7 @@ export const TabelFilter = () => {
                                     </div>
                                 </div>
 
-                                <div
-                                    style={{
-                                        display: 'grid',
-                                        gridTemplateColumns: 'repeat(3,1fr)',
-                                        gap: '1rem',
-                                        marginBottom: '1.25rem'
-                                    }}
-                                >
+                                <div className={styles.ftmntb}>
                                     <div className={styles.form__input_field}>
                                         <select
                                             id="nilai"

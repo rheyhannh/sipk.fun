@@ -556,6 +556,24 @@
     margin-bottom: .75rem;
 }
 
+.ftmn {
+    margin-bottom: .75rem;
+}
+
+.ftmss {
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    gap: 1rem;
+    margin-bottom: 1.25rem;
+}
+
+.ftmntb {
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    gap: 1rem;
+    margin-bottom: 1.25rem;
+}
+
 .tabel__filter .form__input_field {
     height: 42.5px;
     margin: 0;
@@ -645,6 +663,13 @@
     }
 }
 
+@media screen and (max-width: 275px) {
+    .ftmss {
+        display: grid;
+        grid-template-columns: 1fr;
+    }
+}
+
 @media screen and (max-width: 375px) {
     .tabel__setting_control {
         gap: 0.5rem;
@@ -659,6 +684,11 @@
     .tabel__setting_select div {
         display: flex;
         flex-direction: column;
+    }
+
+    .ftmntb {
+        display: grid;
+        grid-template-columns: 1fr;
     }
 }
 
