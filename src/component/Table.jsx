@@ -42,6 +42,7 @@ import {
     IoArrowDownSharp,
     IoArrowUpSharp
 } from "react-icons/io5";
+import { FaInfo, FaPen, FaTrash } from "react-icons/fa";
 
 /*
 ============================== CODE START HERE ==============================
