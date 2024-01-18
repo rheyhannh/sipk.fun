@@ -2,7 +2,6 @@
 
 // ========== NEXT DEPEDENCY ========== //
 import Image from 'next/image';
-import { usePathname, useSearchParams, useRouter } from 'next/navigation';
 
 // ========== REACT DEPEDENCY ========== //
 import { useContext, useEffect, useState, useRef, useMemo } from 'react';
