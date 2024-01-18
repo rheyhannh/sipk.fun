@@ -2289,6 +2289,7 @@ export const TabelSetting = () => {
                                         }
                                     }
                                 } else {
+                                    mutate('sessionUserTable');
                                     try {
                                         const { profil } = await response.json();
                                         if (!profil) {
