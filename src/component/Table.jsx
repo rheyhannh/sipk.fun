@@ -23,7 +23,7 @@ import { ModalContext } from "./provider/Modal";
 import { Spinner } from "./loader/Loading";
 
 // ========== DATA DEPEDENCY ========== //
-import { getLocalTheme } from '@/utils/client_side';
+
 
 // ========== STYLE DEPEDENCY ========== //
 import styles from './style/table.module.css'
@@ -106,13 +106,14 @@ export function Table({ state, validating, user, sessionTable, matkul, matkulHis
         const [columnOrder, setColumnOrder] = useState(sessionTable.columnOrder ?? user.preferences.table.columnOrder ?? [
             'nomor', 'matakuliah', 'semester', 'sks', 'nilai', 'diulang', 'target'
         ]);
-        const [tableEmptyImg, setTableEmptyImg] = useState(getLocalTheme() === 'dark' ? <Image src="https://storage.googleapis.com/sipk_assets/table_kosong_dark.svg" width={100} height={100} alt="Table Empty" /> : <Image src="https://storage.googleapis.com/sipk_assets/table_kosong.svg" width={100} height={100} alt="Table Empty" />)
         const [pageControlPosition, setPageControlPosition] = useState(sessionTable.pageControlPosition ?? user.preferences.table.controlPosition ?? 0);
         const {
             setModal,
             setActive,
             setData: setModalData
         } = useContext(ModalContext);
+
+        const tableEmptyImg = <Image src="https://storage.googleapis.com/sipk_assets/table_kosong.svg" width={100} height={100} alt="Table Empty" />;
 
         const pageControlCSS = [
             styles.page_control_bottom,
@@ -315,14 +316,6 @@ export function Table({ state, validating, user, sessionTable, matkul, matkulHis
                 setActive(true);
             }, 50)
         }
-
-        useEffect(() => {
-            if (getLocalTheme() === 'dark') {
-                setTableEmptyImg(<Image src="https://storage.googleapis.com/sipk_assets/table_kosong_dark.svg" width={100} height={100} alt="Table Empty" />);
-            } else {
-                setTableEmptyImg(<Image src="https://storage.googleapis.com/sipk_assets/table_kosong.svg" width={100} height={100} alt="Table Empty" />);
-            }
-        }, [getLocalTheme()])
 
         useEffect(() => {
             if (initialRender.current) {
