@@ -610,14 +610,19 @@ export function Table({ state, validating, user, sessionTable, matkul, matkulHis
 function CariMatakuliah({
     column, table, isSearchActive
 }) {
-    const matakuliahFilterValue = column.getFilterValue();
+    const matakuliahFilterValue = column.getFilterValue() ?? '';
 
     return (
         <div className={styles.search}>
             <DebouncedInput
                 type='text'
-                value={(matakuliahFilterValue ?? '')}
-                onChange={value => { column.setFilterValue(value); table.setPageIndex(0); }}
+                value={matakuliahFilterValue}
+                onChange={value => {
+                    if (matakuliahFilterValue !== value) {
+                        table.setPageIndex(0);
+                    }
+                    column.setFilterValue(value);
+                }}
                 placeholder={'Cari matakuliah'}
             />
             <div
