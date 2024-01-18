@@ -481,7 +481,7 @@ export function Table({ state, validating, user, sessionTable, matkul, matkulHis
                                 </thead>
                                 <tbody>
                                     {table.getRowModel().rows.map(row => (
-                                        <tr key={row.id} >
+                                        <tr onClick={() => { console.log(`Detail Modal ${row.getValue('nomor')}`) }} key={row.id} >
                                             {row.getVisibleCells().map(cell => {
                                                 const cellType = cell.id.split('_')[1];
                                                 const isNilaiCell = cellType === 'nilai';
@@ -514,6 +514,19 @@ export function Table({ state, validating, user, sessionTable, matkul, matkulHis
                                                     </td>
                                                 )
                                             })}
+                                            <div className={styles.action}>
+                                                <div className={styles.wrapper}>
+                                                    <i onClick={() => { console.log('Delete Modal') }}>
+                                                        <FaTrash size={'12px'} />
+                                                    </i>
+                                                    <i onClick={() => { console.log('Edit Modal') }}>
+                                                        <FaPen size={'12px'} />
+                                                    </i>
+                                                    <i onClick={() => { console.log(`Detail Modal ${row.getValue('nomor')}`) }}>
+                                                        <FaInfo size={'12px'} />
+                                                    </i>
+                                                </div>
+                                            </div>
                                         </tr>
                                     ))}
                                 </tbody>
