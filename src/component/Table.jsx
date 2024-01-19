@@ -42,7 +42,7 @@ import {
     IoArrowDownSharp,
     IoArrowUpSharp
 } from "react-icons/io5";
-import { FaInfo, FaPen, FaTrash } from "react-icons/fa";
+import { FaInfo, FaPen, FaTrash, FaAngleLeft } from "react-icons/fa";
 
 /*
 ============================== CODE START HERE ==============================
@@ -107,6 +107,7 @@ export function Table({ state, validating, user, sessionTable, matkul, matkulHis
             'nomor', 'matakuliah', 'semester', 'sks', 'nilai', 'diulang', 'target'
         ]);
         const [pageControlPosition, setPageControlPosition] = useState(sessionTable.pageControlPosition ?? user.preferences.table.controlPosition ?? 0);
+        const [tableAction, setTableAction] = useState(true);
         const {
             setModal,
             setActive,
@@ -481,7 +482,14 @@ export function Table({ state, validating, user, sessionTable, matkul, matkulHis
                                 </thead>
                                 <tbody>
                                     {table.getRowModel().rows.map(row => (
-                                        <tr onClick={() => { console.log(`Detail Modal ${row.getValue('nomor')}`) }} key={row.id} >
+                                        <tr
+                                            onClick={(e) => {
+                                                if (!e.target.closest(`.${styles.action}`)) {
+                                                    console.log('Detail Modal');
+                                                }
+                                            }}
+                                            key={row.id}
+                                        >
                                             {row.getVisibleCells().map(cell => {
                                                 const cellType = cell.id.split('_')[1];
                                                 const isNilaiCell = cellType === 'nilai';
@@ -514,19 +522,22 @@ export function Table({ state, validating, user, sessionTable, matkul, matkulHis
                                                     </td>
                                                 )
                                             })}
-                                            <div className={styles.action}>
+                                            <td className={`${styles.action} ${tableAction ? styles.expand : ''}`}>
                                                 <div className={styles.wrapper}>
-                                                    <i onClick={() => { console.log('Delete Modal') }}>
-                                                        <FaTrash size={'12px'} />
+                                                    <i onClick={() => setTableAction(!tableAction)}>
+                                                        <FaAngleLeft size={'13px'} />
+                                                    </i>
+                                                    <i onClick={() => { console.log('Modal Confirm Delete Matakuliah') }}>
+                                                        <FaTrash size={'13px'} />
                                                     </i>
                                                     <i onClick={() => { console.log('Edit Modal') }}>
-                                                        <FaPen size={'12px'} />
+                                                        <FaPen size={'13px'} />
                                                     </i>
-                                                    <i onClick={() => { console.log(`Detail Modal ${row.getValue('nomor')}`) }}>
-                                                        <FaInfo size={'12px'} />
+                                                    <i onClick={() => { console.log(`Detail Modal`) }}>
+                                                        <FaInfo size={'13px'} />
                                                     </i>
                                                 </div>
-                                            </div>
+                                            </td>
                                         </tr>
                                     ))}
                                 </tbody>
