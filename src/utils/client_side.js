@@ -144,13 +144,14 @@ export const getSessionTable = () => {
                 'columnOrder' in state && Array.isArray(state.columnOrder) &&
                 'columnVisibility' in state && typeof state.columnVisibility === 'object' && state.columnVisibility !== null && !Array.isArray(state.columnVisibility) &&
                 'columnFilters' in state && Array.isArray(state.columnFilters) &&
-                'columnSorting' in state && Array.isArray(state.columnSorting)
+                'columnSorting' in state && Array.isArray(state.columnSorting) &&
+                'rowAction' in state && typeof state.rowAction === 'boolean'
             ) {
                 const {
                     tab, pageSize, pageIndex,
                     pageControlPosition, columnOrder,
                     columnVisibility, columnFilters,
-                    columnSorting
+                    columnSorting, rowAction
                 }
                     = state;
                 return {
@@ -161,7 +162,8 @@ export const getSessionTable = () => {
                     columnOrder: validateColumnOrder(columnOrder),
                     columnVisibility: validateColumnVisibility(columnVisibility),
                     columnFilters: validateColumnFilters(columnFilters),
-                    columnSorting: validateColumnSorting(columnSorting)
+                    columnSorting: validateColumnSorting(columnSorting),
+                    rowAction: rowAction
                 }
             } else { throw new Error('Invalid table state') }
         } catch (error) {
@@ -176,7 +178,8 @@ export const getSessionTable = () => {
                 columnOrder: null,
                 columnVisibility: null,
                 columnFilters: null,
-                columnSorting: null
+                columnSorting: null,
+                rowAction: null,
             }
         }
     } else {
@@ -188,7 +191,8 @@ export const getSessionTable = () => {
             columnOrder: null,
             columnVisibility: null,
             columnFilters: null,
-            columnSorting: null
+            columnSorting: null,
+            rowAction: null
         }
     }
 }

@@ -107,7 +107,7 @@ export function Table({ state, validating, user, sessionTable, matkul, matkulHis
             'nomor', 'matakuliah', 'semester', 'sks', 'nilai', 'diulang', 'target'
         ]);
         const [pageControlPosition, setPageControlPosition] = useState(sessionTable.pageControlPosition ?? user.preferences.table.controlPosition ?? 0);
-        const [tableAction, setTableAction] = useState(true);
+        const [rowAction, setRowAction] = useState(sessionTable.rowAction ?? true);
         const {
             setModal,
             setActive,
@@ -334,9 +334,10 @@ export function Table({ state, validating, user, sessionTable, matkul, matkulHis
                 columnVisibility,
                 columnFilters,
                 columnSorting: table.getState().sorting,
+                rowAction
             }
             sessionStorage.setItem('_table', JSON.stringify(currentState));
-        }, [activeTab, columnOrder, columnVisibility, columnFilters, pageControlPosition, table.getState().pagination.pageSize, table.getState().pagination.pageIndex, table.getState().sorting])
+        }, [activeTab, columnOrder, columnVisibility, columnFilters, pageControlPosition, rowAction, table.getState().pagination.pageSize, table.getState().pagination.pageIndex, table.getState().sorting])
 
         return (
             <div className={`${styles.container} ${pageControlCSS[pageControlPosition]}`}>
@@ -523,9 +524,9 @@ export function Table({ state, validating, user, sessionTable, matkul, matkulHis
                                                 )
                                             })}
                                             {row.getVisibleCells().length ?
-                                                <td className={`${styles.action} ${tableAction ? styles.expand : ''}`}>
+                                                <td className={`${styles.action} ${rowAction ? styles.expand : ''}`}>
                                                     <div className={styles.wrapper}>
-                                                        <i onClick={() => setTableAction(!tableAction)}>
+                                                        <i onClick={() => setRowAction(!rowAction)}>
                                                             <FaAngleLeft size={'13px'} />
                                                         </i>
                                                         <i onClick={() => { console.log('Modal Confirm Delete Matakuliah'); console.log('a') }}>
