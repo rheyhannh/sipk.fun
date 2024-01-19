@@ -157,13 +157,13 @@ export const getSessionTable = () => {
                 return {
                     tab: validateTab(tab),
                     pageSize: validatePageSize(pageSize),
-                    pageIndex: pageIndex,
+                    pageIndex,
                     pageControlPosition: validatePageControlPosition(pageControlPosition),
                     columnOrder: validateColumnOrder(columnOrder),
                     columnVisibility: validateColumnVisibility(columnVisibility),
                     columnFilters: validateColumnFilters(columnFilters),
                     columnSorting: validateColumnSorting(columnSorting),
-                    rowAction: rowAction
+                    rowAction
                 }
             } else { throw new Error('Invalid table state') }
         } catch (error) {
