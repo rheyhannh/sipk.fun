@@ -522,22 +522,25 @@ export function Table({ state, validating, user, sessionTable, matkul, matkulHis
                                                     </td>
                                                 )
                                             })}
-                                            <td className={`${styles.action} ${tableAction ? styles.expand : ''}`}>
-                                                <div className={styles.wrapper}>
-                                                    <i onClick={() => setTableAction(!tableAction)}>
-                                                        <FaAngleLeft size={'13px'} />
-                                                    </i>
-                                                    <i onClick={() => { console.log('Modal Confirm Delete Matakuliah') }}>
-                                                        <FaTrash size={'13px'} />
-                                                    </i>
-                                                    <i onClick={() => { console.log('Edit Modal') }}>
-                                                        <FaPen size={'13px'} />
-                                                    </i>
-                                                    <i onClick={() => { console.log(`Detail Modal`) }}>
-                                                        <FaInfo size={'13px'} />
-                                                    </i>
-                                                </div>
-                                            </td>
+                                            {row.getVisibleCells().length ?
+                                                <td className={`${styles.action} ${tableAction ? styles.expand : ''}`}>
+                                                    <div className={styles.wrapper}>
+                                                        <i onClick={() => setTableAction(!tableAction)}>
+                                                            <FaAngleLeft size={'13px'} />
+                                                        </i>
+                                                        <i onClick={() => { console.log('Modal Confirm Delete Matakuliah'); console.log('a') }}>
+                                                            <FaTrash size={'13px'} />
+                                                        </i>
+                                                        <i onClick={() => { console.log('Edit Modal') }}>
+                                                            <FaPen size={'13px'} />
+                                                        </i>
+                                                        <i onClick={() => { console.log(`Detail Modal`) }}>
+                                                            <FaInfo size={'13px'} />
+                                                        </i>
+                                                    </div>
+                                                </td>
+                                                : <></>
+                                            }
                                         </tr>
                                     ))}
                                 </tbody>
