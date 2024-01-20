@@ -42,7 +42,7 @@ import {
     IoArrowDownSharp,
     IoArrowUpSharp
 } from "react-icons/io5";
-import { FaInfo, FaPen, FaTrash, FaAngleLeft } from "react-icons/fa";
+import { FaInfo, FaPen, FaTrash, FaAngleLeft, FaUndo } from "react-icons/fa";
 
 /*
 ============================== CODE START HERE ==============================
@@ -523,7 +523,7 @@ export function Table({ state, validating, user, sessionTable, matkul, matkulHis
                                                     </td>
                                                 )
                                             })}
-                                            {row.getVisibleCells().length ? <RowAction rowAction={rowAction} setRowAction={setRowAction} /> : <></>}
+                                            {row.getVisibleCells().length ? <RowAction activeTab={activeTab} rowAction={rowAction} setRowAction={setRowAction} /> : <></>}
                                         </tr>
                                     ))}
                                 </tbody>
@@ -677,7 +677,7 @@ function DebouncedInput({
 }
 
 function RowAction({
-    rowAction, setRowAction
+    activeTab, rowAction, setRowAction
 }) {
     return (
         <td className={`${styles.action} ${rowAction ? styles.expand : ''}`}>
@@ -688,9 +688,14 @@ function RowAction({
                 <i onClick={() => { console.log('Modal Confirm Delete Matakuliah'); }}>
                     <FaTrash size={'13px'} />
                 </i>
-                <i onClick={() => { console.log('Edit Modal') }}>
-                    <FaPen size={'13px'} />
-                </i>
+                {activeTab === 1 || activeTab === 2 ?
+                    <i onClick={() => { console.log('Undo Modal') }}>
+                        <FaUndo size={'13px'} />
+                    </i> :
+                    <i onClick={() => { console.log('Edit Modal') }}>
+                        <FaPen size={'13px'} />
+                    </i>
+                }
                 <i onClick={() => { console.log(`Detail Modal`) }}>
                     <FaInfo size={'13px'} />
                 </i>
