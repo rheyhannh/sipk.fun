@@ -379,10 +379,16 @@ export const PerubahanTerakhirDetail = () => {
                                                     className={styles.form__label}
                                                 >
                                                     {
-                                                        context?.data?.current?.type === 'tambah' ? 'Ditambah'
-                                                            : context?.data?.current?.type === 'ubah' ? 'Diedit'
-                                                                : context?.data?.current?.type === 'hapus' ? 'Dihapus'
-                                                                    : 'Tanggal'
+                                                        isSebelumForm ?
+                                                            context?.data?.prev?.type === 'tambah' ? 'Ditambah'
+                                                                : context?.data?.prev?.type === 'ubah' ? 'Diedit'
+                                                                    : context?.data?.prev?.type === 'hapus' ? 'Dihapus'
+                                                                        : 'Tanggal'
+                                                            :
+                                                            context?.data?.current?.type === 'tambah' ? 'Ditambah'
+                                                                : context?.data?.current?.type === 'ubah' ? 'Diedit'
+                                                                    : context?.data?.current?.type === 'hapus' ? 'Dihapus'
+                                                                        : 'Tanggal'
                                                     }
                                                 </label>
                                             </div>
