@@ -364,7 +364,6 @@ export async function POST(request) {
         })
     }
 
-    console.log(formData)
     // const formDataSchema = Joi.object({
     //     nama: Joi.string().min(3).max(50).required(),
     //     semester: Joi.number().min(0).max(50).required(),
