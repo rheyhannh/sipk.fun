@@ -377,7 +377,7 @@ export async function GET(request) {
         }
     )
 
-    let { data, error } = await supabase.from('matkul').select('*');
+    let { data, error } = await supabase.from('matkul').select('*').order('created_at', { ascending: true });
 
     if (error) {
         console.error(error);
