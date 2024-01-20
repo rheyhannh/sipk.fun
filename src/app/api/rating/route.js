@@ -52,7 +52,7 @@ export async function GET(request) {
     }
 
     try {
-        var currentUsage = await limiter.check(limitRequest, `matkul-${userId}`);
+        var currentUsage = await limiter.check(limitRequest, `rating-${userId}`);
         // Log Here, ex: '{TIMESTAMP} userId {ROUTE} limit {currentUsage}/{limitRequest}'
     } catch {
         // Log Here, ex: '{TIMESTAMP} userId {ROUTE} limited'
@@ -152,7 +152,7 @@ export async function POST(request) {
     }
 
     try {
-        var currentUsage = await limiter.check(limitRequest, `matkul-${userId}`);
+        var currentUsage = await limiter.check(limitRequest, `rating-${userId}`);
         // Log Here, ex: '{TIMESTAMP} userId {ROUTE} limit {currentUsage}/{limitRequest}'
         newHeaders['X-Ratelimit-limit'] = limitRequest;
         newHeaders['X-Ratelimit-Remaining'] = limitRequest - currentUsage;
@@ -296,7 +296,7 @@ export async function PATCH(request) {
     }
 
     try {
-        var currentUsage = await limiter.check(limitRequest, `matkul-${userId}`);
+        var currentUsage = await limiter.check(limitRequest, `rating-${userId}`);
         // Log Here, ex: '{TIMESTAMP} userId {ROUTE} limit {currentUsage}/{limitRequest}'
         newHeaders['X-Ratelimit-limit'] = limitRequest;
         newHeaders['X-Ratelimit-Remaining'] = limitRequest - currentUsage;

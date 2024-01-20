@@ -151,7 +151,7 @@ export async function PATCH(request) {
     }
 
     try {
-        var currentUsage = await limiter.check(limitRequest, `matkul-${userId}`);
+        var currentUsage = await limiter.check(limitRequest, `me-${userId}`);
         // Log Here, ex: '{TIMESTAMP} userId {ROUTE} limit {currentUsage}/{limitRequest}'
         newHeaders['X-Ratelimit-limit'] = limitRequest;
         newHeaders['X-Ratelimit-Remaining'] = limitRequest - currentUsage;
