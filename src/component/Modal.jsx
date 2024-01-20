@@ -653,7 +653,7 @@ export const PerubahanTerakhirConfirm = () => {
                                                         return [ref];
                                                     } else {
                                                         const filteredRef = currentRef.filter(refs => refs.id !== ref.id);
-                                                        return [ref, ...filteredRef];
+                                                        return [...filteredRef, ref];
                                                     }
                                                 },
                                                 revalidate: false,
@@ -768,7 +768,7 @@ export const PerubahanTerakhirConfirm = () => {
                                                         return [ref];
                                                     } else {
                                                         const filteredRef = currentRef.filter(refs => refs.id !== ref.id);
-                                                        return [ref, ...filteredRef];
+                                                        return [...filteredRef, ref];
                                                     }
                                                 },
                                                 revalidate: false,
@@ -1001,12 +1001,7 @@ export const TambahMatkul = () => {
                                                 } else if (currentRef.length === 0) {
                                                     return [ref];
                                                 } else {
-                                                    if (currentRef.length >= 3) {
-                                                        const sliceCurrentRef = currentRef.slice(0, -1);
-                                                        return [ref, ...sliceCurrentRef];
-                                                    } else {
-                                                        return [ref, ...currentRef];
-                                                    }
+                                                    return [...currentRef, ref];
                                                 }
                                             },
                                             revalidate: false,
