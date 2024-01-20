@@ -523,25 +523,7 @@ export function Table({ state, validating, user, sessionTable, matkul, matkulHis
                                                     </td>
                                                 )
                                             })}
-                                            {row.getVisibleCells().length ?
-                                                <td className={`${styles.action} ${rowAction ? styles.expand : ''}`}>
-                                                    <div className={styles.wrapper}>
-                                                        <i onClick={() => setRowAction(!rowAction)}>
-                                                            <FaAngleLeft size={'13px'} />
-                                                        </i>
-                                                        <i onClick={() => { console.log('Modal Confirm Delete Matakuliah'); console.log('a') }}>
-                                                            <FaTrash size={'13px'} />
-                                                        </i>
-                                                        <i onClick={() => { console.log('Edit Modal') }}>
-                                                            <FaPen size={'13px'} />
-                                                        </i>
-                                                        <i onClick={() => { console.log(`Detail Modal`) }}>
-                                                            <FaInfo size={'13px'} />
-                                                        </i>
-                                                    </div>
-                                                </td>
-                                                : <></>
-                                            }
+                                            {row.getVisibleCells().length ? <RowAction rowAction={rowAction} setRowAction={setRowAction} /> : <></>}
                                         </tr>
                                     ))}
                                 </tbody>
@@ -691,6 +673,29 @@ function DebouncedInput({
 
     return (
         <input {...props} value={value} onChange={(e) => setValue(e.target.value)} />
+    )
+}
+
+function RowAction({
+    rowAction, setRowAction
+}) {
+    return (
+        <td className={`${styles.action} ${rowAction ? styles.expand : ''}`}>
+            <div className={styles.wrapper}>
+                <i onClick={() => setRowAction(!rowAction)}>
+                    <FaAngleLeft size={'13px'} />
+                </i>
+                <i onClick={() => { console.log('Modal Confirm Delete Matakuliah'); }}>
+                    <FaTrash size={'13px'} />
+                </i>
+                <i onClick={() => { console.log('Edit Modal') }}>
+                    <FaPen size={'13px'} />
+                </i>
+                <i onClick={() => { console.log(`Detail Modal`) }}>
+                    <FaInfo size={'13px'} />
+                </i>
+            </div>
+        </td>
     )
 }
 
