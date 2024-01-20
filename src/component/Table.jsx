@@ -2,6 +2,7 @@
 
 // ========== NEXT DEPEDENCY ========== //
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 
 // ========== REACT DEPEDENCY ========== //
 import { useContext, useEffect, useState, useRef, useMemo } from 'react';
@@ -18,11 +19,12 @@ import {
     getPaginationRowModel,
     useReactTable,
 } from '@tanstack/react-table'
+import toast from 'react-hot-toast';
 import { ModalContext } from "./provider/Modal";
 import { Spinner } from "./loader/Loading";
 
-// ========== DATA DEPEDENCY ========== //
-
+// ========== UTILS DEPEDENCY ========== //
+import { getLoadingMessage } from '@/utils/client_side';
 
 // ========== STYLE DEPEDENCY ========== //
 import styles from './style/table.module.css'
@@ -44,11 +46,14 @@ import {
 } from "react-icons/io5";
 import { FaInfo, FaPen, FaTrash, FaAngleLeft, FaUndo } from "react-icons/fa";
 
+
 /*
 ============================== CODE START HERE ==============================
 */
 export function Table({ state, validating, user, sessionTable, matkul, matkulHistory, penilaian }) {
+    const router = useRouter();
     const userIdCookie = useCookies().get('s_user_id');
+    const accessToken = useCookies().get('s_access_token');
     const handleRetry = () => {
         mutate(['/api/me', userIdCookie])
         mutate(['/api/matkul', userIdCookie])
@@ -293,6 +298,113 @@ export function Table({ state, validating, user, sessionTable, matkul, matkulHis
             return columnFilters.length > 0;
         }
 
+        const handleHapusMatakuliah = async (e, matkulId, matkulNama) => {
+            e.preventDefault();
+
+            const deleteMatkul = () => {
+                return new Promise(async (resolve, reject) => {
+                    try {
+                        if (!accessToken) {
+                            router.refresh();
+                            throw new Error('Terjadi kesalahan, silahkan coba lagi');
+                        }
+                        if (!userIdCookie) {
+                            router.refresh();
+                            throw new Error('Terjadi kesalahan, silahkan coba lagi');
+                        }
+                        if (!matkulId) {
+                            router.refresh();
+                            throw new Error('Terjadi kesalahan, silahkan coba lagi');
+                        }
+                        if (!matkulNama) {
+                            router.refresh();
+                            throw new Error('Terjadi kesalahan, silahkan coba lagi');
+                        }
+
+                        const response = await fetch(`/api/matkul?id=${matkulId}`, {
+                            method: 'DELETE',
+                            headers: {
+                                'Authorization': `Bearer ${accessToken}`,
+                                'Content-Type': 'application/json',
+                            },
+                        });
+
+                        if (!response.ok) {
+                            if (response.status === 401) {
+                                router.replace('/users?action=login&error=isession', {
+                                    scroll: false
+                                });
+                                throw new Error(`Unauthorized`);
+                            } else {
+                                try {
+                                    const { message } = await response.json();
+                                    if (message) {
+                                        throw new Error(message);
+                                    } else {
+                                        throw new Error(`Terjadi kesalahan`);
+                                    }
+                                } catch (error) {
+                                    console.error(error);
+                                    reject(error);
+                                }
+                            }
+                        } else {
+                            try {
+                                const { ref } = await response.json();
+                                if (!ref) {
+                                    throw new Error('Failed to update cache');
+                                }
+                                mutate(['/api/matkul', userIdCookie], undefined, {
+                                    populateCache: (_, currentMatkul) => {
+                                        if (!currentMatkul) {
+                                            return [];
+                                        } else if (currentMatkul.length - 1 === 0) {
+                                            return [];
+                                        } else {
+                                            const filteredMatkul = currentMatkul.filter(matkul => matkul.id !== `${matkulId}`);
+                                            return [...filteredMatkul];
+                                        }
+                                    },
+                                    revalidate: false,
+                                });
+                                mutate(['/api/matkul-history', userIdCookie], ref, {
+                                    populateCache: (ref, currentRef) => {
+                                        if (!currentRef) {
+                                            return [ref]
+                                        } else if (currentRef.length === 1) {
+                                            return [ref];
+                                        } else {
+                                            const filteredRef = currentRef.filter(refs => refs.id !== ref.id);
+                                            return [...filteredRef, ref];
+                                        }
+                                    },
+                                    revalidate: false,
+                                });
+                                resolve();
+                            } catch {
+                                mutate(['/api/matkul', userIdCookie]);
+                                mutate(['/api/matkul-history', userIdCookie]);
+                                resolve();
+                            }
+                        }
+                    } catch (error) { reject(error) }
+                })
+            }
+
+            toast.promise(
+                deleteMatkul(),
+                {
+                    loading: `${getLoadingMessage(false, 0)} matakuliah`,
+                    success: `${matkulNama ?? 'Matakuliah'} berhasil dihapus`,
+                    error: (error) => `${error.message || 'Terjadi kesalahan'}`
+                },
+                {
+                    position: 'top-left',
+                    duration: 4000,
+                }
+            )
+        }
+
         const handleTambahModal = () => {
             if (!penilaian) { return; }
             setModalData({ penilaian });
@@ -523,7 +635,7 @@ export function Table({ state, validating, user, sessionTable, matkul, matkulHis
                                                     </td>
                                                 )
                                             })}
-                                            {row.getVisibleCells().length ? <RowAction activeTab={activeTab} rowAction={rowAction} setRowAction={setRowAction} /> : <></>}
+                                            {row.getVisibleCells().length ? <RowAction activeTab={activeTab} row={row} rowAction={rowAction} setRowAction={setRowAction} handleHapusMatakuliah={handleHapusMatakuliah} /> : <></>}
                                         </tr>
                                     ))}
                                 </tbody>
@@ -677,7 +789,7 @@ function DebouncedInput({
 }
 
 function RowAction({
-    activeTab, rowAction, setRowAction
+    activeTab, row, rowAction, setRowAction, handleHapusMatakuliah
 }) {
     return (
         <td className={`${styles.action} ${rowAction ? styles.expand : ''}`}>
@@ -685,9 +797,14 @@ function RowAction({
                 <i onClick={() => setRowAction(!rowAction)}>
                     <FaAngleLeft size={'13px'} />
                 </i>
-                <i onClick={() => { console.log('Modal Confirm Delete Matakuliah'); }}>
-                    <FaTrash size={'13px'} />
-                </i>
+                {activeTab === 1 ?
+                    <i onClick={() => { console.log('Hapus Permanent') }}>
+                        <FaTrash size={'13px'} />
+                    </i> :
+                    <i onClick={(e) => { handleHapusMatakuliah(e, row.getValue('nomor'), row.getValue('matakuliah')) }}>
+                        <FaTrash size={'13px'} />
+                    </i>
+                }
                 {activeTab === 1 || activeTab === 2 ?
                     <i onClick={() => { console.log('Undo Modal') }}>
                         <FaUndo size={'13px'} />
