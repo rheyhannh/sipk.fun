@@ -646,8 +646,8 @@ export function History({ state, data, penilaian, count }) {
         }
 
         const getArrayLength = () => {
-            if (count) { return data.slice(0, count) }
-            else { return data }
+            if (count) { return data.slice().reverse().slice(0, count) }
+            else { return data.slice().reverse() }
         }
 
         return (
