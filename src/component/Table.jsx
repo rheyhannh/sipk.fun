@@ -76,7 +76,7 @@ export function Table({ state, validating, user, sessionTable, matkul, matkulHis
                     matkulHistory
                         .filter(history => history.current.type === 'hapus')
                         .map(matkulDihapus => ({
-                            id: matkulDihapus.id,
+                            id: matkulDihapus.matkul_id,
                             nama: matkulDihapus.current.nama,
                             semester: matkulDihapus.current.semester,
                             sks: matkulDihapus.current.sks,
@@ -90,13 +90,13 @@ export function Table({ state, validating, user, sessionTable, matkul, matkulHis
                     matkulHistory
                         .filter(history => history.current.type === 'ubah')
                         .map(matkulDiubah => ({
-                            id: matkulDiubah.id,
+                            id: matkulDiubah.matkul_id,
                             nama: matkulDiubah.current.nama,
                             semester: matkulDiubah.current.semester,
                             sks: matkulDiubah.current.sks,
                             nilai: matkulDiubah.current.nilai,
                             dapat_diulang: matkulDiubah.current.dapat_diulang,
-                            target_nilai: matkulDihapus.current.target_nilai,
+                            target_nilai: matkulDiubah.current.target_nilai,
                         }))
                     : [];
             } else {
@@ -138,7 +138,7 @@ export function Table({ state, validating, user, sessionTable, matkul, matkulHis
                 matkulHistory
                     .filter(history => history.current.type === 'hapus')
                     .map(matkulDihapus => ({
-                        id: matkulDihapus.id,
+                        id: matkulDihapus.matkul_id,
                         nama: matkulDihapus.current.nama,
                         semester: matkulDihapus.current.semester,
                         sks: matkulDihapus.current.sks,
@@ -157,13 +157,13 @@ export function Table({ state, validating, user, sessionTable, matkul, matkulHis
                 matkulHistory
                     .filter(history => history.current.type === 'ubah')
                     .map(matkulDiubah => ({
-                        id: matkulDiubah.id,
+                        id: matkulDiubah.matkul_id,
                         nama: matkulDiubah.current.nama,
                         semester: matkulDiubah.current.semester,
                         sks: matkulDiubah.current.sks,
                         nilai: matkulDiubah.current.nilai,
                         dapat_diulang: matkulDiubah.current.dapat_diulang,
-                        target_nilai: matkulDihapus.current.target_nilai,
+                        target_nilai: matkulDiubah.current.target_nilai,
                     }))
                 : [];
             setActiveTab(2);
