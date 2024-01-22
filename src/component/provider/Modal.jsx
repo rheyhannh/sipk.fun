@@ -11,6 +11,7 @@ import {
     PerubahanTerakhirDetail,
     PerubahanTerakhirConfirm,
     TambahMatkul,
+    DetailMatkul,
     Profil,
     Rating,
     TabelSetting,
@@ -63,7 +64,8 @@ export const ModalProvider = ({ children }) => {
             profil: <Profil/>,
             rating: <Rating/>,
             tabelSetting: <TabelSetting/>,
-            tabelFilter: <TabelFilter/>
+            tabelFilter: <TabelFilter/>,
+            detailMatkul: <DetailMatkul/>
         }
     }
 

@@ -210,7 +210,7 @@ export const Logout = () => {
                                     <h3>Logout</h3>
                                 </div>
                                 <div className={`${styles.btn} ${styles.cancel}`} onClick={() => { context.handleModalClose(); }}>
-                                    <h3>Cancel</h3>
+                                    <h3>Jangan</h3>
                                 </div>
                             </div>
                         </div>
@@ -2908,7 +2908,7 @@ export const TabelFilter = () => {
                                         </button>
                                     </div>
 
-                                    <div style={{ marginTop: '1rem' }} className={`${styles.btn} ${styles.cancel}`} onClick={toggleEditFilter}>
+                                    <div style={{ marginTop: '.75rem' }} className={`${styles.btn} ${styles.cancel}`} onClick={toggleEditFilter}>
                                         <h3>Batalkan</h3>
                                     </div>
 
@@ -2927,6 +2927,550 @@ export const TabelFilter = () => {
                 )
             }
             }
+        </ModalContext.Consumer>
+    )
+}
+
+export const DetailMatkul = () => {
+    const router = useRouter();
+    const userIdCookie = useCookies().get('s_user_id');
+    const accessToken = useCookies().get('s_access_token');
+    const [nama, setNama] = useState('');
+    const [sks, setSks] = useState('');
+    const [nilai, setNilai] = useState('');
+    const [semester, setSemester] = useState('');
+    const [dapatDiulang, setDapatDiulang] = useState('');
+    const [targetNilai, setTargetNilai] = useState('');
+    const [errorMessage, setErrorMessage] = useState('');
+    const [ubahMatkul, setUbahMatkul] = useState(false);
+
+    const handleNamaChange = (e) => {
+        const newNama = e.target.value;
+        if (newNama.length <= 50) {
+            setNama(newNama);
+        }
+    }
+
+    return (
+        <ModalContext.Consumer>
+            {context => {
+                const penilaian = context.data.penilaian;
+                const penilaianKey = Object.keys(penilaian);
+
+                const validateForm = () => {
+                    return new Promise(async (resolve, reject) => {
+                        try {
+                            if (!accessToken) { throw new Error('Missing user access token'); }
+                            if (!userIdCookie) { throw new Error('Missing user id'); }
+
+                            // Validating 'Nama'
+                            if (isEmpty(nama, { ignore_whitespace: true })) { setErrorMessage('Nama matakuliah dibutuhkan'); resolve(null); }
+                            else {
+                                if (!isLength(nama, { min: 3, max: 50 })) { setErrorMessage('Nama matakuliah minimal 3 karakter maksimal 50 karakter'); resolve(null); }
+                            }
+
+                            // Validating 'Sks'
+                            if (isEmpty(sks, { ignore_whitespace: true })) { setErrorMessage('Sks matakuliah dibutuhkan'); resolve(null); }
+                            else {
+                                if (!isInt(sks, { min: 0, max: 50 })) { setErrorMessage('Sks harus angka (min: 0, max: 50)'); resolve(null); }
+                            }
+
+                            // Validating 'Nilai'
+                            if (!penilaian.hasOwnProperty(nilai)) { setErrorMessage('Nilai matakuliah dibutuhkan'); resolve(null); }
+                            else {
+                                if (!isInt(`${penilaian[nilai].weight}`, { min: 0, max: 4 })) { setErrorMessage('Nilai tidak valid'); resolve(null); }
+                            }
+
+                            // Validating 'Semester'
+                            if (isEmpty(semester, { ignore_whitespace: true })) { setErrorMessage('Semester matakuliah dibutuhkan'); resolve(null); }
+                            else {
+                                if (!isInt(semester, { min: 0, max: 50 })) { setErrorMessage('Semester harus angka (min: 0, max: 50)'); resolve(null); }
+                            }
+
+                            resolve({
+                                nama: nama,
+                                semester: Number(semester),
+                                sks: Number(sks),
+                                nilai: {
+                                    indeks: nilai,
+                                    bobot: penilaian[nilai].weight,
+                                    akhir: Number(sks) * penilaian[nilai].weight
+                                },
+                                dapat_diulang: dapatDiulang === 'ya' ? true : false,
+                                target_nilai: {
+                                    indeks: targetNilai || 'A',
+                                    bobot: targetNilai ? penilaian[targetNilai].weight : 4,
+                                }
+                            })
+                        } catch (error) { reject(error); }
+                    })
+                }
+
+                const toggleEditMatkul = () => {
+                    if (ubahMatkul) { setUbahMatkul(false); setErrorMessage('');}
+                    else {
+                        setNama(context?.data?.nama || '');
+                        setSks(context?.data?.sks || '');
+                        setNilai(context?.data?.nilai || '');
+                        setSemester(context?.data?.semester || '');
+                        setDapatDiulang(context?.data?.diulang || '');
+                        setTargetNilai(context?.data?.target || '');
+                        setUbahMatkul(true);
+                    }
+                }
+                
+                const handleEditMatkul = async (e) => {
+                    e.preventDefault();
+
+                    // Validate Here, if ErrorValidate then setErrorMessage
+                    try {
+                        var validatedData = await validateForm();
+                        if (!validatedData) { return; }
+                        context.handleModalClose();
+                    } catch (error) {
+                        context.handleModalClose();
+                        console.error(error.message || 'Terjadi kesalahan');
+                        toast.error('Terjadi kesalahan, silahkan coba lagi', { position: 'top-left', duration: 4000 });
+                        router.refresh();
+                        return;
+                    }
+
+                    const editMatkul = () => {
+                        return new Promise(async (resolve, reject) => {
+                            try {
+                                if (!accessToken) {
+                                    router.refresh();
+                                    throw new Error('Terjadi kesalahan, silahkan coba lagi');
+                                }
+
+                                if (!userIdCookie) {
+                                    router.refresh();
+                                    throw new Error('Terjadi kesalahan, silahkan coba lagi');
+                                }
+
+                                if (!context?.data?.id) {
+                                    router.refresh();
+                                    throw new Error('Terjadi kesalahan, silahkan coba lagi');
+                                }
+
+                                if (!context?.data?.nama) {
+                                    router.refresh();
+                                    throw new Error('Terjadi kesalahan, silahkan coba lagi');
+                                }
+
+                                const response = await fetch(`/api/matkul?id=${context.data.id}`, {
+                                    method: 'PATCH',
+                                    headers: {
+                                        'Authorization': `Bearer ${accessToken}`,
+                                        'Content-Type': 'application/json',
+                                    },
+                                    body: JSON.stringify(validatedData),
+                                });
+
+                                if (!response.ok) {
+                                    if (response.status === 401) {
+                                        router.replace('/users?action=login&error=isession', {
+                                            scroll: false
+                                        });
+                                        throw new Error(`Unauthorized`);
+                                    } else {
+                                        try {
+                                            const { message } = await response.json();
+                                            if (message) {
+                                                throw new Error(message);
+                                            } else {
+                                                throw new Error(`Terjadi kesalahan`);
+                                            }
+                                        } catch (error) {
+                                            console.error(error);
+                                            reject(error);
+                                        }
+                                    }
+                                } else {
+                                    try {
+                                        const { matkul, ref } = await response.json();
+                                        if (!matkul || !ref) {
+                                            throw new Error('Failed to update cache');
+                                        }
+                                        mutate(['/api/matkul', userIdCookie], matkul, {
+                                            populateCache: (matkul, currentMatkul) => {
+                                                if (!currentMatkul || !currentMatkul.length) {
+                                                    return [matkul]
+                                                } else {
+                                                    const findIndex = currentMatkul.findIndex(item => item.id === matkul.id);
+                                                    if (findIndex !== -1) {
+                                                        return currentMatkul.map((item, index) => (index === findIndex ? matkul : item));
+                                                    }
+                                                    else {
+                                                        return [...currentMatkul, matkul];
+                                                    }
+                                                }
+                                            },
+                                            revalidate: false,
+                                        });
+                                        mutate(['/api/matkul-history', userIdCookie], ref, {
+                                            populateCache: (ref, currentRef) => {
+                                                if (!currentRef || !currentRef.length) {
+                                                    return [ref]
+                                                } else {
+                                                    return [...currentRef, ref];
+                                                }
+                                            },
+                                            revalidate: false,
+                                        });
+                                        resolve();
+                                    } catch {
+                                        mutate(['/api/matkul', userIdCookie]);
+                                        mutate(['/api/matkul-history', userIdCookie]);
+                                        resolve();
+                                    }
+                                }
+                            } catch (error) { reject(error); }
+                        });
+                    };
+
+                    toast.promise(
+                        editMatkul(),
+                        {
+                            loading: `${getLoadingMessage(false, 1)}`,
+                            success: `${context.data.nama ?? 'Matakuliah'} berhasil diedit`,
+                            error: (error) => `${error.message || 'Terjadi kesalahan'}`
+                        },
+                        {
+                            position: 'top-left',
+                            duration: 4000,
+                        }
+                    )
+                }
+
+                const handleHapusMatkul = async (e) => {
+                    e.preventDefault();
+
+                    const deleteMatkul = () => {
+                        return new Promise(async (resolve, reject) => {
+                            try {
+                                if (!accessToken) {
+                                    router.refresh();
+                                    throw new Error('Terjadi kesalahan, silahkan coba lagi');
+                                }
+                                if (!userIdCookie) {
+                                    router.refresh();
+                                    throw new Error('Terjadi kesalahan, silahkan coba lagi');
+                                }
+
+                                if (!context?.data?.id) {
+                                    router.refresh();
+                                    throw new Error('Terjadi kesalahan, silahkan coba lagi');
+                                }
+
+                                if (!context?.data?.nama) {
+                                    router.refresh();
+                                    throw new Error('Terjadi kesalahan, silahkan coba lagi');
+                                }
+
+                                const response = await fetch(`/api/matkul?id=${context.data.id}`, {
+                                    method: 'DELETE',
+                                    headers: {
+                                        'Authorization': `Bearer ${accessToken}`,
+                                        'Content-Type': 'application/json',
+                                    },
+                                });
+
+                                if (!response.ok) {
+                                    if (response.status === 401) {
+                                        router.replace('/users?action=login&error=isession', {
+                                            scroll: false
+                                        });
+                                        throw new Error(`Unauthorized`);
+                                    } else {
+                                        try {
+                                            const { message } = await response.json();
+                                            if (message) {
+                                                throw new Error(message);
+                                            } else {
+                                                throw new Error(`Terjadi kesalahan`);
+                                            }
+                                        } catch (error) {
+                                            console.error(error);
+                                            reject(error);
+                                        }
+                                    }
+                                } else {
+                                    try {
+                                        const { ref } = await response.json();
+                                        if (!ref) {
+                                            throw new Error('Failed to update cache');
+                                        }
+                                        mutate(['/api/matkul', userIdCookie], undefined, {
+                                            populateCache: (_, currentMatkul) => {
+                                                if (!currentMatkul) {
+                                                    return [];
+                                                } else if (currentMatkul.length - 1 === 0) {
+                                                    return [];
+                                                } else {
+                                                    const filteredMatkul = currentMatkul.filter(matkul => matkul.id !== `${context.data.id}`);
+                                                    return [...filteredMatkul];
+                                                }
+                                            },
+                                            revalidate: false,
+                                        });
+                                        mutate(['/api/matkul-history', userIdCookie], ref, {
+                                            populateCache: (ref, currentRef) => {
+                                                if (!currentRef) {
+                                                    return [ref]
+                                                } else if (currentRef.length === 1) {
+                                                    return [ref];
+                                                } else {
+                                                    const filteredRef = currentRef.filter(refs => refs.id !== ref.id);
+                                                    return [...filteredRef, ref];
+                                                }
+                                            },
+                                            revalidate: false,
+                                        });
+                                        resolve();
+                                    } catch {
+                                        mutate(['/api/matkul', userIdCookie]);
+                                        mutate(['/api/matkul-history', userIdCookie]);
+                                        resolve();
+                                    }
+                                }
+                            } catch (error) { reject(error); }
+                        })
+                    }
+
+                    toast.promise(
+                        deleteMatkul(),
+                        {
+                            loading: `${getLoadingMessage(false, 0)} matakuliah`,
+                            success: `${context.data.nama ?? 'Matakuliah'} berhasil dihapus`,
+                            error: (error) => `${error.message || 'Terjadi kesalahan'}`
+                        },
+                        {
+                            position: 'top-left',
+                            duration: 4000,
+                        }
+                    )
+                }
+
+                return (
+                    <div className={`${styles.backdrop} ${context.active ? styles.active : ''}`}>
+                        <form
+                            style={ubahMatkul ? {
+                                gridTemplateRows: '30px auto 100px',
+                                overflow: 'hidden'
+                            } : {}}
+                            onSubmit={ubahMatkul ? handleEditMatkul : handleHapusMatkul}
+                            className={`${styles.detail__matakuliah}`}
+                            id='modal'
+                        >
+                            <div className={styles.top}>
+                                <div className={styles.title}>
+                                    <h2>{ubahMatkul ? 'Ubah Matakuliah' : 'Detail Matakuliah'}</h2>
+                                </div>
+                                <div className={styles.close} onClick={() => { context.handleModalClose() }}>
+                                    <FaTimes />
+                                </div>
+                            </div>
+
+                            <div className={styles.inner}>
+                                <div style={{ marginBottom: '1.5rem', textAlign: 'center', color: 'var(--danger-color)' }}>
+                                    {errorMessage}
+                                </div>
+
+                                <div className={styles.form__input_field}>
+                                    <div>
+                                        <input
+                                            type="text"
+                                            id="nama"
+                                            minLength="3"
+                                            maxLength="50"
+                                            placeholder=" "
+                                            className={`${styles.form__input} ${styles.max_length}`}
+                                            value={ubahMatkul ? nama : context?.data?.nama || ''}
+                                            onChange={handleNamaChange}
+                                            onFocus={() => { setErrorMessage('') }}
+                                            disabled={!ubahMatkul}
+                                            required
+                                        />
+                                        <label
+                                            htmlFor="nama"
+                                            className={styles.form__label}
+                                        >
+                                            Nama
+                                        </label>
+                                    </div>
+
+                                    <div className={`${styles.form__input_length} ${nama.length >= 50 ? styles.max : ''}`}>
+                                        <small>{nama.length}/50</small>
+                                    </div>
+                                </div>
+
+                                <div style={{
+                                    display: 'grid',
+                                    gridTemplateColumns: 'repeat(3,1fr)',
+                                    gap: '1rem'
+                                }}>
+                                    <div className={styles.form__input_field}>
+                                        <input
+                                            type="number"
+                                            id="sks"
+                                            step="1"
+                                            min="0"
+                                            max="50"
+                                            placeholder=" "
+                                            className={styles.form__input}
+                                            value={ubahMatkul ? sks : context?.data?.sks || ''}
+                                            onChange={(e) => { setSks(e.target.value) }}
+                                            onFocus={() => { setErrorMessage('') }}
+                                            disabled={!ubahMatkul}
+                                            required
+                                        />
+                                        <label
+                                            htmlFor="sks"
+                                            className={styles.form__label}
+                                        >
+                                            Sks
+                                        </label>
+                                    </div>
+                                    <div className={styles.form__input_field}>
+                                        <select
+                                            id="nilai"
+                                            className={`${styles.form__select} ${nilai || context?.data?.nilai ? styles.filled : ''}`}
+                                            value={ubahMatkul ? nilai : context?.data?.nilai || ''}
+                                            onChange={(e) => { setNilai(e.target.value) }}
+                                            onFocus={() => { setErrorMessage('') }}
+                                            disabled={!ubahMatkul}
+                                            style={ubahMatkul ? {} : { cursor: 'auto' }}
+                                            required
+                                        >
+                                            <option value={''} disabled hidden></option>
+                                            {penilaianKey.map((nilai) => (
+                                                <option value={nilai} key={crypto.randomUUID()}>{nilai}</option>
+                                            ))
+                                            }
+                                        </select>
+                                        <label
+                                            htmlFor="nilai"
+                                            className={styles.form__label}
+                                        >
+                                            Nilai
+                                        </label>
+                                    </div>
+                                    <div className={styles.form__input_field}>
+                                        <input
+                                            type="number"
+                                            id="semester"
+                                            step="1"
+                                            min="0"
+                                            max="50"
+                                            placeholder=" "
+                                            className={styles.form__input}
+                                            value={ubahMatkul ? semester : context?.data?.semester || ''}
+                                            onChange={(e) => { setSemester(e.target.value) }}
+                                            onFocus={() => { setErrorMessage('') }}
+                                            disabled={!ubahMatkul}
+                                            required
+                                        />
+                                        <label
+                                            htmlFor="semester"
+                                            className={styles.form__label}
+                                        >
+                                            Semester
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <div style={{
+                                    display: 'grid',
+                                    gridTemplateColumns: 'repeat(2,1fr)',
+                                    gap: '1rem'
+                                }}>
+                                    <div className={styles.form__input_field}>
+                                        <select
+                                            id="dapatDiulang"
+                                            className={`${styles.form__select} ${dapatDiulang || context?.data?.diulang ? styles.filled : ''}`}
+                                            value={ubahMatkul ? dapatDiulang : context?.data?.diulang || ''}
+                                            onChange={(e) => { setDapatDiulang(e.target.value) }}
+                                            onFocus={() => { setErrorMessage('') }}
+                                            disabled={!ubahMatkul}
+                                            style={ubahMatkul ? {} : { cursor: 'auto ' }}
+                                            required
+                                        >
+                                            <option value={''} disabled hidden></option>
+                                            <option value={'ya'}>Ya</option>
+                                            <option value={'tidak'}>Tidak</option>
+                                        </select>
+                                        <label
+                                            htmlFor="dapatDiulang"
+                                            className={styles.form__label}
+                                        >
+                                            Bisa Diulang
+                                        </label>
+                                    </div>
+
+                                    <div className={styles.form__input_field}>
+                                        <select
+                                            id="maxNilai"
+                                            className={`${styles.form__select} ${targetNilai || context?.data?.target ? styles.filled : ''}`}
+                                            value={ubahMatkul ? targetNilai : context?.data?.target || ''}
+                                            onChange={(e) => { setTargetNilai(e.target.value) }}
+                                            onFocus={() => { setErrorMessage('') }}
+                                            disabled={!ubahMatkul}
+                                            style={ubahMatkul ? {} : { cursor: 'auto ' }}
+                                            required
+                                        >
+                                            <option value={''} disabled hidden></option>
+                                            {penilaianKey.map((nilai) => (
+                                                <option value={nilai} key={crypto.randomUUID()}>{nilai}</option>
+                                            ))
+                                            }
+                                        </select>
+                                        <label
+                                            htmlFor="maxNilai"
+                                            className={styles.form__label}
+                                        >
+                                            Target Nilai
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {ubahMatkul ?
+                                <div
+                                    className={styles.form__action}
+                                >
+                                    <button type='submit' className={styles.btn}>
+                                        <h3>Simpan</h3>
+                                    </button>
+                                    <div style={{marginTop: '.75rem'}} className={`${styles.btn} ${styles.cancel}`} onClick={toggleEditMatkul}>
+                                        <h3>Batalkan</h3>
+                                    </div>
+                                </div>
+                                :
+                                <div
+                                    className={styles.form__action}
+                                >
+                                    <div
+                                        style={{
+                                            display: 'grid',
+                                            gridTemplateColumns: 'repeat(2,1fr)',
+                                            gap: '1rem',
+                                            height: '100%'
+                                        }}
+                                    >
+                                        <div style={{ marginTop: '0' }} className={`${styles.btn} ${styles.confirm} ${styles.reset}`}>
+                                            <h3>Hapus</h3>
+                                        </div>
+                                        <button type='submit' className={styles.btn} onClick={toggleEditMatkul}>
+                                            <h3>Edit</h3>
+                                        </button>
+                                    </div>
+                                </div>
+                            }
+                        </form>
+                    </div>
+                )
+            }}
         </ModalContext.Consumer>
     )
 }

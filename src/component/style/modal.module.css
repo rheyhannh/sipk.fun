@@ -23,6 +23,7 @@
 
 .perubahan__terakhir,
 .tambah__matakuliah,
+.detail__matakuliah,
 .panduan__daftar,
 .logout,
 .rating,
@@ -71,6 +72,10 @@
     max-height: 390px;
 }
 
+.detail__matakuliah {
+    max-height: 425px;
+}
+
 .rating {
     max-height: 420px;
 }
@@ -93,6 +98,7 @@
 
 .backdrop.active .perubahan__terakhir,
 .backdrop.active .tambah__matakuliah,
+.backdrop.active .detail__matakuliah,
 .backdrop.active .panduan__daftar,
 .backdrop.active .rating,
 .backdrop.active .tabel__setting,
@@ -317,12 +323,14 @@
 }
 
 .tambah__matakuliah .form__input:focus+.form__label,
+.detail__matakuliah .form__input:focus+.form__label,
 .profil .form__input:focus+.form__label,
 .tabel__filter .form__input:focus+.form__label {
     color: var(--logo-second-color);
 }
 
 .tambah__matakuliah .form__input:not(:placeholder-shown).form__input:not(:focus)+.form__label,
+.detail__matakuliah .form__input:not(:placeholder-shown).form__input:not(:focus)+.form__label,
 .profil .form__input:not(:placeholder-shown).form__input:not(:focus)+.form__label,
 .tabel__filter .form__input:not(:placeholder-shown).form__input:not(:focus)+.form__label {
     color: var(--logo-second-color);
@@ -601,6 +609,14 @@
     gap: .5rem;
 }
 
+.detail__matakuliah input:disabled {
+    color: var(--infoDark-color);
+}
+
+.detail__matakuliah select:disabled {
+    color: var(--infoDark-color);
+}
+
 @media (hover: hover) and (pointer: fine) {
     .inner::-webkit-scrollbar-thumb:hover {
         border-radius: .25rem;
@@ -609,6 +625,7 @@
 
     .perubahan__terakhir:hover .inner::-webkit-scrollbar,
     .tambah__matakuliah:hover .inner::-webkit-scrollbar,
+    .detail__matakuliah:hover .inner::-webkit-scrollbar,
     .panduan__daftar:hover .inner::-webkit-scrollbar,
     .profil:hover .inner::-webkit-scrollbar,
     .rating:hover .inner::-webkit-scrollbar,
@@ -620,6 +637,7 @@
     .perubahan__terakhir:hover .inner::-webkit-scrollbar-thumb,
     .tambah__matakuliah:hover .inner::-webkit-scrollbar-thumb,
     .panduan__daftar:hover .inner::-webkit-scrollbar-thumb,
+    .detail__matakuliah:hover .inner::-webkit-scrollbar-thumb,
     .profil:hover .inner::-webkit-scrollbar-thumb,
     .rating:hover .inner::-webkit-scrollbar-thumb,
     .tabel__setting:hover .inner::-webkit-scrollbar-thumb,
@@ -629,6 +647,7 @@
 
     .perubahan__terakhir:hover .inner::-webkit-scrollbar-thumb:hover,
     .tambah__matakuliah:hover .inner::-webkit-scrollbar-thumb:hover,
+    .detail__matakuliah:hover .inner::-webkit-scrollbar-thumb:hover,
     .panduan__daftar:hover .inner::-webkit-scrollbar-thumb:hover,
     .profil:hover .inner::-webkit-scrollbar-thumb:hover,
     .rating:hover .inner::-webkit-scrollbar-thumb:hover,
@@ -727,6 +746,7 @@
     .perubahan__terakhir,
     .perubahan__terakhir.ubah,
     .tambah__matakuliah,
+    .detail__matakuliah,
     .panduan__daftar,
     .profil,
     .rating,
