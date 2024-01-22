@@ -383,6 +383,14 @@
     gap: 1rem;
 }
 
+.profil input:disabled {
+    color: var(--infoDark-color);
+}
+
+.profil select:disabled {
+    color: var(--infoDark-color);
+}
+
 .stars {
     display: grid;
     justify-content: center;
@@ -438,6 +446,10 @@
     text-align: center;
     padding: .5rem;
     cursor: pointer;
+}
+
+.rating select:disabled {
+    color: var(--infoDark-color);
 }
 
 .review {
@@ -556,6 +568,10 @@
     border-radius: .5rem;
 }
 
+.tabel__setting_select select:disabled {
+    color: var(--infoDark-color);
+}
+
 .tabel__filter_title {
     text-align: center;
     font-size: .85rem;
@@ -608,6 +624,15 @@
     grid-template-columns: repeat(2,1fr);
     gap: .5rem;
 }
+
+.tabel__filter input:disabled {
+    color: var(--infoDark-color);
+}
+
+.tabel__filter select:disabled {
+    color: var(--infoDark-color);
+}
+
 
 .detail__matakuliah input:disabled {
     color: var(--infoDark-color);
