@@ -414,6 +414,15 @@ export function Table({ state, validating, user, sessionTable, matkul, matkulHis
             }, 50)
         }
 
+        const handleDetailModal = (item) => {
+            if (!penilaian) { return; }
+            setModalData({ penilaian, ...item });
+            setModal('detailMatkul');
+            setTimeout(() => {
+                setActive(true);
+            }, 50)
+        }
+
         const handleSettingModal = () => {
             setModalData({ setPageSize, setColumnOrder, setPageControlPosition, setColumnVisibility, table: getTablePreferences() });
             setModal('tabelSetting');
@@ -635,7 +644,19 @@ export function Table({ state, validating, user, sessionTable, matkul, matkulHis
                                                     </td>
                                                 )
                                             })}
-                                            {row.getVisibleCells().length ? <RowAction activeTab={activeTab} row={row} rowAction={rowAction} setRowAction={setRowAction} handleHapusMatakuliah={handleHapusMatakuliah} /> : <></>}
+                                            {row.getVisibleCells().length ?
+                                                <RowAction
+                                                    activeTab={activeTab}
+                                                    row={row}
+                                                    rowAction={rowAction}
+                                                    setRowAction={setRowAction}
+                                                    handleHapusMatakuliah={handleHapusMatakuliah}
+                                                    handleDetailModal={handleDetailModal}
+                                                />
+                                                :
+                                                <>
+                                                </>
+                                            }
                                         </tr>
                                     ))}
                                 </tbody>
@@ -789,7 +810,7 @@ function DebouncedInput({
 }
 
 function RowAction({
-    activeTab, row, rowAction, setRowAction, handleHapusMatakuliah
+    activeTab, row, rowAction, setRowAction, handleHapusMatakuliah, handleDetailModal
 }) {
     return (
         <td className={`${styles.action} ${rowAction ? styles.expand : ''}`}>
@@ -806,16 +827,36 @@ function RowAction({
                     </i>
                 }
                 {activeTab === 1 || activeTab === 2 ?
-                    <i onClick={() => { console.log('Undo Modal') }}>
-                        <FaUndo size={'13px'} />
-                    </i> :
-                    <i onClick={() => { console.log('Edit Modal') }}>
-                        <FaPen size={'13px'} />
-                    </i>
+                    <>
+                        <i onClick={() => { console.log('Perubahan Terakhir Confirm Modal') }}>
+                            <FaUndo size={'13px'} />
+                        </i>
+                        <i onClick={() => { console.log('Perubahan Terakhir Detail Modal') }}>
+                            <FaInfo size={'13px'} />
+                        </i>
+                    </>
+                    :
+                    <>
+                        <i onClick={() => { console.log('Detail Modal [ubahMatkul:true]') }}
+                        >
+                            <FaPen size={'13px'} />
+                        </i>
+                        <i onClick={() => {
+                            const itemData = {
+                                id: row.getValue('nomor'),
+                                nama: row.getValue('matakuliah'),
+                                sks: `${row.getValue('sks')}`,
+                                nilai: `${row.getValue('nilai')}`,
+                                semester: `${row.getValue('semester')}`,
+                                diulang: row.getValue('diulang') ? 'ya' : 'tidak',
+                                target: row.getValue('target')
+                            }
+                            handleDetailModal(itemData)
+                        }}>
+                            <FaInfo size={'13px'} />
+                        </i>
+                    </>
                 }
-                <i onClick={() => { console.log(`Detail Modal`) }}>
-                    <FaInfo size={'13px'} />
-                </i>
             </div>
         </td>
     )
