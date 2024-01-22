@@ -3007,7 +3007,7 @@ export const DetailMatkul = () => {
                 }
 
                 const toggleEditMatkul = () => {
-                    if (ubahMatkul) { setUbahMatkul(false); setErrorMessage('');}
+                    if (ubahMatkul) { setUbahMatkul(false); setErrorMessage(''); }
                     else {
                         setNama(context?.data?.nama || '');
                         setSks(context?.data?.sks || '');
@@ -3018,7 +3018,7 @@ export const DetailMatkul = () => {
                         setUbahMatkul(true);
                     }
                 }
-                
+
                 const handleEditMatkul = async (e) => {
                     e.preventDefault();
 
@@ -3433,6 +3433,50 @@ export const DetailMatkul = () => {
                                         </label>
                                     </div>
                                 </div>
+
+                                <div style={{ marginTop: '.5rem', marginBottom: '1rem' }} className={styles.form__input_field}>
+                                    <div>
+                                        <input
+                                            type="text"
+                                            id="dibuat"
+                                            placeholder=" "
+                                            className={`${styles.form__input}`}
+                                            style={{ cursor: ubahMatkul ? 'not-allowed' : 'default' }}
+                                            value={context.data.dibuat ?? '-'}
+                                            disabled={true}
+                                            readOnly={true}
+                                            required
+                                        />
+                                        <label
+                                            htmlFor="dibuat"
+                                            className={styles.form__label}
+                                        >
+                                            Dibuat
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <div className={styles.form__input_field}>
+                                    <div>
+                                        <input
+                                            type="text"
+                                            id="diedit"
+                                            placeholder=" "
+                                            className={`${styles.form__input}`}
+                                            style={{ cursor: ubahMatkul ? 'not-allowed' : 'default' }}
+                                            value={context.data.diedit ?? '-'}
+                                            disabled={true}
+                                            readOnly={true}
+                                            required
+                                        />
+                                        <label
+                                            htmlFor="diedit"
+                                            className={styles.form__label}
+                                        >
+                                            Diedit
+                                        </label>
+                                    </div>
+                                </div>
                             </div>
 
                             {ubahMatkul ?
@@ -3442,7 +3486,7 @@ export const DetailMatkul = () => {
                                     <button type='submit' className={styles.btn}>
                                         <h3>Simpan</h3>
                                     </button>
-                                    <div style={{marginTop: '.75rem'}} className={`${styles.btn} ${styles.cancel}`} onClick={toggleEditMatkul}>
+                                    <div style={{ marginTop: '.75rem' }} className={`${styles.btn} ${styles.cancel}`} onClick={toggleEditMatkul}>
                                         <h3>Batalkan</h3>
                                     </div>
                                 </div>
