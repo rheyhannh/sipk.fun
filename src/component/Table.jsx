@@ -24,7 +24,7 @@ import { ModalContext } from "./provider/Modal";
 import { Spinner } from "./loader/Loading";
 
 // ========== UTILS DEPEDENCY ========== //
-import { getLoadingMessage } from '@/utils/client_side';
+import { getLoadingMessage, unixToDate } from '@/utils/client_side';
 
 // ========== STYLE DEPEDENCY ========== //
 import styles from './style/table.module.css'
@@ -45,7 +45,6 @@ import {
     IoArrowUpSharp
 } from "react-icons/io5";
 import { FaInfo, FaPen, FaTrash, FaAngleLeft, FaUndo } from "react-icons/fa";
-
 
 /*
 ============================== CODE START HERE ==============================
@@ -288,6 +287,16 @@ export function Table({ state, validating, user, sessionTable, matkul, matkulHis
                 }
             })
             return result;
+        }
+
+        const getCreatedAtById = (id) => {
+            const item = matkul.find(entry => entry.id === id);
+            return item ? item.created_at ? item.created_at : null : null;
+        }
+
+        const getUpdatedAtById = (id) => {
+            const item = matkul.find(entry => entry.id === id);
+            return item ? item.updated_at ? item.updated_at : null : null;
         }
 
         const isSearchActive = () => {
@@ -652,6 +661,8 @@ export function Table({ state, validating, user, sessionTable, matkul, matkulHis
                                                     setRowAction={setRowAction}
                                                     handleHapusMatakuliah={handleHapusMatakuliah}
                                                     handleDetailModal={handleDetailModal}
+                                                    getCreatedAtById={getCreatedAtById}
+                                                    getUpdatedAtById={getUpdatedAtById}
                                                 />
                                                 :
                                                 <>
@@ -810,7 +821,14 @@ function DebouncedInput({
 }
 
 function RowAction({
-    activeTab, row, rowAction, setRowAction, handleHapusMatakuliah, handleDetailModal
+    activeTab, 
+    row, 
+    rowAction, 
+    setRowAction, 
+    handleHapusMatakuliah, 
+    handleDetailModal, 
+    getCreatedAtById, 
+    getUpdatedAtById
 }) {
     return (
         <td className={`${styles.action} ${rowAction ? styles.expand : ''}`}>
@@ -842,6 +860,8 @@ function RowAction({
                             <FaPen size={'13px'} />
                         </i>
                         <i onClick={() => {
+                            const createdAt = getCreatedAtById(row.getValue('nomor'));
+                            const updatedAt = getUpdatedAtById(row.getValue('nomor'));
                             const itemData = {
                                 id: row.getValue('nomor'),
                                 nama: row.getValue('matakuliah'),
@@ -849,7 +869,9 @@ function RowAction({
                                 nilai: `${row.getValue('nilai')}`,
                                 semester: `${row.getValue('semester')}`,
                                 diulang: row.getValue('diulang') ? 'ya' : 'tidak',
-                                target: row.getValue('target')
+                                target: row.getValue('target'),
+                                dibuat: createdAt ? unixToDate(createdAt, null, { dateStyle: 'full', timeStyle: 'medium' }) : '-',
+                                diedit: updatedAt ? unixToDate(updatedAt, null, { dateStyle: 'full', timeStyle: 'medium' }) : '-',
                             }
                             handleDetailModal(itemData)
                         }}>
