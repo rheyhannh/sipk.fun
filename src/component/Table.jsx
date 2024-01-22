@@ -616,7 +616,20 @@ export function Table({ state, validating, user, sessionTable, matkul, matkulHis
                                         <tr
                                             onClick={(e) => {
                                                 if (!e.target.closest(`.${styles.action}`)) {
-                                                    console.log('Detail Modal');
+                                                    const createdAt = getCreatedAtById(row.getValue('nomor'));
+                                                    const updatedAt = getUpdatedAtById(row.getValue('nomor'));
+                                                    const itemData = {
+                                                        id: row.getValue('nomor'),
+                                                        nama: row.getValue('matakuliah'),
+                                                        sks: `${row.getValue('sks')}`,
+                                                        nilai: `${row.getValue('nilai')}`,
+                                                        semester: `${row.getValue('semester')}`,
+                                                        diulang: row.getValue('diulang') ? 'ya' : 'tidak',
+                                                        target: row.getValue('target'),
+                                                        dibuat: createdAt ? unixToDate(createdAt, null, { dateStyle: 'full', timeStyle: 'medium' }) : '-',
+                                                        diedit: updatedAt ? unixToDate(updatedAt, null, { dateStyle: 'full', timeStyle: 'medium' }) : '-',
+                                                    }
+                                                    handleDetailModal(itemData)
                                                 }
                                             }}
                                             key={row.id}
