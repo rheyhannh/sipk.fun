@@ -157,18 +157,18 @@ export default function DashboardPage() {
     return (
         <div className={styles.wrapper}>
             <div className={styles.primary}>
-                <h1>Dasbor</h1>
+                <h1 className={styles.wrapper__title}>Dasbor</h1>
                 <div className={styles.insight}>
                     <AcademicCard count={3} />
                 </div>
             </div>
             <div className={styles.secondary}>
                 <div>
-                    <h2>Update</h2>
+                    <h2 className={styles.wrapper__title}>Update</h2>
                     <UpdateCard />
                 </div>
                 <div className={styles.history}>
-                    <h2>Perubahan Terakhir</h2>
+                    <h2 className={styles.wrapper__title}>Perubahan Terakhir</h2>
                     <HistoryCard count={3} />
                 </div>
             </div>

@@ -7,7 +7,7 @@
     gap: 1.5rem;
 }
 
-.wrapper h1, .wrapper h2 {
+.wrapper__title {
     color: var(--dark-color);
 }
 
