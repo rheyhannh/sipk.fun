@@ -99,7 +99,8 @@ export async function POST(request) {
             }
         })
     }
-    return NextResponse.json({}, {
+
+    return new Response(null, {
         status: 204
     })
 }
