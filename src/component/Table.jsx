@@ -21,6 +21,7 @@ import {
 } from '@tanstack/react-table'
 import toast from 'react-hot-toast';
 import { ModalContext } from "./provider/Modal";
+import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import { Spinner } from "./loader/Loading";
 
 // ========== UTILS DEPEDENCY ========== //
@@ -28,6 +29,7 @@ import { getLoadingMessage, unixToDate } from '@/utils/client_side';
 
 // ========== STYLE DEPEDENCY ========== //
 import styles from './style/table.module.css'
+import "react-loading-skeleton/dist/skeleton.css";
 
 // ========== ICON DEPEDENCY ========== //
 import {
@@ -61,8 +63,53 @@ export function Table({ state, validating, user, sessionTable, matkul, matkulHis
     }
 
     const SkeletonTable = () => {
+        const tableLoadingImg = <Image src="https://storage.googleapis.com/sipk_assets/table_loading.svg" width={100} height={100} alt="Table Loading" />;
+
         return (
-            <div>Skeleton Table</div>
+            <div className={`${styles.container}`}>
+                <div className={styles.tools}>
+                    <div className={`${styles.tools__tabs} ${styles.skeleton}`}>
+                        {['134px', '70px', '55px'].map((item, index) => (
+                            <div style={{ minWidth: item }} className={`${styles.btn} ${styles.skeleton}`} key={crypto.randomUUID()}>
+                                <SkeletonTheme
+                                    baseColor="var(--skeleton-base)"
+                                    highlightColor="var(--skeleton-highlight)"
+                                >
+                                    <Skeleton width={"100%"} height={"100%"} borderRadius={"35px"} />
+                                </SkeletonTheme>
+                            </div>
+                        ))}
+                    </div>
+                    <div className={styles.tools__right}>
+                        <div className={styles.tools__search}>
+                            <div className={`${styles.search} ${styles.skeleton}`}>
+                                <SkeletonTheme
+                                    baseColor="var(--skeleton-base)"
+                                    highlightColor="var(--skeleton-highlight)"
+                                >
+                                    <Skeleton width={"100%"} height={"100%"} borderRadius={"35px"} />
+                                </SkeletonTheme>
+                            </div>
+                        </div>
+                        <div className={styles.tools__shorcut}>
+                            {Array.from({ length: 3 }, (_, index) => (
+                                <SkeletonTheme
+                                    baseColor="var(--skeleton-base)"
+                                    highlightColor="var(--skeleton-highlight)"
+                                    key={crypto.randomUUID()}
+                                >
+                                    <Skeleton width={"100%"} height={"100%"} borderRadius={"2rem"} />
+                                </SkeletonTheme>
+                            ))}
+                        </div>
+                    </div>
+                </div>
+
+                <div className={styles.loading}>
+                    <div className={styles.image}>{tableLoadingImg}</div>
+                    <h5 className={styles.loading__dots}>Memuat Tabel</h5>
+                </div>
+            </div>
         )
     }
 
