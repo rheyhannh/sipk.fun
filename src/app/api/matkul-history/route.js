@@ -7,6 +7,7 @@ import {
     rateLimit,
     validateJWT
 } from '@/utils/server_side';
+import isUUID from 'validator/lib/isUUID';
 
 const cookieAuthOptions = { secure: true, httpOnly: true, maxAge: 2592000, sameSite: 'lax' };
 const cookieAuthDeleteOptions = { secure: true, httpOnly: true, maxAge: -2592000, sameSite: 'lax' };
@@ -215,7 +216,7 @@ export async function DELETE(request) {
         return NextResponse.json({ message: `Gagal menghapus matakuliah` }, { status: 500, headers: newHeaders })
     }
 
-    return NextResponse.json({}, {
+    return new Response(null, {
         status: 204,
         headers: newHeaders
     })
