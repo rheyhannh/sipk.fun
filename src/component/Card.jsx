@@ -413,8 +413,8 @@ export function Notification({ state, data }) {
                             }
 
                             return (
-                                <SwiperSlide>
-                                    <Link href={item.href} target={'_blank'} className={`${styles.notification__post} ${styles.swiper}`} prefetch={false} key={crypto.randomUUID()}>
+                                <SwiperSlide key={crypto.randomUUID()}>
+                                    <Link href={item.href} target={'_blank'} className={`${styles.notification__post} ${styles.swiper}`} prefetch={false}>
                                         <div className={styles.notification__main}>
                                             <span style={{ color: item.color }}>
                                                 <Icon name={item.icon.name} lib={item.icon.lib} />
