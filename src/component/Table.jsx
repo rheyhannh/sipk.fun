@@ -68,7 +68,7 @@ export function Table({ state, validating, user, sessionTable, matkul, matkulHis
 
     const LoadedTable = () => {
         const initialRender = useRef(true);
-        const [activeTab, setActiveTab] = useState(sessionTable.tab ?? 0);
+        const [activeTab, setActiveTab] = useState(sessionTable?.tab ?? 0);
         const [data, setData] = useState(() => {
             if (activeTab === 1) {
                 return matkulHistory.length ?
@@ -103,15 +103,15 @@ export function Table({ state, validating, user, sessionTable, matkul, matkulHis
             }
         });
         const [isValidating, setIsValidating] = useState(validating);
-        const [columnVisibility, setColumnVisibility] = useState(sessionTable.columnVisibility ?? user?.preferences?.table?.columnVisibility ?? {
+        const [columnVisibility, setColumnVisibility] = useState(sessionTable?.columnVisibility ?? user?.preferences?.table?.columnVisibility ?? {
             nomor: true, matakuliah: true, semester: true, sks: true, nilai: true, diulang: true, target: true
         });
-        const [columnFilters, setColumnFilters] = useState(sessionTable.columnFilters ?? []);
-        const [columnOrder, setColumnOrder] = useState(sessionTable.columnOrder ?? user.preferences.table.columnOrder ?? [
+        const [columnFilters, setColumnFilters] = useState(sessionTable?.columnFilters ?? []);
+        const [columnOrder, setColumnOrder] = useState(sessionTable?.columnOrder ?? user?.preferences?.table?.columnOrder ?? [
             'nomor', 'matakuliah', 'semester', 'sks', 'nilai', 'diulang', 'target'
         ]);
-        const [pageControlPosition, setPageControlPosition] = useState(sessionTable.pageControlPosition ?? user.preferences.table.controlPosition ?? 0);
-        const [rowAction, setRowAction] = useState(sessionTable.rowAction ?? true);
+        const [pageControlPosition, setPageControlPosition] = useState(sessionTable?.pageControlPosition ?? user?.preferences?.table?.controlPosition ?? 0);
+        const [rowAction, setRowAction] = useState(sessionTable?.rowAction ?? true);
         const {
             setModal,
             setActive,
@@ -838,13 +838,13 @@ function DebouncedInput({
 }
 
 function RowAction({
-    activeTab, 
-    row, 
-    rowAction, 
-    setRowAction, 
-    handleHapusMatakuliah, 
-    handleDetailModal, 
-    getCreatedAtById, 
+    activeTab,
+    row,
+    rowAction,
+    setRowAction,
+    handleHapusMatakuliah,
+    handleDetailModal,
+    getCreatedAtById,
     getUpdatedAtById
 }) {
     return (
