@@ -36,11 +36,13 @@ export default async function middleware(request) {
             response.cookies.set({ name: 's_access_token', value: '', ...cookieAuthDeleteOptions });
         }
         if (pathname.startsWith('/users')) {
-            if (!serviceGuestCookie || !isUUID(serviceGuestCookie) ) { response.cookies.set({ name: 's_guest_id', value: crypto.randomUUID(), ...cookieServiceOptions }) }
+            if (!serviceGuestCookie || !isUUID(serviceGuestCookie)) { response.cookies.set({ name: 's_guest_id', value: crypto.randomUUID(), ...cookieServiceOptions }) }
             return response
         }
         loginUrl.searchParams.set('action', 'login');
         loginUrl.searchParams.set('error', 'esession');
+        if (pathname === '/dashboard') { loginUrl.searchParams.set('from', 'dashboard') }
+        if (pathname === '/dashboard/matakuliah') { loginUrl.searchParams.set('from', 'matakuliah') }
         response = NextResponse.redirect(loginUrl);
         return response;
     }
@@ -77,8 +79,10 @@ export default async function middleware(request) {
             // Handle : redirect user to '/users?action=login&error=isession'
             loginUrl.searchParams.set('error', 'isession');
         }
+        if (pathname === '/dashboard') { loginUrl.searchParams.set('from', 'dashboard') }
+        if (pathname === '/dashboard/matakuliah') { loginUrl.searchParams.set('from', 'matakuliah') }
         response = NextResponse.redirect(loginUrl);
-        
+
         // Reset sensitive cookies
         response.cookies.set({ name: process.env.USER_SESSION_COOKIES_NAME, value: '', ...cookieAuthDeleteOptions, })
         response.cookies.set({ name: 's_user_id', value: '', ...cookieAuthDeleteOptions, })

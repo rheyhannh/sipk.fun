@@ -208,10 +208,14 @@ export function UsersForm() {
                         }
                     }
                 } else {
+                    const redirectTo = searchParams.get('from');
                     sessionStorage.removeItem('_table');
-                    router.replace('/dashboard', {
-                        scroll: false
-                    });
+                    if (redirectTo && ['matakuliah'].includes(redirectTo)) {
+                        router.replace(`/dashboard/${redirectTo}`, { scroll: false });
+                    } else {
+                        router.replace('/dashboard', { scroll: false });
+                    }
+
                 }
             })
             .catch((error) => {
