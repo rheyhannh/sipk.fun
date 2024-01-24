@@ -87,7 +87,7 @@ export async function GET(request) {
                 remove(name, options) {
                     cookieStore.set({ name: process.env.USER_SESSION_COOKIES_NAME, value: '', ...cookieAuthDeleteOptions })
                     cookieStore.set({ name: 's_user_id', value: '', ...cookieAuthDeleteOptions })
-                    cookieStore.set({ name: 's_access_token', value: '', ...cookieAuthDeleteOptions})
+                    cookieStore.set({ name: 's_access_token', value: '', ...cookieAuthDeleteOptions })
                 },
             },
         }
@@ -113,4 +113,110 @@ export async function GET(request) {
             'X-Ratelimit-Remaining': limitRequest - currentUsage,
         }
     });
+}
+
+export async function DELETE(request) {
+    const newHeaders = {};
+    const userAccessToken = request.cookies.get(`${process.env.USER_SESSION_COOKIES_NAME}`)?.value;
+    const authorizationHeader = headers().get('Authorization');
+    const authorizationToken = authorizationHeader ? authorizationHeader.split(' ')[1] : null;
+    const cookieStore = cookies();
+    const searchParams = request.nextUrl.searchParams;
+    const id = searchParams.get('id');
+    const matkulId = searchParams.get('mid');
+
+    if (!userAccessToken || !authorizationHeader || !authorizationToken) {
+        return NextResponse.json({ message: 'Unauthorized - Missing access token' }, {
+            status: 401,
+        })
+    }
+
+    const decryptedSession = await decryptAES(userAccessToken, true);
+    const userId = decryptedSession?.user?.id;
+
+    try {
+        var decoded = await validateJWT(authorizationToken, userId);
+        // Log Here, ex: '{TIMESTAMP} decoded.id {METHOD} {ROUTE} {BODY} {PARAMS}'
+    } catch (error) {
+        return NextResponse.json({ message: error.message || 'Unauthorized - Invalid access token' }, {
+            status: 401
+        })
+    }
+
+    try {
+        var currentUsage = await limiter.check(limitRequest, `matkul-${userId}`);
+        // Log Here, ex: '{TIMESTAMP} userId {ROUTE} limit {currentUsage}/{limitRequest}'
+        newHeaders['X-Ratelimit-limit'] = limitRequest;
+        newHeaders['X-Ratelimit-Remaining'] = limitRequest - currentUsage;
+    } catch {
+        // Log Here, ex: '{TIMESTAMP} userId {ROUTE} limited'
+        return NextResponse.json({ message: `Terlalu banyak request, coba lagi dalam 1 menit` }, {
+            status: 429,
+            headers: {
+                'X-Ratelimit-Limit': limitRequest,
+                'X-Ratelimit-Remaining': 0,
+            }
+        })
+    }
+
+    if (!id || !matkulId) {
+        return NextResponse.json({ message: `Gagal menghapus matakuliah, 'id' dan 'mid' dibutuhkan` }, {
+            status: 400,
+            headers: newHeaders
+        })
+    }
+
+    if (!isUUID(id) || !isUUID(matkulId)) {
+        return NextResponse.json({ message: `Gagal menghapus matakuliah, 'id' atau 'mid' bukan uuid` }, {
+            status: 400,
+            headers: newHeaders
+        })
+    }
+
+    const supabase = createServerClient(
+        process.env.SUPABASE_URL,
+        process.env.SUPABASE_ANON_KEY,
+        {
+            cookies: {
+                async get(name) {
+                    const encryptedSession = cookieStore.get(process.env.USER_SESSION_COOKIES_NAME)?.value
+                    if (encryptedSession) {
+                        const decryptedSession = await decryptAES(encryptedSession) || 'removeMe';
+                        return decryptedSession;
+                    }
+                    return encryptedSession;
+                },
+                async set(name, value, options) {
+                    const encryptedSession = await encryptAES(value);
+                    if (encryptedSession) {
+                        cookieStore.set({ name: process.env.USER_SESSION_COOKIES_NAME, value: encryptedSession, ...cookieAuthOptions })
+                    } else {
+                        cookieStore.set({ name: process.env.USER_SESSION_COOKIES_NAME, value, ...cookieAuthOptions })
+                    }
+                },
+                remove(name, options) {
+                    cookieStore.set({ name: process.env.USER_SESSION_COOKIES_NAME, value: '', ...cookieAuthDeleteOptions })
+                    cookieStore.set({ name: 's_user_id', value: '', ...cookieAuthDeleteOptions })
+                    cookieStore.set({ name: 's_access_token', value: '', ...cookieAuthDeleteOptions })
+                },
+            },
+        }
+    )
+
+    var { error } = await supabase.from('matkul').delete().eq('id', matkulId);
+    if (error) {
+        console.error(error);
+        return NextResponse.json({ message: `Gagal menghapus matakuliah` }, { status: 500, headers: newHeaders })
+    }
+
+    var { error } = await supabase.from('matkul_history').delete().eq('id', id);
+    if (error) {
+        console.error(error);
+        return NextResponse.json({ message: `Gagal menghapus matakuliah` }, { status: 500, headers: newHeaders })
+    }
+
+    return NextResponse.json({}, {
+        status: 204,
+        headers: newHeaders
+    })
 }
