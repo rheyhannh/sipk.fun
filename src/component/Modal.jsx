@@ -3518,3 +3518,56 @@ export const DetailMatkul = () => {
         </ModalContext.Consumer>
     )
 }
+
+export const HapusPermanentConfirm = () => {
+    const router = useRouter();
+    const userIdCookie = useCookies().get('s_user_id');
+    const accessToken = useCookies().get('s_access_token');
+
+    return (
+        <ModalContext.Consumer>
+            {context => {
+                const handleHapusPermanent = async (e) => {
+                    e.preventDefault();
+                    console.log('Handle Hapus Matkul dan History Permanent')
+                }
+
+                return (
+                    <div className={`${styles.backdrop} ${context.active ? styles.active : ''}`}>
+                        <div className={`${styles.hapus__permanent} ${styles.confirm}`}>
+                            <div className={styles.top}>
+                                <div className={styles.title}>
+                                    <h2>Hapus Permanen</h2>
+                                </div>
+                                <div className={styles.close} onClick={() => { context.handleModalClose() }}>
+                                    <FaTimes />
+                                </div>
+                            </div>
+
+                            <div style={{ color: 'var(--infoDark-color)' }}>
+                                <p>
+                                    Kamu yakin ingin menghapus <b style={{ fontWeight: '600' }}>{context.data.nama ?? 'matakuliah'}</b> secara <b style={{ fontWeight: '600' }}>permanen</b>?
+                                </p>
+                            </div>
+
+                            <div className={styles.form__action}>
+                                <div
+                                    className={`${styles.btn} ${styles.confirm} ${styles.reset}`}
+                                    onClick={handleHapusPermanent}
+                                >
+                                    <h3>Ya</h3>
+                                </div>
+                                <div
+                                    className={`${styles.btn} ${styles.cancel}`}
+                                    onClick={() => { context.handleModalClose() }}
+                                >
+                                    <h3>Jangan</h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                )
+            }}
+        </ModalContext.Consumer>
+    )
+}

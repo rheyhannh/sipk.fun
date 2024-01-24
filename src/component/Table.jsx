@@ -470,6 +470,14 @@ export function Table({ state, validating, user, sessionTable, matkul, matkulHis
             }, 50)
         }
 
+        const handleHapusPermanentModal = (item) => {
+            setModalData(item);
+            setModal('hapusPermanentConfirm');
+            setTimeout(() => {
+                setActive(true);
+            }, 50)
+        }
+
         const handleDetailModal = (item) => {
             if (!penilaian) { return; }
             setModalData({ penilaian, ...item });
@@ -725,6 +733,7 @@ export function Table({ state, validating, user, sessionTable, matkul, matkulHis
                                                     setRowAction={setRowAction}
                                                     handleHapusMatakuliah={handleHapusMatakuliah}
                                                     handleDetailModal={handleDetailModal}
+                                                    handleHapusPermanentModal={handleHapusPermanentModal}
                                                     getCreatedAtById={getCreatedAtById}
                                                     getUpdatedAtById={getUpdatedAtById}
                                                 />
@@ -891,6 +900,7 @@ function RowAction({
     setRowAction,
     handleHapusMatakuliah,
     handleDetailModal,
+    handleHapusPermanentModal,
     getCreatedAtById,
     getUpdatedAtById
 }) {
@@ -901,7 +911,14 @@ function RowAction({
                     <FaAngleLeft size={'13px'} />
                 </i>
                 {activeTab === 1 ?
-                    <i onClick={() => { console.log('Hapus Permanent') }}>
+                    <i onClick={() => {
+                        const itemData = {
+                            id: row.getValue('nomor'),
+                            refId: 'refId',
+                            nama: row.getValue('matakuliah'),
+                        }
+                        handleHapusPermanentModal(itemData);
+                    }}>
                         <FaTrash size={'13px'} />
                     </i> :
                     <i onClick={(e) => { handleHapusMatakuliah(e, row.getValue('nomor'), row.getValue('matakuliah')) }}>

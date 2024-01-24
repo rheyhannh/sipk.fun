@@ -15,7 +15,8 @@ import {
     Profil,
     Rating,
     TabelSetting,
-    TabelFilter
+    TabelFilter,
+    HapusPermanentConfirm,
 } from "../Modal"
 
 /*
@@ -65,7 +66,8 @@ export const ModalProvider = ({ children }) => {
             rating: <Rating/>,
             tabelSetting: <TabelSetting/>,
             tabelFilter: <TabelFilter/>,
-            detailMatkul: <DetailMatkul/>
+            detailMatkul: <DetailMatkul/>,
+            hapusPermanentConfirm: <HapusPermanentConfirm/>
         }
     }
 

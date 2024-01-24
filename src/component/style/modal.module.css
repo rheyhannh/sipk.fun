@@ -24,6 +24,7 @@
 .perubahan__terakhir,
 .tambah__matakuliah,
 .detail__matakuliah,
+.hapus__permanent,
 .panduan__daftar,
 .logout,
 .rating,
@@ -60,6 +61,7 @@
 }
 
 .perubahan__terakhir.confirm,
+.hapus__permanent.confirm,
 .logout.confirm {
     grid-template-rows: 30px max-content 100px;
     max-height: 230px;
@@ -99,6 +101,7 @@
 .backdrop.active .perubahan__terakhir,
 .backdrop.active .tambah__matakuliah,
 .backdrop.active .detail__matakuliah,
+.backdrop.active .hapus__permanent,
 .backdrop.active .panduan__daftar,
 .backdrop.active .rating,
 .backdrop.active .tabel__setting,
@@ -784,6 +787,7 @@
     }
 
     .perubahan__terakhir.confirm,
+    .hapus__permanent.confirm,
     .logout.confirm,
     .default {
         position: absolute;
@@ -802,6 +806,7 @@
     }
 
     .backdrop.active .perubahan__terakhir.confirm,
+    .backdrop.active .hapus__permanent.confirm,
     .backdrop.active .logout.confirm,
     .backdrop.active .default {
         bottom: 0;
