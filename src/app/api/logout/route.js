@@ -100,6 +100,6 @@ export async function POST(request) {
         })
     }
     return NextResponse.json({}, {
-        status: 200
+        status: 204
     })
 }
