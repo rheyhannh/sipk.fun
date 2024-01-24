@@ -203,6 +203,7 @@
     }
 
     .dashboard__profile.error {
+        color: var(--infoDark-color);
         cursor: pointer;
         gap: .5rem;
     }
