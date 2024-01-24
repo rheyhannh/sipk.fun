@@ -3529,7 +3529,103 @@ export const HapusPermanentConfirm = () => {
             {context => {
                 const handleHapusPermanent = async (e) => {
                     e.preventDefault();
-                    console.log('Handle Hapus Matkul dan History Permanent')
+                    context.handleModalClose();
+                    
+                    const deletePermanent = () => {
+                        return new Promise(async (resolve, reject) => {
+                            try {
+                                if (!accessToken) {
+                                    router.refresh();
+                                    throw new Error('Terjadi kesalahan, silahkan coba lagi');
+                                }
+                                if (!userIdCookie) {
+                                    router.refresh();
+                                    throw new Error('Terjadi kesalahan, silahkan coba lagi');
+                                }
+                                if (!context?.data?.id || !context?.data?.refId) {
+                                    router.refresh();
+                                    throw new Error('Terjadi kesalahan, silahkan coba lagi');
+                                }
+
+                                const response = await fetch(`/api/matkul-history?id=${context.data.refId}&mid=${context.data.id}`, {
+                                    method: 'DELETE',
+                                    headers: {
+                                        'Authorization': `Bearer ${accessToken}`,
+                                        'Content-Type': 'application/json',
+                                    },
+                                });
+
+                                if (!response.ok) {
+                                    if (response.status === 401) {
+                                        router.replace('/users?action=login&error=isession', {
+                                            scroll: false
+                                        });
+                                        throw new Error(`Unauthorized`);
+                                    } else {
+                                        try {
+                                            const { message } = await response.json();
+                                            if (message) {
+                                                throw new Error(message);
+                                            } else {
+                                                throw new Error(`Terjadi kesalahan`);
+                                            }
+                                        } catch (error) {
+                                            console.error(error);
+                                            reject(error);
+                                        }
+                                    }
+                                } else {
+                                    try {
+                                        mutate(['/api/matkul', userIdCookie], undefined, {
+                                            populateCache: (_, currentMatkul) => {
+                                                if (!currentMatkul) {
+                                                    return [];
+                                                } else if (currentMatkul.length - 1 === 0) {
+                                                    return [];
+                                                } else {
+                                                    const filteredMatkul = currentMatkul.filter(matkul => matkul.id !== `${context.data.id}`);
+                                                    return [...filteredMatkul];
+                                                }
+                                            },
+                                            revalidate: false,
+                                        });
+                                        mutate(['/api/matkul-history', userIdCookie], undefined, {
+                                            populateCache: (_, currentRef) => {
+                                                if (!currentRef) {
+                                                    return []
+                                                } else if (currentRef.length - 1 === 0) {
+                                                    return [];
+                                                } else {
+                                                    const filteredRef = currentRef.filter(refs => refs.id !== `${context.data.refId}`);
+                                                    return [...filteredRef];
+                                                }
+                                            },
+                                            revalidate: false,
+                                        });
+                                        resolve();
+                                    } catch {
+                                        mutate(['/api/matkul', userIdCookie]);
+                                        mutate(['/api/matkul-history', userIdCookie]);
+                                        resolve();
+                                    }
+                                }
+
+                            } catch (error) { reject(error) }
+                        })
+                    }
+
+                    toast.promise(
+                        deletePermanent(),
+                        {
+                            loading: `${getLoadingMessage(false, 0)} matakuliah`,
+                            success: `${context.data.nama ?? 'Matakuliah'} berhasil dihapus permanen`,
+                            error: (error) => `${error.message || 'Terjadi kesalahan'}` 
+                        },
+                        {
+                            position: 'top-left',
+                            duration: 4000,
+                        }
+                    )
                 }
 
                 return (
