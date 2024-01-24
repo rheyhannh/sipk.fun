@@ -346,6 +346,11 @@ export function Table({ state, validating, user, sessionTable, matkul, matkulHis
             return item ? item.updated_at ? item.updated_at : null : null;
         }
 
+        const getRefId = (matkulId) => {
+            const item = matkulHistory.find(entry => entry.matkul_id === matkulId);
+            return item ? item.id ? item.id : null : null;
+        }
+
         const isSearchActive = () => {
             return columnFilters.some(filter => filter.id === 'matakuliah');
         };
@@ -736,6 +741,7 @@ export function Table({ state, validating, user, sessionTable, matkul, matkulHis
                                                     handleHapusPermanentModal={handleHapusPermanentModal}
                                                     getCreatedAtById={getCreatedAtById}
                                                     getUpdatedAtById={getUpdatedAtById}
+                                                    getRefId={getRefId}
                                                 />
                                                 :
                                                 <>
@@ -902,7 +908,8 @@ function RowAction({
     handleDetailModal,
     handleHapusPermanentModal,
     getCreatedAtById,
-    getUpdatedAtById
+    getUpdatedAtById,
+    getRefId
 }) {
     return (
         <td className={`${styles.action} ${rowAction ? styles.expand : ''}`}>
@@ -914,7 +921,7 @@ function RowAction({
                     <i onClick={() => {
                         const itemData = {
                             id: row.getValue('nomor'),
-                            refId: 'refId',
+                            refId: getRefId(row.getValue('nomor')),
                             nama: row.getValue('matakuliah'),
                         }
                         handleHapusPermanentModal(itemData);
