@@ -1645,6 +1645,7 @@ export const Rating = () => {
     const [review, setReview] = useState('');
     const [author, setAuthor] = useState(0);
     const [editRating, setEditRating] = useState(false);
+    const [info, setInfo] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
     const starsMessage = [
         'Berapa bintang yang kamu kasih untuk SIPK',
@@ -1656,9 +1657,21 @@ export const Rating = () => {
     ]
 
     const handleReviewChange = (e) => {
+        if (info) { setInfo(''); }
         const newReview = e.target.value;
         if (newReview.length <= 200) {
             setReview(newReview);
+        }
+    }
+
+    const handleAuthorChange = (e) => {
+        const newAuthor = e.target.value;
+        if (['0', '1', '2'].includes(newAuthor)) {
+            setAuthor(Number(newAuthor));
+            if (newAuthor === '0') { setInfo('Rating tampil dengan nama lengkap kamu') }
+            else if (newAuthor === '1') { setInfo('Rating tampil dengan nickname kamu') }
+            else if (newAuthor === '2') { setInfo('Rating tampil sebagai anonim') }
+            else { setInfo('') }
         }
     }
 
@@ -1666,7 +1679,7 @@ export const Rating = () => {
         <ModalContext.Consumer>
             {context => {
                 const toggleEditRating = () => {
-                    if (editRating) { setEditRating(false); setErrorMessage(''); }
+                    if (editRating) { setEditRating(false); setErrorMessage(''); if (info) { setInfo(''); }; }
                     else {
                         setStars(context?.data?.rating || 0);
                         setReview(context?.data?.review || '');
@@ -1708,7 +1721,6 @@ export const Rating = () => {
 
                 const handleTambahRating = async (e) => {
                     e.preventDefault();
-
                     // Validate Here, if ErrorValidate then setErrorMessage, if ErrorCookies then router.refresh()
                     try {
                         var validatedData = await validateForm();
@@ -1936,7 +1948,7 @@ export const Rating = () => {
                                                 placeholder={editRating ? starsMessage[stars] : ''}
                                                 value={editRating ? review : context.data.review}
                                                 onChange={editRating ? handleReviewChange : null}
-                                                onFocus={editRating ? () => { setErrorMessage(''); } : null}
+                                                onFocus={editRating ? () => { setErrorMessage(''); if (info) { setInfo(''); } } : null}
                                                 disabled={!editRating}
                                             />
                                             <div style={{
@@ -1946,12 +1958,12 @@ export const Rating = () => {
                                                 marginBottom: '1rem'
                                             }}>
                                                 <div className={`${styles.review} ${editRating ? review.length >= 200 ? styles.max : '' : context.data.review.length >= 200 ? styles.max : ''}`}>
-                                                    {editRating ? 200 - review.length + ' karakter tersisa' : ''}
+                                                    {editRating ? info ? info : 200 - review.length + ' karakter tersisa' : ''}
                                                 </div>
                                                 <select
                                                     id="authorRating"
                                                     value={editRating ? author : context.data.details.authorType}
-                                                    onChange={editRating ? (e) => { setAuthor(Number(e.target.value)) } : null}
+                                                    onChange={editRating ? handleAuthorChange : null}
                                                     onFocus={editRating ? () => { setErrorMessage('') } : null}
                                                     disabled={!editRating}
                                                     style={editRating ? {} : { cursor: 'auto' }}
@@ -1982,7 +1994,7 @@ export const Rating = () => {
                                                 placeholder={starsMessage[stars]}
                                                 value={review}
                                                 onChange={handleReviewChange}
-                                                onFocus={() => { setErrorMessage('') }}
+                                                onFocus={() => { setErrorMessage(''); if (info) { setInfo(''); } }}
                                             />
                                             <div style={{
                                                 display: 'flex',
@@ -1991,12 +2003,13 @@ export const Rating = () => {
                                                 marginBottom: '1rem'
                                             }}>
                                                 <div className={`${styles.review} ${review.length >= 200 ? styles.max : ''}`}>
-                                                    {review.length > 0 ? 200 - review.length + ' karakter tersisa' : ''}
+                                                    {info ? info : review.length > 0 ? 200 - review.length + ' karakter tersisa' : ''}
+                                                    {editRating ? info ? info : 200 - review.length + ' karakter tersisa' : ''}
                                                 </div>
                                                 <select
                                                     id="authorRating"
                                                     value={author}
-                                                    onChange={(e) => { setAuthor(Number(e.target.value)) }}
+                                                    onChange={handleAuthorChange}
                                                     onFocus={() => { setErrorMessage('') }}
                                                 >
                                                     <option value={0}>Fullname</option>
@@ -3530,7 +3543,7 @@ export const HapusPermanentConfirm = () => {
                 const handleHapusPermanent = async (e) => {
                     e.preventDefault();
                     context.handleModalClose();
-                    
+
                     const deletePermanent = () => {
                         return new Promise(async (resolve, reject) => {
                             try {
@@ -3619,7 +3632,7 @@ export const HapusPermanentConfirm = () => {
                         {
                             loading: `${getLoadingMessage(false, 0)} matakuliah`,
                             success: `${context.data.nama ?? 'Matakuliah'} berhasil dihapus permanen`,
-                            error: (error) => `${error.message || 'Terjadi kesalahan'}` 
+                            error: (error) => `${error.message || 'Terjadi kesalahan'}`
                         },
                         {
                             position: 'top-left',
