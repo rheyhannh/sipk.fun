@@ -483,9 +483,9 @@ export function Table({ state, validating, user, sessionTable, matkul, matkulHis
             }, 50)
         }
 
-        const handleDetailModal = (item) => {
+        const handleDetailModal = (item, edit = false) => {
             if (!penilaian) { return; }
-            setModalData({ penilaian, ...item });
+            setModalData({ penilaian, ...item, edit });
             setModal('detailMatkul');
             setTimeout(() => {
                 setActive(true);
@@ -690,7 +690,7 @@ export function Table({ state, validating, user, sessionTable, matkul, matkulHis
                                                             dibuat: createdAt ? unixToDate(createdAt, null, { dateStyle: 'full', timeStyle: 'medium' }) : '-',
                                                             diedit: updatedAt ? unixToDate(updatedAt, null, { dateStyle: 'full', timeStyle: 'medium' }) : '-',
                                                         }
-                                                        handleDetailModal(itemData)
+                                                        handleDetailModal(itemData, false)
                                                     } else {
                                                         console.log('Perubahan Terakhir Detail Modal');
                                                     }
@@ -943,7 +943,22 @@ function RowAction({
                     </>
                     :
                     <>
-                        <i onClick={() => { console.log('Detail Modal [ubahMatkul:true]') }}
+                        <i onClick={() => {
+                            const createdAt = getCreatedAtById(row.getValue('nomor'));
+                            const updatedAt = getUpdatedAtById(row.getValue('nomor'));
+                            const itemData = {
+                                id: row.getValue('nomor'),
+                                nama: row.getValue('matakuliah'),
+                                sks: `${row.getValue('sks')}`,
+                                nilai: `${row.getValue('nilai')}`,
+                                semester: `${row.getValue('semester')}`,
+                                diulang: row.getValue('diulang') ? 'ya' : 'tidak',
+                                target: row.getValue('target'),
+                                dibuat: createdAt ? unixToDate(createdAt, null, { dateStyle: 'full', timeStyle: 'medium' }) : '-',
+                                diedit: updatedAt ? unixToDate(updatedAt, null, { dateStyle: 'full', timeStyle: 'medium' }) : '-',
+                            }
+                            handleDetailModal(itemData, true);
+                        }}
                         >
                             <FaPen size={'13px'} />
                         </i>
@@ -961,7 +976,7 @@ function RowAction({
                                 dibuat: createdAt ? unixToDate(createdAt, null, { dateStyle: 'full', timeStyle: 'medium' }) : '-',
                                 diedit: updatedAt ? unixToDate(updatedAt, null, { dateStyle: 'full', timeStyle: 'medium' }) : '-',
                             }
-                            handleDetailModal(itemData)
+                            handleDetailModal(itemData, false)
                         }}>
                             <FaInfo size={'13px'} />
                         </i>

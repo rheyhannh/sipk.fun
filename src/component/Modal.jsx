@@ -2948,14 +2948,15 @@ export const DetailMatkul = () => {
     const router = useRouter();
     const userIdCookie = useCookies().get('s_user_id');
     const accessToken = useCookies().get('s_access_token');
-    const [nama, setNama] = useState('');
-    const [sks, setSks] = useState('');
-    const [nilai, setNilai] = useState('');
-    const [semester, setSemester] = useState('');
-    const [dapatDiulang, setDapatDiulang] = useState('');
-    const [targetNilai, setTargetNilai] = useState('');
+    const { data } = useContext(ModalContext);
+    const [nama, setNama] = useState(data.nama ?? '');
+    const [sks, setSks] = useState(data.sks ?? '');
+    const [nilai, setNilai] = useState(data.nilai ?? '');
+    const [semester, setSemester] = useState(data.semester ?? '');
+    const [dapatDiulang, setDapatDiulang] = useState(data.diulang ?? '');
+    const [targetNilai, setTargetNilai] = useState(data.target ?? '');
     const [errorMessage, setErrorMessage] = useState('');
-    const [ubahMatkul, setUbahMatkul] = useState(false);
+    const [ubahMatkul, setUbahMatkul] = useState(data.edit ?? false);
 
     const handleNamaChange = (e) => {
         const newNama = e.target.value;
