@@ -3572,7 +3572,7 @@ export const DetailMatkul = () => {
                                             htmlFor="dibuat"
                                             className={styles.form__label}
                                         >
-                                            Dibuat
+                                            Ditambah
                                         </label>
                                     </div>
                                 </div>
