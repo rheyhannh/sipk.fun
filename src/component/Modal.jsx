@@ -335,7 +335,7 @@ export const PerubahanTerakhirDetail = () => {
                                                         id="dapatDiulang"
                                                         placeholder=" "
                                                         className={styles.form__input}
-                                                        value={isSebelumForm ? context?.data?.prev?.dapat_diulang === 'true' ? 'Ya' : 'Tidak' : context?.data?.current?.dapat_diulang === 'true' ? 'Ya' : 'Tidak'}
+                                                        value={isSebelumForm ? context?.data?.prev?.dapat_diulang ? 'Ya' : 'Tidak' : context?.data?.current?.dapat_diulang ? 'Ya' : 'Tidak'}
                                                         autoComplete='off'
                                                         disabled
                                                     />
@@ -496,7 +496,7 @@ export const PerubahanTerakhirDetail = () => {
                                                         id="dapatDiulang"
                                                         placeholder=" "
                                                         className={styles.form__input}
-                                                        value={context?.data?.current?.dapat_diulang === 'true' ? 'Ya' : 'Tidak'}
+                                                        value={context?.data?.current?.dapat_diulang ? 'Ya' : 'Tidak'}
                                                         autoComplete='off'
                                                         disabled
                                                     />
