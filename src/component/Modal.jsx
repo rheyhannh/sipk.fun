@@ -222,7 +222,7 @@ export const Logout = () => {
 }
 
 export const PerubahanTerakhirDetail = () => {
-    const [isSebelumForm, setIsSebelumForm] = useState(true);
+    const [isSebelumForm, setIsSebelumForm] = useState(false);
 
     return (
         <ModalContext.Consumer>
