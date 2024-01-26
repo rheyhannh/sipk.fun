@@ -351,6 +351,11 @@ export function Table({ state, validating, user, sessionTable, matkul, matkulHis
             return item ? item.id ? item.id : null : null;
         }
 
+        const getRef = (matkulId) => {
+            const item = matkulHistory.find(entry => entry.matkul_id === matkulId);
+            return item ? item : null;
+        }
+
         const isSearchActive = () => {
             return columnFilters.some(filter => filter.id === 'matakuliah');
         };
@@ -487,6 +492,24 @@ export function Table({ state, validating, user, sessionTable, matkul, matkulHis
             if (!penilaian) { return; }
             setModalData({ penilaian, ...item, edit });
             setModal('detailMatkul');
+            setTimeout(() => {
+                setActive(true);
+            }, 50)
+        }
+
+        const handleUndoModal = (matkulId) => {
+            const ref = getRef(matkulId);
+            setModalData(ref);
+            setModal('perubahanTerakhirDetail');
+            setTimeout(() => {
+                setActive(true);
+            }, 50)
+        }
+
+        const handleUndoConfirmModal = (matkulId) => {
+            const ref = getRef(matkulId);
+            setModalData(ref);
+            setModal('perubahanTerakhirConfirm');
             setTimeout(() => {
                 setActive(true);
             }, 50)
@@ -692,7 +715,7 @@ export function Table({ state, validating, user, sessionTable, matkul, matkulHis
                                                         }
                                                         handleDetailModal(itemData, false)
                                                     } else {
-                                                        console.log('Perubahan Terakhir Detail Modal');
+                                                        handleUndoModal(row.getValue('nomor'));
                                                     }
                                                 }
                                             }}
@@ -738,6 +761,8 @@ export function Table({ state, validating, user, sessionTable, matkul, matkulHis
                                                     setRowAction={setRowAction}
                                                     handleHapusMatakuliah={handleHapusMatakuliah}
                                                     handleDetailModal={handleDetailModal}
+                                                    handleUndoModal={handleUndoModal}
+                                                    handleUndoConfirmModal={handleUndoConfirmModal}
                                                     handleHapusPermanentModal={handleHapusPermanentModal}
                                                     getCreatedAtById={getCreatedAtById}
                                                     getUpdatedAtById={getUpdatedAtById}
@@ -906,6 +931,8 @@ function RowAction({
     setRowAction,
     handleHapusMatakuliah,
     handleDetailModal,
+    handleUndoModal,
+    handleUndoConfirmModal,
     handleHapusPermanentModal,
     getCreatedAtById,
     getUpdatedAtById,
@@ -934,10 +961,10 @@ function RowAction({
                 }
                 {activeTab === 1 || activeTab === 2 ?
                     <>
-                        <i onClick={() => { console.log('Perubahan Terakhir Confirm Modal') }}>
+                        <i onClick={() => { handleUndoConfirmModal(row.getValue('nomor')) }}>
                             <FaUndo size={'13px'} />
                         </i>
-                        <i onClick={() => { console.log('Perubahan Terakhir Detail Modal') }}>
+                        <i onClick={() => { handleUndoModal(row.getValue('nomor')) }}>
                             <FaInfo size={'13px'} />
                         </i>
                     </>
