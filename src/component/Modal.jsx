@@ -3127,7 +3127,13 @@ export const DetailMatkul = () => {
                                                 if (!currentRef || !currentRef.length) {
                                                     return [ref]
                                                 } else {
-                                                    return [...currentRef, ref];
+                                                    const findIndex = currentRef.findIndex(item => item.id === ref.id);
+                                                    if (findIndex !== -1) {
+                                                        return currentRef.map((item, index) => (index === findIndex ? ref : item))
+                                                    }
+                                                    else {
+                                                        return [...currentRef, ref];
+                                                    }
                                                 }
                                             },
                                             revalidate: false,
