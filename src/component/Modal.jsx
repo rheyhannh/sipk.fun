@@ -589,10 +589,10 @@ export const PerubahanTerakhirConfirm = () => {
                 }
 
                 const handleUndoMatkul = async (e) => {
-                    if (type === 'tambah') {
-                        e.preventDefault();
-                        context.handleModalClose();
+                    e.preventDefault();
+                    context.handleModalClose();
 
+                    if (type === 'tambah') {
                         const deleteMatkul = () => {
                             return new Promise(async (resolve, reject) => {
                                 try {
@@ -691,9 +691,6 @@ export const PerubahanTerakhirConfirm = () => {
                         )
                     }
                     else if (type === 'hapus') {
-                        e.preventDefault();
-                        context.handleModalClose();
-
                         const addMatkul = () => {
                             return new Promise(async (resolve, reject) => {
                                 try {
@@ -806,8 +803,122 @@ export const PerubahanTerakhirConfirm = () => {
                         )
 
                     }
-                    else if (type === 'ubah') { console.log(`Ubah Matakuliah ${context?.data?.matkul_id}`) }
-                    else { return 0; }
+                    else if (type === 'ubah') {
+                        const editMatkul = () => {
+                            return new Promise(async (resolve, reject) => {
+                                try {
+                                    if (!accessToken) {
+                                        router.refresh();
+                                        throw new Error('Terjadi kesalahan, silahkan coba lagi');
+                                    }
+
+                                    if (!userIdCookie) {
+                                        router.refresh();
+                                        throw new Error('Terjadi kesalahan, silahkan coba lagi');
+                                    }
+
+                                    if (!context?.data?.matkul_id) {
+                                        router.refresh();
+                                        throw new Error('Terjadi kesalahan, silahkan coba lagi');
+                                    }
+
+                                    if (!context?.data?.prev) {
+                                        router.refresh();
+                                        throw new Error('Terjadi kesalahan, silahkan coba lagi');
+                                    }
+
+                                    const { stamp, type, ...prevData } = context.data.prev;
+                                    const response = await fetch(`/api/matkul?id=${context.data.matkul_id}`, {
+                                        method: 'PATCH',
+                                        headers: {
+                                            'Authorization': `Bearer ${accessToken}`,
+                                            'Content-Type': 'application/json',
+                                        },
+                                        body: JSON.stringify(prevData),
+                                    });
+
+                                    if (!response.ok) {
+                                        if (response.status === 401) {
+                                            router.replace('/users?action=login&error=isession', {
+                                                scroll: false
+                                            });
+                                            throw new Error(`Unauthorized`);
+                                        } else {
+                                            try {
+                                                const { message } = await response.json();
+                                                if (message) {
+                                                    throw new Error(message);
+                                                } else {
+                                                    throw new Error(`Terjadi kesalahan`);
+                                                }
+                                            } catch (error) {
+                                                console.error(error);
+                                                reject(error);
+                                            }
+                                        }
+                                    } else {
+                                        try {
+                                            const { matkul, ref } = await response.json();
+                                            if (!matkul || !ref) {
+                                                throw new Error('Failed to update cache');
+                                            }
+                                            mutate(['/api/matkul', userIdCookie], matkul, {
+                                                populateCache: (matkul, currentMatkul) => {
+                                                    if (!currentMatkul || !currentMatkul.length) {
+                                                        return [matkul]
+                                                    } else {
+                                                        const findIndex = currentMatkul.findIndex(item => item.id === matkul.id);
+                                                        if (findIndex !== -1) {
+                                                            return currentMatkul.map((item, index) => (index === findIndex ? matkul : item));
+                                                        }
+                                                        else {
+                                                            return [...currentMatkul, matkul];
+                                                        }
+                                                    }
+                                                },
+                                                revalidate: false,
+                                            });
+                                            mutate(['/api/matkul-history', userIdCookie], ref, {
+                                                populateCache: (ref, currentRef) => {
+                                                    if (!currentRef || !currentRef.length) {
+                                                        return [ref]
+                                                    } else {
+                                                        const findIndex = currentRef.findIndex(item => item.id === ref.id);
+                                                        if (findIndex !== -1) {
+                                                            return currentRef.map((item, index) => (index === findIndex ? ref : item))
+                                                        }
+                                                        else {
+                                                            return [...currentRef, ref];
+                                                        }
+                                                    }
+                                                },
+                                                revalidate: false,
+                                            });
+                                            resolve();
+                                        } catch {
+                                            mutate(['/api/matkul', userIdCookie]);
+                                            mutate(['/api/matkul-history', userIdCookie]);
+                                            resolve();
+                                        }
+                                    }
+                                } catch (error) { reject(error); }
+                            })
+                        }
+
+                        toast.promise(
+                            editMatkul(),
+                            {
+                                loading: `${getLoadingMessage(false, 1)}`,
+                                success: `${context.data.current.nama ?? 'Matakuliah'} berhasil diperbarui`,
+                                error: (error) => `${error.message || 'Terjadi kesalahan'}`
+                            },
+                            {
+                                position: 'top-left',
+                                duration: 4000,
+                            }
+                        )
+                    }
+                    else { return }
                 }
 
                 return (
