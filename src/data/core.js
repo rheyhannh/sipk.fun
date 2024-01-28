@@ -153,7 +153,3 @@ export function useUniversitas(custom, type, id) {
 export function useLocalTheme(custom) {
     return useSWR('localUserTheme', getLocalTheme, { ...swrOptions, revalidateOnFocus: true, ...custom });
 }
-
-export function useSessionTable(custom) {
-    return useSWR('sessionUserTable', getSessionTable, { ...swrOptions, ...custom });
-}

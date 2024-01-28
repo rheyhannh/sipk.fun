@@ -10,7 +10,8 @@ import { Total, Grafik } from '@/component/Card'
 import { Table } from '@/component/Table';
 
 // ========== DATA DEPEDENCY ========== //
-import { useMatkul, useUser, useUniversitas, useMatkulHistory, useSessionTable } from '@/data/core';
+import { useMatkul, useUser, useUniversitas, useMatkulHistory } from '@/data/core';
+import { getSessionTable } from '@/utils/client_side';
 
 // ========== STYLE DEPEDENCY ========== //
 import styles from './matkul.module.css'
@@ -86,11 +87,12 @@ function TabelSection() {
     const { data: matkulHistory, error: matkulHistoryError, isLoading: matkulHistoryLoading, isValidating: matkulHistoryValidating } = useMatkulHistory();
     const { data: user, error: userError, isLoading: userLoading, isValidating: userValidating } = useUser();
     const { data: universitas, error: universitasError, isLoading: universitasLoading, isValidating: universitasValidating } = useUniversitas(null, 'user', user ? user[0].university_id : undefined);
-    const { data: sessionTable, error: sessionTableError, isLoading: sessionTableLoading, isValidating: sessionTableValidating } = useSessionTable();
-    const isLoading = matkulLoading || userLoading || universitasLoading || matkulHistoryLoading || sessionTableLoading;
-    const isValidating = matkulValidating || userValidating || universitasValidating || matkulHistoryValidating || sessionTableValidating;
-    const isError = matkulError || userError || universitasError || matkulHistoryError || sessionTableError;
-
+    const isLoading = matkulLoading || userLoading || universitasLoading || matkulHistoryLoading;
+    const isValidating = matkulValidating || userValidating || universitasValidating || matkulHistoryValidating;
+    const isError = matkulError || userError || universitasError || matkulHistoryError;
+    
+    const sessionTable = getSessionTable();
+    
     if (isError) {
         return <Table state={'error'} />;
     }
