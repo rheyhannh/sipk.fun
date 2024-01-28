@@ -348,9 +348,13 @@
 
 .history__details {
     white-space: nowrap;
-    text-overflow: ellipsis;
     overflow: hidden;
     margin: auto 0;
+}
+
+.history__details h3 {
+    text-overflow: ellipsis;
+    overflow: hidden;
 }
 
 .history__value {
