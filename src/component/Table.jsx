@@ -917,7 +917,7 @@ function DebouncedInput({
         }, debounce);
 
         return () => clearTimeout(timeout);
-    }, [value, onChange, debounce])
+    }, [value, debounce])
 
     return (
         <input {...props} value={value} onChange={(e) => setValue(e.target.value)} />
