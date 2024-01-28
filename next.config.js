@@ -30,6 +30,9 @@ const nextConfig = {
             },
         ],
     },
+    compiler: {
+        styledComponents: true
+    },
 }
 
 module.exports = withBundleAnalyzer(nextConfig)
