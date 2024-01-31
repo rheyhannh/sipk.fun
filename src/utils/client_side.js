@@ -110,7 +110,7 @@ export const getSessionTable = () => {
                 return obj;
             }
             const validateColumnFilters = (arr) => {
-                const validId = ['matakuliah', 'semester', 'sks', 'nilai', 'diulang', 'target'];
+                const validId = ['matakuliah', 'semester', 'sks', 'nilai', 'diulang', 'target', 'ontarget'];
                 const isValid = arr.every(obj => {
                     if (Object.keys(obj).length !== 2 || !obj.hasOwnProperty('id') || !obj.hasOwnProperty('value')) {
                         return false;
