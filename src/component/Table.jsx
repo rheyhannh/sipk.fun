@@ -263,6 +263,11 @@ export function Table({ state, validating, user, sessionTable, matkul, matkulHis
                     cell: info => info.getValue(),
                     header: () => <span>Target Nilai</span>,
                 }),
+                columnHelper.accessor(row => row.nilai.bobot >= row.target_nilai.bobot, {
+                    id: 'ontarget',
+                    cell: info => info.getValue() ? <IoCheckmark size={'15px'} color={'var(--success-color)'} /> : <IoClose size={'15px'} color={'var(--danger-color)'} />,
+                    header: () => <span>On Target</span>,
+                }),
             ],
             []
         )
