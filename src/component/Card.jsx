@@ -1197,7 +1197,7 @@ export function Grafik({ state, matkul, penilaian }) {
                                 Hide
                             </option>
                             {['Semua', 'Ip', 'Matakuliah', 'Sks', 'Kustom'].map((type, index) => (
-                                <option key={crypto.randomUUID()} value={index}>
+                                <option key={crypto.randomUUID()} value={index} hidden={index === 4 ? true : false}>
                                     {type}
                                 </option>
                             ))}
