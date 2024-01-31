@@ -6,7 +6,7 @@ import { useState } from 'react';
 // ========== COMPONENT DEPEDENCY ========== //
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Pagination } from 'swiper/modules';
-import { Total, Grafik } from '@/component/Card'
+import { Total, Grafik, Target } from '@/component/Card'
 import { Table } from '@/component/Table';
 
 // ========== DATA DEPEDENCY ========== //
@@ -113,6 +113,12 @@ function TabelSection() {
     )
 }
 
+function TargetCard() {
+    return (
+        <Target state={'loaded'} />
+    )
+}
+
 export default function MatakuliahPage() {
     const [widget, setWidget] = useState(true);
 
@@ -157,7 +163,7 @@ export default function MatakuliahPage() {
                 >
                     <SwiperSlide> <GrafikCard /> </SwiperSlide>
                     <SwiperSlide> <TotalCard /> </SwiperSlide>
-                    <SwiperSlide> <Grafik state={'empty'} /> </SwiperSlide>
+                    <SwiperSlide> <TargetCard/> </SwiperSlide>
                 </Swiper>
 
                 <TabelSection />

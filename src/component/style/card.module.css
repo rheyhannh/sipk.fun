@@ -46,7 +46,8 @@
 
 .summary .empty__content .image,
 .total .empty__content .image,
-.grafik .empty__content .image {
+.grafik .empty__content .image,
+.target .empty__content .image {
     max-width: 60px;
     margin-bottom: 1rem;
 }
@@ -63,7 +64,8 @@
 .summary,
 .notification,
 .total,
-.grafik {
+.grafik,
+.target {
     height: 225px;
     background: var(--white-color);
     padding: var(--card-padding);
@@ -71,6 +73,10 @@
     box-shadow: var(--box-shadow);
     margin-top: 1rem;
     transition: all var(--transition-default) ease-in-out, background 0s;
+}
+
+.target {
+    padding: var(--card-padding) var(--card-padding) .9rem var(--card-padding);
 }
 
 .summary.skeleton {
@@ -396,24 +402,35 @@
     margin-top: 0;
 }
 
+.target {
+    display: grid;
+    grid-template-rows: max-content 1fr 25px;
+    gap: .75rem;
+    margin-top: 0;
+}
+
 .total.flex,
-.grafik.flex {
+.grafik.flex,
+.target.flex {
     display: flex;
 }
 
 .total.skeleton,
-.grafik.skeleton {
+.grafik.skeleton,
+.target.skeleton {
     box-shadow: none;
 }
 
 .total__main,
-.grafik__main {
+.grafik__main,
+.target__main {
     display: flex;
     gap: .75rem;
     justify-content: space-between;
 }
 
-.total__left {
+.total__left,
+.target__left {
     display: grid;
     grid-template-rows: auto;
     gap: .5rem;
@@ -428,6 +445,7 @@
 
 .total__left_subtitle,
 .total__left_title,
+.target__left_subtitle,
 .grafik__left_subtitle {
     display: flex;
     gap: .5rem;
@@ -435,13 +453,15 @@
 }
 
 .total__left_subtitle.skeleton,
-.grafik__left_subtitle.skeleton {
+.grafik__left_subtitle.skeleton,
+.target__left_subtitle.skeleton {
     display: grid;
     grid-template-columns: max-content auto;
 }
 
 .total__left_icon,
-.grafik__left_icon {
+.grafik__left_icon,
+.target__left_icon {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -452,7 +472,8 @@
 }
 
 .total__left_icon.skeleton,
-.grafik__left_icon.skeleton {
+.grafik__left_icon.skeleton,
+.target__left_icon.skeleton {
     border: none;
     background: none;
 }
@@ -477,13 +498,15 @@
     width: 100%;
 }
 
-.grafik__right {
+.grafik__right,
+.target__right {
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-.grafik__right select {
+.grafik__right select,
+.target__right select {
     padding: 0 .5rem;
     height: 25px;
     text-align: center;
@@ -501,6 +524,110 @@
     overflow: auto;
     background: var(--inner-color-bg1);
     border-radius: .5rem;
+}
+
+.target__data {
+    display: grid;
+    grid-template-rows: 20px 1fr 1fr;
+    gap: .4rem;
+    overflow: hidden;
+}
+
+.target__data_title {
+    text-align: center;
+    color: var(--logo-second-color);
+}
+
+.target__data_box {
+    display: grid;
+    grid-template-columns: 30px 1fr max-content;
+    gap: .8rem;
+    align-items: center;
+    color: var(--dark-color);
+    background: var(--inner-color-bg1);
+    border-radius: .5rem;
+    padding: 0 .75rem;
+}
+
+.target__data_box .icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.target__data_box .details {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.target__data_box .details small {
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+.target__data_box .details h3 {
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.target__data_box .details h3 span {
+    margin-left: .25rem;
+    color: var(--infoDark-color);
+    font-size: .75rem;
+    font-weight: 400;
+}
+
+.target__data_box .details h3 span.matkul::after {
+    content: 'Matakuliah';
+}
+
+.target__data_box .details h3 span.sks::after {
+    content: 'Sks';
+}
+
+.target__data_box .details.hit h3,
+.target__data_box .details.hit small {
+    color: var(--success-sec-color);
+}
+
+.target__data_box .details.unhit h3,
+.target__data_box .details.unhit small {
+    color: var(--warning-sec-color);
+}
+
+.target__data_box small {
+    color: var(--infoDark-color);
+}
+
+.target__data_box .more small {
+    cursor: pointer;
+}
+
+.target__data_box .more small::after {
+    content: 'Tabel';
+}
+
+.target__swiper_nav {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.target__swiper_nav .box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 25px;
+    height: 25px;
+    color: var(--infoDark-color);
+    background: transparent;
+    border-radius: 50%;
+    cursor: pointer;
 }
 
 .total__data.skeleton {
@@ -631,11 +758,26 @@
         color: var(--white-color);
         background: var(--logo-second-color);
     }
+
+    .target__data_box .more small:hover {
+        color: var(--logo-second-color);
+    }
+
+    .target__swiper_nav .box:hover {
+        color: var(--logo-second-color);
+        background: var(--accordion-bg-color);
+    }
 }
 
 @media screen and (min-width: 320px) {
     .notification.swiper {
         height: 190px;
+    }
+}
+
+@media screen and (min-width: 355px) {
+    .target__data_box .more small::after {
+        content: 'Lihat di tabel';
     }
 }
 

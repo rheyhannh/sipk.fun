@@ -5,11 +5,11 @@ import Image from "next/image";
 import Link from "next/link";
 
 // ========== REACT DEPEDENCY ========== //
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useState, useRef } from 'react';
 
 // ========== COMPONENT DEPEDENCY ========== //
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { Pagination, Autoplay } from 'swiper/modules';
+import { Swiper, SwiperSlide, useSwiper } from 'swiper/react';
+import { Pagination, Autoplay, Navigation } from 'swiper/modules';
 import { mutate } from 'swr';
 import { useCookies } from 'next-client-cookies';
 import { DashboardContext } from "./provider/Dashboard";
@@ -34,6 +34,7 @@ import {
 import styles from './style/card.module.css'
 import 'swiper/css';
 import 'swiper/css/pagination';
+import 'swiper/css/navigation';
 import "react-loading-skeleton/dist/skeleton.css";
 
 // ========== ICON DEPEDENCY ========== //
@@ -42,6 +43,8 @@ import { CiTrash, CiEdit } from "react-icons/ci";
 import { FaInfo, FaUndo } from "react-icons/fa";
 import { LuBookCopy, LuLineChart, LuBarChartHorizontalBig } from "react-icons/lu";
 import { IoAnalyticsOutline, IoServerOutline, IoAddOutline } from "react-icons/io5";
+import { TbTarget, TbTargetArrow, TbTargetOff } from "react-icons/tb";
+import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 
 /*
 ============================== CODE START HERE ==============================
@@ -1286,6 +1289,156 @@ export function Grafik({ state, matkul, penilaian }) {
                         <h5>Tambah Matakuliah</h5>
                     </div>
                 </div>
+            </div>
+        )
+    }
+
+    if (state === 'loading') { return (<SkeletonCard />) }
+    else if (state === 'loaded') { return (<LoadedCard />) }
+    else if (state === 'error') { return (<ErrorCard />) }
+    else if (state === 'validating') { return (<ValidatingCard />) }
+    else if (state === 'empty') { return (<EmptyCard />) }
+    else { return 'Unidentified Card State' }
+}
+
+export function Target({ state, matkul, penilaian }) {
+    const userIdCookie = useCookies().get('s_user_id');
+    const handleRetry = () => {
+        mutate(['/api/matkul', userIdCookie])
+    }
+
+    const SkeletonCard = () => {
+        return (
+            <div>
+                Skeleton Target Card
+            </div>
+        )
+    }
+
+    const LoadedCard = () => {
+        const [type, setType] = useState(0);
+        const swiperRef = useRef();
+        const dummies = [
+            { semester: 1, on_target: { matkul: 5, sks: 13 }, off_target: { matkul: 2, sks: 2 } },
+            { semester: 3, on_target: { matkul: 2, sks: 5 }, off_target: { matkul: 5, sks: 4 } },
+            { semester: 5, on_target: { matkul: 3, sks: 7 }, off_target: { matkul: 1, sks: 3 } },
+            { semester: 6, on_target: { matkul: 2, sks: 2 }, off_target: { matkul: 0, sks: 0 } },
+            { semester: 9, on_target: { matkul: 1, sks: 12 }, off_target: { matkul: 0, sks: 0 } },
+            { semester: 10, on_target: { matkul: 1, sks: 9 }, off_target: { matkul: 1, sks: 1 } },
+            { semester: 13, on_target: { matkul: 6, sks: 22 }, off_target: { matkul: 5, sks: 7 } },
+        ]
+
+        const swiper = useSwiper();
+
+        return (
+            <div className={styles.target}>
+                <div className={styles.target__main}>
+                    <div className={styles.target__left}>
+                        <div className={styles.target__left_subtitle}>
+                            <div style={{ boxShadow: 'var(--box-shadow2)' }} className={styles.target__left_icon}>
+                                <TbTarget size={'17px'} color={'var(--logo-second-color)'} />
+                            </div>
+                            <h3 style={{ color: 'var(--infoDark-color)', fontWeight: '500' }}>
+                                Target
+                            </h3>
+                        </div>
+                    </div>
+                    <div className={styles.target__right}>
+                        <select
+                            value={type}
+                            onChange={e => setType(Number(e.target.value))}
+                        >
+                            {['Matakuliah', 'Sks'].map((item, index) => (
+                                <option key={crypto.randomUUID()} value={index}>
+                                    {item}
+                                </option>
+                            ))}
+                        </select>
+                    </div>
+                </div>
+                <Swiper
+                    modules={[Navigation]}
+                    onBeforeInit={(swiper) => {
+                        swiperRef.current = swiper;
+                    }}
+                    direction={'vertical'}
+                    loop={dummies.length >= 3 ? true : false}
+                    slidesPerView={1}
+                    spaceBetween={15}
+                    style={{
+                        "width": "100%",
+                        "height": "100%",
+                    }}
+                >
+                    {dummies.map((item, index) => {
+                        return (
+                            <SwiperSlide className={styles.target__data} key={crypto.randomUUID()}>
+                                <h3 className={styles.target__data_title}>Semester {item.semester}</h3>
+                                <div className={styles.target__data_box}>
+                                    <div className={styles.icon}>
+                                        <TbTargetArrow color={'var(--success-color)'} size={'75%'} />
+                                    </div>
+                                    <div className={`${styles.details} ${styles.hit}`}>
+                                        <h3>
+                                            {type === 0 ? item.on_target.matkul : type === 1 ? item.on_target.sks : '-'}<span className={type === 0 ? styles.matkul : type === 1 ? styles.sks : styles.hide} />
+                                        </h3>
+                                        <small>On Target</small>
+                                    </div>
+                                    <div className={styles.more}>
+                                        <small />
+                                    </div>
+                                </div>
+
+                                <div className={styles.target__data_box}>
+                                    <div className={styles.icon}>
+                                        <TbTargetOff color={'var(--warning-color)'} size={'75%'} />
+                                    </div>
+                                    <div className={`${styles.details} ${styles.unhit}`}>
+                                        <h3>
+                                            {type === 0 ? item.off_target.matkul : type === 1 ? item.off_target.sks : '-'}<span className={type === 0 ? styles.matkul : type === 1 ? styles.sks : styles.hide} />
+                                        </h3>
+                                        <small>Off Target</small>
+                                    </div>
+                                    <div className={styles.more}>
+                                        <small />
+                                    </div>
+                                </div>
+                            </SwiperSlide>
+                        )
+                    })}
+                </Swiper>
+                <div className={styles.target__swiper_nav}>
+                    <div className={styles.box} onClick={() => swiperRef.current?.slidePrev()}>
+                        <IoIosArrowUp size={'75%'} />
+                    </div>
+                    <div className={styles.box} onClick={() => swiperRef.current?.slideNext()}>
+                        <IoIosArrowDown size={'75%'} />
+                    </div>
+                </div>
+            </div>
+        )
+    }
+
+    const ErrorCard = () => {
+        return (
+            <div>
+                Error Target Card
+            </div>
+        )
+    }
+
+    const ValidatingCard = () => {
+        return (
+            <div>
+                Validating Target Card
+            </div>
+        )
+    }
+
+    const EmptyCard = () => {
+        return (
+            <div>
+                Empty Target Card
             </div>
         )
     }
