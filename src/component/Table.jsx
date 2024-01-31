@@ -267,6 +267,7 @@ export function Table({ state, validating, user, sessionTable, matkul, matkulHis
                     id: 'ontarget',
                     cell: info => info.getValue() ? <IoCheckmark size={'15px'} color={'var(--success-color)'} /> : <IoClose size={'15px'} color={'var(--danger-color)'} />,
                     header: () => <span>On Target</span>,
+                    invertSorting: true,
                 }),
             ],
             []
@@ -688,8 +689,8 @@ export function Table({ state, validating, user, sessionTable, matkul, matkulHis
                                                                         header.getContext()
                                                                     )}
                                                                     {{
-                                                                        asc: header.column.id === 'diulang' ? <IoCheckmark /> : <IoArrowDownSharp />,
-                                                                        desc: header.column.id === 'diulang' ? <IoClose /> : <IoArrowUpSharp />,
+                                                                        asc: header.column.id === 'diulang' || header.column.id === 'ontarget' ? <IoCheckmark /> : <IoArrowDownSharp />,
+                                                                        desc: header.column.id === 'diulang' || header.column.id === 'ontarget' ? <IoClose /> : <IoArrowUpSharp />,
                                                                     }[header.column.getIsSorted()] ?? null}
                                                                 </span>
                                                             </div>

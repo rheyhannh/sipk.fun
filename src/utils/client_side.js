@@ -59,7 +59,7 @@ export const getSessionTable = () => {
     const savedState = sessionStorage.getItem('_table');
     if (savedState) {
         try {
-            const allowedKeys = ['nomor', 'matakuliah', 'semester', 'sks', 'nilai', 'diulang', 'target'];
+            const allowedKeys = ['nomor', 'matakuliah', 'semester', 'sks', 'nilai', 'diulang', 'target', 'ontarget'];
             const state = JSON.parse(savedState);
             const validateTab = (tab) => {
                 const allowedTab = [0, 1, 2];
@@ -123,7 +123,7 @@ export const getSessionTable = () => {
                 return isValid ? arr : null;
             }
             const validateColumnSorting = (arr) => {
-                const validId = ['matakuliah', 'semester', 'sks', 'nilai', 'diulang', 'target'];
+                const validId = ['matakuliah', 'semester', 'sks', 'nilai', 'diulang', 'target', 'ontarget'];
                 const isValid = arr.every(obj => {
                     if (Object.keys(obj).length !== 2 || !obj.hasOwnProperty('id') || !obj.hasOwnProperty('desc')) {
                         return false;
