@@ -1437,8 +1437,12 @@ export function Target({ state, matkul, penilaian }) {
 
     const ValidatingCard = () => {
         return (
-            <div>
-                Validating Target Card
+            <div className={`${styles.target} ${styles.flex}`}>
+                <div className={styles.validating__wrapper}>
+                    <div className={styles.validating__content}>
+                        <Spinner size={'30px'} color={'var(--logo-second-color)'} />
+                    </div>
+                </div>
             </div>
         )
     }
