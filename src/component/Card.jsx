@@ -8,7 +8,7 @@ import Link from "next/link";
 import { useContext, useEffect, useState, useRef } from 'react';
 
 // ========== COMPONENT DEPEDENCY ========== //
-import { Swiper, SwiperSlide, useSwiper } from 'swiper/react';
+import { Swiper, SwiperSlide } from 'swiper/react';
 import { Pagination, Autoplay, Navigation } from 'swiper/modules';
 import { mutate } from 'swr';
 import { useCookies } from 'next-client-cookies';
@@ -17,7 +17,7 @@ import { ModalContext } from "./provider/Modal";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import CountUp from 'react-countup';
 import ProgressBar from "@ramonak/react-progress-bar";
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import { LineChart, Line, XAxis, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import { Icon } from '@/component/loader/ReactIcons'
 import { Spinner } from "./loader/Loading";
 
@@ -1327,8 +1327,6 @@ export function Target({ state, matkul, penilaian }) {
             { semester: 10, on_target: { matkul: 1, sks: 9 }, off_target: { matkul: 1, sks: 1 } },
             { semester: 13, on_target: { matkul: 6, sks: 22 }, off_target: { matkul: 5, sks: 7 } },
         ]
-
-        const swiper = useSwiper();
 
         return (
             <div className={styles.target}>
