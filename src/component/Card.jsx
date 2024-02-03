@@ -1439,9 +1439,35 @@ export function Target({ state, matkul, penilaian }) {
     }
 
     const EmptyCard = () => {
+        const {
+            setModal,
+            setActive,
+            setData
+        } = useContext(ModalContext);
+
+        const handleTambahModal = () => {
+            if (!penilaian) { return; }
+            setData({ penilaian });
+            setModal('tambahMatkul');
+            setTimeout(() => {
+                setActive(true);
+            }, 50)
+        }
+
         return (
-            <div>
-                Empty Target Card
+            <div className={`${styles.target} ${styles.flex}`}>
+                <div className={styles.empty__wrapper}>
+                    <div className={styles.empty__content} onClick={() => { handleTambahModal() }}>
+                        <Image
+                            src={'https://storage.googleapis.com/sipk_assets/tambah_matkul.svg'}
+                            width={100}
+                            height={100}
+                            alt='Tambah Matakuliah'
+                            className={styles.image}
+                        />
+                        <h5>Tambah Matakuliah</h5>
+                    </div>
+                </div>
             </div>
         )
     }

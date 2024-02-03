@@ -75,7 +75,7 @@
     transition: all var(--transition-default) ease-in-out, background 0s;
 }
 
-.target {
+.target:not(.flex) {
     padding: var(--card-padding) var(--card-padding) .9rem var(--card-padding);
 }
 
