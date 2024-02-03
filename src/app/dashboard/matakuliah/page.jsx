@@ -90,9 +90,9 @@ function TabelSection() {
     const isLoading = matkulLoading || userLoading || universitasLoading || matkulHistoryLoading;
     const isValidating = matkulValidating || userValidating || universitasValidating || matkulHistoryValidating;
     const isError = matkulError || userError || universitasError || matkulHistoryError;
-    
+
     const sessionTable = getSessionTable();
-    
+
     if (isError) {
         return <Table state={'error'} />;
     }
@@ -114,8 +114,31 @@ function TabelSection() {
 }
 
 function TargetCard() {
+    const { data: user, error: userError, isLoading: userLoading, isValidating: userValidating } = useUser();
+    const { data: matkul, error: matkulError, isLoading: matkulLoading, isValidating: matkulValidating } = useMatkul();
+    const { data: universitas, error: universitasError, isLoading: universitasLoading, isValidating: universitasValidating } = useUniversitas(null, 'user', user ? user[0].university_id : undefined);
+    const isError = userError || matkulError || universitasError;
+    const isLoading = userLoading || matkulLoading || universitasLoading;
+    const isValidating = userValidating || matkulValidating || universitasValidating;
+
+    if (isError) {
+        return <Target state={'error'} />;
+    }
+
+    if (isLoading) {
+        return <Target state={'loading'} />;
+    }
+
+    if (isValidating) {
+        return <Target state={'validating'} />;
+    }
+
+    if (!matkul.length) {
+        return <Target state={'empty'} penilaian={universitas[0].penilaian} />
+    }
+
     return (
-        <Target state={'loaded'} />
+        <Target state={'loaded'} matkul={matkul} penilaian={universitas[0].penilaian} />
     )
 }
 
@@ -163,7 +186,7 @@ export default function MatakuliahPage() {
                 >
                     <SwiperSlide> <GrafikCard /> </SwiperSlide>
                     <SwiperSlide> <TotalCard /> </SwiperSlide>
-                    <SwiperSlide> <TargetCard/> </SwiperSlide>
+                    <SwiperSlide> <TargetCard /> </SwiperSlide>
                 </Swiper>
 
                 <TabelSection />

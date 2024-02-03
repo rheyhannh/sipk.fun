@@ -27,7 +27,7 @@ import {
     getUserSks, getUserSksPercentage,
     getUserIpk, getUserIpkPercentage,
     getAllSemester, getStatsSemester,
-    getStatsByNilai,
+    getStatsByNilai, getOnAndOffTarget,
 } from "@/data/summary";
 
 // ========== UTILS DEPEDENCY ========== //
@@ -1321,15 +1321,7 @@ export function Target({ state, matkul, penilaian }) {
     const LoadedCard = () => {
         const [type, setType] = useState(0);
         const swiperRef = useRef();
-        const dummies = [
-            { semester: 1, on_target: { matkul: 5, sks: 13 }, off_target: { matkul: 2, sks: 2 } },
-            { semester: 3, on_target: { matkul: 2, sks: 5 }, off_target: { matkul: 5, sks: 4 } },
-            { semester: 5, on_target: { matkul: 3, sks: 7 }, off_target: { matkul: 1, sks: 3 } },
-            { semester: 6, on_target: { matkul: 2, sks: 2 }, off_target: { matkul: 0, sks: 0 } },
-            { semester: 9, on_target: { matkul: 1, sks: 12 }, off_target: { matkul: 0, sks: 0 } },
-            { semester: 10, on_target: { matkul: 1, sks: 9 }, off_target: { matkul: 1, sks: 1 } },
-            { semester: 13, on_target: { matkul: 6, sks: 22 }, off_target: { matkul: 5, sks: 7 } },
-        ]
+        const target = getOnAndOffTarget(matkul);
 
         const setColumnFilters = (semester, onTarget) => {
             const currentState = getSessionTable();
@@ -1373,7 +1365,7 @@ export function Target({ state, matkul, penilaian }) {
                         swiperRef.current = swiper;
                     }}
                     direction={'vertical'}
-                    loop={dummies.length >= 3 ? true : false}
+                    loop={target.length >= 3 ? true : false}
                     slidesPerView={1}
                     spaceBetween={15}
                     style={{
@@ -1381,7 +1373,7 @@ export function Target({ state, matkul, penilaian }) {
                         "height": "100%",
                     }}
                 >
-                    {dummies.map((item, index) => {
+                    {target.map((item, index) => {
                         return (
                             <SwiperSlide className={styles.target__data} key={crypto.randomUUID()}>
                                 <h3 className={styles.target__data_title}>Semester {item.semester}</h3>
