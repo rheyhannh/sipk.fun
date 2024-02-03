@@ -116,7 +116,7 @@ const getStatsByNilai = (matkul, universitas, sort = false) => {
       const entries = matkul.filter(item => item.nilai.indeks === keyNilai[index]);
       const totalSks = entries.reduce((sum, item) => sum + item.sks, 0);
       const totalMatakuliah = entries.length;
-  
+
       return {
         indeks: keyNilai[index],
         totalSks,
@@ -132,6 +132,33 @@ const getStatsByNilai = (matkul, universitas, sort = false) => {
   return -1;
 }
 
+const getOnAndOffTarget = (matkul) => {
+  if (matkul.length !== 0) {
+    const groupBySemester = matkul.reduce((acc, item) => {
+      const key = item.semester;
+      if (!acc[key]) {
+        acc[key] = [];
+      }
+      acc[key].push(item);
+      return acc;
+    }, {});
+
+    const result = Object.values(groupBySemester).map(group => {
+      const semester = group[0].semester;
+      const on = group.filter(item => item.nilai.bobot >= item.target_nilai.bobot);
+      const off = group.filter(item => item.nilai.bobot < item.target_nilai.bobot);
+      const on_target = { matkul: on.length, sks: on.reduce((sum, item) => sum + item.sks, 0) };
+      const off_target = { matkul: off.length, sks: off.reduce((sum, item) => sum + item.sks, 0) };
+
+      return { semester, on_target, off_target };
+    })
+
+    return result;
+  }
+
+  return -1;
+}
+
 module.exports = {
   getUserIpk,
   getUserIpkPercentage,
@@ -142,4 +169,5 @@ module.exports = {
   getAllSemester,
   getStatsSemester,
   getStatsByNilai,
+  getOnAndOffTarget,
 }
