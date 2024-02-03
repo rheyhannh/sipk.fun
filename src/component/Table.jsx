@@ -25,7 +25,7 @@ import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import { Spinner } from "./loader/Loading";
 
 // ========== UTILS DEPEDENCY ========== //
-import { getLoadingMessage, unixToDate } from '@/utils/client_side';
+import { getLoadingMessage, getSessionTable, unixToDate } from '@/utils/client_side';
 
 // ========== STYLE DEPEDENCY ========== //
 import styles from './style/table.module.css'
@@ -536,6 +536,21 @@ export function Table({ state, validating, user, sessionTable, matkul, matkulHis
                 setActive(true);
             }, 50)
         }
+
+        useEffect(() => {
+            function applyTableState() {
+                const { columnFilters } = getSessionTable();
+                if (columnFilters) {
+                    setColumnFilters(columnFilters);
+                }
+            }
+
+            window.addEventListener('on-table-session-changes', applyTableState);
+
+            return () => {
+                window.removeEventListener('on-table-session-changes', applyTableState);
+            }
+        }, [])
 
         useEffect(() => {
             if (initialRender.current) {

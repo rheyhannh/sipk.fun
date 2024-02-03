@@ -30,6 +30,9 @@ import {
     getStatsByNilai,
 } from "@/data/summary";
 
+// ========== UTILS DEPEDENCY ========== //
+import { getSessionTable } from '@/utils/client_side';
+
 // ========== STYLE DEPEDENCY ========== //
 import styles from './style/card.module.css'
 import 'swiper/css';
@@ -1328,6 +1331,16 @@ export function Target({ state, matkul, penilaian }) {
             { semester: 13, on_target: { matkul: 6, sks: 22 }, off_target: { matkul: 5, sks: 7 } },
         ]
 
+        const setColumnFilters = (semester, onTarget) => {
+            const currentState = getSessionTable();
+            const newState = {
+                ...currentState,
+                columnFilters: [{ id: "semester", value: [`${semester}`, `${semester}`] }, { id: "ontarget", value: onTarget }]
+            }
+            sessionStorage.setItem('_table', JSON.stringify(newState));
+            window.dispatchEvent(new Event('on-table-session-changes'));
+        }
+
         return (
             <div className={styles.target}>
                 <div className={styles.target__main}>
@@ -1383,7 +1396,7 @@ export function Target({ state, matkul, penilaian }) {
                                         <small>On Target</small>
                                     </div>
                                     <div className={styles.more}>
-                                        <small />
+                                        <small onClick={() => { setColumnFilters(item.semester, true) }} />
                                     </div>
                                 </div>
 
@@ -1398,7 +1411,7 @@ export function Target({ state, matkul, penilaian }) {
                                         <small>Off Target</small>
                                     </div>
                                     <div className={styles.more}>
-                                        <small />
+                                        <small onClick={() => { setColumnFilters(item.semester, false) }} />
                                     </div>
                                 </div>
                             </SwiperSlide>
