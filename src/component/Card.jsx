@@ -1591,8 +1591,8 @@ export function Progress({ state, user, matkul, penilaian }) {
                                 <CountUp
                                     start={0}
                                     duration={2.5}
-                                    decimals={Number.isInteger(41) ? 0 : 2}
-                                    end={41}
+                                    decimals={Number.isInteger(getUserSks(matkul)) ? 0 : 2}
+                                    end={getUserSks(matkul)}
                                     delay={0}
                                 >
                                     {({ countUpRef }) => (
@@ -1600,11 +1600,11 @@ export function Progress({ state, user, matkul, penilaian }) {
                                     )}
                                 </CountUp>
                                 <h3 style={{ color: 'var(--infoDark-color)', fontWeight: '400' }}>|</h3>
-                                <small style={{ color: 'var(--infoDark-color)' }}>144</small>
+                                <small style={{ color: 'var(--infoDark-color)' }}>{user[0]?.sks_target || '-'}</small>
                             </div>
                         </div>
                         <ProgressBar
-                            completed={12}
+                            completed={getUserSksPercentage(user, matkul)}
                             maxCompleted={100}
                             height={'100%'}
                             isLabelVisible={false}
@@ -1622,8 +1622,8 @@ export function Progress({ state, user, matkul, penilaian }) {
                                 <CountUp
                                     start={0}
                                     duration={2.5}
-                                    decimals={Number.isInteger(5) ? 0 : 2}
-                                    end={5}
+                                    decimals={Number.isInteger(getUserMatkul(matkul)) ? 0 : 2}
+                                    end={getUserMatkul(matkul)}
                                     delay={0}
                                 >
                                     {({ countUpRef }) => (
@@ -1631,11 +1631,11 @@ export function Progress({ state, user, matkul, penilaian }) {
                                     )}
                                 </CountUp>
                                 <h3 style={{ color: 'var(--infoDark-color)', fontWeight: '400' }}>|</h3>
-                                <small style={{ color: 'var(--infoDark-color)' }}>50</small>
+                                <small style={{ color: 'var(--infoDark-color)' }}>{user[0]?.matkul_target || '-'}</small>
                             </div>
                         </div>
                         <ProgressBar
-                            completed={28}
+                            completed={getUserMatkulPercentage(user, matkul)}
                             maxCompleted={100}
                             height={'100%'}
                             isLabelVisible={false}
@@ -1653,8 +1653,8 @@ export function Progress({ state, user, matkul, penilaian }) {
                                 <CountUp
                                     start={0}
                                     duration={2.5}
-                                    decimals={Number.isInteger(3.25) ? 0 : 2}
-                                    end={3.25}
+                                    decimals={Number.isInteger(getUserIpk(matkul)) ? 0 : 2}
+                                    end={getUserIpk(matkul)}
                                     delay={0}
                                 >
                                     {({ countUpRef }) => (
@@ -1662,11 +1662,11 @@ export function Progress({ state, user, matkul, penilaian }) {
                                     )}
                                 </CountUp>
                                 <h3 style={{ color: 'var(--infoDark-color)', fontWeight: '400' }}>|</h3>
-                                <small style={{ color: 'var(--infoDark-color)' }}>4.00</small>
+                                <small style={{ color: 'var(--infoDark-color)' }}>{user[0]?.ipk_target || '-'}</small>
                             </div>
                         </div>
                         <ProgressBar
-                            completed={68}
+                            completed={getUserIpkPercentage(user, matkul)}
                             maxCompleted={100}
                             height={'100%'}
                             isLabelVisible={false}
