@@ -1725,8 +1725,12 @@ export function Progress({ state, user, matkul, penilaian }) {
 
     const ValidatingCard = () => {
         return (
-            <div>
-                Validating Progress Card
+            <div className={`${styles.progress} ${styles.flex}`}>
+                <div className={styles.validating__wrapper}>
+                    <div className={styles.validating__content}>
+                        <Spinner size={'30px'} color={'var(--logo-second-color)'} />
+                    </div>
+                </div>
             </div>
         )
     }
