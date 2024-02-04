@@ -1227,9 +1227,9 @@ export function Grafik({ state, matkul, penilaian }) {
                                     else { return; }
                                 }}
                             />
-                            <Line name="Ip" type="monotone" dataKey="ip" stroke="var(--danger-color)" dot={{ fill: 'var(--danger-color)' }} hide={ipGrafik} />
+                            <Line name="Ip" type="monotone" dataKey="ip" stroke="var(--success-color)" dot={{ fill: 'var(--success-color)' }} hide={ipGrafik} />
                             <Line name="Matakuliah" type="monotone" dataKey="matkul" stroke="var(--warning-color)" dot={{ fill: 'var(--warning-color)' }} hide={matkulGrafik} />
-                            <Line name="Sks" type="monotone" dataKey="sks" stroke="var(--success-color)" dot={{ fill: 'var(--success-color)' }} hide={sksGrafik} />
+                            <Line name="Sks" type="monotone" dataKey="sks" stroke="var(--danger-color)" dot={{ fill: 'var(--danger-color)' }} hide={sksGrafik} />
                         </LineChart>
                     </ResponsiveContainer>
                 </div>
