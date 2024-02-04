@@ -44,7 +44,6 @@ import "react-loading-skeleton/dist/skeleton.css";
 
 import { CiTrash, CiEdit } from "react-icons/ci";
 import { FaInfo, FaUndo } from "react-icons/fa";
-import { LuBookCopy, LuLineChart, LuBarChartHorizontalBig } from "react-icons/lu";
 import { IoAnalyticsOutline, IoServerOutline, IoAddOutline } from "react-icons/io5";
 import { TbTarget, TbTargetArrow, TbTargetOff, TbAtom } from "react-icons/tb";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
