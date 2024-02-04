@@ -1562,8 +1562,41 @@ export function Progress({ state, user, matkul, penilaian }) {
 
     const SkeletonCard = () => {
         return (
-            <div>
-                Skeleton Progress Card
+            <div className={`${styles.progress} ${styles.skeleton}`}>
+                <div className={styles.progress__main}>
+                    <div className={styles.progress__left}>
+                        <div className={`${styles.progress__left_subtitle} ${styles.skeleton}`}>
+                            <SkeletonTheme
+                                baseColor="var(--skeleton-base)"
+                                highlightColor="var(--skeleton-highlight)"
+                            >
+                                <Skeleton width={"100%"} height={"100%"} containerClassName={`${styles.progress__left_icon} ${styles.skeleton}`} />
+                            </SkeletonTheme>
+                            <div style={{ width: '100%' }}>
+                                <h3>
+                                    <SkeletonTheme
+                                        baseColor="var(--skeleton-base)"
+                                        highlightColor="var(--skeleton-highlight)"
+                                    >
+                                        <Skeleton width={"100%"} height={"100%"} />
+                                    </SkeletonTheme>
+                                </h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div className={styles.progress__data}>
+                    {Array.from({ length: 3 }, (_, index) => (
+                        <div className={styles.skeleton} key={crypto.randomUUID()}>
+                            <SkeletonTheme
+                                baseColor="var(--skeleton-base)"
+                                highlightColor="var(--skeleton-highlight)"
+                            >
+                                <Skeleton width={"100%"} height={"100%"} />
+                            </SkeletonTheme>
+                        </div>
+                    ))}
+                </div>
             </div>
         )
     }
@@ -1596,7 +1629,7 @@ export function Progress({ state, user, matkul, penilaian }) {
                                     delay={0}
                                 >
                                     {({ countUpRef }) => (
-                                        <h3 ref={countUpRef}/>
+                                        <h3 ref={countUpRef} />
                                     )}
                                 </CountUp>
                                 <h3 style={{ color: 'var(--infoDark-color)', fontWeight: '400' }}>|</h3>
@@ -1627,7 +1660,7 @@ export function Progress({ state, user, matkul, penilaian }) {
                                     delay={0}
                                 >
                                     {({ countUpRef }) => (
-                                        <h3 ref={countUpRef}/>
+                                        <h3 ref={countUpRef} />
                                     )}
                                 </CountUp>
                                 <h3 style={{ color: 'var(--infoDark-color)', fontWeight: '400' }}>|</h3>
@@ -1658,7 +1691,7 @@ export function Progress({ state, user, matkul, penilaian }) {
                                     delay={0}
                                 >
                                     {({ countUpRef }) => (
-                                        <h3 ref={countUpRef}/>
+                                        <h3 ref={countUpRef} />
                                     )}
                                 </CountUp>
                                 <h3 style={{ color: 'var(--infoDark-color)', fontWeight: '400' }}>|</h3>

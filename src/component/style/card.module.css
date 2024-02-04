@@ -761,6 +761,10 @@
     overflow: hidden;
 }
 
+.progress__data .skeleton {
+    padding: .2rem 0;
+}
+
 .progress__data .wrapper {
     display: grid;
     grid-template-rows: max-content 7px;
