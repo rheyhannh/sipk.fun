@@ -429,8 +429,7 @@
     justify-content: space-between;
 }
 
-.total__left,
-.target__left {
+.total__left {
     display: grid;
     grid-template-rows: auto;
     gap: .5rem;
@@ -438,7 +437,8 @@
     width: 100%;
 }
 
-.grafik__left {
+.grafik__left,
+.target__left {
     max-width: 100px;
     width: 100%;
 }
@@ -630,6 +630,11 @@
     cursor: pointer;
 }
 
+.target__swiper_nav .box.skeleton {
+    color: var(--skeleton-base);
+    cursor: auto;
+}
+
 .total__data.skeleton {
     overflow: hidden;
     border: none;
@@ -721,7 +726,8 @@
     .notification:not(.skeleton):hover,
     .history:not(.skeleton):hover,
     .total:not(.skeleton):hover,
-    .grafik:not(.skeleton):hover {
+    .grafik:not(.skeleton):hover,
+    .target:not(.skeleton):hover {
         box-shadow: none;
     }
 
@@ -763,7 +769,7 @@
         color: var(--logo-second-color);
     }
 
-    .target__swiper_nav .box:hover {
+    .target__swiper_nav .box:not(.skeleton):hover {
         color: var(--logo-second-color);
         background: var(--accordion-bg-color);
     }

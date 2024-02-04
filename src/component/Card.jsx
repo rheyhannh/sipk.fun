@@ -1312,8 +1312,73 @@ export function Target({ state, matkul, penilaian }) {
 
     const SkeletonCard = () => {
         return (
-            <div>
-                Skeleton Target Card
+            <div className={`${styles.target} ${styles.skeleton}`}>
+                <div className={styles.target__main}>
+                    <div className={styles.target__left}>
+                        <div className={`${styles.target__left_subtitle} ${styles.skeleton}`}>
+                            <SkeletonTheme
+                                baseColor="var(--skeleton-base)"
+                                highlightColor="var(--skeleton-highlight)"
+                            >
+                                <Skeleton width={"100%"} height={"100%"} containerClassName={`${styles.target__left_icon} ${styles.skeleton}`} />
+                            </SkeletonTheme>
+                            <div style={{ width: '100%' }}>
+                                <h3>
+                                    <SkeletonTheme
+                                        baseColor="var(--skeleton-base)"
+                                        highlightColor="var(--skeleton-highlight)"
+                                    >
+                                        <Skeleton width={"100%"} height={"100%"} />
+                                    </SkeletonTheme>
+                                </h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div className={styles.target__right}>
+                        <div style={{ width: '70px' }}>
+                            <h3>
+                                <SkeletonTheme
+                                    baseColor="var(--skeleton-base)"
+                                    highlightColor="var(--skeleton-highlight)"
+                                >
+                                    <Skeleton width={"100%"} height={"100%"} />
+                                </SkeletonTheme>
+                            </h3>
+                        </div>
+                    </div>
+                </div>
+                <div className={styles.target__data}>
+                    <h3 className={styles.target__data_title}>
+                        <SkeletonTheme
+                            baseColor="var(--skeleton-base)"
+                            highlightColor="var(--skeleton-highlight)"
+                        >
+                            <Skeleton width={"30%"} height={"90%"} />
+                        </SkeletonTheme>
+                    </h3>
+                    <SkeletonTheme
+                        baseColor="var(--skeleton-base)"
+                        highlightColor="var(--skeleton-highlight)"
+                        borderRadius={".5rem"}
+                    >
+                        <Skeleton width={"100%"} height={"90%"} />
+                    </SkeletonTheme>
+                    <SkeletonTheme
+                        baseColor="var(--skeleton-base)"
+                        highlightColor="var(--skeleton-highlight)"
+                        borderRadius={".5rem"}
+                    >
+                        <Skeleton width={"100%"} height={"90%"} />
+                    </SkeletonTheme>
+                </div>
+                <div className={styles.target__swiper_nav}>
+                    <div className={`${styles.box} ${styles.skeleton}`}>
+                        <IoIosArrowUp size={'75%'} />
+                    </div>
+                    <div className={`${styles.box} ${styles.skeleton}`}>
+                        <IoIosArrowDown size={'75%'} />
+                    </div>
+                </div>
             </div>
         )
     }
