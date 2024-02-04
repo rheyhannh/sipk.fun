@@ -53,7 +53,7 @@ function AcademicCard({ count }) {
         <>
             <Summary
                 state='loaded'
-                color='var(--second-color-lighter)'
+                color='var(--danger-color)'
                 icon={{ name: 'MdOutlineConfirmationNumber', lib: 'md' }}
                 data={{ value: x.getUserSks(matkul), percentage: x.getUserSksPercentage(user, matkul), keterangan: `${user.length !== 0 ? `Targetmu ${user[0].sks_target}` : `Terakhir diupdate`}` }}
                 title={'SKS'}
@@ -63,7 +63,7 @@ function AcademicCard({ count }) {
 
             <Summary
                 state='loaded'
-                color='var(--first-color)'
+                color='var(--warning-color)'
                 icon={{ name: 'IoBookOutline', lib: 'io5' }}
                 data={{ value: x.getUserMatkul(matkul), percentage: x.getUserMatkulPercentage(user, matkul), keterangan: `${user.length !== 0 ? `Targetmu ${user[0].matkul_target}` : `Terakhir diupdate`}` }}
                 title={'Matakuliah'}
