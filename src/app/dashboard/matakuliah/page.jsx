@@ -6,7 +6,7 @@ import { useState } from 'react';
 // ========== COMPONENT DEPEDENCY ========== //
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Pagination } from 'swiper/modules';
-import { Total, Grafik, Target } from '@/component/Card'
+import { Total, Grafik, Target, Progress } from '@/component/Card'
 import { Table } from '@/component/Table';
 
 // ========== DATA DEPEDENCY ========== //
@@ -142,6 +142,35 @@ function TargetCard() {
     )
 }
 
+function ProgressCard() {
+    const { data: matkul, error: matkulError, isLoading: matkulLoading, isValidating: matkulValidating } = useMatkul();
+    const { data: user, error: userError, isLoading: userLoading, isValidating: userValidating } = useUser();
+    const { data: universitas, error: universitasError, isLoading: universitasLoading, isValidating: universitasValidating } = useUniversitas(null, 'user', user ? user[0].university_id : undefined);
+    const isError = matkulError || userError || universitasError;
+    const isLoading = matkulLoading || userLoading || universitasLoading;
+    const isValidating = matkulValidating || userValidating || universitasValidating;
+
+    if (isError) {
+        return <Progress state={'error'} />;
+    }
+
+    if (isLoading) {
+        return <Progress state={'loading'} />;
+    }
+
+    if (isValidating) {
+        return <Progress state={'validating'} />;
+    }
+
+    if (!matkul.length) {
+        return <Progress state={'empty'} penilaian={universitas[0].penilaian} />
+    }
+
+    return (
+        <Progress state={'loaded'} user={user} matkul={matkul} penilaian={universitas[0].penilaian} />
+    )
+}
+
 export default function MatakuliahPage() {
     const [widget, setWidget] = useState(true);
 
@@ -186,6 +215,7 @@ export default function MatakuliahPage() {
                 >
                     <SwiperSlide> <GrafikCard /> </SwiperSlide>
                     <SwiperSlide> <TotalCard /> </SwiperSlide>
+                    <SwiperSlide> <ProgressCard/> </SwiperSlide>
                     <SwiperSlide> <TargetCard /> </SwiperSlide>
                 </Swiper>
 

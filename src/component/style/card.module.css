@@ -47,7 +47,8 @@
 .summary .empty__content .image,
 .total .empty__content .image,
 .grafik .empty__content .image,
-.target .empty__content .image {
+.target .empty__content .image,
+.progress .empty__content .image {
     max-width: 60px;
     margin-bottom: 1rem;
 }
@@ -65,7 +66,8 @@
 .notification,
 .total,
 .grafik,
-.target {
+.target,
+.progress {
     height: 225px;
     background: var(--white-color);
     padding: var(--card-padding);
@@ -174,7 +176,7 @@
     grid-template-rows: 1fr 1fr;
 }
 
-.notification.swiper.skeleton .notification__post.swiper.skeleton:first-child{
+.notification.swiper.skeleton .notification__post.swiper.skeleton:first-child {
     display: none;
 }
 
@@ -394,8 +396,13 @@
     gap: .6rem;
 }
 
+/* 
+    Grafik, Total, Target, Progress Core Styles 
+*/
+
 .total,
-.grafik {
+.grafik,
+.progress {
     display: grid;
     grid-template-rows: max-content 1fr;
     gap: 1rem;
@@ -411,13 +418,15 @@
 
 .total.flex,
 .grafik.flex,
-.target.flex {
+.target.flex,
+.progress.flex {
     display: flex;
 }
 
 .total.skeleton,
 .grafik.skeleton,
-.target.skeleton {
+.target.skeleton,
+.progress.skeleton {
     box-shadow: none;
 }
 
@@ -429,6 +438,10 @@
     justify-content: space-between;
 }
 
+.progress__main {
+    display: flex;
+}
+
 .total__left {
     display: grid;
     grid-template-rows: auto;
@@ -438,7 +451,8 @@
 }
 
 .grafik__left,
-.target__left {
+.target__left,
+.progress__left {
     max-width: 100px;
     width: 100%;
 }
@@ -446,6 +460,7 @@
 .total__left_subtitle,
 .total__left_title,
 .target__left_subtitle,
+.progress__left_subtitle,
 .grafik__left_subtitle {
     display: flex;
     gap: .5rem;
@@ -454,14 +469,16 @@
 
 .total__left_subtitle.skeleton,
 .grafik__left_subtitle.skeleton,
-.target__left_subtitle.skeleton {
+.target__left_subtitle.skeleton,
+.progress__left_subtitle.skeleton {
     display: grid;
     grid-template-columns: max-content auto;
 }
 
 .total__left_icon,
 .grafik__left_icon,
-.target__left_icon {
+.target__left_icon,
+.progress__left_icon {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -473,7 +490,8 @@
 
 .total__left_icon.skeleton,
 .grafik__left_icon.skeleton,
-.target__left_icon.skeleton {
+.target__left_icon.skeleton,
+.progress__left_icon.skeleton {
     border: none;
     background: none;
 }
@@ -520,11 +538,9 @@
     font-size: .8rem;
 }
 
-.total__data {
-    overflow: auto;
-    background: var(--inner-color-bg1);
-    border-radius: .5rem;
-}
+/* 
+    Target Card Styles 
+*/
 
 .target__data {
     display: grid;
@@ -635,6 +651,16 @@
     cursor: auto;
 }
 
+/* 
+    Total Card Styles 
+*/
+
+.total__data {
+    overflow: auto;
+    background: var(--inner-color-bg1);
+    border-radius: .5rem;
+}
+
 .total__data.skeleton {
     overflow: hidden;
     border: none;
@@ -697,6 +723,10 @@
     font-weight: 600;
 }
 
+/* 
+    Grafik Card Styles 
+*/
+
 .grafik__data {
     width: 100%;
     height: 100%;
@@ -720,6 +750,48 @@
     border-bottom: 1px solid var(--darkVariant-color);
 }
 
+/* 
+    Progress Card Styles 
+*/
+
+.progress__data {
+    display: grid;
+    grid-template-rows: repeat(3, 1fr);
+    gap: .75rem;
+    overflow: hidden;
+}
+
+.progress__data .wrapper {
+    display: grid;
+    grid-template-rows: max-content 7px;
+    gap: .3rem;
+}
+
+.progress__data .wrapper.sks {
+    color: var(--danger-color);
+}
+
+.progress__data .wrapper.matkul {
+    color: var(--warning-color);
+}
+
+.progress__data .wrapper.ipk {
+    color: var(--success-color);
+}
+
+.progress__data .top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.progress__data .details {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: .25rem;
+}
+
 @media (hover: hover) and (pointer: fine) {
 
     .summary:not(.skeleton):hover,
@@ -727,7 +799,8 @@
     .history:not(.skeleton):hover,
     .total:not(.skeleton):hover,
     .grafik:not(.skeleton):hover,
-    .target:not(.skeleton):hover {
+    .target:not(.skeleton):hover,
+    .progress:not(.skeleton):hover {
         box-shadow: none;
     }
 
@@ -794,10 +867,10 @@
 
     .notification.swiper.skeleton .skeleton__wrapper {
         display: grid;
-        grid-template-columns: repeat(2,1fr);
+        grid-template-columns: repeat(2, 1fr);
     }
 
-    .notification.swiper.skeleton .notification__post.swiper.skeleton:first-child{
+    .notification.swiper.skeleton .notification__post.swiper.skeleton:first-child {
         display: grid;
     }
 }

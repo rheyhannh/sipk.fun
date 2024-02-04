@@ -46,7 +46,7 @@ import { CiTrash, CiEdit } from "react-icons/ci";
 import { FaInfo, FaUndo } from "react-icons/fa";
 import { LuBookCopy, LuLineChart, LuBarChartHorizontalBig } from "react-icons/lu";
 import { IoAnalyticsOutline, IoServerOutline, IoAddOutline } from "react-icons/io5";
-import { TbTarget, TbTargetArrow, TbTargetOff } from "react-icons/tb";
+import { TbTarget, TbTargetArrow, TbTargetOff, TbAtom } from "react-icons/tb";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 
 /*
@@ -1542,6 +1542,167 @@ export function Target({ state, matkul, penilaian }) {
                         <h5>Tambah Matakuliah</h5>
                     </div>
                 </div>
+            </div>
+        )
+    }
+
+    if (state === 'loading') { return (<SkeletonCard />) }
+    else if (state === 'loaded') { return (<LoadedCard />) }
+    else if (state === 'error') { return (<ErrorCard />) }
+    else if (state === 'validating') { return (<ValidatingCard />) }
+    else if (state === 'empty') { return (<EmptyCard />) }
+    else { return 'Unidentified Card State' }
+}
+
+export function Progress({ state, user, matkul, penilaian }) {
+    const userIdCookie = useCookies().get('s_user_id');
+    const handleRetry = () => {
+        mutate(['/api/matkul', userIdCookie])
+        mutate(['/api/me', userIdCookie])
+    }
+
+    const SkeletonCard = () => {
+        return (
+            <div>
+                Skeleton Progress Card
+            </div>
+        )
+    }
+
+    const LoadedCard = () => {
+        return (
+            <div className={styles.progress}>
+                <div className={styles.progress__main}>
+                    <div className={styles.progress__left}>
+                        <div className={styles.progress__left_subtitle}>
+                            <div style={{ boxShadow: 'var(--box-shadow2)' }} className={styles.target__left_icon}>
+                                <TbAtom size={'17px'} color={'var(--logo-second-color)'} />
+                            </div>
+                            <h3 style={{ color: 'var(--infoDark-color)', fontWeight: '500' }}>
+                                Progress
+                            </h3>
+                        </div>
+                    </div>
+                </div>
+                <div className={styles.progress__data}>
+                    <div className={`${styles.wrapper} ${styles.sks}`}>
+                        <div className={styles.top}>
+                            <h3>SKS</h3>
+                            <div className={styles.details}>
+                                <CountUp
+                                    start={0}
+                                    duration={2.5}
+                                    decimals={Number.isInteger(41) ? 0 : 2}
+                                    end={41}
+                                    delay={0}
+                                >
+                                    {({ countUpRef }) => (
+                                        <h3 ref={countUpRef}/>
+                                    )}
+                                </CountUp>
+                                <h3 style={{ color: 'var(--infoDark-color)', fontWeight: '400' }}>|</h3>
+                                <small style={{ color: 'var(--infoDark-color)' }}>144</small>
+                            </div>
+                        </div>
+                        <ProgressBar
+                            completed={12}
+                            maxCompleted={100}
+                            height={'100%'}
+                            isLabelVisible={false}
+                            baseBgColor={'var(--inner-color-bg1)'}
+                            borderRadius={'.25rem'}
+                            bgColor={'var(--danger-color)'}
+                            animateOnRender={true}
+                            transitionDuration={'2.5s'}
+                        />
+                    </div>
+                    <div className={`${styles.wrapper} ${styles.matkul}`}>
+                        <div className={styles.top}>
+                            <h3>Matakuliah</h3>
+                            <div className={styles.details}>
+                                <CountUp
+                                    start={0}
+                                    duration={2.5}
+                                    decimals={Number.isInteger(5) ? 0 : 2}
+                                    end={5}
+                                    delay={0}
+                                >
+                                    {({ countUpRef }) => (
+                                        <h3 ref={countUpRef}/>
+                                    )}
+                                </CountUp>
+                                <h3 style={{ color: 'var(--infoDark-color)', fontWeight: '400' }}>|</h3>
+                                <small style={{ color: 'var(--infoDark-color)' }}>50</small>
+                            </div>
+                        </div>
+                        <ProgressBar
+                            completed={28}
+                            maxCompleted={100}
+                            height={'100%'}
+                            isLabelVisible={false}
+                            baseBgColor={'var(--inner-color-bg1)'}
+                            borderRadius={'.25rem'}
+                            bgColor={'var(--warning-color)'}
+                            animateOnRender={true}
+                            transitionDuration={'2.5s'}
+                        />
+                    </div>
+                    <div className={`${styles.wrapper} ${styles.ipk}`}>
+                        <div className={styles.top}>
+                            <h3>IPK</h3>
+                            <div className={styles.details}>
+                                <CountUp
+                                    start={0}
+                                    duration={2.5}
+                                    decimals={Number.isInteger(3.25) ? 0 : 2}
+                                    end={3.25}
+                                    delay={0}
+                                >
+                                    {({ countUpRef }) => (
+                                        <h3 ref={countUpRef}/>
+                                    )}
+                                </CountUp>
+                                <h3 style={{ color: 'var(--infoDark-color)', fontWeight: '400' }}>|</h3>
+                                <small style={{ color: 'var(--infoDark-color)' }}>4.00</small>
+                            </div>
+                        </div>
+                        <ProgressBar
+                            completed={68}
+                            maxCompleted={100}
+                            height={'100%'}
+                            isLabelVisible={false}
+                            baseBgColor={'var(--inner-color-bg1)'}
+                            borderRadius={'.25rem'}
+                            bgColor={'var(--success-color)'}
+                            animateOnRender={true}
+                            transitionDuration={'2.5s'}
+                        />
+                    </div>
+                </div>
+            </div>
+        )
+    }
+
+    const ErrorCard = () => {
+        return (
+            <div>
+                Error Progress Card
+            </div>
+        )
+    }
+
+    const ValidatingCard = () => {
+        return (
+            <div>
+                Validating Progress Card
+            </div>
+        )
+    }
+
+    const EmptyCard = () => {
+        return (
+            <div>
+                Empty Progress Card
             </div>
         )
     }
