@@ -321,7 +321,6 @@ small {
 
 ::-webkit-scrollbar-thumb:hover {
     background-color: var(--scroll-thumbHover-color);
-    ;
     border-radius: .5rem;
 }
 
