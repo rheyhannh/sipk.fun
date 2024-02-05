@@ -1569,7 +1569,7 @@ export function Distribusi({ state, matkul, penilaian }) {
                                 Semua
                             </option>
                             {
-                                ['x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x'].map((item, index) => (
+                                getAllSemester(matkul, true).map((item, index) => (
                                     <option key={crypto.randomUUID()} value={item}>
                                         Semester {item}
                                     </option>
