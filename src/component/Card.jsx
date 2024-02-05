@@ -913,7 +913,7 @@ export function Grafik({ state, matkul, penilaian }) {
                             id="grafik_data-scroll"
                             data={data}
                         >
-                            <XAxis dataKey="semester" axisLine={false} tickLine={false} interval={'equidistantPreserveStart'} />
+                            <XAxis dataKey="semester" interval={'equidistantPreserveStart'} />
                             <Tooltip content={<CustomTooltip />} />
                             <Legend
                                 formatter={customLegendText}
