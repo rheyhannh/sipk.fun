@@ -28,6 +28,7 @@ import {
     getUserIpk, getUserIpkPercentage,
     getAllSemester, getStatsSemester,
     getStatsByNilai, getOnAndOffTarget,
+    getDistribusiNilai,
 } from "@/data/summary";
 
 // ========== UTILS DEPEDENCY ========== //
@@ -1800,17 +1801,20 @@ export function Distribusi({ state, matkul, penilaian }) {
         const [semester, setSemester] = useState(-1);
         const [matkulBar, setMatkulBar] = useState(false);
         const [sksBar, setSksBar] = useState(false);
-        const data = [
-            { "nilai": "A", "matkul": 6, "sks": 13 },
-            { "nilai": "A-", "matkul": 9, "sks": 4 },
-            { "nilai": "B+", "matkul": 3, "sks": 11 },
-            { "nilai": "B", "matkul": 7, "sks": 8 },
-            { "nilai": "B-", "matkul": 4, "sks": 14 },
-            { "nilai": "C+", "matkul": 1, "sks": 9 },
-            { "nilai": "C", "matkul": 10, "sks": 5 },
-            { "nilai": "D", "matkul": 5, "sks": 12 },
-            { "nilai": "E", "matkul": 8, "sks": 2 }
+
+        const emptyData = penilaian ? Object.keys(penilaian).map(nilai => ({
+            nilai,
+            matkul: 0,
+            sks: 0,
+            weight: penilaian[nilai].weight
+        })) : [
+            { "nilai": "A", "matkul": 0, "sks": 0 },
+            { "nilai": "B", "matkul": 0, "sks": 0 },
+            { "nilai": "C", "matkul": 0, "sks": 0 },
+            { "nilai": "D", "matkul": 0, "sks": 0 },
         ];
+
+        const data = getDistribusiNilai(matkul, penilaian, false);
 
         const customLegendText = (value, entry, index) => {
             return <span style={{ cursor: 'pointer' }}>{value}</span>
@@ -1822,7 +1826,7 @@ export function Distribusi({ state, matkul, penilaian }) {
                     <div className={styles.distribusi__tooltip}>
                         <p className={styles.distribusi__tooltip_title}>{`${label}`}</p>
                         {payload.map((item, index) => (
-                            <p key={`distribusi-tooltip-legend-${index}`}>{item?.name && item?.value ? `${item.name} : ${item.value}` : ''}</p>
+                            <p key={`distribusi-tooltip-legend-${index}`}>{`${item.name} : ${item.value}`}</p>
                         ))}
                     </div>
                 )
@@ -1868,7 +1872,7 @@ export function Distribusi({ state, matkul, penilaian }) {
                                 Semua
                             </option>
                             {
-                                [1, 2, 3, 4, 5].map((item, index) => (
+                                getAllSemester(matkul, true).map((item, index) => (
                                     <option key={crypto.randomUUID()} value={item}>
                                         Semester {item}
                                     </option>
@@ -1881,7 +1885,7 @@ export function Distribusi({ state, matkul, penilaian }) {
                     <ResponsiveContainer width={'100%'} height={'100%'}>
                         <BarChart
                             id="distribusi_data-scroll"
-                            data={data}
+                            data={semester === -1 ? data['semua'] : data[`semester${semester}`] ? data[`semester${semester}`] : emptyData}
                         >
                             <XAxis dataKey="nilai" tick={<CustomAxisX />} />
                             <Tooltip content={<CustomTooltip />} cursor={{ fill: 'var(--accordion-bg-color)', strokeWidth: 1 }} />
