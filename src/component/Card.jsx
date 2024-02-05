@@ -1812,18 +1812,6 @@ export function Distribusi({ state, matkul, penilaian }) {
             { "nilai": "E", "matkul": 8, "sks": 2 }
         ];
 
-        const refColor = {
-            "A": "success",
-            "A-": "success",
-            "B+": "success",
-            "B": "warning",
-            "B-": "warning",
-            "C+": "danger",
-            "C": "danger",
-            "D": "crimson",
-            "E": "crimson"
-        }
-
         const customLegendText = (value, entry, index) => {
             return <span style={{ cursor: 'pointer' }}>{value}</span>
         }
@@ -1845,7 +1833,7 @@ export function Distribusi({ state, matkul, penilaian }) {
 
         const CustomAxisX = ({ x, y, stroke, payload }) => {
             const nilai = payload.value;
-            const color = refColor[nilai] ? `var(--${refColor[nilai]}-color)` : 'var(--dark-color)';
+            const color = penilaian[nilai]?.style ? `var(--${penilaian[nilai].style}-color)` : 'var(--dark-color)';
             return (
                 <g transform={`translate(${x},${y})`}>
                     <text x={0} y={0} dy={10} textAnchor="middle" fill={color}>
