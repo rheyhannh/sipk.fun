@@ -913,7 +913,7 @@ export function Grafik({ state, matkul, penilaian }) {
                             id="grafik_data-scroll"
                             data={data}
                         >
-                            <XAxis dataKey="semester" interval={'equidistantPreserveStart'} />
+                            <XAxis dataKey="semester" stroke="var(--infoDark-color)" interval={'equidistantPreserveStart'} />
                             <Tooltip content={<CustomTooltip />} />
                             <Legend
                                 formatter={customLegendText}
@@ -1396,7 +1396,7 @@ export function Distribusi({ state, matkul, penilaian }) {
                             id="distribusi_data-scroll"
                             data={semester === -1 ? data['semua'] : data[`semester${semester}`] ? data[`semester${semester}`] : emptyData}
                         >
-                            <XAxis dataKey="nilai" tick={<CustomAxisX />} />
+                            <XAxis dataKey="nilai" stroke="var(--infoDark-color)" tick={<CustomAxisX />} />
                             <Tooltip content={<CustomTooltip />} cursor={{ fill: 'var(--accordion-bg-color)', strokeWidth: 1 }} />
                             <Legend
                                 formatter={customLegendText}
