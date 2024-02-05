@@ -136,7 +136,7 @@
 .dark-theme {
     /* === MAIN COLOR === */
     --first-color-lighter: hsl(11, 100%, 65%);
-    --second-color-lighter: hsl(222, 30%, 35%);
+    --second-color-lighter: hsl(222, 30%, 47.5%);
     /* === END OF MAIN COLOR === */
 
     /* === UTILS COLOR === */
