@@ -48,7 +48,8 @@
 .total .empty__content .image,
 .grafik .empty__content .image,
 .target .empty__content .image,
-.progress .empty__content .image {
+.progress .empty__content .image,
+.distribusi .empty__content .image {
     max-width: 60px;
     margin-bottom: 1rem;
 }
@@ -67,7 +68,8 @@
 .total,
 .grafik,
 .target,
-.progress {
+.progress,
+.distribusi {
     height: 225px;
     background: var(--white-color);
     padding: var(--card-padding);
@@ -402,7 +404,8 @@
 
 .total,
 .grafik,
-.progress {
+.progress,
+.distribusi {
     display: grid;
     grid-template-rows: max-content 1fr;
     gap: 1rem;
@@ -419,20 +422,23 @@
 .total.flex,
 .grafik.flex,
 .target.flex,
-.progress.flex {
+.progress.flex,
+.distribusi.flex {
     display: flex;
 }
 
 .total.skeleton,
 .grafik.skeleton,
 .target.skeleton,
-.progress.skeleton {
+.progress.skeleton,
+.distribusi.skeleton {
     box-shadow: none;
 }
 
 .total__main,
 .grafik__main,
-.target__main {
+.target__main,
+.distribusi__main {
     display: flex;
     gap: .75rem;
     justify-content: space-between;
@@ -452,7 +458,8 @@
 
 .grafik__left,
 .target__left,
-.progress__left {
+.progress__left,
+.distribusi__left {
     max-width: 100px;
     width: 100%;
 }
@@ -461,7 +468,8 @@
 .total__left_title,
 .target__left_subtitle,
 .progress__left_subtitle,
-.grafik__left_subtitle {
+.grafik__left_subtitle,
+.distribusi__left_subtitle {
     display: flex;
     gap: .5rem;
     align-items: center;
@@ -470,7 +478,8 @@
 .total__left_subtitle.skeleton,
 .grafik__left_subtitle.skeleton,
 .target__left_subtitle.skeleton,
-.progress__left_subtitle.skeleton {
+.progress__left_subtitle.skeleton,
+.distribusi__left_subtitle.skeleton {
     display: grid;
     grid-template-columns: max-content auto;
 }
@@ -478,7 +487,8 @@
 .total__left_icon,
 .grafik__left_icon,
 .target__left_icon,
-.progress__left_icon {
+.progress__left_icon,
+.distribusi__left_icon {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -491,7 +501,8 @@
 .total__left_icon.skeleton,
 .grafik__left_icon.skeleton,
 .target__left_icon.skeleton,
-.progress__left_icon.skeleton {
+.progress__left_icon.skeleton,
+.distribusi__left_icon.skeleton {
     border: none;
     background: none;
 }
@@ -517,14 +528,16 @@
 }
 
 .grafik__right,
-.target__right {
+.target__right,
+.distribusi__right {
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
 .grafik__right select,
-.target__right select {
+.target__right select,
+.distribusi__right select {
     padding: 0 .5rem;
     height: 25px;
     text-align: center;
@@ -796,6 +809,33 @@
     gap: .25rem;
 }
 
+/* 
+    Distribusi Card Styles 
+*/
+
+.distribusi__data {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.distribusi__tooltip {
+    background: var(--box-color-bg1);
+    box-shadow: var(--box-shadow2);
+    padding: .7rem;
+    border-radius: .25rem;
+}
+
+.distribusi__tooltip p {
+    color: var(--dark-color);
+}
+
+.distribusi__tooltip_title {
+    font-weight: 600;
+    margin-bottom: .25rem;
+    border-bottom: 1px solid var(--darkVariant-color);
+}
+
 @media (hover: hover) and (pointer: fine) {
 
     .summary:not(.skeleton):hover,
@@ -804,7 +844,8 @@
     .total:not(.skeleton):hover,
     .grafik:not(.skeleton):hover,
     .target:not(.skeleton):hover,
-    .progress:not(.skeleton):hover {
+    .progress:not(.skeleton):hover,
+    .distribusi:not(.skeleton):hover {
         box-shadow: none;
     }
 

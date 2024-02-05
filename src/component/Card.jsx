@@ -17,7 +17,7 @@ import { ModalContext } from "./provider/Modal";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import CountUp from 'react-countup';
 import ProgressBar from "@ramonak/react-progress-bar";
-import { LineChart, Line, XAxis, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import { LineChart, Line, BarChart, Bar, XAxis, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import { Icon } from '@/component/loader/ReactIcons'
 import { Spinner } from "./loader/Loading";
 
@@ -45,7 +45,7 @@ import "react-loading-skeleton/dist/skeleton.css";
 import { CiTrash, CiEdit } from "react-icons/ci";
 import { FaInfo, FaUndo } from "react-icons/fa";
 import { IoAnalyticsOutline, IoServerOutline, IoAddOutline } from "react-icons/io5";
-import { TbTarget, TbTargetArrow, TbTargetOff, TbAtom } from "react-icons/tb";
+import { TbTarget, TbTargetArrow, TbTargetOff, TbAtom, TbAntennaBars5 } from "react-icons/tb";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 
 /*
@@ -1770,6 +1770,170 @@ export function Progress({ state, user, matkul, penilaian }) {
                         <h5>Tambah Matakuliah</h5>
                     </div>
                 </div>
+            </div>
+        )
+    }
+
+    if (state === 'loading') { return (<SkeletonCard />) }
+    else if (state === 'loaded') { return (<LoadedCard />) }
+    else if (state === 'error') { return (<ErrorCard />) }
+    else if (state === 'validating') { return (<ValidatingCard />) }
+    else if (state === 'empty') { return (<EmptyCard />) }
+    else { return 'Unidentified Card State' }
+}
+
+export function Distribusi({ state, matkul, penilaian }) {
+    const userIdCookie = useCookies().get('s_user_id');
+    const handleRetry = () => {
+        mutate(['/api/matkul', userIdCookie])
+    }
+
+    const SkeletonCard = () => {
+        return (
+            <div>
+                Skeleton Distribusi Card
+            </div>
+        )
+    }
+
+    const LoadedCard = () => {
+        const [semester, setSemester] = useState(-1);
+        const [matkulBar, setMatkulBar] = useState(false);
+        const [sksBar, setSksBar] = useState(false);
+        const data = [
+            { "nilai": "A", "matkul": 6, "sks": 13 },
+            { "nilai": "A-", "matkul": 9, "sks": 4 },
+            { "nilai": "B+", "matkul": 3, "sks": 11 },
+            { "nilai": "B", "matkul": 7, "sks": 8 },
+            { "nilai": "B-", "matkul": 4, "sks": 14 },
+            { "nilai": "C+", "matkul": 1, "sks": 9 },
+            { "nilai": "C", "matkul": 10, "sks": 5 },
+            { "nilai": "D", "matkul": 5, "sks": 12 },
+            { "nilai": "E", "matkul": 8, "sks": 2 }
+        ];
+
+        const refColor = {
+            "A": "success",
+            "A-": "success",
+            "B+": "success",
+            "B": "warning",
+            "B-": "warning",
+            "C+": "danger",
+            "C": "danger",
+            "D": "crimson",
+            "E": "crimson"
+        }
+
+        const customLegendText = (value, entry, index) => {
+            return <span style={{ cursor: 'pointer' }}>{value}</span>
+        }
+
+        const CustomTooltip = ({ active, payload, label }) => {
+            if (active && payload && payload.length) {
+                return (
+                    <div className={styles.distribusi__tooltip}>
+                        <p className={styles.distribusi__tooltip_title}>{`${label}`}</p>
+                        {payload.map((item, index) => (
+                            <p key={`distribusi-tooltip-legend-${index}`}>{item?.name && item?.value ? `${item.name} : ${item.value}` : ''}</p>
+                        ))}
+                    </div>
+                )
+            }
+
+            return null;
+        }
+
+        const CustomAxisX = ({ x, y, stroke, payload }) => {
+            const nilai = payload.value;
+            const color = refColor[nilai] ? `var(--${refColor[nilai]}-color)` : 'var(--dark-color)';
+            return (
+                <g transform={`translate(${x},${y})`}>
+                    <text x={0} y={0} dy={10} textAnchor="middle" fill={color}>
+                        {nilai}
+                    </text>
+                </g>
+            )
+        }
+
+        return (
+            <div className={styles.distribusi}>
+                <div className={styles.distribusi__main}>
+                    <div className={styles.distribusi__left}>
+                        <div className={styles.distribusi__left_subtitle}>
+                            <div style={{ boxShadow: 'var(--box-shadow2)' }} className={styles.total__left_icon}>
+                                <TbAntennaBars5 size={'17px'} color={'var(--logo-second-color)'} />
+                            </div>
+                            <h3 style={{ color: 'var(--infoDark-color)', fontWeight: '500' }}>
+                                Distribusi
+                            </h3>
+                        </div>
+                    </div>
+                    <div className={styles.distribusi__right}>
+                        <select
+                            value={semester}
+                            onChange={e => {
+                                const x = Number(e.target.value);
+                                setSemester(x);
+                            }}
+                        >
+                            <option value={-1}>
+                                Semua
+                            </option>
+                            {
+                                [1, 2, 3, 4, 5].map((item, index) => (
+                                    <option key={crypto.randomUUID()} value={item}>
+                                        Semester {item}
+                                    </option>
+                                ))
+                            }
+                        </select>
+                    </div>
+                </div>
+                <div className={styles.distribusi__data}>
+                    <ResponsiveContainer width={'100%'} height={'100%'}>
+                        <BarChart
+                            id="distribusi_data-scroll"
+                            data={data}
+                        >
+                            <XAxis dataKey="nilai" tick={<CustomAxisX />} />
+                            <Tooltip content={<CustomTooltip />} cursor={{ fill: 'var(--accordion-bg-color)', strokeWidth: 1 }} />
+                            <Legend
+                                formatter={customLegendText}
+                                onClick={(x) => {
+                                    if (x.dataKey === 'matkul') { setMatkulBar(!x.inactive) }
+                                    else if (x.dataKey === 'sks') { setSksBar(!x.inactive) }
+                                    else { return; }
+                                }}
+                            />
+                            <Bar name="Matakuliah" dataKey="matkul" fill="var(--first-color-lighter)" hide={matkulBar} />
+                            <Bar name="Sks" dataKey="sks" fill="var(--second-color-lighter)" hide={sksBar} />
+                        </BarChart>
+                    </ResponsiveContainer>
+                </div>
+            </div>
+        )
+    }
+
+    const ErrorCard = () => {
+        return (
+            <div>
+                Error Distribusi Card
+            </div>
+        )
+    }
+
+    const ValidatingCard = () => {
+        return (
+            <div>
+                Validating Distribusi Card
+            </div>
+        )
+    }
+
+    const EmptyCard = () => {
+        return (
+            <div>
+                Empty Distribusi Card
             </div>
         )
     }

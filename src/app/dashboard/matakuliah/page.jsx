@@ -6,7 +6,7 @@ import { useState } from 'react';
 // ========== COMPONENT DEPEDENCY ========== //
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Pagination } from 'swiper/modules';
-import { Total, Grafik, Target, Progress } from '@/component/Card'
+import { Total, Grafik, Target, Progress, Distribusi } from '@/component/Card'
 import { Table } from '@/component/Table';
 
 // ========== DATA DEPEDENCY ========== //
@@ -142,6 +142,35 @@ function TargetCard() {
     )
 }
 
+function DistribusiCard() {
+    const { data: matkul, error: matkulError, isLoading: matkulLoading, isValidating: matkulValidating } = useMatkul();
+    const { data: user, error: userError, isLoading: userLoading, isValidating: userValidating } = useUser();
+    const { data: universitas, error: universitasError, isLoading: universitasLoading, isValidating: universitasValidating } = useUniversitas(null, 'user', user ? user[0].university_id : undefined);
+    const isError = matkulError || userError || universitasError;
+    const isLoading = matkulLoading || userLoading || universitasLoading;
+    const isValidating = matkulValidating || userValidating || universitasValidating;
+
+    if (isError) {
+        return <Distribusi state={'error'} />;
+    }
+
+    if (isLoading) {
+        return <Distribusi state={'loading'} />;
+    }
+
+    if (isValidating) {
+        return <Distribusi state={'validating'} />;
+    }
+
+    if (!matkul.length) {
+        return <Distribusi state={'empty'} penilaian={universitas[0].penilaian} />
+    }
+
+    return (
+        <Distribusi state={'loaded'} matkul={matkul} penilaian={universitas[0].penilaian} />
+    )
+}
+
 function ProgressCard() {
     const { data: matkul, error: matkulError, isLoading: matkulLoading, isValidating: matkulValidating } = useMatkul();
     const { data: user, error: userError, isLoading: userLoading, isValidating: userValidating } = useUser();
@@ -209,14 +238,16 @@ export default function MatakuliahPage() {
                         "--swiper-pagination-color": "var(--logo-second-color)",
                         "--swiper-pagination-bullet-inactive-color": "var(--infoDark-color)",
                     }}
-                    noSwipingSelector={['#total_data-scroll', '#grafik_data-scroll']}
+                    noSwipingSelector={['#total_data-scroll', '#grafik_data-scroll', '#distribusi_data-scroll']}
                     modules={[Pagination]}
                     className={`${styles.insight} ${widget ? styles.active : ''}`}
                 >
-                    <SwiperSlide> <GrafikCard /> </SwiperSlide>
-                    <SwiperSlide> <TotalCard /> </SwiperSlide>
+                    {/* <SwiperSlide> <TotalCard /> </SwiperSlide>
                     <SwiperSlide> <ProgressCard/> </SwiperSlide>
-                    <SwiperSlide> <TargetCard /> </SwiperSlide>
+                    <SwiperSlide> <TargetCard /> </SwiperSlide> */}
+                    <SwiperSlide> <Distribusi state={'loading'}/> </SwiperSlide>
+                    <SwiperSlide> <DistribusiCard/> </SwiperSlide>
+                    <SwiperSlide> <GrafikCard /> </SwiperSlide>
                 </Swiper>
 
                 <TabelSection />
