@@ -159,6 +159,7 @@ export function Table({ state, validating, user, sessionTable, matkul, matkulHis
         ]);
         const [pageControlPosition, setPageControlPosition] = useState(sessionTable?.pageControlPosition ?? user?.preferences?.table?.controlPosition ?? 0);
         const [rowAction, setRowAction] = useState(sessionTable?.rowAction ?? true);
+        const [pagesIndex, setPagesIndex] = useState(sessionTable?.pageIndex ? sessionTable.pageIndex + 1 : 1);
         const {
             setModal,
             setActive,
@@ -177,6 +178,7 @@ export function Table({ state, validating, user, sessionTable, matkul, matkulHis
             setActiveTab(0);
             setData(matkul);
             table.setPageIndex(0);
+            setPagesIndex(1);
         }
 
         const handleDeletedMatakuliahTab = () => {
@@ -196,6 +198,7 @@ export function Table({ state, validating, user, sessionTable, matkul, matkulHis
             setActiveTab(1);
             setData(historyHapus);
             table.setPageIndex(0);
+            setPagesIndex(1);
         }
 
         const handleEditedMatakuliahTab = () => {
@@ -215,6 +218,7 @@ export function Table({ state, validating, user, sessionTable, matkul, matkulHis
             setActiveTab(2);
             setData(historyEdit);
             table.setPageIndex(0);
+            setPagesIndex(1);
         }
 
         const columnHelper = createColumnHelper();
@@ -311,8 +315,8 @@ export function Table({ state, validating, user, sessionTable, matkul, matkulHis
         }
 
         const setPageIndex = (reset = false, index) => {
-            if (reset) { table.setPageIndex(0) }
-            else { table.setPageIndex(index) }
+            if (reset) { table.setPageIndex(0); setPagesIndex(1); }
+            else { table.setPageIndex(index); setPagesIndex(index + 1) }
         }
 
         const getTablePreferences = () => {
@@ -601,7 +605,7 @@ export function Table({ state, validating, user, sessionTable, matkul, matkulHis
                     </div>
                     <div className={styles.tools__right}>
                         <div className={styles.tools__search}>
-                            <CariMatakuliah initValue={table.getColumn('matakuliah').getFilterValue()} column={table.getColumn('matakuliah')} table={table} isSearchActive={isSearchActive} />
+                            <CariMatakuliah initValue={table.getColumn('matakuliah').getFilterValue()} column={table.getColumn('matakuliah')} table={table} isSearchActive={isSearchActive} setPagesIndex={setPagesIndex} />
                         </div>
                         <div className={styles.tools__shorcut}>
                             <div className={styles.tools__shorcut_box} onClick={() => { handleTambahModal() }}>
@@ -641,13 +645,13 @@ export function Table({ state, validating, user, sessionTable, matkul, matkulHis
                             </div>
                             <div className={styles.pagination__control}>
                                 <div
-                                    onClick={table.getCanPreviousPage() ? () => table.setPageIndex(0) : null}
+                                    onClick={table.getCanPreviousPage() ? () => { table.setPageIndex(0); setPagesIndex(1); } : null}
                                     className={`${styles.pagination__navs} ${!table.getCanPreviousPage() ? styles.disabled : ''}`}
                                 >
                                     <IoPlayBack size={'16px'} />
                                 </div>
                                 <div
-                                    onClick={table.getCanPreviousPage() ? () => table.previousPage() : null}
+                                    onClick={table.getCanPreviousPage() ? () => { table.previousPage(); setPagesIndex(prev => prev - 1) } : null}
                                     className={`${styles.pagination__navs} ${!table.getCanPreviousPage() ? styles.disabled : ''}`}
                                 >
                                     <IoCaretBack size={'16px'} />
@@ -655,22 +659,27 @@ export function Table({ state, validating, user, sessionTable, matkul, matkulHis
                                 <div className={styles.pagination__input}>
                                     <input
                                         type="number"
-                                        min={1}
-                                        value={table.getState().pagination.pageIndex + 1}
+                                        value={pagesIndex}
                                         onChange={e => {
-                                            const page = e.target.value ? Number(e.target.value) - 1 : 0
-                                            table.setPageIndex(page)
+                                            if (e.target.value) {
+                                                const page = Number(e.target.value) - 1;
+                                                table.setPageIndex(page)
+                                                setPagesIndex(page + 1);
+                                            } else {
+                                                setPagesIndex(e.target.value);
+                                            }
                                         }}
+                                        onBlur={() => { if (!pagesIndex) { setPagesIndex(table.getState().pagination.pageIndex + 1) } }}
                                     />
                                 </div>
                                 <div
-                                    onClick={table.getCanNextPage() ? () => table.nextPage() : null}
+                                    onClick={table.getCanNextPage() ? () => { table.nextPage(); setPagesIndex(prev => prev + 1); } : null}
                                     className={`${styles.pagination__navs} ${!table.getCanNextPage() ? styles.disabled : ''}`}
                                 >
                                     <IoCaretForward size={'16px'} />
                                 </div>
                                 <div
-                                    onClick={table.getCanNextPage() ? () => table.setPageIndex(table.getPageCount() - 1) : null}
+                                    onClick={table.getCanNextPage() ? () => { table.setPageIndex(table.getPageCount() - 1); setPagesIndex(table.getPageCount()) } : null}
                                     className={`${styles.pagination__navs} ${!table.getCanNextPage() ? styles.disabled : ''}`}
                                 >
                                     <IoPlayForward size={'16px'} />
@@ -821,13 +830,13 @@ export function Table({ state, validating, user, sessionTable, matkul, matkulHis
                             </div>
                             <div className={styles.pagination__control}>
                                 <div
-                                    onClick={table.getCanPreviousPage() ? () => table.setPageIndex(0) : null}
+                                    onClick={table.getCanPreviousPage() ? () => { table.setPageIndex(0); setPagesIndex(1); } : null}
                                     className={`${styles.pagination__navs} ${!table.getCanPreviousPage() ? styles.disabled : ''}`}
                                 >
                                     <IoPlayBack size={'16px'} />
                                 </div>
                                 <div
-                                    onClick={table.getCanPreviousPage() ? () => table.previousPage() : null}
+                                    onClick={table.getCanPreviousPage() ? () => { table.previousPage(); setPagesIndex(prev => prev - 1) } : null}
                                     className={`${styles.pagination__navs} ${!table.getCanPreviousPage() ? styles.disabled : ''}`}
                                 >
                                     <IoCaretBack size={'16px'} />
@@ -835,22 +844,27 @@ export function Table({ state, validating, user, sessionTable, matkul, matkulHis
                                 <div className={styles.pagination__input}>
                                     <input
                                         type="number"
-                                        min={1}
-                                        value={table.getState().pagination.pageIndex + 1}
+                                        value={pagesIndex}
                                         onChange={e => {
-                                            const page = e.target.value ? Number(e.target.value) - 1 : 0
-                                            table.setPageIndex(page)
+                                            if (e.target.value) {
+                                                const page = Number(e.target.value) - 1;
+                                                table.setPageIndex(page)
+                                                setPagesIndex(page + 1);
+                                            } else {
+                                                setPagesIndex(e.target.value);
+                                            }
                                         }}
+                                        onBlur={() => { if (!pagesIndex) { setPagesIndex(table.getState().pagination.pageIndex + 1) } }}
                                     />
                                 </div>
                                 <div
-                                    onClick={table.getCanNextPage() ? () => table.nextPage() : null}
+                                    onClick={table.getCanNextPage() ? () => { table.nextPage(); setPagesIndex(prev => prev + 1); } : null}
                                     className={`${styles.pagination__navs} ${!table.getCanNextPage() ? styles.disabled : ''}`}
                                 >
                                     <IoCaretForward size={'16px'} />
                                 </div>
                                 <div
-                                    onClick={table.getCanNextPage() ? () => table.setPageIndex(table.getPageCount() - 1) : null}
+                                    onClick={table.getCanNextPage() ? () => { table.setPageIndex(table.getPageCount() - 1); setPagesIndex(table.getPageCount()); } : null}
                                     className={`${styles.pagination__navs} ${!table.getCanNextPage() ? styles.disabled : ''}`}
                                 >
                                     <IoPlayForward size={'16px'} />
@@ -888,7 +902,7 @@ export function Table({ state, validating, user, sessionTable, matkul, matkulHis
 }
 
 function CariMatakuliah({
-    column, table, isSearchActive
+    column, table, isSearchActive, setPagesIndex
 }) {
     const matakuliahFilterValue = column.getFilterValue() ?? '';
 
@@ -900,6 +914,7 @@ function CariMatakuliah({
                 onChange={value => {
                     if (matakuliahFilterValue !== value) {
                         table.setPageIndex(0);
+                        setPagesIndex(1);
                     }
                     column.setFilterValue(value);
                 }}
