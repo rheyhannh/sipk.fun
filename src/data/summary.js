@@ -159,6 +159,58 @@ const getOnAndOffTarget = (matkul) => {
   return -1;
 }
 
+const getDistribusiNilai = (matkul, penilaian, asc = false) => {
+  if (matkul.length !== 0) {
+    const result = {};
+
+    matkul.forEach(matakuliah => {
+      const semesterKey = `semester${matakuliah.semester}`;
+
+      if (!result['semua']) { result['semua'] = []; }
+      if (!result[semesterKey]) { result[semesterKey] = []; }
+
+      Object.keys(penilaian).forEach(indeksNilai => {
+        const nilai = result[semesterKey].find(item => item.nilai === indeksNilai);
+        const semua = result['semua'].find(item => item.nilai === indeksNilai);
+
+        if (nilai) {
+          nilai.matkul += (matakuliah.nilai.indeks === indeksNilai) ? 1 : 0;
+          nilai.sks += (matakuliah.nilai.indeks === indeksNilai) ? matakuliah.sks : 0;
+        } else {
+          result[semesterKey].push({
+            nilai: indeksNilai,
+            matkul: (matakuliah.nilai.indeks === indeksNilai) ? 1 : 0,
+            sks: (matakuliah.nilai.indeks === indeksNilai) ? matakuliah.sks : 0,
+            weight: penilaian[indeksNilai].weight,
+          });
+        }
+
+        if (semua) {
+          semua.matkul += (matakuliah.nilai.indeks === indeksNilai) ? 1 : 0;
+          semua.sks += (matakuliah.nilai.indeks === indeksNilai) ? matakuliah.sks : 0;
+        } else {
+          result['semua'].push({
+            nilai: indeksNilai,
+            matkul: (matakuliah.nilai.indeks === indeksNilai) ? 1 : 0,
+            sks: (matakuliah.nilai.indeks === indeksNilai) ? matakuliah.sks : 0,
+            weight: penilaian[indeksNilai].weight,
+          });
+        }
+      });
+    });
+
+    Object.keys(result).forEach(semester => {
+      result[semester] = result[semester].sort((a, b) => {
+        return asc ? a.weight - b.weight : b.weight - a.weight;
+      });
+    });
+
+    return result;
+  }
+
+  return -1;
+}
+
 module.exports = {
   getUserIpk,
   getUserIpkPercentage,
@@ -170,4 +222,5 @@ module.exports = {
   getStatsSemester,
   getStatsByNilai,
   getOnAndOffTarget,
+  getDistribusiNilai,
 }
