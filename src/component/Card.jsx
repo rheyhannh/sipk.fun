@@ -1488,8 +1488,49 @@ export function Distribusi({ state, matkul, penilaian }) {
 
     const SkeletonCard = () => {
         return (
-            <div>
-                Skeleton Distribusi Card
+            <div className={`${styles.distribusi} ${styles.skeleton}`}>
+                <div className={styles.distribusi__main}>
+                    <div className={styles.distribusi__left}>
+                        <div className={`${styles.distribusi__left_subtitle} ${styles.skeleton}`}>
+                            <SkeletonTheme
+                                baseColor="var(--skeleton-base)"
+                                highlightColor="var(--skeleton-highlight)"
+                            >
+                                <Skeleton width={"100%"} height={"100%"} containerClassName={`${styles.grafik__left_icon} ${styles.skeleton}`} />
+                            </SkeletonTheme>
+                            <div style={{ width: '100%' }}>
+                                <h3>
+                                    <SkeletonTheme
+                                        baseColor="var(--skeleton-base)"
+                                        highlightColor="var(--skeleton-highlight)"
+                                    >
+                                        <Skeleton width={"100%"} height={"100%"} />
+                                    </SkeletonTheme>
+                                </h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div className={styles.distribusi__right}>
+                        <div style={{ width: '70px' }}>
+                            <h3>
+                                <SkeletonTheme
+                                    baseColor="var(--skeleton-base)"
+                                    highlightColor="var(--skeleton-highlight)"
+                                >
+                                    <Skeleton width={"100%"} height={"100%"} />
+                                </SkeletonTheme>
+                            </h3>
+                        </div>
+                    </div>
+                </div>
+                <div className={styles.distribusi__data}>
+                    <SkeletonTheme
+                        baseColor="var(--skeleton-base)"
+                        highlightColor="var(--skeleton-highlight)"
+                    >
+                        <Skeleton width={"100%"} height={"100%"} />
+                    </SkeletonTheme>
+                </div>
             </div>
         )
     }
