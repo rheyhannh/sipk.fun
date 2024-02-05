@@ -1251,235 +1251,6 @@ export function Target({ state, matkul, penilaian }) {
     else { return 'Unidentified Card State' }
 }
 
-export function Progress({ state, user, matkul, penilaian }) {
-    const userIdCookie = useCookies().get('s_user_id');
-    const handleRetry = () => {
-        mutate(['/api/matkul', userIdCookie])
-        mutate(['/api/me', userIdCookie])
-    }
-
-    const SkeletonCard = () => {
-        return (
-            <div className={`${styles.progress} ${styles.skeleton}`}>
-                <div className={styles.progress__main}>
-                    <div className={styles.progress__left}>
-                        <div className={`${styles.progress__left_subtitle} ${styles.skeleton}`}>
-                            <SkeletonTheme
-                                baseColor="var(--skeleton-base)"
-                                highlightColor="var(--skeleton-highlight)"
-                            >
-                                <Skeleton width={"100%"} height={"100%"} containerClassName={`${styles.progress__left_icon} ${styles.skeleton}`} />
-                            </SkeletonTheme>
-                            <div style={{ width: '100%' }}>
-                                <h3>
-                                    <SkeletonTheme
-                                        baseColor="var(--skeleton-base)"
-                                        highlightColor="var(--skeleton-highlight)"
-                                    >
-                                        <Skeleton width={"100%"} height={"100%"} />
-                                    </SkeletonTheme>
-                                </h3>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div className={styles.progress__data}>
-                    {Array.from({ length: 3 }, (_, index) => (
-                        <div className={styles.skeleton} key={crypto.randomUUID()}>
-                            <SkeletonTheme
-                                baseColor="var(--skeleton-base)"
-                                highlightColor="var(--skeleton-highlight)"
-                            >
-                                <Skeleton width={"100%"} height={"100%"} />
-                            </SkeletonTheme>
-                        </div>
-                    ))}
-                </div>
-            </div>
-        )
-    }
-
-    const LoadedCard = () => {
-        return (
-            <div className={styles.progress}>
-                <div className={styles.progress__main}>
-                    <div className={styles.progress__left}>
-                        <div className={styles.progress__left_subtitle}>
-                            <div style={{ boxShadow: 'var(--box-shadow2)' }} className={styles.target__left_icon}>
-                                <TbAtom size={'17px'} color={'var(--logo-second-color)'} />
-                            </div>
-                            <h3 style={{ color: 'var(--infoDark-color)', fontWeight: '500' }}>
-                                Progress
-                            </h3>
-                        </div>
-                    </div>
-                </div>
-                <div className={styles.progress__data}>
-                    <div className={`${styles.wrapper} ${styles.sks}`}>
-                        <div className={styles.top}>
-                            <h3>SKS</h3>
-                            <div className={styles.details}>
-                                <CountUp
-                                    start={0}
-                                    duration={2.5}
-                                    decimals={Number.isInteger(getUserSks(matkul)) ? 0 : 2}
-                                    end={getUserSks(matkul)}
-                                    delay={0}
-                                >
-                                    {({ countUpRef }) => (
-                                        <h3 ref={countUpRef} />
-                                    )}
-                                </CountUp>
-                                <h3 style={{ color: 'var(--infoDark-color)', fontWeight: '400' }}>|</h3>
-                                <small style={{ color: 'var(--infoDark-color)' }}>{user[0]?.sks_target || '-'}</small>
-                            </div>
-                        </div>
-                        <ProgressBar
-                            completed={getUserSksPercentage(user, matkul)}
-                            maxCompleted={100}
-                            height={'100%'}
-                            isLabelVisible={false}
-                            baseBgColor={'var(--inner-color-bg1)'}
-                            borderRadius={'.25rem'}
-                            bgColor={'var(--danger-color)'}
-                            animateOnRender={true}
-                            transitionDuration={'2.5s'}
-                        />
-                    </div>
-                    <div className={`${styles.wrapper} ${styles.matkul}`}>
-                        <div className={styles.top}>
-                            <h3>Matakuliah</h3>
-                            <div className={styles.details}>
-                                <CountUp
-                                    start={0}
-                                    duration={2.5}
-                                    decimals={Number.isInteger(getUserMatkul(matkul)) ? 0 : 2}
-                                    end={getUserMatkul(matkul)}
-                                    delay={0}
-                                >
-                                    {({ countUpRef }) => (
-                                        <h3 ref={countUpRef} />
-                                    )}
-                                </CountUp>
-                                <h3 style={{ color: 'var(--infoDark-color)', fontWeight: '400' }}>|</h3>
-                                <small style={{ color: 'var(--infoDark-color)' }}>{user[0]?.matkul_target || '-'}</small>
-                            </div>
-                        </div>
-                        <ProgressBar
-                            completed={getUserMatkulPercentage(user, matkul)}
-                            maxCompleted={100}
-                            height={'100%'}
-                            isLabelVisible={false}
-                            baseBgColor={'var(--inner-color-bg1)'}
-                            borderRadius={'.25rem'}
-                            bgColor={'var(--warning-color)'}
-                            animateOnRender={true}
-                            transitionDuration={'2.5s'}
-                        />
-                    </div>
-                    <div className={`${styles.wrapper} ${styles.ipk}`}>
-                        <div className={styles.top}>
-                            <h3>IPK</h3>
-                            <div className={styles.details}>
-                                <CountUp
-                                    start={0}
-                                    duration={2.5}
-                                    decimals={Number.isInteger(getUserIpk(matkul)) ? 0 : 2}
-                                    end={getUserIpk(matkul)}
-                                    delay={0}
-                                >
-                                    {({ countUpRef }) => (
-                                        <h3 ref={countUpRef} />
-                                    )}
-                                </CountUp>
-                                <h3 style={{ color: 'var(--infoDark-color)', fontWeight: '400' }}>|</h3>
-                                <small style={{ color: 'var(--infoDark-color)' }}>{user[0]?.ipk_target || '-'}</small>
-                            </div>
-                        </div>
-                        <ProgressBar
-                            completed={getUserIpkPercentage(user, matkul)}
-                            maxCompleted={100}
-                            height={'100%'}
-                            isLabelVisible={false}
-                            baseBgColor={'var(--inner-color-bg1)'}
-                            borderRadius={'.25rem'}
-                            bgColor={'var(--success-color)'}
-                            animateOnRender={true}
-                            transitionDuration={'2.5s'}
-                        />
-                    </div>
-                </div>
-            </div>
-        )
-    }
-
-    const ErrorCard = () => {
-        return (
-            <div className={`${styles.progress} ${styles.flex}`}>
-                <div className={styles.error__wrapper}>
-                    <div className={styles.error__content} onClick={handleRetry}>
-                        <h5>Gagal mengambil data</h5>
-                        <h1>&#x21bb;</h1>
-                    </div>
-                </div>
-            </div>
-        )
-    }
-
-    const ValidatingCard = () => {
-        return (
-            <div className={`${styles.progress} ${styles.flex}`}>
-                <div className={styles.validating__wrapper}>
-                    <div className={styles.validating__content}>
-                        <Spinner size={'30px'} color={'var(--logo-second-color)'} />
-                    </div>
-                </div>
-            </div>
-        )
-    }
-
-    const EmptyCard = () => {
-        const {
-            setModal,
-            setActive,
-            setData
-        } = useContext(ModalContext);
-
-        const handleTambahModal = () => {
-            if (!penilaian) { return; }
-            setData({ penilaian });
-            setModal('tambahMatkul');
-            setTimeout(() => {
-                setActive(true);
-            }, 50)
-        }
-
-        return (
-            <div className={`${styles.progress} ${styles.flex}`}>
-                <div className={styles.empty__wrapper}>
-                    <div className={styles.empty__content} onClick={() => { handleTambahModal() }}>
-                        <Image
-                            src={'https://storage.googleapis.com/sipk_assets/tambah_matkul.svg'}
-                            width={100}
-                            height={100}
-                            alt='Tambah Matakuliah'
-                            className={styles.image}
-                        />
-                        <h5>Tambah Matakuliah</h5>
-                    </div>
-                </div>
-            </div>
-        )
-    }
-
-    if (state === 'loading') { return (<SkeletonCard />) }
-    else if (state === 'loaded') { return (<LoadedCard />) }
-    else if (state === 'error') { return (<ErrorCard />) }
-    else if (state === 'validating') { return (<ValidatingCard />) }
-    else if (state === 'empty') { return (<EmptyCard />) }
-    else { return 'Unidentified Card State' }
-}
-
 export function Distribusi({ state, matkul, penilaian }) {
     const userIdCookie = useCookies().get('s_user_id');
     const handleRetry = () => {
@@ -1710,3 +1481,233 @@ export function Distribusi({ state, matkul, penilaian }) {
     else if (state === 'empty') { return (<EmptyCard />) }
     else { return 'Unidentified Card State' }
 }
+
+export function Progress({ state, user, matkul, penilaian }) {
+    const userIdCookie = useCookies().get('s_user_id');
+    const handleRetry = () => {
+        mutate(['/api/matkul', userIdCookie])
+        mutate(['/api/me', userIdCookie])
+    }
+
+    const SkeletonCard = () => {
+        return (
+            <div className={`${styles.progress} ${styles.skeleton}`}>
+                <div className={styles.progress__main}>
+                    <div className={styles.progress__left}>
+                        <div className={`${styles.progress__left_subtitle} ${styles.skeleton}`}>
+                            <SkeletonTheme
+                                baseColor="var(--skeleton-base)"
+                                highlightColor="var(--skeleton-highlight)"
+                            >
+                                <Skeleton width={"100%"} height={"100%"} containerClassName={`${styles.progress__left_icon} ${styles.skeleton}`} />
+                            </SkeletonTheme>
+                            <div style={{ width: '100%' }}>
+                                <h3>
+                                    <SkeletonTheme
+                                        baseColor="var(--skeleton-base)"
+                                        highlightColor="var(--skeleton-highlight)"
+                                    >
+                                        <Skeleton width={"100%"} height={"100%"} />
+                                    </SkeletonTheme>
+                                </h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div className={styles.progress__data}>
+                    {Array.from({ length: 3 }, (_, index) => (
+                        <div className={styles.skeleton} key={crypto.randomUUID()}>
+                            <SkeletonTheme
+                                baseColor="var(--skeleton-base)"
+                                highlightColor="var(--skeleton-highlight)"
+                            >
+                                <Skeleton width={"100%"} height={"100%"} />
+                            </SkeletonTheme>
+                        </div>
+                    ))}
+                </div>
+            </div>
+        )
+    }
+
+    const LoadedCard = () => {
+        return (
+            <div className={styles.progress}>
+                <div className={styles.progress__main}>
+                    <div className={styles.progress__left}>
+                        <div className={styles.progress__left_subtitle}>
+                            <div style={{ boxShadow: 'var(--box-shadow2)' }} className={styles.target__left_icon}>
+                                <TbAtom size={'17px'} color={'var(--logo-second-color)'} />
+                            </div>
+                            <h3 style={{ color: 'var(--infoDark-color)', fontWeight: '500' }}>
+                                Progress
+                            </h3>
+                        </div>
+                    </div>
+                </div>
+                <div className={styles.progress__data}>
+                    <div className={`${styles.wrapper} ${styles.sks}`}>
+                        <div className={styles.top}>
+                            <h3>SKS</h3>
+                            <div className={styles.details}>
+                                <CountUp
+                                    start={0}
+                                    duration={2.5}
+                                    decimals={Number.isInteger(getUserSks(matkul)) ? 0 : 2}
+                                    end={getUserSks(matkul)}
+                                    delay={0}
+                                >
+                                    {({ countUpRef }) => (
+                                        <h3 ref={countUpRef} />
+                                    )}
+                                </CountUp>
+                                <h3 style={{ color: 'var(--infoDark-color)', fontWeight: '400' }}>|</h3>
+                                <small style={{ color: 'var(--infoDark-color)' }}>{user[0]?.sks_target || '-'}</small>
+                            </div>
+                        </div>
+                        <ProgressBar
+                            completed={getUserSksPercentage(user, matkul)}
+                            maxCompleted={100}
+                            height={'100%'}
+                            isLabelVisible={false}
+                            baseBgColor={'var(--inner-color-bg1)'}
+                            borderRadius={'.25rem'}
+                            bgColor={'var(--danger-color)'}
+                            animateOnRender={true}
+                            transitionDuration={'2.5s'}
+                        />
+                    </div>
+                    <div className={`${styles.wrapper} ${styles.matkul}`}>
+                        <div className={styles.top}>
+                            <h3>Matakuliah</h3>
+                            <div className={styles.details}>
+                                <CountUp
+                                    start={0}
+                                    duration={2.5}
+                                    decimals={Number.isInteger(getUserMatkul(matkul)) ? 0 : 2}
+                                    end={getUserMatkul(matkul)}
+                                    delay={0}
+                                >
+                                    {({ countUpRef }) => (
+                                        <h3 ref={countUpRef} />
+                                    )}
+                                </CountUp>
+                                <h3 style={{ color: 'var(--infoDark-color)', fontWeight: '400' }}>|</h3>
+                                <small style={{ color: 'var(--infoDark-color)' }}>{user[0]?.matkul_target || '-'}</small>
+                            </div>
+                        </div>
+                        <ProgressBar
+                            completed={getUserMatkulPercentage(user, matkul)}
+                            maxCompleted={100}
+                            height={'100%'}
+                            isLabelVisible={false}
+                            baseBgColor={'var(--inner-color-bg1)'}
+                            borderRadius={'.25rem'}
+                            bgColor={'var(--warning-color)'}
+                            animateOnRender={true}
+                            transitionDuration={'2.5s'}
+                        />
+                    </div>
+                    <div className={`${styles.wrapper} ${styles.ipk}`}>
+                        <div className={styles.top}>
+                            <h3>IPK</h3>
+                            <div className={styles.details}>
+                                <CountUp
+                                    start={0}
+                                    duration={2.5}
+                                    decimals={Number.isInteger(getUserIpk(matkul)) ? 0 : 2}
+                                    end={getUserIpk(matkul)}
+                                    delay={0}
+                                >
+                                    {({ countUpRef }) => (
+                                        <h3 ref={countUpRef} />
+                                    )}
+                                </CountUp>
+                                <h3 style={{ color: 'var(--infoDark-color)', fontWeight: '400' }}>|</h3>
+                                <small style={{ color: 'var(--infoDark-color)' }}>{user[0]?.ipk_target || '-'}</small>
+                            </div>
+                        </div>
+                        <ProgressBar
+                            completed={getUserIpkPercentage(user, matkul)}
+                            maxCompleted={100}
+                            height={'100%'}
+                            isLabelVisible={false}
+                            baseBgColor={'var(--inner-color-bg1)'}
+                            borderRadius={'.25rem'}
+                            bgColor={'var(--success-color)'}
+                            animateOnRender={true}
+                            transitionDuration={'2.5s'}
+                        />
+                    </div>
+                </div>
+            </div>
+        )
+    }
+
+    const ErrorCard = () => {
+        return (
+            <div className={`${styles.progress} ${styles.flex}`}>
+                <div className={styles.error__wrapper}>
+                    <div className={styles.error__content} onClick={handleRetry}>
+                        <h5>Gagal mengambil data</h5>
+                        <h1>&#x21bb;</h1>
+                    </div>
+                </div>
+            </div>
+        )
+    }
+
+    const ValidatingCard = () => {
+        return (
+            <div className={`${styles.progress} ${styles.flex}`}>
+                <div className={styles.validating__wrapper}>
+                    <div className={styles.validating__content}>
+                        <Spinner size={'30px'} color={'var(--logo-second-color)'} />
+                    </div>
+                </div>
+            </div>
+        )
+    }
+
+    const EmptyCard = () => {
+        const {
+            setModal,
+            setActive,
+            setData
+        } = useContext(ModalContext);
+
+        const handleTambahModal = () => {
+            if (!penilaian) { return; }
+            setData({ penilaian });
+            setModal('tambahMatkul');
+            setTimeout(() => {
+                setActive(true);
+            }, 50)
+        }
+
+        return (
+            <div className={`${styles.progress} ${styles.flex}`}>
+                <div className={styles.empty__wrapper}>
+                    <div className={styles.empty__content} onClick={() => { handleTambahModal() }}>
+                        <Image
+                            src={'https://storage.googleapis.com/sipk_assets/tambah_matkul.svg'}
+                            width={100}
+                            height={100}
+                            alt='Tambah Matakuliah'
+                            className={styles.image}
+                        />
+                        <h5>Tambah Matakuliah</h5>
+                    </div>
+                </div>
+            </div>
+        )
+    }
+
+    if (state === 'loading') { return (<SkeletonCard />) }
+    else if (state === 'loaded') { return (<LoadedCard />) }
+    else if (state === 'error') { return (<ErrorCard />) }
+    else if (state === 'validating') { return (<ValidatingCard />) }
+    else if (state === 'empty') { return (<EmptyCard />) }
+    else { return 'Unidentified Card State' }
+}
+
