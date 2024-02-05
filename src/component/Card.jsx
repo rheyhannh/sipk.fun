@@ -1646,8 +1646,13 @@ export function Distribusi({ state, matkul, penilaian }) {
 
     const ErrorCard = () => {
         return (
-            <div>
-                Error Distribusi Card
+            <div className={`${styles.distribusi} ${styles.flex}`}>
+                <div className={styles.error__wrapper}>
+                    <div className={styles.error__content} onClick={handleRetry}>
+                        <h5>Gagal mengambil data</h5>
+                        <h1>&#x21bb;</h1>
+                    </div>
+                </div>
             </div>
         )
     }
