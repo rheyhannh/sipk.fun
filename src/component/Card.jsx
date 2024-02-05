@@ -1659,8 +1659,12 @@ export function Distribusi({ state, matkul, penilaian }) {
 
     const ValidatingCard = () => {
         return (
-            <div>
-                Validating Distribusi Card
+            <div className={`${styles.distribusi} ${styles.flex}`}>
+                <div className={styles.validating__wrapper}>
+                    <div className={styles.validating__content}>
+                        <Spinner size={'30px'} color={'var(--logo-second-color)'} />
+                    </div>
+                </div>
             </div>
         )
     }
