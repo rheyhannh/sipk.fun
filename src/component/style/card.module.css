@@ -512,6 +512,21 @@
     font-size: .8rem;
 }
 
+.grafik__right select::-webkit-scrollbar,
+.target__right select::-webkit-scrollbar,
+.distribusi__right select::-webkit-scrollbar {
+    width: .30rem;
+    border-radius: .25rem;
+    background-color: var(--scroll-bar-color);
+}
+
+.grafik__right select::-webkit-scrollbar-thumb,
+.target__right select::-webkit-scrollbar-thumb,
+.distribusi__right select::-webkit-scrollbar-thumb {
+    border-radius: .25rem;
+    background-color: var(--scroll-thumbHover-color);
+}
+
 /* 
     Target Card Styles 
 */
