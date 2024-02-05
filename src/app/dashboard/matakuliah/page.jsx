@@ -53,37 +53,6 @@ function GrafikCard() {
     )
 }
 
-function TabelSection() {
-    const { data: matkul, error: matkulError, isLoading: matkulLoading, isValidating: matkulValidating } = useMatkul();
-    const { data: matkulHistory, error: matkulHistoryError, isLoading: matkulHistoryLoading, isValidating: matkulHistoryValidating } = useMatkulHistory();
-    const { data: user, error: userError, isLoading: userLoading, isValidating: userValidating } = useUser();
-    const { data: universitas, error: universitasError, isLoading: universitasLoading, isValidating: universitasValidating } = useUniversitas(null, 'user', user ? user[0].university_id : undefined);
-    const isLoading = matkulLoading || userLoading || universitasLoading || matkulHistoryLoading;
-    const isValidating = matkulValidating || userValidating || universitasValidating || matkulHistoryValidating;
-    const isError = matkulError || userError || universitasError || matkulHistoryError;
-
-    const sessionTable = getSessionTable();
-
-    if (isError) {
-        return <Table state={'error'} />;
-    }
-
-    if (isLoading) {
-        return <Table state={'loading'} />;
-    }
-
-    return (
-        <Table
-            state={'loaded'}
-            validating={isValidating}
-            user={user[0]} matkul={matkul}
-            sessionTable={sessionTable}
-            matkulHistory={matkulHistory}
-            penilaian={universitas[0].penilaian}
-        />
-    )
-}
-
 function TargetCard() {
     const { data: user, error: userError, isLoading: userLoading, isValidating: userValidating } = useUser();
     const { data: matkul, error: matkulError, isLoading: matkulLoading, isValidating: matkulValidating } = useMatkul();
@@ -171,6 +140,37 @@ function ProgressCard() {
     )
 }
 
+function TabelSection() {
+    const { data: matkul, error: matkulError, isLoading: matkulLoading, isValidating: matkulValidating } = useMatkul();
+    const { data: matkulHistory, error: matkulHistoryError, isLoading: matkulHistoryLoading, isValidating: matkulHistoryValidating } = useMatkulHistory();
+    const { data: user, error: userError, isLoading: userLoading, isValidating: userValidating } = useUser();
+    const { data: universitas, error: universitasError, isLoading: universitasLoading, isValidating: universitasValidating } = useUniversitas(null, 'user', user ? user[0].university_id : undefined);
+    const isLoading = matkulLoading || userLoading || universitasLoading || matkulHistoryLoading;
+    const isValidating = matkulValidating || userValidating || universitasValidating || matkulHistoryValidating;
+    const isError = matkulError || userError || universitasError || matkulHistoryError;
+
+    const sessionTable = getSessionTable();
+
+    if (isError) {
+        return <Table state={'error'} />;
+    }
+
+    if (isLoading) {
+        return <Table state={'loading'} />;
+    }
+
+    return (
+        <Table
+            state={'loaded'}
+            validating={isValidating}
+            user={user[0]} matkul={matkul}
+            sessionTable={sessionTable}
+            matkulHistory={matkulHistory}
+            penilaian={universitas[0].penilaian}
+        />
+    )
+}
+
 export default function MatakuliahPage() {
     const [widget, setWidget] = useState(true);
 
@@ -213,12 +213,10 @@ export default function MatakuliahPage() {
                     modules={[Pagination]}
                     className={`${styles.insight} ${widget ? styles.active : ''}`}
                 >
-                    
-                    <SwiperSlide> <ProgressCard/> </SwiperSlide>
-                    <SwiperSlide> <TargetCard /> </SwiperSlide>
-                    <SwiperSlide> <Distribusi state={'loading'}/> </SwiperSlide>
-                    <SwiperSlide> <DistribusiCard/> </SwiperSlide>
                     <SwiperSlide> <GrafikCard /> </SwiperSlide>
+                    <SwiperSlide> <TargetCard /> </SwiperSlide>
+                    <SwiperSlide> <DistribusiCard/> </SwiperSlide>
+                    <SwiperSlide> <ProgressCard/> </SwiperSlide>
                 </Swiper>
 
                 <TabelSection />
