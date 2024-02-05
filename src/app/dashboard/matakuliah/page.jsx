@@ -6,7 +6,7 @@ import { useState } from 'react';
 // ========== COMPONENT DEPEDENCY ========== //
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Pagination } from 'swiper/modules';
-import { Total, Grafik, Target, Progress, Distribusi } from '@/component/Card'
+import { Grafik, Target, Progress, Distribusi } from '@/component/Card'
 import { Table } from '@/component/Table';
 
 // ========== DATA DEPEDENCY ========== //
@@ -24,35 +24,6 @@ import { AiOutlineAppstore } from "react-icons/ai";
 /*
 ============================== CODE START HERE ==============================
 */
-function TotalCard() {
-    const { data: matkul, error: matkulError, isLoading: matkulLoading, isValidating: matkulValidating } = useMatkul();
-    const { data: user, error: userError, isLoading: userLoading, isValidating: userValidating } = useUser();
-    const { data: universitas, error: universitasError, isLoading: universitasLoading, isValidating: universitasValidating } = useUniversitas(null, 'user', user ? user[0].university_id : undefined);
-    const isError = matkulError || userError || universitasError;
-    const isLoading = matkulLoading || userLoading || universitasLoading;
-    const isValidating = matkulValidating || userValidating || universitasValidating;
-
-    if (isError) {
-        return <Total state={'error'} />;
-    }
-
-    if (isLoading) {
-        return <Total state={'loading'} />;
-    }
-
-    if (isValidating) {
-        return <Total state={'validating'} />;
-    }
-
-    if (!matkul.length) {
-        return <Total state={'empty'} penilaian={universitas[0].penilaian} />
-    }
-
-    return (
-        <Total state={'loaded'} user={user} matkul={matkul} penilaian={universitas[0].penilaian} />
-    )
-}
-
 function GrafikCard() {
     const { data: user, error: userError, isLoading: userLoading, isValidating: userValidating } = useUser();
     const { data: matkul, error: matkulError, isLoading: matkulLoading, isValidating: matkulValidating } = useMatkul();
@@ -238,13 +209,13 @@ export default function MatakuliahPage() {
                         "--swiper-pagination-color": "var(--logo-second-color)",
                         "--swiper-pagination-bullet-inactive-color": "var(--infoDark-color)",
                     }}
-                    noSwipingSelector={['#total_data-scroll', '#grafik_data-scroll', '#distribusi_data-scroll']}
+                    noSwipingSelector={['#grafik_data-scroll', '#distribusi_data-scroll']}
                     modules={[Pagination]}
                     className={`${styles.insight} ${widget ? styles.active : ''}`}
                 >
-                    {/* <SwiperSlide> <TotalCard /> </SwiperSlide>
+                    
                     <SwiperSlide> <ProgressCard/> </SwiperSlide>
-                    <SwiperSlide> <TargetCard /> </SwiperSlide> */}
+                    <SwiperSlide> <TargetCard /> </SwiperSlide>
                     <SwiperSlide> <Distribusi state={'loading'}/> </SwiperSlide>
                     <SwiperSlide> <DistribusiCard/> </SwiperSlide>
                     <SwiperSlide> <GrafikCard /> </SwiperSlide>

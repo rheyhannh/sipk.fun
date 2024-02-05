@@ -27,8 +27,7 @@ import {
     getUserSks, getUserSksPercentage,
     getUserIpk, getUserIpkPercentage,
     getAllSemester, getStatsSemester,
-    getStatsByNilai, getOnAndOffTarget,
-    getDistribusiNilai,
+    getOnAndOffTarget, getDistribusiNilai,
 } from "@/data/summary";
 
 // ========== UTILS DEPEDENCY ========== //
@@ -45,7 +44,7 @@ import "react-loading-skeleton/dist/skeleton.css";
 
 import { CiTrash, CiEdit } from "react-icons/ci";
 import { FaInfo, FaUndo } from "react-icons/fa";
-import { IoAnalyticsOutline, IoServerOutline, IoAddOutline } from "react-icons/io5";
+import { IoAnalyticsOutline, IoAddOutline } from "react-icons/io5";
 import { TbTarget, TbTargetArrow, TbTargetOff, TbAtom, TbAntennaBars5 } from "react-icons/tb";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 
@@ -768,308 +767,6 @@ export function History({ state, data, penilaian, count }) {
     else { return 'Unidentified Card State' }
 }
 
-export function Total({ state, user, matkul, penilaian }) {
-    const userIdCookie = useCookies().get('s_user_id');
-    const handleRetry = () => {
-        mutate(['/api/matkul', userIdCookie])
-        mutate(['/api/me', userIdCookie])
-    }
-
-    const SkeletonCard = () => {
-        return (
-            <div className={`${styles.total} ${styles.skeleton}`}>
-                <div className={styles.total__main}>
-                    <div className={styles.total__left}>
-                        <div className={`${styles.total__left_subtitle} ${styles.skeleton}`}>
-                            <SkeletonTheme
-                                baseColor="var(--skeleton-base)"
-                                highlightColor="var(--skeleton-highlight)"
-                            >
-                                <Skeleton width={"100%"} height={"100%"} containerClassName={`${styles.total__left_icon} ${styles.skeleton}`} />
-                            </SkeletonTheme>
-                            <div style={{ width: '100%' }}>
-                                <h3>
-                                    <SkeletonTheme
-                                        baseColor="var(--skeleton-base)"
-                                        highlightColor="var(--skeleton-highlight)"
-                                    >
-                                        <Skeleton width={"75%"} height={"100%"} />
-                                    </SkeletonTheme>
-                                </h3>
-                            </div>
-                        </div>
-                        <div className={styles.total__left_title}>
-                            <div style={{ width: '100%' }}>
-                                <h2>
-                                    <SkeletonTheme
-                                        baseColor="var(--skeleton-base)"
-                                        highlightColor="var(--skeleton-highlight)"
-                                    >
-                                        <Skeleton width={"75%"} height={"100%"} />
-                                    </SkeletonTheme>
-                                </h2>
-                            </div>
-                        </div>
-                    </div>
-                    <div className={styles.total__right}>
-                        <div style={{ width: '100%' }} className={styles.total__right_number}>
-                            <div style={{ width: '100%' }}>
-                                <h1>
-                                    <SkeletonTheme
-                                        baseColor="var(--skeleton-base)"
-                                        highlightColor="var(--skeleton-highlight)"
-                                    >
-                                        <Skeleton width={"100%"} height={"100%"} />
-                                    </SkeletonTheme>
-                                </h1>
-                            </div>
-                            <h2 style={{ color: 'var(--skeleton-base)', fontWeight: '400' }}>|</h2>
-                            <div style={{ width: '100%' }}>
-                                <p>
-                                    <SkeletonTheme
-                                        baseColor="var(--skeleton-base)"
-                                        highlightColor="var(--skeleton-highlight)"
-                                    >
-                                        <Skeleton width={"100%"} height={"100%"} />
-                                    </SkeletonTheme>
-                                </p>
-                            </div>
-                        </div>
-                        <div className={styles.total__right_progress}>
-                            <SkeletonTheme
-                                baseColor="var(--skeleton-base)"
-                                highlightColor="var(--skeleton-highlight)"
-                            >
-                                <Skeleton width={"100%"} height={"100%"} />
-                            </SkeletonTheme>
-                        </div>
-                    </div>
-                </div>
-                <div className={`${styles.total__data} ${styles.skeleton}`}>
-                    <SkeletonTheme
-                        baseColor="var(--skeleton-base)"
-                        highlightColor="var(--skeleton-highlight)"
-                    >
-                        <Skeleton width={"100%"} height={"100%"} />
-                    </SkeletonTheme>
-                </div>
-            </div>
-        )
-    }
-
-    const LoadedCard = () => {
-        const [dataTab, setDataTab] = useState(0);
-        const [baseTab, setBaseTab] = useState(0);
-        const dataType = [
-            { name: 'SKS', short: '•' },
-            { name: 'Matkul', short: '•' },
-            { name: 'IPK', short: '•' }
-        ]
-
-        const baseType = [
-            'Semester', 'Nilai'
-        ]
-
-        const handleDataTab = () => {
-            if (dataTab === 2) { setDataTab(0) }
-            else { setDataTab(dataTab + 1) }
-            setBaseTab(0);
-        }
-
-        const handleBaseTab = () => {
-            if (dataTab === 2) { return; }
-            else {
-                if (baseTab === 1) { setBaseTab(0) }
-                else { setBaseTab(1) }
-            }
-        }
-
-        const getData = () => {
-            if (baseTab === 1) {
-                const nilaiStats = getStatsByNilai(matkul, penilaian);
-                const element = nilaiStats.map((item, index) => (
-                    <div
-                        style={{
-                            display: 'flex',
-                            flexDirection: 'column',
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                            textAlign: 'center',
-                            borderRight: `${index !== 4 && index !== 9 ? 'solid 1px var(--infoDark-color)' : 'none'}`
-                        }}
-                        key={crypto.randomUUID()}
-                    >
-                        <h3 style={{ color: `var(--${item.style}-sec-color)` }}>{item.indeks}</h3>
-                        <span style={{ color: 'var(--dark-color)', fontWeight: '600' }}>{dataTab === 0 ? item.totalSks : dataTab === 1 ? item.totalMatakuliah : -1}{dataType[dataTab].short}</span>
-                    </div>
-                ))
-
-                return (
-                    <div
-                        style={{
-                            display: 'grid',
-                            gridTemplateColumns: `repeat(5,1fr)`,
-                            width: '100%',
-                            height: '100%',
-                            padding: '.5rem'
-                        }}
-                    >
-                        {element}
-                    </div>
-                )
-            } else if (baseTab === 0) {
-                const semesterCount = getAllSemester(matkul).length;
-                return (
-                    <div
-                        id="total_data-scroll"
-                        className={`${styles.total__data_content} ${semesterCount > 8 ? styles.scroll : ''}`}
-                        style={semesterCount > 8 ? {} : { gridTemplateColumns: `repeat(${semesterCount > 4 ? 4 : semesterCount},1fr)`, }}
-                    >
-                        {getStatsSemester(matkul, true).map((item, index) => (
-                            <div
-                                className={`${styles.total__data_content_entries} ${semesterCount > 8 ? styles.scroll : ''}`}
-                                key={crypto.randomUUID()}
-                            >
-                                <h3>{item.semester}</h3>
-                                <span>{dataTab === 0 ? item.totalSks : dataTab === 1 ? item.count : dataTab === 2 ? (item.totalNilai / item.totalSks).toFixed(2) : -1}{dataType[dataTab].short}</span>
-                            </div>
-                        ))
-                        }
-                    </div>
-                )
-            } else {
-                <h1>Empty</h1>
-            }
-        }
-
-        return (
-            <div className={styles.total}>
-                <div className={styles.total__main}>
-                    <div className={styles.total__left}>
-                        <div className={styles.total__left_subtitle}>
-                            <div style={{ boxShadow: 'var(--box-shadow2)' }} className={styles.total__left_icon}>
-                                <IoServerOutline size={'17px'} color={'var(--logo-second-color)'} />
-                            </div>
-                            <h3 style={{ color: 'var(--infoDark-color)', fontWeight: '500' }}>
-                                <span onClick={handleBaseTab}>{baseType[baseTab]}</span>
-                            </h3>
-                        </div>
-                        <div className={styles.total__left_title}>
-                            <h2
-                                onClick={handleDataTab}
-                                style={{ color: 'var(--dark-color)' }}
-                            >{dataType[dataTab].name}
-                            </h2>
-                        </div>
-                    </div>
-                    <div className={styles.total__right}>
-                        <div className={styles.total__right_number}>
-                            <CountUp
-                                start={0}
-                                duration={2.5}
-                                decimals={Number.isInteger(dataTab === 0 ? getUserSks(matkul) : dataTab === 1 ? getUserMatkul(matkul) : dataTab === 2 ? getUserIpk(matkul) : -1) ? 0 : 2}
-                                end={dataTab === 0 ? getUserSks(matkul) : dataTab === 1 ? getUserMatkul(matkul) : dataTab === 2 ? getUserIpk(matkul) : -1}
-                                delay={0}
-                            >
-                                {({ countUpRef }) => (
-                                    <h1 style={{ color: 'var(--success-sec-color)' }} ref={countUpRef} />
-                                )}
-                            </CountUp>
-                            <h2 style={{ color: 'var(--infoDark-color)', fontWeight: '400' }}>|</h2>
-                            <p style={{ color: 'var(--infoDark-color)' }}>
-                                {dataTab === 0 ? user[0].sks_target : dataTab === 1 ? user[0].matkul_target : dataTab === 2 ? user[0].ipk_target : -1}
-                            </p>
-                        </div>
-                        <div className={styles.total__right_progress}>
-                            <ProgressBar
-                                completed={dataTab === 0 ? getUserSksPercentage(user, matkul) : dataTab === 1 ? getUserMatkulPercentage(user, matkul) : dataTab === 2 ? getUserIpkPercentage(user, matkul) : -1}
-                                maxCompleted={100}
-                                height={'15px'}
-                                labelSize={'10px'}
-                                baseBgColor={'var(--inner-color-bg1)'}
-                                borderRadius={'1rem'}
-                                bgColor={'var(--success-sec-color)'}
-                                animateOnRender={true}
-                                transitionDuration={'2.5s'}
-
-                            />
-                        </div>
-                    </div>
-                </div>
-                <div className={styles.total__data}>
-                    {getData()}
-                </div>
-            </div>
-        )
-    }
-
-    const ErrorCard = () => {
-        return (
-            <div className={`${styles.total} ${styles.flex}`}>
-                <div className={styles.error__wrapper}>
-                    <div className={styles.error__content} onClick={handleRetry}>
-                        <h5>Gagal mengambil data</h5>
-                        <h1>&#x21bb;</h1>
-                    </div>
-                </div>
-            </div>
-        )
-    }
-
-    const ValidatingCard = () => {
-        return (
-            <div className={`${styles.total} ${styles.flex}`}>
-                <div className={styles.validating__wrapper}>
-                    <div className={styles.validating__content}>
-                        <Spinner size={'30px'} color={'var(--logo-second-color)'} />
-                    </div>
-                </div>
-            </div>
-        )
-    }
-
-    const EmptyCard = () => {
-        const {
-            setModal,
-            setActive,
-            setData
-        } = useContext(ModalContext);
-
-        const handleTambahModal = () => {
-            if (!penilaian) { return; }
-            setData({ penilaian });
-            setModal('tambahMatkul');
-            setTimeout(() => {
-                setActive(true);
-            }, 50)
-        }
-
-        return (
-            <div className={`${styles.total} ${styles.flex}`}>
-                <div className={styles.empty__wrapper}>
-                    <div className={styles.empty__content} onClick={() => { handleTambahModal() }}>
-                        <Image
-                            src={'https://storage.googleapis.com/sipk_assets/tambah_matkul.svg'}
-                            width={100}
-                            height={100}
-                            alt='Tambah Matakuliah'
-                            className={styles.image}
-                        />
-                        <h5>Tambah Matakuliah</h5>
-                    </div>
-                </div>
-            </div>
-        )
-    }
-
-    if (state === 'loading') { return (<SkeletonCard />) }
-    else if (state === 'loaded') { return (<LoadedCard />) }
-    else if (state === 'error') { return (<ErrorCard />) }
-    else if (state === 'validating') { return (<ValidatingCard />) }
-    else if (state === 'empty') { return (<EmptyCard />) }
-    else { return 'Unidentified Card State' }
-}
-
 export function Grafik({ state, matkul, penilaian }) {
     const userIdCookie = useCookies().get('s_user_id');
     const handleRetry = () => {
@@ -1182,7 +879,7 @@ export function Grafik({ state, matkul, penilaian }) {
                 <div className={styles.grafik__main}>
                     <div className={styles.grafik__left}>
                         <div className={styles.grafik__left_subtitle}>
-                            <div style={{ boxShadow: 'var(--box-shadow2)' }} className={styles.total__left_icon}>
+                            <div style={{ boxShadow: 'var(--box-shadow2)' }} className={styles.grafik__left_icon}>
                                 <IoAnalyticsOutline size={'17px'} color={'var(--logo-second-color)'} />
                             </div>
                             <h3 style={{ color: 'var(--infoDark-color)', fontWeight: '500' }}>
@@ -1852,7 +1549,7 @@ export function Distribusi({ state, matkul, penilaian }) {
                 <div className={styles.distribusi__main}>
                     <div className={styles.distribusi__left}>
                         <div className={styles.distribusi__left_subtitle}>
-                            <div style={{ boxShadow: 'var(--box-shadow2)' }} className={styles.total__left_icon}>
+                            <div style={{ boxShadow: 'var(--box-shadow2)' }} className={styles.distribusi__left_icon}>
                                 <TbAntennaBars5 size={'17px'} color={'var(--logo-second-color)'} />
                             </div>
                             <h3 style={{ color: 'var(--infoDark-color)', fontWeight: '500' }}>
@@ -1872,7 +1569,7 @@ export function Distribusi({ state, matkul, penilaian }) {
                                 Semua
                             </option>
                             {
-                                getAllSemester(matkul, true).map((item, index) => (
+                                ['x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x'].map((item, index) => (
                                     <option key={crypto.randomUUID()} value={item}>
                                         Semester {item}
                                     </option>
