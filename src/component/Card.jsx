@@ -767,7 +767,7 @@ export function History({ state, data, penilaian, count }) {
     else { return 'Unidentified Card State' }
 }
 
-export function Grafik({ state, matkul, penilaian }) {
+export function Grafik({ state, matkul, penilaian, sessionWidgets }) {
     const userIdCookie = useCookies().get('s_user_id');
     const handleRetry = () => {
         mutate(['/api/matkul', userIdCookie])
@@ -823,9 +823,9 @@ export function Grafik({ state, matkul, penilaian }) {
     }
 
     const LoadedCard = () => {
-        const [ipGrafik, setIpGrafik] = useState(false);
-        const [matkulGrafik, setMatkulGrafik] = useState(false);
-        const [sksGrafik, setSksGrafik] = useState(false);
+        const [ipGrafik, setIpGrafik] = useState(sessionWidgets?.grafik?.hideIp ?? false);
+        const [matkulGrafik, setMatkulGrafik] = useState(sessionWidgets?.grafik?.hideMatkul ?? false);
+        const [sksGrafik, setSksGrafik] = useState(sessionWidgets?.grafik?.hideSks ?? false);
 
         const getLineState = () => {
             if (!ipGrafik && !matkulGrafik && !sksGrafik) {
@@ -1001,7 +1001,7 @@ export function Grafik({ state, matkul, penilaian }) {
     else { return 'Unidentified Card State' }
 }
 
-export function Target({ state, matkul, penilaian }) {
+export function Target({ state, matkul, penilaian, sessionWidgets }) {
     const userIdCookie = useCookies().get('s_user_id');
     const handleRetry = () => {
         mutate(['/api/matkul', userIdCookie])
@@ -1081,7 +1081,7 @@ export function Target({ state, matkul, penilaian }) {
     }
 
     const LoadedCard = () => {
-        const [type, setType] = useState(0);
+        const [type, setType] = useState(sessionWidgets?.target?.tab ?? 0);
         const swiperRef = useRef();
         const target = getOnAndOffTarget(matkul);
 
@@ -1251,7 +1251,7 @@ export function Target({ state, matkul, penilaian }) {
     else { return 'Unidentified Card State' }
 }
 
-export function Distribusi({ state, matkul, penilaian }) {
+export function Distribusi({ state, matkul, penilaian, sessionWidgets }) {
     const userIdCookie = useCookies().get('s_user_id');
     const handleRetry = () => {
         mutate(['/api/matkul', userIdCookie])
@@ -1307,9 +1307,9 @@ export function Distribusi({ state, matkul, penilaian }) {
     }
 
     const LoadedCard = () => {
-        const [semester, setSemester] = useState(-1);
-        const [matkulBar, setMatkulBar] = useState(false);
-        const [sksBar, setSksBar] = useState(false);
+        const [semester, setSemester] = useState(sessionWidgets?.distribusi?.tab ?? -1);
+        const [matkulBar, setMatkulBar] = useState(sessionWidgets?.distribusi?.hideMatkul ?? false);
+        const [sksBar, setSksBar] = useState(sessionWidgets?.distribusi?.hideSks ?? false);
 
         const emptyData = penilaian ? Object.keys(penilaian).map(nilai => ({
             nilai,

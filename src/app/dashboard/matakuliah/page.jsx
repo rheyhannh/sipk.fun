@@ -11,7 +11,7 @@ import { Table } from '@/component/Table';
 
 // ========== DATA DEPEDENCY ========== //
 import { useMatkul, useUser, useUniversitas, useMatkulHistory } from '@/data/core';
-import { getSessionTable } from '@/utils/client_side';
+import { getSessionTable, getSessionWidgets } from '@/utils/client_side';
 
 // ========== STYLE DEPEDENCY ========== //
 import styles from './matkul.module.css'
@@ -32,6 +32,8 @@ function GrafikCard() {
     const isLoading = userLoading || matkulLoading || universitasLoading;
     const isValidating = userValidating || matkulValidating || universitasValidating;
 
+    const sessionWidgets = getSessionWidgets();
+
     if (isError) {
         return <Grafik state={'error'} />;
     }
@@ -49,7 +51,7 @@ function GrafikCard() {
     }
 
     return (
-        <Grafik state={'loaded'} matkul={matkul} penilaian={universitas[0].penilaian} />
+        <Grafik state={'loaded'} matkul={matkul} penilaian={universitas[0].penilaian} sessionWidgets={sessionWidgets} />
     )
 }
 
@@ -60,6 +62,8 @@ function TargetCard() {
     const isError = userError || matkulError || universitasError;
     const isLoading = userLoading || matkulLoading || universitasLoading;
     const isValidating = userValidating || matkulValidating || universitasValidating;
+
+    const sessionWidgets = getSessionWidgets();
 
     if (isError) {
         return <Target state={'error'} />;
@@ -78,7 +82,7 @@ function TargetCard() {
     }
 
     return (
-        <Target state={'loaded'} matkul={matkul} penilaian={universitas[0].penilaian} />
+        <Target state={'loaded'} matkul={matkul} penilaian={universitas[0].penilaian} sessionWidgets={sessionWidgets} />
     )
 }
 
@@ -89,6 +93,8 @@ function DistribusiCard() {
     const isError = matkulError || userError || universitasError;
     const isLoading = matkulLoading || userLoading || universitasLoading;
     const isValidating = matkulValidating || userValidating || universitasValidating;
+
+    const sessionWidgets = getSessionWidgets();
 
     if (isError) {
         return <Distribusi state={'error'} />;
@@ -107,7 +113,7 @@ function DistribusiCard() {
     }
 
     return (
-        <Distribusi state={'loaded'} matkul={matkul} penilaian={universitas[0].penilaian} />
+        <Distribusi state={'loaded'} matkul={matkul} penilaian={universitas[0].penilaian} sessionWidgets={sessionWidgets} />
     )
 }
 
@@ -215,8 +221,8 @@ export default function MatakuliahPage() {
                 >
                     <SwiperSlide> <GrafikCard /> </SwiperSlide>
                     <SwiperSlide> <TargetCard /> </SwiperSlide>
-                    <SwiperSlide> <DistribusiCard/> </SwiperSlide>
-                    <SwiperSlide> <ProgressCard/> </SwiperSlide>
+                    <SwiperSlide> <DistribusiCard /> </SwiperSlide>
+                    <SwiperSlide> <ProgressCard /> </SwiperSlide>
                 </Swiper>
 
                 <TabelSection />
