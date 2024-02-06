@@ -47,6 +47,10 @@ export const getLoadingMessage = (funWord = false, index = true) => {
 }
 
 // Settings or Preferences Utility
+/**
+ * Method untuk mendapatkan tema yang digunakan dari `localStorage` jika tersedia. Default value `'light'`.
+ * @return {"dark"|"light"} Tema yang digunakan `'dark'` atau `'light'`
+ */
 export const getLocalTheme = () => {
     const localTheme = localStorage.getItem('_theme');
     if (!localTheme) { localStorage.setItem('_theme', 'light'); }
@@ -55,6 +59,10 @@ export const getLocalTheme = () => {
     return isDarkTheme ? 'dark' : 'light';
 }
 
+/**
+ * Method untuk mendapatkan table state dari `sessionStorage` lalu melakukan validasi. Jika tidak valid, maka properties akan bernilai `null`
+ * @returns {{tab?:number|null, columnFilters?:Array|null, rowAction?:Boolean|null, columnOrder?:Array|null, columnSorting?:Array|null, pageSize?:number|null, columnVisibility?:Array|null, pageIndex?:number|null, pageControlPosition?:number|null }} Table state object
+ */
 export const getSessionTable = () => {
     const savedState = sessionStorage.getItem('_table');
     if (savedState) {
@@ -197,6 +205,10 @@ export const getSessionTable = () => {
     }
 }
 
+/**
+ * Method untuk mendapatkan grafik card state dari `sessionStorage` lalu melakukan validasi. Jika tidak valid, maka properties akan bernilai `null`
+ * @returns {{hideIp?:Boolean|null, hideMatkul?:Boolean|null, hideSks?:Boolean|null }} Grafik card state
+ */
 export const getSessionGrafik = () => {
     const savedState = sessionStorage.getItem('_grafik');
     if (savedState) {
@@ -231,6 +243,10 @@ export const getSessionGrafik = () => {
     }
 }
 
+/**
+ * Method untuk mendapatkan target card state dari `sessionStorage` lalu melakukan validasi. Jika tidak valid, maka properties akan bernilai `null`
+ * @returns {{tab?:number|null, swiperIndex?:number|null }} Target card state
+ */
 export const getSessionTarget = () => {
     const savedState = sessionStorage.getItem('_target');
     if (savedState) {
@@ -267,6 +283,10 @@ export const getSessionTarget = () => {
     }
 }
 
+/**
+ * Method untuk mendapatkan distribusi card state dari `sessionStorage` lalu melakukan validasi. Jika tidak valid, maka properties akan bernilai `null`
+ * @returns {{tab?:number|null, hideMatkul?:boolean|null, hideSks?:boolean|null }} Distribusi card state
+ */
 export const getSessionDistribusi = () => {
     const savedState = sessionStorage.getItem('_distribusi');
     if (savedState) {
