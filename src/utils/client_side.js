@@ -197,82 +197,106 @@ export const getSessionTable = () => {
     }
 }
 
-export const getSessionWidgets = () => {
-    const savedState = sessionStorage.getItem('_widgets');
+export const getSessionGrafik = () => {
+    const savedState = sessionStorage.getItem('_grafik');
     if (savedState) {
         try {
             const state = JSON.parse(savedState);
-            const validateGrafik = grafik => {
-                const allowedKeys = ['hideIp', 'hideMatkul', 'hideSks'];
-                const keys = Object.keys(grafik);
-                if (keys.length !== 3 || !keys.every(key => allowedKeys.includes(key))) {
-                    return null;
-                }
-
-                const values = Object.values(grafik);
-                if (!values.every(value => typeof value === 'boolean')) {
-                    return null;
-                }
-
-                return grafik;
-            }
-            const validateTarget = target => {
-                const allowedKeys = ['tab', 'swiperIndex'];
-                const keys = Object.keys(target);
-                if (keys.length !== 2 || !keys.every(key => allowedKeys.includes(key))) {
-                    return null;
-                }
-
-                const values = Object.values(target);
-                if (!values.every(value => typeof value === 'number')) {
-                    return null;
-                }
-                if (![0, 1].includes(target.tab)) {
-                    return null;
-                }
-
-                return target;
-            }
-            const validateDistribusi = distribusi => {
-                const allowedKeys = ['tab', 'hideMatkul', 'hideSks'];
-                const keys = Object.keys(distribusi);
-                if (keys.length !== 3 || !keys.every(key => allowedKeys.includes(key))) {
-                    return null;
-                }
-
-                if (typeof distribusi.tab !== 'number') { return null; }
-                if (typeof distribusi.hideMatkul !== 'boolean' || typeof distribusi.hideSks !== 'boolean') { return null; }
-
-                return distribusi
-            }
-            
             if (
-                'grafik' in state && typeof state.grafik === 'object' && state.grafik !== null && !Array.isArray(state.grafik) &&
-                'target' in state && typeof state.target === 'object' && state.target !== null && !Array.isArray(state.target) &&
-                'distribusi' in state && typeof state.distribusi === 'object' && state.distribusi !== null && !Array.isArray(state.distribusi)
+                'hideIp' in state && typeof state.hideIp === 'boolean' &&
+                'hideMatkul' in state && typeof state.hideMatkul === 'boolean' &&
+                'hideSks' in state && typeof state.hideSks === 'boolean'
             ) {
-                const { grafik, target, distribusi } = state;
+                const { hideIp, hideMatkul, hideSks } = state;
                 return {
-                    grafik: validateGrafik(grafik),
-                    target: validateTarget(target),
-                    distribusi: validateDistribusi(distribusi)
+                    hideIp, hideMatkul, hideSks
                 }
-            } else { throw new Error('Invalid widgets state') }
+            } else { throw new Error('Invalid grafik state') }
         } catch (error) {
-            sessionStorage.removeItem('_widgets');
+            sessionStorage.removeItem('_grafik');
             console.error(error?.message || 'Something went wrong');
-            console.error('Using default widgets state');
+            console.error('Using default grafik state');
             return {
-                grafik: null,
-                target: null,
-                distribusi: null
+                hideIp: null,
+                hideMatkul: null,
+                hideSks: null
             }
         }
     } else {
         return {
-            grafik: null,
-            target: null,
-            distribusi: null
+            hideIp: null,
+            hideMatkul: null,
+            hideSks: null
+        }
+    }
+}
+
+export const getSessionTarget = () => {
+    const savedState = sessionStorage.getItem('_target');
+    if (savedState) {
+        try {
+            const state = JSON.parse(savedState);
+            const validateTab = tab => {
+                return [0, 1].includes(tab) ? tab : null;
+            }
+
+            if (
+                'tab' in state && typeof state.tab === 'number' &&
+                'swiperIndex' in state && typeof state.swiperIndex === 'number'
+            ) {
+                const { tab, swiperIndex } = state;
+                return {
+                    tab: validateTab(tab),
+                    swiperIndex
+                }
+            } else { throw new Error('Invalid target state') }
+        } catch (error) {
+            sessionStorage.removeItem('_target');
+            console.error(error?.message || 'Something went wrong');
+            console.error('Using default target state');
+            return {
+                tab: null,
+                swiperIndex: null
+            }
+        }
+    } else {
+        return {
+            tab: null,
+            swiperIndex: null
+        }
+    }
+}
+
+export const getSessionDistribusi = () => {
+    const savedState = sessionStorage.getItem('_distribusi');
+    if (savedState) {
+        try {
+            const state = JSON.parse(savedState);
+            if (
+                'tab' in state && typeof state.tab === 'number' &&
+                'hideMatkul' in state && typeof state.hideMatkul === 'boolean' &&
+                'hideSks' in state && typeof state.hideSks === 'boolean'
+            ) {
+                const { tab, hideMatkul, hideSks } = state;
+                return {
+                    tab, hideMatkul, hideSks
+                }
+            } else { throw new Error('Invalid distribusi state') }
+        } catch (error) {
+            sessionStorage.removeItem('_distribusi');
+            console.error(error?.message || 'Something went wrong');
+            console.error('Using default distribusi state');
+            return {
+                tab: null,
+                hideMatkul: null,
+                hideSks: null
+            }
+        }
+    } else {
+        return {
+            tab: null,
+            hideMatkul: null,
+            hideSks: null
         }
     }
 }

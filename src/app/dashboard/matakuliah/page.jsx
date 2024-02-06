@@ -11,7 +11,7 @@ import { Table } from '@/component/Table';
 
 // ========== DATA DEPEDENCY ========== //
 import { useMatkul, useUser, useUniversitas, useMatkulHistory } from '@/data/core';
-import { getSessionTable, getSessionWidgets } from '@/utils/client_side';
+import { getSessionTable, getSessionGrafik, getSessionTarget, getSessionDistribusi } from '@/utils/client_side';
 
 // ========== STYLE DEPEDENCY ========== //
 import styles from './matkul.module.css'
@@ -32,7 +32,7 @@ function GrafikCard() {
     const isLoading = userLoading || matkulLoading || universitasLoading;
     const isValidating = userValidating || matkulValidating || universitasValidating;
 
-    const sessionWidgets = getSessionWidgets();
+    const savedState = getSessionGrafik();
 
     if (isError) {
         return <Grafik state={'error'} />;
@@ -51,7 +51,7 @@ function GrafikCard() {
     }
 
     return (
-        <Grafik state={'loaded'} matkul={matkul} penilaian={universitas[0].penilaian} sessionWidgets={sessionWidgets} />
+        <Grafik state={'loaded'} matkul={matkul} penilaian={universitas[0].penilaian} savedState={savedState} />
     )
 }
 
@@ -63,7 +63,7 @@ function TargetCard() {
     const isLoading = userLoading || matkulLoading || universitasLoading;
     const isValidating = userValidating || matkulValidating || universitasValidating;
 
-    const sessionWidgets = getSessionWidgets();
+    const savedState = getSessionTarget();
 
     if (isError) {
         return <Target state={'error'} />;
@@ -82,7 +82,7 @@ function TargetCard() {
     }
 
     return (
-        <Target state={'loaded'} matkul={matkul} penilaian={universitas[0].penilaian} sessionWidgets={sessionWidgets} />
+        <Target state={'loaded'} matkul={matkul} penilaian={universitas[0].penilaian} savedState={savedState} />
     )
 }
 
@@ -94,7 +94,7 @@ function DistribusiCard() {
     const isLoading = matkulLoading || userLoading || universitasLoading;
     const isValidating = matkulValidating || userValidating || universitasValidating;
 
-    const sessionWidgets = getSessionWidgets();
+    const savedState = getSessionDistribusi();
 
     if (isError) {
         return <Distribusi state={'error'} />;
@@ -113,7 +113,7 @@ function DistribusiCard() {
     }
 
     return (
-        <Distribusi state={'loaded'} matkul={matkul} penilaian={universitas[0].penilaian} sessionWidgets={sessionWidgets} />
+        <Distribusi state={'loaded'} matkul={matkul} penilaian={universitas[0].penilaian} savedState={savedState} />
     )
 }
 

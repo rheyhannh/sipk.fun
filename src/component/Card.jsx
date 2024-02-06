@@ -767,7 +767,7 @@ export function History({ state, data, penilaian, count }) {
     else { return 'Unidentified Card State' }
 }
 
-export function Grafik({ state, matkul, penilaian, sessionWidgets }) {
+export function Grafik({ state, matkul, penilaian, savedState }) {
     const userIdCookie = useCookies().get('s_user_id');
     const handleRetry = () => {
         mutate(['/api/matkul', userIdCookie])
@@ -823,9 +823,9 @@ export function Grafik({ state, matkul, penilaian, sessionWidgets }) {
     }
 
     const LoadedCard = () => {
-        const [ipGrafik, setIpGrafik] = useState(sessionWidgets?.grafik?.hideIp ?? false);
-        const [matkulGrafik, setMatkulGrafik] = useState(sessionWidgets?.grafik?.hideMatkul ?? false);
-        const [sksGrafik, setSksGrafik] = useState(sessionWidgets?.grafik?.hideSks ?? false);
+        const [ipGrafik, setIpGrafik] = useState(savedState?.hideIp ?? false);
+        const [matkulGrafik, setMatkulGrafik] = useState(savedState?.hideMatkul ?? false);
+        const [sksGrafik, setSksGrafik] = useState(savedState?.hideSks ?? false);
 
         const getLineState = () => {
             if (!ipGrafik && !matkulGrafik && !sksGrafik) {
@@ -873,6 +873,15 @@ export function Grafik({ state, matkul, penilaian, sessionWidgets }) {
             matkul: count,
             sks: totalSks,
         }));
+
+        useEffect(() => {
+            const currentState = {
+                hideIp: ipGrafik,
+                hideMatkul: matkulGrafik,
+                hideSks: sksGrafik
+            }
+            sessionStorage.setItem('_grafik', JSON.stringify(currentState));
+        }, [ipGrafik, matkulGrafik, sksGrafik])
 
         return (
             <div className={styles.grafik}>
@@ -1001,7 +1010,7 @@ export function Grafik({ state, matkul, penilaian, sessionWidgets }) {
     else { return 'Unidentified Card State' }
 }
 
-export function Target({ state, matkul, penilaian, sessionWidgets }) {
+export function Target({ state, matkul, penilaian, savedState }) {
     const userIdCookie = useCookies().get('s_user_id');
     const handleRetry = () => {
         mutate(['/api/matkul', userIdCookie])
@@ -1081,7 +1090,7 @@ export function Target({ state, matkul, penilaian, sessionWidgets }) {
     }
 
     const LoadedCard = () => {
-        const [type, setType] = useState(sessionWidgets?.target?.tab ?? 0);
+        const [type, setType] = useState(savedState?.tab ?? 0);
         const swiperRef = useRef();
         const target = getOnAndOffTarget(matkul);
 
@@ -1094,6 +1103,14 @@ export function Target({ state, matkul, penilaian, sessionWidgets }) {
             sessionStorage.setItem('_table', JSON.stringify(newState));
             window.dispatchEvent(new Event('on-table-session-changes'));
         }
+
+        useEffect(() => {
+            const currentState = {
+                tab: type,
+                swiperIndex: 0
+            }
+            sessionStorage.setItem('_target', JSON.stringify(currentState));
+        }, [type])
 
         return (
             <div className={styles.target}>
@@ -1251,7 +1268,7 @@ export function Target({ state, matkul, penilaian, sessionWidgets }) {
     else { return 'Unidentified Card State' }
 }
 
-export function Distribusi({ state, matkul, penilaian, sessionWidgets }) {
+export function Distribusi({ state, matkul, penilaian, savedState }) {
     const userIdCookie = useCookies().get('s_user_id');
     const handleRetry = () => {
         mutate(['/api/matkul', userIdCookie])
@@ -1307,9 +1324,9 @@ export function Distribusi({ state, matkul, penilaian, sessionWidgets }) {
     }
 
     const LoadedCard = () => {
-        const [semester, setSemester] = useState(sessionWidgets?.distribusi?.tab ?? -1);
-        const [matkulBar, setMatkulBar] = useState(sessionWidgets?.distribusi?.hideMatkul ?? false);
-        const [sksBar, setSksBar] = useState(sessionWidgets?.distribusi?.hideSks ?? false);
+        const [semester, setSemester] = useState(savedState?.tab ? getAllSemester(matkul).includes(savedState.tab) ? savedState.tab : -1 : -1);
+        const [matkulBar, setMatkulBar] = useState(savedState?.hideMatkul ?? false);
+        const [sksBar, setSksBar] = useState(savedState?.hideSks ?? false);
 
         const emptyData = penilaian ? Object.keys(penilaian).map(nilai => ({
             nilai,
@@ -1355,6 +1372,15 @@ export function Distribusi({ state, matkul, penilaian, sessionWidgets }) {
                 </g>
             )
         }
+
+        useEffect(() => {
+            const currentState = {
+                tab: semester,
+                hideMatkul: matkulBar,
+                hideSks: sksBar
+            }
+            sessionStorage.setItem('_distribusi', JSON.stringify(currentState));
+        }, [semester, matkulBar, sksBar])
 
         return (
             <div className={styles.distribusi}>
