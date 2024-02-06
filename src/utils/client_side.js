@@ -255,7 +255,7 @@ export const getSessionWidgets = () => {
                 return {
                     grafik: validateGrafik(grafik),
                     target: validateTarget(target),
-                    ditribusi: validateDistribusi(distribusi)
+                    distribusi: validateDistribusi(distribusi)
                 }
             } else { throw new Error('Invalid widgets state') }
         } catch (error) {
