@@ -1091,6 +1091,7 @@ export function Target({ state, matkul, penilaian, savedState }) {
 
     const LoadedCard = () => {
         const [type, setType] = useState(savedState?.tab ?? 0);
+        const [swiperIndex, setSwiperIndex] = useState(savedState?.swiperIndex ?? 0);
         const swiperRef = useRef();
         const target = getOnAndOffTarget(matkul);
 
@@ -1107,10 +1108,10 @@ export function Target({ state, matkul, penilaian, savedState }) {
         useEffect(() => {
             const currentState = {
                 tab: type,
-                swiperIndex: 0
+                swiperIndex: swiperIndex
             }
             sessionStorage.setItem('_target', JSON.stringify(currentState));
-        }, [type])
+        }, [type, swiperIndex])
 
         return (
             <div className={styles.target}>
@@ -1143,7 +1144,9 @@ export function Target({ state, matkul, penilaian, savedState }) {
                     onBeforeInit={(swiper) => {
                         swiperRef.current = swiper;
                     }}
+                    onSlideChangeTransitionEnd={(swiper) => setSwiperIndex(swiper.realIndex)}
                     direction={'vertical'}
+                    initialSlide={swiperIndex}
                     loop={target.length >= 3 ? true : false}
                     slidesPerView={1}
                     spaceBetween={15}
