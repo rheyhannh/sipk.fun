@@ -151,11 +151,11 @@ export function Table({ state, validating, user, sessionTable, matkul, matkulHis
         });
         const [isValidating, setIsValidating] = useState(validating);
         const [columnVisibility, setColumnVisibility] = useState(sessionTable?.columnVisibility ?? user?.preferences?.table?.columnVisibility ?? {
-            nomor: true, matakuliah: true, semester: true, sks: true, nilai: true, diulang: true, target: true
+            nomor: true, matakuliah: true, semester: true, sks: true, nilai: true, diulang: true, target: true, ontarget: true
         });
         const [columnFilters, setColumnFilters] = useState(sessionTable?.columnFilters ?? []);
         const [columnOrder, setColumnOrder] = useState(sessionTable?.columnOrder ?? user?.preferences?.table?.columnOrder ?? [
-            'nomor', 'matakuliah', 'semester', 'sks', 'nilai', 'diulang', 'target'
+            'nomor', 'matakuliah', 'semester', 'sks', 'nilai', 'diulang', 'target', 'ontarget'
         ]);
         const [pageControlPosition, setPageControlPosition] = useState(sessionTable?.pageControlPosition ?? user?.preferences?.table?.controlPosition ?? 0);
         const [rowAction, setRowAction] = useState(sessionTable?.rowAction ?? true);
@@ -322,7 +322,7 @@ export function Table({ state, validating, user, sessionTable, matkul, matkulHis
         const getTablePreferences = () => {
             const currentPageSize = table.getState().pagination.pageSize;
             const titleKey = {
-                nomor: "Nomor", matakuliah: "Matakuliah", semester: "Semester", sks: "Sks", nilai: "Nilai", diulang: "Bisa Diulang", target: "Target Nilai"
+                nomor: "Nomor", matakuliah: "Matakuliah", semester: "Semester", sks: "Sks", nilai: "Nilai", diulang: "Bisa Diulang", target: "Target Nilai", ontarget: "On Target"
             }
             const columnState = columnOrder.map((id, index) => {
                 const title = titleKey[id];

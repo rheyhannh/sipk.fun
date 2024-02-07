@@ -185,7 +185,7 @@ export async function PATCH(request) {
         })
     }
 
-    const allowedColumn = ['nomor', 'matakuliah', 'semester', 'sks', 'nilai', 'diulang', 'target'];
+    const allowedColumn = ['nomor', 'matakuliah', 'semester', 'sks', 'nilai', 'diulang', 'target', 'ontarget'];
     const formDataSchema =
         type === 'preferences' ?
             Joi.object({
@@ -195,7 +195,7 @@ export async function PATCH(request) {
                     columnOrder: Joi.array()
                         .items(Joi.string().valid(...allowedColumn))
                         .unique()
-                        .length(7)
+                        .length(8)
                         .required(),
                     columnVisibility: Joi.object()
                         .keys({
@@ -206,6 +206,7 @@ export async function PATCH(request) {
                             nilai: Joi.boolean().required(),
                             diulang: Joi.boolean().required(),
                             target: Joi.boolean().required(),
+                            ontarget: Joi.boolean().required()
                         })
                         .required()
                         .length(allowedColumn.length)

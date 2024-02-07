@@ -2191,6 +2191,7 @@ export const TabelSetting = () => {
         { title: 'Nilai', id: 'nilai', visible: true },
         { title: 'Bisa Diulang', id: 'diulang', visible: true },
         { title: 'Target Nilai', id: 'target', visible: true },
+        { title: 'On Target', id: 'ontarget', visible: true },
     ]);
     const [errorMessage, setErrorMessage] = useState('');
 

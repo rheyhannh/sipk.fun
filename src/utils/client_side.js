@@ -92,7 +92,7 @@ export const getSessionTable = () => {
             }
             const validateColumnOrder = (arr) => {
                 const isValid = () => {
-                    if (arr.length !== 7) {
+                    if (arr.length !== 8) {
                         return false;
                     }
                     for (const str of allowedKeys) {
@@ -106,7 +106,7 @@ export const getSessionTable = () => {
             }
             const validateColumnVisibility = (obj) => {
                 const keys = Object.keys(obj);
-                if (keys.length !== 7 || !keys.every(key => allowedKeys.includes(key))) {
+                if (keys.length !== 8 || !keys.every(key => allowedKeys.includes(key))) {
                     return null;
                 }
 

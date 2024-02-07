@@ -468,8 +468,8 @@
 
 .tabel__setting_ordering {
     display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    gap: 1.5rem;
+    grid-template-columns: repeat(8, 1fr);
+    gap: 1rem;
     width: 100%;
     min-height: 150px;
     margin-bottom: 1.5rem;
