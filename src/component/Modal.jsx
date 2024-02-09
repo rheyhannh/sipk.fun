@@ -2646,8 +2646,8 @@ export const TabelFilter = () => {
     const [semesterMaks, setSemesterMaks] = useState('');
     const [filteredNilai, setFilteredNilai] = useState([]);
     const [filteredTargetNilai, setFilteredTargetNilai] = useState([]);
-    const [targetNilai, setTargetNilai] = useState('');
     const [dapatDiulang, setDapatDiulang] = useState('');
+    const [onTarget, setOnTarget] = useState('');
 
     const handleNamaChange = (e) => {
         const newNama = e.target.value;
@@ -2728,6 +2728,7 @@ export const TabelFilter = () => {
                             if (setNilaiFilters.length) { filters.push({ id: 'nilai', value: setNilaiFilters }) }
                             if (setTargetNilaiFilters.length) { filters.push({ id: 'target', value: setTargetNilaiFilters }) }
                             if (dapatDiulang && !allValue.includes(dapatDiulang)) { filters.push({ id: 'diulang', value: dapatDiulang === 'ya' ? true : false }) }
+                            if (onTarget && !allValue.includes(onTarget)) { filters.push({ id: 'ontarget', value: onTarget === 'ya' ? true : false }) }
                             resolve(filters);
                         } catch (error) { reject(error) }
                     })
@@ -2744,6 +2745,7 @@ export const TabelFilter = () => {
                         setFilteredNilai(getBooleanFilteredNilai(context?.data?.currentFilters?.nilai));
                         setFilteredTargetNilai(getBooleanFilteredNilai(context?.data?.currentFilters?.target));
                         setDapatDiulang(context?.data?.currentFilters?.diulang || '');
+                        setOnTarget(context?.data?.currentFilters?.ontarget || '')
                         setEditFilter(true);
                     }
                 }
@@ -2757,6 +2759,7 @@ export const TabelFilter = () => {
                     setFilteredNilai(getBooleanFilteredNilai(null));
                     setFilteredTargetNilai(getBooleanFilteredNilai(null));
                     setDapatDiulang('');
+                    setOnTarget('');
                 }
 
                 const handleApplyFilter = async (e) => {
@@ -2931,32 +2934,6 @@ export const TabelFilter = () => {
                                 <div className={styles.ftmntb}>
                                     <div className={styles.form__input_field}>
                                         <select
-                                            id="targetNilai"
-                                            className={`${styles.form__select} ${targetNilai || context?.data?.currentFilters?.target ? styles.filled : ''}`}
-                                            value={editFilter ? targetNilai : context?.data?.currentFilters?.target || ''}
-                                            onChange={(e) => { setTargetNilai(e.target.value) }}
-                                            onFocus={() => { setErrorMessage('') }}
-                                            disabled={!editFilter}
-                                            style={editFilter ? {} : { cursor: 'auto' }}
-                                        >
-                                            <option value={''} disabled hidden></option>
-                                            <option value={-1}>Semua</option>
-                                            {penilaianKey.map((nilai) => (
-                                                <option value={nilai} key={crypto.randomUUID()}>{nilai}</option>
-                                            ))
-                                            }
-                                        </select>
-
-                                        <label
-                                            htmlFor="targetNilai"
-                                            className={styles.form__label}
-                                        >
-                                            Target Nilai
-                                        </label>
-                                    </div>
-
-                                    <div className={styles.form__input_field}>
-                                        <select
                                             id="dapatDiulang"
                                             className={`${styles.form__select} ${dapatDiulang || context?.data?.currentFilters?.diulang ? styles.filled : ''}`}
                                             value={editFilter ? dapatDiulang : context?.data?.currentFilters?.diulang || ''}
@@ -2978,9 +2955,32 @@ export const TabelFilter = () => {
                                             Bisa Diulang
                                         </label>
                                     </div>
+                                    <div className={styles.form__input_field}>
+                                        <select
+                                            id="onTarget"
+                                            className={`${styles.form__select} ${onTarget || context?.data?.currentFilters?.ontarget ? styles.filled : ''}`}
+                                            value={editFilter ? onTarget : context?.data?.currentFilters?.ontarget || ''}
+                                            onChange={(e) => { setOnTarget(e.target.value) }}
+                                            onFocus={() => { setErrorMessage('') }}
+                                            disabled={!editFilter}
+                                            style={editFilter ? {} : { cursor: 'auto' }}
+                                        >
+                                            <option value={''} disabled hidden></option>
+                                            <option value={-1}>Semua</option>
+                                            <option value={'ya'}>Ya</option>
+                                            <option value={'tidak'}>Tidak</option>
+                                        </select>
+
+                                        <label
+                                            htmlFor="onTarget"
+                                            className={styles.form__label}
+                                        >
+                                            On Target
+                                        </label>
+                                    </div>
                                 </div>
 
-                                <div style={{marginBottom: '1.25rem'}} className={styles.ftmn}>
+                                <div style={{ marginBottom: '1.25rem' }} className={styles.ftmn}>
                                     <div>
                                         <h3 className={styles.tabel__filter_title}>Nilai</h3>
                                         <div className={styles.tabel__filter_check}>

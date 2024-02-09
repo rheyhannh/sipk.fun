@@ -335,11 +335,11 @@ export function Table({ state, validating, user, sessionTable, matkul, matkulHis
         }
 
         const getTableFilters = () => {
-            const searchId = ['matakuliah', 'semester', 'sks', 'nilai', 'diulang', 'target'];
+            const searchId = ['matakuliah', 'semester', 'sks', 'nilai', 'diulang', 'target', 'ontarget'];
             const result = {};
             searchId.forEach((id) => {
                 const item = columnFilters.find((item) => item.id === id);
-                if (id === 'diulang') {
+                if (id === 'diulang' || id === 'ontarget') {
                     result[id] = item ? item.value ? 'ya' : 'tidak' : '';
                 } else {
                     result[id] = item ? item.value : '';
