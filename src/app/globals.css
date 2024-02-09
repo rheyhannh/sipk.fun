@@ -55,6 +55,8 @@
     --box-color-warning: hsl(36, 100%, 95%);
     --box-color-danger: hsl(340, 100%, 95%);
     --box-color-crimson: hsl(0, 100%, 95%);
+    --box-color-primary: hsl(234, 100%, 95%);
+    --box-color-main: hsl(222, 100%, 95%);
     /* === END OF BOX === */
 
     /* === BORDER-RADIUS === */
@@ -180,6 +182,8 @@
     --box-color-warning: hsl(36, 25%, 21%);
     --box-color-danger: hsl(340, 25%, 21%);
     --box-color-crimson: hsl(0, 25%, 21%);
+    --box-color-primary: hsl(234, 25%, 21%);
+    --box-color-main: hsl(11, 25%, 21%);
     /* === END OF BOX === */
 
     /* === BOX-SHADOW === */
