@@ -61,28 +61,6 @@ function Right() {
         else { helloDark() }
     }
 
-    const handleNamaLengkap = (input, maxLength) => {
-        const trimmedInput = input.trim();
-        if (trimmedInput.length <= maxLength) {
-            return trimmedInput;
-        } else {
-            const words = trimmedInput.split(' ');
-            let truncatedText = '';
-            let currentLength = 0;
-
-            for (const word of words) {
-                if (currentLength + word.length + 1 <= maxLength) {
-                    truncatedText += word + ' ';
-                    currentLength += word.length + 1;
-                } else {
-                    break;
-                }
-            }
-
-            return truncatedText.trim();
-        }
-    }
-
     const handleProfilModal = () => {
         if (!data || data.length === 0 || error) { return; }
         setData(data);
@@ -189,7 +167,7 @@ function Right() {
                 <div className={`${styles.dashboard__profile_info}`}>
                     <p>
                         <b>
-                            {handleNamaLengkap(data[0].fullname, 20)}
+                            {data[0].fullname}
                         </b>
                     </p>
                     <small>

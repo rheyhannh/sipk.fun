@@ -148,6 +148,11 @@
 .dashboard__profile_info {
     max-width: 150px;
     white-space: nowrap;
+    overflow: hidden;
+}
+
+.dashboard__profile_info p,
+.dashboard__profile_info small {
     text-overflow: ellipsis;
     overflow: hidden;
 }
