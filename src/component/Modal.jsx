@@ -2645,6 +2645,7 @@ export const TabelFilter = () => {
     const [semesterMin, setSemesterMin] = useState('');
     const [semesterMaks, setSemesterMaks] = useState('');
     const [filteredNilai, setFilteredNilai] = useState([]);
+    const [filteredTargetNilai, setFilteredTargetNilai] = useState([]);
     const [targetNilai, setTargetNilai] = useState('');
     const [dapatDiulang, setDapatDiulang] = useState('');
 
@@ -2717,19 +2718,15 @@ export const TabelFilter = () => {
                                     setErrorMessage('Semester maksimal harus angka 0 - 50'); resolve(null);
                                 }
                             }
-                            if (targetNilai && !allValue.includes(targetNilai)) {
-                                if (!penilaianKey.some(grade => grade.toLowerCase() === targetNilai.toLowerCase())) {
-                                    setErrorMessage('Target nilai tidak diizinkan'); resolve(null);
-                                }
-                            }
 
                             const filters = [];
                             const setNilaiFilters = penilaianKey.filter((_, index) => filteredNilai[index]);
+                            const setTargetNilaiFilters = penilaianKey.filter((_, index) => filteredTargetNilai[index]);
                             if (nama) { filters.push({ id: 'matakuliah', value: nama }) }
                             if (sksMin || sksMaks) { filters.push({ id: 'sks', value: [sksMin, sksMaks] }) }
                             if (semesterMin || semesterMaks) { filters.push({ id: 'semester', value: [semesterMin, semesterMaks] }) }
                             if (setNilaiFilters.length) { filters.push({ id: 'nilai', value: setNilaiFilters }) }
-                            if (targetNilai && !allValue.includes(targetNilai)) { filters.push({ id: 'target', value: targetNilai }) }
+                            if (setTargetNilaiFilters.length) { filters.push({ id: 'target', value: setTargetNilaiFilters }) }
                             if (dapatDiulang && !allValue.includes(dapatDiulang)) { filters.push({ id: 'diulang', value: dapatDiulang === 'ya' ? true : false }) }
                             resolve(filters);
                         } catch (error) { reject(error) }
@@ -2745,7 +2742,7 @@ export const TabelFilter = () => {
                         setSemesterMin(context?.data?.currentFilters?.semester[0] || '');
                         setSemesterMaks(context?.data?.currentFilters?.semester[1] || '');
                         setFilteredNilai(getBooleanFilteredNilai(context?.data?.currentFilters?.nilai));
-                        setTargetNilai(context?.data?.currentFilters?.target || '');
+                        setFilteredTargetNilai(getBooleanFilteredNilai(context?.data?.currentFilters?.target));
                         setDapatDiulang(context?.data?.currentFilters?.diulang || '');
                         setEditFilter(true);
                     }
@@ -2758,7 +2755,7 @@ export const TabelFilter = () => {
                     setSemesterMin('');
                     setSemesterMaks('');
                     setFilteredNilai(getBooleanFilteredNilai(null));
-                    setTargetNilai('');
+                    setFilteredTargetNilai(getBooleanFilteredNilai(null));
                     setDapatDiulang('');
                 }
 
@@ -2996,6 +2993,28 @@ export const TabelFilter = () => {
                                                             setFilteredNilai(updatedState);
                                                         } : null}
                                                         className={`${styles.item} ${styles[type]} ${filteredNilai[index] ? styles.active : ''}`} key={crypto.randomUUID()}
+                                                    >
+                                                        {key}
+                                                    </span>
+                                                )
+                                            })}
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div className={styles.ftmn}>
+                                    <div>
+                                        <h3 className={styles.tabel__filter_title}>Target Nilai</h3>
+                                        <div className={styles.tabel__filter_check}>
+                                            {penilaianKey.map((key, index) => {
+                                                const type = editFilter ? penilaian[key]?.style ?? 'primary' : 'disabled';
+                                                return (
+                                                    <span
+                                                        onClick={editFilter ? () => {
+                                                            const updatedState = filteredTargetNilai.map((item, i) => (i === index ? !item : item));
+                                                            setFilteredTargetNilai(updatedState);
+                                                        } : null}
+                                                        className={`${styles.item} ${styles[type]} ${filteredTargetNilai[index] ? styles.active : ''}`} key={crypto.randomUUID()}
                                                     >
                                                         {key}
                                                     </span>

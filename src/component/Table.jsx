@@ -267,6 +267,7 @@ export function Table({ state, validating, user, sessionTable, matkul, matkulHis
                     id: 'target',
                     cell: info => info.getValue(),
                     header: () => <span>Target Nilai</span>,
+                    filterFn: 'arrIncludesSome',
                 }),
                 columnHelper.accessor(row => row.nilai.bobot >= row.target_nilai.bobot, {
                     id: 'ontarget',
