@@ -2982,7 +2982,7 @@ export const TabelFilter = () => {
 
                                 <div style={{ marginBottom: '1.25rem' }} className={styles.ftmn}>
                                     <div>
-                                        <h3 className={styles.tabel__filter_title}>Nilai</h3>
+                                        <h3 style={{marginBottom: '.4rem'}} className={styles.tabel__filter_title}>Nilai</h3>
                                         <div className={styles.tabel__filter_check}>
                                             {penilaianKey.map((key, index) => {
                                                 const type = editFilter ? penilaian[key]?.style ?? 'primary' : 'disabled';
@@ -3004,7 +3004,7 @@ export const TabelFilter = () => {
 
                                 <div className={styles.ftmn}>
                                     <div>
-                                        <h3 className={styles.tabel__filter_title}>Target Nilai</h3>
+                                        <h3 style={{marginBottom: '.4rem'}} className={styles.tabel__filter_title}>Target Nilai</h3>
                                         <div className={styles.tabel__filter_check}>
                                             {penilaianKey.map((key, index) => {
                                                 const type = editFilter ? penilaian[key]?.style ?? 'primary' : 'disabled';
