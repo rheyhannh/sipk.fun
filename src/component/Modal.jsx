@@ -2980,7 +2980,7 @@ export const TabelFilter = () => {
                                     </div>
                                 </div>
 
-                                <div className={styles.ftmn}>
+                                <div style={{marginBottom: '1.25rem'}} className={styles.ftmn}>
                                     <div>
                                         <h3 className={styles.tabel__filter_title}>Nilai</h3>
                                         <div className={styles.tabel__filter_check}>

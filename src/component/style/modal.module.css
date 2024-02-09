@@ -95,7 +95,7 @@
 }
 
 .tabel__filter {
-    max-height: 455px;
+    max-height: 515px;
 }
 
 .backdrop.active .perubahan__terakhir,
@@ -580,7 +580,7 @@
     font-size: .85rem;
     font-weight: 600;
     color: var(--dark-color);
-    margin-bottom: .75rem;
+    margin-bottom: .4rem;
 }
 
 .ftmn {
