@@ -589,14 +589,14 @@
 
 .ftmss {
     display: grid;
-    grid-template-columns: repeat(2,1fr);
+    grid-template-columns: repeat(2, 1fr);
     gap: 1rem;
     margin-bottom: 1.25rem;
 }
 
 .ftmntb {
     display: grid;
-    grid-template-columns: repeat(3,1fr);
+    grid-template-columns: repeat(2, 1fr);
     gap: 1rem;
     margin-bottom: 1.25rem;
 }
@@ -624,8 +624,58 @@
 
 .tabel__filter_range {
     display: grid;
-    grid-template-columns: repeat(2,1fr);
+    grid-template-columns: repeat(2, 1fr);
     gap: .5rem;
+}
+
+.tabel__filter_check {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, 30px);
+    gap: 1rem;
+    align-items: center;
+    justify-content: center;
+}
+
+.tabel__filter_check .item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 30px;
+    cursor: pointer;
+    color: var(--dark-color);
+    background: var(--accordion-bg-color);
+    border-radius: 50%;
+}
+
+.tabel__filter_check .item.success.active {
+    color: var(--success-color);
+    background: var(--box-color-success);
+}
+
+.tabel__filter_check .item.warning.active {
+    color: var(--warning-color);
+    background: var(--box-color-warning);
+}
+
+.tabel__filter_check .item.danger.active {
+    color: var(--danger-color);
+    background: var(--box-color-danger);
+}
+
+.tabel__filter_check .item.crimson.active {
+    color: var(--crimson-color);
+    background: var(--box-color-crimson);
+}
+
+.tabel__filter_check .item.primary.active {
+    color: var(--primary-color);
+    background: var(--box-color-primary);
+}
+
+.tabel__filter_check .item.disabled {
+    cursor: auto;
+    color: var(--infoDark-color);
+    background: var(--light-color);
 }
 
 .tabel__filter input:disabled {
@@ -708,6 +758,31 @@
     .star:not(.disabled):hover {
         color: gold;
     }
+
+    .tabel__filter_check .item.success:hover {
+        color: var(--success-color);
+        background: var(--box-color-success);
+    }
+
+    .tabel__filter_check .item.warning:hover {
+        color: var(--warning-color);
+        background: var(--box-color-warning);
+    }
+
+    .tabel__filter_check .item.danger:hover {
+        color: var(--danger-color);
+        background: var(--box-color-danger);
+    }
+
+    .tabel__filter_check .item.crimson:hover {
+        color: var(--crimson-color);
+        background: var(--box-color-crimson);
+    }
+
+    .tabel__filter_check .item.primary:hover {
+        color: var(--primary-color);
+        background: var(--box-color-primary);
+    }
 }
 
 @media screen and (max-width: 275px) {
@@ -721,7 +796,7 @@
     .tabel__setting_control {
         gap: 0.5rem;
     }
-    
+
     .tabel__setting_select {
         height: 50px;
         display: flex;

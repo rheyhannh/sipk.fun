@@ -2644,7 +2644,7 @@ export const TabelFilter = () => {
     const [sksMaks, setSksMaks] = useState('');
     const [semesterMin, setSemesterMin] = useState('');
     const [semesterMaks, setSemesterMaks] = useState('');
-    const [nilai, setNilai] = useState('');
+    const [filteredNilai, setFilteredNilai] = useState([]);
     const [targetNilai, setTargetNilai] = useState('');
     const [dapatDiulang, setDapatDiulang] = useState('');
 
@@ -2661,6 +2661,12 @@ export const TabelFilter = () => {
                 const penilaian = context.data.penilaian;
                 const penilaianKey = Object.keys(penilaian);
 
+                const getBooleanFilteredNilai = (filter) => {
+                    if (!filter || !filter.length || !Array.isArray(filter)) {
+                        return Array.from({ length: penilaianKey.length }, () => false);
+                    }
+                    return penilaianKey.map((value) => filter.includes(value.toUpperCase()));
+                }
 
                 const validateForm = () => {
                     return new Promise(async (resolve, reject) => {
@@ -2711,11 +2717,6 @@ export const TabelFilter = () => {
                                     setErrorMessage('Semester maksimal harus angka 0 - 50'); resolve(null);
                                 }
                             }
-                            if (nilai && !allValue.includes(nilai)) {
-                                if (!penilaianKey.some(grade => grade.toLowerCase() === nilai.toLowerCase())) {
-                                    setErrorMessage('Nilai tidak diizinkan'); resolve(null);
-                                }
-                            }
                             if (targetNilai && !allValue.includes(targetNilai)) {
                                 if (!penilaianKey.some(grade => grade.toLowerCase() === targetNilai.toLowerCase())) {
                                     setErrorMessage('Target nilai tidak diizinkan'); resolve(null);
@@ -2723,10 +2724,11 @@ export const TabelFilter = () => {
                             }
 
                             const filters = [];
+                            const setNilaiFilters = penilaianKey.filter((_, index) => filteredNilai[index]);
                             if (nama) { filters.push({ id: 'matakuliah', value: nama }) }
                             if (sksMin || sksMaks) { filters.push({ id: 'sks', value: [sksMin, sksMaks] }) }
                             if (semesterMin || semesterMaks) { filters.push({ id: 'semester', value: [semesterMin, semesterMaks] }) }
-                            if (nilai && !allValue.includes(nilai)) { filters.push({ id: 'nilai', value: nilai }) }
+                            if (setNilaiFilters.length) { filters.push({ id: 'nilai', value: setNilaiFilters }) }
                             if (targetNilai && !allValue.includes(targetNilai)) { filters.push({ id: 'target', value: targetNilai }) }
                             if (dapatDiulang && !allValue.includes(dapatDiulang)) { filters.push({ id: 'diulang', value: dapatDiulang === 'ya' ? true : false }) }
                             resolve(filters);
@@ -2742,7 +2744,7 @@ export const TabelFilter = () => {
                         setSksMaks(context?.data?.currentFilters?.sks[1] || '');
                         setSemesterMin(context?.data?.currentFilters?.semester[0] || '');
                         setSemesterMaks(context?.data?.currentFilters?.semester[1] || '');
-                        setNilai(context?.data?.currentFilters?.nilai || '');
+                        setFilteredNilai(getBooleanFilteredNilai(context?.data?.currentFilters?.nilai));
                         setTargetNilai(context?.data?.currentFilters?.target || '');
                         setDapatDiulang(context?.data?.currentFilters?.diulang || '');
                         setEditFilter(true);
@@ -2755,7 +2757,7 @@ export const TabelFilter = () => {
                     setSksMaks('');
                     setSemesterMin('');
                     setSemesterMaks('');
-                    setNilai('');
+                    setFilteredNilai(getBooleanFilteredNilai(null));
                     setTargetNilai('');
                     setDapatDiulang('');
                 }
@@ -2932,32 +2934,6 @@ export const TabelFilter = () => {
                                 <div className={styles.ftmntb}>
                                     <div className={styles.form__input_field}>
                                         <select
-                                            id="nilai"
-                                            className={`${styles.form__select} ${nilai || context?.data?.currentFilters?.nilai ? styles.filled : ''}`}
-                                            value={editFilter ? nilai : context?.data?.currentFilters?.nilai || ''}
-                                            onChange={(e) => { setNilai(e.target.value) }}
-                                            onFocus={() => { setErrorMessage('') }}
-                                            disabled={!editFilter}
-                                            style={editFilter ? {} : { cursor: 'auto' }}
-                                        >
-                                            <option value={''} disabled hidden></option>
-                                            <option value={-1}>Semua</option>
-                                            {penilaianKey.map((nilai) => (
-                                                <option value={nilai} key={crypto.randomUUID()}>{nilai}</option>
-                                            ))
-                                            }
-                                        </select>
-
-                                        <label
-                                            htmlFor="nilai"
-                                            className={styles.form__label}
-                                        >
-                                            Nilai
-                                        </label>
-                                    </div>
-
-                                    <div className={styles.form__input_field}>
-                                        <select
                                             id="targetNilai"
                                             className={`${styles.form__select} ${targetNilai || context?.data?.currentFilters?.target ? styles.filled : ''}`}
                                             value={editFilter ? targetNilai : context?.data?.currentFilters?.target || ''}
@@ -3004,6 +2980,28 @@ export const TabelFilter = () => {
                                         >
                                             Bisa Diulang
                                         </label>
+                                    </div>
+                                </div>
+
+                                <div className={styles.ftmn}>
+                                    <div>
+                                        <h3 className={styles.tabel__filter_title}>Nilai</h3>
+                                        <div className={styles.tabel__filter_check}>
+                                            {penilaianKey.map((key, index) => {
+                                                const type = editFilter ? penilaian[key]?.style ?? 'primary' : 'disabled';
+                                                return (
+                                                    <span
+                                                        onClick={editFilter ? () => {
+                                                            const updatedState = filteredNilai.map((item, i) => (i === index ? !item : item));
+                                                            setFilteredNilai(updatedState);
+                                                        } : null}
+                                                        className={`${styles.item} ${styles[type]} ${filteredNilai[index] ? styles.active : ''}`} key={crypto.randomUUID()}
+                                                    >
+                                                        {key}
+                                                    </span>
+                                                )
+                                            })}
+                                        </div>
                                     </div>
                                 </div>
                             </div>

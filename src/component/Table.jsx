@@ -254,6 +254,7 @@ export function Table({ state, validating, user, sessionTable, matkul, matkulHis
                     cell: info => info.getValue(),
                     header: () => <span>Nilai</span>,
                     footer: info => info.column.id,
+                    filterFn: 'arrIncludesSome',
                 }),
                 columnHelper.accessor(row => row.dapat_diulang, {
                     id: 'diulang',
