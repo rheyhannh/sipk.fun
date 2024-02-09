@@ -1001,7 +1001,7 @@ export const TambahMatkul = () => {
                             // Validating 'Nilai'
                             if (nilai < 0) { setErrorMessage('Nilai matakuliah dibutuhkan'); resolve(null); }
                             else {
-                                if (!isInt(nilai, { min: 0, max: 4 })) { setErrorMessage('Nilai tidak valid'); resolve(null); }
+                                if (Number(nilai) > 4) { setErrorMessage('Nilai tidak valid'); resolve(null); }
                             }
 
                             // Validating 'Semester'
@@ -2982,7 +2982,7 @@ export const TabelFilter = () => {
 
                                 <div style={{ marginBottom: '1.25rem' }} className={styles.ftmn}>
                                     <div>
-                                        <h3 style={{marginBottom: '.5rem'}} className={styles.tabel__filter_title}>Nilai</h3>
+                                        <h3 style={{ marginBottom: '.5rem' }} className={styles.tabel__filter_title}>Nilai</h3>
                                         <div className={styles.tabel__filter_check}>
                                             {penilaianKey.map((key, index) => {
                                                 const type = editFilter ? penilaian[key]?.style ?? 'primary' : 'disabled';
@@ -3004,7 +3004,7 @@ export const TabelFilter = () => {
 
                                 <div className={styles.ftmn}>
                                     <div>
-                                        <h3 style={{marginBottom: '.5rem'}} className={styles.tabel__filter_title}>Target Nilai</h3>
+                                        <h3 style={{ marginBottom: '.5rem' }} className={styles.tabel__filter_title}>Target Nilai</h3>
                                         <div className={styles.tabel__filter_check}>
                                             {penilaianKey.map((key, index) => {
                                                 const type = editFilter ? penilaian[key]?.style ?? 'primary' : 'disabled';
@@ -3116,7 +3116,7 @@ export const DetailMatkul = () => {
                             // Validating 'Nilai'
                             if (!penilaian.hasOwnProperty(nilai)) { setErrorMessage('Nilai matakuliah dibutuhkan'); resolve(null); }
                             else {
-                                if (!isInt(`${penilaian[nilai].weight}`, { min: 0, max: 4 })) { setErrorMessage('Nilai tidak valid'); resolve(null); }
+                                if (Number(penilaian[nilai].weight) > 4) { setErrorMessage('Nilai tidak valid'); resolve(null); }
                             }
 
                             // Validating 'Semester'
