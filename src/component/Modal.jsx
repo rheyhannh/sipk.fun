@@ -1017,7 +1017,7 @@ export const TambahMatkul = () => {
                                 nilai: {
                                     indeks: penilaianKey.find((key) => `${penilaian[key].weight}` === `${nilai}`),
                                     bobot: Number(nilai),
-                                    akhir: Number(sks) * Number(nilai)
+                                    akhir: +(Number(sks) * Number(nilai)).toFixed(2)
                                 },
                                 dapat_diulang: dapatDiulang === 'true' ? true : false,
                                 target_nilai: {
@@ -3132,7 +3132,7 @@ export const DetailMatkul = () => {
                                 nilai: {
                                     indeks: nilai,
                                     bobot: penilaian[nilai].weight,
-                                    akhir: Number(sks) * penilaian[nilai].weight
+                                    akhir: +(Number(sks) * penilaian[nilai].weight).toFixed(2)
                                 },
                                 dapat_diulang: dapatDiulang === 'ya' ? true : false,
                                 target_nilai: {
