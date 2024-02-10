@@ -365,7 +365,7 @@ export function Table({ state, validating, user, sessionTable, matkul, matkulHis
 
         const getRef = (matkulId) => {
             const item = matkulHistory.find(entry => entry.matkul_id === matkulId);
-            return item ? item : null;
+            return item ? { ...item, fromTabel: true } : null;
         }
 
         const isSearchActive = () => {

@@ -222,16 +222,132 @@ export const Logout = () => {
 }
 
 export const PerubahanTerakhirDetail = () => {
+    const router = useRouter();
+    const userIdCookie = useCookies().get('s_user_id');
+    const accessToken = useCookies().get('s_access_token');
     const [isSebelumForm, setIsSebelumForm] = useState(false);
 
     return (
         <ModalContext.Consumer>
             {context => {
+                const handleHapusMatakuliah = async (e) => {
+                    e.preventDefault();
+                    context.handleModalClose();
+
+                    const deleteMatkul = () => {
+                        return new Promise(async (resolve, reject) => {
+                            try {
+                                if (!accessToken) {
+                                    router.refresh();
+                                    throw new Error('Terjadi kesalahan, silahkan coba lagi');
+                                }
+                                if (!userIdCookie) {
+                                    router.refresh();
+                                    throw new Error('Terjadi kesalahan, silahkan coba lagi');
+                                }
+
+                                if (!context?.data?.matkul_id) {
+                                    router.refresh();
+                                    throw new Error('Terjadi kesalahan, silahkan coba lagi');
+                                }
+
+                                if (!context?.data?.current?.nama) {
+                                    router.refresh();
+                                    throw new Error('Terjadi kesalahan, silahkan coba lagi');
+                                }
+
+                                const response = await fetch(`/api/matkul?id=${context.data.matkul_id}`, {
+                                    method: 'DELETE',
+                                    headers: {
+                                        'Authorization': `Bearer ${accessToken}`,
+                                        'Content-Type': 'application/json',
+                                    },
+                                });
+
+                                if (!response.ok) {
+                                    if (response.status === 401) {
+                                        router.replace('/users?action=login&error=isession', {
+                                            scroll: false
+                                        });
+                                        throw new Error(`Unauthorized`);
+                                    } else {
+                                        try {
+                                            const { message } = await response.json();
+                                            if (message) {
+                                                throw new Error(message);
+                                            } else {
+                                                throw new Error(`Terjadi kesalahan`);
+                                            }
+                                        } catch (error) {
+                                            console.error(error);
+                                            reject(error);
+                                        }
+                                    }
+                                } else {
+                                    try {
+                                        const { ref } = await response.json();
+                                        if (!ref) {
+                                            throw new Error('Failed to update cache');
+                                        }
+                                        mutate(['/api/matkul', userIdCookie], undefined, {
+                                            populateCache: (_, currentMatkul) => {
+                                                if (!currentMatkul) {
+                                                    return [];
+                                                } else if (currentMatkul.length - 1 === 0) {
+                                                    return [];
+                                                } else {
+                                                    const filteredMatkul = currentMatkul.filter(matkul => matkul.id !== `${context.data.matkul_id}`);
+                                                    return [...filteredMatkul];
+                                                }
+                                            },
+                                            revalidate: false,
+                                        });
+                                        mutate(['/api/matkul-history', userIdCookie], ref, {
+                                            populateCache: (ref, currentRef) => {
+                                                if (!currentRef) {
+                                                    return [ref]
+                                                } else if (currentRef.length === 1) {
+                                                    return [ref];
+                                                } else {
+                                                    const filteredRef = currentRef.filter(refs => refs.id !== ref.id);
+                                                    return [...filteredRef, ref];
+                                                }
+                                            },
+                                            revalidate: false,
+                                        });
+                                        resolve();
+                                    } catch {
+                                        mutate(['/api/matkul', userIdCookie]);
+                                        mutate(['/api/matkul-history', userIdCookie]);
+                                        resolve();
+                                    }
+                                }
+                            } catch (error) { reject(error); }
+                        })
+                    }
+
+                    toast.promise(
+                        deleteMatkul(),
+                        {
+                            loading: `${getLoadingMessage(false, 0)} matakuliah`,
+                            success: `${context.data.current.nama ?? 'Matakuliah'} berhasil dihapus`,
+                            error: (error) => `${error.message || 'Terjadi kesalahan'}`
+                        },
+                        {
+                            position: 'top-left',
+                            duration: 4000,
+                        }
+                    )
+                }
+
                 return (
                     <div className={`${styles.backdrop} ${context.active ? styles.active : ''}`}>
                         {
                             context?.data?.current?.type === 'ubah' ?
-                                <div className={`${styles.perubahan__terakhir} ${styles.ubah}`} id='modal'>
+                                <div
+                                    className={`${styles.perubahan__terakhir} ${styles.ubah}`}
+                                    id='modal'
+                                >
                                     <div className={styles.top}>
                                         <div className={styles.title}>
                                             <h2>Detail Matakuliah</h2>
@@ -394,13 +510,36 @@ export const PerubahanTerakhirDetail = () => {
                                             </div>
                                         </form>
                                     </div>
-                                    <div className={styles.form__action}>
-                                        <div className={styles.btn} onClick={() => { context.setModal('perubahanTerakhirConfirm'); }}>
-                                            <h3>Batalkan</h3>
+                                    {context?.data?.fromTabel ?
+                                        <div className={styles.form__action}>
+                                            <div
+                                                style={{
+                                                    display: 'grid',
+                                                    gridTemplateColumns: 'repeat(2,1fr)',
+                                                    gap: '1rem',
+                                                    height: '100%'
+                                                }}
+                                            >
+                                                <div className={`${styles.btn} ${styles.confirm} ${styles.reset}`} onClick={handleHapusMatakuliah}>
+                                                    <h3>Hapus</h3>
+                                                </div>
+                                                <div className={styles.btn} onClick={() => { context.setModal('perubahanTerakhirConfirm'); }}>
+                                                    <h3>Batalkan</h3>
+                                                </div>
+                                            </div>
                                         </div>
-                                    </div>
+                                        : <div className={styles.form__action}>
+                                            <div className={styles.btn} onClick={() => { context.setModal('perubahanTerakhirConfirm'); }}>
+                                                <h3>Batalkan</h3>
+                                            </div>
+                                        </div>
+                                    }
                                 </div>
-                                : <div className={styles.perubahan__terakhir} id='modal'>
+                                :
+                                <div
+                                    className={styles.perubahan__terakhir}
+                                    id='modal'
+                                >
                                     <div className={styles.top}>
                                         <div className={styles.title}>
                                             <h2>Detail Matakuliah</h2>
@@ -549,11 +688,30 @@ export const PerubahanTerakhirDetail = () => {
                                             </div>
                                         </form>
                                     </div>
-                                    <div className={styles.form__action}>
-                                        <div className={styles.btn} onClick={() => { context.setModal('perubahanTerakhirConfirm'); }}>
-                                            <h3>Batalkan</h3>
+                                    {context?.data?.fromTabel ?
+                                        <div className={styles.form__action}>
+                                            <div
+                                                style={{
+                                                    display: 'grid',
+                                                    gridTemplateColumns: 'repeat(2,1fr)',
+                                                    gap: '1rem',
+                                                    height: '100%'
+                                                }}
+                                            >
+                                                <div className={`${styles.btn} ${styles.confirm} ${styles.reset}`} onClick={() => { context.setModal('hapusPermanentConfirm'); }}>
+                                                    <h3>Hapus Permanen</h3>
+                                                </div>
+                                                <div className={styles.btn} onClick={() => { context.setModal('perubahanTerakhirConfirm'); }}>
+                                                    <h3>Batalkan</h3>
+                                                </div>
+                                            </div>
                                         </div>
-                                    </div>
+                                        : <div className={styles.form__action}>
+                                            <div className={styles.btn} onClick={() => { context.setModal('perubahanTerakhirConfirm'); }}>
+                                                <h3>Batalkan</h3>
+                                            </div>
+                                        </div>
+                                    }
                                 </div>
                         }
                     </div>
@@ -3667,6 +3825,7 @@ export const HapusPermanentConfirm = () => {
     return (
         <ModalContext.Consumer>
             {context => {
+                const matakuliah = context?.data?.nama ? context?.data?.nama : context?.data?.current?.nama ? context?.data?.current?.nama : null;
                 const handleHapusPermanent = async (e) => {
                     e.preventDefault();
                     context.handleModalClose();
@@ -3682,12 +3841,21 @@ export const HapusPermanentConfirm = () => {
                                     router.refresh();
                                     throw new Error('Terjadi kesalahan, silahkan coba lagi');
                                 }
-                                if (!context?.data?.id || !context?.data?.refId) {
-                                    router.refresh();
-                                    throw new Error('Terjadi kesalahan, silahkan coba lagi');
+                                if (context?.data?.fromTabel) {
+                                    if (!context?.data?.id || !context?.data?.matkul_id) {
+                                        router.refresh();
+                                        throw new Error('Terjadi kesalahan, silahkan coba lagi');
+                                    }
+                                } else {
+                                    if (!context?.data?.id || !context?.data?.refId) {
+                                        router.refresh();
+                                        throw new Error('Terjadi kesalahan, silahkan coba lagi');
+                                    }
                                 }
 
-                                const response = await fetch(`/api/matkul-history?id=${context.data.refId}&mid=${context.data.id}`, {
+                                const idParamsValue = context?.data?.fromTabel ? context.data.id : context.data.refId;
+                                const midParamsValue = context?.data?.fromTabel ? context.data.matkul_id : context.data.id;
+                                const response = await fetch(`/api/matkul-history?id=${idParamsValue}&mid=${midParamsValue}`, {
                                     method: 'DELETE',
                                     headers: {
                                         'Authorization': `Bearer ${accessToken}`,
@@ -3723,7 +3891,7 @@ export const HapusPermanentConfirm = () => {
                                                 } else if (currentMatkul.length - 1 === 0) {
                                                     return [];
                                                 } else {
-                                                    const filteredMatkul = currentMatkul.filter(matkul => matkul.id !== `${context.data.id}`);
+                                                    const filteredMatkul = currentMatkul.filter(matkul => matkul.id !== `${midParamsValue}`);
                                                     return [...filteredMatkul];
                                                 }
                                             },
@@ -3736,7 +3904,7 @@ export const HapusPermanentConfirm = () => {
                                                 } else if (currentRef.length - 1 === 0) {
                                                     return [];
                                                 } else {
-                                                    const filteredRef = currentRef.filter(refs => refs.id !== `${context.data.refId}`);
+                                                    const filteredRef = currentRef.filter(refs => refs.id !== `${idParamsValue}`);
                                                     return [...filteredRef];
                                                 }
                                             },
@@ -3758,7 +3926,7 @@ export const HapusPermanentConfirm = () => {
                         deletePermanent(),
                         {
                             loading: `${getLoadingMessage(false, 0)} matakuliah`,
-                            success: `${context.data.nama ?? 'Matakuliah'} berhasil dihapus permanen`,
+                            success: `${matakuliah ?? 'Matakuliah'} berhasil dihapus permanen`,
                             error: (error) => `${error.message || 'Terjadi kesalahan'}`
                         },
                         {
@@ -3782,7 +3950,7 @@ export const HapusPermanentConfirm = () => {
 
                             <div style={{ color: 'var(--infoDark-color)' }}>
                                 <p>
-                                    Kamu yakin ingin menghapus <b style={{ fontWeight: '600' }}>{context.data.nama ?? 'matakuliah'}</b> secara <b style={{ fontWeight: '600' }}>permanen</b>?
+                                    Kamu yakin ingin menghapus <b style={{ fontWeight: '600' }}>{matakuliah ?? 'matakuliah'}</b> secara <b style={{ fontWeight: '600' }}>permanen</b>?
                                 </p>
                             </div>
 
