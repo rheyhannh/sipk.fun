@@ -177,7 +177,7 @@ export const Logout = () => {
                 }
             } else {
                 const stamp = Math.floor(Date.now() / 1000);
-                localStorage.removeItem('_table');
+                sessionStorage.clear();
                 router.replace(`/users?logout=${stamp}`, {
                     scroll: false,
                 });

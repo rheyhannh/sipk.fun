@@ -209,7 +209,7 @@ export function UsersForm() {
                     }
                 } else {
                     const redirectTo = searchParams.get('from');
-                    sessionStorage.removeItem('_table');
+                    sessionStorage.clear();
                     if (redirectTo && ['matakuliah'].includes(redirectTo)) {
                         router.replace(`/dashboard/${redirectTo}`, { scroll: false });
                     } else {
