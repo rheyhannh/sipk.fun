@@ -3284,6 +3284,7 @@ export const DetailMatkul = () => {
 
                 const handleHapusMatkul = async (e) => {
                     e.preventDefault();
+                    context.handleModalClose();
 
                     const deleteMatkul = () => {
                         return new Promise(async (resolve, reject) => {
@@ -3641,12 +3642,12 @@ export const DetailMatkul = () => {
                                             height: '100%'
                                         }}
                                     >
-                                        <div style={{ marginTop: '0' }} className={`${styles.btn} ${styles.confirm} ${styles.reset}`}>
+                                        <button style={{ marginTop: '0' }} type='submit' className={`${styles.btn} ${styles.confirm} ${styles.reset}`}>
                                             <h3>Hapus</h3>
-                                        </div>
-                                        <button type='submit' className={styles.btn} onClick={toggleEditMatkul}>
-                                            <h3>Edit</h3>
                                         </button>
+                                        <div className={styles.btn} onClick={toggleEditMatkul}>
+                                            <h3>Edit</h3>
+                                        </div>
                                     </div>
                                 </div>
                             }
