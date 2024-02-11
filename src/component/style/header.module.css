@@ -145,6 +145,11 @@
     cursor: pointer;
 }
 
+.dashboard__profile:has(.skeleton),
+.dashboard__profile.validating {
+    cursor: auto;
+}
+
 .dashboard__profile_info {
     max-width: 150px;
     white-space: nowrap;

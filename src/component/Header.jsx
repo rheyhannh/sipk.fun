@@ -131,7 +131,6 @@ function Right() {
                     <Spinner size={'20px'} color={'var(--logo-second-color)'} />
                 </div>
             </>
-
         )
     }
 
