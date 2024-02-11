@@ -3093,7 +3093,7 @@ export const TabelFilter = () => {
                                     <div className={styles.form__input_field}>
                                         <select
                                             id="dapatDiulang"
-                                            className={`${styles.form__select} ${dapatDiulang || context?.data?.currentFilters?.diulang ? styles.filled : ''}`}
+                                            className={`${styles.form__select} ${editFilter ? dapatDiulang ? styles.filled : '' : context?.data?.currentFilters?.diulang ? styles.filled : ''}`}
                                             value={editFilter ? dapatDiulang : context?.data?.currentFilters?.diulang || ''}
                                             onChange={(e) => { setDapatDiulang(e.target.value) }}
                                             onFocus={() => { setErrorMessage('') }}
@@ -3116,7 +3116,7 @@ export const TabelFilter = () => {
                                     <div className={styles.form__input_field}>
                                         <select
                                             id="onTarget"
-                                            className={`${styles.form__select} ${onTarget || context?.data?.currentFilters?.ontarget ? styles.filled : ''}`}
+                                            className={`${styles.form__select} ${editFilter ? onTarget ? styles.filled : '' : context?.data?.currentFilters?.ontarget ? styles.filled : ''}`}
                                             value={editFilter ? onTarget : context?.data?.currentFilters?.ontarget || ''}
                                             onChange={(e) => { setOnTarget(e.target.value) }}
                                             onFocus={() => { setErrorMessage('') }}
