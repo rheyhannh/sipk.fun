@@ -217,7 +217,7 @@ export async function PATCH(request) {
             :
             Joi.object({
                 fullname: Joi.string().pattern(/^[A-Za-z\s]*$/, 'alpha only').pattern(/^[a-zA-Z]+(\s[a-zA-Z]+)*$/, 'one space each word').min(6).max(50),
-                nickname: Joi.string().min(6).max(20),
+                nickname: Joi.string().min(3).max(20),
                 jurusan: Joi.string().min(6).max(30),
                 sks_target: Joi.number().integer().min(5).max(1000),
                 matkul_target: Joi.number().integer().min(5).max(1000),

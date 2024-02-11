@@ -1539,7 +1539,7 @@ export const Profil = () => {
 
                     // Validating 'Nickname'
                     if (isEmpty(nickname, { ignore_whitespace: true })) { setErrorMessage('Nickname dibutuhkan'); return false; }
-                    if (!isLength(nickname, { min: 6, max: 20 })) { setErrorMessage('Nickname minimal 6 karakter maksimal 20 karakter'); return false; }
+                    if (!isLength(nickname, { min: 3, max: 20 })) { setErrorMessage('Nickname minimal 3 karakter maksimal 20 karakter'); return false; }
 
                     // Validating 'Jurusan'
                     if (isEmpty(jurusan, { ignore_whitespace: true })) { setErrorMessage('Jurusan dibutuhkan'); return false; }
