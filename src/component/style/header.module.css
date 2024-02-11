@@ -105,6 +105,10 @@
     gap: 1.5rem;
 }
 
+.dashboard__right:has(.empty) {
+    gap: 0
+}
+
 .dashboard__logo img {
     width: 48px;
 }
@@ -203,8 +207,7 @@
     }
 
     .dashboard__profile.validating,
-    .dashboard__profile.error,
-    .dashboard__profile.empty {
+    .dashboard__profile.error {
         display: flex;
         justify-content: center;
         align-items: center;
