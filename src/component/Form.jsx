@@ -110,6 +110,7 @@ export function UsersForm() {
     const [hideLoginPassword, setHideLoginPassword] = useState(true);
     const [hideDaftarPassword, setHideDaftarPassword] = useState(true);
     const [inputValidator, setInputValidator] = useState(initialInputValidator);
+    const [resetPassword, setResetPassword] = useState(false);
 
     /*
     ========== Data ==========
@@ -308,6 +309,24 @@ export function UsersForm() {
             });
     }
 
+    const handleResetPassword = async (e) => {
+        e.preventDefault();
+
+        if (inputValidator[0].status !== 'success') {
+            toast.error('Pastikan data terisi dan valid', getToastOptions('login'));
+            return;
+        }
+
+        if (!guestIdCookie || !isUUID(guestIdCookie)) {
+            toast.error('Terjadi kesalahan, silahkan coba lagi', getToastOptions('login'));
+            router.refresh();
+            return;
+        }
+
+        console.log('Proccess Reset Password');
+        handleSuksesResetModal();
+    }
+
     const getToastOptions = (form, style, icon) => {
         const duration = 3000;
         if (form === 'login') {
@@ -328,6 +347,14 @@ export function UsersForm() {
 
     const handleSuksesDaftarModal = () => {
         setData({ image: emailImg, message: 'Periksa emailmu termasuk folder spam, untuk langkah selanjutnya.', isSuccess: true });
+        setModal('default');
+        setTimeout(() => {
+            setActive(true);
+        }, 50)
+    }
+
+    const handleSuksesResetModal = () => {
+        setData({ image: emailImg, message: 'Yuk periksa emailmu termasuk folder spam, untuk konfirmasi reset password.', isSuccess: true });
         setModal('default');
         setTimeout(() => {
             setActive(true);
@@ -445,6 +472,7 @@ export function UsersForm() {
         router.push('/users?action=daftar', undefined, { shallow: true })
         setTimeout(() => { resetFormValue(); }, 1250);
     }
+
     const handleModeLogin = () => {
         setLoginMode(true);
         router.push('/users?action=login', undefined, { shallow: true })
@@ -457,6 +485,7 @@ export function UsersForm() {
     }
 
     const resetFormValue = () => {
+        setResetPassword(false);
         setNamaLengkap('');
         setUniversitas(0);
         setEmail('');
@@ -488,7 +517,7 @@ export function UsersForm() {
                                 />
 
                                 <form
-                                    onSubmit={handleLogin}
+                                    onSubmit={resetPassword ? handleResetPassword : handleLogin}
                                     onSubmitCapture={(e) => {
                                         setErrorMessageLogin('');
                                         const allInput = e.target.querySelectorAll('input');
@@ -498,7 +527,7 @@ export function UsersForm() {
                                     }}
                                     className={styles.sign_in_form}
                                 >
-                                    <h2 className={styles.title}>Login</h2>
+                                    <h2 className={styles.title}>{resetPassword ? 'Reset Password' : 'Login'}</h2>
                                     <h3 style={{ margin: '.25rem 0', color: 'var(--danger-color)', fontWeight: 'var(--font-medium)' }}>{errorMessageLogin}</h3>
                                     <div className={styles.input_field}>
                                         <i><FaEnvelope /></i>
@@ -524,7 +553,7 @@ export function UsersForm() {
                                             </span>
                                         </i>
                                     </div>
-                                    <div className={`${styles.input_field} ${styles.password}`}>
+                                    <div className={`${styles.input_field} ${styles.password} ${resetPassword ? styles.hide : ''}`}>
                                         <i><FaLock /></i>
 
                                         <input
@@ -536,7 +565,7 @@ export function UsersForm() {
                                             onChange={handlePasswordChange}
                                             onFocus={() => { handleInputFocus(1) }}
                                             onBlur={(e) => { handleInputBlur(e, 1, 'password', 'login') }}
-                                            required
+                                            required={resetPassword ? false : true}
                                         />
 
                                         <i className={styles.eye}>
@@ -557,10 +586,10 @@ export function UsersForm() {
                                         </i>
                                     </div>
 
-                                    <button type='submit' className={`${styles.btn}`}>Login</button>
+                                    <button type='submit' className={`${styles.btn}`}>{resetPassword ? 'Submit' : 'Login'}</button>
 
                                     <p className={styles.social_text}>
-                                        <a>Lupa password ? Klik disini.</a>
+                                        <a onClick={() => { setResetPassword(!resetPassword); setErrorMessageLogin(''); }}>{resetPassword ? 'Klik disini untuk kembali login.' : 'Lupa password ? Klik disini.'}</a>
                                     </p>
                                 </form>
                                 <form

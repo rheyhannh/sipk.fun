@@ -373,6 +373,13 @@
     grid-template-columns: repeat(2, 1fr);
 }
 
+.hide {
+    display: none;
+    opacity: 0;
+    visibility: hidden;
+    user-select: none;
+}
+
 @media (hover: hover) and (pointer: fine) {
     .btn:not(.transparent):hover {
         background-color: var(--users-btn-hov);
