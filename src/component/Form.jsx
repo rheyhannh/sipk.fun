@@ -110,7 +110,7 @@ export function UsersForm() {
     const [hideLoginPassword, setHideLoginPassword] = useState(true);
     const [hideDaftarPassword, setHideDaftarPassword] = useState(true);
     const [inputValidator, setInputValidator] = useState(initialInputValidator);
-    const [resetPassword, setResetPassword] = useState(false);
+    const [emailLogin, setEmailLogin] = useState(false);
 
     /*
     ========== Data ==========
@@ -309,7 +309,7 @@ export function UsersForm() {
             });
     }
 
-    const handleResetPassword = async (e) => {
+    const handleEmailLogin = async (e) => {
         e.preventDefault();
 
         if (inputValidator[0].status !== 'success') {
@@ -323,8 +323,51 @@ export function UsersForm() {
             return;
         }
 
-        console.log('Proccess Reset Password');
-        handleSuksesResetModal();
+        setLoading(true);
+        captcha.current.execute({
+            async: true
+        })
+            .then(async ({ response: token }) => {
+                const unixStamp = Math.round(Date.now() / 1000).toString();
+                const result = Array.from(unixStamp)
+                    .map(Number)
+                    .filter(digit => digit !== 0)
+                    .reduce((acc, digit) => acc * digit, 1);
+
+                const nonce = result.toString();
+                const nonceReverse = nonce.split('').reverse().join('');
+                const hashDigest = SHA256(nonce + guestIdCookie + nonceReverse);
+                const hmacDigest = HmacSHA512(hashDigest, unixStamp);
+                const identifier = Hex.stringify(hmacDigest);
+                const response = await fetch(`/api/magiclink?stamp=${unixStamp}&identifier=${identifier}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ email: email, token: token }),
+                })
+
+                if (!response.ok) {
+                    if (response.status === 429) {
+                        handleErrorModal('Terlalu banyak request, coba lagi dalam 1 menit');
+                    } else if (response.status === 400) {
+                        handleErrorModal('Pastikan emailmu sudah terdaftar dan dikonfirmasi');
+                    } else {
+                        handleErrorModal('Sepertinya ada yang salah, silahkan coba lagi');
+                        router.refresh();
+                    }
+                } else {
+                    handleSuksesResetModal();
+                }
+            })
+            .catch((error) => {
+                if (error === 'challenge-closed') { setErrorMessageLogin('Captcha dibutuhkan untuk login') }
+                else { setErrorMessageLogin(error.message ? error.message : 'Terjadi kesalahan saat login') }
+            })
+            .finally(() => {
+                setLoading(false);
+                captcha.current.resetCaptcha();
+            });
     }
 
     const getToastOptions = (form, style, icon) => {
@@ -354,7 +397,17 @@ export function UsersForm() {
     }
 
     const handleSuksesResetModal = () => {
-        setData({ image: emailImg, message: 'Yuk periksa emailmu termasuk folder spam, untuk konfirmasi reset password.', isSuccess: true });
+        setData({ image: emailImg, message: 'Yuk periksa emailmu termasuk folder spam, untuk langkah selanjutnya.', isSuccess: true });
+        setModal('default');
+        setTimeout(() => {
+            setActive(true);
+        }, 50)
+    }
+
+    const handleErrorModal = (message, isSuccess = false) => {
+        setData({
+            message, isSuccess
+        })
         setModal('default');
         setTimeout(() => {
             setActive(true);
@@ -485,7 +538,7 @@ export function UsersForm() {
     }
 
     const resetFormValue = () => {
-        setResetPassword(false);
+        setEmailLogin(false);
         setNamaLengkap('');
         setUniversitas(0);
         setEmail('');
@@ -517,7 +570,7 @@ export function UsersForm() {
                                 />
 
                                 <form
-                                    onSubmit={resetPassword ? handleResetPassword : handleLogin}
+                                    onSubmit={emailLogin ? handleEmailLogin : handleLogin}
                                     onSubmitCapture={(e) => {
                                         setErrorMessageLogin('');
                                         const allInput = e.target.querySelectorAll('input');
@@ -527,7 +580,7 @@ export function UsersForm() {
                                     }}
                                     className={styles.sign_in_form}
                                 >
-                                    <h2 className={styles.title}>{resetPassword ? 'Reset Password' : 'Login'}</h2>
+                                    <h2 className={styles.title}>{emailLogin ? 'Email Login' : 'Login'}</h2>
                                     <h3 style={{ margin: '.25rem 0', color: 'var(--danger-color)', fontWeight: 'var(--font-medium)' }}>{errorMessageLogin}</h3>
                                     <div className={styles.input_field}>
                                         <i><FaEnvelope /></i>
@@ -553,7 +606,7 @@ export function UsersForm() {
                                             </span>
                                         </i>
                                     </div>
-                                    <div className={`${styles.input_field} ${styles.password} ${resetPassword ? styles.hide : ''}`}>
+                                    <div className={`${styles.input_field} ${styles.password} ${emailLogin ? styles.hide : ''}`}>
                                         <i><FaLock /></i>
 
                                         <input
@@ -565,7 +618,7 @@ export function UsersForm() {
                                             onChange={handlePasswordChange}
                                             onFocus={() => { handleInputFocus(1) }}
                                             onBlur={(e) => { handleInputBlur(e, 1, 'password', 'login') }}
-                                            required={resetPassword ? false : true}
+                                            required={emailLogin ? false : true}
                                         />
 
                                         <i className={styles.eye}>
@@ -586,10 +639,10 @@ export function UsersForm() {
                                         </i>
                                     </div>
 
-                                    <button type='submit' className={`${styles.btn}`}>{resetPassword ? 'Submit' : 'Login'}</button>
+                                    <button type='submit' className={`${styles.btn}`}>{emailLogin ? 'Submit' : 'Login'}</button>
 
                                     <p className={styles.social_text}>
-                                        <a onClick={() => { setResetPassword(!resetPassword); setErrorMessageLogin(''); }}>{resetPassword ? 'Klik disini untuk kembali login.' : 'Lupa password ? Klik disini.'}</a>
+                                        <a onClick={() => { setEmailLogin(!emailLogin); setErrorMessageLogin(''); }}>{emailLogin ? 'Klik disini untuk login pakai password.' : 'Lupa password ? Klik disini.'}</a>
                                     </p>
                                 </form>
                                 <form
