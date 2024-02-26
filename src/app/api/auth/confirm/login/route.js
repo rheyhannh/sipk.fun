@@ -112,5 +112,8 @@ export async function GET(request) {
         cookieStore.set({ name: 's_access_token', value: data.session.access_token, ...cookieServiceOptions });
     }
 
-    return NextResponse.redirect(dashboardUrl);
+    return new Response(null, {
+        status: 204,
+        headers: newHeaders
+    })
 }

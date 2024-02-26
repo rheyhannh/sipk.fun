@@ -111,18 +111,21 @@ export async function GET(request) {
     if (data?.session) {
         cookieStore.set({ name: 's_user_id', value: data.session.user.id, ...cookieServiceOptions });
         cookieStore.set({ name: 's_access_token', value: data.session.access_token, ...cookieServiceOptions });
-        
+
         var { error } = await supabase.from('user').update(
             {
                 is_email_confirmed: true,
                 email_confirmed_at: new Date(),
             }
         ).eq('id', data.session.user.id);
-        
+
         if (error) {
             console.error(`Gagal update column setelah konfirmasi email. [uid: ${data.session.user.id || 'Unknown'}]`)
         }
     }
 
-    return NextResponse.redirect(dashboardUrl);
+    return new Response(null, {
+        status: 204,
+        headers: newHeaders
+    })
 }
