@@ -94,16 +94,6 @@ function Content({ type, states, setStates }) {
     const guestIdCookie = useCookies().get('s_guest_id');
     const isLogin = type === 'login' ? true : false;
 
-    const setNewState = (state) => {
-        if (state === 'loading') { setStates({ loading: true, error: false, success: false }) }
-        else if (state === 'success') { setStates({ loading: false, error: false, success: true }) }
-        else if (state === 'error') { setStates({ loading: false, error: true, success: false }) }
-        else { return }
-        setTimeout(() => {
-            setStates({ loading: false, error: false, success: true })
-        }, 4000)
-    }
-
     const handleFetch = async () => {
         const tokenHash = searchParams.get('token');
 
@@ -171,20 +161,20 @@ function Content({ type, states, setStates }) {
     }
 
     if (!states.loading && !states.error && !states.success) {
-        return <Default isLogin={isLogin} state={states} setNewState={setNewState} handleFetch={handleFetch} />
+        return <Default isLogin={isLogin} state={states} handleFetch={handleFetch} />
     }
     else if (states.loading) {
-        return <Loading isLogin={isLogin} state={states} setNewState={setNewState} handleFetch={handleFetch} />
+        return <Loading isLogin={isLogin} state={states} handleFetch={handleFetch} />
     }
     else if (states.success) {
-        return <Success isLogin={isLogin} state={states} setNewState={setNewState} handleFetch={handleFetch} />
+        return <Success isLogin={isLogin} state={states} handleFetch={handleFetch} />
     }
     else if (states.error) {
-        return <Error isLogin={isLogin} state={states} setNewState={setNewState} handleFetch={handleFetch} />
+        return <Error isLogin={isLogin} state={states} handleFetch={handleFetch} />
     }
 }
 
-function Default({ isLogin, state, setNewState, handleFetch }) {
+function Default({ isLogin, state, handleFetch }) {
     return (
         <div className={styles.content}>
             <h2 className={styles.content__title}>
@@ -202,7 +192,7 @@ function Default({ isLogin, state, setNewState, handleFetch }) {
     )
 }
 
-function Loading({ isLogin, state, setNewState, handleFetch }) {
+function Loading({ isLogin, state, handleFetch }) {
     return (
         <div className={styles.content}>
             <h2 className={styles.content__title}>
@@ -211,7 +201,7 @@ function Loading({ isLogin, state, setNewState, handleFetch }) {
             <div className={styles.content__text}>
                 Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium nihil nemo rerum alias ratione modi?
             </div>
-            <div className={styles.content__action} onClick={() => { setNewState('loading') }}>
+            <div className={styles.content__action}>
                 <div className={`${styles.btn}`}>
                     <h3>Ditunggu ya kak</h3>
                 </div>
@@ -220,7 +210,7 @@ function Loading({ isLogin, state, setNewState, handleFetch }) {
     )
 }
 
-function Success({ isLogin, state, setNewState, handleFetch }) {
+function Success({ isLogin, state, handleFetch }) {
     return (
         <div className={styles.content}>
             <h2 className={styles.content__title}>
@@ -260,7 +250,7 @@ function Success({ isLogin, state, setNewState, handleFetch }) {
     )
 }
 
-function Error({ isLogin, state, setNewState, handleFetch }) {
+function Error({ isLogin, state, handleFetch }) {
     const getContent = () => {
         if (state?.code === '429') {
             return {
