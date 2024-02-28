@@ -213,9 +213,9 @@ function Success({ isLogin, state, handleFetch }) {
             </h2>
             <div className={styles.content__text}>
                 {isLogin ?
-                    'Proses login berhasil. Apakah kamu mau reset passwordmu?'
+                    'Login berhasil. Kamu akan dialihkan ke dashboard dalam x detik'
                     :
-                    'Akun kamu sudah dikonfirmasi. Mulai petualanganmu sekarang bersama SIPK dengan klik tombol dibawah.'
+                    'Akun berhasil dikonfirmasi. Mulai petualanganmu sekarang bersama SIPK dengan klik tombol dibawah.'
                 }
             </div>
             <div className={styles.content__action}>
