@@ -220,21 +220,9 @@ function Success({ isLogin, state, handleFetch }) {
             </div>
             <div className={styles.content__action}>
                 {isLogin ?
-                    <div
-                        style={{
-                            display: 'grid',
-                            gridTemplateColumns: 'repeat(2,1fr)',
-                            gap: '1rem',
-                            height: '100%'
-                        }}
-                    >
-                        <a className={`${styles.btn} ${styles.cancel}`} href={'/dashboard'}>
-                            <h3>Gausah</h3>
-                        </a>
-                        <div className={`${styles.btn} ${styles.success}`}>
-                            <h3>Boleh</h3>
-                        </div>
-                    </div>
+                    <a className={`${styles.btn} ${styles.success}`} href={'/dashboard'}>
+                        <h3>Menuju Dashboard (x)</h3>
+                    </a>
                     :
                     <a className={`${styles.btn} ${styles.success}`} href={'/dashboard'}>
                         <h3>Mulai Sekarang</h3>
