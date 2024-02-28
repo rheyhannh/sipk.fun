@@ -39,6 +39,19 @@ export default async function middleware(request) {
             if (!serviceGuestCookie || !isUUID(serviceGuestCookie)) { response.cookies.set({ name: 's_guest_id', value: crypto.randomUUID(), ...cookieServiceOptions }) }
             return response
         }
+        if (pathname.startsWith('/magiclink')) {
+            const allowedActions = ['login', 'confirm'];
+            const action = request.nextUrl.searchParams.get('action');
+            const token = request.nextUrl.searchParams.get('token');
+            if (!serviceGuestCookie || !isUUID(serviceGuestCookie)) { response.cookies.set({ name: 's_guest_id', value: crypto.randomUUID(), ...cookieServiceOptions }) }
+            if (!action || !token || !allowedActions.includes(action)) {
+                loginUrl.searchParams.set('action', 'login');
+                loginUrl.searchParams.set('error', 'ilink');
+                response = NextResponse.redirect(loginUrl);
+            }
+            return response
+        }
+
         loginUrl.searchParams.set('action', 'login');
         loginUrl.searchParams.set('error', 'esession');
         if (pathname === '/dashboard') { loginUrl.searchParams.set('from', 'dashboard') }
@@ -78,10 +91,20 @@ export default async function middleware(request) {
             // This block run when [1] and user try access '/dashboard/*'
             // Handle : redirect user to '/users?action=login&error=isession'
             loginUrl.searchParams.set('error', 'isession');
+            if (pathname === '/dashboard') { loginUrl.searchParams.set('from', 'dashboard') }
+            if (pathname === '/dashboard/matakuliah') { loginUrl.searchParams.set('from', 'matakuliah') }
+            response = NextResponse.redirect(loginUrl);
         }
-        if (pathname === '/dashboard') { loginUrl.searchParams.set('from', 'dashboard') }
-        if (pathname === '/dashboard/matakuliah') { loginUrl.searchParams.set('from', 'matakuliah') }
-        response = NextResponse.redirect(loginUrl);
+
+        if (pathname.startsWith('/magiclink')) {
+            const allowedActions = ['login', 'confirm'];
+            const action = request.nextUrl.searchParams.get('action');
+            const token = request.nextUrl.searchParams.get('token');
+            if (!action || !token || !allowedActions.includes(action)) {
+                loginUrl.searchParams.set('error', 'ilink');
+                response = NextResponse.redirect(loginUrl);
+            }
+        }
 
         // Reset sensitive cookies
         response.cookies.set({ name: process.env.USER_SESSION_COOKIES_NAME, value: '', ...cookieAuthDeleteOptions, })
@@ -107,19 +130,19 @@ export default async function middleware(request) {
                 response.cookies.set({ name: 's_access_token', value: data.session.access_token, ...cookieServiceOptions })
             }
         }
-    }
 
-    if (pathname.startsWith('/users')) {
-        // This block run when session (secure auth token) are valid or receiving new session ...
-        // ... but user trying to access '/users'
-        // Handle : redirect user to '/dashboard'
-        const dashboardUrl = new URL("/dashboard", request.url);
-        response = NextResponse.redirect(dashboardUrl);
+        if (pathname.startsWith('/users') || pathname.startsWith('/magiclink')) {
+            // This block run when session (secure auth token) are valid or receiving new session ...
+            // ... but user trying to access '/users' or '/magiclink'
+            // Handle : redirect user to '/dashboard'
+            const dashboardUrl = new URL("/dashboard", request.url);
+            response = NextResponse.redirect(dashboardUrl);
+        }
     }
 
     return response;
 }
 
 export const config = {
-    matcher: ['/dashboard/:path*', '/users/:path*'],
+    matcher: ['/dashboard/:path*', '/users/:path*', '/magiclink/:path*'],
 }
