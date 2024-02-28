@@ -194,17 +194,12 @@ function Default({ isLogin, state, handleFetch }) {
 
 function Loading({ isLogin, state, handleFetch }) {
     return (
-        <div className={styles.content}>
+        <div className={`${styles.content} ${styles.no_action}`}>
             <h2 className={styles.content__title}>
                 Memproses Magiclink
             </h2>
             <div className={styles.content__text}>
                 Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium nihil nemo rerum alias ratione modi?
-            </div>
-            <div className={styles.content__action}>
-                <div className={`${styles.btn}`}>
-                    <h3>Ditunggu ya kak</h3>
-                </div>
             </div>
         </div>
     )
