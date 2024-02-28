@@ -139,7 +139,8 @@ export function UsersForm() {
         if (error && mode === 'login') {
             const errorList = {
                 "isession": "Sesi invalid, silahkan login kembali",
-                "esession": "Silahkan login terlebih dahulu"
+                "esession": "Silahkan login terlebih dahulu",
+                "ilink": "Magiclink invalid, silahkan login ulang"
             }
             router.refresh();
             setErrorMessageLogin(errorList[error] || 'Terjadi error, silahkan login kembali');
