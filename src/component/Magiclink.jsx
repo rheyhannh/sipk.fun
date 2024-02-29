@@ -14,6 +14,7 @@ import isUUID from 'validator/lib/isUUID';
 import { mutate } from 'swr';
 import { useCookies } from 'next-client-cookies';
 import toast from 'react-hot-toast';
+import Countdown from 'react-countdown';
 
 // ========== DATA DEPEDENCY ========== //
 import { useLocalTheme } from '@/data/core';
@@ -206,29 +207,44 @@ function Loading({ isLogin, state, handleFetch }) {
 }
 
 function Success({ isLogin, state, handleFetch }) {
+    const router = useRouter();
+
     return (
         <div className={styles.content}>
             <h2 className={styles.content__title}>
                 Magiclink Valid
             </h2>
-            <div className={styles.content__text}>
-                {isLogin ?
-                    'Login berhasil. Kamu akan dialihkan ke dashboard dalam x detik'
-                    :
-                    'Akun berhasil dikonfirmasi. Mulai petualanganmu sekarang bersama SIPK dengan klik tombol dibawah.'
-                }
-            </div>
-            <div className={styles.content__action}>
-                {isLogin ?
-                    <a className={`${styles.btn} ${styles.success}`} href={'/dashboard'}>
-                        <h3>Menuju Dashboard (x)</h3>
-                    </a>
-                    :
-                    <a className={`${styles.btn} ${styles.success}`} href={'/dashboard'}>
-                        <h3>Mulai Sekarang</h3>
-                    </a>
-                }
-            </div>
+            {isLogin ?
+                <Countdown
+                    date={Date.now() + 3000}
+                    onComplete={() => router.replace('/dashboard')}
+                    renderer={props => {
+                        return (
+                            <>
+                                <div className={styles.content__text}>
+                                    Login berhasil. Kamu akan dialihkan ke dashboard dalam <span style={{fontWeight: '700'}}>{props.seconds} detik</span>
+                                </div>
+                                <div className={styles.content__action}>
+                                    <a className={`${styles.btn} ${styles.success}`} href={'/dashboard'}>
+                                        <h3>Menuju Dashboard ({props.seconds})</h3>
+                                    </a>
+                                </div>
+                            </>
+                        )
+                    }}
+                />
+                :
+                <>
+                    <div className={styles.content__text}>
+                        Akun berhasil dikonfirmasi. Mulai pakai SIPK sekarang dengan klik tombol dibawah.
+                    </div>
+                    <div className={styles.content__action}>
+                        <a className={`${styles.btn} ${styles.success}`} href={'/dashboard'}>
+                            <h3>Mulai Sekarang</h3>
+                        </a>
+                    </div>
+                </>
+            }
         </div>
     )
 }
