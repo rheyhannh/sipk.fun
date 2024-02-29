@@ -1,7 +1,7 @@
 'use client'
 
 // ========== NEXT DEPEDENCY ========== //
-import Image from 'next/image'
+import Link from 'next/link'
 import { useRouter, useSearchParams } from 'next/navigation';
 
 // ========== REACT DEPEDENCY ========== //
@@ -225,9 +225,9 @@ function Success({ isLogin, state, handleFetch }) {
                                     Login berhasil. Kamu akan dialihkan ke dashboard dalam <span style={{fontWeight: '700'}}>{props.seconds} detik</span>
                                 </div>
                                 <div className={styles.content__action}>
-                                    <a className={`${styles.btn} ${styles.success}`} href={'/dashboard'}>
+                                    <Link className={`${styles.btn} ${styles.success}`} href={'/dashboard'} prefetch={false} replace>
                                         <h3>Menuju Dashboard ({props.seconds})</h3>
-                                    </a>
+                                    </Link>
                                 </div>
                             </>
                         )
@@ -239,9 +239,9 @@ function Success({ isLogin, state, handleFetch }) {
                         Akun berhasil dikonfirmasi. Mulai pakai SIPK sekarang dengan klik tombol dibawah.
                     </div>
                     <div className={styles.content__action}>
-                        <a className={`${styles.btn} ${styles.success}`} href={'/dashboard'}>
+                        <Link className={`${styles.btn} ${styles.success}`} href={'/dashboard'} prefetch={false} replace>
                             <h3>Mulai Sekarang</h3>
-                        </a>
+                        </Link>
                     </div>
                 </>
             }
@@ -262,26 +262,26 @@ function Error({ isLogin, state, handleFetch }) {
                 title: 'Magiclink Invalid',
                 text: `Magiclink tidak sesuai atau sudah expired. Kamu perlu ${isLogin ? 'login ulang' : 'daftar ulang'} untuk mendapatkan magiclink baru.`,
                 action: isLogin ?
-                    <a className={`${styles.btn} ${styles.error}`} href={'/users?action=login'}>
+                    <Link className={`${styles.btn} ${styles.error}`} href={'/users?action=login'} prefetch={false} replace>
                         <h3>Login Ulang</h3>
-                    </a>
+                    </Link>
                     :
-                    <a className={`${styles.btn} ${styles.error}`} href={'/users?action=daftar'}>
+                    <Link className={`${styles.btn} ${styles.error}`} href={'/users?action=daftar'} prefetch={false} replace>
                         <h3>Daftar Ulang</h3>
-                    </a>
+                    </Link>
             }
         } else {
             return {
                 title: 'Terjadi Kesalahan',
                 text: `Silahkan refresh halaman ini dan coba lagi, atau ${isLogin ? 'login ulang' : 'daftar ulang'} untuk mendapatkan magiclink baru.`,
                 action: isLogin ?
-                    <a className={`${styles.btn} ${styles.error}`} href={'/users?action=login'}>
+                    <Link className={`${styles.btn} ${styles.error}`} href={'/users?action=login'} prefetch={false} replace>
                         <h3>Login Ulang</h3>
-                    </a>
+                    </Link>
                     :
-                    <a className={`${styles.btn} ${styles.error}`} href={'/users?action=daftar'}>
+                    <Link className={`${styles.btn} ${styles.error}`} href={'/users?action=daftar'} prefetch={false} replace>
                         <h3>Daftar Ulang</h3>
-                    </a>
+                    </Link>
             }
         }
     }
