@@ -222,7 +222,7 @@ function Success({ isLogin, state, handleFetch }) {
                         return (
                             <>
                                 <div className={styles.content__text}>
-                                    Login berhasil. Kamu akan dialihkan ke dashboard dalam <span style={{fontWeight: '700'}}>{props.seconds} detik</span>
+                                    Login berhasil. Kamu akan dialihkan ke dashboard dalam <span style={{ fontWeight: '700' }}>{props.seconds} detik</span>
                                 </div>
                                 <div className={styles.content__action}>
                                     <Link className={`${styles.btn} ${styles.success}`} href={'/dashboard'} prefetch={false} replace>
