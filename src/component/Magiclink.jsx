@@ -287,16 +287,20 @@ function Error({ isLogin, state, handleFetch }) {
     }
 
     return (
-        <div className={styles.content}>
+        <div className={`${styles.content} ${getContent().action ? '' : styles.no_action}`}>
             <h2 className={styles.content__title}>
                 {getContent().title}
             </h2>
+
             <div className={styles.content__text}>
                 {getContent().text}
             </div>
-            <div className={styles.content__action}>
-                {getContent().action}
-            </div>
+
+            {getContent().action && (
+                <div className={styles.content__action}>
+                    {getContent().action}
+                </div>
+            )}
         </div>
     )
 }
