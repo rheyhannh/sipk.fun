@@ -46,6 +46,7 @@ export default async function middleware(request) {
             if (!serviceGuestCookie || !isUUID(serviceGuestCookie)) { response.cookies.set({ name: 's_guest_id', value: crypto.randomUUID(), ...cookieServiceOptions }) }
             if (!action || !token || !allowedActions.includes(action)) {
                 loginUrl.searchParams.set('action', 'login');
+                loginUrl.searchParams.set('type', 'email');
                 loginUrl.searchParams.set('error', 'ilink');
                 response = NextResponse.redirect(loginUrl);
             }
@@ -101,6 +102,8 @@ export default async function middleware(request) {
             const action = request.nextUrl.searchParams.get('action');
             const token = request.nextUrl.searchParams.get('token');
             if (!action || !token || !allowedActions.includes(action)) {
+                loginUrl.searchParams.set('action', 'login');
+                loginUrl.searchParams.set('type', 'email');
                 loginUrl.searchParams.set('error', 'ilink');
                 response = NextResponse.redirect(loginUrl);
             }
