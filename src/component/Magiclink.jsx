@@ -262,7 +262,7 @@ function Error({ isLogin, state, handleFetch }) {
                 title: 'Magiclink Invalid',
                 text: `Magiclink tidak sesuai atau sudah expired. Kamu perlu ${isLogin ? 'login ulang' : 'daftar ulang'} untuk mendapatkan magiclink baru.`,
                 action: isLogin ?
-                    <Link className={`${styles.btn} ${styles.error}`} href={'/users?action=login'} prefetch={false} replace>
+                    <Link className={`${styles.btn} ${styles.error}`} href={'/users?action=login&type=email'} prefetch={false} replace>
                         <h3>Login Ulang</h3>
                     </Link>
                     :
@@ -275,7 +275,7 @@ function Error({ isLogin, state, handleFetch }) {
                 title: 'Terjadi Kesalahan',
                 text: `Silahkan refresh halaman ini dan coba lagi, atau ${isLogin ? 'login ulang' : 'daftar ulang'} untuk mendapatkan magiclink baru.`,
                 action: isLogin ?
-                    <Link className={`${styles.btn} ${styles.error}`} href={'/users?action=login'} prefetch={false} replace>
+                    <Link className={`${styles.btn} ${styles.error}`} href={'/users?action=login&type=email'} prefetch={false} replace>
                         <h3>Login Ulang</h3>
                     </Link>
                     :
