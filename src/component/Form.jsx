@@ -150,6 +150,10 @@ export function UsersForm() {
         const logout = searchParams.get('logout');
         if (logout) { router.refresh(); }
 
+        // Email Login ?
+        const loginType = searchParams.get('type');
+        if (loginType === 'email') { setEmailLogin(true); }
+
     }, [searchParams])
 
     /*
