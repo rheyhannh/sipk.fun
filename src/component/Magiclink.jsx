@@ -254,13 +254,13 @@ function Error({ isLogin, state, handleFetch }) {
         if (state?.code === '429') {
             return {
                 title: 'Too Many Request',
-                text: 'Silahkan refresh halaman ini dan coba lagi dalam 1 menit.',
+                text: 'Terlalu banyak request. Silahkan refresh dan coba lagi dalam 1 menit.',
                 action: null
             }
         } else if (state?.code === '403') {
             return {
                 title: 'Magiclink Invalid',
-                text: `Magiclink tidak sesuai atau sudah expired. Kamu perlu ${isLogin ? 'login ulang' : 'daftar ulang'} untuk mendapatkan magiclink baru.`,
+                text: `Magiclink tidak sesuai atau sudah expired. Silahkan ${isLogin ? 'login ulang' : 'daftar ulang'} agar dapat magiclink baru.`,
                 action: isLogin ?
                     <Link className={`${styles.btn} ${styles.error}`} href={'/users?action=login&type=email'} prefetch={false} replace>
                         <h3>Login Ulang</h3>
@@ -273,7 +273,7 @@ function Error({ isLogin, state, handleFetch }) {
         } else {
             return {
                 title: 'Terjadi Kesalahan',
-                text: `Silahkan refresh halaman ini dan coba lagi, atau ${isLogin ? 'login ulang' : 'daftar ulang'} untuk mendapatkan magiclink baru.`,
+                text: `Ada yang salah. Silahkan coba lagi atau ${isLogin ? 'login ulang' : 'daftar ulang'} untuk mendapatkan magiclink baru.`,
                 action: isLogin ?
                     <Link className={`${styles.btn} ${styles.error}`} href={'/users?action=login&type=email'} prefetch={false} replace>
                         <h3>Login Ulang</h3>
