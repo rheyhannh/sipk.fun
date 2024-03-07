@@ -1,21 +1,20 @@
 .container {
     position: relative;
     width: 100%;
-    min-height: 100vh;
+    height: 100%;
     background-color: var(--body-color);
+    overflow-y: auto;
+    overflow-x: hidden;
     font-size: var(--normal-font-size);
-    overflow: hidden;
     z-index: var(--z-default);
 }
 
 .backdrop {
-    position: fixed;
-    top: 0;
-    left: 0;
     background: rgba(0, 0, 0, .5);
     backdrop-filter: blur(1px);
     width: 100%;
     height: 100%;
+    min-height: 450px;
 }
 
 .wrapper {
@@ -198,6 +197,7 @@
 }
 
 .content {
+    overflow: hidden;
     width: 100%;
     height: 100%;
     display: grid;
@@ -212,6 +212,9 @@
 
 .content__title {
     text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .content__text {
@@ -219,9 +222,6 @@
 }
 
 .content__action {
-    position: sticky;
-    bottom: 0;
-    left: 0;
     height: 50px;
     text-transform: capitalize;
 }
@@ -329,7 +329,6 @@
     color: var(--danger-color);
 }
 
-
 @keyframes rotate {
     from {
         transform: translate(-50%, -50%) rotate(-360deg);
@@ -405,5 +404,28 @@
 
     .btn.cancel:hover {
         background: var(--accordion-bg-color);
+    }
+}
+
+@media screen and (max-width: 425px) {
+    .wrapper {
+        max-width: 80%;
+        min-width: 225px;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .icon__outter {
+        width: 77px;
+        height: 77px;
+    }
+
+    .icon__inner {
+        width: 65px;
+        height: 65px;
+    }
+
+    .icon {
+        font-size: 1.75rem;
     }
 }
