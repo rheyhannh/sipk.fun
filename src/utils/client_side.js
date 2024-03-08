@@ -46,6 +46,10 @@ export const getLoadingMessage = (funWord = false, index = true) => {
     return funWord ? message.fun[usedIndex] || 'Memproses Keajaiban' : message.default[usedIndex] || 'Memproses permintaanmu';
 }
 
+/**
+ * Method untuk mendapatkan fakta default (static) tentang SIPK. Dapat digunakan untuk error handler jika fetch `api/fakta` gagal.
+ * @return {Array} Array of string fakta tentang SIPK
+ */
 export const getDefaultFakta = () => {
     const fakta = [
         'Fakta 1', 'Fakta 2', 'Fakta 3', 'Fakta 4', 'Fakta 5'
