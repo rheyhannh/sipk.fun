@@ -153,3 +153,8 @@ export function useUniversitas(custom, type, id) {
 export function useLocalTheme(custom) {
     return useSWR('localUserTheme', getLocalTheme, { ...swrOptions, revalidateOnFocus: true, ...custom });
 }
+
+export function useFakta(custom) {
+    const url = '/api/fakta';
+    return useSWR(url, () => fetchPublic(url), { ...swrOptions, ...custom });
+}
