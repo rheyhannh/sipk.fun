@@ -46,6 +46,14 @@ export const getLoadingMessage = (funWord = false, index = true) => {
     return funWord ? message.fun[usedIndex] || 'Memproses Keajaiban' : message.default[usedIndex] || 'Memproses permintaanmu';
 }
 
+export const getDefaultFakta = () => {
+    const fakta = [
+        'Fakta 1', 'Fakta 2', 'Fakta 3', 'Fakta 4', 'Fakta 5'
+    ]
+
+    return fakta;
+}
+
 // Settings or Preferences Utility
 /**
  * Method untuk mendapatkan tema yang digunakan dari `localStorage` jika tersedia. Default value `'light'`.
