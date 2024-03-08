@@ -15,7 +15,7 @@ const cookieAuthOptions = { secure: true, httpOnly: true, maxAge: 2592000, sameS
 const cookieAuthDeleteOptions = { secure: true, httpOnly: true, maxAge: -2592000, sameSite: 'lax' };
 const cookieServiceOptions = { secure: false, httpOnly: false, maxAge: 2592000, sameSite: 'lax' };
 const limitRequest = parseInt(process.env.API_UNIVERSITAS_REQUEST_LIMIT);
-const limiter = await await rateLimit({
+const limiter = await rateLimit({
     interval: parseInt(process.env.API_UNIVERSITAS_TOKEN_INTERVAL_SECONDS) * 1000,
     uniqueTokenPerInterval: parseInt(process.env.API_UNIVERSITAS_MAX_TOKEN_PERINTERVAL),
 })
