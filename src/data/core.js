@@ -1,7 +1,7 @@
 // ========== COMPONENT DEPEDENCY ========== //
 import useSWR from 'swr'
 import { useCookies } from 'next-client-cookies';
-import { getLocalTheme, getSessionTable } from '@/utils/client_side';
+import { getLocalTheme } from '@/utils/client_side';
 
 /*
 ============================== CODE START HERE ==============================
