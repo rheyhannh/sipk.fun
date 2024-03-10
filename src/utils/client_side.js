@@ -55,6 +55,12 @@ export const getDefaultFakta = () => {
         'Fakta 1', 'Fakta 2', 'Fakta 3', 'Fakta 4', 'Fakta 5'
     ]
 
+    // Shuffle array use Fisher-Yates Algorithm
+    for (let i = fakta.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [fakta[i], fakta[j]] = [fakta[j], fakta[i]];
+    }
+
     return fakta;
 }
 
