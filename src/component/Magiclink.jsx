@@ -17,7 +17,8 @@ import toast from 'react-hot-toast';
 import Countdown from 'react-countdown';
 
 // ========== DATA DEPEDENCY ========== //
-import { useLocalTheme } from '@/data/core';
+import { useLocalTheme, useFakta } from '@/data/core';
+import { getDefaultFakta } from '@/utils/client_side';
 
 // ========== STYLE DEPEDENCY ========== //
 import styles from './style/magiclink.module.css'
@@ -93,6 +94,7 @@ function Content({ type, states, setStates }) {
     const router = useRouter();
     const searchParams = useSearchParams();
     const guestIdCookie = useCookies().get('s_guest_id');
+    const { data: fakta } = useFakta();
     const isLogin = type === 'login' ? true : false;
 
     const handleFetch = async () => {
@@ -165,7 +167,7 @@ function Content({ type, states, setStates }) {
         return <Default isLogin={isLogin} state={states} handleFetch={handleFetch} />
     }
     else if (states.loading) {
-        return <Loading isLogin={isLogin} state={states} handleFetch={handleFetch} />
+        return <Loading fakta={fakta} />
     }
     else if (states.success) {
         return <Success isLogin={isLogin} state={states} handleFetch={handleFetch} />
@@ -193,14 +195,30 @@ function Default({ isLogin, state, handleFetch }) {
     )
 }
 
-function Loading({ isLogin, state, handleFetch }) {
+function Loading({ fakta }) {
+    const [mounted, setMounted] = useState(false);
+    const [usedFakta, setUsedFakta] = useState('');
+
+    useEffect(() => {
+        if (!mounted) {
+            if (fakta && fakta.length > 0) {
+                const randomIndex = Math.floor(Math.random() * fakta.length);
+                const selectedFakta = fakta[randomIndex].text ?? '';
+                setUsedFakta(selectedFakta);
+            }
+            else { setUsedFakta(getDefaultFakta()[0]) }
+        }
+
+        setMounted(true);
+    }, [fakta])
+
     return (
         <div className={`${styles.content} ${styles.no_action}`}>
             <h2 className={styles.content__title}>
                 Memproses Magiclink
             </h2>
             <div className={styles.content__text}>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium nihil nemo rerum alias ratione modi?
+                {usedFakta}
             </div>
         </div>
     )
