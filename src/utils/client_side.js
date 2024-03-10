@@ -48,7 +48,7 @@ export const getLoadingMessage = (funWord = false, index = true) => {
 
 /**
  * Method untuk mendapatkan fakta default (static) tentang SIPK. Dapat digunakan untuk error handler jika fetch `api/fakta` gagal.
- * @return {Array} Array of string fakta tentang SIPK
+ * @returns {Array<string>} Array of string fakta tentang SIPK yang sudah dishuffle urutan indexnya.
  */
 export const getDefaultFakta = () => {
     const fakta = [
