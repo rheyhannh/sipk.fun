@@ -101,6 +101,11 @@ const swrOptions = {
     shouldRetryOnError: false,
 }
 
+/**
+ * Hook SWR untuk mendapatkan data user
+ * @param {object} custom Custom SWR options
+ * @returns {{isLoading:Boolean, isValidating:Boolean, error:{}, data: Array<{ id:string, email:string, is_email_confirmed:boolean, email_confirmed_at:Date, is_banned:boolean, banned_until:Date, roles:string, fullname:string, nickname:string, university:string, university_id:number, jurusan:string, sks_target:number, matkul_target:number, ipk_target:float, created_at:Date, updated_at:Date, preferences:{table:{size:number, controlPosition:0|1|2, columnOrder:['nomor'|'matakuliah'|'semester'|'sks'|'nilai'|'diulang'|'target'|'ontarget'], columnVisibility:{nomor:boolean, matakuliah:boolean, semester:boolean, sks:boolean, nilai:boolean, diulang:boolean, target:boolean, ontarget:boolean} }} }>}} Users data dan SWR state
+ */
 export function useUser(custom) {
     const url = '/api/me';
     const userIdCookie = useCookies().get('s_user_id');
@@ -108,6 +113,11 @@ export function useUser(custom) {
     return useSWR([url, userIdCookie], () => fetchWithUserId(url, userIdCookie, accessToken), { ...swrOptions, ...custom })
 }
 
+/**
+ * Hook SWR untuk mendapatkan data matakuliah user
+ * @param {object} custom Custom SWR options
+ * @returns {{isLoading:Boolean, isValidating:Boolean, error:{}, data: Array<{id:string, nama:string, semester:number, sks:number, nilai:{indeks:string, bobot:float, akhir:float}, dapat_diulang:boolean, owned_by:string, target_nilai:{indeks:string, bobot: float}, created_at:number, updated_at:number, deleted_at:number}>}} Users matakuliah data dan SWR state
+ */
 export function useMatkul(custom) {
     const url = '/api/matkul';
     const userIdCookie = useCookies().get('s_user_id');
@@ -115,6 +125,11 @@ export function useMatkul(custom) {
     return useSWR([url, userIdCookie], () => fetchWithUserId(url, userIdCookie, accessToken), { ...swrOptions, ...custom })
 }
 
+/**
+ * Hook SWR untuk mendapatkan data matakuliah history user
+ * @param {object} custom Custom SWR options
+ * @returns {{isLoading:Boolean, isValidating:Boolean, error:{}, data: Array<{id:string, current:{nama:string, semester:number, sks:number, nilai:{indeks:string, bobot:float, akhir:float}, dapat_diulang:boolean, target_nilai:{indeks:string, bobot:float}, type:'tambah'|'hapus'|'ubah', stamp:number}, prev:{nama:string, semester:number, sks:number, nilai:{indeks:string, bobot:float, akhir:float}, dapat_diulang:boolean, target_nilai:{indeks:string, bobot:float}, type:'tambah'|'hapus'|'ubah', stamp:number}, owned_by:string, last_change_at:number, matkul_id:string}>}} Users matakuliah history data dan SWR state
+ */
 export function useMatkulHistory(custom) {
     const url = '/api/matkul-history';
     const userIdCookie = useCookies().get('s_user_id');
@@ -122,6 +137,11 @@ export function useMatkulHistory(custom) {
     return useSWR([url, userIdCookie], () => fetchWithUserId(url, userIdCookie, accessToken), { ...swrOptions, ...custom })
 }
 
+/**
+ * Hook SWR untuk mendapatkan data rating user
+ * @param {object} custom Custom SWR options
+ * @returns {{isLoading:Boolean, isValidating:Boolean, error:{}, data: Array<{id:string, rating:number, review:string, owned_by:string, created_at:Date, unix_created_at:number, unix_updated_at:number, details:{author:string, authorType:0|1|2, universitas:string}}>}} Users rating data dan SWR state
+ */
 export function useRating(custom) {
     const url = '/api/rating';
     const userIdCookie = useCookies().get('s_user_id');
@@ -129,12 +149,24 @@ export function useRating(custom) {
     return useSWR([url, userIdCookie], () => fetchWithUserId(url, userIdCookie, accessToken), { ...swrOptions, ...custom })
 }
 
+/**
+ * Hook SWR untuk mendapatkan notifikasi atau berita dari SIPK
+ * @param {object} custom Custom SWR options
+ * @returns {{isLoading:Boolean, isValidating:Boolean, error:{}, data: Array<{title:string, description:string, href:string, icon:{lib:string, name:string}, color:string, date_created_at:Date, unix_created_at:number}>}} Notifikasi atau berita dan SWR state
+ */
 export function useNotifikasi(custom) {
     const url = '/api/notifikasi';
     const accessToken = useCookies().get('s_access_token');
     return useSWR(url, () => fetchDefault(url, accessToken), { ...swrOptions, ...custom })
 }
 
+/**
+ * Hook SWR untuk mendapatkan data universitas
+ * @param {object} custom Custom SWR options
+ * @param {'public'|'user'} type Jika 'user' akan return props `penilaian` untuk digunakan sebagai perhitungan nilai. Jika 'public' akan return props `assets` berupa deskripsi, logo, etc.
+ * @param {number|'all'} id Id universitas. Query data berdasarkan `id` atau `all` untuk semua
+ * @returns {{isLoading:Boolean, isValidating:Boolean, error:{}, data: Array<{id:string, nama:string, short:string, penilaian:{cat:string, style:'success'|'warning'|'danger'|'crimson', weight:float}, assets:{logo:string, desc:string, style:{color:{primary:string, secondary:string}}}, created_at:Date}>}} Universitas data dan SWR state
+ */
 export function useUniversitas(custom, type, id) {
     var url = null;
     if (type && id) {
@@ -150,10 +182,20 @@ export function useUniversitas(custom, type, id) {
     }, { ...swrOptions, ...custom })
 }
 
+/**
+ * Hook SWR untuk mendapatkan user local browser theme
+ * @param {object} custom Custom SWR options
+ * @returns {{isLoading:Boolean, isValidating:Boolean, error:{}, data:'dark'|'light'}} User local browser theme dan SWR state
+ */
 export function useLocalTheme(custom) {
     return useSWR('localUserTheme', getLocalTheme, { ...swrOptions, revalidateOnFocus: true, ...custom });
 }
 
+/**
+ * Hook SWR untuk mendapatkan data fakta tentang SIPK
+ * @param {object} custom Custom SWR options
+ * @returns {{isLoading:Boolean, isValidating:Boolean, error:{}, data: Array<{id:string, text:string, unix_created_at:number, unix_updated_at:number}>}} Data fakta SIPK dan SWR state
+ */
 export function useFakta(custom) {
     const url = '/api/fakta';
     return useSWR(url, () => fetchPublic(url), { ...swrOptions, ...custom });
