@@ -89,6 +89,13 @@ function Wrapper() {
     )
 }
 
+/**
+ * Render magiclink content `login|confirm` sesuai dengan state nya `loading|error|success|default`.
+ * @param {{states:{loading:boolean, success:boolean, error:boolean, code?:string|null}, setStates:(states:{loading:boolean, success:boolean, error:boolean}) => void}} props React props object
+ * @param props.states Magiclink state
+ * @param props.setStates Method untuk set magiclink state
+ * @returns {ReactNode} Element react untuk render magiclink content
+ */
 function Content({ states, setStates }) {
     const router = useRouter();
     const searchParams = useSearchParams();
@@ -176,6 +183,13 @@ function Content({ states, setStates }) {
     }
 }
 
+/**
+ * Render magiclink content `login|confirm` dengan state `default`.
+ * @param {{isLogin:boolean, handleFetch:() => void}} props React props object
+ * @param props.isLogin Apakah login content atau bukan
+ * @param props.handleFetch Method fetch untuk verifikasi magiclink
+ * @returns {ReactNode} Element react untuk render magiclink content dengan state default.
+ */
 function Default({ isLogin, handleFetch }) {
     return (
         <div className={styles.content}>
@@ -194,6 +208,12 @@ function Default({ isLogin, handleFetch }) {
     )
 }
 
+/**
+ * Render magiclink content `login|confirm` dengan state `loading`.
+ * @param {{fakta:Array<string>}} props React props object
+ * @param props.fakta Content fakta tentang SIPK
+ * @returns {ReactNode} Element react untuk render magiclink content dengan state loading.
+ */
 function Loading({ fakta }) {
     const [mounted, setMounted] = useState(false);
     const [usedFakta, setUsedFakta] = useState('');
@@ -223,6 +243,12 @@ function Loading({ fakta }) {
     )
 }
 
+/**
+ * Render magiclink content `login|confirm` dengan state `success`.
+ * @param {{isLogin:boolean}} props React props object
+ * @param props.isLogin Apakah login content atau bukan
+ * @returns {ReactNode} Element react untuk render magiclink content dengan state success.
+ */
 function Success({ isLogin }) {
     const router = useRouter();
 
@@ -266,6 +292,13 @@ function Success({ isLogin }) {
     )
 }
 
+/**
+ * Render magiclink content `login|confirm` dengan state `error`.
+ * @param {{isLogin:boolean, state:{loading:boolean, success:boolean, error:boolean, code?:string|null}}} props React props object
+ * @param props.isLogin Apakah login content atau bukan
+ * @param props.states Magiclink state
+ * @returns {ReactNode} Element react untuk render magiclink content dengan state error.
+ */
 function Error({ isLogin, state }) {
     const getContent = () => {
         if (state?.code === '429') {
