@@ -44,9 +44,8 @@ function Wrapper() {
     const [states, setStates] = useState({
         loading: false, success: false, error: false
     })
+    
     const { data: theme } = useLocalTheme();
-    const type = useSearchParams().get('action');
-
     const getStates = () => states.loading ? styles.loading : states.success ? styles.success : states.error ? styles.error : '';
 
     const handleChangeTheme = (newTheme) => {
@@ -75,7 +74,7 @@ function Wrapper() {
                     <FaExclamation />
                 </div>
             </div>
-            <Content type={type} states={states} setStates={setStates} />
+            <Content states={states} setStates={setStates} />
             <div className={`${styles.theme__outter} ${getStates()}`}>
                 <div className={styles.theme__inner}>
                     <div className={`${styles.circle} ${theme !== 'dark' ? styles.active : ''}`} onClick={() => { handleChangeTheme('light') }}>
@@ -90,12 +89,12 @@ function Wrapper() {
     )
 }
 
-function Content({ type, states, setStates }) {
+function Content({ states, setStates }) {
     const router = useRouter();
     const searchParams = useSearchParams();
     const guestIdCookie = useCookies().get('s_guest_id');
     const { data: fakta } = useFakta();
-    const isLogin = type === 'login' ? true : false;
+    const isLogin = useSearchParams().get('action') === 'login' ? true : false;
 
     const handleFetch = async () => {
         const tokenHash = searchParams.get('token');
