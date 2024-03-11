@@ -101,7 +101,7 @@ function Content({ states, setStates }) {
     const searchParams = useSearchParams();
     const guestIdCookie = useCookies().get('s_guest_id');
     const { data: fakta } = useFakta();
-    const isLogin = useSearchParams().get('action') === 'login' ? true : false;
+    const isLogin = searchParams.get('action') === 'login' ? true : false;
 
     const handleFetch = async () => {
         const tokenHash = searchParams.get('token');
