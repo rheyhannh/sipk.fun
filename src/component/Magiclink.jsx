@@ -176,7 +176,7 @@ function Content({ states, setStates }) {
     }
 }
 
-function Default({ isLogin, state, handleFetch }) {
+function Default({ isLogin, handleFetch }) {
     return (
         <div className={styles.content}>
             <h2 className={styles.content__title}>
@@ -223,7 +223,7 @@ function Loading({ fakta }) {
     )
 }
 
-function Success({ isLogin, state, handleFetch }) {
+function Success({ isLogin }) {
     const router = useRouter();
 
     return (
@@ -266,7 +266,7 @@ function Success({ isLogin, state, handleFetch }) {
     )
 }
 
-function Error({ isLogin, state, handleFetch }) {
+function Error({ isLogin, state }) {
     const getContent = () => {
         if (state?.code === '429') {
             return {
