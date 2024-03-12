@@ -49,10 +49,10 @@ function Container({ children }) {
 
 /**
  * Render magiclink wrapper sesuai dengan state nya `loading|error|success|default`.
- * @param {{children:any, states:{loading:boolean, success:boolean, error:boolean, code?:string|null}, getStates:() => {loading:boolean, success:boolean, error:boolean, code?:string|null}}} props React props object
+ * @param {{children:any, states:{loading:boolean, success:boolean, error:boolean, code?:string|null}, getStates:() => string}} props React props object
  * @param props.children Component or element children.
  * @param props.states Magiclink state
- * @param props.getStates  Method untuk mendapatkan current states `loading|error|success|default`.
+ * @param props.getStates  Method untuk mendapatkan css class berdasarkan current states `loading|error|success|default`.
  * @returns {ReactNode} Element react untuk render magiclink wrapper.
  */
 function Wrapper({ children, states, getStates }) {
@@ -83,8 +83,8 @@ function Wrapper({ children, states, getStates }) {
 
 /**
  * Render theme changer sesuai dengan state nya `loading|error|success|default`.
- * @param {{getStates:() => {loading:boolean, success:boolean, error:boolean, code?:string|null}, theme:'dark'|'light', handleChangeTheme:(newTheme:'dark'|'light') => void}} props React props object
- * @param props.getStates  Method untuk mendapatkan current states `loading|error|success|default`.
+ * @param {{getStates:() => string, theme:'dark'|'light', handleChangeTheme:(newTheme:'dark'|'light') => void}} props React props object
+ * @param props.getStates  Method untuk mendapatkan css class berdasarkan current states `loading|error|success|default`.
  * @param props.theme Current theme `dark|light`.
  * @param props.handleChangeTheme Method untuk ganti tema.
  * @returns {ReactNode} Element react untuk render theme changer.
