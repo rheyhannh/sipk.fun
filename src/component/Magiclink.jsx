@@ -40,20 +40,7 @@ function Container({ children }) {
     )
 }
 
-function Wrapper() {
-    const [states, setStates] = useState({
-        loading: false, success: false, error: false
-    })
-    
-    const { data: theme } = useLocalTheme();
-    const getStates = () => states.loading ? styles.loading : states.success ? styles.success : states.error ? styles.error : '';
-
-    const handleChangeTheme = (newTheme) => {
-        if (theme === newTheme) { return }
-        localStorage.setItem('_theme', theme === 'dark' ? 'light' : 'dark')
-        mutate('localUserTheme');
-    }
-
+function Wrapper({ children, states, getStates }) {
     return (
         <div className={`${styles.wrapper} ${getStates()}`}>
             <div className={styles.border__wrapper}>
@@ -74,8 +61,7 @@ function Wrapper() {
                     <FaExclamation />
                 </div>
             </div>
-            <Content states={states} setStates={setStates} />
-            <ThemeChanger getStates={getStates} theme={theme} handleChangeTheme={handleChangeTheme} />
+            {children}
         </div>
     )
 }
@@ -370,9 +356,25 @@ function Error({ isLogin, state }) {
 }
 
 export function Main() {
+    const [states, setStates] = useState({
+        loading: false, success: false, error: false
+    })
+
+    const { data: theme } = useLocalTheme();
+    const getStates = () => states.loading ? styles.loading : states.success ? styles.success : states.error ? styles.error : '';
+
+    const handleChangeTheme = (newTheme) => {
+        if (theme === newTheme) { return }
+        localStorage.setItem('_theme', theme === 'dark' ? 'light' : 'dark')
+        mutate('localUserTheme');
+    }
+
     return (
         <Container>
-            <Wrapper />
+            <Wrapper states={states} getStates={getStates}>
+                <Content states={states} setStates={setStates} />
+                <ThemeChanger getStates={getStates} theme={theme} handleChangeTheme={handleChangeTheme} />
+            </Wrapper>
         </Container>
     )
 }
