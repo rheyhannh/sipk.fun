@@ -80,6 +80,14 @@ function Wrapper() {
     )
 }
 
+/**
+ * Render theme changer sesuai dengan state nya `loading|error|success|default`.
+ * @param {{getStates:() => {loading:boolean, success:boolean, error:boolean, code?:string|null}, theme:'dark'|'light', handleChangeTheme:(newTheme:'dark'|'light') => void}} props React props object
+ * @param props.getStates  Method untuk mendapatkan current states `loading|error|success|default`.
+ * @param props.theme Current theme `dark|light`.
+ * @param props.handleChangeTheme Method untuk ganti tema.
+ * @returns {ReactNode} Element react untuk render theme changer.
+ */
 function ThemeChanger({ getStates, theme, handleChangeTheme }) {
     return (
         <div className={`${styles.theme__outter} ${getStates()}`}>
