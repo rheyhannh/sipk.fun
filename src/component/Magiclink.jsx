@@ -49,23 +49,23 @@ function Container({ children }) {
 
 /**
  * Render magiclink wrapper sesuai dengan state nya `loading|error|success|default`.
- * @param {{children:any, states:{loading:boolean, success:boolean, error:boolean, code?:string|null}, getStates:() => string}} props React props object
+ * @param {{children:any, states:{loading:boolean, success:boolean, error:boolean, code?:string|null}, getClassnameByState:() => string}} props React props object
  * @param props.children Component or element children.
  * @param props.states Magiclink state
- * @param props.getStates  Method untuk mendapatkan css class berdasarkan current states `loading|error|success|default`.
+ * @param props.getClassnameByState  Method untuk mendapatkan css class berdasarkan current states `loading|error|success|default`.
  * @returns {ReactNode} Element react untuk render magiclink wrapper.
  */
-function Wrapper({ children, states, getStates }) {
+function Wrapper({ children, states, getClassnameByState }) {
     return (
-        <div className={`${styles.wrapper} ${getStates()}`}>
+        <div className={`${styles.wrapper} ${getClassnameByState()}`}>
             <div className={styles.border__wrapper}>
                 <span className={`${styles.border__top} ${states.success || states.error || !states.loading ? styles.hide : ''}`} />
                 <span className={`${styles.border__right} ${states.success || states.error || !states.loading ? styles.hide : ''}`} />
                 <span className={`${styles.border__bottom} ${states.success || states.error || !states.loading ? styles.hide : ''}`} />
                 <span className={`${styles.border__left} ${states.success || states.error || !states.loading ? styles.hide : ''}`} />
             </div>
-            <div className={`${styles.icon__outter} ${getStates()}`} />
-            <div className={`${styles.icon__inner} ${getStates()}`}>
+            <div className={`${styles.icon__outter} ${getClassnameByState()}`} />
+            <div className={`${styles.icon__inner} ${getClassnameByState()}`}>
                 <div className={`${styles.icon} ${styles.loading} ${states.loading ? styles.active : ''} ${states.success || states.error ? styles.hide : ''}`}>
                     <FaLink />
                 </div>
@@ -83,15 +83,15 @@ function Wrapper({ children, states, getStates }) {
 
 /**
  * Render theme changer sesuai dengan state nya `loading|error|success|default`.
- * @param {{getStates:() => string, theme:'dark'|'light', handleChangeTheme:(newTheme:'dark'|'light') => void}} props React props object
- * @param props.getStates  Method untuk mendapatkan css class berdasarkan current states `loading|error|success|default`.
+ * @param {{getClassnameByState:() => string, theme:'dark'|'light', handleChangeTheme:(newTheme:'dark'|'light') => void}} props React props object
+ * @param props.getClassnameByState  Method untuk mendapatkan css class berdasarkan current states `loading|error|success|default`.
  * @param props.theme Current theme `dark|light`.
  * @param props.handleChangeTheme Method untuk ganti tema.
  * @returns {ReactNode} Element react untuk render theme changer.
  */
-function ThemeChanger({ getStates, theme, handleChangeTheme }) {
+function ThemeChanger({ getClassnameByState, theme, handleChangeTheme }) {
     return (
-        <div className={`${styles.theme__outter} ${getStates()}`}>
+        <div className={`${styles.theme__outter} ${getClassnameByState()}`}>
             <div className={styles.theme__inner}>
                 <div className={`${styles.circle} ${theme !== 'dark' ? styles.active : ''}`} onClick={() => { handleChangeTheme('light') }}>
                     <FiSun size={'15px'} />
@@ -376,7 +376,7 @@ export function Main() {
     })
 
     const { data: theme } = useLocalTheme();
-    const getStates = () => states.loading ? styles.loading : states.success ? styles.success : states.error ? styles.error : '';
+    const getClassnameByState = () => states.loading ? styles.loading : states.success ? styles.success : states.error ? styles.error : '';
 
     const handleChangeTheme = (newTheme) => {
         if (theme === newTheme) { return }
@@ -386,9 +386,9 @@ export function Main() {
 
     return (
         <Container>
-            <Wrapper states={states} getStates={getStates}>
+            <Wrapper states={states} getClassnameByState={getClassnameByState}>
                 <Content states={states} setStates={setStates} />
-                <ThemeChanger getStates={getStates} theme={theme} handleChangeTheme={handleChangeTheme} />
+                <ThemeChanger getClassnameByState={getClassnameByState} theme={theme} handleChangeTheme={handleChangeTheme} />
             </Wrapper>
         </Container>
     )
