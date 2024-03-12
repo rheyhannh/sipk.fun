@@ -75,14 +75,20 @@ function Wrapper() {
                 </div>
             </div>
             <Content states={states} setStates={setStates} />
-            <div className={`${styles.theme__outter} ${getStates()}`}>
-                <div className={styles.theme__inner}>
-                    <div className={`${styles.circle} ${theme !== 'dark' ? styles.active : ''}`} onClick={() => { handleChangeTheme('light') }}>
-                        <FiSun size={'15px'} />
-                    </div>
-                    <div className={`${styles.circle} ${theme === 'dark' ? styles.active : ''}`} onClick={() => { handleChangeTheme('dark') }}>
-                        <FiMoon size={'15px'} />
-                    </div>
+            <ThemeChanger getStates={getStates} theme={theme} handleChangeTheme={handleChangeTheme} />
+        </div>
+    )
+}
+
+function ThemeChanger({ getStates, theme, handleChangeTheme }) {
+    return (
+        <div className={`${styles.theme__outter} ${getStates()}`}>
+            <div className={styles.theme__inner}>
+                <div className={`${styles.circle} ${theme !== 'dark' ? styles.active : ''}`} onClick={() => { handleChangeTheme('light') }}>
+                    <FiSun size={'15px'} />
+                </div>
+                <div className={`${styles.circle} ${theme === 'dark' ? styles.active : ''}`} onClick={() => { handleChangeTheme('dark') }}>
+                    <FiMoon size={'15px'} />
                 </div>
             </div>
         </div>
