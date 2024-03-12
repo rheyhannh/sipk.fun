@@ -30,6 +30,13 @@ import { FiSun, FiMoon } from 'react-icons/fi';
 /*
 ============================== CODE START HERE ==============================
 */
+
+/**
+ * Render magiclink container.
+ * @param {{children:any}} props React props object
+ * @param props.children Component or element children.
+ * @returns {ReactNode} Element react untuk render magiclink container.
+ */
 function Container({ children }) {
     return (
         <div className={styles.container}>
@@ -40,6 +47,14 @@ function Container({ children }) {
     )
 }
 
+/**
+ * Render magiclink wrapper sesuai dengan state nya `loading|error|success|default`.
+ * @param {{children:any, states:{loading:boolean, success:boolean, error:boolean, code?:string|null}, getStates:() => {loading:boolean, success:boolean, error:boolean, code?:string|null}}} props React props object
+ * @param props.children Component or element children.
+ * @param props.states Magiclink state
+ * @param props.getStates  Method untuk mendapatkan current states `loading|error|success|default`.
+ * @returns {ReactNode} Element react untuk render magiclink wrapper.
+ */
 function Wrapper({ children, states, getStates }) {
     return (
         <div className={`${styles.wrapper} ${getStates()}`}>
