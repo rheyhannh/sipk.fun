@@ -170,16 +170,16 @@ function Content({ states, setStates }) {
     }
 
     if (!states.loading && !states.error && !states.success) {
-        return <Default isLogin={isLogin} state={states} handleFetch={handleFetch} />
+        return <Default isLogin={isLogin} handleFetch={handleFetch} />
     }
     else if (states.loading) {
         return <Loading fakta={fakta} />
     }
     else if (states.success) {
-        return <Success isLogin={isLogin} state={states} handleFetch={handleFetch} />
+        return <Success isLogin={isLogin} />
     }
     else if (states.error) {
-        return <Error isLogin={isLogin} state={states} handleFetch={handleFetch} />
+        return <Error isLogin={isLogin} state={states} />
     }
 }
 
