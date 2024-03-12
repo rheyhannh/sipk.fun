@@ -707,7 +707,12 @@ export function UsersForm() {
                                             onBlur={(e) => { handleInputBlur(e, 3, 'universitas', 'daftar') }}
                                             required
                                         >
-                                            <option style={{ color: 'var(--infoDark-color)' }} value={0}>
+                                            <option
+                                                style={{ color: 'var(--infoDark-color)' }}
+                                                value={0}
+                                                disabled={universitasData ? true : false}
+                                                hidden={universitasData ? true : false}
+                                            >
                                                 {universitasLoading && 'Loading...'}
                                                 {universitasError && 'Gagal memuat universitas'}
                                                 {universitasData && 'Pilih Universitas'}
