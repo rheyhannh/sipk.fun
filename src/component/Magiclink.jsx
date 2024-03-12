@@ -169,10 +169,7 @@ function Content({ states, setStates }) {
         }
     }
 
-    if (!states.loading && !states.error && !states.success) {
-        return <Default isLogin={isLogin} handleFetch={handleFetch} />
-    }
-    else if (states.loading) {
+    if (states.loading) {
         return <Loading fakta={fakta} />
     }
     else if (states.success) {
@@ -180,6 +177,9 @@ function Content({ states, setStates }) {
     }
     else if (states.error) {
         return <Error isLogin={isLogin} state={states} />
+    }
+    else {
+        return <Default isLogin={isLogin} handleFetch={handleFetch} />
     }
 }
 
