@@ -377,7 +377,7 @@ function Error({ isLogin, state }) {
 
 export function Main() {
     const [states, setStates] = useState({
-        loading: false, success: true, error: false
+        loading: false, success: false, error: false
     })
 
     const getClassnameByState = () => states.loading ? styles.loading : states.success ? styles.success : states.error ? styles.error : '';
