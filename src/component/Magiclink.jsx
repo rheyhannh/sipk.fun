@@ -83,10 +83,8 @@ function Wrapper({ children, states, getClassnameByState }) {
 
 /**
  * Render theme changer sesuai dengan state nya `loading|error|success|default`.
- * @param {{getClassnameByState:() => string, theme:'dark'|'light', handleChangeTheme:(newTheme:'dark'|'light') => void}} props React props object
+ * @param {{getClassnameByState:() => string}} props React props object
  * @param props.getClassnameByState  Method untuk mendapatkan css class berdasarkan current states `loading|error|success|default`.
- * @param props.theme Current theme `dark|light`.
- * @param props.handleChangeTheme Method untuk ganti tema.
  * @returns {ReactNode} Element react untuk render theme changer.
  */
 function ThemeChanger({ getClassnameByState }) {
