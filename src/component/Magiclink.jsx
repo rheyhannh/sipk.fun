@@ -256,7 +256,7 @@ function Loading({ fakta }) {
             <h2 className={styles.content__title}>
                 Memproses Magiclink
             </h2>
-            <div className={styles.content__text}>
+            <div className={`${styles.content__text} ${styles.intermezzo}`}>
                 {usedFakta}
             </div>
         </div>

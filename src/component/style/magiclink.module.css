@@ -221,6 +221,11 @@
     text-align: justify;
 }
 
+.content__text.intermezzo {
+    color: var(--infoDark-color);
+    font-style: italic;
+}
+
 .content__action {
     height: 50px;
     text-transform: capitalize;
