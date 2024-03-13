@@ -51,8 +51,18 @@ export const getLoadingMessage = (funWord = false, index = true) => {
  * @returns {Array<string>} Array of string fakta tentang SIPK yang sudah dishuffle urutan indexnya.
  */
 export const getDefaultFakta = () => {
+    // Maximum fatka length 160 chars or Lorem20.
     const fakta = [
-        'Fakta 1', 'Fakta 2', 'Fakta 3', 'Fakta 4', 'Fakta 5'
+        'Email Login adalah fitur untuk kamu yang mau login tanpa menggunakan password.', 
+        'Sampai saat ini, SIPK dapat digunakan mahasiswa dari 10 universitas di Indonesia.', 
+        'Kamu dapat mengubah target SKS dan Matakuliah dengan rentang 5 sampai dengan 1000.', 
+        'Matakuliah yang sudah dihapus dapat dikembalikan lagi dari Perubahan Terakhir atau Tabel', 
+        'Kamu dapat mengubah target IPK dengan rentang 1.00 sampai dengan 4.00',
+        'Perubahan Terakhir adalah fitur yang dapat melihat perubahan matakuliah kamu baik itu yang ditambah, dihapus dan diubah.',
+        'Kamu dapat menghapus dan mengembalikan matakuliah yang sudah diubah dari Tabel Diubah',
+        'Perubahan Terakhir dapat mengembalikan matakuliah yang sudah ditambah, dihapus dan diubah.',
+        'Kamu dapat menghapus secara permanent dan mengembalikan matakuliah yang sudah dihapus dari Tabel Dihapus.',
+        'Kamu dapat melihat matakuliah yang sudah dihapus pada Tabel Dihapus dan yang sudah diubah pada Tabel Diedit.'
     ]
 
     // Shuffle array use Fisher-Yates Algorithm
