@@ -89,7 +89,14 @@ function Wrapper({ children, states, getClassnameByState }) {
  * @param props.handleChangeTheme Method untuk ganti tema.
  * @returns {ReactNode} Element react untuk render theme changer.
  */
-function ThemeChanger({ getClassnameByState, theme, handleChangeTheme }) {
+function ThemeChanger({ getClassnameByState }) {
+    const { data: theme } = useLocalTheme();
+    const handleChangeTheme = (newTheme) => {
+        if (theme === newTheme) { return }
+        localStorage.setItem('_theme', theme === 'dark' ? 'light' : 'dark')
+        mutate('localUserTheme');
+    }
+
     return (
         <div className={`${styles.theme__outter} ${getClassnameByState()}`}>
             <div className={styles.theme__inner}>
@@ -372,23 +379,16 @@ function Error({ isLogin, state }) {
 
 export function Main() {
     const [states, setStates] = useState({
-        loading: false, success: false, error: false
+        loading: false, success: true, error: false
     })
 
-    const { data: theme } = useLocalTheme();
     const getClassnameByState = () => states.loading ? styles.loading : states.success ? styles.success : states.error ? styles.error : '';
-
-    const handleChangeTheme = (newTheme) => {
-        if (theme === newTheme) { return }
-        localStorage.setItem('_theme', theme === 'dark' ? 'light' : 'dark')
-        mutate('localUserTheme');
-    }
 
     return (
         <Container>
             <Wrapper states={states} getClassnameByState={getClassnameByState}>
                 <Content states={states} setStates={setStates} />
-                <ThemeChanger getClassnameByState={getClassnameByState} theme={theme} handleChangeTheme={handleChangeTheme} />
+                <ThemeChanger getClassnameByState={getClassnameByState} />
             </Wrapper>
         </Container>
     )
