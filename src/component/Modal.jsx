@@ -10,6 +10,16 @@
  * @property {{}} data Data modal yang digunakan.
  */
 
+/**
+ * @typedef UsersContext
+ * @type {object}
+ * @property {(loginMode:boolean) => void} setLoginMode Method untuk mengaktifkan atau nonaktifkan mode login.
+ * @property {(isBigContent:boolean) => void} setBigContent Method untuk mengaktifkan atau nonaktifkan big content.
+ * @property {boolean} loginMode State apakah mode login atau bukan.
+ * @property {boolean} isBigContent State apakah big content `window.matchMedia('(min-width: 870px)')` atau bukan.
+ * @property {Array<{title:string, description:ReactElement|string, icon:ReactElement|string}>} daftarAccordionList Data accordion untuk panduan daftar.
+ */
+
 // ========== NEXT DEPEDENCY ========== //
 import Link from "next/link";
 import { useRouter } from 'next/navigation';
@@ -112,6 +122,7 @@ export const Default = () => {
 }
 
 export const PanduanDaftar = () => {
+    /** @type {UsersContext} */
     const {
         daftarAccordionList
     } = useContext(UsersContext);
