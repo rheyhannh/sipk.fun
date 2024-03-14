@@ -56,19 +56,6 @@ export const UsersProvider = ({ children }) => {
     ========== Required Data ==========
     */
 
-    const listUniversitas = [
-        { id: 1, nama: 'Universitas Brawijaya' },
-        { id: 2, nama: 'Universitas Diponegoro' },
-        { id: 3, nama: 'Universitas Indonesia' },
-        { id: 4, nama: 'Institut Teknologi Bandung' },
-        { id: 5, nama: 'Universitas Airlangga' },
-        { id: 6, nama: 'Institut Pertanian Bogor' },
-        { id: 7, nama: 'Institut Teknologi Sepuluh November' },
-        { id: 8, nama: 'Telkom University' },
-        { id: 9, nama: 'Universitas Padjajaran' },
-        { id: 10, nama: 'Universitas Jendral Soedirman' },
-    ]
-
     const daftarAccordionList = [
         {
             title: 'Nama Lengkap',
@@ -137,7 +124,7 @@ export const UsersProvider = ({ children }) => {
             value={{
                 loginMode, setLoginMode,
                 isBigContent, setBigContent,
-                listUniversitas, daftarAccordionList
+                daftarAccordionList
             }}
         >
             {children}
