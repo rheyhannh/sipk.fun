@@ -1,5 +1,17 @@
 'use client'
 
+// ========== DOCS ========== //
+/**
+ * @typedef ModalContext
+ * @type {object}
+ * @property {(modalType:'default'|'panduanDaftar'|'logout'|'perubahanTerakhirDetail'|'perubahanTerakhirConfirm'|'tambahMatkul'|'profil'|'rating'|'tabelSetting'|'tabelFilter'|'detailMatkul'|'hapusPermanentConfirm') => void} setModal Method untuk set tipe modal.
+ * @property {(modalActive:boolean) => void} setActive Method untuk mengaktifkan atau nonaktifkan modal.
+ * @property {(modalData: {isSuccess?:boolean|true, image?:any|(FaRegCircleCheck|FaRegTimesCircle), title?:string|('Yeaay!'|'Ooops!'), message?:string|('Berhasil memproses permintaanmu'|'Sepertinya ada yang salah saat memproses permintaanmu.'), actionText?:string|'Tutup'}) => void} setData Method untuk set data modal. Setiap tipe modal cenderung memiliki props yang berbeda, sehingga perlu disesuaikan. Jika tipe modal `'default'`, gunakan props yang tertera diatas.
+ * @property {'default'|'panduanDaftar'|'logout'|'perubahanTerakhirDetail'|'perubahanTerakhirConfirm'|'tambahMatkul'|'profil'|'rating'|'tabelSetting'|'tabelFilter'|'detailMatkul'|'hapusPermanentConfirm'} modal Tipe modal yang digunakan.
+ * @property {boolean} active State modal apakah aktif atau nonaktif.
+ * @property {{}} data Data modal yang digunakan.
+ */
+
 // ========== NEXT DEPEDENCY ========== //
 import Image from 'next/image';
 import { League_Spartan } from 'next/font/google';
@@ -39,6 +51,7 @@ import { FiSun, FiMoon } from 'react-icons/fi';
 function Right() {
     const { data, error, isLoading, isValidating } = useUser();
     const { data: theme } = useLocalTheme();
+    /** @type {ModalContext} */
     const {
         setModal,
         setActive,
