@@ -13,9 +13,7 @@ export function Accordion({
     item = [
         { title: 'Title', description: 'Description', icon: '+' },
         { title: 'Title 2', description: 'Description 2', icon: '+' },
-    ],
-    customClass = '',
-
+    ]
 }) {
     const [accordion, setAccordion] = useState(Array(item.length).fill(false));
     const handleAccordionState = (index) => {
