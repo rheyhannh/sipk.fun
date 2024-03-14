@@ -47,8 +47,8 @@ import { unixToDate, getLoadingMessage } from "@/utils/client_side";
 import { useUser, useUniversitas } from "@/data/core";
 
 // ========== ICONS DEPEDENCY ========== //
-import { FaTimes, FaRegTimesCircle, FaEye, FaEyeSlash } from 'react-icons/fa'
-import { FaRegCircleCheck } from "react-icons/fa6";
+import { FaTimes, FaRegTimesCircle, FaEye, FaEyeSlash, FaCheckCircle, FaExclamationCircle } from 'react-icons/fa'
+import { FaRegCircleCheck, FaPlus, FaCircleInfo, FaGear } from "react-icons/fa6";
 import { AiOutlineStar, AiFillStar, AiOutlineDrag } from "react-icons/ai";
 import {
     IoCaretForward,
