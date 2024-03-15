@@ -19,7 +19,6 @@
  * @property {(isBigContent:boolean) => void} setBigContent Method untuk mengaktifkan atau nonaktifkan big content.
  * @property {boolean} loginMode State apakah mode login atau bukan.
  * @property {boolean} isBigContent State apakah big content `window.matchMedia('(min-width: 870px)')` atau bukan.
- * @property {Array<{title:string, description:ReactElement|string, icon:ReactElement|string}>} daftarAccordionList Data accordion untuk panduan daftar.
  */
 
 // ========== NEXT DEPEDENCY ========== //
