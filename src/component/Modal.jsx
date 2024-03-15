@@ -122,10 +122,69 @@ export const Default = () => {
 }
 
 export const PanduanDaftar = () => {
-    /** @type {UsersContext} */
-    const {
-        daftarAccordionList
-    } = useContext(UsersContext);
+    const daftarAccordionList = [
+        {
+            title: 'Nama Lengkap',
+            description: (
+                <ul>
+                    <li>Gunakan hanya huruf, tanpa simbol atau angka</li>
+                    <li>Panjang minimal 6 karakter, maksimal 100</li>
+                    <li>Gunakan hanya satu spasi di antara setiap kata</li>
+                </ul>
+            ),
+            icon: <FaPlus />
+        },
+        {
+            title: 'Universitas',
+            description: (
+                <ul>
+                    <li>Pilih universitas yang sesuai dan tersedia</li>
+                    <li>Universitas yang berbeda dapat mempengaruhi penilaian, pastikan kamu memilih yang sesuai</li>
+                    <li>Jika universitasmu belum tersedia, kamu dapat daftar <span style={{ color: 'green' }}>disini</span></li>
+                </ul>
+            ),
+            icon: <FaPlus />
+        },
+        {
+            title: 'Email',
+            description: (
+                <ul>
+                    <li>Gunakan email valid yang dapat dihubungi</li>
+                    <li>Konfirmasi pendaftaran dengan mengklik link yang dikirimkan SIPK</li>
+                </ul>
+
+            ),
+            icon: <FaPlus />
+        }
+        ,
+        {
+            title: 'Password',
+            description: (
+                <ul>
+                    <li>Gunakan password minimal 6 karakter, maksimal 50</li>
+                    <li>Disarankan kombinasi huruf kecil, huruf besar, angka dan simbol</li>
+                    <li>Password lemah atau kurang kuat dapat digunakan, walaupun tidak disarankan</li>
+                </ul>
+            ),
+            icon: <FaPlus />
+        }
+        ,
+        {
+            title: 'Keterangan Icon',
+            description: (
+                <div className={styles.keterangan_icon}>
+                    <span><FaCircleInfo color='var(--primary-color)' />  Data dibutuhkan</span>
+                    <span><FaGear color='var(--logo-second-color)' />  Data sedang divalidasi</span>
+                    <span><FaCheckCircle color='var(--success-color)' />  Data Valid</span>
+                    <span><FaCheckCircle color='var(--warning-color)' />  Password kurang kuat</span>
+                    <span><FaCheckCircle color='var(--danger-color)' />  Password lemah</span>
+                    <span><FaExclamationCircle color='crimson' />  Data Invalid</span>
+                </div>
+            ),
+            icon: <FaPlus />
+        }
+    ]
+
     return (
         <ModalContext.Consumer>
             {context => {
