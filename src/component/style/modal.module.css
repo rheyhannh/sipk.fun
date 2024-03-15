@@ -54,6 +54,11 @@
     transform: translateY(10%);
 }
 
+.keterangan_icon {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+} 
+
 .perubahan__terakhir.ubah {
     display: grid;
     grid-template-rows: 30px 30px auto 50px;
@@ -815,6 +820,11 @@
 }
 
 @media screen and (max-width: 400px) {
+    .keterangan_icon {
+        display: flex;
+        flex-direction: column;
+    }
+
     .stars {
         grid-template-columns: 27.5px 32.5px 40px 32.5px 27.5px;
         height: 40px;

@@ -368,11 +368,6 @@
         color var(--transition-default) ease-in-out;
 }
 
-.keterangan_icon {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-}
-
 .hide {
     display: none;
     opacity: 0;
@@ -499,13 +494,6 @@
             top .95s .95s ease-in-out,
             box-shadow var(--transition-default) ease-in-out,
             color var(--transition-default) ease-in-out;
-    }
-}
-
-@media screen and (max-width: 400px) {
-    .keterangan_icon {
-        display: flex;
-        flex-direction: column;
     }
 }
 
