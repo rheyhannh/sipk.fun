@@ -150,8 +150,17 @@ export function UsersForm() {
         : <Image src="https://storage.googleapis.com/sipk_assets/check_email.svg" width={100} height={100} alt="Check Email" />
 
     /*
-========== useEffect ==========
-*/
+    ========== useEffect ==========
+    */
+
+    useEffect(() => {
+        window.addEventListener('focus', handleAuthCheck);
+
+        return () => {
+            window.removeEventListener('focus', handleAuthCheck);
+        }
+    }, [])
+
     useEffect(() => {
         // Login Mode or Daftar Mode ?
         const mode = searchParams.get('action');
@@ -183,6 +192,13 @@ export function UsersForm() {
     /*
     ========== Methods, Functions, Helpers ==========
     */
+    const handleAuthCheck = async () => {
+        setLoading(true);
+        setTimeout(() => {
+            setLoading(false);
+        }, 3000)
+    }
+
     const handleLogin = async (e) => {
         e.preventDefault();
 
