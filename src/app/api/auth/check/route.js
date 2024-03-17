@@ -49,6 +49,13 @@ export async function GET(request) {
         })
     }
 
+    if (!secureCookie) {
+        return NextResponse.json({ message: 'Unauthorized - Missing access token' }, {
+            status: 401,
+            headers: newHeaders
+        })
+    }
+
     const cookieStore = cookies();
     const supabase = createServerClient(
         process.env.SUPABASE_URL,
