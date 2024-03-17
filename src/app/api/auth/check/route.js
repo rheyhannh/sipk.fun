@@ -105,7 +105,7 @@ export async function GET(request) {
             headers: newHeaders
         })
     } else {
-        return NextResponse.json({ message: 'Unauthorized' }, {
+        return NextResponse.json({ message: 'Unauthorized - Invalid access token' }, {
             status: 401,
             headers: newHeaders
         })
