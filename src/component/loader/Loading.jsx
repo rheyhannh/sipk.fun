@@ -18,10 +18,10 @@ export function Spinner({ size, color }) {
     )
 }
 
-export function Ball({ backdrop, active }) {
+export function Ball({ active, backdrop, backdropStyle = {} }) {
     if (backdrop) {
         return (
-            <div className={styles.backdrop} style={{ display: active ? 'flex' : 'none' }}>
+            <div className={styles.backdrop} style={{ display: active ? 'flex' : 'none', ...backdropStyle }}>
                 <span className={styles.ball}/>
             </div>
         )
