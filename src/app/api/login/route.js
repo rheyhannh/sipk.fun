@@ -146,6 +146,11 @@ export async function POST(request) {
         console.error(error);
         return NextResponse.json({ message: error.message }, { status: 403, headers: newHeaders })
     }
+    
+    if (data.session) {
+        cookieStore.set({ name: 's_user_id', value: data.session.user.id, ...cookieServiceOptions });
+        cookieStore.set({ name: 's_access_token', value: data.session.access_token, ...cookieServiceOptions });
+    }
 
     return NextResponse.json({ success: true }, { status: 200, headers: newHeaders })
 }
