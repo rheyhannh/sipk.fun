@@ -19,6 +19,9 @@ const limiter = await rateLimit({
 export async function GET(request) {
     const newHeaders = {};
     const serviceGuestCookie = request.cookies.get('s_guest_id')?.value;
+    const accessTokenCookie = request.cookies.get('s_access_token')?.value;
+    const userIdCookie = request.cookies.get('s_user_id')?.value;
+    const secureCookie = request.cookies.get(process.env.USER_SESSION_COOKIES_NAME)?.value;
 
     // guestKey (IP or guest_Id) to create key for rate limiter
     const guestKey =
@@ -63,7 +66,7 @@ export async function GET(request) {
                 async set(name, value, options) {
                     const encryptedSession = await encryptAES(value);
                     if (encryptedSession) {
-                        cookieStore.set({ name: process.env.USER_SESSION_COOKIES_NAME, value: encryptedSession, ...cookieAuthOptions })
+                        if (!secureCookie || secureCookie !== encryptedSession) { cookieStore.set({ name: process.env.USER_SESSION_COOKIES_NAME, value: encryptedSession, ...cookieAuthOptions }) }
                     } else {
                         cookieStore.set({ name: process.env.USER_SESSION_COOKIES_NAME, value, ...cookieAuthOptions })
                     }
@@ -88,8 +91,8 @@ export async function GET(request) {
     }
 
     if (data.session) {
-        cookieStore.set({ name: 's_user_id', value: data.session.user.id, ...cookieServiceOptions });
-        cookieStore.set({ name: 's_access_token', value: data.session.access_token, ...cookieServiceOptions });
+        if (!userIdCookie || userIdCookie !== data.session.user.id) { cookieStore.set({ name: 's_user_id', value: data.session.user.id, ...cookieServiceOptions }) }
+        if (!accessTokenCookie || accessTokenCookie !== data.session.access_token) { cookieStore.set({ name: 's_access_token', value: data.session.access_token, ...cookieServiceOptions }) }
         return new Response(null, {
             status: 204,
             headers: newHeaders
