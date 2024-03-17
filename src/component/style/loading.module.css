@@ -13,6 +13,11 @@
     transition: all .5s ease-in-out;
 }
 
+.backdrop.transparent {
+    background: transparent;
+    backdrop-filter: none;
+}
+
 .ball {
     animation: rotate 1s infinite;
     height: 50px;
