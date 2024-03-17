@@ -194,9 +194,21 @@ export function UsersForm() {
     */
     const handleAuthCheck = async () => {
         setLoading(true);
-        setTimeout(() => {
+        try {
+            const response = await fetch(`/api/auth/check`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+
+            if (response.ok) { router.replace('/dashboard', { scroll: false }) }
+
+        } catch (error) {
+            console.error('Gagal melakukan autentikasi');
+        } finally {
             setLoading(false);
-        }, 3000)
+        }
     }
 
     const handleLogin = async (e) => {
