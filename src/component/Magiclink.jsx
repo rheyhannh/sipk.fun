@@ -35,7 +35,7 @@ import { FiSun, FiMoon } from 'react-icons/fi';
  * Render magiclink container.
  * @param {{children:any}} props React props object
  * @param props.children Component or element children.
- * @returns {ReactNode} Element react untuk render magiclink container.
+ * @returns {ReactElement} Element react untuk render magiclink container.
  */
 function Container({ children }) {
     return (
@@ -53,7 +53,7 @@ function Container({ children }) {
  * @param props.children Component or element children.
  * @param props.states Magiclink state
  * @param props.getClassnameByState  Method untuk mendapatkan css class berdasarkan current states `loading|error|success|default`.
- * @returns {ReactNode} Element react untuk render magiclink wrapper.
+ * @returns {ReactElement} Element react untuk render magiclink wrapper.
  */
 function Wrapper({ children, states, getClassnameByState }) {
     return (
@@ -85,7 +85,7 @@ function Wrapper({ children, states, getClassnameByState }) {
  * Render theme changer sesuai dengan state nya `loading|error|success|default`.
  * @param {{getClassnameByState:() => string}} props React props object
  * @param props.getClassnameByState  Method untuk mendapatkan css class berdasarkan current states `loading|error|success|default`.
- * @returns {ReactNode} Element react untuk render theme changer.
+ * @returns {ReactElement} Element react untuk render theme changer.
  */
 function ThemeChanger({ getClassnameByState }) {
     const { data: theme } = useLocalTheme();
@@ -114,7 +114,7 @@ function ThemeChanger({ getClassnameByState }) {
  * @param {{states:{loading:boolean, success:boolean, error:boolean, code?:string|null}, setStates:(states:{loading:boolean, success:boolean, error:boolean}) => void}} props React props object
  * @param props.states Magiclink state
  * @param props.setStates Method untuk set magiclink state
- * @returns {ReactNode} Element react untuk render magiclink content
+ * @returns {ReactElement} Element react untuk render magiclink content
  */
 function Content({ states, setStates }) {
     const router = useRouter();
@@ -208,7 +208,7 @@ function Content({ states, setStates }) {
  * @param {{isLogin:boolean, handleFetch:() => void}} props React props object
  * @param props.isLogin Apakah login content atau bukan
  * @param props.handleFetch Method fetch untuk verifikasi magiclink
- * @returns {ReactNode} Element react untuk render magiclink content dengan state default.
+ * @returns {ReactElement} Element react untuk render magiclink content dengan state default.
  */
 function Default({ isLogin, handleFetch }) {
     return (
@@ -232,7 +232,7 @@ function Default({ isLogin, handleFetch }) {
  * Render magiclink content `login|confirm` dengan state `loading`.
  * @param {{fakta:Array<string>}} props React props object
  * @param props.fakta Content fakta tentang SIPK
- * @returns {ReactNode} Element react untuk render magiclink content dengan state loading.
+ * @returns {ReactElement} Element react untuk render magiclink content dengan state loading.
  */
 function Loading({ fakta }) {
     const [mounted, setMounted] = useState(false);
@@ -267,7 +267,7 @@ function Loading({ fakta }) {
  * Render magiclink content `login|confirm` dengan state `success`.
  * @param {{isLogin:boolean}} props React props object
  * @param props.isLogin Apakah login content atau bukan
- * @returns {ReactNode} Element react untuk render magiclink content dengan state success.
+ * @returns {ReactElement} Element react untuk render magiclink content dengan state success.
  */
 function Success({ isLogin }) {
     const router = useRouter();
@@ -317,7 +317,7 @@ function Success({ isLogin }) {
  * @param {{isLogin:boolean, state:{loading:boolean, success:boolean, error:boolean, code?:string|null}}} props React props object
  * @param props.isLogin Apakah login content atau bukan
  * @param props.states Magiclink state
- * @returns {ReactNode} Element react untuk render magiclink content dengan state error.
+ * @returns {ReactElement} Element react untuk render magiclink content dengan state error.
  */
 function Error({ isLogin, state }) {
     const getContent = () => {
