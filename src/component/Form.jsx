@@ -128,7 +128,7 @@ export function UsersForm() {
     const [password, setPassword] = useState('');
 
     // Utils
-    const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState({ active: false, backdrop: 'default', hideBall: false });
     const [errorMessageLogin, setErrorMessageLogin] = useState('');
     const [errorMessageDaftar, setErrorMessageDaftar] = useState('');
     const [hideLoginPassword, setHideLoginPassword] = useState(true);
@@ -193,7 +193,7 @@ export function UsersForm() {
     ========== Methods, Functions, Helpers ==========
     */
     const handleAuthCheck = async () => {
-        setLoading(true);
+        setLoading({ active: true, backdrop: 'transparent', hideBall: true });
         try {
             const response = await fetch(`/api/auth/check`, {
                 method: 'GET',
@@ -207,7 +207,7 @@ export function UsersForm() {
         } catch (error) {
             console.error('Gagal melakukan autentikasi');
         } finally {
-            setLoading(false);
+            setLoading({ active: false });
         }
     }
 
@@ -225,7 +225,7 @@ export function UsersForm() {
             return;
         }
 
-        setLoading(true);
+        setLoading({ active: true });
         captcha.current.execute({
             async: true
         })
@@ -281,7 +281,7 @@ export function UsersForm() {
                 else { setErrorMessageLogin(error.message ? error.message : 'Terjadi kesalahan saat login') }
             })
             .finally(() => {
-                setLoading(false);
+                setLoading({ active: false });
                 captcha.current.resetCaptcha();
             });
     }
@@ -305,7 +305,7 @@ export function UsersForm() {
             return;
         }
 
-        setLoading(true);
+        setLoading({ active: true });
         captcha.current.execute({
             async: true
         })
@@ -361,7 +361,7 @@ export function UsersForm() {
                 else { setErrorMessageDaftar(error.message ? error.message : 'Terjadi kesalahan saat daftar') }
             })
             .finally(() => {
-                setLoading(false);
+                setLoading({ active: false });
                 captcha.current.resetCaptcha();
             });
     }
@@ -380,7 +380,7 @@ export function UsersForm() {
             return;
         }
 
-        setLoading(true);
+        setLoading({ active: true });
         captcha.current.execute({
             async: true
         })
@@ -422,7 +422,7 @@ export function UsersForm() {
                 else { setErrorMessageLogin(error.message ? error.message : 'Terjadi kesalahan saat login') }
             })
             .finally(() => {
-                setLoading(false);
+                setLoading({ active: false });
                 captcha.current.resetCaptcha();
             });
     }
@@ -616,7 +616,7 @@ export function UsersForm() {
                 </>
                 :
                 <div>
-                    <Ball active={loading} backdrop={true} />
+                    <Ball active={loading.active ?? false} backdrop={loading.backdrop ?? 'default'} hideBall={loading.hideBall ?? false} />
                     <div className={`${styles.container} ${loginMode ? '' : styles.sign_up_mode}`}>
                         <div className={styles.forms_container}>
                             <div className={styles.signin_signup}>
