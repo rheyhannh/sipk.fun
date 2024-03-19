@@ -52,8 +52,7 @@ import 'swiper/css/pagination';
 import 'swiper/css/navigation';
 import "react-loading-skeleton/dist/skeleton.css";
 
-// ========== ICON DEPEDENCY ========== //
-
+// ========== ICONS DEPEDENCY ========== //
 import { CiTrash, CiEdit } from "react-icons/ci";
 import { FaInfo, FaUndo } from "react-icons/fa";
 import { IoAnalyticsOutline, IoAddOutline } from "react-icons/io5";
@@ -1759,3 +1758,6 @@ export function Progress({ state, user, matkul, penilaian }) {
     else { return 'Unidentified Card State' }
 }
 
+/*
+============================== CODE END HERE ==============================
+*/
