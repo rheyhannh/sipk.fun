@@ -77,17 +77,12 @@ import { useUniversitas } from '@/data/core';
 ============================== CODE START HERE ==============================
 */
 export function UsersForm() {
-    /*
-    ========== Next Hooks ==========
-    */
+    /* ========== Next Hooks ========== */
     const captcha = useRef();
     const router = useRouter();
     const searchParams = useSearchParams();
 
-    /*
-    ========== Context ==========
-    */
-    /** @type {UsersContext} */
+    /* ========== Context ========== */
     const {
         loginMode, setLoginMode,
         isBigContent,
@@ -100,14 +95,10 @@ export function UsersForm() {
         setData
     } = useContext(ModalContext);
 
-    /*
-    ========== Cookies ==========
-    */
+    /* ========== Cookies ========== */
     const guestIdCookie = useCookies().get('s_guest_id');
 
-    /*
-    ========== States ==========
-    */
+    /* ========== States ========== */
     // Init
     const listInputs = [
         'Email', 'Password', 'Nama Lengkap', 'Universitas', 'Email', 'Password'
@@ -136,22 +127,16 @@ export function UsersForm() {
     const [inputValidator, setInputValidator] = useState(initialInputValidator);
     const [emailLogin, setEmailLogin] = useState(false);
 
-    /*
-    ========== Data ==========
-    */
+    /* ========== Data ========== */
     const { data: universitasData, error: universitasError, isLoading: universitasLoading, isValidating: universitasValidating } = useUniversitas(null, 'public', 'all');
     const { data: theme } = useLocalTheme();
 
-    /*
-    ========== Images ==========
-    */
+    /* ========== Images ========== */
     const emailImg = theme === 'dark' ?
         <Image src="https://storage.googleapis.com/sipk_assets/check_email_dark.svg" width={100} height={100} alt="Check Email" />
         : <Image src="https://storage.googleapis.com/sipk_assets/check_email.svg" width={100} height={100} alt="Check Email" />
 
-    /*
-    ========== useEffect ==========
-    */
+    /* ========== useEffect ========== */
 
     useEffect(() => {
         window.addEventListener('focus', handleAuthCheck);
@@ -189,9 +174,7 @@ export function UsersForm() {
 
     }, [searchParams])
 
-    /*
-    ========== Methods, Functions, Helpers ==========
-    */
+    /* ========== Methods, Functions, Helpers ========== */
     const handleAuthCheck = async () => {
         setLoading({ active: true, backdrop: 'transparent', hideBall: true });
         try {
