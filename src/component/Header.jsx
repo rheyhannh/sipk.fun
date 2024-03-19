@@ -186,6 +186,7 @@ function Right() {
 }
 
 export default function Header() {
+    /** @type {ContextTypes.DashboardContext} */
     const {
         isNavbarActive,
         setNavbarActive,
