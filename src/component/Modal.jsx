@@ -1,14 +1,5 @@
-// ========== DOCS ========== //
-/**
- * @typedef ModalContext
- * @type {object}
- * @property {(modalType:'default'|'panduanDaftar'|'logout'|'perubahanTerakhirDetail'|'perubahanTerakhirConfirm'|'tambahMatkul'|'profil'|'rating'|'tabelSetting'|'tabelFilter'|'detailMatkul'|'hapusPermanentConfirm') => void} setModal Method untuk set tipe modal.
- * @property {(modalActive:boolean) => void} setActive Method untuk mengaktifkan atau nonaktifkan modal.
- * @property {(modalData: {isSuccess?:boolean|true, image?:any|(FaRegCircleCheck|FaRegTimesCircle), title?:string|('Yeaay!'|'Ooops!'), message?:string|('Berhasil memproses permintaanmu'|'Sepertinya ada yang salah saat memproses permintaanmu.'), actionText?:string|'Tutup'}) => void} setData Method untuk set data modal. Setiap tipe modal cenderung memiliki props yang berbeda, sehingga perlu disesuaikan. Jika tipe modal `'default'`, gunakan props yang tertera diatas.
- * @property {'default'|'panduanDaftar'|'logout'|'perubahanTerakhirDetail'|'perubahanTerakhirConfirm'|'tambahMatkul'|'profil'|'rating'|'tabelSetting'|'tabelFilter'|'detailMatkul'|'hapusPermanentConfirm'} modal Tipe modal yang digunakan.
- * @property {boolean} active State modal apakah aktif atau nonaktif.
- * @property {{}} data Data modal yang digunakan.
- */
+// ========== TYPES ========== //
+import * as ContextTypes from '../types/context.js'
 
 // ========== NEXT DEPEDENCY ========== //
 import Link from "next/link";
@@ -29,7 +20,6 @@ import { mutate } from 'swr';
 import { useCookies } from 'next-client-cookies';
 import toast from 'react-hot-toast';
 import { ModalContext } from "./provider/Modal";
-import { UsersContext } from './provider/Users';
 import { Accordion } from '@/component/Accordion';
 import { unixToDate, getLoadingMessage } from "@/utils/client_side";
 
@@ -50,6 +40,9 @@ import {
 // ========== STYLE DEPEDENCY ========== //
 import styles from './style/modal.module.css'
 
+/*
+============================== CODE START HERE ==============================
+*/
 export const Default = () => {
     return (
         <ModalContext.Consumer>
@@ -3302,7 +3295,7 @@ export const DetailMatkul = () => {
     const router = useRouter();
     const userIdCookie = useCookies().get('s_user_id');
     const accessToken = useCookies().get('s_access_token');
-    /** @type {ModalContext} */
+    /** @type {ContextTypes.ModalContext} */
     const { data } = useContext(ModalContext);
     const [nama, setNama] = useState(data.nama ?? '');
     const [sks, setSks] = useState(data.sks ?? '');
