@@ -42,7 +42,7 @@ const league_spartan = League_Spartan({
     weight: ['100', '200', '300', '400', '500', '600', '700', '800', '900']
 })
 
-// ========== ICON DEPEDENCY ========== //
+// ========== ICONS DEPEDENCY ========== //
 import { FiSun, FiMoon } from 'react-icons/fi';
 
 /*
@@ -273,3 +273,7 @@ export default function Header() {
         </>
     )
 }
+
+/*
+============================== CODE END HERE ==============================
+*/
