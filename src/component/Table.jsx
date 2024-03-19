@@ -43,7 +43,7 @@ import { getLoadingMessage, getSessionTable, unixToDate } from '@/utils/client_s
 import styles from './style/table.module.css'
 import "react-loading-skeleton/dist/skeleton.css";
 
-// ========== ICON DEPEDENCY ========== //
+// ========== ICONS DEPEDENCY ========== //
 import {
     IoSearchCircle,
     IoAdd,
@@ -1065,3 +1065,6 @@ function RowAction({
     )
 }
 
+/*
+============================== CODE END HERE ==============================
+*/
