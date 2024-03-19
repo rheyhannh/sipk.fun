@@ -1,16 +1,7 @@
 'use client'
 
-// ========== DOCS ========== //
-/**
- * @typedef ModalContext
- * @type {object}
- * @property {(modalType:'default'|'panduanDaftar'|'logout'|'perubahanTerakhirDetail'|'perubahanTerakhirConfirm'|'tambahMatkul'|'profil'|'rating'|'tabelSetting'|'tabelFilter'|'detailMatkul'|'hapusPermanentConfirm') => void} setModal Method untuk set tipe modal.
- * @property {(modalActive:boolean) => void} setActive Method untuk mengaktifkan atau nonaktifkan modal.
- * @property {(modalData: {isSuccess?:boolean|true, image?:any|(FaRegCircleCheck|FaRegTimesCircle), title?:string|('Yeaay!'|'Ooops!'), message?:string|('Berhasil memproses permintaanmu'|'Sepertinya ada yang salah saat memproses permintaanmu.'), actionText?:string|'Tutup'}) => void} setData Method untuk set data modal. Setiap tipe modal cenderung memiliki props yang berbeda, sehingga perlu disesuaikan. Jika tipe modal `'default'`, gunakan props yang tertera diatas.
- * @property {'default'|'panduanDaftar'|'logout'|'perubahanTerakhirDetail'|'perubahanTerakhirConfirm'|'tambahMatkul'|'profil'|'rating'|'tabelSetting'|'tabelFilter'|'detailMatkul'|'hapusPermanentConfirm'} modal Tipe modal yang digunakan.
- * @property {boolean} active State modal apakah aktif atau nonaktif.
- * @property {{}} data Data modal yang digunakan.
- */
+// ========== TYPES ========== //
+import * as ContextTypes from '../types/context.js'
 
 // ========== NEXT DEPEDENCY ========== //
 import Link from 'next/link';
@@ -42,7 +33,7 @@ export default function Nav({ children }) {
         isRichContent,
         activeLink
     } = useContext(DashboardContext);
-    /** @type {ModalContext} */
+    /** @type {ContextTypes.ModalContext} */
     const {
         setModal,
         setActive,
