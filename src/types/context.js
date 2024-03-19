@@ -18,4 +18,19 @@
  * @property {boolean} isBigContent State apakah big content `window.matchMedia('(min-width: 870px)')` atau bukan.
  */
 
+/**
+ * @typedef DashboardContext
+ * @type {object}
+ * @property {(isNavbarActive:boolean) => void} setNavbarActive Method untuk mengaktifkan atau nonaktifkan navbar.
+ * @property {(activeLink:string) => void} setActiveLink Method untuk mengaktifkan link atau pathname yang sedang aktif pada navbar.
+ * @property {(isRichContent:boolean) => void} setRichContent Method untuk mengaktifkan atau nonaktifkan rich content.
+ * @property {(isPhoneContent:boolean) => void} setPhoneContent Method untuk mengaktifkan atau nonaktifkan phone content.
+ * @property {(isTouchDevice:boolean) => void} setTouchDevice Method untuk mengaktifkan atau nonaktifkan touch device.
+ * @property {boolean} isNavbarActive State apakah navbar aktif atau tidak.
+ * @property {string} activeLink State link atau pathname yang sedang aktif. Ex: `'/dashboard'`.
+ * @property {boolean} isRichContent State apakah rich content `window.matchMedia('(min-width: 1280px)')` atau bukan.
+ * @property {boolean} isPhoneContent State apakah phone content `window.matchMedia('(max-width: 768px)')` atau bukan.
+ * @property {boolean} isTouchDevice State apakah touch device `'ontouchstart' in window || navigator.msMaxTouchPoints` atau bukan. 
+ */
+
 export const ContextTypes = {}
