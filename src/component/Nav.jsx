@@ -27,12 +27,15 @@ import styles from './style/nav.module.css'
 export default function Nav({ children }) {
     const { data, error } = useUser();
     const { data: rating, error: ratingError, isLoading: ratingLoading, isValidating: ratingValidating} = useRating();
+    
+    /** @type {ContextTypes.DashboardContext} */
     const {
         isNavbarActive,
         setNavbarActive,
         isRichContent,
         activeLink
     } = useContext(DashboardContext);
+    
     /** @type {ContextTypes.ModalContext} */
     const {
         setModal,
