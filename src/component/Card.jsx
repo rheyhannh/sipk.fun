@@ -250,6 +250,7 @@ export function Notification({ state, data }) {
         mutate('/api/notifikasi')
     }
 
+    /** @type {ContextTypes.DashboardContext} */
     const {
         isPhoneContent,
     } = useContext(DashboardContext);
@@ -537,7 +538,8 @@ export function History({ state, data, penilaian, count }) {
     const handleRetry = () => {
         mutate(['/api/matkul-history', userIdCookie])
     }
-
+    
+    /** @type {ContextTypes.DashboardContext} */
     const {
         isTouchDevice,
     } = useContext(DashboardContext);
