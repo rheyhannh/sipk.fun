@@ -1,6 +1,11 @@
+// ========== NEXT DEPEDENCY ========== //
 import { NextResponse } from 'next/server';
 import { cookies, headers } from 'next/headers';
+
+// ========== SUPABASE DEPEDENCY ========== //
 import { createServerClient } from '@supabase/ssr';
+
+// ========== UTIL DEPEDENCY ========== //
 import {
     encryptAES,
     decryptAES,
@@ -15,6 +20,10 @@ const limiter = await rateLimit({
     interval: parseInt(process.env.API_LOGOUT_TOKEN_INTERVAL_SECONDS) * 1000,
     uniqueTokenPerInterval: parseInt(process.env.API_LOGOUT_MAX_TOKEN_PERINTERVAL),
 })
+
+/*
+============================== CODE START HERE ==============================
+*/
 
 export async function POST(request) {
     const userAccessToken = request.cookies.get(`${process.env.USER_SESSION_COOKIES_NAME}`)?.value;
@@ -104,3 +113,7 @@ export async function POST(request) {
         status: 204
     })
 }
+
+/*
+============================== CODE END HERE ==============================
+*/

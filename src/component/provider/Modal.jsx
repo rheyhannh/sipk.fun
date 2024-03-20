@@ -22,6 +22,7 @@ import {
 /*
 ============================== CODE START HERE ==============================
 */
+
 export const ModalContext = createContext();
 export const ModalProvider = ({ children }) => {
     const [active, setActive] = useState(false);
@@ -83,3 +84,7 @@ export const ModalProvider = ({ children }) => {
         </ModalContext.Provider>
     )
 }
+
+/*
+============================== CODE END HERE ==============================
+*/

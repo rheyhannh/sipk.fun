@@ -4,6 +4,7 @@ import styles from '../style/loading.module.css'
 /*
 ============================== CODE START HERE ==============================
 */
+
 export function Spinner({ size, color }) {
     return (
         <span
@@ -48,3 +49,7 @@ export function Ball({ active, backdrop, hideBall = false }) {
         )
     }
 }
+
+/*
+============================== CODE END HERE ==============================
+*/

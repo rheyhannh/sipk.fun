@@ -1,8 +1,13 @@
+// ========== TAG / METADATA ========== //
 export const metadata = {
     title: 'SIPK | Matakuliah',
     description: 'SIPK Dashboard - Matakuliah',
     keywords: 'sipk, sistem indeks prestasi kumulatif, kalkulator ipk, kalkulator nilai, kalkulator kuliah, ipk, indeks prestasi kumulatif, kuliah, sipk website, sipk dashboard, dashboard',
 }
+
+/*
+============================== CODE START HERE ==============================
+*/
 
 export default function DashboardLayout({
     children,
@@ -13,3 +18,7 @@ export default function DashboardLayout({
         </>
     )
 }
+
+/*
+============================== CODE END HERE ==============================
+*/

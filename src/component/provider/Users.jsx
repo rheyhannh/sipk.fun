@@ -20,6 +20,7 @@ import form from '../style/form.module.css'
 /*
 ============================== CODE START HERE ==============================
 */
+
 export const UsersContext = createContext();
 export const UsersProvider = ({ children }) => {
     /*
@@ -63,3 +64,7 @@ export const UsersProvider = ({ children }) => {
         </UsersContext.Provider>
     )
 }
+
+/*
+============================== CODE END HERE ==============================
+*/

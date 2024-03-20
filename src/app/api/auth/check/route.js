@@ -1,6 +1,11 @@
+// ========== NEXT DEPEDENCY ========== //
 import { NextResponse } from 'next/server';
 import { cookies, headers } from 'next/headers';
+
+// ========== SUPABASE DEPEDENCY ========== //
 import { createServerClient } from '@supabase/ssr';
+
+// ========== UTIL DEPEDENCY ========== //
 import {
     encryptAES,
     decryptAES,
@@ -15,6 +20,10 @@ const limiter = await rateLimit({
     interval: parseInt(process.env.API_AUTHCHECK_TOKEN_INTERVAL_SECONDS) * 1000,
     uniqueTokenPerInterval: parseInt(process.env.API_AUTHCHECK_MAX_TOKEN_PERINTERVAL),
 })
+
+/*
+============================== CODE START HERE ==============================
+*/
 
 export async function GET(request) {
     const newHeaders = {};
@@ -111,3 +120,7 @@ export async function GET(request) {
         })
     }
 }
+
+/*
+============================== CODE END HERE ==============================
+*/

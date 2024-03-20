@@ -1,6 +1,6 @@
 'use client'
 
-// ========== TYPES ========== //
+// ========== TYPE DEPEDENCY ========== //
 import * as ContextTypes from '../types/context.js'
 
 // ========== NEXT DEPEDENCY ========== //
@@ -33,7 +33,7 @@ import {
     getOnAndOffTarget, getDistribusiNilai,
 } from "@/data/summary";
 
-// ========== UTILS DEPEDENCY ========== //
+// ========== UTIL DEPEDENCY ========== //
 import { getSessionTable } from '@/utils/client_side';
 
 // ========== STYLE DEPEDENCY ========== //
@@ -43,7 +43,7 @@ import 'swiper/css/pagination';
 import 'swiper/css/navigation';
 import "react-loading-skeleton/dist/skeleton.css";
 
-// ========== ICONS DEPEDENCY ========== //
+// ========== ICON DEPEDENCY ========== //
 import { CiTrash, CiEdit } from "react-icons/ci";
 import { FaInfo, FaUndo } from "react-icons/fa";
 import { IoAnalyticsOutline, IoAddOutline } from "react-icons/io5";
@@ -53,6 +53,7 @@ import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 /*
 ============================== CODE START HERE ==============================
 */
+
 export function Summary({ state, icon, color, title, data, penilaian }) {
     const userIdCookie = useCookies().get('s_user_id');
     const handleRetry = () => {

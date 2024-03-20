@@ -1,5 +1,8 @@
+// ========== NEXT DEPEDENCY ========== //
 import { NextResponse } from 'next/server';
 import { cookies, headers } from 'next/headers';
+
+// ========== SUPABASE DEPEDENCY ========== //
 import { createServerClient } from '@supabase/ssr';
 import {
     encryptAES,
@@ -18,6 +21,10 @@ const limiter = await rateLimit({
     interval: parseInt(process.env.API_MAGICLINK_TOKEN_INTERVAL_SECONDS) * 1000,
     uniqueTokenPerInterval: parseInt(process.env.API_MAGICLINK_MAX_TOKEN_PERINTERVAL),
 })
+
+/*
+============================== CODE START HERE ==============================
+*/
 
 export async function POST(request) {
     const newHeaders = {};
@@ -156,3 +163,7 @@ export async function POST(request) {
 
     return NextResponse.json({ success: true }, { status: 200, headers: newHeaders })
 }
+
+/*
+============================== CODE END HERE ==============================
+*/

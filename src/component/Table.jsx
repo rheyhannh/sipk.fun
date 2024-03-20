@@ -1,6 +1,6 @@
 'use client'
 
-// ========== TYPES ========== //
+// ========== TYPE DEPEDENCY ========== //
 import * as ContextTypes from '../types/context.js'
 
 // ========== NEXT DEPEDENCY ========== //
@@ -27,14 +27,14 @@ import { ModalContext } from "./provider/Modal";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import { Spinner } from "./loader/Loading";
 
-// ========== UTILS DEPEDENCY ========== //
+// ========== UTIL DEPEDENCY ========== //
 import { getLoadingMessage, getSessionTable, unixToDate } from '@/utils/client_side';
 
 // ========== STYLE DEPEDENCY ========== //
 import styles from './style/table.module.css'
 import "react-loading-skeleton/dist/skeleton.css";
 
-// ========== ICONS DEPEDENCY ========== //
+// ========== ICON DEPEDENCY ========== //
 import {
     IoSearchCircle,
     IoAdd,
@@ -54,6 +54,7 @@ import { FaInfo, FaPen, FaTrash, FaAngleLeft, FaUndo } from "react-icons/fa";
 /*
 ============================== CODE START HERE ==============================
 */
+
 export function Table({ state, validating, user, sessionTable, matkul, matkulHistory, penilaian }) {
     const router = useRouter();
     const userIdCookie = useCookies().get('s_user_id');

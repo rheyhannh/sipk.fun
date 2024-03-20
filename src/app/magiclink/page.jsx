@@ -10,8 +10,13 @@ import styles from './page.module.css';
 /*
 ============================== CODE START HERE ==============================
 */
+
 export default function Page() {
     return (
         <Main />
     )
 }
+
+/*
+============================== CODE END HERE ==============================
+*/

@@ -1,6 +1,11 @@
+// ========== NEXT DEPEDENCY ========== //
 import { NextResponse } from 'next/server';
 import { cookies, headers } from 'next/headers';
+
+// ========== SUPABASE DEPEDENCY ========== //
 import { createServerClient } from '@supabase/ssr';
+
+// ========== UTIL DEPEDENCY ========== //
 import {
     encryptAES,
     decryptAES,
@@ -16,6 +21,10 @@ const limiter = await rateLimit({
     interval: parseInt(process.env.API_MATKULHISTORY_TOKEN_INTERVAL_SECONDS) * 1000,
     uniqueTokenPerInterval: parseInt(process.env.API_MATKULHISTORY_MAX_TOKEN_PERINTERVAL),
 })
+
+/*
+============================== CODE START HERE ==============================
+*/
 
 export async function GET(request) {
     const userAccessToken = request.cookies.get(`${process.env.USER_SESSION_COOKIES_NAME}`)?.value;
@@ -221,3 +230,7 @@ export async function DELETE(request) {
         headers: newHeaders
     })
 }
+
+/*
+============================== CODE END HERE ==============================
+*/

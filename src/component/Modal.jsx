@@ -1,4 +1,4 @@
-// ========== TYPES ========== //
+// ========== TYPE DEPEDENCY ========== //
 import * as ContextTypes from '../types/context.js'
 
 // ========== NEXT DEPEDENCY ========== //
@@ -8,13 +8,6 @@ import { useRouter } from 'next/navigation';
 // ========== REACT DEPEDENCY ========== //
 import { useState, useContext, useRef } from "react";
 
-// ========== VALIDATOR/SANITIZER DEPEDENCY ========== //
-import isLength from 'validator/lib/isLength';
-import isInt from 'validator/lib/isInt';
-import isEmpty from 'validator/lib/isEmpty';
-import isFloat from 'validator/lib/isFloat'
-import isAlpha from 'validator/lib/isAlpha';
-
 // ========== COMPONENTS DEPEDENCY ========== //
 import { mutate } from 'swr';
 import { useCookies } from 'next-client-cookies';
@@ -23,10 +16,17 @@ import { ModalContext } from "./provider/Modal";
 import { Accordion } from '@/component/Accordion';
 import { unixToDate, getLoadingMessage } from "@/utils/client_side";
 
+// ========== UTIL DEPEDENCY ========== //
+import isLength from 'validator/lib/isLength';
+import isInt from 'validator/lib/isInt';
+import isEmpty from 'validator/lib/isEmpty';
+import isFloat from 'validator/lib/isFloat'
+import isAlpha from 'validator/lib/isAlpha';
+
 // ========== DATA DEPEDENCY ========== //
 import { useUser, useUniversitas } from "@/data/core";
 
-// ========== ICONS DEPEDENCY ========== //
+// ========== ICON DEPEDENCY ========== //
 import { FaTimes, FaRegTimesCircle, FaEye, FaEyeSlash, FaCheckCircle, FaExclamationCircle } from 'react-icons/fa'
 import { FaRegCircleCheck, FaPlus, FaCircleInfo, FaGear } from "react-icons/fa6";
 import { AiOutlineStar, AiFillStar, AiOutlineDrag } from "react-icons/ai";
@@ -43,6 +43,7 @@ import styles from './style/modal.module.css'
 /*
 ============================== CODE START HERE ==============================
 */
+
 export const Default = () => {
     return (
         <ModalContext.Consumer>

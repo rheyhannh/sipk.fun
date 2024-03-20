@@ -24,6 +24,7 @@ export const metadata = {
 /*
 ============================== CODE START HERE ==============================
 */
+
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
@@ -36,3 +37,7 @@ export default function RootLayout({ children }) {
     </html>
   )
 }
+
+/*
+============================== CODE END HERE ==============================
+*/

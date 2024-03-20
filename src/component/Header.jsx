@@ -1,6 +1,6 @@
 'use client'
 
-// ========== TYPES ========== //
+// ========== TYPE DEPEDENCY ========== //
 import * as ContextTypes from '../types/context.js'
 
 // ========== NEXT DEPEDENCY ========== //
@@ -33,12 +33,13 @@ const league_spartan = League_Spartan({
     weight: ['100', '200', '300', '400', '500', '600', '700', '800', '900']
 })
 
-// ========== ICONS DEPEDENCY ========== //
+// ========== ICON DEPEDENCY ========== //
 import { FiSun, FiMoon } from 'react-icons/fi';
 
 /*
 ============================== CODE START HERE ==============================
 */
+
 function Right() {
     const { data, error, isLoading, isValidating } = useUser();
     const { data: theme } = useLocalTheme();

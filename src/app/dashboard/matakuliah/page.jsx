@@ -18,12 +18,13 @@ import styles from './matkul.module.css'
 import 'swiper/css';
 import 'swiper/css/pagination';
 
-// ========== ICONS DEPEDENCY ========== //
+// ========== ICON DEPEDENCY ========== //
 import { AiOutlineAppstore } from "react-icons/ai";
 
 /*
 ============================== CODE START HERE ==============================
 */
+
 function GrafikCard() {
     const { data: user, error: userError, isLoading: userLoading, isValidating: userValidating } = useUser();
     const { data: matkul, error: matkulError, isLoading: matkulLoading, isValidating: matkulValidating } = useMatkul();
@@ -230,3 +231,7 @@ export default function MatakuliahPage() {
         </>
     )
 }
+
+/*
+============================== CODE END HERE ==============================
+*/

@@ -1,5 +1,3 @@
-// ========== COMPONENT DEPEDENCY ========== //
-
 // ========== TAG / METADATA ========== //
 export const metadata = {
     title: 'SIPK | Magiclink',
@@ -10,6 +8,7 @@ export const metadata = {
 /*
 ============================== CODE START HERE ==============================
 */
+
 export default function Layout({
     children,
 }) {
@@ -19,3 +18,7 @@ export default function Layout({
         </>
     )
 }
+
+/*
+============================== CODE END HERE ==============================
+*/

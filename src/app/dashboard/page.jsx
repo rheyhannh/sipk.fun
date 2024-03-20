@@ -13,6 +13,7 @@ import styles from './home.module.css'
 /*
 ============================== CODE START HERE ==============================
 */
+
 function AcademicCard({ count }) {
     const { data: user, error: userError, isLoading: userLoading, isValidating: userValidating } = useUser();
     const { data: matkul, error: matkulError, isLoading: matkulLoading, isValidating: matkulValidating } = useMatkul();
@@ -175,3 +176,7 @@ export default function DashboardPage() {
         </div>
     )
 }
+
+/*
+============================== CODE END HERE ==============================
+*/

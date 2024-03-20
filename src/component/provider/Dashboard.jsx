@@ -6,6 +6,7 @@ import { createContext, useEffect, useState } from "react"
 /*
 ============================== CODE START HERE ==============================
 */
+
 export const DashboardContext = createContext();
 export const DashboardProvider = ({ children }) => {
     /*
@@ -79,3 +80,7 @@ export const DashboardProvider = ({ children }) => {
         </DashboardContext.Provider>
     )
 }
+
+/*
+============================== CODE END HERE ==============================
+*/

@@ -1,6 +1,6 @@
 'use client'
 
-// ========== TYPES ========== //
+// ========== TYPE DEPEDENCY ========== //
 import * as ContextTypes from '../types/context.js'
 
 // ========== NEXT DEPEDENCY ========== //
@@ -15,6 +15,7 @@ import { DashboardContext } from './provider/Dashboard';
 /*
 ============================== CODE START HERE ==============================
 */
+
 export function NavigationEvents() {
     /** @type {ContextTypes.DashboardContext} */
     const { setActiveLink, setNavbarActive, isRichContent } = useContext(DashboardContext);
@@ -31,3 +32,7 @@ export function NavigationEvents() {
 
     return null
 }
+
+/*
+============================== CODE END HERE ==============================
+*/

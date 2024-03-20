@@ -1,6 +1,6 @@
 'use client'
 
-// ========== TYPES ========== //
+// ========== TYPE DEPEDENCY ========== //
 import * as ContextTypes from '../types/context.js'
 
 // ========== NEXT DEPEDENCY ========== //
@@ -10,19 +10,7 @@ import { useRouter, useSearchParams } from 'next/navigation';
 // ========== REACT DEPEDENCY ========== //
 import { useState, useContext, useRef, useEffect } from 'react';
 
-// ========== CAPTCHA DEPEDENCY ========== //
-import HCaptcha from '@hcaptcha/react-hcaptcha';
-
-// ========== VALIDATOR/SANITIZER DEPEDENCY ========== //
-import isEmail from 'validator/lib/isEmail';
-import isEmpty from 'validator/lib/isEmpty';
-import isLength from 'validator/lib/isLength';
-import isStrongPassword from 'validator/lib/isStrongPassword';
-import isAlpha from 'validator/lib/isAlpha';
-import isInt from 'validator/lib/isInt';
-import isUUID from 'validator/lib/isUUID';
-
-// ========== COMPONENTS DEPEDENCY ========== //
+// ========== COMPONENT DEPEDENCY ========== //
 import { mutate } from 'swr';
 import { useCookies } from 'next-client-cookies';
 import { SHA256, HmacSHA512 } from 'crypto-js';
@@ -32,13 +20,23 @@ import { UsersContext } from './provider/Users';
 import { ModalContext } from "./provider/Modal";
 import { Ball } from '@/component/loader/Loading';
 
+// ========== UTIL DEPEDENCY ========== //
+import HCaptcha from '@hcaptcha/react-hcaptcha';
+import isEmail from 'validator/lib/isEmail';
+import isEmpty from 'validator/lib/isEmpty';
+import isLength from 'validator/lib/isLength';
+import isStrongPassword from 'validator/lib/isStrongPassword';
+import isAlpha from 'validator/lib/isAlpha';
+import isInt from 'validator/lib/isInt';
+import isUUID from 'validator/lib/isUUID';
+
 // ========== DATA DEPEDENCY ========== //
 import { useLocalTheme } from '@/data/core';
 
 // ========== STYLE DEPEDENCY ========== //
 import styles from './style/form.module.css'
 
-// ========== ICONS DEPEDENCY ========== //
+// ========== ICON DEPEDENCY ========== //
 import {
     FaEnvelope,
     FaLock,
@@ -58,6 +56,7 @@ import { useUniversitas } from '@/data/core';
 /*
 ============================== CODE START HERE ==============================
 */
+
 export function UsersForm() {
     /* ========== Next Hooks ========== */
     const captcha = useRef();

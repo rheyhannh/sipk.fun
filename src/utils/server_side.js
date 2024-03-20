@@ -178,3 +178,7 @@ export async function getEtag(data, algorithm = 'MD5', etagFormat = true) {
 }
 
 // Options
+
+/*
+============================== CODE END HERE ==============================
+*/

@@ -1,6 +1,7 @@
 /*
 ============================== CODE START HERE ==============================
 */
+
 const getUserIpk = (matkul) => {
   if (matkul.length !== 0) {
     const totalSks = getUserSks(matkul);
@@ -224,3 +225,7 @@ module.exports = {
   getOnAndOffTarget,
   getDistribusiNilai,
 }
+
+/*
+============================== CODE END HERE ==============================
+*/

@@ -7,23 +7,23 @@ import { useRouter, useSearchParams } from 'next/navigation';
 // ========== REACT DEPEDENCY ========== //
 import { useState, useEffect } from 'react';
 
-// ========== VALIDATOR/SANITIZER DEPEDENCY ========== //
-import isUUID from 'validator/lib/isUUID';
-
 // ========== COMPONENTS DEPEDENCY ========== //
 import { mutate } from 'swr';
 import { useCookies } from 'next-client-cookies';
 import toast from 'react-hot-toast';
 import Countdown from 'react-countdown';
 
+// ========== UTIL DEPEDENCY ========== //
+import { getDefaultFakta } from '@/utils/client_side';
+import isUUID from 'validator/lib/isUUID';
+
 // ========== DATA DEPEDENCY ========== //
 import { useLocalTheme, useFakta } from '@/data/core';
-import { getDefaultFakta } from '@/utils/client_side';
 
 // ========== STYLE DEPEDENCY ========== //
 import styles from './style/magiclink.module.css'
 
-// ========== ICONS DEPEDENCY ========== //
+// ========== ICON DEPEDENCY ========== //
 import { FaLink, FaCheck, FaExclamation } from "react-icons/fa";
 import { FiSun, FiMoon } from 'react-icons/fi';
 

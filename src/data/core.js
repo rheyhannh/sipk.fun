@@ -6,6 +6,7 @@ import { getLocalTheme } from '@/utils/client_side';
 /*
 ============================== CODE START HERE ==============================
 */
+
 const fetchPublic = (url) => {
     return fetch(url, {
         headers: {
@@ -200,3 +201,7 @@ export function useFakta(custom) {
     const url = '/api/fakta';
     return useSWR(url, () => fetchPublic(url), { ...swrOptions, ...custom });
 }
+
+/*
+============================== CODE END HERE ==============================
+*/

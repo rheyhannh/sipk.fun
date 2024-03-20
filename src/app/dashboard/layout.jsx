@@ -8,7 +8,6 @@ import { NavigationEvents } from '@/component/NavigationEvents';
 import { DashboardProvider } from '@/component/provider/Dashboard';
 import { ModalProvider } from '@/component/provider/Modal';
 
-
 // ========== TAG / METADATA ========== //
 export const metadata = {
   title: 'SIPK | Dashboard',
@@ -19,6 +18,7 @@ export const metadata = {
 /*
 ============================== CODE START HERE ==============================
 */
+
 export default function DashboardLayout({
   children,
 }) {
@@ -40,3 +40,7 @@ export default function DashboardLayout({
     </>
   )
 }
+
+/*
+============================== CODE END HERE ==============================
+*/

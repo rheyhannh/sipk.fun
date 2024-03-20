@@ -1,6 +1,6 @@
 'use client'
 
-// ========== TYPES ========== //
+// ========== TYPE DEPEDENCY ========== //
 import * as ContextTypes from '../types/context.js'
 
 // ========== NEXT DEPEDENCY ========== //
@@ -24,6 +24,7 @@ import styles from './style/nav.module.css'
 /*
 ============================== CODE START HERE ==============================
 */
+
 export default function Nav({ children }) {
     const { data, error } = useUser();
     const { data: rating, error: ratingError, isLoading: ratingLoading, isValidating: ratingValidating} = useRating();
