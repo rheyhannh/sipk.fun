@@ -1,8 +1,10 @@
 // ========== NEXT DEPEDENCY ========== //
 import { NextResponse } from 'next/server'
 
-// ========== COMPONENT DEPEDENCY ========== //
+// ========== SUPABASE DEPEDENCY ========== //
 import { createServerClient } from '@supabase/ssr'
+
+// ========== UTIL DEPEDENCY ========== //
 import {
     encryptAES,
     decryptAES,
@@ -149,3 +151,7 @@ export default async function middleware(request) {
 export const config = {
     matcher: ['/dashboard/:path*', '/users/:path*', '/magiclink/:path*'],
 }
+
+/*
+============================== CODE END HERE ==============================
+*/
