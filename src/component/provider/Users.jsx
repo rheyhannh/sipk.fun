@@ -3,20 +3,6 @@
 // ========== REACT DEPEDENCY ========== //
 import { createContext, useEffect, useState } from "react"
 
-// ========== ICONS DEPEDENCY ========== //
-import {
-    FaCheckCircle,
-    FaExclamationCircle,
-} from "react-icons/fa";
-import {
-    FaPlus,
-    FaCircleInfo,
-    FaGear
-} from "react-icons/fa6";
-
-// ========== STYLE DEPEDENCY ========== //
-import form from '../style/form.module.css'
-
 /*
 ============================== CODE START HERE ==============================
 */
