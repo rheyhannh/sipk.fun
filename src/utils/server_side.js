@@ -178,6 +178,13 @@ export async function getEtag(data, algorithm = 'MD5', etagFormat = true) {
 }
 
 // Options
+/**
+ * Method untuk mendapatkan cookies options.
+ * @param {'auth'|'service'} type Jika `'auth'` maka secure dan httpOnly bernilai `true`, jika `'service'` maka secure dan httpOnly bernilai `false`.
+ * @param {'set'|'remove'} action Jika `'set'` maka maxAge bernilai positif, jika `'remove'` maka maxAge bernilai negatif.
+ * @param {{}} custom Object props cookies options yang ingin ditambah atau diubah.
+ * @returns {{secure:boolean, httpOnly:boolean, maxAge:2592000|-2592000, sameSite:'lax', custom?:{}}} Object dengan props cookies options sesuai dengan parameter yang digunakan.
+ */
 export async function getCookieOptions(type, action, custom = {}) {
     return {
         secure: type === 'service' ? false : true,
