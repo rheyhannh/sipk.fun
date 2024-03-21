@@ -10,17 +10,18 @@ import {
     encryptAES,
     decryptAES,
     rateLimit,
+    getCookieOptions
 } from '@/utils/server_side';
 
-
-const cookieAuthOptions = { secure: true, httpOnly: true, maxAge: 2592000, sameSite: 'lax' };
-const cookieAuthDeleteOptions = { secure: true, httpOnly: true, maxAge: -2592000, sameSite: 'lax' };
-const cookieServiceOptions = { secure: false, httpOnly: false, maxAge: 2592000, sameSite: 'lax' };
 const limitRequest = parseInt(process.env.API_AUTH_REQUEST_LIMIT);
 const limiter = await rateLimit({
     interval: parseInt(process.env.API_AUTH_TOKEN_INTERVAL_SECONDS) * 1000,
     uniqueTokenPerInterval: parseInt(process.env.API_AUTH_MAX_TOKEN_PERINTERVAL),
 })
+
+const cookieAuthOptions = await getCookieOptions('auth', 'set');
+const cookieAuthDeleteOptions = await getCookieOptions('auth', 'remove');
+const cookieServiceOptions = await getCookieOptions('service', 'set');
 
 /*
 ============================== CODE START HERE ==============================
