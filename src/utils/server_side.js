@@ -134,8 +134,8 @@ export async function validateIdentifier(id, stamp, identifier) {
         const expiredAt = Number(stamp) + 30;
         const now = Math.round(Date.now() / 1000);
         const isExpired = now > expiredAt;
-        if (isExpired) { throw new Error('Expired stamp')}
-        
+        if (isExpired) { throw new Error('Expired stamp') }
+
         const result = Array.from(stamp)
             .map(Number)
             .filter(digit => digit !== 0)
@@ -178,6 +178,15 @@ export async function getEtag(data, algorithm = 'MD5', etagFormat = true) {
 }
 
 // Options
+export async function getCookieOptions(type, action, custom = {}) {
+    return {
+        secure: type === 'service' ? false : true,
+        httpOnly: type === 'service' ? false : true,
+        maxAge: action === 'remove' ? -2592000 : 2592000,
+        sameSite: 'lax',
+        ...custom
+    }
+}
 
 /*
 ============================== CODE END HERE ==============================
