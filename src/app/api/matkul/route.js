@@ -10,18 +10,20 @@ import {
     encryptAES,
     decryptAES,
     rateLimit,
-    validateJWT
+    validateJWT,
+    getCookieOptions
 } from '@/utils/server_side';
 import isUUID from 'validator/lib/isUUID';
 import Joi from 'joi';
 
-const cookieAuthOptions = { secure: true, httpOnly: true, maxAge: 2592000, sameSite: 'lax' };
-const cookieAuthDeleteOptions = { secure: true, httpOnly: true, maxAge: -2592000, sameSite: 'lax' };
 const limitRequest = parseInt(process.env.API_MATKUL_REQUEST_LIMIT);
 const limiter = await rateLimit({
     interval: parseInt(process.env.API_MATKUL_TOKEN_INTERVAL_SECONDS) * 1000,
     uniqueTokenPerInterval: parseInt(process.env.API_MATKUL_MAX_TOKEN_PERINTERVAL),
 })
+
+const cookieAuthOptions = await getCookieOptions('auth', 'set');
+const cookieAuthDeleteOptions = await getCookieOptions('auth', 'remove');
 
 /*
 ============================== CODE START HERE ==============================
