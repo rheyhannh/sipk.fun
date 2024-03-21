@@ -8,17 +8,18 @@ import { createServerClient } from '@supabase/ssr'
 import {
     encryptAES,
     decryptAES,
+    getCookieOptions
 } from '@/utils/server_side';
 import isUUID from 'validator/lib/isUUID';
 
 /*
 ============================== CODE START HERE ==============================
 */
-const cookieAuthOptions = { secure: true, httpOnly: true, maxAge: 2592000, sameSite: 'lax' };
-const cookieAuthDeleteOptions = { secure: true, httpOnly: true, maxAge: -2592000, sameSite: 'lax' };
-const cookieServiceOptions = { secure: false, httpOnly: false, maxAge: 2592000, sameSite: 'lax' };
 
 export default async function middleware(request) {
+    const cookieAuthOptions = await getCookieOptions('auth', 'set');
+    const cookieAuthDeleteOptions = await getCookieOptions('auth', 'remove');
+    const cookieServiceOptions = await getCookieOptions('service', 'set');
     const secureAuthSessionToken = request.cookies.get(`${process.env.USER_SESSION_COOKIES_NAME}`)?.value;
     const serviceUserCookie = request.cookies.get('s_user_id')?.value;
     const serviceAccessTokenCookie = request.cookies.get('s_access_token')?.value;
