@@ -195,7 +195,7 @@ export function useLocalTheme(custom) {
 /**
  * Hook SWR untuk mendapatkan data fakta tentang SIPK
  * @param {object} custom Custom SWR options
- * @returns {{isLoading:Boolean, isValidating:Boolean, error:{}, data: Array<{id:string, text:string, unix_created_at:number, unix_updated_at:number}>}} Data fakta SIPK dan SWR state
+ * @returns {{isLoading:Boolean, isValidating:Boolean, error:{}, data: Array<{id:string, text:string, details:{tags:Array<string>}, created_at:Date, updated_at:Date}>}} Data fakta SIPK dan SWR state
  */
 export function useFakta(custom) {
     const url = '/api/fakta';
