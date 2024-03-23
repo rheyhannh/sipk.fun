@@ -16,6 +16,12 @@ const nextConfig = {
                     { key: 'X-Powered-By', value: 'Next.js' }
                 ]
             },
+            {
+                source: '/api/fakta',
+                headers: [
+                    { key: 'Cache-Control', value: 'max-age=21600' },
+                ]
+            }
         ]
     },
     experimental: {
