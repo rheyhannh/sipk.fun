@@ -115,8 +115,8 @@ export function UsersForm() {
 
     /* ========== Images ========== */
     const emailImg = theme === 'dark' ?
-        <Image src="https://storage.googleapis.com/sipk_assets/check_email_dark.svg" width={100} height={100} alt="Check Email" />
-        : <Image src="https://storage.googleapis.com/sipk_assets/check_email.svg" width={100} height={100} alt="Check Email" />
+        <Image src="/check_email_dark.svg" width={100} height={100} alt="Check Email" />
+        : <Image src="/check_email.svg" width={100} height={100} alt="Check Email" />
 
     /* ========== useEffect ========== */
 
@@ -823,7 +823,7 @@ export function UsersForm() {
                                     <button className={`${styles.btn} ${styles.transparent}`} onClick={handleModeDaftar}>Daftar</button>
                                 </div>
                                 <Image
-                                    src="https://storage.googleapis.com/sipk_assets/daftar.svg"
+                                    src="/daftar.svg"
                                     width={500}
                                     height={500}
                                     alt="Register"
@@ -838,7 +838,7 @@ export function UsersForm() {
                                     <button className={`${styles.btn} ${styles.transparent}`} onClick={handleModeLogin}>Login</button>
                                 </div>
                                 <Image
-                                    src="https://storage.googleapis.com/sipk_assets/login.svg"
+                                    src="/login.svg"
                                     width={500}
                                     height={500}
                                     alt="Login"

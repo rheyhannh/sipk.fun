@@ -225,7 +225,7 @@ export function Summary({ state, icon, color, title, data, penilaian }) {
                 <div className={styles.empty__wrapper}>
                     <div className={styles.empty__content} onClick={() => { handleTambahModal() }}>
                         <Image
-                            src={'https://storage.googleapis.com/sipk_assets/tambah_matkul.svg'}
+                            src={'/tambah_matkul.svg'}
                             width={100}
                             height={100}
                             alt='Tambah Matakuliah'
@@ -998,7 +998,7 @@ export function Grafik({ state, matkul, penilaian, savedState }) {
                 <div className={styles.empty__wrapper}>
                     <div className={styles.empty__content} onClick={() => { handleTambahModal() }}>
                         <Image
-                            src={'https://storage.googleapis.com/sipk_assets/tambah_matkul.svg'}
+                            src={'/tambah_matkul.svg'}
                             width={100}
                             height={100}
                             alt='Tambah Matakuliah'
@@ -1260,7 +1260,7 @@ export function Target({ state, matkul, penilaian, savedState }) {
                 <div className={styles.empty__wrapper}>
                     <div className={styles.empty__content} onClick={() => { handleTambahModal() }}>
                         <Image
-                            src={'https://storage.googleapis.com/sipk_assets/tambah_matkul.svg'}
+                            src={'/tambah_matkul.svg'}
                             width={100}
                             height={100}
                             alt='Tambah Matakuliah'
@@ -1501,7 +1501,7 @@ export function Distribusi({ state, matkul, penilaian, savedState }) {
                 <div className={styles.empty__wrapper}>
                     <div className={styles.empty__content} onClick={() => { handleTambahModal() }}>
                         <Image
-                            src={'https://storage.googleapis.com/sipk_assets/tambah_matkul.svg'}
+                            src={'/tambah_matkul.svg'}
                             width={100}
                             height={100}
                             alt='Tambah Matakuliah'
@@ -1731,7 +1731,7 @@ export function Progress({ state, user, matkul, penilaian }) {
                 <div className={styles.empty__wrapper}>
                     <div className={styles.empty__content} onClick={() => { handleTambahModal() }}>
                         <Image
-                            src={'https://storage.googleapis.com/sipk_assets/tambah_matkul.svg'}
+                            src={'/tambah_matkul.svg'}
                             width={100}
                             height={100}
                             alt='Tambah Matakuliah'

@@ -67,7 +67,7 @@ export function Table({ state, validating, user, sessionTable, matkul, matkulHis
     }
 
     const SkeletonTable = () => {
-        const tableLoadingImg = <Image src="https://storage.googleapis.com/sipk_assets/table_loading.svg" width={100} height={100} alt="Table Loading" />;
+        const tableLoadingImg = <Image src="/table_loading.svg" width={100} height={100} alt="Table Loading" />;
 
         return (
             <div className={`${styles.container}`}>
@@ -171,7 +171,7 @@ export function Table({ state, validating, user, sessionTable, matkul, matkulHis
             setData: setModalData
         } = useContext(ModalContext);
 
-        const tableEmptyImg = <Image src="https://storage.googleapis.com/sipk_assets/table_kosong.svg" width={100} height={100} alt="Table Empty" />;
+        const tableEmptyImg = <Image src="/table_kosong.svg" width={100} height={100} alt="Table Empty" />;
 
         const pageControlCSS = [
             styles.page_control_bottom,

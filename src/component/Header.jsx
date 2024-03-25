@@ -247,7 +247,7 @@ export default function Header() {
 
                 <div onClick={scrollToTop} className={styles.dashboard__logo}>
                     <Image
-                        src={'https://storage.googleapis.com/sipk_assets/logo.png'}
+                        src={'/logo.png'}
                         width={96}
                         height={96}
                         alt={'SIPK Logo'}
