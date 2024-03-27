@@ -403,14 +403,6 @@
     gap: 1rem;
 }
 
-.profil input:disabled {
-    color: var(--infoDark-color);
-}
-
-.profil select:disabled {
-    color: var(--infoDark-color);
-}
-
 .stars {
     display: grid;
     justify-content: center;
