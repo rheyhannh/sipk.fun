@@ -95,6 +95,16 @@ export default function Nav({ children }) {
         }, 50)
     }
 
+    const handleAkunModal = () => {
+        if (!data || data.length === 0 || error) { return; }
+        if (!isRichContent) { setNavbarActive(false); }
+        setData(data);
+        setModal('akun');
+        setTimeout(() => {
+            setActive(true);
+        }, 50)
+    }
+
     return (
         <>
             {isRichContent === true ?
@@ -121,7 +131,7 @@ export default function Nav({ children }) {
 
                                         <span
                                             className={styles.link}
-                                            onClick={() => { console.log('Show Modal Ganti Email dan Password') }}
+                                            onClick={handleAkunModal}
                                         >
                                             <span className={styles.link__icon}>
                                                 <Icon name={'RiUserSettingsLine'} lib={'ri'} props={{ size: '24px' }} />
@@ -218,7 +228,7 @@ export default function Nav({ children }) {
 
                                     <span
                                         className={styles.link}
-                                        onClick={() => { console.log('Show Modal Ganti Email dan Password') }}
+                                        onClick={handleAkunModal}
                                     >
                                         <span className={styles.link__icon}>
                                             <Icon name={'RiUserSettingsLine'} lib={'ri'} props={{ size: '24px' }} />
