@@ -17,6 +17,7 @@ import {
     TabelSetting,
     TabelFilter,
     HapusPermanentConfirm,
+    Akun
 } from "../Modal"
 
 /*
@@ -68,7 +69,8 @@ export const ModalProvider = ({ children }) => {
             tabelSetting: <TabelSetting/>,
             tabelFilter: <TabelFilter/>,
             detailMatkul: <DetailMatkul/>,
-            hapusPermanentConfirm: <HapusPermanentConfirm/>
+            hapusPermanentConfirm: <HapusPermanentConfirm/>,
+            akun: <Akun/>
         }
     }
 

@@ -31,7 +31,8 @@
 .tabel__setting,
 .tabel__filter,
 .profil,
-.default {
+.default,
+.akun {
     display: grid;
     grid-template-rows: 30px auto 50px;
     gap: 1rem;
@@ -103,6 +104,14 @@
     max-height: 530px;
 }
 
+.akun {
+    max-height: 380px;
+}
+
+.akun.ganti_password {
+    max-height: 320px;
+}
+
 .backdrop.active .perubahan__terakhir,
 .backdrop.active .tambah__matakuliah,
 .backdrop.active .detail__matakuliah,
@@ -112,7 +121,8 @@
 .backdrop.active .tabel__setting,
 .backdrop.active .tabel__filter,
 .backdrop.active .profil,
-.backdrop.active .logout {
+.backdrop.active .logout,
+.backdrop.active .akun {
     transform: scale(1) translateY(0);
 }
 
@@ -333,14 +343,16 @@
 .tambah__matakuliah .form__input:focus+.form__label,
 .detail__matakuliah .form__input:focus+.form__label,
 .profil .form__input:focus+.form__label,
-.tabel__filter .form__input:focus+.form__label {
+.tabel__filter .form__input:focus+.form__label,
+.akun .form__input:focus+.form__label {
     color: var(--logo-second-color);
 }
 
 .tambah__matakuliah .form__input:not(:placeholder-shown).form__input:not(:focus)+.form__label,
 .detail__matakuliah .form__input:not(:placeholder-shown).form__input:not(:focus)+.form__label,
 .profil .form__input:not(:placeholder-shown).form__input:not(:focus)+.form__label,
-.tabel__filter .form__input:not(:placeholder-shown).form__input:not(:focus)+.form__label {
+.tabel__filter .form__input:not(:placeholder-shown).form__input:not(:focus)+.form__label,
+.akun .form__input:not(:placeholder-shown).form__input:not(:focus)+.form__label {
     color: var(--logo-second-color);
 }
 
@@ -713,7 +725,8 @@
     .profil:hover .inner::-webkit-scrollbar,
     .rating:hover .inner::-webkit-scrollbar,
     .tabel__setting:hover .inner::-webkit-scrollbar,
-    .tabel__filter:hover .inner::-webkit-scrollbar {
+    .tabel__filter:hover .inner::-webkit-scrollbar,
+    .akun:hover .inner::-webkit-scrollbar {
         visibility: visible;
     }
 
@@ -724,7 +737,8 @@
     .profil:hover .inner::-webkit-scrollbar-thumb,
     .rating:hover .inner::-webkit-scrollbar-thumb,
     .tabel__setting:hover .inner::-webkit-scrollbar-thumb,
-    .tabel__filter:hover .inner::-webkit-scrollbar-thumb {
+    .tabel__filter:hover .inner::-webkit-scrollbar-thumb,
+    .akun:hover .inner::-webkit-scrollbar-thumb {
         visibility: visible;
     }
 
@@ -735,7 +749,8 @@
     .profil:hover .inner::-webkit-scrollbar-thumb:hover,
     .rating:hover .inner::-webkit-scrollbar-thumb:hover,
     .tabel__setting:hover .inner::-webkit-scrollbar-thumb:hover,
-    .tabel__filter:hover .inner::-webkit-scrollbar-thumb:hover {
+    .tabel__filter:hover .inner::-webkit-scrollbar-thumb:hover,
+    .akun:hover .inner::-webkit-scrollbar-thumb:hover {
         visibility: visible;
     }
 
@@ -864,7 +879,8 @@
     .profil,
     .rating,
     .tabel__setting,
-    .tabel__filter {
+    .tabel__filter,
+    .akun {
         max-height: none;
         max-width: none;
         padding: 2rem 1rem;

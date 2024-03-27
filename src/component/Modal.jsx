@@ -1934,6 +1934,7 @@ export const Profil = () => {
                                     </div>
                                 </div>
                             </div>
+
                             <div
                                 style={editProfil ? {
                                     display: 'grid',
@@ -4036,6 +4037,222 @@ export const HapusPermanentConfirm = () => {
                                 </div>
                             </div>
                         </div>
+                    </div>
+                )
+            }}
+        </ModalContext.Consumer>
+    )
+}
+
+export const Akun = () => {
+    const router = useRouter();
+    const userIdCookie = useCookies().get('s_user_id');
+    const accessToken = useCookies().get('s_access_token');
+    const [editPassword, setEditPassword] = useState(false);
+    const [password, setPassword] = useState('');
+    const [passwordConfirm, setPasswordConfirm] = useState('');
+    const [errorMessage, setErrorMessage] = useState('');
+
+    const handlePasswordChange = (e) => {
+        setPassword(e.target.value);
+    }
+
+    const handlePasswordConfirmChange = (e) => {
+        setPasswordConfirm(e.target.value);
+    }
+
+    return (
+        <ModalContext.Consumer>
+            {context => {
+                const toggleEditPassword = () => {
+                    if (editPassword) { setEditPassword(false); setPassword(''); setPasswordConfirm(''); setErrorMessage(''); }
+                    else { setEditPassword(true); }
+                }
+
+                const validateForm = () => {
+
+                }
+
+                const handleEditPassword = async (e) => {
+
+                }
+
+                return (
+                    <div className={`${styles.backdrop} ${context.active ? styles.active : ''}`}>
+                        <form onSubmit={handleEditPassword} className={`${styles.akun} ${editPassword ? styles.ganti_password : ''}`} id="modal">
+                            <div className={styles.top}>
+                                <div className={styles.title}>
+                                    <h2>{editPassword ? 'Ganti Password' : 'Detail Akun'}</h2>
+                                </div>
+                                <div className={styles.close} onClick={() => { context.handleModalClose() }}>
+                                    <FaTimes />
+                                </div>
+                            </div>
+
+                            <div className={styles.inner}>
+                                <div style={{ marginBottom: '1.5rem', textAlign: 'center', color: 'var(--danger-color)' }}>
+                                    {errorMessage}
+                                </div>
+
+                                {editPassword && (
+                                    <div style={{ display: 'grid', gridTemplateRows: 'repeat(2,1fr)', gap: '0' }}>
+                                        <div className={styles.form__input_field}>
+                                            <div>
+                                                <input
+                                                    type="text"
+                                                    id="password"
+                                                    placeholder=" "
+                                                    className={`${styles.form__input} ${styles.max_length}`}
+                                                    value={password}
+                                                    onChange={handlePasswordChange}
+                                                    onFocus={() => { setErrorMessage('') }}
+                                                    disabled={!editPassword}
+                                                    required
+                                                />
+                                                <label
+                                                    htmlFor="password"
+                                                    className={styles.form__label}
+                                                >
+                                                    Password Baru
+                                                </label>
+                                            </div>
+
+                                            <div className={`${styles.form__input_length} ${password.length >= 50 ? styles.max : ''}`}>
+                                                <small>{password.length}/50</small>
+                                            </div>
+                                        </div>
+
+                                        <div className={styles.form__input_field}>
+                                            <div>
+                                                <input
+                                                    type="text"
+                                                    id="passwordConfirm"
+                                                    placeholder=" "
+                                                    className={`${styles.form__input} ${styles.max_length}`}
+                                                    value={passwordConfirm}
+                                                    onChange={handlePasswordConfirmChange}
+                                                    onFocus={() => { setErrorMessage('') }}
+                                                    disabled={!editPassword}
+                                                    required
+                                                />
+                                                <label
+                                                    htmlFor="passwordConfirm"
+                                                    className={styles.form__label}
+                                                >
+                                                    Konfirmasi Password Baru
+                                                </label>
+                                            </div>
+
+                                            <div className={`${styles.form__input_length} ${passwordConfirm.length >= 50 ? styles.max : ''}`}>
+                                                <small>{passwordConfirm.length}/50</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                )}
+
+                                {!editPassword && (
+                                    <div style={{ display: 'grid', gridTemplateRows: 'repeat(3,1fr)', gap: '0' }}>
+                                        <div className={styles.form__input_field}>
+                                            <div>
+                                                <input
+                                                    type="text"
+                                                    id="email"
+                                                    placeholder=" "
+                                                    className={`${styles.form__input}`}
+                                                    value={context?.data[0]?.email ?? '-'}
+                                                    disabled={true}
+                                                    readOnly={true}
+                                                />
+                                                <label
+                                                    htmlFor="email"
+                                                    className={styles.form__label}
+                                                >
+                                                    Email
+                                                </label>
+                                            </div>
+                                        </div>
+
+                                        <div className={styles.form__input_field}>
+                                            <div>
+                                                <input
+                                                    type="text"
+                                                    id="confirmedAt"
+                                                    placeholder=" "
+                                                    className={`${styles.form__input}`}
+                                                    value={
+                                                        context?.data[0]?.email_confirmed_at ?
+                                                            (() => {
+                                                                try {
+                                                                    const date = new Date(context.data[0].email_confirmed_at);
+                                                                    return date.toLocaleString('id-ID', { dateStyle: 'full', timeStyle: 'medium' });
+                                                                } catch (error) {
+                                                                    return '-';
+                                                                }
+                                                            })()
+                                                            : '-'
+                                                    }
+                                                    disabled={true}
+                                                    readOnly={true}
+                                                    required
+                                                />
+                                                <label
+                                                    htmlFor="confirmedAt"
+                                                    className={styles.form__label}
+                                                >
+                                                    Dikonfirmasi
+                                                </label>
+                                            </div>
+                                        </div>
+
+                                        <div className={styles.form__input_field}>
+                                            <div>
+                                                <input
+                                                    type="text"
+                                                    id="roles"
+                                                    placeholder=" "
+                                                    style={{ textTransform: 'capitalize' }}
+                                                    className={`${styles.form__input}`}
+                                                    value={context?.data[0]?.roles ?? '-'}
+                                                    disabled={true}
+                                                    readOnly={true}
+                                                />
+                                                <label
+                                                    htmlFor="roles"
+                                                    className={styles.form__label}
+                                                >
+                                                    Status
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                )}
+                                
+                            </div>
+
+                            <div
+                                style={editPassword ? {
+                                    display: 'grid',
+                                    gridTemplateColumns: 'repeat(2,1fr)',
+                                    gap: '1rem'
+                                } : {}}
+                                className={styles.form__action}
+                            >
+                                {editPassword ?
+                                    <>
+                                        <div style={{ marginTop: '0' }} className={`${styles.btn} ${styles.cancel}`} onClick={toggleEditPassword}>
+                                            <h3>Batalkan</h3>
+                                        </div>
+                                        <button type='submit' className={styles.btn}>
+                                            <h3>Simpan</h3>
+                                        </button>
+                                    </>
+                                    :
+                                    <div className={styles.btn} onClick={toggleEditPassword}>
+                                        <h3>Ganti Password</h3>
+                                    </div>
+                                }
+                            </div>
+                        </form>
                     </div>
                 )
             }}
