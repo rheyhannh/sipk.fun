@@ -872,7 +872,8 @@
     .rating,
     .tabel__setting,
     .tabel__filter,
-    .akun {
+    .akun,
+    .akun.ganti_password {
         max-height: none;
         max-width: none;
         padding: 2rem 1rem;
