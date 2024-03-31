@@ -14,7 +14,7 @@ import { useCookies } from 'next-client-cookies';
 import toast from 'react-hot-toast';
 import { ModalContext } from "./provider/Modal";
 import { Accordion } from '@/component/Accordion';
-import { unixToDate, getLoadingMessage } from "@/utils/client_side";
+import { unixToDate, getLoadingMessage, checkStrongPassword } from "@/utils/client_side";
 
 // ========== UTIL DEPEDENCY ========== //
 import isLength from 'validator/lib/isLength';
