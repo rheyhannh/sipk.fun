@@ -4113,6 +4113,7 @@ export const Akun = () => {
                                                     type="text"
                                                     id="password"
                                                     placeholder=" "
+                                                    autoComplete='off'
                                                     className={`${styles.form__input} ${styles.password_level}`}
                                                     value={password}
                                                     onChange={handlePasswordChange}
@@ -4139,6 +4140,7 @@ export const Akun = () => {
                                                     type="text"
                                                     id="passwordConfirm"
                                                     placeholder=" "
+                                                    autoComplete='off'
                                                     className={`${styles.form__input} ${styles.max_length}`}
                                                     value={passwordConfirm}
                                                     onChange={handlePasswordConfirmChange}
