@@ -1,3 +1,6 @@
+// ========== UTIL DEPEDENCY ========== //
+import isStrongPassword from 'validator/lib/isStrongPassword';
+
 /*
 ============================== CODE START HERE ==============================
 */
