@@ -350,6 +350,15 @@ export const getSessionDistribusi = () => {
     }
 }
 
+// Validator or Input Checker
+export const checkStrongPassword = (password) => {
+    if (!password) { return { point: -1, message: 'Password kosong', level: 'empty' } }
+    const point = isStrongPassword(password, { returnScore: true });
+    const message = point >= 45 ? 'Password kuat' : point >= 25 ? 'Password kurang kuat' : 'Password lemah';
+    const level = point >= 45 ? 'kuat' : point >= 25 ? 'cukup' : 'lemah';
+    return { point, message, level };
+}
+
 /*
 ============================== CODE END HERE ==============================
 */
