@@ -351,6 +351,11 @@ export const getSessionDistribusi = () => {
 }
 
 // Validator or Input Checker
+/**
+ * Method untuk mengecek apakah password kuat menggunakan `validator.isStrongPassword` berdasarkan password point.
+ * @param {string} password Jika falsy, return `{point: -1, message: 'Pasword kosong', level: 'empty'}`
+ * @returns {{point:number|-1, message:'Password kuat'|'Password kurang kuat'|'Password lemah'|'Password kosong', level:'kuat'|'cukup'|'lemah'|'empty' }} Password object attribute.
+ */
 export const checkStrongPassword = (password) => {
     if (!password) { return { point: -1, message: 'Password kosong', level: 'empty' } }
     const point = isStrongPassword(password, { returnScore: true });
