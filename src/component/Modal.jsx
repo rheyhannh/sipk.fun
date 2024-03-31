@@ -4054,11 +4054,22 @@ export const Akun = () => {
     const [errorMessage, setErrorMessage] = useState('');
 
     const handlePasswordChange = (e) => {
-        setPassword(e.target.value);
+        const { value } = e.target;
+        if (value.length <= 50) { setPassword(value) }
     }
 
     const handlePasswordConfirmChange = (e) => {
         setPasswordConfirm(e.target.value);
+    }
+
+    const getPasswordLevelStyles = () => {
+        if (password.length <= 6) {
+            return styles.less
+        } else if (password.length > 50) {
+            return styles.max
+        } else {
+            return styles[`${checkStrongPassword(password).level}`]
+        }
     }
 
     return (
@@ -4102,7 +4113,7 @@ export const Akun = () => {
                                                     type="text"
                                                     id="password"
                                                     placeholder=" "
-                                                    className={`${styles.form__input} ${styles.max_length}`}
+                                                    className={`${styles.form__input} ${styles.password_level}`}
                                                     value={password}
                                                     onChange={handlePasswordChange}
                                                     onFocus={() => { setErrorMessage('') }}
@@ -4117,8 +4128,8 @@ export const Akun = () => {
                                                 </label>
                                             </div>
 
-                                            <div className={`${styles.form__input_length} ${password.length >= 50 ? styles.max : ''}`}>
-                                                <small>{password.length}/50</small>
+                                            <div className={`${styles.password__level} ${getPasswordLevelStyles()}`}>
+                                                <small />
                                             </div>
                                         </div>
 
@@ -4226,7 +4237,6 @@ export const Akun = () => {
                                         </div>
                                     </div>
                                 )}
-                                
                             </div>
 
                             <div

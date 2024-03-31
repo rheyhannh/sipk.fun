@@ -239,6 +239,11 @@
     padding-right: .25rem;
 }
 
+.form__input.password_level {
+    max-width: calc(100% - 60px);
+    padding-right: .25rem;
+}
+
 .form__input_length {
     opacity: 0;
     visibility: hidden;
@@ -253,7 +258,61 @@
     transition: opacity var(--transition-default) ease;
 }
 
-.form__input_field:focus-within .form__input_length {
+.password__level {
+    opacity: 0;
+    visibility: hidden;
+    position: absolute;
+    right: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    color: var(--infoDark-color);
+    transition: opacity var(--transition-default) ease;
+}
+
+.password__level.less {
+    color: crimson;
+}
+
+.password__level.less small::after {
+    content: 'Min 6';
+}
+
+.password__level.lemah {
+    color: var(--danger-color);
+}
+
+.password__level.lemah small::after {
+    content: 'Lemah';
+}
+
+.password__level.cukup {
+    color: var(--warning-color);
+}
+
+.password__level.cukup small::after {
+    content: 'Cukup';
+}
+
+.password__level.kuat {
+    color: var(--success-color);
+}
+
+.password__level.kuat small::after {
+    content: 'Kuat';
+}
+
+.password__level.max {
+    color: crimson;
+}
+
+.password__level.max small::after {
+    content: 'Maks 50';
+}
+
+.form__input_field:focus-within .form__input_length,
+.form__input_field:focus-within .password__level {
     opacity: 1;
     visibility: visible;
 }
