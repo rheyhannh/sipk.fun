@@ -4050,7 +4050,9 @@ export const Akun = () => {
     const accessToken = useCookies().get('s_access_token');
     const [editPassword, setEditPassword] = useState(false);
     const [password, setPassword] = useState('');
+    const [hidePassword, setHidePassword] = useState(false);
     const [passwordConfirm, setPasswordConfirm] = useState('');
+    const [hidePasswordConfirm, setHidePasswordConfirm] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
 
     const handlePasswordChange = (e) => {
@@ -4110,7 +4112,7 @@ export const Akun = () => {
                                         <div className={styles.form__input_field}>
                                             <div>
                                                 <input
-                                                    type="text"
+                                                    type={hidePassword ? 'password' : 'text'}
                                                     id="password"
                                                     placeholder=" "
                                                     autoComplete='off'
@@ -4137,7 +4139,7 @@ export const Akun = () => {
                                         <div className={styles.form__input_field}>
                                             <div>
                                                 <input
-                                                    type="text"
+                                                    type={hidePasswordConfirm ? 'password' : 'text'}
                                                     id="passwordConfirm"
                                                     placeholder=" "
                                                     autoComplete='off'
