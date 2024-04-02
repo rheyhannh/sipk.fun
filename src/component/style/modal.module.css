@@ -315,7 +315,8 @@
     content: 'Cukup';
 }
 
-.password__level.kuat {
+.password__level.kuat,
+.password__level.valid {
     color: var(--success-color);
 }
 
@@ -323,12 +324,21 @@
     content: 'Kuat';
 }
 
-.password__level.max {
+.password__level.valid small::after {
+    content: '\2713';
+}
+
+.password__level.max,
+.password__level.invalid {
     color: crimson;
 }
 
 .password__level.max small::after {
     content: 'Maks 50';
+}
+
+.password__level.invalid small::after {
+    content: '\274c';
 }
 
 .form__input_field:focus-within .form__input_length,

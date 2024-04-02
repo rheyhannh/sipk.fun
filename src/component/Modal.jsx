@@ -4074,6 +4074,16 @@ export const Akun = () => {
         }
     }
 
+    const getPasswordConfirmLevelStyles = () => {
+        if (password.length > 0) {
+            if (passwordConfirm === password) { return styles.valid }
+            else { return styles.invalid }
+        }
+        else {
+            return ''
+        }
+    }
+
     return (
         <ModalContext.Consumer>
             {context => {
@@ -4150,7 +4160,7 @@ export const Akun = () => {
                                                     id="passwordConfirm"
                                                     placeholder=" "
                                                     autoComplete='off'
-                                                    className={`${styles.form__input} ${styles.max_length}`}
+                                                    className={`${styles.form__input} ${styles.password_tool}`}
                                                     value={passwordConfirm}
                                                     onChange={handlePasswordConfirmChange}
                                                     onFocus={() => { setErrorMessage('') }}
@@ -4165,8 +4175,15 @@ export const Akun = () => {
                                                 </label>
                                             </div>
 
-                                            <div className={`${styles.form__input_length} ${passwordConfirm.length >= 50 ? styles.max : ''}`}>
-                                                <small>{passwordConfirm.length}/50</small>
+                                            <div className={styles.password__tool}>
+                                                <div className={`${styles.password__level} ${getPasswordConfirmLevelStyles()}`}>
+                                                    <small />
+                                                </div>
+                                                <div className={styles.password__eye}>
+                                                    <span onClick={() => setHidePasswordConfirm(!hidePasswordConfirm)}>
+                                                        {hidePasswordConfirm ? <FaEye /> : <FaEyeSlash />}
+                                                    </span>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
