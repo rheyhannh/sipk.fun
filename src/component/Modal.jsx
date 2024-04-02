@@ -4065,7 +4065,7 @@ export const Akun = () => {
     }
 
     const getPasswordLevelStyles = () => {
-        if (password.length <= 6) {
+        if (password.length < 6) {
             return styles.less
         } else if (password.length > 50) {
             return styles.max
