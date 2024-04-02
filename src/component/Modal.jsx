@@ -4116,7 +4116,7 @@ export const Akun = () => {
                                                     id="password"
                                                     placeholder=" "
                                                     autoComplete='off'
-                                                    className={`${styles.form__input} ${styles.password_level}`}
+                                                    className={`${styles.form__input} ${styles.password_tool}`}
                                                     value={password}
                                                     onChange={handlePasswordChange}
                                                     onFocus={() => { setErrorMessage('') }}
@@ -4131,8 +4131,15 @@ export const Akun = () => {
                                                 </label>
                                             </div>
 
-                                            <div className={`${styles.password__level} ${getPasswordLevelStyles()}`}>
-                                                <small />
+                                            <div className={styles.password__tool}>
+                                                <div className={`${styles.password__level} ${getPasswordLevelStyles()}`}>
+                                                    <small />
+                                                </div>
+                                                <div className={styles.password__eye}>
+                                                    <span onClick={() => setHidePassword(!hidePassword)}>
+                                                        {hidePassword ? <FaEye /> : <FaEyeSlash />}
+                                                    </span>
+                                                </div>
                                             </div>
                                         </div>
 

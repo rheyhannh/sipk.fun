@@ -239,8 +239,8 @@
     padding-right: .25rem;
 }
 
-.form__input.password_level {
-    max-width: calc(100% - 60px);
+.form__input.password_tool {
+    max-width: calc(100% - 90px);
     padding-right: .25rem;
 }
 
@@ -258,11 +258,31 @@
     transition: opacity var(--transition-default) ease;
 }
 
+.password__tool {
+    position: absolute;
+    right: 1rem;
+    width: 75px;
+    height: 100%;
+    display: grid;
+    grid-template-columns: 1fr 25px;
+    color: var(--infoDark-color);
+    transition: opacity var(--transition-default) ease;
+}
+
+.password__eye {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.password__eye span {
+    display: flex;
+    cursor: pointer;
+}
+
 .password__level {
     opacity: 0;
     visibility: hidden;
-    position: absolute;
-    right: 1rem;
     display: flex;
     justify-content: center;
     align-items: center;
