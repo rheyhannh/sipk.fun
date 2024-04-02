@@ -4093,7 +4093,28 @@ export const Akun = () => {
                 }
 
                 const validateForm = () => {
+                    return new Promise(async (resolve, reject) => {
+                        try {
+                            if (!accessToken) { throw new Error('Missing user access token'); }
+                            if (!userIdCookie) { throw new Error('Missing user id'); }
 
+                            // Validating 'Password'
+                            if (isEmpty(password, { ignore_whitespace: true })) { setErrorMessage('Password dibutuhkan'); resolve(null); }
+                            else {
+                                if (!isLength(password, { min: 6, max: 50 })) { setErrorMessage('Password min 6, max 50 karakter'); resolve(null); }
+                            }
+
+                            // Validating 'Password Confirm'
+                            if (isEmpty(passwordConfirm, { ignore_whitespace: true })) { setErrorMessage('Konfirmasi password dibutuhkan'); resolve(null); }
+                            else {
+                                if (passwordConfirm !== password) { setErrorMessage('Konfirmasi password tidak sesuai'); resolve(null); }
+                            }
+
+                            resolve({
+                                password
+                            })
+                        } catch (error) { reject(error); }
+                    })
                 }
 
                 const handleEditPassword = async (e) => {
