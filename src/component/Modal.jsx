@@ -4050,9 +4050,9 @@ export const Akun = () => {
     const accessToken = useCookies().get('s_access_token');
     const [editPassword, setEditPassword] = useState(false);
     const [password, setPassword] = useState('');
-    const [hidePassword, setHidePassword] = useState(false);
+    const [hidePassword, setHidePassword] = useState(true);
     const [passwordConfirm, setPasswordConfirm] = useState('');
-    const [hidePasswordConfirm, setHidePasswordConfirm] = useState(false);
+    const [hidePasswordConfirm, setHidePasswordConfirm] = useState(true);
     const [errorMessage, setErrorMessage] = useState('');
 
     const handlePasswordChange = (e) => {
