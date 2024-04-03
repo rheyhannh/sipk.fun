@@ -4118,7 +4118,82 @@ export const Akun = () => {
                 }
 
                 const handleEditPassword = async (e) => {
+                    e.preventDefault();
 
+                    // Validate Here, if ErrorValidate then setErrorMessage
+                    try {
+                        var validatedData = await validateForm();
+                        if (!validatedData) { return }
+                        context.handleModalClose();
+                    } catch (error) {
+                        context.handleModalClose();
+                        console.error(error.message || 'Terjadi kesalahan');
+                        toast.error('Terjadi kesalahan, silahkan coba lagi', { position: 'top-left', duration: 4000 });
+                        router.refresh();
+                        return;
+                    }
+
+                    const editPassword = () => {
+                        return new Promise(async (resolve, reject) => {
+                            try {
+                                if (!accessToken) {
+                                    router.refresh();
+                                    throw new Error('Terjadi kesalahan, silahkan coba lagi');
+                                }
+                                if (!userIdCookie) {
+                                    router.refresh();
+                                    throw new Error('Terjadi kesalahan, silahkan coba lagi');
+                                }
+
+                                const response = await fetch('/api/auth/password', {
+                                    method: 'PATCH',
+                                    headers: {
+                                        'Authorization': `Bearer ${accessToken}`,
+                                        'Content-Type': 'application/json',
+                                    },
+                                    body: JSON.stringify(validatedData),
+                                });
+
+                                if (!response.ok) {
+                                    if (response.status === 401) {
+                                        router.replace('/users?action=login&error=isession', {
+                                            scroll: false
+                                        });
+                                        throw new Error(`Unauthorized`);
+                                    } else {
+                                        try {
+                                            const { message } = await response.json();
+                                            if (message) {
+                                                throw new Error(message);
+                                            } else {
+                                                throw new Error(`Terjadi kesalahan`);
+                                            }
+                                        } catch (error) {
+                                            console.error(error);
+                                            reject(error);
+                                        }
+                                    }
+                                } else {
+                                    resolve();
+                                }
+                            } catch (error) {
+                                reject(error);
+                            }
+                        });
+                    }
+
+                    toast.promise(
+                        editPassword(),
+                        {
+                            loading: `${getLoadingMessage(false, 1)}`,
+                            success: `Password berhasil diganti`,
+                            error: (error) => `${error.message || 'Terjadi kesalahan'}`
+                        },
+                        {
+                            position: 'top-left',
+                            duration: 4000,
+                        }
+                    )
                 }
 
                 return (
