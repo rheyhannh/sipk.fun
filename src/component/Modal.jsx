@@ -4145,7 +4145,7 @@ export const Akun = () => {
                                     throw new Error('Terjadi kesalahan, silahkan coba lagi');
                                 }
 
-                                const response = await fetch('/api/auth/password', {
+                                const response = await fetch('/api/password', {
                                     method: 'PATCH',
                                     headers: {
                                         'Authorization': `Bearer ${accessToken}`,
