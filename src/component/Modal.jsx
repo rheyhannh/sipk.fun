@@ -4262,6 +4262,9 @@ export const Akun = () => {
                                                     value={passwordConfirm}
                                                     onChange={handlePasswordConfirmChange}
                                                     onFocus={() => { setErrorMessage('') }}
+                                                    onPaste={(e) => {
+                                                        e.preventDefault(); setErrorMessage('Untuk keamanan, silahkan ketik ulang password barumu'); return false;
+                                                    }}
                                                     disabled={!editPassword}
                                                     required
                                                 />
