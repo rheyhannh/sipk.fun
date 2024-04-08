@@ -492,7 +492,7 @@ export function UsersForm() {
             }
         } else if (type === 'password' && !isEmpty(value)) {
             isValidated = isLength(value, { min: 6, max: 50 });
-            if (!isValidated) { newMessage = 'Password min 6, max 100 karakter', newStatus = 'error' }
+            if (!isValidated) { newMessage = 'Password min 6, max 50 karakter', newStatus = 'error' }
             else { newMessage = 'Password valid', newStatus = 'success' }
         } else if (type === 'namalengkap' && !isEmpty(value)) {
             isValidated = isLength(value, { min: 6, max: 100 });
