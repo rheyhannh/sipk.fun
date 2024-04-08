@@ -39,6 +39,9 @@ const nextConfig = {
     compiler: {
         styledComponents: true
     },
+    env: {
+        NEXT_PUBLIC_APP_VERSION: process.env.npm_package_version,
+    },
 }
 
 module.exports = withBundleAnalyzer(nextConfig)
