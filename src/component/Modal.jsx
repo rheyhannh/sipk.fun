@@ -4056,11 +4056,13 @@ export const Akun = () => {
     const [errorMessage, setErrorMessage] = useState('');
 
     const handlePasswordChange = (e) => {
+        setErrorMessage('')
         const { value } = e.target;
         if (value.length <= 50) { setPassword(value) }
     }
 
     const handlePasswordConfirmChange = (e) => {
+        setErrorMessage('')
         setPasswordConfirm(e.target.value);
     }
 
