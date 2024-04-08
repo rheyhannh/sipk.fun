@@ -174,14 +174,14 @@ export default function Nav({ children }) {
 
                                         <span
                                             className={styles.link}
-                                            onClick={() => { console.log('Show Modal Feedback') }}
+                                            onClick={() => { console.log('Show Modal Tentang') }}
                                         >
                                             <span className={styles.link__icon}>
                                                 <Icon name={'GoReport'} lib={'go'} props={{ size: '24px' }} />
                                             </span>
 
                                             <h4 className={styles.link__text} >
-                                                {'Feedback'}
+                                                {'Tentang'}
                                             </h4>
                                         </span>
 
@@ -271,14 +271,14 @@ export default function Nav({ children }) {
 
                                     <span
                                         className={styles.link}
-                                        onClick={() => { console.log('Show Modal Feedback') }}
+                                        onClick={() => { console.log('Show Modal Tentang') }}
                                     >
                                         <span className={styles.link__icon}>
                                             <Icon name={'GoReport'} lib={'go'} props={{ size: '24px' }} />
                                         </span>
 
                                         <h4 className={styles.link__text} >
-                                            {'Feedback'}
+                                            {'Tentang'}
                                         </h4>
                                     </span>
 
