@@ -108,7 +108,7 @@ export async function POST(request) {
                 {
                     email: Joi.string().min(6).max(100).email().required(),
                     password: Joi.string().min(6).max(50).required(),
-                    fullname: Joi.string().required(),
+                    fullname: Joi.string().min(6).max(100).required(),
                     university: Joi.string().required(), // Add validator to make sure university and university_id match (ex: id = 1, university must Universitas Brawijaya)
                     university_id: Joi.number().min(0).max(parseInt(process.env.DATA_UNIVERSITAS_LENGTH)).required(),
                     token: process.env.NODE_ENV !== 'production' ? Joi.string() : Joi.string().required(),
