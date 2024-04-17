@@ -3,6 +3,7 @@ import * as ContextTypes from '../types/context.js'
 
 // ========== NEXT DEPEDENCY ========== //
 import Link from "next/link";
+import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 
 // ========== REACT DEPEDENCY ========== //
@@ -27,8 +28,8 @@ import isAlpha from 'validator/lib/isAlpha';
 import { useUser, useUniversitas } from "@/data/core";
 
 // ========== ICON DEPEDENCY ========== //
-import { FaTimes, FaRegTimesCircle, FaEye, FaEyeSlash, FaCheckCircle, FaExclamationCircle } from 'react-icons/fa'
-import { FaRegCircleCheck, FaPlus, FaCircleInfo, FaGear } from "react-icons/fa6";
+import { FaTimes, FaRegTimesCircle, FaEye, FaEyeSlash, FaCheckCircle, FaExclamationCircle, FaExclamation, FaInfo, FaBook, FaTelegramPlane, FaTiktok } from 'react-icons/fa'
+import { FaRegCircleCheck, FaPlus, FaCircleInfo, FaGear, FaArrowUpRightFromSquare } from "react-icons/fa6";
 import { AiOutlineStar, AiFillStar, AiOutlineDrag } from "react-icons/ai";
 import {
     IoCaretForward,
