@@ -4419,8 +4419,14 @@ export const Tentang = () => {
             clickable = false
         }
     ) => {
-        return (
+        const Container = ({ children }) => (
             <div className={`${styles.card} ${useActionIcon ? styles.explore : ''} ${clickable ? styles.clickable : ''}`}>
+                {children}
+            </div>
+        )
+
+        return (
+            <Container>
                 <div className={styles.card_icon}>
                     {icon.primary ?? <FaCircleInfo />}
                 </div>
@@ -4429,7 +4435,7 @@ export const Tentang = () => {
                     {description ? <small>{description}</small> : null}
                 </div>
                 {useActionIcon ? <div className={styles.card_icon}>{icon.secondary ?? <FaArrowUpRightFromSquare />}</div> : null}
-            </div>
+            </Container>
         )
     }
 
