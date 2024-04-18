@@ -4404,7 +4404,7 @@ export const Tentang = () => {
     const Section = ({ children, title }) => {
         return (
             <div className={styles.item}>
-                <h3 className={styles.title}> {title ?? 'Lorem, ipsum.'} </h3>
+                <h3 className={styles.title}>{title ?? 'Lorem, ipsum.'}</h3>
                 {children}
             </div>
         )
