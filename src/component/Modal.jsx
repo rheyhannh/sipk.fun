@@ -4496,6 +4496,7 @@ export const Tentang = () => {
                                         </Section>
                                         <Section title={'Support Us'}>
                                             <Card onClick={() => { console.log('Modal Rating') }} clickable={true} useActionIcon={true} icon={{ primary: <AiFillStar />, secondary: <FaPlus /> }} title={'Rating'} description={'Berikan penilaianmu'} />
+                                            {/* Target link (href) belum sesuai. */}
                                             <Card useNextLink={true} href={'https://docs.google.com/forms'} target={'_blank'} prefetch={false} clickable={true} useActionIcon={true} icon={{ primary: <FaExclamation /> }} title={'Feedback'} description={'Laporkan masalah'} />
                                         </Section>
                                         <Section title={'Help & Social'}>
