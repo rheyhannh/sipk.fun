@@ -105,6 +105,15 @@ export default function Nav({ children }) {
         }, 50)
     }
 
+    const handleTentangModal = () => {
+        if (!isRichContent) { setNavbarActive(false); }
+        setData(null);
+        setModal('tentang');
+        setTimeout(() => {
+            setActive(true);
+        }, 50)
+    }
+
     return (
         <>
             {isRichContent === true ?
@@ -174,7 +183,7 @@ export default function Nav({ children }) {
 
                                         <span
                                             className={styles.link}
-                                            onClick={() => { console.log('Show Modal Tentang') }}
+                                            onClick={handleTentangModal}
                                         >
                                             <span className={styles.link__icon}>
                                                 <Icon name={'GoInfo'} lib={'go'} props={{ size: '24px' }} />
@@ -271,7 +280,7 @@ export default function Nav({ children }) {
 
                                     <span
                                         className={styles.link}
-                                        onClick={() => { console.log('Show Modal Tentang') }}
+                                        onClick={handleTentangModal}
                                     >
                                         <span className={styles.link__icon}>
                                             <Icon name={'GoInfo'} lib={'go'} props={{ size: '24px' }} />
