@@ -36,6 +36,7 @@ export const ModalProvider = ({ children }) => {
         setActive(false);
         setTimeout(() => {
             setModal(null);
+            setPrevModal(null);
             setData(null);
         }, 350);
     }
