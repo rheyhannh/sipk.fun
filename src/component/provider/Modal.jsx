@@ -29,6 +29,7 @@ export const ModalContext = createContext();
 export const ModalProvider = ({ children }) => {
     const [active, setActive] = useState(false);
     const [modal, setModal] = useState(null);
+    const [prevModal, setPrevModal] = useState(null);
     const [data, setData] = useState(null);
 
     const handleModalClose = () => {
@@ -59,28 +60,29 @@ export const ModalProvider = ({ children }) => {
 
     const modalList = {
         type: {
-            default: <Default/>,
-            panduanDaftar: <PanduanDaftar/>,
-            logout: <Logout/>,
+            default: <Default />,
+            panduanDaftar: <PanduanDaftar />,
+            logout: <Logout />,
             perubahanTerakhirDetail: <PerubahanTerakhirDetail />,
             perubahanTerakhirConfirm: <PerubahanTerakhirConfirm />,
-            tambahMatkul: <TambahMatkul/>,
-            profil: <Profil/>,
-            rating: <Rating/>,
-            tabelSetting: <TabelSetting/>,
-            tabelFilter: <TabelFilter/>,
-            detailMatkul: <DetailMatkul/>,
-            hapusPermanentConfirm: <HapusPermanentConfirm/>,
-            akun: <Akun/>,
-            tentang: <Tentang/>
+            tambahMatkul: <TambahMatkul />,
+            profil: <Profil />,
+            rating: <Rating />,
+            tabelSetting: <TabelSetting />,
+            tabelFilter: <TabelFilter />,
+            detailMatkul: <DetailMatkul />,
+            hapusPermanentConfirm: <HapusPermanentConfirm />,
+            akun: <Akun />,
+            tentang: <Tentang />
         }
     }
 
     return (
         <ModalContext.Provider
             value={{
-                setModal, setActive, setData, handleModalClose,
-                modal, active, data
+                modal, active, data, prevModal,
+                setModal, setActive, setData, setPrevModal,
+                handleModalClose
             }}
         >
             {modalList.type[modal]}
