@@ -44,6 +44,7 @@ export const ModalProvider = ({ children }) => {
     const handleModalPrev = () => {
         if (prevModal && modalList.type[prevModal]) {
             setData(null);
+            setPrevModal(null);
             setModal(prevModal);
         }
     }
