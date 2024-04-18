@@ -4499,6 +4499,7 @@ export const Tentang = () => {
                                             <Card clickable={true} useActionIcon={true} icon={{ primary: <FaExclamation /> }} title={'Feedback'} description={'Laporkan masalah'} />
                                         </Section>
                                         <Section title={'Help & Social'}>
+                                            {/* Target link (href) belum sesuai. */}
                                             <Card useNextLink={true} href={'http://localhost:3000/panduan'} target={'_blank'} prefetch={false} clickable={true} useActionIcon={true} icon={{ primary: <FaBook /> }} title={'Panduan'} />
                                             <Card useNextLink={true} href={'https://web.telegram.org/k/'} target={'_blank'} prefetch={false} clickable={true} useActionIcon={true} icon={{ primary: <FaTelegramPlane /> }} title={'Telegram'} />
                                             <Card useNextLink={true} href={'https://www.tiktok.com/'} target={'_blank'} prefetch={false} clickable={true} useActionIcon={true} icon={{ primary: <FaTiktok /> }} title={'Tiktok'} />
