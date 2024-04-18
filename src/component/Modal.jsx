@@ -4416,15 +4416,21 @@ export const Tentang = () => {
             description,
             icon = { primary: <FaCircleInfo />, secondary: <FaArrowUpRightFromSquare /> },
             useActionIcon = false,
+            useNextLink = false,
             clickable = false,
             ...props
         }
     ) => {
-        const Container = ({ children }) => (
-            <div {...props} className={`${styles.card} ${useActionIcon ? styles.explore : ''} ${clickable ? styles.clickable : ''}`}>
-                {children}
-            </div>
-        )
+        const Container = ({ children }) => {
+            return useNextLink ?
+                <Link {...props} className={`${styles.card} ${useActionIcon ? styles.explore : ''} ${clickable ? styles.clickable : ''}`}>
+                    {children}
+                </Link>
+                :
+                <div {...props} className={`${styles.card} ${useActionIcon ? styles.explore : ''} ${clickable ? styles.clickable : ''}`}>
+                    {children}
+                </div>
+        }
 
         const CardIcon = () => (
             <div className={styles.card_icon}>
@@ -4493,9 +4499,9 @@ export const Tentang = () => {
                                             <Card clickable={true} useActionIcon={true} icon={{ primary: <FaExclamation /> }} title={'Feedback'} description={'Laporkan masalah'} />
                                         </Section>
                                         <Section title={'Help & Social'}>
-                                            <Card clickable={true} useActionIcon={true} icon={{ primary: <FaBook /> }} title={'Panduan'} />
-                                            <Card clickable={true} useActionIcon={true} icon={{ primary: <FaTelegramPlane /> }} title={'Telegram'} />
-                                            <Card clickable={true} useActionIcon={true} icon={{ primary: <FaTiktok /> }} title={'Tiktok'} />
+                                            <Card useNextLink={true} href={'http://localhost:3000/panduan'} target={'_blank'} prefetch={false} clickable={true} useActionIcon={true} icon={{ primary: <FaBook /> }} title={'Panduan'} />
+                                            <Card useNextLink={true} href={'https://web.telegram.org/k/'} target={'_blank'} prefetch={false} clickable={true} useActionIcon={true} icon={{ primary: <FaTelegramPlane /> }} title={'Telegram'} />
+                                            <Card useNextLink={true} href={'https://www.tiktok.com/'} target={'_blank'} prefetch={false} clickable={true} useActionIcon={true} icon={{ primary: <FaTiktok /> }} title={'Tiktok'} />
                                         </Section>
                                     </div>
                                 </div>
