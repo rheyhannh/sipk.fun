@@ -4471,6 +4471,12 @@ export const Tentang = () => {
     return (
         <ModalContext.Consumer>
             {/** @param {ContextTypes.ModalContext} context */ context => {
+                const handleRatingModal = () => {
+                    context.setData(null);
+                    context.setPrevModal('tentang');
+                    context.setModal('rating');
+                }
+
                 return (
                     <div className={`${styles.backdrop} ${context.active ? styles.active : ''}`}>
                         <div className={`${styles.tentang}`} id="modal">
@@ -4501,7 +4507,7 @@ export const Tentang = () => {
                                             <Card icon={{ primary: <FaInfo /> }} title={'Version'} description={process.env.NEXT_PUBLIC_APP_VERSION ?? '-'} />
                                         </Section>
                                         <Section title={'Support Us'}>
-                                            <Card onClick={() => { console.log('Modal Rating') }} clickable={true} useActionIcon={true} icon={{ primary: <AiFillStar />, secondary: <FaPlus /> }} title={'Rating'} description={'Berikan penilaianmu'} />
+                                            <Card onClick={handleRatingModal} clickable={true} useActionIcon={true} icon={{ primary: <AiFillStar />, secondary: <FaPlus /> }} title={'Rating'} description={'Berikan penilaianmu'} />
                                             {/* Target link (href) belum sesuai. */}
                                             <Card useNextLink={true} href={'https://docs.google.com/forms'} target={'_blank'} prefetch={false} clickable={true} useActionIcon={true} icon={{ primary: <FaExclamation /> }} title={'Feedback'} description={'Laporkan masalah'} />
                                         </Section>
