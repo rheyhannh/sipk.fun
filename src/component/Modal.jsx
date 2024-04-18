@@ -4416,11 +4416,12 @@ export const Tentang = () => {
             description,
             icon = { primary: <FaCircleInfo />, secondary: <FaArrowUpRightFromSquare /> },
             useActionIcon = false,
-            clickable = false
+            clickable = false,
+            ...props
         }
     ) => {
         const Container = ({ children }) => (
-            <div className={`${styles.card} ${useActionIcon ? styles.explore : ''} ${clickable ? styles.clickable : ''}`}>
+            <div {...props} className={`${styles.card} ${useActionIcon ? styles.explore : ''} ${clickable ? styles.clickable : ''}`}>
                 {children}
             </div>
         )
@@ -4488,7 +4489,7 @@ export const Tentang = () => {
                                             <Card icon={{ primary: <FaInfo /> }} title={'Version'} description={process.env.NEXT_PUBLIC_APP_VERSION ?? '-'} />
                                         </Section>
                                         <Section title={'Support Us'}>
-                                            <Card clickable={true} useActionIcon={true} icon={{ primary: <AiFillStar />, secondary: <FaPlus /> }} title={'Rating'} description={'Berikan penilaianmu'} />
+                                            <Card onClick={() => { console.log('Modal Rating') }} clickable={true} useActionIcon={true} icon={{ primary: <AiFillStar />, secondary: <FaPlus /> }} title={'Rating'} description={'Berikan penilaianmu'} />
                                             <Card clickable={true} useActionIcon={true} icon={{ primary: <FaExclamation /> }} title={'Feedback'} description={'Laporkan masalah'} />
                                         </Section>
                                         <Section title={'Help & Social'}>
