@@ -4400,6 +4400,91 @@ export const Akun = () => {
     )
 }
 
+export const Tentang = () => {
+    const Section = ({ children, title }) => {
+        return (
+            <div className={styles.item}>
+                <h3 className={styles.title}> {title ?? 'Lorem, ipsum.'} </h3>
+                {children}
+            </div>
+        )
+    }
+
+    const Card = (
+        {
+            title = 'Lorem, ipsum.',
+            description,
+            icon = { primary: <FaCircleInfo />, secondary: <FaArrowUpRightFromSquare /> },
+            useActionIcon = false,
+            clickable = false
+        }
+    ) => {
+        return (
+            <div className={`${styles.card} ${useActionIcon ? styles.explore : ''} ${clickable ? styles.clickable : ''}`}>
+                <div className={styles.card_icon}>
+                    {icon.primary ?? <FaCircleInfo />}
+                </div>
+                <div className={styles.card_text}>
+                    <h3>{title}</h3>
+                    {description ? <small>{description}</small> : null}
+                </div>
+                {useActionIcon ? <div className={styles.card_icon}>{icon.secondary ?? <FaArrowUpRightFromSquare />}</div> : null}
+            </div>
+        )
+    }
+
+    return (
+        <ModalContext.Consumer>
+            {context => {
+
+                return (
+                    <div className={`${styles.backdrop} ${context.active ? styles.active : ''}`}>
+                        <div className={`${styles.tentang}`} id="modal">
+                            <div className={styles.top}>
+                                <div className={styles.title}>
+                                    <h2>Tentang</h2>
+                                </div>
+                                <div className={styles.close} onClick={() => { context.handleModalClose() }}>
+                                    <FaTimes />
+                                </div>
+                            </div>
+
+                            <div className={styles.inner}>
+                                <div className={styles.content}>
+                                    <div className={styles.content__logo}>
+                                        <Image
+                                            src={'/logo_fill.png'}
+                                            width={160}
+                                            height={160}
+                                            alt={'SIPK Logo'}
+                                            priority
+                                        />
+                                        <small>version: {process.env.NEXT_PUBLIC_APP_VERSION ?? '-'}</small>
+                                    </div>
+
+                                    <div className={styles.content__section}>
+                                        <Section title={'Info'}>
+                                            <Card icon={{ primary: <FaInfo /> }} title={'Version'} description={process.env.NEXT_PUBLIC_APP_VERSION ?? '-'} />
+                                        </Section>
+                                        <Section title={'Support Us'}>
+                                            <Card clickable={true} useActionIcon={true} icon={{ primary: <AiFillStar />, secondary: <FaPlus /> }} title={'Rating'} description={'Berikan penilaianmu'} />
+                                            <Card clickable={true} useActionIcon={true} icon={{ primary: <FaExclamation /> }} title={'Feedback'} description={'Laporkan masalah'} />
+                                        </Section>
+                                        <Section title={'Help & Social'}>
+                                            <Card clickable={true} useActionIcon={true} icon={{ primary: <FaBook /> }} title={'Panduan'} />
+                                            <Card clickable={true} useActionIcon={true} icon={{ primary: <FaTelegramPlane /> }} title={'Telegram'} />
+                                            <Card clickable={true} useActionIcon={true} icon={{ primary: <FaTiktok /> }} title={'Tiktok'} />
+                                        </Section>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                )
+            }}
+        </ModalContext.Consumer>
+    )
+}
 /*
 ============================== CODE END HERE ==============================
 */
