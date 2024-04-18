@@ -4425,16 +4425,32 @@ export const Tentang = () => {
             </div>
         )
 
+        const CardIcon = () => (
+            <div className={styles.card_icon}>
+                {icon.primary ?? <FaCircleInfo />}
+            </div>
+        )
+
+        const CardText = () => (
+            <div className={styles.card_text}>
+                <h3>{title}</h3>
+                {description ? <small>{description}</small> : null}
+            </div>
+        )
+
+        const CardActionIcon = () => {
+            return useActionIcon ? (
+                <div className={styles.card_icon}>
+                    {icon.secondary ?? <FaArrowUpRightFromSquare />}
+                </div>
+            ) : null
+        }
+
         return (
             <Container>
-                <div className={styles.card_icon}>
-                    {icon.primary ?? <FaCircleInfo />}
-                </div>
-                <div className={styles.card_text}>
-                    <h3>{title}</h3>
-                    {description ? <small>{description}</small> : null}
-                </div>
-                {useActionIcon ? <div className={styles.card_icon}>{icon.secondary ?? <FaArrowUpRightFromSquare />}</div> : null}
+                <CardIcon/>
+                <CardText/>
+                <CardActionIcon/>
             </Container>
         )
     }
