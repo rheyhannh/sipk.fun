@@ -4448,9 +4448,9 @@ export const Tentang = () => {
 
         return (
             <Container>
-                <CardIcon/>
-                <CardText/>
-                <CardActionIcon/>
+                <CardIcon />
+                <CardText />
+                <CardActionIcon />
             </Container>
         )
     }
