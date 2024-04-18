@@ -2010,7 +2010,7 @@ export const Rating = () => {
 
     return (
         <ModalContext.Consumer>
-            {context => {
+            {/** @param {ContextTypes.ModalContext} context */ context => {
                 const toggleEditRating = () => {
                     if (editRating) { setEditRating(false); setErrorMessage(''); if (info) { setInfo(''); }; }
                     else {
