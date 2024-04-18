@@ -41,6 +41,13 @@ export const ModalProvider = ({ children }) => {
         }, 350);
     }
 
+    const handleModalPrev = () => {
+        if (prevModal && modalList.type[prevModal]) {
+            setData(null);
+            setModal(prevModal);
+        }
+    }
+
     useEffect(() => {
         if (active) { document.body.classList.add('disable_scroll'); }
         else { document.body.classList.remove('disable_scroll'); }
@@ -83,7 +90,7 @@ export const ModalProvider = ({ children }) => {
             value={{
                 modal, active, data, prevModal,
                 setModal, setActive, setData, setPrevModal,
-                handleModalClose
+                handleModalClose, handleModalPrev
             }}
         >
             {modalList.type[modal]}
