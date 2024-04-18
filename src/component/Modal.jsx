@@ -4472,6 +4472,7 @@ export const Tentang = () => {
         <ModalContext.Consumer>
             {/** @param {ContextTypes.ModalContext} context */ context => {
                 const handleRatingModal = () => {
+                    // Rating modal still without users rating data.
                     context.setData(null);
                     context.setPrevModal('tentang');
                     context.setModal('rating');
