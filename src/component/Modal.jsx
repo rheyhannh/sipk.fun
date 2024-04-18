@@ -4457,8 +4457,7 @@ export const Tentang = () => {
 
     return (
         <ModalContext.Consumer>
-            {context => {
-
+            {/** @param {ContextTypes.ModalContext} context */ context => {
                 return (
                     <div className={`${styles.backdrop} ${context.active ? styles.active : ''}`}>
                         <div className={`${styles.tentang}`} id="modal">
