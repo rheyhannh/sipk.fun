@@ -36,6 +36,7 @@ import {
     IoCaretBack,
     IoPlayForward,
     IoPlayBack,
+    IoArrowBack
 } from "react-icons/io5";
 
 // ========== STYLE DEPEDENCY ========== //
