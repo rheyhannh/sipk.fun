@@ -2249,6 +2249,11 @@ export const Rating = () => {
                     <div className={`${styles.backdrop} ${context.active ? styles.active : ''}`}>
                         <form onSubmit={editRating ? handleEditRating : handleTambahRating} className={`${styles.rating}`} id='modal'>
                             <div className={styles.top}>
+                                {context.prevModal ?
+                                    <div className={styles.prev} onClick={() => { context.handleModalPrev() }}>
+                                        <IoArrowBack />
+                                    </div> : null
+                                }
                                 <div className={styles.title}>
                                     <h2>{editRating ? 'Edit Rating' : 'Rating'}</h2>
                                 </div>
