@@ -27,7 +27,6 @@ import styles from './style/nav.module.css'
 
 export default function Nav({ children }) {
     const { data, error } = useUser();
-    const { data: rating, error: ratingError, isLoading: ratingLoading, isValidating: ratingValidating} = useRating();
     
     /** @type {ContextTypes.DashboardContext} */
     const {
@@ -86,9 +85,8 @@ export default function Nav({ children }) {
     }
 
     const handleRatingModal = () => {
-        if (ratingLoading || ratingValidating || ratingError) { return; }
         if (!isRichContent) { setNavbarActive(false); }
-        setData(rating.length ? rating[0] : null);
+        setData(null);
         setModal('rating');
         setTimeout(() => {
             setActive(true);

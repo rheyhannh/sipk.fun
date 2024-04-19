@@ -1982,6 +1982,7 @@ export const Rating = () => {
     const accessToken = useCookies().get('s_access_token');
     const { data: user } = useUser({ revalidateOnMount: false });
     const { data: universitas } = useUniversitas({ revalidateOnMount: false }, 'user', user ? user[0].university_id : undefined);
+    const { data: ratingData, error: ratingError, isLoading: ratingLoading, isValidating: ratingValidating} = useRating();
     const [stars, setStars] = useState(0);
     const [review, setReview] = useState('');
     const [author, setAuthor] = useState(0);
@@ -2018,398 +2019,456 @@ export const Rating = () => {
 
     return (
         <ModalContext.Consumer>
-            {/** @param {ContextTypes.ModalContext} context */ context => {
-                const toggleEditRating = () => {
-                    if (editRating) { setEditRating(false); setErrorMessage(''); if (info) { setInfo(''); }; }
-                    else {
-                        setStars(context?.data?.rating || 0);
-                        setReview(context?.data?.review || '');
-                        setAuthor(context?.data?.details?.authorType || 0);
-                        setEditRating(true);
+            {
+            /** @param {ContextTypes.ModalContext} context */ context => {
+                    const toggleEditRating = () => {
+                        if (editRating) { setEditRating(false); setErrorMessage(''); if (info) { setInfo(''); }; }
+                        else {
+                            setStars(ratingData.length ? ratingData[0].rating : 0);
+                            setReview(ratingData.length ? ratingData[0].review : '');
+                            setAuthor(ratingData.length ? ratingData[0].details.authorType : 0);
+                            setEditRating(true);
+                        }
                     }
-                }
 
-                const validateForm = () => {
-                    return new Promise(async (resolve, reject) => {
+                    const validateForm = () => {
+                        return new Promise(async (resolve, reject) => {
+                            try {
+                                if (!accessToken) { throw new Error('Missing user access token'); }
+                                if (!userIdCookie) { throw new Error('Missing user id'); }
+
+                                const unallowedWords = ['http', 'https', 'www'];
+                                const unallowedSymbols = ['<', '>', '&', '/', `'`, `"`];
+
+                                // Validating & Sanitize 'Stars'
+                                if (stars <= 0) { setErrorMessage('Kamu harus pilih bintang 1 - 5'); resolve(null); }
+                                if (stars > 5) { setStars(5); }
+
+                                // Validating & Sanitize 'Review'
+                                if (review.length > 200) { setErrorMessage('Pesan maksimal 200 karakter'); resolve(null); }
+                                if (unallowedWords.some(word => review.includes(word))) { setErrorMessage('Pesan tidak dapat mengandung URL'); resolve(null); }
+                                if (unallowedSymbols.some(symbol => review.includes(symbol))) { setErrorMessage(`Pesan tidak dapat mengandung simbol > , < , & , ' , " dan /`); return false; }
+
+                                resolve({
+                                    rating: stars,
+                                    review: review,
+                                    details: {
+                                        author: author === 0 ? user[0].fullname : author === 1 ? user[0].nickname : 'Anonim',
+                                        authorType: author,
+                                        universitas: universitas[0].nama
+                                    }
+                                })
+                            } catch (error) { reject(error); }
+                        })
+                    }
+
+                    const handleTambahRating = async (e) => {
+                        e.preventDefault();
+                        // Validate Here, if ErrorValidate then setErrorMessage, if ErrorCookies then router.refresh()
                         try {
-                            if (!accessToken) { throw new Error('Missing user access token'); }
-                            if (!userIdCookie) { throw new Error('Missing user id'); }
+                            var validatedData = await validateForm();
+                            if (!validatedData) { return }
+                            context.handleModalClose();
+                        } catch (error) {
+                            context.handleModalClose();
+                            console.error(error.message || 'Terjadi kesalahan');
+                            toast.error('Terjadi kesalahan, silahkan coba lagi', { position: 'top-left', duration: 4000 });
+                            router.refresh();
+                            return;
+                        }
 
-                            const unallowedWords = ['http', 'https', 'www'];
-                            const unallowedSymbols = ['<', '>', '&', '/', `'`, `"`];
+                        const addRating = () => {
+                            return new Promise(async (resolve, reject) => {
+                                try {
+                                    if (!accessToken) {
+                                        router.refresh();
+                                        throw new Error('Terjadi kesalahan, silahkan coba lagi');
+                                    }
+                                    if (!userIdCookie) {
+                                        router.refresh();
+                                        throw new Error('Terjadi kesalahan, silahkan coba lagi');
+                                    }
 
-                            // Validating & Sanitize 'Stars'
-                            if (stars <= 0) { setErrorMessage('Kamu harus pilih bintang 1 - 5'); resolve(null); }
-                            if (stars > 5) { setStars(5); }
+                                    const response = await fetch('/api/rating', {
+                                        method: 'POST',
+                                        headers: {
+                                            'Authorization': `Bearer ${accessToken}`,
+                                            'Content-Type': 'application/json',
+                                        },
+                                        body: JSON.stringify(validatedData),
+                                    });
 
-                            // Validating & Sanitize 'Review'
-                            if (review.length > 200) { setErrorMessage('Pesan maksimal 200 karakter'); resolve(null); }
-                            if (unallowedWords.some(word => review.includes(word))) { setErrorMessage('Pesan tidak dapat mengandung URL'); resolve(null); }
-                            if (unallowedSymbols.some(symbol => review.includes(symbol))) { setErrorMessage(`Pesan tidak dapat mengandung simbol > , < , & , ' , " dan /`); return false; }
-
-                            resolve({
-                                rating: stars,
-                                review: review,
-                                details: {
-                                    author: author === 0 ? user[0].fullname : author === 1 ? user[0].nickname : 'Anonim',
-                                    authorType: author,
-                                    universitas: universitas[0].nama
-                                }
-                            })
-                        } catch (error) { reject(error); }
-                    })
-                }
-
-                const handleTambahRating = async (e) => {
-                    e.preventDefault();
-                    // Validate Here, if ErrorValidate then setErrorMessage, if ErrorCookies then router.refresh()
-                    try {
-                        var validatedData = await validateForm();
-                        if (!validatedData) { return }
-                        context.handleModalClose();
-                    } catch (error) {
-                        context.handleModalClose();
-                        console.error(error.message || 'Terjadi kesalahan');
-                        toast.error('Terjadi kesalahan, silahkan coba lagi', { position: 'top-left', duration: 4000 });
-                        router.refresh();
-                        return;
-                    }
-
-                    const addRating = () => {
-                        return new Promise(async (resolve, reject) => {
-                            try {
-                                if (!accessToken) {
-                                    router.refresh();
-                                    throw new Error('Terjadi kesalahan, silahkan coba lagi');
-                                }
-                                if (!userIdCookie) {
-                                    router.refresh();
-                                    throw new Error('Terjadi kesalahan, silahkan coba lagi');
-                                }
-
-                                const response = await fetch('/api/rating', {
-                                    method: 'POST',
-                                    headers: {
-                                        'Authorization': `Bearer ${accessToken}`,
-                                        'Content-Type': 'application/json',
-                                    },
-                                    body: JSON.stringify(validatedData),
-                                });
-
-                                if (!response.ok) {
-                                    if (response.status === 401) {
-                                        router.replace('/users?action=login&error=isession', {
-                                            scroll: false
-                                        });
-                                        throw new Error(`Unauthorized`);
+                                    if (!response.ok) {
+                                        if (response.status === 401) {
+                                            router.replace('/users?action=login&error=isession', {
+                                                scroll: false
+                                            });
+                                            throw new Error(`Unauthorized`);
+                                        } else {
+                                            try {
+                                                const { message } = await response.json();
+                                                if (message) {
+                                                    throw new Error(message);
+                                                } else {
+                                                    throw new Error(`Terjadi kesalahan`);
+                                                }
+                                            } catch (error) {
+                                                console.error(error);
+                                                reject(error);
+                                            }
+                                        }
                                     } else {
                                         try {
-                                            const { message } = await response.json();
-                                            if (message) {
-                                                throw new Error(message);
-                                            } else {
-                                                throw new Error(`Terjadi kesalahan`);
+                                            const { rating } = await response.json();
+                                            if (!rating) {
+                                                throw new Error('Failed to update cache');
                                             }
-                                        } catch (error) {
-                                            console.error(error);
-                                            reject(error);
+                                            mutate(['/api/rating', userIdCookie], rating, {
+                                                populateCache: (rating, current) => {
+                                                    return [rating]
+                                                },
+                                                revalidate: false,
+                                            });
+                                            resolve();
+                                        } catch {
+                                            mutate(['/api/rating', userIdCookie]);
+                                            resolve();
                                         }
                                     }
-                                } else {
-                                    try {
-                                        const { rating } = await response.json();
-                                        if (!rating) {
-                                            throw new Error('Failed to update cache');
-                                        }
-                                        mutate(['/api/rating', userIdCookie], rating, {
-                                            populateCache: (rating, current) => {
-                                                return [rating]
-                                            },
-                                            revalidate: false,
-                                        });
-                                        resolve();
-                                    } catch {
-                                        mutate(['/api/rating', userIdCookie]);
-                                        resolve();
-                                    }
+                                } catch (error) {
+                                    reject(error);
                                 }
-                            } catch (error) {
-                                reject(error);
-                            }
-                        });
-                    };
+                            });
+                        };
 
-                    toast.promise(
-                        addRating(),
-                        {
-                            loading: `${getLoadingMessage(false, 3)} rating`,
-                            success: `Rating berhasil dibuat`,
-                            error: (error) => `${error.message || 'Terjadi kesalahan'}`
-                        },
-                        {
-                            position: 'top-left',
-                            duration: 4000,
-                        }
-                    )
-                }
-
-                const handleEditRating = async (e) => {
-                    e.preventDefault();
-
-                    // Validate Here, if ErrorValidate then setErrorMessage, if ErrorCookies then router.refresh()                    const validatedData = validateForm();
-                    try {
-                        var validatedData = await validateForm();
-                        if (!validatedData) { return }
-                        context.handleModalClose();
-                    } catch (error) {
-                        context.handleModalClose();
-                        console.error(error.message || 'Terjadi kesalahan');
-                        toast.error('Terjadi kesalahan, silahkan coba lagi', { position: 'top-left', duration: 4000 });
-                        router.refresh();
-                        return;
-                    }
-
-                    const editRating = () => {
-                        return new Promise(async (resolve, reject) => {
-                            try {
-                                const ratingId = context?.data?.id;
-
-                                if (!accessToken) {
-                                    router.refresh();
-                                    throw new Error('Terjadi kesalahan, silahkan coba lagi');
-                                }
-                                if (!userIdCookie) {
-                                    router.refresh();
-                                    throw new Error('Terjadi kesalahan, silahkan coba lagi');
-                                }
-                                if (!ratingId) {
-                                    router.refresh();
-                                    throw new Error('Terjadi kesahalan, silahkan coba lagi');
-                                }
-
-                                const response = await fetch(`/api/rating?id=${ratingId}`, {
-                                    method: 'PATCH',
-                                    headers: {
-                                        'Authorization': `Bearer ${accessToken}`,
-                                        'Content-Type': 'application/json',
-                                    },
-                                    body: JSON.stringify(validatedData),
-                                });
-
-                                if (!response.ok) {
-                                    if (response.status === 401) {
-                                        router.replace('/users?action=login&error=isession', {
-                                            scroll: false
-                                        });
-                                        throw new Error(`Unauthorized`);
-                                    } else {
-                                        try {
-                                            const { message } = await response.json();
-                                            if (message) {
-                                                throw new Error(message);
-                                            } else {
-                                                throw new Error(`Terjadi kesalahan`);
-                                            }
-                                        } catch (error) {
-                                            console.error(error);
-                                            reject(error);
-                                        }
-                                    }
-                                } else {
-                                    try {
-                                        const { rating } = await response.json();
-                                        if (!rating) {
-                                            throw new Error('Failed to update cache');
-                                        }
-                                        mutate(['/api/rating', userIdCookie], rating, {
-                                            populateCache: (rating, current) => {
-                                                return [rating]
-                                            },
-                                            revalidate: false,
-                                        });
-                                        resolve();
-                                    } catch {
-                                        mutate(['/api/rating', userIdCookie]);
-                                        resolve();
-                                    }
-                                }
-                            } catch (error) {
-                                reject(error);
-                            }
-                        });
-                    };
-
-                    toast.promise(
-                        editRating(),
-                        {
-                            loading: `${getLoadingMessage(false, 4)} rating`,
-                            success: `Rating berhasil diperbarui`,
-                            error: (error) => `${error.message || 'Terjadi kesalahan'}`
-                        },
-                        {
-                            position: 'top-left',
-                            duration: 4000,
-                        }
-                    )
-                }
-
-                return (
-                    <div className={`${styles.backdrop} ${context.active ? styles.active : ''}`}>
-                        <form onSubmit={editRating ? handleEditRating : handleTambahRating} className={`${styles.rating}`} id='modal'>
-                            <div className={styles.top}>
-                                {context.prevModal ?
-                                    <div className={styles.prev} onClick={() => { context.handleModalPrev() }}>
-                                        <IoArrowBack />
-                                    </div> : null
-                                }
-                                <div className={styles.title}>
-                                    <h2>{editRating ? 'Edit Rating' : 'Rating'}</h2>
-                                </div>
-                                <div className={styles.close} onClick={() => { context.handleModalClose() }}>
-                                    <FaTimes />
-                                </div>
-                            </div>
-
-                            <div className={styles.inner}>
-                                <div style={{ marginBottom: '1rem', textAlign: 'center', color: 'var(--danger-color)' }}>
-                                    {errorMessage}
-                                </div>
-                                {
-                                    context.data ?
-                                        <>
-                                            <div className={styles.stars}>
-                                                {
-                                                    Array.from({ length: 5 }, (_, index) => (
-                                                        <div
-                                                            className={`${styles.star} ${editRating ? stars >= index + 1 ? styles.filled : '' : context.data.rating >= index + 1 ? styles.filled : ''} ${editRating ? '' : styles.disabled}`}
-                                                            onClick={editRating ? () => { setStars(index + 1); setErrorMessage(''); } : null}
-                                                            key={crypto.randomUUID()}
-                                                        >
-                                                            {editRating ? stars >= index + 1 ? <AiFillStar size={'100%'} /> : <AiOutlineStar size={'100%'} /> : context.data.rating >= index + 1 ? <AiFillStar size={'100%'} /> : <AiOutlineStar size={'100%'} />}
-                                                        </div>
-                                                    ))
-                                                }
-                                            </div>
-                                            <textarea
-                                                placeholder={editRating ? starsMessage[stars] : ''}
-                                                value={editRating ? review : context.data.review}
-                                                onChange={editRating ? handleReviewChange : null}
-                                                onFocus={editRating ? () => { setErrorMessage(''); if (info) { setInfo(''); } } : null}
-                                                disabled={!editRating}
-                                            />
-                                            <div style={{
-                                                display: 'flex',
-                                                justifyContent: 'space-between',
-                                                alignItems: 'center',
-                                                marginBottom: '1rem'
-                                            }}>
-                                                <div className={`${styles.review} ${editRating ? review.length >= 200 ? styles.max : '' : context.data.review.length >= 200 ? styles.max : ''}`}>
-                                                    {editRating ? info ? info : 200 - review.length + ' karakter tersisa' : ''}
-                                                </div>
-                                                <select
-                                                    id="authorRating"
-                                                    value={editRating ? author : context.data.details.authorType}
-                                                    onChange={editRating ? handleAuthorChange : null}
-                                                    onFocus={editRating ? () => { setErrorMessage('') } : null}
-                                                    disabled={!editRating}
-                                                    style={editRating ? {} : { cursor: 'auto' }}
-                                                >
-                                                    <option value={0}>Fullname</option>
-                                                    <option value={1}>Nickname</option>
-                                                    <option value={2}>Anonim</option>
-                                                </select>
-                                            </div>
-                                        </>
-                                        :
-                                        <>
-                                            <div className={styles.stars}>
-                                                {
-                                                    Array.from({ length: 5 }, (_, index) => (
-                                                        <div
-                                                            className={`${styles.star} ${stars >= index + 1 ? styles.filled : ''}`}
-                                                            onClick={() => { setStars(index + 1); setErrorMessage(''); }}
-                                                            key={crypto.randomUUID()}
-                                                        >
-                                                            {stars >= index + 1 ? <AiFillStar size={'100%'} /> : <AiOutlineStar size={'100%'} />}
-                                                        </div>
-                                                    ))
-                                                }
-                                            </div>
-                                            <textarea
-                                                maxLength={200}
-                                                placeholder={starsMessage[stars]}
-                                                value={review}
-                                                onChange={handleReviewChange}
-                                                onFocus={() => { setErrorMessage(''); if (info) { setInfo(''); } }}
-                                            />
-                                            <div style={{
-                                                display: 'flex',
-                                                justifyContent: 'space-between',
-                                                alignItems: 'center',
-                                                marginBottom: '1rem'
-                                            }}>
-                                                <div className={`${styles.review} ${review.length >= 200 ? styles.max : ''}`}>
-                                                    {info ? info : review.length > 0 ? 200 - review.length + ' karakter tersisa' : ''}
-                                                    {editRating ? info ? info : 200 - review.length + ' karakter tersisa' : ''}
-                                                </div>
-                                                <select
-                                                    id="authorRating"
-                                                    value={author}
-                                                    onChange={handleAuthorChange}
-                                                    onFocus={() => { setErrorMessage('') }}
-                                                >
-                                                    <option value={0}>Fullname</option>
-                                                    <option value={1}>Nickname</option>
-                                                    <option value={2}>Anonim</option>
-                                                </select>
-                                            </div>
-                                        </>
-                                }
-                            </div>
-
+                        toast.promise(
+                            addRating(),
                             {
-                                context.data ?
-                                    <>
-                                        <div
-                                            style={editRating ? {
-                                                display: 'grid',
-                                                gridTemplateColumns: 'repeat(2,1fr)',
-                                                gap: '1rem'
-                                            } : {}}
-                                            className={styles.form__action}
-                                        >
-                                            {editRating ?
-                                                <>
-                                                    <div style={{ marginTop: '0' }} className={`${styles.btn} ${styles.cancel}`} onClick={toggleEditRating}>
-                                                        <h3>Batalkan</h3>
-                                                    </div>
-                                                    <button type='submit' className={styles.btn}>
-                                                        <h3>Simpan</h3>
-                                                    </button>
-                                                </>
-                                                :
-                                                <div className={styles.btn} onClick={toggleEditRating}>
-                                                    <h3>Edit Rating</h3>
-                                                </div>
+                                loading: `${getLoadingMessage(false, 3)} rating`,
+                                success: `Rating berhasil dibuat`,
+                                error: (error) => `${error.message || 'Terjadi kesalahan'}`
+                            },
+                            {
+                                position: 'top-left',
+                                duration: 4000,
+                            }
+                        )
+                    }
+
+                    const handleEditRating = async (e) => {
+                        e.preventDefault();
+
+                        // Validate Here, if ErrorValidate then setErrorMessage, if ErrorCookies then router.refresh()                    const validatedData = validateForm();
+                        try {
+                            var validatedData = await validateForm();
+                            if (!validatedData) { return }
+                            context.handleModalClose();
+                        } catch (error) {
+                            context.handleModalClose();
+                            console.error(error.message || 'Terjadi kesalahan');
+                            toast.error('Terjadi kesalahan, silahkan coba lagi', { position: 'top-left', duration: 4000 });
+                            router.refresh();
+                            return;
+                        }
+
+                        const editRating = () => {
+                            return new Promise(async (resolve, reject) => {
+                                try {
+                                    const ratingId = ratingData[0]?.id;
+
+                                    if (!accessToken) {
+                                        router.refresh();
+                                        throw new Error('Terjadi kesalahan, silahkan coba lagi');
+                                    }
+                                    if (!userIdCookie) {
+                                        router.refresh();
+                                        throw new Error('Terjadi kesalahan, silahkan coba lagi');
+                                    }
+                                    if (!ratingId) {
+                                        router.refresh();
+                                        throw new Error('Terjadi kesahalan, silahkan coba lagi');
+                                    }
+
+                                    const response = await fetch(`/api/rating?id=${ratingId}`, {
+                                        method: 'PATCH',
+                                        headers: {
+                                            'Authorization': `Bearer ${accessToken}`,
+                                            'Content-Type': 'application/json',
+                                        },
+                                        body: JSON.stringify(validatedData),
+                                    });
+
+                                    if (!response.ok) {
+                                        if (response.status === 401) {
+                                            router.replace('/users?action=login&error=isession', {
+                                                scroll: false
+                                            });
+                                            throw new Error(`Unauthorized`);
+                                        } else {
+                                            try {
+                                                const { message } = await response.json();
+                                                if (message) {
+                                                    throw new Error(message);
+                                                } else {
+                                                    throw new Error(`Terjadi kesalahan`);
+                                                }
+                                            } catch (error) {
+                                                console.error(error);
+                                                reject(error);
                                             }
+                                        }
+                                    } else {
+                                        try {
+                                            const { rating } = await response.json();
+                                            if (!rating) {
+                                                throw new Error('Failed to update cache');
+                                            }
+                                            mutate(['/api/rating', userIdCookie], rating, {
+                                                populateCache: (rating, current) => {
+                                                    return [rating]
+                                                },
+                                                revalidate: false,
+                                            });
+                                            resolve();
+                                        } catch {
+                                            mutate(['/api/rating', userIdCookie]);
+                                            resolve();
+                                        }
+                                    }
+                                } catch (error) {
+                                    reject(error);
+                                }
+                            });
+                        };
+
+                        toast.promise(
+                            editRating(),
+                            {
+                                loading: `${getLoadingMessage(false, 4)} rating`,
+                                success: `Rating berhasil diperbarui`,
+                                error: (error) => `${error.message || 'Terjadi kesalahan'}`
+                            },
+                            {
+                                position: 'top-left',
+                                duration: 4000,
+                            }
+                        )
+                    }
+
+                    const Container = ({ children }) => (
+                        <div className={`${styles.backdrop} ${context.active ? styles.active : ''}`}>
+                            {children}
+                        </div>
+                    )
+
+                    const Wrapper = ({ children }) => (
+                        <form onSubmit={editRating ? handleEditRating : handleTambahRating} className={`${styles.rating}`} id='modal'>
+                            {children}
+                        </form>
+                    )
+
+                    const Top = () => (
+                        <div className={styles.top}>
+                            {context.prevModal ?
+                                <div className={styles.prev} onClick={() => { context.handleModalPrev() }}>
+                                    <IoArrowBack />
+                                </div> : null
+                            }
+                            <div className={styles.title}>
+                                <h2>{editRating ? 'Edit Rating' : 'Rating'}</h2>
+                            </div>
+                            <div className={styles.close} onClick={() => { context.handleModalClose() }}>
+                                <FaTimes />
+                            </div>
+                        </div>
+                    )
+
+                    const FormError = () => (
+                        <div
+                            style={{
+                                display: 'flex',
+                                flexDirection: 'column',
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                                width: '100%',
+                                height: '100%',
+                                color: 'var(--infoDark-color)'
+                            }}
+                        >
+                            <h5>Gagal mengambil data</h5>
+                            <h1>&#x21bb;</h1>
+                        </div>
+                    )
+
+                    const FormLoadingOrValidating = () => (
+                        <div
+                            style={{
+                                display: 'flex',
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                                width: '100%',
+                                height: '100%'
+                            }}
+                        >
+                            <Spinner size={'32px'} color={'var(--first-color)'} />
+                        </div>
+                    )
+
+                    const FormLoaded = () => (
+                        <>
+                            <div style={{ marginBottom: '1rem', textAlign: 'center', color: 'var(--danger-color)' }}>
+                                {errorMessage}
+                            </div>
+                            {
+                                ratingData.length ?
+                                    <>
+                                        <div className={styles.stars}>
+                                            {
+                                                Array.from({ length: 5 }, (_, index) => (
+                                                    <div
+                                                        className={`${styles.star} ${editRating ? stars >= index + 1 ? styles.filled : '' : ratingData[0].rating >= index + 1 ? styles.filled : ''} ${editRating ? '' : styles.disabled}`}
+                                                        onClick={editRating ? () => { setStars(index + 1); setErrorMessage(''); } : null}
+                                                        key={crypto.randomUUID()}
+                                                    >
+                                                        {editRating ? stars >= index + 1 ? <AiFillStar size={'100%'} /> : <AiOutlineStar size={'100%'} /> : ratingData[0].rating >= index + 1 ? <AiFillStar size={'100%'} /> : <AiOutlineStar size={'100%'} />}
+                                                    </div>
+                                                ))
+                                            }
+                                        </div>
+                                        <textarea
+                                            placeholder={editRating ? starsMessage[stars] : ''}
+                                            value={editRating ? review : ratingData[0].review}
+                                            onChange={editRating ? handleReviewChange : null}
+                                            onFocus={editRating ? () => { setErrorMessage(''); if (info) { setInfo(''); } } : null}
+                                            disabled={!editRating}
+                                        />
+                                        <div style={{
+                                            display: 'flex',
+                                            justifyContent: 'space-between',
+                                            alignItems: 'center',
+                                            marginBottom: '1rem'
+                                        }}>
+                                            <div className={`${styles.review} ${editRating ? review.length >= 200 ? styles.max : '' : ratingData[0].review.length >= 200 ? styles.max : ''}`}>
+                                                {editRating ? info ? info : 200 - review.length + ' karakter tersisa' : ''}
+                                            </div>
+                                            <select
+                                                id="authorRating"
+                                                value={editRating ? author : ratingData[0].details.authorType}
+                                                onChange={editRating ? handleAuthorChange : null}
+                                                onFocus={editRating ? () => { setErrorMessage('') } : null}
+                                                disabled={!editRating}
+                                                style={editRating ? {} : { cursor: 'auto' }}
+                                            >
+                                                <option value={0}>Fullname</option>
+                                                <option value={1}>Nickname</option>
+                                                <option value={2}>Anonim</option>
+                                            </select>
                                         </div>
                                     </>
                                     :
                                     <>
-                                        <div
-                                            className={styles.form__action}
-                                        >
-                                            <button type='submit' className={styles.btn}>
-                                                <h3>Submit</h3>
-                                            </button>
+                                        <div className={styles.stars}>
+                                            {
+                                                Array.from({ length: 5 }, (_, index) => (
+                                                    <div
+                                                        className={`${styles.star} ${stars >= index + 1 ? styles.filled : ''}`}
+                                                        onClick={() => { setStars(index + 1); setErrorMessage(''); }}
+                                                        key={crypto.randomUUID()}
+                                                    >
+                                                        {stars >= index + 1 ? <AiFillStar size={'100%'} /> : <AiOutlineStar size={'100%'} />}
+                                                    </div>
+                                                ))
+                                            }
+                                        </div>
+                                        <textarea
+                                            maxLength={200}
+                                            placeholder={starsMessage[stars]}
+                                            value={review}
+                                            onChange={handleReviewChange}
+                                            onFocus={() => { setErrorMessage(''); if (info) { setInfo(''); } }}
+                                        />
+                                        <div style={{
+                                            display: 'flex',
+                                            justifyContent: 'space-between',
+                                            alignItems: 'center',
+                                            marginBottom: '1rem'
+                                        }}>
+                                            <div className={`${styles.review} ${review.length >= 200 ? styles.max : ''}`}>
+                                                {info ? info : review.length > 0 ? 200 - review.length + ' karakter tersisa' : ''}
+                                                {editRating ? info ? info : 200 - review.length + ' karakter tersisa' : ''}
+                                            </div>
+                                            <select
+                                                id="authorRating"
+                                                value={author}
+                                                onChange={handleAuthorChange}
+                                                onFocus={() => { setErrorMessage('') }}
+                                            >
+                                                <option value={0}>Fullname</option>
+                                                <option value={1}>Nickname</option>
+                                                <option value={2}>Anonim</option>
+                                            </select>
                                         </div>
                                     </>
                             }
-                        </form>
-                    </div>
-                )
-            }
+                        </>
+                    )
 
+                    const Form = () => {
+                        return ratingError ? <FormError /> : ratingLoading || ratingValidating ? <FormLoadingOrValidating /> : <FormLoaded />
+                    }
+
+                    const FormButton = () => {
+                        return ratingLoading || ratingValidating || ratingError ?
+                            null
+                            :
+                            ratingData.length ?
+                                <>
+                                    <div
+                                        style={editRating ? {
+                                            display: 'grid',
+                                            gridTemplateColumns: 'repeat(2,1fr)',
+                                            gap: '1rem'
+                                        } : {}}
+                                        className={styles.form__action}
+                                    >
+                                        {editRating ?
+                                            <>
+                                                <div style={{ marginTop: '0' }} className={`${styles.btn} ${styles.cancel}`} onClick={toggleEditRating}>
+                                                    <h3>Batalkan</h3>
+                                                </div>
+                                                <button type='submit' className={styles.btn}>
+                                                    <h3>Simpan</h3>
+                                                </button>
+                                            </>
+                                            :
+                                            <div className={styles.btn} onClick={toggleEditRating}>
+                                                <h3>Edit Rating</h3>
+                                            </div>
+                                        }
+                                    </div>
+                                </>
+                                :
+                                <>
+                                    <div
+                                        className={styles.form__action}
+                                    >
+                                        <button type='submit' className={styles.btn}>
+                                            <h3>Submit</h3>
+                                        </button>
+                                    </div>
+                                </>
+                    }
+
+                    return (
+                        <Container>
+                            <Wrapper>
+                                <Top />
+                                <Form />
+                                <FormButton />
+                            </Wrapper>
+                        </Container>
+                    )
+                }
             }
         </ModalContext.Consumer>
     )
