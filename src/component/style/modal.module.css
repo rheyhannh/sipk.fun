@@ -95,6 +95,11 @@
     max-height: 420px;
 }
 
+.rating.error,
+.rating.loading {
+    grid-template-rows: 30px auto;
+}
+
 .profil {
     max-height: 455px;
 }

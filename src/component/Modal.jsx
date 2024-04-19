@@ -2257,7 +2257,7 @@ export const Rating = () => {
 
                     return (
                         <div className={`${styles.backdrop} ${context.active ? styles.active : ''}`}>
-                            <form onSubmit={editRating ? handleEditRating : handleTambahRating} className={`${styles.rating}`} id='modal'>
+                            <form onSubmit={editRating ? handleEditRating : handleTambahRating} className={`${styles.rating} ${ratingError ? styles.error : ratingLoading || ratingValidating ? styles.loading : ''}`} id='modal'>
                                 <div className={styles.top}>
                                     {context.prevModal ?
                                         <div className={styles.prev} onClick={() => { context.handleModalPrev() }}>
