@@ -840,6 +840,7 @@
     display: grid;
     gap: .5rem;
     padding: .5rem 0;
+    border-top: 2px solid var(--skeleton-base);
 }
 
 .tentang .content__section .item .title {
