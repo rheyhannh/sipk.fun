@@ -5,6 +5,7 @@ import * as ContextTypes from '../types/context.js'
 import Link from "next/link";
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
+import { League_Spartan } from 'next/font/google';
 
 // ========== REACT DEPEDENCY ========== //
 import { useState, useContext, useRef } from "react";
@@ -41,6 +42,12 @@ import {
 
 // ========== STYLE DEPEDENCY ========== //
 import styles from './style/modal.module.css'
+const league_spartan = League_Spartan({
+    subsets: ['latin'],
+    display: 'swap',
+    variable: '--leaguespartan-font',
+    weight: ['100', '200', '300', '400', '500', '600', '700', '800', '900']
+})
 
 /*
 ============================== CODE START HERE ==============================
