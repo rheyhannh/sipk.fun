@@ -5,6 +5,13 @@ import styles from '../style/loading.module.css'
 ============================== CODE START HERE ==============================
 */
 
+/**
+ * Render spinner untuk feedback loading.
+ * @param {{size?:string|'24px', color?:string|'var(--infoDark-color)'}} props React props object.
+ * @param props.size Ukuran spinner.
+ * @param props.color Warna spinner.
+ * @returns {ReactElement} Element react untuk render spinner.
+ */
 export function Spinner({ size, color }) {
     return (
         <span
