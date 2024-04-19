@@ -4502,8 +4502,8 @@ export const Tentang = () => {
                                     <div className={styles.content__logo}>
                                         <Image
                                             src={'/logo_fill.png'}
-                                            width={160}
-                                            height={160}
+                                            width={128}
+                                            height={128}
                                             alt={'SIPK Logo'}
                                             priority
                                         />
