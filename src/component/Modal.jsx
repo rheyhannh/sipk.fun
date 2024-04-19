@@ -17,6 +17,7 @@ import toast from 'react-hot-toast';
 import { ModalContext } from "./provider/Modal";
 import { Accordion } from '@/component/Accordion';
 import { unixToDate, getLoadingMessage, checkStrongPassword } from "@/utils/client_side";
+import { Spinner } from './loader/Loading.jsx';
 
 // ========== UTIL DEPEDENCY ========== //
 import isLength from 'validator/lib/isLength';
@@ -26,7 +27,7 @@ import isFloat from 'validator/lib/isFloat'
 import isAlpha from 'validator/lib/isAlpha';
 
 // ========== DATA DEPEDENCY ========== //
-import { useUser, useUniversitas } from "@/data/core";
+import { useUser, useUniversitas, useRating } from "@/data/core";
 
 // ========== ICON DEPEDENCY ========== //
 import { FaTimes, FaRegTimesCircle, FaEye, FaEyeSlash, FaCheckCircle, FaExclamationCircle, FaExclamation, FaInfo, FaBook, FaTelegramPlane, FaTiktok } from 'react-icons/fa'
