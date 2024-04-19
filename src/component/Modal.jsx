@@ -1982,7 +1982,7 @@ export const Rating = () => {
     const accessToken = useCookies().get('s_access_token');
     const { data: user } = useUser({ revalidateOnMount: false });
     const { data: universitas } = useUniversitas({ revalidateOnMount: false }, 'user', user ? user[0].university_id : undefined);
-    const { data: ratingData, error: ratingError, isLoading: ratingLoading, isValidating: ratingValidating} = useRating();
+    const { data: ratingData, error: ratingError, isLoading: ratingLoading, isValidating: ratingValidating } = useRating();
     const [stars, setStars] = useState(0);
     const [review, setReview] = useState('');
     const [author, setAuthor] = useState(0);
@@ -2255,218 +2255,193 @@ export const Rating = () => {
                         )
                     }
 
-                    const Container = ({ children }) => (
+                    return (
                         <div className={`${styles.backdrop} ${context.active ? styles.active : ''}`}>
-                            {children}
-                        </div>
-                    )
+                            <form onSubmit={editRating ? handleEditRating : handleTambahRating} className={`${styles.rating}`} id='modal'>
+                                <div className={styles.top}>
+                                    {context.prevModal ?
+                                        <div className={styles.prev} onClick={() => { context.handleModalPrev() }}>
+                                            <IoArrowBack />
+                                        </div> : null
+                                    }
+                                    <div className={styles.title}>
+                                        <h2>{editRating ? 'Edit Rating' : 'Rating'}</h2>
+                                    </div>
+                                    <div className={styles.close} onClick={() => { context.handleModalClose() }}>
+                                        <FaTimes />
+                                    </div>
+                                </div>
 
-                    const Wrapper = ({ children }) => (
-                        <form onSubmit={editRating ? handleEditRating : handleTambahRating} className={`${styles.rating}`} id='modal'>
-                            {children}
-                        </form>
-                    )
-
-                    const Top = () => (
-                        <div className={styles.top}>
-                            {context.prevModal ?
-                                <div className={styles.prev} onClick={() => { context.handleModalPrev() }}>
-                                    <IoArrowBack />
-                                </div> : null
-                            }
-                            <div className={styles.title}>
-                                <h2>{editRating ? 'Edit Rating' : 'Rating'}</h2>
-                            </div>
-                            <div className={styles.close} onClick={() => { context.handleModalClose() }}>
-                                <FaTimes />
-                            </div>
-                        </div>
-                    )
-
-                    const FormError = () => (
-                        <div
-                            style={{
-                                display: 'flex',
-                                flexDirection: 'column',
-                                justifyContent: 'center',
-                                alignItems: 'center',
-                                width: '100%',
-                                height: '100%',
-                                color: 'var(--infoDark-color)'
-                            }}
-                        >
-                            <h5>Gagal mengambil data</h5>
-                            <h1>&#x21bb;</h1>
-                        </div>
-                    )
-
-                    const FormLoadingOrValidating = () => (
-                        <div
-                            style={{
-                                display: 'flex',
-                                justifyContent: 'center',
-                                alignItems: 'center',
-                                width: '100%',
-                                height: '100%'
-                            }}
-                        >
-                            <Spinner size={'32px'} color={'var(--first-color)'} />
-                        </div>
-                    )
-
-                    const FormLoaded = () => (
-                        <>
-                            <div style={{ marginBottom: '1rem', textAlign: 'center', color: 'var(--danger-color)' }}>
-                                {errorMessage}
-                            </div>
-                            {
-                                ratingData.length ?
-                                    <>
-                                        <div className={styles.stars}>
-                                            {
-                                                Array.from({ length: 5 }, (_, index) => (
-                                                    <div
-                                                        className={`${styles.star} ${editRating ? stars >= index + 1 ? styles.filled : '' : ratingData[0].rating >= index + 1 ? styles.filled : ''} ${editRating ? '' : styles.disabled}`}
-                                                        onClick={editRating ? () => { setStars(index + 1); setErrorMessage(''); } : null}
-                                                        key={crypto.randomUUID()}
-                                                    >
-                                                        {editRating ? stars >= index + 1 ? <AiFillStar size={'100%'} /> : <AiOutlineStar size={'100%'} /> : ratingData[0].rating >= index + 1 ? <AiFillStar size={'100%'} /> : <AiOutlineStar size={'100%'} />}
-                                                    </div>
-                                                ))
-                                            }
+                                {
+                                    ratingError ?
+                                        <div
+                                            style={{
+                                                display: 'flex',
+                                                flexDirection: 'column',
+                                                justifyContent: 'center',
+                                                alignItems: 'center',
+                                                width: '100%',
+                                                height: '100%',
+                                                color: 'var(--infoDark-color)'
+                                            }}
+                                        >
+                                            <h5>Gagal mengambil data</h5>
+                                            <h1>&#x21bb;</h1>
                                         </div>
-                                        <textarea
-                                            placeholder={editRating ? starsMessage[stars] : ''}
-                                            value={editRating ? review : ratingData[0].review}
-                                            onChange={editRating ? handleReviewChange : null}
-                                            onFocus={editRating ? () => { setErrorMessage(''); if (info) { setInfo(''); } } : null}
-                                            disabled={!editRating}
-                                        />
-                                        <div style={{
-                                            display: 'flex',
-                                            justifyContent: 'space-between',
-                                            alignItems: 'center',
-                                            marginBottom: '1rem'
-                                        }}>
-                                            <div className={`${styles.review} ${editRating ? review.length >= 200 ? styles.max : '' : ratingData[0].review.length >= 200 ? styles.max : ''}`}>
-                                                {editRating ? info ? info : 200 - review.length + ' karakter tersisa' : ''}
-                                            </div>
-                                            <select
-                                                id="authorRating"
-                                                value={editRating ? author : ratingData[0].details.authorType}
-                                                onChange={editRating ? handleAuthorChange : null}
-                                                onFocus={editRating ? () => { setErrorMessage('') } : null}
-                                                disabled={!editRating}
-                                                style={editRating ? {} : { cursor: 'auto' }}
+                                        : ratingLoading || ratingValidating ?
+                                            <div
+                                                style={{
+                                                    display: 'flex',
+                                                    justifyContent: 'center',
+                                                    alignItems: 'center',
+                                                    width: '100%',
+                                                    height: '100%'
+                                                }}
                                             >
-                                                <option value={0}>Fullname</option>
-                                                <option value={1}>Nickname</option>
-                                                <option value={2}>Anonim</option>
-                                            </select>
-                                        </div>
-                                    </>
-                                    :
-                                    <>
-                                        <div className={styles.stars}>
-                                            {
-                                                Array.from({ length: 5 }, (_, index) => (
-                                                    <div
-                                                        className={`${styles.star} ${stars >= index + 1 ? styles.filled : ''}`}
-                                                        onClick={() => { setStars(index + 1); setErrorMessage(''); }}
-                                                        key={crypto.randomUUID()}
-                                                    >
-                                                        {stars >= index + 1 ? <AiFillStar size={'100%'} /> : <AiOutlineStar size={'100%'} />}
-                                                    </div>
-                                                ))
-                                            }
-                                        </div>
-                                        <textarea
-                                            maxLength={200}
-                                            placeholder={starsMessage[stars]}
-                                            value={review}
-                                            onChange={handleReviewChange}
-                                            onFocus={() => { setErrorMessage(''); if (info) { setInfo(''); } }}
-                                        />
-                                        <div style={{
-                                            display: 'flex',
-                                            justifyContent: 'space-between',
-                                            alignItems: 'center',
-                                            marginBottom: '1rem'
-                                        }}>
-                                            <div className={`${styles.review} ${review.length >= 200 ? styles.max : ''}`}>
-                                                {info ? info : review.length > 0 ? 200 - review.length + ' karakter tersisa' : ''}
-                                                {editRating ? info ? info : 200 - review.length + ' karakter tersisa' : ''}
+                                                <Spinner size={'32px'} color={'var(--first-color)'} />
                                             </div>
-                                            <select
-                                                id="authorRating"
-                                                value={author}
-                                                onChange={handleAuthorChange}
-                                                onFocus={() => { setErrorMessage('') }}
-                                            >
-                                                <option value={0}>Fullname</option>
-                                                <option value={1}>Nickname</option>
-                                                <option value={2}>Anonim</option>
-                                            </select>
-                                        </div>
-                                    </>
-                            }
-                        </>
-                    )
-
-                    const Form = () => {
-                        return ratingError ? <FormError /> : ratingLoading || ratingValidating ? <FormLoadingOrValidating /> : <FormLoaded />
-                    }
-
-                    const FormButton = () => {
-                        return ratingLoading || ratingValidating || ratingError ?
-                            null
-                            :
-                            ratingData.length ?
-                                <>
-                                    <div
-                                        style={editRating ? {
-                                            display: 'grid',
-                                            gridTemplateColumns: 'repeat(2,1fr)',
-                                            gap: '1rem'
-                                        } : {}}
-                                        className={styles.form__action}
-                                    >
-                                        {editRating ?
-                                            <>
-                                                <div style={{ marginTop: '0' }} className={`${styles.btn} ${styles.cancel}`} onClick={toggleEditRating}>
-                                                    <h3>Batalkan</h3>
+                                            :
+                                            <div className={styles.inner}>
+                                                <div style={{ marginBottom: '1rem', textAlign: 'center', color: 'var(--danger-color)' }}>
+                                                    {errorMessage}
                                                 </div>
-                                                <button type='submit' className={styles.btn}>
-                                                    <h3>Simpan</h3>
-                                                </button>
+                                                {
+                                                    ratingData.length ?
+                                                        <>
+                                                            <div className={styles.stars}>
+                                                                {
+                                                                    Array.from({ length: 5 }, (_, index) => (
+                                                                        <div
+                                                                            className={`${styles.star} ${editRating ? stars >= index + 1 ? styles.filled : '' : ratingData[0].rating >= index + 1 ? styles.filled : ''} ${editRating ? '' : styles.disabled}`}
+                                                                            onClick={editRating ? () => { setStars(index + 1); setErrorMessage(''); } : null}
+                                                                            key={crypto.randomUUID()}
+                                                                        >
+                                                                            {editRating ? stars >= index + 1 ? <AiFillStar size={'100%'} /> : <AiOutlineStar size={'100%'} /> : ratingData[0].rating >= index + 1 ? <AiFillStar size={'100%'} /> : <AiOutlineStar size={'100%'} />}
+                                                                        </div>
+                                                                    ))
+                                                                }
+                                                            </div>
+                                                            <textarea
+                                                                placeholder={editRating ? starsMessage[stars] : ''}
+                                                                value={editRating ? review : ratingData[0].review}
+                                                                onChange={editRating ? handleReviewChange : null}
+                                                                onFocus={editRating ? () => { setErrorMessage(''); if (info) { setInfo(''); } } : null}
+                                                                disabled={!editRating}
+                                                            />
+                                                            <div style={{
+                                                                display: 'flex',
+                                                                justifyContent: 'space-between',
+                                                                alignItems: 'center',
+                                                                marginBottom: '1rem'
+                                                            }}>
+                                                                <div className={`${styles.review} ${editRating ? review.length >= 200 ? styles.max : '' : ratingData[0].review.length >= 200 ? styles.max : ''}`}>
+                                                                    {editRating ? info ? info : 200 - review.length + ' karakter tersisa' : ''}
+                                                                </div>
+                                                                <select
+                                                                    id="authorRating"
+                                                                    value={editRating ? author : ratingData[0].details.authorType}
+                                                                    onChange={editRating ? handleAuthorChange : null}
+                                                                    onFocus={editRating ? () => { setErrorMessage('') } : null}
+                                                                    disabled={!editRating}
+                                                                    style={editRating ? {} : { cursor: 'auto' }}
+                                                                >
+                                                                    <option value={0}>Fullname</option>
+                                                                    <option value={1}>Nickname</option>
+                                                                    <option value={2}>Anonim</option>
+                                                                </select>
+                                                            </div>
+                                                        </>
+                                                        :
+                                                        <>
+                                                            <div className={styles.stars}>
+                                                                {
+                                                                    Array.from({ length: 5 }, (_, index) => (
+                                                                        <div
+                                                                            className={`${styles.star} ${stars >= index + 1 ? styles.filled : ''}`}
+                                                                            onClick={() => { setStars(index + 1); setErrorMessage(''); }}
+                                                                            key={crypto.randomUUID()}
+                                                                        >
+                                                                            {stars >= index + 1 ? <AiFillStar size={'100%'} /> : <AiOutlineStar size={'100%'} />}
+                                                                        </div>
+                                                                    ))
+                                                                }
+                                                            </div>
+                                                            <textarea
+                                                                maxLength={200}
+                                                                placeholder={starsMessage[stars]}
+                                                                value={review}
+                                                                onChange={handleReviewChange}
+                                                                onFocus={() => { setErrorMessage(''); if (info) { setInfo(''); } }}
+                                                            />
+                                                            <div style={{
+                                                                display: 'flex',
+                                                                justifyContent: 'space-between',
+                                                                alignItems: 'center',
+                                                                marginBottom: '1rem'
+                                                            }}>
+                                                                <div className={`${styles.review} ${review.length >= 200 ? styles.max : ''}`}>
+                                                                    {info ? info : review.length > 0 ? 200 - review.length + ' karakter tersisa' : ''}
+                                                                    {editRating ? info ? info : 200 - review.length + ' karakter tersisa' : ''}
+                                                                </div>
+                                                                <select
+                                                                    id="authorRating"
+                                                                    value={author}
+                                                                    onChange={handleAuthorChange}
+                                                                    onFocus={() => { setErrorMessage('') }}
+                                                                >
+                                                                    <option value={0}>Fullname</option>
+                                                                    <option value={1}>Nickname</option>
+                                                                    <option value={2}>Anonim</option>
+                                                                </select>
+                                                            </div>
+                                                        </>
+                                                }
+                                            </div>
+                                }
+
+                                {
+                                    ratingLoading || ratingValidating || ratingError ?
+                                        null
+                                        :
+                                        ratingData.length ?
+                                            <>
+                                                <div
+                                                    style={editRating ? {
+                                                        display: 'grid',
+                                                        gridTemplateColumns: 'repeat(2,1fr)',
+                                                        gap: '1rem'
+                                                    } : {}}
+                                                    className={styles.form__action}
+                                                >
+                                                    {editRating ?
+                                                        <>
+                                                            <div style={{ marginTop: '0' }} className={`${styles.btn} ${styles.cancel}`} onClick={toggleEditRating}>
+                                                                <h3>Batalkan</h3>
+                                                            </div>
+                                                            <button type='submit' className={styles.btn}>
+                                                                <h3>Simpan</h3>
+                                                            </button>
+                                                        </>
+                                                        :
+                                                        <div className={styles.btn} onClick={toggleEditRating}>
+                                                            <h3>Edit Rating</h3>
+                                                        </div>
+                                                    }
+                                                </div>
                                             </>
                                             :
-                                            <div className={styles.btn} onClick={toggleEditRating}>
-                                                <h3>Edit Rating</h3>
-                                            </div>
-                                        }
-                                    </div>
-                                </>
-                                :
-                                <>
-                                    <div
-                                        className={styles.form__action}
-                                    >
-                                        <button type='submit' className={styles.btn}>
-                                            <h3>Submit</h3>
-                                        </button>
-                                    </div>
-                                </>
-                    }
-
-                    return (
-                        <Container>
-                            <Wrapper>
-                                <Top />
-                                <Form />
-                                <FormButton />
-                            </Wrapper>
-                        </Container>
+                                            <>
+                                                <div
+                                                    className={styles.form__action}
+                                                >
+                                                    <button type='submit' className={styles.btn}>
+                                                        <h3>Submit</h3>
+                                                    </button>
+                                                </div>
+                                            </>
+                                }
+                            </form>
+                        </div>
                     )
                 }
             }
