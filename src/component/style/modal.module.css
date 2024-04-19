@@ -819,7 +819,6 @@
 
 .tentang .content__logo {
     display: flex;
-    flex-direction: column;
     align-items: center;
     justify-content: center;
     gap: .75rem;
@@ -830,8 +829,8 @@
     width: 64px;
 }
 
-.tentang .content__logo small {
-    color: var(--infoDark-color);
+.tentang .content__logo h2 {
+    font-size: var(--h1-font-size);
 }
 
 .tentang .content__section {

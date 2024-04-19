@@ -4507,7 +4507,10 @@ export const Tentang = () => {
                                             alt={'SIPK Logo'}
                                             priority
                                         />
-                                        <small>version: {process.env.NEXT_PUBLIC_APP_VERSION ?? '-'}</small>
+                                        <h2 className={league_spartan.variable} style={{ fontFamily: 'var(--leaguespartan-font)' }}>
+                                            <span style={{ color: 'var(--logo-first-color)' }}>SIP</span>
+                                            <span style={{ color: 'var(--logo-second-color)' }}>K</span>
+                                        </h2>
                                     </div>
 
                                     <div className={styles.content__section}>
