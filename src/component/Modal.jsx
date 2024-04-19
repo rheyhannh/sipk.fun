@@ -2017,6 +2017,10 @@ export const Rating = () => {
         }
     }
 
+    const handleRetry = () => {
+        mutate(['/api/rating', userIdCookie])
+    }
+
     return (
         <ModalContext.Consumer>
             {
@@ -2286,7 +2290,7 @@ export const Rating = () => {
                                             }}
                                         >
                                             <h5>Gagal mengambil data</h5>
-                                            <h1>&#x21bb;</h1>
+                                            <h1 style={{cursor:'pointer'}} onClick={handleRetry}>&#x21bb;</h1>
                                         </div>
                                         : ratingLoading || ratingValidating ?
                                             <div
