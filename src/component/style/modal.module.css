@@ -814,7 +814,6 @@
 .tentang .content {
     display: grid;
     grid-template-rows: max-content auto;
-    gap: 1rem;
 }
 
 .tentang .content__logo {
@@ -822,7 +821,7 @@
     align-items: center;
     justify-content: center;
     gap: .75rem;
-    padding: 1rem 0;
+    padding: .75rem 0;
 }
 
 .tentang .content__logo img {
@@ -835,16 +834,15 @@
 
 .tentang .content__section {
     display: grid;
-    gap: 1.25rem;
 }
 
 .tentang .content__section .item {
     display: grid;
     gap: .5rem;
+    padding: .5rem 0;
 }
 
 .tentang .content__section .item .title {
-    padding: .35rem 0;
     font-weight: 500;
     color: var(--infoDark-color);
 }
