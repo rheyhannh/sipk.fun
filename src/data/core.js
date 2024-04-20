@@ -1,3 +1,6 @@
+// ========== TYPE DEPEDENCY ========== //
+import * as SupabaseTypes from '../types/supabase.js';
+
 // ========== COMPONENT DEPEDENCY ========== //
 import useSWR from 'swr'
 import { useCookies } from 'next-client-cookies';
