@@ -1,5 +1,6 @@
 /**
  * @typedef UserData
+ * @type {object}
  * @property {string} id Id user
  * @property {string} email Email user
  * @property {boolean} is_email_confirmed Boolean apakah email sudah dikonfirmasi
