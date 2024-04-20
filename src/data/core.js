@@ -108,7 +108,7 @@ const swrOptions = {
 /**
  * Hook SWR untuk mendapatkan data user
  * @param {object} custom Custom SWR options
- * @returns {{isLoading:Boolean, isValidating:Boolean, error:{}, data: Array<{ id:string, email:string, is_email_confirmed:boolean, email_confirmed_at:Date, is_banned:boolean, banned_until:Date, roles:string, fullname:string, nickname:string, university:string, university_id:number, jurusan:string, sks_target:number, matkul_target:number, ipk_target:float, created_at:Date, updated_at:Date, preferences:{table:{size:number, controlPosition:0|1|2, columnOrder:['nomor'|'matakuliah'|'semester'|'sks'|'nilai'|'diulang'|'target'|'ontarget'], columnVisibility:{nomor:boolean, matakuliah:boolean, semester:boolean, sks:boolean, nilai:boolean, diulang:boolean, target:boolean, ontarget:boolean} }} }>}} Users data dan SWR state
+ * @returns {{isLoading:Boolean, isValidating:Boolean, error:{}, data: Array<SupabaseTypes.UserData>}} Users data dan SWR state
  */
 export function useUser(custom) {
     const url = '/api/me';
