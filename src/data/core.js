@@ -120,7 +120,7 @@ export function useUser(custom) {
 /**
  * Hook SWR untuk mendapatkan data matakuliah user
  * @param {object} custom Custom SWR options
- * @returns {{isLoading:Boolean, isValidating:Boolean, error:{}, data: Array<{id:string, nama:string, semester:number, sks:number, nilai:{indeks:string, bobot:float, akhir:float}, dapat_diulang:boolean, owned_by:string, target_nilai:{indeks:string, bobot: float}, created_at:number, updated_at:number, deleted_at:number}>}} Users matakuliah data dan SWR state
+ * @returns {{isLoading:Boolean, isValidating:Boolean, error:{}, data: Array<SupabaseTypes.MatkulData>}} Users matakuliah data dan SWR state
  */
 export function useMatkul(custom) {
     const url = '/api/matkul';
