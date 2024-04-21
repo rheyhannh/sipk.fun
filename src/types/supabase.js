@@ -122,4 +122,15 @@
  * @property {number} unix_created_at Unix timestamp notifikasi dibuat
  */
 
+/**
+ * @typedef FaktaData
+ * @type {object}
+ * @property {string} id Id fakta
+ * @property {string} text Konten fakta
+ * @property {object} details Details fakta
+ * @property {Array<string>} details.tags Tags atau tagar fakta
+ * @property {Date} created_at Tanggal fakta dibuat
+ * @property {Date} updated_at Tanggal fakta diperbarui
+ */
+
 export const SupabaseTypes = {}
