@@ -108,4 +108,18 @@
  * @property {string} details.universitas Universitas user pemilik rating
  */
 
+/**
+ * @typedef NotifikasiData
+ * @type {object}
+ * @property {string} title Judul atau headline notifikasi
+ * @property {string} description Deskripsi notifikasi
+ * @property {string} href Path atau link notifikasi
+ * @property {object} icon Icon {@link https://react-icons.github.io/react-icons/ react-icons} yang digunakan
+ * @property {string} icon.lib Library icon pada {@link https://react-icons.github.io/react-icons/ react-icons}, ex: `'fa', 'io5', etc`
+ * @property {string} icon.name Nama icon pada {@link https://react-icons.github.io/react-icons/ react-icons}, ex: `'FaRocket', 'IoAdd', etc`
+ * @property {string} color Warna atau variabel warna yang digunakan, ex: `'red', 'var(--some-color)', etc`
+ * @property {Date} date_created_at Tanggal notifikasi dibuat
+ * @property {number} unix_created_at Unix timestamp notifikasi dibuat
+ */
+
 export const SupabaseTypes = {}
