@@ -18,7 +18,20 @@
  * @property {float} ipk_target Target ipk user
  * @property {Date} created_at Tanggal user daftar
  * @property {Date} updated_at Tanggal terakhir user memperbarui datanya
- * @property {{table:{size:number, controlPosition:0|1|2, columnOrder:['nomor'|'matakuliah'|'semester'|'sks'|'nilai'|'diulang'|'target'|'ontarget'], columnVisibility:{nomor:boolean, matakuliah:boolean, semester:boolean, sks:boolean, nilai:boolean, diulang:boolean, target:boolean, ontarget:boolean} }}} preferences Preferences user
+ * @property {object} preferences User preferences
+ * @property {object} preferences.table User table preferences
+ * @property {number} preferences.table.size Jumlah matakuliah yang ditampilkan pada table
+ * @property {0|1|2} preferences.table.controlPosition Posisi kontrol table
+ * @property {['nomor'|'matakuliah'|'semester'|'sks'|'nilai'|'diulang'|'target'|'ontarget']} preferences.table.columnOrder Array untuk urutan table dari kiri ke kanan (index terkecil ke terbesar)
+ * @property {object} preferences.table.columnVisibility Object untuk visibilitas kolom
+ * @property {boolean} preferences.table.columnVisibility.nomor Boolean untuk menampilkan kolom `nomor` pada table
+ * @property {boolean} preferences.table.columnVisibility.matakuliah Boolean untuk menampilkan kolom `matakuliah` pada table
+ * @property {boolean} preferences.table.columnVisibility.semester Boolean untuk menampilkan kolom `semester` pada table
+ * @property {boolean} preferences.table.columnVisibility.sks Boolean untuk menampilkan kolom `sks` pada table
+ * @property {boolean} preferences.table.columnVisibility.nilai Boolean untuk menampilkan kolom `nilai` pada table
+ * @property {boolean} preferences.table.columnVisibility.diulang Boolean untuk menampilkan kolom `diulang` pada table
+ * @property {boolean} preferences.table.columnVisibility.target Boolean untuk menampilkan kolom `target` pada table
+ * @property {boolean} preferences.table.columnVisibility.ontarget Boolean untuk menampilkan kolom `ontarget` pada table
  */
 
 /**
