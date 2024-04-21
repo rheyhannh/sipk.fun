@@ -132,7 +132,7 @@ export function useMatkul(custom) {
 /**
  * Hook SWR untuk mendapatkan data matakuliah history user
  * @param {object} custom Custom SWR options
- * @returns {{isLoading:Boolean, isValidating:Boolean, error:{}, data: Array<{id:string, current:{nama:string, semester:number, sks:number, nilai:{indeks:string, bobot:float, akhir:float}, dapat_diulang:boolean, target_nilai:{indeks:string, bobot:float}, type:'tambah'|'hapus'|'ubah', stamp:number}, prev:{nama:string, semester:number, sks:number, nilai:{indeks:string, bobot:float, akhir:float}, dapat_diulang:boolean, target_nilai:{indeks:string, bobot:float}, type:'tambah'|'hapus'|'ubah', stamp:number}, owned_by:string, last_change_at:number, matkul_id:string}>}} Users matakuliah history data dan SWR state
+ * @returns {{isLoading:Boolean, isValidating:Boolean, error:{}, data: Array<SupabaseTypes.MatkulHistoryData>}} Users matakuliah history data dan SWR state
  */
 export function useMatkulHistory(custom) {
     const url = '/api/matkul-history';
