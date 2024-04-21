@@ -169,7 +169,7 @@ export function useNotifikasi(custom) {
  * @param {object} custom Custom SWR options
  * @param {'public'|'user'} type Jika 'user' akan return props `penilaian` untuk digunakan sebagai perhitungan nilai. Jika 'public' akan return props `assets` berupa deskripsi, logo, etc.
  * @param {number|'all'} id Id universitas. Query data berdasarkan `id` atau `all` untuk semua
- * @returns {{isLoading:Boolean, isValidating:Boolean, error:{}, data: Array<{id:string, nama:string, short:string, penilaian:{cat:string, style:'success'|'warning'|'danger'|'crimson', weight:float}, assets:{logo:string, desc:string, style:{color:{primary:string, secondary:string}}}, created_at:Date}>}} Universitas data dan SWR state
+ * @returns {{isLoading:Boolean, isValidating:Boolean, error:{}, data: Array<SupabaseTypes.UniversitasData>}} Universitas data dan SWR state
  */
 export function useUniversitas(custom, type, id) {
     var url = null;
