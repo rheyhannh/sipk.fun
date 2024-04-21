@@ -144,7 +144,7 @@ export function useMatkulHistory(custom) {
 /**
  * Hook SWR untuk mendapatkan data rating user
  * @param {object} custom Custom SWR options
- * @returns {{isLoading:Boolean, isValidating:Boolean, error:{}, data: Array<{id:string, rating:number, review:string, owned_by:string, created_at:Date, unix_created_at:number, unix_updated_at:number, details:{author:string, authorType:0|1|2, universitas:string}}>}} Users rating data dan SWR state
+ * @returns {{isLoading:Boolean, isValidating:Boolean, error:{}, data: Array<SupabaseTypes.RatingData>}} Users rating data dan SWR state
  */
 export function useRating(custom) {
     const url = '/api/rating';
