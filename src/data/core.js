@@ -156,7 +156,7 @@ export function useRating(custom) {
 /**
  * Hook SWR untuk mendapatkan notifikasi atau berita dari SIPK
  * @param {object} custom Custom SWR options
- * @returns {{isLoading:Boolean, isValidating:Boolean, error:{}, data: Array<{title:string, description:string, href:string, icon:{lib:string, name:string}, color:string, date_created_at:Date, unix_created_at:number}>}} Notifikasi atau berita dan SWR state
+ * @returns {{isLoading:Boolean, isValidating:Boolean, error:{}, data: Array<SupabaseTypes.NotifikasiData>}} Notifikasi atau berita dan SWR state
  */
 export function useNotifikasi(custom) {
     const url = '/api/notifikasi';
