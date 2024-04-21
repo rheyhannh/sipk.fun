@@ -92,4 +92,20 @@
  * @property {string} matkul_id Id matakuliah
  */
 
+/**
+ * @typedef RatingData
+ * @type {object}
+ * @property {string} id Id rating
+ * @property {number} rating Jumlah bintang atau rating (`1 - 5`)
+ * @property {string} review Ulasan atau review
+ * @property {string} owned_by Id user pemilik rating
+ * @property {Date} created_at Tanggal rating dibuat
+ * @property {number} unix_created_at Unix timestamp rating dibuat
+ * @property {number} unix_updated_at Unix timestamp terakhir rating diperbarui
+ * @property {object} details Details rating
+ * @property {string} details.author Nama user pemilik rating
+ * @property {0|1|2} details.authorType Tipe author rating
+ * @property {string} details.universitas Universitas user pemilik rating
+ */
+
 export const SupabaseTypes = {}
