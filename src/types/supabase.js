@@ -55,4 +55,41 @@
  * @property {number} deleted_at Unix timestamp matakuliah dihapus
  */
 
+/**
+ * @typedef MatkulHistoryData
+ * @type {object}
+ * @property {string} id Id history matakuliah
+ * @property {object} current Current history matakuliah
+ * @property {string} current.nama Nama matakuliah
+ * @property {number} current.semester Semester matakuliah
+ * @property {number} current.sks Sks matakuliah
+ * @property {object} current.nilai Nilai matakuliah
+ * @property {string} current.nilai.indeks Indeks nilai matakuliah
+ * @property {float} current.nilai.bobot Bobot nilai matakuliah
+ * @property {float} current.nilai.akhir Nilai akhir matakuliah
+ * @property {boolean} current.dapat_diulang Boolean matakuliah dapat diulang atau tidak
+ * @property {object} current.target_nilai Target nilai matakuliah
+ * @property {string} current.target_nilai.indeks Indeks target nilai matakuliah
+ * @property {float} current.target_nilai.bobot Bobot target nilai matakuliah
+ * @property {'tambah'|'hapus'|'ubah'} current.type Tipe history matakuliah
+ * @property {number} current.stamp Unix timestamp history matakuliah
+ * @property {object} prev Previous history matakuliah
+ * @property {string} prev.nama Nama matakuliah
+ * @property {number} prev.semester Semester matakuliah
+ * @property {number} prev.sks Sks matakuliah
+ * @property {object} prev.nilai Nilai matakuliah
+ * @property {string} prev.nilai.indeks Indeks nilai matakuliah
+ * @property {float} prev.nilai.bobot Bobot nilai matakuliah
+ * @property {float} prev.nilai.akhir Nilai akhir matakuliah
+ * @property {boolean} prev.dapat_diulang Boolean matakuliah dapat diulang atau tidak
+ * @property {object} prev.target_nilai Target nilai matakuliah
+ * @property {string} prev.target_nilai.indeks Indeks target nilai matakuliah
+ * @property {float} prev.target_nilai.bobot Bobot target nilai matakuliah
+ * @property {'tambah'|'hapus'|'ubah'} prev.type Tipe history matakuliah
+ * @property {number} prev.stamp Unix timestamp history matakuliah
+ * @property {string} owned_by Id user pemilik history matakuliah
+ * @property {number} last_change_at Unix timestamp perubahan terakhir history matakuliah
+ * @property {string} matkul_id Id matakuliah
+ */
+
 export const SupabaseTypes = {}
