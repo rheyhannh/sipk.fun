@@ -6,6 +6,14 @@ import useSWR from 'swr'
 import { useCookies } from 'next-client-cookies';
 import { getLocalTheme } from '@/utils/client_side';
 
+// ========== TYPE ========== //
+/**
+ * @typedef SWRState 
+ * @property {boolean} isLoading SWR loading state
+ * @property {boolean} isValidating SWR validating state
+ * @property {object} error SWR error object
+ */
+
 /*
 ============================== CODE START HERE ==============================
 */
