@@ -116,7 +116,7 @@ const swrOptions = {
 /**
  * Hook SWR untuk mendapatkan data user
  * @param {object} custom Custom SWR options
- * @returns {{isLoading:Boolean, isValidating:Boolean, error:{}, data: Array<SupabaseTypes.UserData>}} Users data dan SWR state
+ * @returns {SWRState & {data:Array<SupabaseTypes.UserData>}} Users data dan SWR state
  */
 export function useUser(custom) {
     const url = '/api/me';
@@ -128,7 +128,7 @@ export function useUser(custom) {
 /**
  * Hook SWR untuk mendapatkan data matakuliah user
  * @param {object} custom Custom SWR options
- * @returns {{isLoading:Boolean, isValidating:Boolean, error:{}, data: Array<SupabaseTypes.MatkulData>}} Users matakuliah data dan SWR state
+ * @returns {SWRState & {data:Array<SupabaseTypes.MatkulData>}} Users matakuliah data dan SWR state
  */
 export function useMatkul(custom) {
     const url = '/api/matkul';
@@ -140,7 +140,7 @@ export function useMatkul(custom) {
 /**
  * Hook SWR untuk mendapatkan data matakuliah history user
  * @param {object} custom Custom SWR options
- * @returns {{isLoading:Boolean, isValidating:Boolean, error:{}, data: Array<SupabaseTypes.MatkulHistoryData>}} Users matakuliah history data dan SWR state
+ * @returns {SWRState & {data:Array<SupabaseTypes.MatkulHistoryData>}} Users matakuliah history data dan SWR state
  */
 export function useMatkulHistory(custom) {
     const url = '/api/matkul-history';
@@ -152,7 +152,7 @@ export function useMatkulHistory(custom) {
 /**
  * Hook SWR untuk mendapatkan data rating user
  * @param {object} custom Custom SWR options
- * @returns {{isLoading:Boolean, isValidating:Boolean, error:{}, data: Array<SupabaseTypes.RatingData>}} Users rating data dan SWR state
+ * @returns {SWRState & {data:Array<SupabaseTypes.RatingData>}} Users rating data dan SWR state
  */
 export function useRating(custom) {
     const url = '/api/rating';
@@ -164,7 +164,7 @@ export function useRating(custom) {
 /**
  * Hook SWR untuk mendapatkan notifikasi atau berita dari SIPK
  * @param {object} custom Custom SWR options
- * @returns {{isLoading:Boolean, isValidating:Boolean, error:{}, data: Array<SupabaseTypes.NotifikasiData>}} Notifikasi atau berita dan SWR state
+ * @returns {SWRState & {data:Array<SupabaseTypes.NotifikasiData>}} Notifikasi data dan SWR state
  */
 export function useNotifikasi(custom) {
     const url = '/api/notifikasi';
@@ -177,7 +177,7 @@ export function useNotifikasi(custom) {
  * @param {object} custom Custom SWR options
  * @param {'public'|'user'} type Jika 'user' akan return props `penilaian` untuk digunakan sebagai perhitungan nilai. Jika 'public' akan return props `assets` berupa deskripsi, logo, etc.
  * @param {number|'all'} id Id universitas. Query data berdasarkan `id` atau `all` untuk semua
- * @returns {{isLoading:Boolean, isValidating:Boolean, error:{}, data: Array<SupabaseTypes.UniversitasData>}} Universitas data dan SWR state
+ * @returns {SWRState & {data:Array<SupabaseTypes.UniversitasData>}} Universitas data dan SWR state
  */
 export function useUniversitas(custom, type, id) {
     var url = null;
@@ -206,7 +206,7 @@ export function useLocalTheme(custom) {
 /**
  * Hook SWR untuk mendapatkan data fakta tentang SIPK
  * @param {object} custom Custom SWR options
- * @returns {{isLoading:Boolean, isValidating:Boolean, error:{}, data: Array<SupabaseTypes.FaktaData>}} Data fakta SIPK dan SWR state
+ * @returns {SWRState & {data:Array<SupabaseTypes.FaktaData>}} Fakta data dan SWR state
  */
 export function useFakta(custom) {
     const url = '/api/fakta';
