@@ -10,7 +10,7 @@ import styles from './page.module.css'
 ============================== CODE START HERE ==============================
 */
 
-export default function Home() {
+export default function LandingPage() {
   return (
     <main className={styles.main}>
       <h1>Root Page</h1>
