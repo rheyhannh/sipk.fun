@@ -24,9 +24,9 @@ export default function Notification({ position }) {
                 <ToastBar toast={t}>
                     {({ icon, message }) => {
                         const customColor = { error: 'var(--danger-sec-color)', success: 'var(--success-sec-color)' }
-                        const isLoading = t.type === 'loading' ? true : false;
-                        const isError = t.type === 'error' ? true : false;
-                        const isSuccess = t.type === 'success' ? true : false;
+                        const isLoading = t.type === 'loading';
+                        const isError = t.type === 'error';
+                        const isSuccess = t.type === 'success';
                         const isImportant = ['loading', 'error', 'success'].includes(t.type);
                         t.iconTheme = { primary: `var(--${isError ? 'danger-sec-color' : isSuccess ? 'success-sec-color' : 'logo-second-color'})`, secondary: '#fff'}
                         
