@@ -29,7 +29,7 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body className={poppins.variable}>
         <CookiesProvider>
-        <Notification />
+          <Notification />
           {children}
         </CookiesProvider>
       </body>
