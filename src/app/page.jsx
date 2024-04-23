@@ -1,5 +1,8 @@
 'use client'
 
+// ========== COMPONENT DEPEDENCY ========== //
+import { LandingProvider } from '@/component/provider/Landing'
+
 // ========== STYLE DEPEDENCY ========== //
 import styles from './page.module.css'
 
