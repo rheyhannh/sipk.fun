@@ -23,7 +23,7 @@ export const LandingProvider = ({ children }) => {
     */
     useEffect(() => {
         // Content Init
-        const richMediaQuery = window.matchMedia('(min-width: 1280px)');
+        const richMediaQuery = window.matchMedia('(min-width: 820px)');
         const touchDevice = 'ontouchstart' in window || navigator.msMaxTouchPoints;
 
         const handleRichMediaQueryChange = (e) => {
