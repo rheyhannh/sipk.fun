@@ -37,4 +37,13 @@
  * @property {boolean} isTouchDevice State apakah touch device `'ontouchstart' in window || navigator.msMaxTouchPoints` atau bukan. 
  */
 
+/**
+ * @typedef LandingContext
+ * @type {object}
+ * @property {(isRichContent:boolean) => void} setRichContent Method untuk mengaktifkan atau nonaktifkan rich content.
+ * @property {(isTouchDevice:boolean) => void} setTouchDevice Method untuk mengaktifkan atau nonaktifkan touch device.
+ * @property {boolean} isRichContent State apakah rich content `window.matchMedia('(min-width: 1280px)')` atau bukan.
+ * @property {boolean} isTouchDevice State apakah touch device `'ontouchstart' in window || navigator.msMaxTouchPoints` atau bukan.
+ */
+
 export const ContextTypes = {}
