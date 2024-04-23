@@ -12,9 +12,11 @@ import styles from './page.module.css'
 
 export default function LandingPage() {
   return (
-    <main className={styles.main}>
-      <h1>Root Page</h1>
-    </main>
+    <LandingProvider>
+      <main className={styles.main}>
+        <h1>Root Page</h1>
+      </main>
+    </LandingProvider>
   )
 }
 
