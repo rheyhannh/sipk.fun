@@ -8,6 +8,12 @@ import { createContext, useEffect, useState } from "react";
 */
 
 export const LandingContext = createContext();
+/**
+ * Landing page context provider. Use this wrapper to use any `LandingContext` config.
+ * @param {{children:any}} props React props object
+ * @param props.children Component or element children.
+ * @returns {ReactElement} Landing page context provider wrapper.
+ */
 export const LandingProvider = ({ children }) => {
     /*
     ========== States ==========

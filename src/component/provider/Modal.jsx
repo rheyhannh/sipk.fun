@@ -26,6 +26,12 @@ import {
 */
 
 export const ModalContext = createContext();
+/**
+ * Modal context provider. Use this wrapper to use Modal component.
+ * @param {{children:any}} props React props object
+ * @param props.children Component or element children.
+ * @returns {ReactElement} Modal context provider wrapper.
+ */
 export const ModalProvider = ({ children }) => {
     const [active, setActive] = useState(false);
     const [modal, setModal] = useState(null);

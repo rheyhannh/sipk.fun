@@ -8,6 +8,12 @@ import { createContext, useEffect, useState } from "react"
 */
 
 export const UsersContext = createContext();
+/**
+ * Users page context provider. Use this wrapper to use any `UsersContext` config.
+ * @param {{children:any}} props React props object
+ * @param props.children Component or element children.
+ * @returns {ReactElement} Users page context provider wrapper.
+ */
 export const UsersProvider = ({ children }) => {
     /*
     ========== States ==========
