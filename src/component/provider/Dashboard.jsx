@@ -78,6 +78,14 @@ export const DashboardProvider = ({ children }) => {
         }
     }, [])
 
+    useEffect(() => {
+        window.addEventListener('focus', handleAuthCheck);
+
+        return () => {
+            window.removeEventListener('focus', handleAuthCheck);
+        }
+    }, [])
+
     /* ========== Methods, Functions, Helpers ========== */
     const handleAuthCheck = async () => {
         if (cookies.get('s_access_token')) { return }
