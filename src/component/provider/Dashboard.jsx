@@ -1,7 +1,7 @@
 'use client'
 
 // ========== NEXT DEPEDENCY ========== //
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 
 // ========== REACT DEPEDENCY ========== //
 import { createContext, useEffect, useState } from "react"
