@@ -17,6 +17,7 @@ export const DashboardContext = createContext();
 export const DashboardProvider = ({ children }) => {
     /* ========== Next Hooks ========== */
     const router = useRouter();
+    const pathname = usePathname();
 
     /*
     ========== States ==========
