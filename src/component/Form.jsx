@@ -78,7 +78,8 @@ export function UsersForm() {
     } = useContext(ModalContext);
 
     /* ========== Cookies ========== */
-    const guestIdCookie = useCookies().get('s_guest_id');
+    const cookies = useCookies();
+    const guestIdCookie = cookies.get('s_guest_id');
 
     /* ========== States ========== */
     // Init
