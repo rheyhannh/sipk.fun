@@ -159,6 +159,7 @@ export function UsersForm() {
 
     /* ========== Methods, Functions, Helpers ========== */
     const handleAuthCheck = async () => {
+        if (!cookies.get('s_access_token')) { return }
         setLoading({ active: true, backdrop: 'transparent', hideBall: true });
         try {
             const response = await fetch(`/api/auth/check`, {
