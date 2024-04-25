@@ -169,7 +169,14 @@ export function UsersForm() {
                 }
             })
 
-            if (response.ok) { router.replace('/dashboard', { scroll: false }) }
+            if (response.ok) {
+                const redirectTo = searchParams.get('from');
+                if (redirectTo && ['matakuliah'].includes(redirectTo)) {
+                    router.replace(`/dashboard/${redirectTo}`, { scroll: false });
+                } else {
+                    router.replace('/dashboard', { scroll: false });
+                }
+            }
 
         } catch (error) {
             console.error('Gagal melakukan autentikasi');
