@@ -89,8 +89,18 @@ export const DashboardProvider = ({ children }) => {
 
     /* ========== Methods, Functions, Helpers ========== */
     const handleAuthCheck = async () => {
-        if (cookies.get('s_access_token')) { return }
-        else { router.replace('/users?action=login&error=esession', { scroll: false }) }
+        if (cookies.get('s_access_token')) {
+            return;
+        }
+
+        let redirectPath = '/users?action=login&error=esession';
+        if (pathname === '/dashboard') {
+            redirectPath += '&from=dashboard';
+        } else if (pathname === '/dashboard/matakuliah') {
+            redirectPath += '&from=matakuliah';
+        }
+
+        router.replace(redirectPath, { scroll: false });
     }
 
     return (
