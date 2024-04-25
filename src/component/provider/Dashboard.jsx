@@ -1,7 +1,13 @@
 'use client'
 
+// ========== NEXT DEPEDENCY ========== //
+import { useRouter } from "next/navigation";
+
 // ========== REACT DEPEDENCY ========== //
 import { createContext, useEffect, useState } from "react"
+
+// ========== COMPONENT DEPEDENCY ========== //
+import { useCookies } from 'next-client-cookies';
 
 /*
 ============================== CODE START HERE ==============================
