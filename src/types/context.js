@@ -1,5 +1,6 @@
 /**
  * @typedef ModalContext
+ * Config berupa states, variable maupun method yang digunakan modal.
  * @type {object}
  * @property {(modalType:'tentang'|'default'|'panduanDaftar'|'logout'|'perubahanTerakhirDetail'|'perubahanTerakhirConfirm'|'tambahMatkul'|'profil'|'rating'|'tabelSetting'|'tabelFilter'|'detailMatkul'|'hapusPermanentConfirm'|'akun') => void} setModal Method untuk set tipe modal.
  * @property {(modalActive:boolean) => void} setActive Method untuk mengaktifkan atau nonaktifkan modal.
@@ -15,6 +16,7 @@
 
 /**
  * @typedef UsersContext
+ * Config berupa states, variable maupun method yang digunakan pada page users `/users/:any`.
  * @type {object}
  * @property {(loginMode:boolean) => void} setLoginMode Method untuk mengaktifkan atau nonaktifkan mode login.
  * @property {(isBigContent:boolean) => void} setBigContent Method untuk mengaktifkan atau nonaktifkan big content.
@@ -24,6 +26,7 @@
 
 /**
  * @typedef DashboardContext
+ * Config berupa states, variable maupun method yang digunakan pada page dashboard `/dashboard/:any`.
  * @type {object}
  * @property {(isNavbarActive:boolean) => void} setNavbarActive Method untuk mengaktifkan atau nonaktifkan navbar.
  * @property {(activeLink:string) => void} setActiveLink Method untuk mengaktifkan link atau pathname yang sedang aktif pada navbar.
@@ -39,6 +42,7 @@
 
 /**
  * @typedef LandingContext
+ * Config berupa states, variable maupun method yang digunakan pada landing atau root page.
  * @type {object}
  * @property {(isRichContent:boolean) => void} setRichContent Method untuk mengaktifkan atau nonaktifkan rich content.
  * @property {(isTouchDevice:boolean) => void} setTouchDevice Method untuk mengaktifkan atau nonaktifkan touch device.
