@@ -15,6 +15,9 @@ import { useCookies } from 'next-client-cookies';
 
 export const DashboardContext = createContext();
 export const DashboardProvider = ({ children }) => {
+    /* ========== Next Hooks ========== */
+    const router = useRouter();
+
     /*
     ========== States ==========
     */
@@ -28,6 +31,9 @@ export const DashboardProvider = ({ children }) => {
 
     // Touch Devices
     const [isTouchDevice, setTouchDevice] = useState(false);
+
+    /* ========== Cookies ========== */
+    const cookies = useCookies();
 
     /*
     ========== Use Effect Hook ==========
