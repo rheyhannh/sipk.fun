@@ -10,7 +10,7 @@ import { LandingProvider } from '@/component/provider/Landing'
 export default function LandingPage() {
   return (
     <LandingProvider>
-      <main className={styles.main}>
+      <main className={`landing`}>
         <h1>Root Page</h1>
       </main>
     </LandingProvider>
