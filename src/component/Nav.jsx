@@ -17,6 +17,7 @@ import { PiUserCircleLight } from "react-icons/pi";
 
 // ========== DATA DEPEDENCY ========== //
 import { useUser } from '@/data/core';
+import { dashboardNavItem } from '@/constant/client'
 
 // ========== STYLE DEPEDENCY ========== //
 import styles from './style/nav.module.css'
@@ -27,7 +28,7 @@ import styles from './style/nav.module.css'
 
 export default function Nav({ children }) {
     const { data, error } = useUser();
-    
+
     /** @type {ContextTypes.DashboardContext} */
     const {
         isNavbarActive,
@@ -35,18 +36,13 @@ export default function Nav({ children }) {
         isRichContent,
         activeLink
     } = useContext(DashboardContext);
-    
+
     /** @type {ContextTypes.ModalContext} */
     const {
         setModal,
         setActive,
         setData
     } = useContext(ModalContext);
-
-    const navList = [
-        { text: 'Dashboard', href: '/dashboard', icon: 'AiOutlineAppstore', lib: 'ai' },
-        { text: 'Matakuliah', href: '/dashboard/matakuliah', icon: 'BsJournalBookmark', lib: 'bs' },
-    ]
 
     useEffect(() => {
         const handleClickOutside = (e) => {
@@ -149,7 +145,7 @@ export default function Nav({ children }) {
                                             </h4>
                                         </span>
 
-                                        {navList.map((item, index) => (
+                                        {dashboardNavItem.map((item, index) => (
                                             <Link
                                                 href={item.href}
                                                 className={`${styles.link} ${activeLink === item.href ? styles.active : ''}`}
@@ -246,7 +242,7 @@ export default function Nav({ children }) {
                                         </h4>
                                     </span>
 
-                                    {navList.map((item, index) => (
+                                    {dashboardNavItem.map((item, index) => (
                                         <Link
                                             href={item.href}
                                             className={`${styles.link} ${activeLink === item.href ? styles.active : ''}`}
