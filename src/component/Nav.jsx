@@ -16,7 +16,7 @@ import { Icon } from './loader/ReactIcons';
 import { PiUserCircleLight } from "react-icons/pi";
 
 // ========== DATA DEPEDENCY ========== //
-import { useUser, useRating } from '@/data/core';
+import { useUser } from '@/data/core';
 
 // ========== STYLE DEPEDENCY ========== //
 import styles from './style/nav.module.css'
