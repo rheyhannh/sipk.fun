@@ -1,16 +1,19 @@
 'use client'
 
-// ========== TYPE DEPEDENCY ========== //
+// #region TYPE DEPEDENCY
 import * as ContextTypes from '../types/context.js'
+// #endregion
 
-// ========== NEXT DEPEDENCY ========== //
+// #region NEXT DEPEDENCY
 import Image from 'next/image';
 import { useRouter, useSearchParams } from 'next/navigation';
+// #endregion
 
-// ========== REACT DEPEDENCY ========== //
+// #region REACT DEPEDENCY
 import { useState, useContext, useRef, useEffect } from 'react';
+// #endregion
 
-// ========== COMPONENT DEPEDENCY ========== //
+// #region COMPONENT DEPEDENCY
 import { mutate } from 'swr';
 import { useCookies } from 'next-client-cookies';
 import { SHA256, HmacSHA512 } from 'crypto-js';
@@ -19,8 +22,9 @@ import toast from 'react-hot-toast';
 import { UsersContext } from './provider/Users';
 import { ModalContext } from "./provider/Modal";
 import { Ball } from '@/component/loader/Loading';
+// #endregion
 
-// ========== UTIL DEPEDENCY ========== //
+// #region UTIL DEPEDENCY
 import HCaptcha from '@hcaptcha/react-hcaptcha';
 import isEmail from 'validator/lib/isEmail';
 import isEmpty from 'validator/lib/isEmpty';
@@ -29,14 +33,18 @@ import isStrongPassword from 'validator/lib/isStrongPassword';
 import isAlpha from 'validator/lib/isAlpha';
 import isInt from 'validator/lib/isInt';
 import isUUID from 'validator/lib/isUUID';
+// #endregion
 
-// ========== DATA DEPEDENCY ========== //
+// #region DATA DEPEDENCY
 import { useLocalTheme } from '@/data/core';
+import { useUniversitas } from '@/data/core';
+// #endregion
 
-// ========== STYLE DEPEDENCY ========== //
+// #region STYLE DEPEDENCY
 import styles from './style/form.module.css'
+// #endregion
 
-// ========== ICON DEPEDENCY ========== //
+// #region ICON DEPEDENCY
 import {
     FaEnvelope,
     FaLock,
@@ -51,7 +59,7 @@ import {
 import { FaCircleInfo, FaGear } from "react-icons/fa6";
 import { FiSun } from 'react-icons/fi';
 import { BiMoon } from 'react-icons/bi';
-import { useUniversitas } from '@/data/core';
+// #endregion
 
 /*
 ============================== CODE START HERE ==============================
