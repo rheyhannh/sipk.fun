@@ -553,13 +553,13 @@ export function UsersForm() {
 
     const handleModeDaftar = () => {
         setLoginMode(false);
-        router.push('/users?action=daftar', undefined, { shallow: true })
+        router.push('/users?action=daftar', { shallow: true, scroll: false })
         setTimeout(() => { resetFormValue(); }, 1250);
     }
 
     const handleModeLogin = () => {
         setLoginMode(true);
-        router.push('/users?action=login', undefined, { shallow: true })
+        router.push('/users?action=login', { shallow: true, scroll: false })
         setTimeout(() => { resetFormValue(); }, 1250);
     }
 
