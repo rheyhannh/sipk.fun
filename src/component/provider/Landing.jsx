@@ -29,9 +29,11 @@ export const LandingProvider = ({ children }) => {
         // Content Init
         const richMediaQuery = window.matchMedia('(min-width: 820px)');
         const touchDevice = 'ontouchstart' in window || navigator.msMaxTouchPoints;
+        const accessTokenCookie = cookies.get('s_access_token');
 
         setRichContent(richMediaQuery.matches);
         if (touchDevice) { setTouchDevice(true); }
+        if (accessTokenCookie) { setAccessTokenExist(true); }
 
         richMediaQuery.addEventListener('change', (e) => { setRichContent(e.matches) });
         window.addEventListener('touchstart', () => { if (!isTouchDevice) { setTouchDevice(true); } })
@@ -53,7 +55,8 @@ export const LandingProvider = ({ children }) => {
         <LandingContext.Provider
             value={{
                 isRichContent, setRichContent,
-                isTouchDevice, setTouchDevice
+                isTouchDevice, setTouchDevice,
+                isAccessTokenExist, setAccessTokenExist
             }}
         >
             {children}
