@@ -38,17 +38,22 @@ export const LandingProvider = ({ children }) => {
         richMediaQuery.addEventListener('change', (e) => { setRichContent(e.matches) });
         window.addEventListener('touchstart', () => { if (!isTouchDevice) { setTouchDevice(true); } })
         window.addEventListener('mouseover', () => { if (isTouchDevice) { setTouchDevice(false); } })
+        window.addEventListener('focus', handleOnFocusWindow);
 
         return () => {
             richMediaQuery.removeEventListener('change', (e) => { setRichContent(e.matches) });
             window.removeEventListener('touchstart', () => { });
             window.removeEventListener('mouseover', () => { });
+            window.removeEventListener('focus', () => { });
         }
     }, [])
     // #endregion
 
     // #region Methods, Helpers, Etc
-    
+    const handleOnFocusWindow = () => {
+        const accessTokenCookie = cookies.get('s_access_token');
+        setAccessTokenExist(accessTokenCookie ? true : false);
+    }
     // #endregion
 
     return (
