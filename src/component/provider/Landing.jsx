@@ -32,23 +32,15 @@ export const LandingProvider = ({ children }) => {
         const richMediaQuery = window.matchMedia('(min-width: 820px)');
         const touchDevice = 'ontouchstart' in window || navigator.msMaxTouchPoints;
 
-        const handleRichMediaQueryChange = (e) => {
-            setRichContent(e.matches);
-        }
-
-        handleRichMediaQueryChange(richMediaQuery);
+        setRichContent(richMediaQuery.matches);
         if (touchDevice) { setTouchDevice(true); }
 
-        richMediaQuery.addEventListener('change', handleRichMediaQueryChange);
-        window.addEventListener('touchstart', () => {
-            if (!isTouchDevice) { setTouchDevice(true); }
-        })
-        window.addEventListener('mouseover', () => {
-            if (isTouchDevice) { setTouchDevice(false); }
-        })
+        richMediaQuery.addEventListener('change', (e) => { setRichContent(e.matches) });
+        window.addEventListener('touchstart', () => { if (!isTouchDevice) { setTouchDevice(true); } })
+        window.addEventListener('mouseover', () => { if (isTouchDevice) { setTouchDevice(false); } })
 
         return () => {
-            richMediaQuery.removeEventListener('change', handleRichMediaQueryChange);
+            richMediaQuery.removeEventListener('change', (e) => { setRichContent(e.matches) });
             window.removeEventListener('touchstart', () => { });
             window.removeEventListener('mouseover', () => { });
         }
