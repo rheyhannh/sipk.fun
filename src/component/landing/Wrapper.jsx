@@ -1,3 +1,5 @@
+'use client'
+
 // #region TYPE DEPEDENCY
 import * as ContextTypes from '@/types/context.js'
 // #endregion
