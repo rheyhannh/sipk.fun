@@ -46,8 +46,10 @@
  * @type {object}
  * @property {(isRichContent:boolean) => void} setRichContent Method untuk mengaktifkan atau nonaktifkan rich content.
  * @property {(isTouchDevice:boolean) => void} setTouchDevice Method untuk mengaktifkan atau nonaktifkan touch device.
- * @property {boolean} isRichContent State apakah rich content `window.matchMedia('(min-width: 1280px)')` atau bukan.
+ * @property {(isAccessTokenExist:boolean) => void} setAccessTokenExist Method untuk set `s_access_token` cookie tersedia atau tidak.
+ * @property {boolean} isRichContent State apakah rich content `window.matchMedia('(min-width: 820px)')` atau bukan.
  * @property {boolean} isTouchDevice State apakah touch device `'ontouchstart' in window || navigator.msMaxTouchPoints` atau bukan.
+ * @property {boolean} isAccessTokenExist State apakah `s_access_token` cookie tersedia atau tidak.
  */
 
 export const ContextTypes = {}
