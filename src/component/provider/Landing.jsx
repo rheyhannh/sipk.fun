@@ -16,10 +16,7 @@ export const LandingContext = createContext();
  * @returns {ReactElement} Landing page context provider wrapper.
  */
 export const LandingProvider = ({ children }) => {
-    /*
-    ========== States ==========
-    */
-    // Rich (min-width: 820px)
+    const cookies = useCookies();
     const [isRichContent, setRichContent] = useState(0);
 
     // Touch Devices
