@@ -1,16 +1,17 @@
 :root {
-
+    /* #region CUSTOM SIZES */
     --header-height: 4rem;
     --aside-width: 10rem;
+    /* #endregion */
 
-    /* === MAIN COLOR === */
+    /* #region MAIN COLOR */
     --first-color: hsla(11, 100%, 63%, 1);
     --second-color: hsla(222, 55%, 25%, 1);
     --first-color-lighter: hsl(11, 100%, 60%);
     --second-color-lighter: hsl(222, 40%, 30%);
-    /* === END OF MAIN COLOR === */
+    /* #endregion */
 
-    /* === UTILS COLOR === */
+    /* #region UTILS COLOR */
     --primary-color: hsla(234, 86%, 65%, 1);
     --danger-color: hsla(340, 80%, 57%, 1);
     --success-color: hsla(160, 70%, 47%, 1);
@@ -41,14 +42,13 @@
     --logo-first-color: #FF6341;
     --logo-second-color: #1d3263;
     --logo-second-color-lighter: hsla(222, 35%, 30%, .95);
+    /* #endregion */
 
-    /* === END OF UTILS COLOR === */
-
-    /* === INNER === */
+    /* #region INNER */
     --inner-color-bg1: #F8FAFC;
-    /* === END OF INNER === */
+    /* #endregion */
 
-    /* === BOX === */
+    /* #region BOX */
     --box-color-bg1: #FFFFFF;
     --box-color-bg2: var(--inner-color-bg1);
     --box-color-success: hsl(160, 100%, 95%);
@@ -57,21 +57,21 @@
     --box-color-crimson: hsl(0, 100%, 95%);
     --box-color-primary: hsl(234, 100%, 95%);
     --box-color-main: hsl(222, 100%, 95%);
-    /* === END OF BOX === */
+    /* #endregion */
 
-    /* === BORDER-RADIUS === */
+    /* #region BORDER-RADIUS */
     --card-border-radius: 2rem;
     --border-radius-1: 0.4rem;
     --border-radius-2: 0.8rem;
     --border-radius-3: 1.2rem;
-    /* === END OF BORDER-RADIUS === */
+    /* #endregion */
 
-    /* === PADDING === */
+    /* #region PADDING */
     --card-padding: 1.8rem;
     --padding-1: 1.2rem;
-    /*  === END OF PADDING === */
+    /*  #endregion */
 
-    /* === MARGIN === */
+    /* #region MARGIN */
     --m-0-25: .25rem;
     --m-0-5: .5rem;
     --m-0-75: .75rem;
@@ -81,9 +81,9 @@
     --m-2: 2rem;
     --m-2-5: 2.5rem;
     --m-3: 3rem;
-    /*  === END OF MARGIN === */
+    /*  #endregion */
 
-    /* === FONT-SIZE === */
+    /* #region FONT-SIZE */
     --big-font-size: 2.5rem;
     --h1-font-size: 1.725rem;
     --h2-font-size: 1.5rem;
@@ -91,9 +91,9 @@
     --normal-font-size: 1.075rem;
     --small-font-size: .850rem;
     --smaller-font-size: .800rem;
-    /*  === END OF FONT-SIZE === */
+    /*  #endregion */
 
-    /* === FONT-WEIGHT === */
+    /* #region FONT-WEIGHT */
     --font-extra-light: 200;
     --font-light: 300;
     --font-regular: 400;
@@ -101,25 +101,25 @@
     --font-semi-bold: 600;
     --font-bold: 700;
     --font-extra-bold: 800;
-    /*  === END OF FONT-WEIGHT === */
+    /*  #endregion */
 
-    /* === Z-INDEX === */
+    /* #region Z-INDEX */
     --z-default: 1;
     --z-tooltip: 10;
     --z-fixed: 100;
     --z-modal: 1000;
-    /*  === END OF Z-INDEX === */
+    /* #endregion */
 
-    /* === BOX-SHADOW === */
+    /* #region BOX-SHADOW */
     --box-shadow: 0 1rem 1.5rem var(--light-color);
     --box-shadow2: 0 0 .2rem .1rem rgba(0, 0, 0, .2);
-    /* === END OF BOX-SHADOW === */
+    /* #endregion */
 
-    /* === TRANSITION === */
+    /* #region TRANSITION */
     --transition-default: .3s;
-    /* === END OF TRANSITION === */
+    /* #endregion */
 
-    /* === USERS '/users' === */
+    /* #region USERS '/users' */
     --users-big-circle: linear-gradient(-45deg, hsl(222, 40%, 30%), hsl(222, 40%, 30%));
     --users-box-shadow: 0 0 .5rem var(--logo-second-color);
     --users-box-shadow-lighter: 0 0 .5rem rgba(29, 50, 99, .5);
@@ -132,16 +132,16 @@
     --accordion-bg-color: hsl(222, 42%, 95%);
     --accordion-bg2-color: hsl(222, 42%, 85%);
     --accordion-highlight-color: hsl(222, 40%, 30%);
-    /* === END OF USERS '/users' === */
+    /* #endregion */
 }
 
 .dark-theme {
-    /* === MAIN COLOR === */
+    /* #region MAIN COLOR */
     --first-color-lighter: hsl(11, 100%, 65%);
     --second-color-lighter: hsl(222, 30%, 47.5%);
-    /* === END OF MAIN COLOR === */
+    /* #endregion */
 
-    /* === UTILS COLOR === */
+    /* #region UTILS COLOR */
     --primary-color: hsla(234, 76%, 69%, 1);
     --danger-color: hsla(340, 100%, 68%, 1);
     --success-color: hsla(160, 86%, 60%, 1);
@@ -169,13 +169,13 @@
     --logo-second-color: #FF6341;
     --logo-second-color-lighter: hsla(11, 100%, 62.5%, .95);
     --inner-custom: #18181B;
-    /* === END OF UTILS COLOR === */
+    /* #endregion */
 
-    /* === INNER === */
+    /* #region INNER */
     --inner-color-bg1: #18181B;
-    /* === END OF INNER === */
+    /* #endregion */
 
-    /* === BOX === */
+    /* #region BOX */
     --box-color-bg1: #3F3F46;
     --box-color-bg2: #3F3F46;
     --box-color-success: hsl(160, 25%, 21%);
@@ -184,14 +184,14 @@
     --box-color-crimson: hsl(0, 25%, 21%);
     --box-color-primary: hsl(234, 25%, 21%);
     --box-color-main: hsl(11, 25%, 21%);
-    /* === END OF BOX === */
+    /* #endregion */
 
-    /* === BOX-SHADOW === */
+    /* #region BOX-SHADOW */
     --box-shadow: 0 1rem 1.5rem var(--light-color);
     --box-shadow2: none;
-    /* === END OF BOX-SHADOW === */
+    /* #endregion */
     
-    /* === USERS '/users' === */
+    /* #region USERS '/users' */
     --users-big-circle: linear-gradient(-45deg, #FF6341, #FF6341);
     --users-box-shadow: 0 0 .5rem var(--logo-second-color);
     --users-box-shadow-lighter: 0 0 .5rem rgba(255, 99, 65, .75);
@@ -204,8 +204,7 @@
     --accordion-bg-color: hsl(200, 6%, 32%);
     --accordion-bg2-color: hsl(200, 6%, 47%);
     --accordion-highlight-color: hsl(11, 100%, 65%);
-    /* === END OF USERS '/users' === */
-
+    /* #endregion */
 }
 
 * {
