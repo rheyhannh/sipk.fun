@@ -1,8 +1,12 @@
 'use client'
 
-// ========== REACT DEPEDENCY ========== //
+// #region REACT DEPEDENCY
 import { createContext, useEffect, useState } from "react";
+// #endregion
+
+// #region COMPONENT DEPEDENCY
 import { useCookies } from 'next-client-cookies';
+// #endregion
 
 /*
 ============================== CODE START HERE ==============================
@@ -16,15 +20,10 @@ export const LandingContext = createContext();
  * @returns {ReactElement} Landing page context provider wrapper.
  */
 export const LandingProvider = ({ children }) => {
+    // #region Hooks
     const cookies = useCookies();
     const [isRichContent, setRichContent] = useState(0);
-
-    // Touch Devices
     const [isTouchDevice, setTouchDevice] = useState(false);
-
-    /*
-    ========== Use Effect Hook ==========
-    */
     useEffect(() => {
         // Content Init
         const richMediaQuery = window.matchMedia('(min-width: 820px)');
@@ -43,6 +42,11 @@ export const LandingProvider = ({ children }) => {
             window.removeEventListener('mouseover', () => { });
         }
     }, [])
+    // #endregion
+
+    // #region Methods, Helpers, Etc
+    
+    // #endregion
 
     return (
         <LandingContext.Provider
