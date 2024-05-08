@@ -11,9 +11,10 @@ import { Wrapper } from '@/component/landing/Wrapper';
 export default function LandingPage() {
   return (
     <LandingProvider>
-      <main className={`landing`}>
-        <h1>Root Page</h1>
-      </main>
+      <Container>
+        <Wrapper>
+        </Wrapper>
+      </Container>
     </LandingProvider>
   )
 }
