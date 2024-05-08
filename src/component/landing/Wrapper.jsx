@@ -8,6 +8,7 @@ import { useContext } from 'react'
 
 // #region COMPONENT DEPEDENCY
 import { LandingContext } from '../provider/Landing'
+import toast from 'react-hot-toast';
 // #endregion
 
 // #region STYLE DEPEDENCY
@@ -26,6 +27,12 @@ export function Wrapper({ children }) {
                 <a href={isAccessTokenExist ? '/dashboard' : '/users'} target={'_blank'}>
                     {isAccessTokenExist ? 'Dashboard' : 'Login atau Daftar'}
                 </a>
+            </h1>
+            <h1>Toast Notification</h1>
+            <h1>
+                <span onClick={() => { toast.success('Lorem ipsum dolor sit amet.', { position: 'top-left', duration: 2500 }); }}>Success</span> |
+                <span onClick={() => { toast.error('Lorem ipsum dolor sit amet.', { position: 'top-left', duration: 2500 }); }}> Error</span> |
+                <span onClick={() => { toast.loading('Lorem ipsum dolor sit amet.', { position: 'top-left', duration: 5000 }); }}> Loading</span>
             </h1>
         </div>
     )
