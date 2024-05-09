@@ -8,7 +8,8 @@ import { Wrapper } from '@/component/landing/Wrapper';
 ============================== CODE START HERE ==============================
 */
 
-export default function LandingPage() {
+
+export default async function LandingPage() {
   return (
     <LandingProvider>
       <Container>
