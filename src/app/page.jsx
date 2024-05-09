@@ -17,7 +17,13 @@ import { Wrapper } from '@/component/landing/Wrapper';
  * @returns {Promise<Array<SupabaseTypes.UniversitasData>>} Array of universitas data.
  */
 async function getUniversitasData() {
-  return await (await fetch('http://localhost:3000/api/universitas?type=public&id=all', { next: { revalidate: 10 } })).json();
+  const response = await fetch('http://localhost:3000/api/universitas', {
+    headers: {
+      'x-api-key': process.env.SUPABASE_SERVICE_KEY
+    },
+    next: { revalidate: 10 }
+  });
+  return await response.json();
 }
 
 /**
@@ -25,7 +31,13 @@ async function getUniversitasData() {
  * @returns {Promise<Array<SupabaseTypes.RatingData>>} Array of users rating data.
  */
 async function getRatingData() {
-  return ['abc', 'cde', 'fgh'];
+  const response = await fetch('http://localhost:3000/api/rating', {
+    headers: {
+      'x-api-key': process.env.SUPABASE_SERVICE_KEY
+    },
+    next: { revalidate: 10 }
+  });
+  return await response.json();
 }
 
 export default async function LandingPage() {
