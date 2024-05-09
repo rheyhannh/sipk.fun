@@ -13,7 +13,7 @@ import { Wrapper } from '@/component/landing/Wrapper';
 */
 
 /**
- * Fetch data dari supabase untuk universitas yang tersedia.
+ * Fetch data untuk universitas yang tersedia menggunakan headers `x-api-key` (supabase service role key).
  * @returns {Promise<Array<SupabaseTypes.UniversitasData>>} Array of universitas data.
  */
 async function getUniversitasData() {
@@ -27,7 +27,7 @@ async function getUniversitasData() {
 }
 
 /**
- * Fetch data dari supabase untuk user rating yang tersedia.
+ * Fetch data untuk user rating yang tersedia menggunakan headers `x-api-key` (supabase service role key).
  * @returns {Promise<Array<SupabaseTypes.RatingData>>} Array of users rating data.
  */
 async function getRatingData() {
