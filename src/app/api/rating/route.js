@@ -4,6 +4,7 @@ import { cookies, headers } from 'next/headers';
 
 // ========== SUPABASE DEPEDENCY ========== //
 import { createServerClient } from '@supabase/ssr';
+import { createClient } from '@supabase/supabase-js';
 
 // ========== UTIL DEPEDENCY ========== //
 import {
