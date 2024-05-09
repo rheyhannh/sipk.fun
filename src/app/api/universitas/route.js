@@ -38,8 +38,25 @@ export async function GET(request) {
     const userAccessToken = request.cookies.get(`${process.env.USER_SESSION_COOKIES_NAME}`)?.value;
     const authorizationHeader = headers().get('Authorization');
     const authorizationToken = authorizationHeader ? authorizationHeader.split(' ')[1] : null;
+    const apiKeyHeader = headers().get('X-API-KEY');
     var serviceGuestCookie = request.cookies.get('s_guest_id')?.value;
     var serviceUserIdCookie = request.cookies.get('s_user_id')?.value;
+
+    if (apiKeyHeader) {
+        if (apiKeyHeader !== process.env.SUPABASE_SERVICE_KEY) {
+            return NextResponse.json({ message: `Invalid API key` }, {
+                status: 401,
+            })
+        }
+        const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_SERVICE_KEY);
+        const { data, error } = await supabase.from('universitas').select('*').order('id', { ascending: true });
+        if (error) {
+            console.error(error);
+            return NextResponse.json({ message: error.message }, { status: 500 })
+        }
+
+        return NextResponse.json(data, { status: 200 })
+    }
 
     if (serviceGuestCookie) {
         if (!isUUID(serviceGuestCookie)) {
@@ -103,7 +120,7 @@ export async function GET(request) {
 
         const decryptedSession = await decryptAES(userAccessToken, true);
         const userId = decryptedSession?.user?.id;
-    
+
         if (!decryptedSession || !userId) {
             cookieStore.set({ name: process.env.USER_SESSION_COOKIES_NAME, value: '', ...cookieAuthDeleteOptions })
             cookieStore.set({ name: 's_user_id', value: '', ...cookieAuthDeleteOptions })
