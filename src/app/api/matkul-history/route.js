@@ -4,6 +4,7 @@ import { cookies, headers } from 'next/headers';
 
 // ========== SUPABASE DEPEDENCY ========== //
 import { createServerClient } from '@supabase/ssr';
+import { createClient } from '@supabase/supabase-js';
 
 // ========== UTIL DEPEDENCY ========== //
 import {
@@ -33,6 +34,23 @@ export async function GET(request) {
     const authorizationHeader = headers().get('Authorization');
     const authorizationToken = authorizationHeader ? authorizationHeader.split(' ')[1] : null;
     const cookieStore = cookies();
+    const apiKeyHeader = headers().get('X-API-KEY');
+
+    if (apiKeyHeader) {
+        if (apiKeyHeader !== process.env.SUPABASE_SERVICE_KEY) {
+            return NextResponse.json({ message: `Invalid API key` }, {
+                status: 401,
+            })
+        }
+        const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_SERVICE_KEY);
+        const { data, error } = await supabase.from('matkul_history').select('*');
+        if (error) {
+            console.error(error);
+            return NextResponse.json({ message: error.message }, { status: 500 })
+        }
+
+        return NextResponse.json(data, { status: 200 })
+    }
 
     if (!userAccessToken || !authorizationHeader || !authorizationToken) {
         return NextResponse.json({ message: 'Unauthorized - Missing access token' }, {
