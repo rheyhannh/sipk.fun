@@ -1,3 +1,7 @@
+// #region TYPE DEPEDENCY
+import * as SupabaseTypes from '@/types/supabase';
+// #endregion
+
 // #region COMPONENT DEPEDENCY
 import { LandingProvider } from '@/component/provider/Landing';
 import { Container } from '@/component/landing/Container';
