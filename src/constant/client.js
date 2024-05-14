@@ -13,6 +13,7 @@ const dashboardNavItem = [
     { text: 'Matakuliah', id: null, href: '/dashboard/matakuliah', icon: 'BsJournalBookmark', lib: 'bs' },
 ];
 
+/** @type {Array<NavItem>} Landing page navigation item */
 const landingNavItem = [
     { text: 'Home', id: 'landing', href: null, icon: 'AiOutlineAppstore', lib: 'ai' },
     { text: 'Feature', id: 'feature', href: null, icon: 'AiOutlineAppstore', lib: 'ai' },
