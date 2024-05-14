@@ -133,7 +133,10 @@
     --accordion-bg2-color: hsl(222, 42%, 85%);
     --accordion-highlight-color: hsl(222, 40%, 30%);
     /* #endregion */
+
+    /* #region LANDING '/' */
     --landing-navbar-bg: rgba(254, 254, 254, .5);
+    /* #endregion */
 }
 
 .dark-theme {
@@ -191,7 +194,7 @@
     --box-shadow: 0 1rem 1.5rem var(--light-color);
     --box-shadow2: none;
     /* #endregion */
-    
+
     /* #region USERS '/users' */
     --users-big-circle: linear-gradient(-45deg, #FF6341, #FF6341);
     --users-box-shadow: 0 0 .5rem var(--logo-second-color);
@@ -206,7 +209,10 @@
     --accordion-bg2-color: hsl(200, 6%, 47%);
     --accordion-highlight-color: hsl(11, 100%, 65%);
     /* #endregion */
+
+    /* #region LANDING '/' */
     --landing-navbar-bg: rgba(32, 37, 40, .5);
+    /* #endregion */
 }
 
 * {
