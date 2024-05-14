@@ -8,8 +8,8 @@
 
 /** @type {Array<NavItem>} Dashboard navigation item */
 const dashboardNavItem = [
-    { text: 'Dashboard', href: '/dashboard', icon: 'AiOutlineAppstore', lib: 'ai' },
-    { text: 'Matakuliah', href: '/dashboard/matakuliah', icon: 'BsJournalBookmark', lib: 'bs' },
+    { text: 'Dashboard', id: null, href: '/dashboard', icon: 'AiOutlineAppstore', lib: 'ai' },
+    { text: 'Matakuliah', id: null, href: '/dashboard/matakuliah', icon: 'BsJournalBookmark', lib: 'bs' },
 ];
 
 export { 
