@@ -7,3 +7,45 @@
     gap: 2rem;
     background: yellow;
 }
+
+.nav {
+    display: flex;
+    gap: 2rem;
+    padding: 1rem 2rem;
+    position: sticky;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 50px;
+    background: var(--landing-navbar-bg);
+    backdrop-filter: blur(5px);
+    z-index: var(--z-fixed);
+}
+
+.section {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    width: 90%;
+    min-height: 400px;
+}
+
+.section.context {
+    background: grey;
+}
+
+.section.feature {
+    background: salmon;
+}
+
+.section.landing {
+    background: sandybrown;
+}
+
+.section__name {
+    position: absolute;
+    top: 5%;
+    left: 2.5%;
+}
