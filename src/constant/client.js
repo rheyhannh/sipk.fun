@@ -13,6 +13,13 @@ const dashboardNavItem = [
     { text: 'Matakuliah', id: null, href: '/dashboard/matakuliah', icon: 'BsJournalBookmark', lib: 'bs' },
 ];
 
+const landingNavItem = [
+    { text: 'Home', id: 'landing', href: null, icon: 'AiOutlineAppstore', lib: 'ai' },
+    { text: 'Feature', id: 'feature', href: null, icon: 'AiOutlineAppstore', lib: 'ai' },
+    { text: 'Context', id: 'context', href: null, icon: 'AiOutlineAppstore', lib: 'ai' },
+]
+
 export { 
-    dashboardNavItem 
+    dashboardNavItem,
+    landingNavItem
 };
