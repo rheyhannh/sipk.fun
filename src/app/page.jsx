@@ -6,6 +6,10 @@ import * as SupabaseTypes from '@/types/supabase';
 import { LandingProvider } from '@/component/provider/Landing';
 import { Container } from '@/component/landing/Container';
 import { Wrapper } from '@/component/landing/Wrapper';
+import { Landing } from '@/component/landing/sections/Landing';
+import { Feature } from '@/component/landing/sections/Feature';
+import { Context } from '@/component/landing/sections/Context';
+import { Nav } from '@/component/landing/Nav';
 // #endregion
 
 /*
@@ -44,7 +48,11 @@ export default async function LandingPage() {
   return (
     <LandingProvider>
       <Container>
+        <Nav />
         <Wrapper>
+          <Landing/>
+          <Feature />
+          <Context />
         </Wrapper>
       </Container>
     </LandingProvider>
