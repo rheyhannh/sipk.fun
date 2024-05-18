@@ -44,6 +44,16 @@ async function getRatingData() {
   return await response.json();
 }
 
+async function getNotifikasiData() {
+  const response = await fetch('http://localhost:3000/api/notifikasi', {
+    headers: {
+      'x-api-key': process.env.SUPABASE_SERVICE_KEY
+    },
+    next: { revalidate: 10 }
+  });
+  return await response.json();
+}
+
 export default async function LandingPage() {
   return (
     <LandingProvider>
