@@ -135,7 +135,9 @@
     /* #endregion */
 
     /* #region LANDING '/' */
-    --landing-navbar-bg: rgba(254, 254, 254, .5);
+    --landing-navbar-bg: hsla(0, 0%, 100%, .8);
+    --landing-navbar-boxShadow: inset 0 -1px 0 0 #333;
+    --landing-navbarContent-bg: linear-gradient(to bottom, #171717, #171717, #262626);
     /* #endregion */
 }
 
@@ -211,7 +213,9 @@
     /* #endregion */
 
     /* #region LANDING '/' */
-    --landing-navbar-bg: rgba(32, 37, 40, .5);
+    --landing-navbar-bg: rgba(0, 0, 0, .8);
+    --landing-navbar-boxShadow: inset 0 -1px 0 0 #eaeaea;
+    --landing-navbarContent-bg: linear-gradient(to bottom, #171717, #171717, #262626);
     /* #endregion */
 }
 
