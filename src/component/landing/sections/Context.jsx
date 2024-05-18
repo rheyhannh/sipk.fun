@@ -18,7 +18,7 @@ import toast from 'react-hot-toast';
 import styles from '../style/landing.module.css'
 // #endregion
 
-export function Context() {
+export function Context({ data = { universitas: null, rating: null, notifikasi: null } }) {
     /** @type {ContextTypes.LandingContext} */
     const { isRichContent, isTouchDevice, isAccessTokenExist } = useContext(LandingContext);
 
