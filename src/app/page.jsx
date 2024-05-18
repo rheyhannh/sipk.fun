@@ -61,7 +61,7 @@ async function getNotifikasiData() {
 export default async function LandingPage() {
   const universitasData = await getUniversitasData();
   const ratingData = await getRatingData();
-  const notifikasi = await getNotifikasiData();
+  const notifikasiData = await getNotifikasiData();
 
   return (
     <LandingProvider>
