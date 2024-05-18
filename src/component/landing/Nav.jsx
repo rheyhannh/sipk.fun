@@ -1,5 +1,6 @@
 'use client'
 
+import * as SupabaseTypes from '@/types/supabase';
 // #region REACT DEPEDENCY
 import { useEffect, useState } from "react";
 // #endregion
