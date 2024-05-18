@@ -18,6 +18,12 @@ import toast from 'react-hot-toast';
 import styles from '../style/landing.module.css'
 // #endregion
 
+/**
+ * Render landing page section `context`
+ * @param {{data:{universitas:Array<SupabaseTypes.UniversitasData>, rating: Array<SupabaseTypes.RatingData>, notifikasi: Array<SupabaseTypes.NotifikasiData>}}} props React props object
+ * @param props.data Data depedency
+ * @returns {ReactElement} Element react untuk render landing page section `context`
+ */
 export function Context({ data = { universitas: null, rating: null, notifikasi: null } }) {
     /** @type {ContextTypes.LandingContext} */
     const { isRichContent, isTouchDevice, isAccessTokenExist } = useContext(LandingContext);
