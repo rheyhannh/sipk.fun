@@ -12,6 +12,7 @@ import { useEffect, useState } from "react";
 import { Link } from 'react-scroll';
 import { AnimatePresence, motion } from "framer-motion";
 import { mutate } from 'swr';
+import { Icon } from '@/component/loader/ReactIcons';
 // #endregion
 
 // #region DATA DEPEDENCY
