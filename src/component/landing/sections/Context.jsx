@@ -46,6 +46,12 @@ export function Context({ data = { universitas: null, rating: null, notifikasi: 
                 <span onClick={() => { toast.error('Lorem ipsum dolor sit amet.', { position: 'top-left', duration: 2500 }); }}> Error</span> |
                 <span onClick={() => { toast.loading('Lorem ipsum dolor sit amet.', { position: 'top-left', duration: 5000 }); }}> Loading</span>
             </h1>
+            <h1>Log Data Deps</h1>
+            <h1>
+                <span onClick={() => { console.log('Universitas data deps'); console.log(data.universitas); }}> Universitas</span> |
+                <span onClick={() => { console.log('Rating data deps'); console.log(data.rating); }}> Rating</span> |
+                <span onClick={() => { console.log('Blog data deps'); console.log(data.notifikasi); }}> Blog/Notification</span>
+            </h1>
         </section>
     )
 }
