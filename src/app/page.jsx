@@ -44,6 +44,10 @@ async function getRatingData() {
   return await response.json();
 }
 
+/**
+ * Fetch data untuk notifikasi yang tersedia menggunakan headers `x-api-key` (supabase service role key).
+ * @returns {Promise<Array<SupabaseTypes.NotifikasiData>>} Array of notifikasi data.
+ */
 async function getNotifikasiData() {
   const response = await fetch('http://localhost:3000/api/notifikasi', {
     headers: {
