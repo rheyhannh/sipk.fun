@@ -6,6 +6,8 @@ import { useEffect, useState } from "react";
 
 // #region COMPONENT DEPEDENCY
 import { Link } from 'react-scroll';
+import { AnimatePresence, motion } from "framer-motion";
+import { mutate } from 'swr';
 // #endregion
 
 // #region DATA DEPEDENCY
