@@ -108,7 +108,7 @@ const Tabs = () => {
                         tab={t.id}
                         useDropdown={t.useDropdown}
                     >
-                        {t.title}
+                        {t.text}
                     </Tab>
                 );
             })}
