@@ -348,7 +348,7 @@ main.dashboard {
 main.landing {
     width: 100vw;
     margin: 0;
-    background: red;
+    /* background: red; */
 }
 
 @media screen and (min-width: 768px) {
