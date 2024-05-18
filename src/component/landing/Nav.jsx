@@ -1,5 +1,9 @@
 'use client'
 
+// #region REACT DEPEDENCY
+import { useEffect, useState } from "react";
+// #endregion
+
 // #region COMPONENT DEPEDENCY
 import { Link } from 'react-scroll';
 // #endregion
