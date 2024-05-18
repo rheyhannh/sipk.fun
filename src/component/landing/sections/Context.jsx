@@ -1,7 +1,7 @@
 'use client'
 
 // #region TYPE DEPEDENCY
-import * as ContextTypes from '@/types/context.js'
+import * as ContextTypes from '@/types/context';
 // #endregion
 
 // #region REACT DEPEDENCY
