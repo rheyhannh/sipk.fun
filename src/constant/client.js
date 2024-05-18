@@ -9,15 +9,13 @@
 
 /** @type {Array<NavItem>} Dashboard page navigation item */
 const dashboardNavItem = [
-    { text: 'Dashboard', id: null, href: '/dashboard', icon: 'AiOutlineAppstore', lib: 'ai' },
-    { text: 'Matakuliah', id: null, href: '/dashboard/matakuliah', icon: 'BsJournalBookmark', lib: 'bs' },
+    { text: 'Dashboard', sectionId: null, href: '/dashboard', icon: 'AiOutlineAppstore', lib: 'ai' },
+    { text: 'Matakuliah', sectionId: null, href: '/dashboard/matakuliah', icon: 'BsJournalBookmark', lib: 'bs' },
 ];
 
 /** @type {Array<NavItem>} Landing page navigation item */
 const landingNavItem = [
-    { text: 'Home', id: 'landing', href: null, icon: 'AiOutlineAppstore', lib: 'ai' },
-    { text: 'Feature', id: 'feature', href: null, icon: 'AiOutlineAppstore', lib: 'ai' },
-    { text: 'Context', id: 'context', href: null, icon: 'AiOutlineAppstore', lib: 'ai' },
+    { text: 'Home', sectionId: 'landing', href: null, icon: 'AiOutlineAppstore', lib: 'ai' },
 ]
 
 export { 
