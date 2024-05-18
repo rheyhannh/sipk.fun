@@ -297,28 +297,5 @@ const Blog = () => {
     );
 };
 
-const TABS = [
-    {
-        title: 'Home',
-        useDropdown: false,
-    },
-    {
-        title: 'Feature',
-        useDropdown: true,
-        Component: Feature,
-    },
-    {
-        title: 'Blog',
-        useDropdown: true,
-        Component: Blog,
-    },
-    {
-        title: 'Testimoni',
-        useDropdown: false,
-    },
-    {
-        title: 'Etc',
-        useDropdown: true,
-        Component: Feature,
-    },
-].map((n, idx) => ({ ...n, id: idx + 1 }));
+const COMPONENTS = { feature: Feature, blog: Blog }
+const TABS = landingNavItem.map((x, index) => ({ ...x, id: index + 1, useDropdown: x?.dropdown ? true : false, Component: COMPONENTS[x.sectionId] || null }));
