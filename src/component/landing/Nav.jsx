@@ -19,6 +19,15 @@ import { landingNavItem } from '@/constant/client';
 import styles from './style/landing.module.css'
 // #endregion
 
+import {
+    FiArrowRight,
+    FiBarChart2,
+    FiChevronDown,
+    FiHome,
+    FiPieChart,
+    FiSun,
+    FiMoon,
+} from "react-icons/fi";
 export function Nav() {
     const { data: theme } = useLocalTheme();
 
