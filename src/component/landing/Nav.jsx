@@ -35,7 +35,7 @@ import {
 } from "react-icons/fi";
 // #endregion
 
-export function Nav() {
+export function Nav({ data = { notifikasi: null } }) {
     const { data: theme } = useLocalTheme();
 
     const handleChangeTheme = (newTheme) => {
