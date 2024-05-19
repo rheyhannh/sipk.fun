@@ -64,7 +64,7 @@ export default async function LandingPage() {
   const notifikasiData = await getNotifikasiData();
 
   return (
-    <LandingProvider>
+    <LandingProvider serverData={{ universitas: universitasData, rating: ratingData, notifikasi: notifikasiData }}>
       <Container>
         <Nav data={{ notifikasi: notifikasiData }} />
         <Wrapper>
