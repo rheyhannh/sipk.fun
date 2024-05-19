@@ -38,8 +38,6 @@ import {
 
 /**
  * Render landing page nav
- * @param {{data:{notifikasi: Array<SupabaseTypes.NotifikasiData>}}} props React props object
- * @param props.data Data depedency
  * @returns {ReactElement} Element react untuk render landing page nav
  */
 export function Nav() {
