@@ -221,7 +221,7 @@ const Nub = ({ selected }) => {
     );
 };
 
-const Feature = () => {
+const Feature = ({ dropdown = null }) => {
     return (
         <div className={styles.nav__item_feature}>
             <a
@@ -270,7 +270,7 @@ const Feature = () => {
     );
 };
 
-const Blog = () => {
+const Blog = ({ dropdown = null }) => {
     /** @type {ContextTypes.LandingContext} */
     const { data: { notifikasi } } = useContext(LandingContext);
     const latestNotifikasi = notifikasi.sort((a, b) => b.unix_created_at - a.unix_created_at).slice(0, 3);
