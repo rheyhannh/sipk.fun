@@ -1,7 +1,7 @@
 'use client'
 
 // #region TYPE DEPEDENCY
-import * as SupabaseTypes from '@/types/supabase';
+import * as ContextTypes from '@/types/context';
 // #endregion
 
 // #region REACT DEPEDENCY
