@@ -29,6 +29,8 @@ export const LandingProvider = ({ children }) => {
     const [isRichContent, setRichContent] = useState(0);
     const [isTouchDevice, setTouchDevice] = useState(false);
     const [isAccessTokenExist, setAccessTokenExist] = useState(false);
+    const [data, setData] = useState(serverData);
+
     useEffect(() => {
         // Content Init
         const richMediaQuery = window.matchMedia('(min-width: 820px)');
