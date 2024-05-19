@@ -230,48 +230,20 @@ const Nub = ({ selected }) => {
 const Feature = ({ dropdown = null }) => {
     return (
         <div className={styles.nav__item_feature}>
-            <a
-                href="#"
-                className={styles.link}
-            >
-                <FiHome className={styles.icon} />
-                <span className={styles.text}>Startup</span>
-            </a>
-            <a
-                href="#"
-                className={styles.link}
-            >
-                <FiBarChart2 className={styles.icon} />
-                <span className={styles.text}>Scaleup</span>
-            </a>
-            <a
-                href="#"
-                className={styles.link}
-            >
-                <FiPieChart className={styles.icon} />
-                <span className={styles.text}>Enterprise</span>
-            </a>
-            <a
-                href="#"
-                className={styles.link}
-            >
-                <FiBarChart2 className={styles.icon} />
-                <span className={styles.text}>Scaleup</span>
-            </a>
-            <a
-                href="#"
-                className={styles.link}
-            >
-                <FiPieChart className={styles.icon} />
-                <span className={styles.text}>Enterprise</span>
-            </a>
-            <a
-                href="#"
-                className={styles.link}
-            >
-                <FiHome className={styles.icon} />
-                <span className={styles.text}>Startup</span>
-            </a>
+            {dropdown.map((item, index) => {
+                return (
+                    <a
+                        href={`#${item.sectionId}`}
+                        className={styles.link}
+                        key={`landingNavFeatureItem-${index}`}
+                    >
+                        <div className={styles.icon}>
+                            <Icon name={item.icon} lib={item.lib} />
+                        </div>
+                        <span className={styles.text}>{item.text}</span>
+                    </a>
+                )
+            })}
         </div>
     );
 };
