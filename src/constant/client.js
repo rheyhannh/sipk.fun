@@ -20,12 +20,12 @@ const landingNavItem = [
     {
         text: 'Feature', sectionId: 'feature', href: null, icon: 'AiOutlineAppstore', lib: 'ai',
         dropdown: [
-            { text: 'Feature 1', sectionId: 'feature1', href: null, icon: 'AiOutlineAppstore', lib: 'ai' },
-            { text: 'Feature 2', sectionId: 'feature2', href: null, icon: 'AiOutlineAppstore', lib: 'ai' },
-            { text: 'Feature 3', sectionId: 'feature3', href: null, icon: 'AiOutlineAppstore', lib: 'ai' },
-            { text: 'Feature 4', sectionId: 'feature4', href: null, icon: 'AiOutlineAppstore', lib: 'ai' },
-            { text: 'Feature 5', sectionId: 'feature5', href: null, icon: 'AiOutlineAppstore', lib: 'ai' },
-            { text: 'Feature 6', sectionId: 'feature5', href: null, icon: 'AiOutlineAppstore', lib: 'ai' }
+            { text: 'Feature 1', sectionId: 'feature1', href: null, icon: 'AiFillAndroid', lib: 'ai' },
+            { text: 'Feature 2', sectionId: 'feature2', href: null, icon: 'AiFillDollarCircle', lib: 'ai' },
+            { text: 'Feature 3', sectionId: 'feature3', href: null, icon: 'AiFillGift', lib: 'ai' },
+            { text: 'Feature 4', sectionId: 'feature4', href: null, icon: 'AiFillWechat', lib: 'ai' },
+            { text: 'Feature 5', sectionId: 'feature5', href: null, icon: 'AiFillThunderbolt', lib: 'ai' },
+            { text: 'Feature 6', sectionId: 'feature5', href: null, icon: 'AiFillShop', lib: 'ai' }
         ]
     },
     { text: 'Universitas', sectionId: 'universitas', href: null, icon: 'AiOutlineAppstore', lib: 'ai' },
