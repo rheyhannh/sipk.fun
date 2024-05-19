@@ -2,7 +2,6 @@
 
 // #region TYPE DEPEDENCY
 import * as ContextTypes from '@/types/context';
-import * as SupabaseTypes from '@/types/supabase';
 // #endregion
 
 // #region REACT DEPEDENCY
