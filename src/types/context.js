@@ -1,3 +1,5 @@
+import * as SupabaseTypes from './supabase';
+
 /**
  * @typedef ModalContext
  * Config berupa states, variable maupun method yang digunakan modal.
