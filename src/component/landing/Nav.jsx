@@ -13,6 +13,7 @@ import { Link } from 'react-scroll';
 import { AnimatePresence, motion } from "framer-motion";
 import { mutate } from 'swr';
 import { Icon } from '@/component/loader/ReactIcons';
+import { LandingContext } from "@/component/provider/Landing";
 // #endregion
 
 // #region DATA DEPEDENCY
