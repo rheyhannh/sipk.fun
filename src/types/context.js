@@ -49,9 +49,14 @@ import * as SupabaseTypes from './supabase';
  * @property {(isRichContent:boolean) => void} setRichContent Method untuk mengaktifkan atau nonaktifkan rich content.
  * @property {(isTouchDevice:boolean) => void} setTouchDevice Method untuk mengaktifkan atau nonaktifkan touch device.
  * @property {(isAccessTokenExist:boolean) => void} setAccessTokenExist Method untuk set `s_access_token` cookie tersedia atau tidak.
+ * @property {(data:{universitas:Array<SupabaseTypes.UniversitasData>, rating:Array<SupabaseTypes.RatingData>, notifikasi:Array<SupabaseTypes.NotifikasiData>}) => void} setData Method untuk set data yang dibutuhkan landing page.
  * @property {boolean} isRichContent State apakah rich content `window.matchMedia('(min-width: 820px)')` atau bukan.
  * @property {boolean} isTouchDevice State apakah touch device `'ontouchstart' in window || navigator.msMaxTouchPoints` atau bukan.
  * @property {boolean} isAccessTokenExist State apakah `s_access_token` cookie tersedia atau tidak.
+ * @property {Object} data State untuk store data yang dibutuhkan landing page.
+ * @property {Array<SupabaseTypes.UniversitasData>} data.universitas Lorem.
+ * @property {Array<SupabaseTypes.RatingData>} data.rating Lorem2.
+ * @property {Array<SupabaseTypes.NotifikasiData>} data.notifikasi Lorem3.
  */
 
 export const ContextTypes = {}
