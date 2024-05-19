@@ -67,7 +67,8 @@ export const LandingProvider = ({ children }) => {
             value={{
                 isRichContent, setRichContent,
                 isTouchDevice, setTouchDevice,
-                isAccessTokenExist, setAccessTokenExist
+                isAccessTokenExist, setAccessTokenExist,
+                data, setData
             }}
         >
             {children}
