@@ -42,7 +42,7 @@ import {
  * @param props.data Data depedency
  * @returns {ReactElement} Element react untuk render landing page nav
  */
-export function Nav({ data = { notifikasi: null } }) {
+export function Nav() {
     const { data: theme } = useLocalTheme();
 
     const handleChangeTheme = (newTheme) => {
