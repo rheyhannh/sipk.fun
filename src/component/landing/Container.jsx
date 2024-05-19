@@ -12,6 +12,10 @@ import { useContext } from "react"
 import { LandingContext } from "@/component/provider/Landing"
 // #endregion
 
+/**
+ * Render landing page container
+ * @returns {ReactElement} Element react untuk render landing page container
+ */
 export function Container({ children }) {
     /** @type {ContextTypes.LandingContext} */
     const { isRichContent, isTouchDevice } = useContext(LandingContext);
