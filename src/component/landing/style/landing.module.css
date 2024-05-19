@@ -211,6 +211,7 @@
 
 .nav__item_feature .link .icon {
     margin-bottom: 0.5rem;
+    height: 1.25rem;
     font-size: 1.25rem;
     color: var(--logo-second-color);
 }
