@@ -26,7 +26,7 @@ import styles from '../style/landing.module.css'
  */
 export function Context({ data = { universitas: null, rating: null, notifikasi: null } }) {
     /** @type {ContextTypes.LandingContext} */
-    const { isRichContent, isTouchDevice, isAccessTokenExist } = useContext(LandingContext);
+    const { isRichContent, isTouchDevice, isAccessTokenExist, data } = useContext(LandingContext);
 
     return (
         <section className={`${styles.section} ${styles.context}`} id={'context'}>
@@ -46,7 +46,7 @@ export function Context({ data = { universitas: null, rating: null, notifikasi: 
                 <span onClick={() => { toast.error('Lorem ipsum dolor sit amet.', { position: 'top-left', duration: 2500 }); }}> Error</span> |
                 <span onClick={() => { toast.loading('Lorem ipsum dolor sit amet.', { position: 'top-left', duration: 5000 }); }}> Loading</span>
             </h1>
-            <h1>Log Data Deps</h1>
+            <h1>Log Data Deps From Context</h1>
             <h1>
                 <span onClick={() => { console.log('Universitas data deps'); console.log(data.universitas); }}> Universitas</span> |
                 <span onClick={() => { console.log('Rating data deps'); console.log(data.rating); }}> Rating</span> |
