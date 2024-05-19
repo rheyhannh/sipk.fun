@@ -172,7 +172,7 @@ const Content = ({ selected, dir }) => {
                                 animate={{ opacity: 1, x: 0 }}
                                 transition={{ duration: 0.25, ease: "easeInOut" }}
                             >
-                                <t.Component />
+                                <t.Component {...(t.dropdown && { dropdown: t.dropdown })} />
                             </motion.div>
                         )}
                     </div>
