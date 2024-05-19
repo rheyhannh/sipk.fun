@@ -271,6 +271,7 @@ const Feature = () => {
 };
 
 const Blog = () => {
+    /** @type {ContextTypes.LandingContext} */
     const { data: { notifikasi } } = useContext(LandingContext);
     const latestNotifikasi = notifikasi.sort((a, b) => b.unix_created_at - a.unix_created_at).slice(0, 3);
 
