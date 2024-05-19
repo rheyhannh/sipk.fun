@@ -271,6 +271,13 @@ const Feature = () => {
 };
 
 const Blog = () => {
+    const truncateText = (text, maxLength = 60) => {
+        if (text.length <= maxLength) {
+            return text;
+        }
+        return text.slice(0, maxLength - 3) + '...';
+    };
+
     return (
         <div className={styles.nav__item_blog}>
             <div className={styles.link}>
