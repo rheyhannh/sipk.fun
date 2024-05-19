@@ -246,11 +246,16 @@
 }
 
 .nav__item_blog .link .link_item .thumbnail {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1rem;
     margin-bottom: 0.5rem;
     height: 3.5rem;
     width: 100%;
     border-radius: 0.25rem;
-    background: var(--logo-second-color);
+    background: var(--landing-navbar-bg);
+    backdrop-filter: saturate(180%) blur(5px);
 }
 
 .nav__item_blog .link .link_item .text {
