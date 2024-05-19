@@ -24,7 +24,7 @@ import styles from '../style/landing.module.css'
  * @param props.data Data depedency
  * @returns {ReactElement} Element react untuk render landing page section `context`
  */
-export function Context({ data = { universitas: null, rating: null, notifikasi: null } }) {
+export function Context() {
     /** @type {ContextTypes.LandingContext} */
     const { isRichContent, isTouchDevice, isAccessTokenExist, data } = useContext(LandingContext);
 
