@@ -271,6 +271,9 @@ const Feature = () => {
 };
 
 const Blog = () => {
+    const { data: { notifikasi } } = useContext(LandingContext);
+    const latestNotifikasi = notifikasi.sort((a, b) => b.unix_created_at - a.unix_created_at).slice(0, 3);
+
     const truncateText = (text, maxLength = 60) => {
         if (text.length <= maxLength) {
             return text;
@@ -281,30 +284,19 @@ const Blog = () => {
     return (
         <div className={styles.nav__item_blog}>
             <div className={styles.link}>
-                <a href="#" className={styles.link_item}>
-                    <div className={styles.thumbnail} />
-                    <h4 className={styles.text}>Lorem ipsum dolor</h4>
-                    <p className={styles.description}>
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Amet illo
-                        quidem eos.
-                    </p>
-                </a>
-                <a href="#" className={styles.link_item}>
-                    <div className={styles.thumbnail} />
-                    <h4 className={styles.text}>Lorem ipsum dolor</h4>
-                    <p className={styles.description}>
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Amet illo
-                        quidem eos.
-                    </p>
-                </a>
-                <a href="#" className={styles.link_item}>
-                    <div className={styles.thumbnail} />
-                    <h4 className={styles.text}>Lorem ipsum dolor</h4>
-                    <p className={styles.description}>
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Amet illo
-                        quidem eos.
-                    </p>
-                </a>
+                {latestNotifikasi.map((item, index) => {
+                    return (
+                        <a href={item.href} className={styles.link_item} key={`landingNavBlogItem-${index}`}>
+                            <div style={{ color: item.color }} className={styles.thumbnail}>
+                                <Icon name={item.icon.name} lib={item.icon.lib} />
+                            </div>
+                            <h4 style={{ color: item.color }} className={styles.text}>{item.title}</h4>
+                            <p className={styles.description}>
+                                {truncateText(item.description)}
+                            </p>
+                        </a>
+                    )
+                })}
             </div>
             <button className={styles.more}>
                 <span>View more</span>
