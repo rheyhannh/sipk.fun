@@ -56,9 +56,9 @@ import * as SupabaseTypes from './supabase';
  * @property {boolean} isTouchDevice State apakah touch device `'ontouchstart' in window || navigator.msMaxTouchPoints` atau bukan.
  * @property {boolean} isAccessTokenExist State apakah `s_access_token` cookie tersedia atau tidak.
  * @property {Object} data State untuk store data yang dibutuhkan landing page.
- * @property {Array<SupabaseTypes.UniversitasData>} data.universitas Lorem.
- * @property {Array<SupabaseTypes.RatingData>} data.rating Lorem2.
- * @property {Array<SupabaseTypes.NotifikasiData>} data.notifikasi Lorem3.
+ * @property {Array<SupabaseTypes.UniversitasData>} data.universitas Array of universitas data.
+ * @property {Array<SupabaseTypes.RatingData>} data.rating Array of users rating data.
+ * @property {Array<SupabaseTypes.NotifikasiData>} data.notifikasi Array of notifikasi data.
  */
 
 export const ContextTypes = {}
