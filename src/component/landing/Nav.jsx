@@ -221,6 +221,12 @@ const Nub = ({ selected }) => {
     );
 };
 
+/**
+ * Render nav item `feature` dropdown
+ * @param {{dropdown:landingNavItem|null}} props React props object 
+ * @param props.dropdown Dropdown yang tesedia pada `landingNavItem` dengan `sectionId=feature`. Props ini dipass secara otomatis jika dropdown tersedia (lihat component `Content`) atau null
+ * @returns {ReactElement} Element react untuk render nav item `feature` dropdown 
+ */
 const Feature = ({ dropdown = null }) => {
     return (
         <div className={styles.nav__item_feature}>
@@ -270,6 +276,12 @@ const Feature = ({ dropdown = null }) => {
     );
 };
 
+/**
+ * Render nav item `blog` dropdown
+ * @param {{dropdown:landingNavItem|null}} props React props object 
+ * @param props.dropdown Dropdown yang tesedia pada `landingNavItem` dengan `sectionId=blog`. Props ini dipass secara otomatis jika dropdown tersedia (lihat component `Content`) atau null
+ * @returns {ReactElement} Element react untuk render nav item `blog` dropdown 
+ */
 const Blog = ({ dropdown = null }) => {
     /** @type {ContextTypes.LandingContext} */
     const { data: { notifikasi } } = useContext(LandingContext);
