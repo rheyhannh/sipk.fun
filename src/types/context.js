@@ -1,4 +1,6 @@
+// #region TYPE DEPEDENCY
 import * as SupabaseTypes from './supabase';
+// #endregion
 
 /**
  * @typedef ModalContext
