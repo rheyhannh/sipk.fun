@@ -136,8 +136,11 @@
 
     /* #region LANDING '/' */
     --landing-navbar-bg: hsla(0, 0%, 100%, .8);
-    --landing-navbar-boxShadow: inset 0 -1px 0 0 #333;
-    --landing-navbarContent-bg: linear-gradient(to bottom, #171717, #171717, #262626);
+    --landing-navbar-nub-color: #fcfcfc;
+    --landing-navbarBlogThumbnail-bg: #f4f4f4;
+    /* --landing-navbar-boxShadow: inset 0 -1px 0 0 #333; */
+    --landing-navbar-boxShadow: inset 0 -1px 0 0 var(--logo-second-color);
+    --landing-navbarContent-bg: linear-gradient(to bottom, #fcfcfc, #fcfcfc, #ffffff);
     /* #endregion */
 }
 
@@ -214,8 +217,11 @@
 
     /* #region LANDING '/' */
     --landing-navbar-bg: rgba(0, 0, 0, .8);
-    --landing-navbar-boxShadow: inset 0 -1px 0 0 #eaeaea;
-    --landing-navbarContent-bg: linear-gradient(to bottom, #171717, #171717, #262626);
+    --landing-navbar-nub-color: #171717;
+    --landing-navbarBlogThumbnail-bg: rgba(0, 0, 0, .8);
+    /* --landing-navbar-boxShadow: inset 0 -1px 0 0 #eaeaea; */
+    --landing-navbar-boxShadow: inset 0 -1px 0 0 var(--logo-second-color);
+    --landing-navbarContent-bg: linear-gradient(to bottom, #171717, #171717, #202020);
     /* #endregion */
 }
 
