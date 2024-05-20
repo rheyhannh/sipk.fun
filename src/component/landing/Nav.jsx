@@ -284,7 +284,7 @@ const Blog = ({ dropdown = null }) => {
                 })}
             </div>
             <button className={styles.more}>
-                <span>View more</span>
+                <span>Selengkapnya</span>
                 <FiArrowRight />
             </button>
         </div>
