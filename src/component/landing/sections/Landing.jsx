@@ -23,8 +23,23 @@ export function Landing() {
 
     return (
         <section className={`${styles.section} ${styles.landing}`} id={'landing'}>
-            <div className={styles.section__name}>
-                <h1>Landing</h1>
+            <div className={styles.main}>
+                <div className={styles.announcer}>
+                    <Reveal>
+                        <h3>Announcer Component</h3>
+                    </Reveal>
+                </div>
+                <div className={styles.text}>
+                    <Reveal>
+                        <h1 className={styles.title}>SIPK</h1>
+                    </Reveal>
+                    <Reveal>
+                        <h2 className={styles.description}>Elevate Your Academic Journey</h2>
+                    </Reveal>
+                </div>
+            </div>
+            <div className={styles.background}>
+                <h1>Something Cool</h1>
             </div>
         </section>
     )
