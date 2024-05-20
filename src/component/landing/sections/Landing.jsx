@@ -5,7 +5,7 @@ import * as ContextTypes from '@/types/context.js'
 // #endregion
 
 // #region REACT DEPEDENCY
-import { useContext } from 'react'
+import { useContext, useRef, useEffect, useState } from 'react'
 // #endregion
 
 // #region COMPONENT DEPEDENCY
