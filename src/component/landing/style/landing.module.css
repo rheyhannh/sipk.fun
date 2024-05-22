@@ -301,7 +301,7 @@
 .content {
     position: absolute;
     left: 0;
-    top: calc(100% + 24px);
+    top: calc(100% + 18px);
     width: 36rem;
     border: 1px solid var(--logo-second-color);
     border-radius: 0.5rem;
@@ -311,10 +311,10 @@
 
 .bridge {
     position: absolute;
-    top: -24px;
+    top: -18px;
     left: 0;
     right: 0;
-    height: 24px;
+    height: 18px;
 }
 
 .nub {
