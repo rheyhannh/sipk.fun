@@ -115,6 +115,12 @@
     /* background: hotpink; */
 }
 
+.section.landing .main .announcer .box {
+    height: 30px;
+    width: 200px;
+    background: yellowgreen;
+}
+
 .section.landing .main .text {
     display: flex;
     flex-direction: column;
