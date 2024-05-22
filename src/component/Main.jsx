@@ -40,6 +40,12 @@ const league_spartan = League_Spartan({
  * @property {LogoImageProps} image
  * @property {LogoTextProps} text
  */
+
+/**
+ * Render text `SIPK` dengan font dan warna yang telah ditentukan
+ * @param {LogoTextProps} props React props object 
+ * @returns Element react untuk render text `SIPK`
+ */
 export function LogoText({
     as: TextTag = 'h2',
     textProps = {},
@@ -57,6 +63,11 @@ export function LogoText({
     );
 }
 
+/**
+ * Render logo menggunakan next image
+ * @param {LogoImageProps} props React props object 
+ * @returns Element react untuk render logo menggunakan next image
+ */
 export function LogoImage({
     src = '/logo.png',
     width = 96,
@@ -75,6 +86,11 @@ export function LogoImage({
     );
 }
 
+/**
+ * Render logo image dan logo text
+ * @param {LogoProps} props React props object 
+ * @returns Element react untuk render logo image dan logo text
+ */
 export function Logo({
     container: ContainerTag = 'div',
     containerProps = {},
