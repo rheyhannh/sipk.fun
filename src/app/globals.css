@@ -242,7 +242,6 @@ html {
 
 body {
     width: 100vw;
-    height: 100vh;
     font-size: .8rem;
     background: var(--body-color);
     color: var(--dark-color);
