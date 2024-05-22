@@ -12,7 +12,10 @@ import { useContext } from "react"
 import { LandingContext } from "@/component/provider/Landing"
 // #endregion
 
+// #region STYLE DEPEDENCY
 import styles from './style/landing.module.css'
+// #endregion
+
 /**
  * Render landing page container
  * @returns {ReactElement} Element react untuk render landing page container
