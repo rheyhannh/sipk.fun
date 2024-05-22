@@ -49,6 +49,11 @@ export function Context() {
                 <span onClick={() => { console.log('Rating data deps'); console.log(data.rating); }}> Rating</span> |
                 <span onClick={() => { console.log('Blog data deps'); console.log(data.notifikasi); }}> Blog/Notification</span>
             </h1>
+            <h1>Users Viewport</h1>
+            <h1>
+                <span>Width: {window.innerWidth}px | </span>
+                <span>Height : {window.innerHeight}px</span>
+            </h1>
         </section>
     )
 }
