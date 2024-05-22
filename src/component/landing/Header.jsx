@@ -19,6 +19,10 @@ import { animateScroll as scroll } from 'react-scroll';
 import styles from './style/landing.module.css'
 // #endregion
 
+/**
+ * Render landing page header
+ * @returns {ReactElement} Element react untuk render landing page header
+ */
 export function Header() {
     /** @type {ContextTypes.LandingContext} */
     const { isRichContent, isTouchDevice } = useContext(LandingContext);
