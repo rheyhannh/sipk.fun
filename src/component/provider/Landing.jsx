@@ -29,6 +29,8 @@ export const LandingContext = createContext();
  * @returns {ReactElement} Landing page context provider wrapper
  */
 export const LandingProvider = ({ children, serverData }) => {
+    const { data: theme } = useLocalTheme();
+    
     // #region Hooks
     const cookies = useCookies();
     const [isRichContent, setRichContent] = useState(0);
