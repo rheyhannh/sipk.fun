@@ -17,6 +17,10 @@ import { motion, useInView, useAnimation } from 'framer-motion';
 import styles from '../style/landing.module.css'
 // #endregion
 
+/**
+ * Render landing page section `landing`
+ * @returns {ReactElement} Element react untuk render landing page section `landing`
+ */
 export function Landing() {
     /** @type {ContextTypes.LandingContext} */
     const { isRichContent, isTouchDevice, isAccessTokenExist } = useContext(LandingContext);
