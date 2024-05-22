@@ -19,6 +19,7 @@ import { animateScroll as scroll } from 'react-scroll';
 import { DashboardContext } from './provider/Dashboard';
 import { ModalContext } from './provider/Modal';
 import { Spinner } from "./loader/Loading";
+import { Logo } from './Main.jsx';
 
 // ========== DATA DEPEDENCY ========== //
 import { useUser, useLocalTheme } from '@/data/core';
