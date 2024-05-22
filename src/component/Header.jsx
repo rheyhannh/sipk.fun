@@ -245,19 +245,17 @@ export default function Header() {
                     </div>
                 </div>
 
-                <div onClick={scrollToTop} className={styles.dashboard__logo}>
-                    <Image
-                        src={'/logo.png'}
-                        width={96}
-                        height={96}
-                        alt={'SIPK Logo'}
-                        priority
-                    />
-                    <h2 className={league_spartan.variable} style={{ fontFamily: 'var(--leaguespartan-font)' }}>
-                        <span style={{ color: 'var(--logo-first-color)' }}>SIP</span>
-                        <span style={{ color: 'var(--logo-second-color)' }}>K</span>
-                    </h2>
-                </div>
+                <Logo
+                    containerProps={{
+                        onClick: scrollToTop,
+                        className: styles.dashboard__logo
+                    }}
+                    image={{
+                        imageProps: {
+                            priority: true,
+                        }
+                    }}
+                />
 
                 <div className={styles.dashboard__right}>
                     <Right />
