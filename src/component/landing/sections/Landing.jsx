@@ -26,7 +26,9 @@ export function Landing() {
             <div className={styles.main}>
                 <div className={styles.announcer}>
                     <Reveal>
-                        <h3>Announcer Component</h3>
+                        <div className={styles.box}>
+
+                        </div>
                     </Reveal>
                 </div>
                 <div className={styles.text}>
