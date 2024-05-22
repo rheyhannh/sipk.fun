@@ -12,6 +12,7 @@ import { createContext, useEffect, useState } from "react";
 import { useCookies } from 'next-client-cookies';
 // #endregion
 
+import { useLocalTheme } from '@/data/core';
 /*
 ============================== CODE START HERE ==============================
 */
