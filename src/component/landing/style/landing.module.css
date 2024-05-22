@@ -155,6 +155,72 @@
     z-index: var(--z-fixed);
 }
 
+.header .logo,
+.header .actions {
+    height: 30.5px;
+}
+
+.header .logo {
+    width: 125px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: .5rem;
+    cursor: pointer;
+}
+
+.header .logo img {
+    width: 58px;
+}
+
+.header .logo h2 {
+    font-size: var(--h1-font-size);
+}
+
+.header .actions {
+    width: 200px;
+    display: flex;
+    gap: .75rem;
+}
+
+.header .actions a {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    border-radius: 2rem;
+}
+
+.header .actions a.main {
+    width: 55%;
+    /* this background should own variables on landing, incase users btn change and this not change */
+    background: var(--users-btn-alt);
+    color: var(--white-color);
+}
+
+.header .actions a.secondary {
+    width: 45%;
+    background: var(--white-color);
+    color: var(--dark-color);
+    border: 1px solid var(--accordion-bg2-color);
+}
+
+.header .actions a.main:hover {
+    /* this background should own variables on landing, incase users btn change and this not change */
+    background: var(--users-btn-hov);
+}
+
+.header .actions a.secondary:hover {
+    background: var(--accordion-bg-color);
+}
+
+.header .actions.logged_in a.main {
+    width: 57.5%;
+}
+
+.header .actions.logged_in a.secondary {
+    width: 42.5%;
+}
 .tabs {
     position: relative;
     display: flex;
