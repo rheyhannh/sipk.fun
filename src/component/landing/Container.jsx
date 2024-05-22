@@ -25,8 +25,10 @@ export function Container({ children }) {
     const { isRichContent, isTouchDevice } = useContext(LandingContext);
 
     return (
-        <main className={`landing`}>
-            {children}
+        <main>
+            <div className={styles.container}>
+                {children}
+            </div>
         </main>
     )
 }
