@@ -18,11 +18,11 @@ import { useCookies } from 'next-client-cookies';
 
 export const LandingContext = createContext();
 /**
- * Landing page context provider. Use this wrapper to use any `LandingContext` config.
- * @param {{children:any, data:{universitas:Array<SupabaseTypes.UniversitasData>, rating: Array<SupabaseTypes.RatingData>, notifikasi: Array<SupabaseTypes.NotifikasiData>}}} props React props object
- * @param props.children Component or element children.
- * @param props.data Data depedency.
- * @returns {ReactElement} Landing page context provider wrapper.
+ * Landing page context provider. Use this wrapper to use any `LandingContext` config
+ * @param {{children:any, serverData:{universitas:Array<SupabaseTypes.UniversitasData>, rating: Array<SupabaseTypes.RatingData>, notifikasi: Array<SupabaseTypes.NotifikasiData>}}} props React props object
+ * @param props.children Component or element children
+ * @param props.serverData Data depedency from SSR
+ * @returns {ReactElement} Landing page context provider wrapper
  */
 export const LandingProvider = ({ children, serverData }) => {
     // #region Hooks
