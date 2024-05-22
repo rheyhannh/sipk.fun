@@ -20,6 +20,7 @@ import styles from './style/landing.module.css'
 // #endregion
 
 export function Header() {
+    /** @type {ContextTypes.LandingContext} */
     const { isRichContent, isTouchDevice } = useContext(LandingContext);
 
     return (
@@ -37,6 +38,7 @@ export function Header() {
 }
 
 const Actions = () => {
+    /** @type {ContextTypes.LandingContext} */
     const { isAccessTokenExist } = useContext(LandingContext);
 
     return (
