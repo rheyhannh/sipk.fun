@@ -140,15 +140,16 @@
     left: 2.5%;
 }
 
-.nav {
+.header {
     position: sticky;
     top: 0;
     left: 0;
-    width: 100vw;
-    height: 96px;
+    width: 100%;
+    height: 72px;
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
+    padding: 0 2.5rem;
     background: var(--landing-navbar-bg);
     backdrop-filter: saturate(180%) blur(5px);
     box-shadow: var(--landing-navbar-boxShadow);
@@ -221,6 +222,22 @@
 .header .actions.logged_in a.secondary {
     width: 42.5%;
 }
+
+.nav {
+    /* position: sticky; */
+    /* top: 0; */
+    /* left: 0; */
+    /* width: 100vw; */
+    /* height: 72px; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* background: var(--landing-navbar-bg);
+    backdrop-filter: saturate(180%) blur(5px);
+    box-shadow: var(--landing-navbar-boxShadow);
+    z-index: var(--z-fixed); */
+}
+
 .tabs {
     position: relative;
     display: flex;
