@@ -10,7 +10,6 @@ import { Landing } from '@/component/landing/sections/Landing';
 import { Feature } from '@/component/landing/sections/Feature';
 import { Context } from '@/component/landing/sections/Context';
 import { Header } from '@/component/landing/Header';
-import { Nav } from '@/component/landing/Nav';
 // #endregion
 
 /*
