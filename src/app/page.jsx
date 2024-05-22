@@ -66,8 +66,8 @@ export default async function LandingPage() {
 
   return (
     <LandingProvider serverData={{ universitas: universitasData, rating: ratingData, notifikasi: notifikasiData }}>
+      <Header/>
       <Container>
-        <Nav />
         <Wrapper>
           <Landing />
           <Feature />
