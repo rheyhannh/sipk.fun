@@ -40,7 +40,7 @@
     justify-content: center;
     align-items: center;
     position: relative;
-    width: 90%;
+    width: 95%;
     min-height: 100vh;
 }
 
@@ -95,19 +95,21 @@
 
 .section.landing .main {
     position: absolute;
-    top: 50%;
-    left: 20%;
-    transform: translateX(-20%) translateY(-50%);
+    top: 30%;
+    left: 7.5%;
+    transform: translateX(-7.5%) translateY(-30%);
     border: 5px solid skyblue;
     /* background: skyblue; */
     z-index: 3;
+    width: 75%;
+    max-width: 925px;
+    min-width: 625px;
 }
 
 .section.landing .main .announcer {
-    width: 100%;
-    height: 50px;
+    width: max-content;
+    padding-left: 1.25rem;
     display: flex;
-    justify-content: center;
     align-items: center;
     border: 2.5px solid hotpink;
     /* background: hotpink; */
@@ -116,8 +118,8 @@
 .section.landing .main .text {
     display: flex;
     flex-direction: column;
-    gap: .25rem;
-    padding: .5rem;
+    gap: .75rem;
+    padding: 0 1.25rem 1.25rem 1.25rem;
     border: 2.5px solid honeydew;
     /* background: honeydew; */
 }
@@ -127,16 +129,18 @@
 }
 
 .section.landing .main .text .description {
-    font-size: var(--h1-font-size);
+    text-align: justify;
+    font-size: var(--h2-font-size);
+    color: var(--infoDark-color);
 }
 
 .section.landing .background {
     position: absolute;
-    top: 50%;
-    right: 0%;
-    transform: translateX(-0%) translateY(-50%);
-    width: 512px;
-    height: 512px;
+    top: 30%;
+    right: 7.5%;
+    transform: translateX(7.5%) translateY(-30%);
+    width: 480px;
+    height: 480px;
     display: flex;
     justify-content: center;
     align-items: center;
