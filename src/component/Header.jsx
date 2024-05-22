@@ -4,11 +4,6 @@
 import * as ContextTypes from '../types/context.js'
 // #endregion
 
-// #region NEXT DEPEDENCY
-import Image from 'next/image';
-import { League_Spartan } from 'next/font/google';
-// #endregion
-
 // #region REACT DEPEDENCY
 import { useContext, useEffect, useState } from 'react'
 // #endregion
@@ -31,12 +26,6 @@ import { useUser, useLocalTheme } from '@/data/core';
 
 // #region STYLE DEPEDENCY
 import styles from './style/header.module.css'
-const league_spartan = League_Spartan({
-    subsets: ['latin'],
-    display: 'swap',
-    variable: '--leaguespartan-font',
-    weight: ['100', '200', '300', '400', '500', '600', '700', '800', '900']
-})
 // #endregion
 
 // #region ICON DEPEDENCY
