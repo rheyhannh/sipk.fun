@@ -18,6 +18,8 @@ import styles from './style/landing.module.css'
 
 /**
  * Render landing page container
+ * @param {{children}} props React props object
+ * @param props.children Component or element children
  * @returns {ReactElement} Element react untuk render landing page container
  */
 export function Container({ children }) {
