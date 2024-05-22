@@ -1,16 +1,19 @@
 'use client'
 
-// ========== TYPE DEPEDENCY ========== //
+// #region TYPE DEPEDENCY
 import * as ContextTypes from '../types/context.js'
+// #endregion
 
-// ========== NEXT DEPEDENCY ========== //
+// #region NEXT DEPEDENCY
 import Image from 'next/image';
 import { League_Spartan } from 'next/font/google';
+// #endregion
 
-// ========== REACT DEPEDENCY ========== //
+// #region REACT DEPEDENCY
 import { useContext, useEffect, useState } from 'react'
+// #endregion
 
-// ========== COMPONENT DEPEDENCY ========== //
+// #region COMPONENT DEPEDENCY
 import { mutate } from 'swr';
 import { useCookies } from 'next-client-cookies';
 import Skeleton from "react-loading-skeleton";
@@ -20,11 +23,13 @@ import { DashboardContext } from './provider/Dashboard';
 import { ModalContext } from './provider/Modal';
 import { Spinner } from "./loader/Loading";
 import { Logo } from './Main.jsx';
+// #endregion
 
-// ========== DATA DEPEDENCY ========== //
+// #region DATA DEPEDENCY
 import { useUser, useLocalTheme } from '@/data/core';
+// #endregion
 
-// ========== STYLE DEPEDENCY ========== //
+// #region STYLE DEPEDENCY
 import styles from './style/header.module.css'
 const league_spartan = League_Spartan({
     subsets: ['latin'],
@@ -32,9 +37,11 @@ const league_spartan = League_Spartan({
     variable: '--leaguespartan-font',
     weight: ['100', '200', '300', '400', '500', '600', '700', '800', '900']
 })
+// #endregion
 
-// ========== ICON DEPEDENCY ========== //
+// #region ICON DEPEDENCY
 import { FiSun, FiMoon } from 'react-icons/fi';
+// #endregion
 
 /*
 ============================== CODE START HERE ==============================
