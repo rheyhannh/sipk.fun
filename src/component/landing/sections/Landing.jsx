@@ -31,15 +31,18 @@ export function Landing() {
                 </div>
                 <div className={styles.text}>
                     <Reveal>
-                        <h1 className={styles.title}>SIPK</h1>
+                        <h1 className={styles.title}>
+                            Lorem ipsum dolor sit amet.
+                        </h1>
                     </Reveal>
                     <Reveal>
-                        <h2 className={styles.description}>Elevate Your Academic Journey</h2>
+                        <p className={styles.description}>
+                            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Error quibusdam atque repellat nam facere vitae numquam ipsum quae cum placeat.
+                        </p>
                     </Reveal>
                 </div>
             </div>
             <div className={styles.background}>
-                <h1>Something Cool</h1>
             </div>
         </section>
     )
