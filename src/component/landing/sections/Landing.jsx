@@ -65,9 +65,52 @@ export function Landing() {
                     </Reveal>
                 </div>
             </div>
-            <div className={styles.background}>
-            </div>
-        </section>
+const FlyIn = ({ children, duration = 0.5, delay = 0.25 }) => {
+    const [anim, setAnim] = useState('hide');
+    const ref = useRef(null);
+    const isInView = useInView(ref, { once: true });
+
+    const mainControls = useAnimation();
+
+    const handleHideAnimation = () => {
+        mainControls.start('hide');
+        setAnim('hide');
+    }
+
+    const handleShowAnimation = () => {
+        mainControls.start('show');
+        setAnim('show');
+    }
+
+    useEffect(() => {
+        if (isInView) {
+            // Fire the animation
+            mainControls.start("show");
+            setAnim('show');
+        }
+    }, [isInView])
+
+    return (
+        <div
+            ref={ref}
+            style={{
+                position: 'relative',
+                overflow: 'hidden',
+            }}
+            onClick={() => { anim === 'hide' ? handleShowAnimation() : handleHideAnimation() }}
+        >
+            <motion.div
+                variants={{
+                    hide: { x: -75, y: 75 },
+                    show: { x: 0, y: 0 },
+                }}
+                initial="hide"
+                animate={mainControls}
+                transition={{ duration, delay }}
+            >
+                {children}
+            </motion.div>
+        </div>
     )
 }
 
