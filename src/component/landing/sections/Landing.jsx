@@ -375,3 +375,15 @@ const Reveal = ({ children }) => {
         </div>
     )
 }
+
+const cloudsDarkColor = {
+    outter: '#483B38',
+    center: '#A2513F',
+    main: '#FF6341'
+}
+
+const cloudsLightColor = {
+    outter: '#DBDEE3',
+    center: '#7784A2',
+    main: '#1D3263'
+}
