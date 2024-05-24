@@ -29,6 +29,9 @@ export function Landing() {
     /** @type {ContextTypes.LandingContext} */
     const { isRichContent, isTouchDevice, isAccessTokenExist } = useContext(LandingContext);
 
+    const [rocketState, setRocketState] = useState('hide');
+    const [cloudsState, setCloudsState] = useState('hide');
+
     return (
         <section className={`${styles.section} ${styles.landing}`} id={'landing'}>
             <div className={styles.main}>
