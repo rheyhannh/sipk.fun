@@ -295,8 +295,8 @@ const FlyIn = ({ children, duration = 0.5, delay = 0.25 }) => {
         >
             <motion.div
                 variants={{
-                    hide: { x: -75, y: 75 },
-                    show: { x: 0, y: 0 },
+                    hide: { opacity: 0, x: 75, y: -75 },
+                    show: { opacity: 1, x: 0, y: 0 },
                 }}
                 initial="hide"
                 animate={mainControls}
