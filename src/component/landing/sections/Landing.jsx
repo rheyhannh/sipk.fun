@@ -13,6 +13,7 @@ import { LandingContext } from '@/component/provider/Landing'
 import { motion, useInView, useAnimation } from 'framer-motion';
 // #endregion
 
+import { useLocalTheme } from '@/data/core';
 // #region STYLE DEPEDENCY
 import styles from '../style/landing.module.css'
 // #endregion
