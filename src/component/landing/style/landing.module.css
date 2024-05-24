@@ -125,6 +125,10 @@
     z-index: 1;
 }
 
+.section.landing .clouds .item svg {
+    display: block;
+}
+
 .section.landing .rocket {
     position: absolute;
     top: 15%;
