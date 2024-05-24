@@ -159,13 +159,13 @@
 .section.landing .content .text .title {
     text-align: center;
     font-size: var(--h1-font-size);
-    color: var(--dark-color);
+    color: var(--alwaysWhite-color);
 }
 
 .section.landing .content .text .description {
     text-align: justify;
     font-size: var(--h3-font-size);
-    color: var(--infoDark-color);
+    color: var(--alwaysWhite-color);
 }
 
 .section__name {
