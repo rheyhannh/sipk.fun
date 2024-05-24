@@ -59,6 +59,7 @@ export function Landing() {
 }
 
 const Clouds = ({ cloudsState, setCloudsState }) => {
+    const { data: theme } = useLocalTheme();
     const ref = useRef(null);
     const isInView = useInView(ref, { once: true });
 
