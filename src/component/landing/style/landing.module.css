@@ -125,14 +125,18 @@
     z-index: 1;
 }
 
-.section.landing .main .text .title {
-    font-size: var(--big-font-size);
+.section.landing .rocket {
+    position: absolute;
+    top: 15%;
+    left: 77.5%;
+    transform: translate(-77.5%, -15%) rotate(30deg);
+    /* border: 2px solid aqua; */
+    z-index: 2;
 }
 
-.section.landing .main .text .description {
-    text-align: justify;
-    font-size: var(--h2-font-size);
-    color: var(--infoDark-color);
+.section.landing .rocket svg {
+    width: 430px;
+    height: auto;
 }
 
 .section.landing .content {
