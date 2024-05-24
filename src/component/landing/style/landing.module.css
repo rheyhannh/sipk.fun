@@ -39,8 +39,8 @@
     justify-content: center;
     align-items: center;
     position: relative;
-    width: 95%;
-    min-height: 100vh;
+    width: 100%;
+    height: 100vh;
 }
 
 .section.context {
@@ -89,6 +89,8 @@
     display: initial;
     position: relative;
     overflow: hidden;
+    height: calc(100vh - 72px);
+    border: 5px solid aqua;
     /* background: sandybrown; */
 }
 
