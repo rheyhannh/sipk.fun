@@ -34,10 +34,20 @@ export function Landing() {
 
     return (
         <section className={`${styles.section} ${styles.landing}`} id={'landing'}>
-            <div className={styles.main}>
-                <div className={styles.announcer}>
-                    <Reveal>
-                        <div className={styles.box}>
+            <div
+                className={styles.animation__controller}
+                onClick={() => {
+                    if (rocketState === 'hide' && cloudsState === 'hide') {
+                        setRocketState('show');
+                        setCloudsState('show');
+                    } else {
+                        setRocketState('hide');
+                        setCloudsState('hide');
+                    }
+                }}
+            >
+                {(rocketState === 'hide' && cloudsState === 'hide') ? <FaCheck size={'18px'} /> : <FaTimes size={'18px'} />}
+            </div>
 
                         </div>
                     </Reveal>
