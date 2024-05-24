@@ -94,26 +94,19 @@
     /* background: sandybrown; */
 }
 
-.section.landing .main {
+.section.landing .animation__controller {
     position: absolute;
-    top: 30%;
-    left: 7.5%;
-    transform: translateX(-7.5%) translateY(-30%);
-    border: 5px solid skyblue;
-    /* background: skyblue; */
-    z-index: 3;
-    width: 75%;
-    max-width: 925px;
-    min-width: 625px;
-}
-
-.section.landing .main .announcer {
-    width: max-content;
-    padding-left: 1.25rem;
+    top: 46px;
+    right: 46px;
+    width: 42px;
+    height: 42px;
     display: flex;
+    justify-content: center;
     align-items: center;
-    border: 2.5px solid hotpink;
-    /* background: hotpink; */
+    background: var(--box-color-main);
+    color: var(--logo-second-color);
+    border-radius: .5rem;
+    z-index: var(--z-fixed);
 }
 
 .section.landing .main .announcer .box {
