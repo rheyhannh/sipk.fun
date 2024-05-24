@@ -17,6 +17,7 @@ import { motion, useInView, useAnimation } from 'framer-motion';
 import styles from '../style/landing.module.css'
 // #endregion
 
+import { FaCheck, FaTimes } from "react-icons/fa";
 /**
  * Render landing page section `landing`
  * @returns {ReactElement} Element react untuk render landing page section `landing`
