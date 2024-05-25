@@ -42,12 +42,14 @@ export function Landing() {
             <div
                 className={styles.animation__controller}
                 onClick={() => {
-                    if (rocketState === 'hide' && cloudsState === 'hide') {
+                    if (rocketState === 'hide' && cloudsState === 'hide' && contentState === 'hide') {
                         setRocketState('show');
                         setCloudsState('show');
+                        setContentState('show');
                     } else {
                         setRocketState('hide');
                         setCloudsState('hide');
+                        setContentState('hide');
                     }
                 }}
             >
@@ -256,13 +258,13 @@ const Content = ({ contentState, setContentState }) => {
             }}
         >
             <div className={styles.text}>
-                <FlyIn duration={0.5} delay={0}>
+                <FlyIn duration={0.5} delay={1} contentState={contentState} setContentState={setContentState}>
                     <h1 className={styles.title}>
                         Lorem ipsum dolor sit amet.
                     </h1>
                 </FlyIn>
 
-                <FlyIn duration={0.5} delay={0}>
+                <FlyIn duration={0.5} delay={1} contentState={contentState} setContentState={setContentState}>
                     <p className={styles.description}>
                         Lorem ipsum dolor sit amet consectetur adipisicing elit. Sed, quis.
                     </p>
@@ -272,30 +274,13 @@ const Content = ({ contentState, setContentState }) => {
     )
 }
 
-const FlyIn = ({ children, duration = 0.5, delay = 0.25 }) => {
-    const [anim, setAnim] = useState('hide');
+const FlyIn = ({ children, duration = 0.5, delay = 0.25, contentState, setContentState }) => {
     const ref = useRef(null);
-    const isInView = useInView(ref, { once: true });
-
-    const mainControls = useAnimation();
-
-    const handleHideAnimation = () => {
-        mainControls.start('hide');
-        setAnim('hide');
-    }
-
-    const handleShowAnimation = () => {
-        mainControls.start('show');
-        setAnim('show');
-    }
 
     useEffect(() => {
-        if (isInView) {
-            // Fire the animation
-            mainControls.start("show");
-            setAnim('show');
-        }
-    }, [isInView])
+        // Fire the animation
+        setContentState('show');
+    }, [])
 
     return (
         <div
@@ -304,15 +289,14 @@ const FlyIn = ({ children, duration = 0.5, delay = 0.25 }) => {
                 position: 'relative',
                 overflow: 'hidden',
             }}
-            onClick={() => { anim === 'hide' ? handleShowAnimation() : handleHideAnimation() }}
         >
             <motion.div
                 variants={{
                     hide: { opacity: 0, x: 75, y: -75 },
                     show: { opacity: 1, x: 0, y: 0 },
                 }}
-                initial="hide"
-                animate={mainControls}
+                initial={"hide"}
+                animate={contentState}
                 transition={{ duration, delay }}
             >
                 {children}
