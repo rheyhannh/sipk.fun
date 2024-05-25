@@ -141,6 +141,7 @@
 .section.landing .rocket svg {
     width: 430px;
     height: auto;
+    display: block;
 }
 
 .section.landing .content {
