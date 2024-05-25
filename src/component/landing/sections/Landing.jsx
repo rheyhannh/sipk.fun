@@ -35,6 +35,7 @@ export function Landing() {
 
     const [rocketState, setRocketState] = useState('hide');
     const [cloudsState, setCloudsState] = useState('hide');
+    const [contentState, setContentState] = useState('hide');
 
     return (
         <section className={`${styles.section} ${styles.landing}`} id={'landing'}>
