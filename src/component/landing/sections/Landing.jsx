@@ -149,7 +149,7 @@ const Clouds = ({ children, cloudsState, setCloudsState }) => {
                 transition={{ duration: 1, delay: 0.25 }}
             >
                 <Main />
-                <Content />
+                {children}
             </motion.div>
         </div>
     )
