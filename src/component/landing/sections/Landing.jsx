@@ -53,13 +53,15 @@ export function Landing() {
             >
                 {(rocketState === 'hide' && cloudsState === 'hide') ? <FaCheck size={'18px'} /> : <FaTimes size={'18px'} />}
             </div>
-            <Clouds cloudsState={cloudsState} setCloudsState={setCloudsState} />
+            <Clouds cloudsState={cloudsState} setCloudsState={setCloudsState}>
+                <Content contentState={contentState} setContentState={setContentState} />
+            </Clouds>
             <Rocket rocketState={rocketState} setRocketState={setRocketState} />
         </section>
     )
 }
 
-const Clouds = ({ cloudsState, setCloudsState }) => {
+const Clouds = ({ children, cloudsState, setCloudsState }) => {
     const { data: theme } = useLocalTheme();
     const ref = useRef(null);
     const isInView = useInView(ref, { once: true });
