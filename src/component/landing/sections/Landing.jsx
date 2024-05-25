@@ -207,7 +207,7 @@ const Rocket = ({ rocketState = 'hide', setRocketState }) => {
     )
 }
 
-const Content = () => {
+const Content = ({ contentState, setContentState }) => {
     const [top, setTop] = useState('0');
     const [left, setLeft] = useState('0');
     const [width, setWidth] = useState('0px');
