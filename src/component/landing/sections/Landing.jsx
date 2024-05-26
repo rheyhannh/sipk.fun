@@ -55,25 +55,19 @@ export function Landing() {
             id={'landing'}
         >
             <div
-                className={styles.animation__controller}
-                onClick={() => {
-                    if (rocketState === 'hide' && cloudsState === 'hide' && contentState === 'hide') {
-                        setRocketState('show');
-                        setCloudsState('show');
-                        setContentState('show');
-                    } else {
-                        setRocketState('hide');
-                        setCloudsState('hide');
-                        setContentState('hide');
-                    }
+                style={{
+                    position: 'sticky',
+                    top: '0',
+                    height: 'calc(100vh)',
+                    overflow: 'hidden'
                 }}
             >
-                {(rocketState === 'hide' && cloudsState === 'hide') ? <FaCheck size={'18px'} /> : <FaTimes size={'18px'} />}
+                <AnimationController rocketState={rocketState} setRocketState={setRocketState} cloudsState={cloudsState} setCloudsState={setCloudsState} contentState={contentState} setContentState={setContentState} />
+                <Clouds cloudsState={cloudsState} setCloudsState={setCloudsState} onScrollAnimation={onScrollCloudsAnim}>
+                    <Content contentState={contentState} setContentState={setContentState} />
+                </Clouds>
+                <Rocket rocketState={rocketState} setRocketState={setRocketState} onScrollAnimation={onScrollRocketAnim} />
             </div>
-            <Clouds cloudsState={cloudsState} setCloudsState={setCloudsState}>
-                <Content contentState={contentState} setContentState={setContentState} />
-            </Clouds>
-            <Rocket rocketState={rocketState} setRocketState={setRocketState} />
         </section>
     )
 }
