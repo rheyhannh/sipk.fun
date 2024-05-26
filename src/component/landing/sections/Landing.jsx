@@ -318,6 +318,15 @@ const AnimationController = (
         </div>
     )
 }
+
+const FlyIn = (
+    {
+        children,
+        duration = 0.5,
+        delay = 0.25,
+        contentState,
+        setContentState,
+    }) => {
     const ref = useRef(null);
 
     useEffect(() => {
