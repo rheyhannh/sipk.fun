@@ -88,8 +88,8 @@
 .section.landing {
     display: initial;
     position: relative;
-    overflow: hidden;
-    height: calc(100vh - 72px);
+    /* overflow: hidden; */
+    height: calc(200vh);
     /* border: 5px solid aqua; */
     /* background: sandybrown; */
 }
