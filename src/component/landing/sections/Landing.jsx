@@ -49,11 +49,7 @@ export function Landing() {
     }
 
     return (
-        <section
-            ref={sectionRef}
-            className={`${styles.section} ${styles.landing}`}
-            id={'landing'}
-        >
+        <Section sectionRef={sectionRef}>
             <Wrapper>
                 <AnimationController rocketState={rocketState} setRocketState={setRocketState} cloudsState={cloudsState} setCloudsState={setCloudsState} contentState={contentState} setContentState={setContentState} />
                 <Clouds cloudsState={cloudsState} setCloudsState={setCloudsState} onScrollAnimation={onScrollCloudsAnim}>
@@ -61,6 +57,22 @@ export function Landing() {
                 </Clouds>
                 <Rocket rocketState={rocketState} setRocketState={setRocketState} onScrollAnimation={onScrollRocketAnim} />
             </Wrapper>
+        </Section>
+    )
+}
+
+const Section = (
+    {
+        children,
+        sectionRef
+    }) => {
+    return (
+        <section
+            ref={sectionRef}
+            className={`${styles.section} ${styles.landing}`}
+            id={'landing'}
+        >
+            {children}
         </section>
     )
 }
