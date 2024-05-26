@@ -83,6 +83,7 @@ const Clouds = (
         children,
         cloudsState,
         setCloudsState,
+        onScrollAnimation
     }) => {
     const { data: theme } = useLocalTheme();
     const ref = useRef(null);
@@ -181,6 +182,7 @@ const Rocket = (
     {
         rocketState = 'hide',
         setRocketState,
+        onScrollAnimation
     }) => {
     const ref = useRef(null);
     const isInView = useInView(ref, { once: true });
