@@ -63,7 +63,12 @@ export function Landing() {
     )
 }
 
-const Clouds = ({ children, cloudsState, setCloudsState }) => {
+const Clouds = (
+    {
+        children,
+        cloudsState,
+        setCloudsState,
+    }) => {
     const { data: theme } = useLocalTheme();
     const ref = useRef(null);
     const isInView = useInView(ref, { once: true });
@@ -157,7 +162,11 @@ const Clouds = ({ children, cloudsState, setCloudsState }) => {
     )
 }
 
-const Rocket = ({ rocketState = 'hide', setRocketState }) => {
+const Rocket = (
+    {
+        rocketState = 'hide',
+        setRocketState,
+    }) => {
     const ref = useRef(null);
     const isInView = useInView(ref, { once: true });
 
@@ -211,7 +220,11 @@ const Rocket = ({ rocketState = 'hide', setRocketState }) => {
     )
 }
 
-const Content = ({ contentState, setContentState }) => {
+const Content = (
+    {
+        contentState,
+        setContentState
+    }) => {
     const [top, setTop] = useState('0');
     const [left, setLeft] = useState('0');
     const [width, setWidth] = useState('0px');
