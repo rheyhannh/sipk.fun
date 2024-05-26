@@ -132,8 +132,8 @@
 .section.landing .rocket {
     position: absolute;
     top: 15%;
-    left: 77.5%;
-    transform: translate(-77.5%, -15%) rotate(30deg);
+    left: 90%;
+    transform: translate(-90%, -15%) rotate(30deg);
     /* border: 2px solid aqua; */
     z-index: 2;
 }
