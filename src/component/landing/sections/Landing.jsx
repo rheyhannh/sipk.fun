@@ -40,6 +40,14 @@ export function Landing() {
     const { scrollYProgress } = useScroll({
         target: sectionRef,
     })
+
+    const onScrollRocketAnim = useTransform(scrollYProgress, [0, 1], ["0%", "-150%"]);
+    const onScrollCloudsAnim = {
+        outter: useTransform(scrollYProgress, [0, 1], ["0%", "175%"]),
+        center: useTransform(scrollYProgress, [0, 1], ["0%", "150%"]),
+        main: useTransform(scrollYProgress, [0, 1], ["0%", "125%"])
+    }
+
     return (
         <section
             ref={sectionRef}
