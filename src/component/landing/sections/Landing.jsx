@@ -37,6 +37,9 @@ export function Landing() {
     const [cloudsState, setCloudsState] = useState('hide');
     const [contentState, setContentState] = useState('hide');
 
+    const { scrollYProgress } = useScroll({
+        target: sectionRef,
+    })
     return (
         <section
             ref={sectionRef}
