@@ -290,7 +290,34 @@ const Content = (
     )
 }
 
-const FlyIn = ({ children, duration = 0.5, delay = 0.25, contentState, setContentState }) => {
+const AnimationController = (
+    {
+        rocketState,
+        setRocketState,
+        cloudsState,
+        setCloudsState,
+        contentState,
+        setContentState
+    }) => {
+    return (
+        <div
+            className={styles.animation__controller}
+            onClick={() => {
+                if (rocketState === 'hide' && cloudsState === 'hide' && contentState === 'hide') {
+                    setRocketState('show');
+                    setCloudsState('show');
+                    setContentState('show');
+                } else {
+                    setRocketState('hide');
+                    setCloudsState('hide');
+                    setContentState('hide');
+                }
+            }}
+        >
+            {(rocketState === 'hide' && cloudsState === 'hide' && contentState === 'hide') ? <FaCheck size={'18px'} /> : <FaTimes size={'18px'} />}
+        </div>
+    )
+}
     const ref = useRef(null);
 
     useEffect(() => {
