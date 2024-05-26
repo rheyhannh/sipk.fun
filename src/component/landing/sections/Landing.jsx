@@ -54,21 +54,32 @@ export function Landing() {
             className={`${styles.section} ${styles.landing}`}
             id={'landing'}
         >
-            <div
-                style={{
-                    position: 'sticky',
-                    top: '0',
-                    height: 'calc(100vh)',
-                    overflow: 'hidden'
-                }}
-            >
+            <Wrapper>
                 <AnimationController rocketState={rocketState} setRocketState={setRocketState} cloudsState={cloudsState} setCloudsState={setCloudsState} contentState={contentState} setContentState={setContentState} />
                 <Clouds cloudsState={cloudsState} setCloudsState={setCloudsState} onScrollAnimation={onScrollCloudsAnim}>
                     <Content contentState={contentState} setContentState={setContentState} />
                 </Clouds>
                 <Rocket rocketState={rocketState} setRocketState={setRocketState} onScrollAnimation={onScrollRocketAnim} />
-            </div>
+            </Wrapper>
         </section>
+    )
+}
+
+const Wrapper = (
+    {
+        children
+    }) => {
+    return (
+        <div
+            style={{
+                position: 'sticky',
+                top: '0',
+                height: 'calc(100vh)',
+                overflow: 'hidden'
+            }}
+        >
+            {children}
+        </div>
     )
 }
 
