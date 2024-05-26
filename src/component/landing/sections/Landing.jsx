@@ -38,7 +38,10 @@ export function Landing() {
     const [contentState, setContentState] = useState('hide');
 
     return (
-        <section className={`${styles.section} ${styles.landing}`} id={'landing'}>
+        <section
+            className={`${styles.section} ${styles.landing}`}
+            id={'landing'}
+        >
             <div
                 className={styles.animation__controller}
                 onClick={() => {
