@@ -274,13 +274,23 @@ const Content = (
             }}
         >
             <div className={styles.text}>
-                <FlyIn duration={0.5} delay={1} contentState={contentState} setContentState={setContentState}>
+                <FlyIn
+                    duration={0.5}
+                    delay={1}
+                    contentState={contentState}
+                    setContentState={setContentState}
+                >
                     <h1 className={styles.title}>
                         Lorem ipsum dolor sit amet.
                     </h1>
                 </FlyIn>
 
-                <FlyIn duration={0.5} delay={1} contentState={contentState} setContentState={setContentState}>
+                <FlyIn
+                    duration={0.5}
+                    delay={1}
+                    contentState={contentState}
+                    setContentState={setContentState}
+                >
                     <p className={styles.description}>
                         Lorem ipsum dolor sit amet consectetur adipisicing elit. Sed, quis.
                     </p>
