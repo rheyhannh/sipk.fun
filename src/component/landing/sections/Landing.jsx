@@ -32,13 +32,14 @@ import { FaCheck, FaTimes } from "react-icons/fa";
 export function Landing() {
     /** @type {ContextTypes.LandingContext} */
     const { isRichContent, isTouchDevice, isAccessTokenExist } = useContext(LandingContext);
-
+    const sectionRef = useRef(null);
     const [rocketState, setRocketState] = useState('hide');
     const [cloudsState, setCloudsState] = useState('hide');
     const [contentState, setContentState] = useState('hide');
 
     return (
         <section
+            ref={sectionRef}
             className={`${styles.section} ${styles.landing}`}
             id={'landing'}
         >
