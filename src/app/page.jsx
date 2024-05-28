@@ -73,7 +73,8 @@ export default async function LandingPage() {
       <Header />
       <Container>
         <Wrapper>
-          <Landing />
+          {/* <Landing /> */}
+          <Introduction/>
           <Feature />
           <Context />
         </Wrapper>
