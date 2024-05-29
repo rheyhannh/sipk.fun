@@ -30,6 +30,9 @@ export function Introduction() {
     
     const sectionRef = useRef(null);
     const isSectionInView = useInView(sectionRef, { once: true });
+    const { scrollYProgress } = useScroll({
+        target: sectionRef
+    });
 
     return (
         <Section sectionRef={sectionRef}>
