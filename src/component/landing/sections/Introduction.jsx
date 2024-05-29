@@ -49,7 +49,12 @@ const Section = ({ children, sectionRef }) => {
     return (
         <section
             ref={sectionRef}
-            className={`${styles.section} ${styles.introduction}`}
+            className={`${styles.section}`}
+            style={{
+                display: 'initial',
+                height: '300vh',
+                border: '7.5px solid red'
+            }}
             id={'intro'}
         >
             {children}
