@@ -34,6 +34,10 @@ export function Introduction() {
         target: sectionRef
     });
 
+    useMotionValueEvent(scrollYProgress, "change", (latest) => {
+        console.log(`Section introduction scroll : ${(latest * 100).toFixed(1)}%`)
+    })
+
     return (
         <Section sectionRef={sectionRef}>
 
