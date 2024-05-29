@@ -61,3 +61,20 @@ const Section = ({ children, sectionRef }) => {
         </section>
     )
 }
+
+const Wrapper = ({ children }) => {
+    return (
+        <div
+            style={{
+                position: 'sticky',
+                top: '0',
+                height: '100vh',
+                overflow: 'hidden',
+                padding: 'calc(72px + 2rem) 2rem 2rem 2rem',
+                border: '5px solid purple',
+            }}
+        >
+            {children}
+        </div>
+    )
+}
