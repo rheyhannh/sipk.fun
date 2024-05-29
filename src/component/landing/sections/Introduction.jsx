@@ -40,7 +40,9 @@ export function Introduction() {
 
     return (
         <Section sectionRef={sectionRef}>
+            <Wrapper>
 
+            </Wrapper>
         </Section>
     )
 }
