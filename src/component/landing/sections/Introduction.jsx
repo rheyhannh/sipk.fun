@@ -30,7 +30,7 @@ export function Introduction() {
     const sectionRef = useRef(null);
     const [sectionScrollProgress, setSectionScrollProgress] = useState(0);
     const isSectionInView = useInView(sectionRef, { once: true });
-    const { scrollYProgress} = useScroll({ target: sectionRef });
+    const { scrollYProgress } = useScroll({ target: sectionRef });
 
     useEffect(() => {
         scrollYProgress.on('change', (latest) => {
