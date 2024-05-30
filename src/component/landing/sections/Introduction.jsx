@@ -55,15 +55,16 @@ export function Introduction() {
                                 enterScrollTimeframe={[0, 0.2]}
                                 exitScrollTimeframe={[0.75, 0.95]}
                                 overallTimeframe={[0, 0.5]}
-                            /> :
+                                useStagger={true}
+                            />
+                            :
                             <Title
                                 sectionRef={sectionRef}
                                 title={'Kenapa pakai SIPK ?'}
-                                enterAnimation={'staggerFirst'}
                                 enterScrollTimeframe={[0, 0.2]}
-                                exitAnimation={'staggerLast'}
                                 exitScrollTimeframe={[0.75, 0.95]}
                                 overallTimeframe={[0.5, 1]}
+                                useStagger={false}
                             />
                     }
                     <Description sectionRef={sectionRef} />
@@ -133,6 +134,7 @@ const Title = (
         enterScrollTimeframe = [0, 0.2],
         exitScrollTimeframe = [0.75, 0.95],
         overallTimeframe = [0, 0.5],
+        useStagger = false,
     }) => {
     const [scope, animate] = useAnimate();
     const { scrollYProgress: sectionScrollProgress } = useScroll({ target: sectionRef });
