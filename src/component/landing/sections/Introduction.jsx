@@ -166,3 +166,22 @@ const Title = (
     )
 }
 
+const Description = ({ sectionRef }) => {
+    const [scope, animate] = useAnimate();
+    const description = 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quos nam fugit assumenda dolor neque, repellat veritatis saepe consequuntur impedit earum dolorem, ut dolores, eaque natus optio tempore? Sapiente, nulla repellat.';
+
+    return (
+        <p
+            ref={scope}
+            style={{
+                fontSize: 'var(--h1-font-size)',
+                color: 'var(--dark-color)',
+                textAlign: 'justify',
+            }}
+        >
+            <span>
+                {description}
+            </span>
+        </p>
+    )
+}
