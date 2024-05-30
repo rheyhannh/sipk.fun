@@ -164,9 +164,23 @@ const Title = (
         });
     }
     const opacity = getOpacity();
-        [enterScrollTimeframe[0], enterScrollTimeframe[1], exitScrollTimeframe[0], exitScrollTimeframe[1]],
-        [-75, 0, 0, -75]
-    )
+
+    const getY = () => {
+        const enterOffset = (enterScrollTimeframe[1] - enterScrollTimeframe[0]) / titleWords.length;
+        const exitOffset = (exitScrollTimeframe[1] - exitScrollTimeframe[0]) / titleWords.length;
+
+        return titleWords.map((_, index) => {
+            const enterStart = enterScrollTimeframe[0] + (index * enterOffset);
+            const exitStart = exitScrollTimeframe[0] + (index * exitOffset);
+
+            return useTransform(
+                timeframe,
+                [enterStart, enterScrollTimeframe[1], exitStart, exitScrollTimeframe[1]],
+                [-75, 0, 0, -75]
+            );
+        });
+    }
+    const y = getY();
 
     // Testing Purposes.
     // useEffect(() => {
