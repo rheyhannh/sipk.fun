@@ -201,25 +201,6 @@ const Title = (
     }
     const y = getY();
 
-    // Testing Purposes.
-    // useEffect(() => {
-    //     sectionScrollProgress.on('change', (latest) => {
-    //         const percentage = (latest * 100).toFixed(1);
-    //         console.log(`section: ${percentage}`);
-    //     })
-
-    //     timeframe.on('change', (latest) => {
-    //         const percentage = (latest * 100).toFixed(1);
-    //         console.log(`timeframe: ${percentage}`);
-    //     })
-
-    //     return () => {
-    //         console.log('Clearing Listener.')
-    //         sectionScrollProgress.clearListeners();
-    //         timeframe.clearListeners();
-    //     }
-    // }, [])
-
     if (useStagger) {
         return (
             <div
