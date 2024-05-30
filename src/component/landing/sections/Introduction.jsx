@@ -52,9 +52,7 @@ export function Introduction() {
                             <Title
                                 sectionRef={sectionRef}
                                 title={'Apa itu SIPK ?'}
-                                enterAnimation={'staggerFirst'}
                                 enterScrollTimeframe={[0, 0.2]}
-                                exitAnimation={'staggerLast'}
                                 exitScrollTimeframe={[0.75, 0.95]}
                                 overallTimeframe={[0, 0.5]}
                             /> :
@@ -132,9 +130,7 @@ const Title = (
     {
         sectionRef,
         title = 'Lorem ipsum dolor sit amet.',
-        enterAnimation = 'staggerFirst',
         enterScrollTimeframe = [0, 0.2],
-        exitAnimation = 'staggerLast',
         exitScrollTimeframe = [0.75, 0.95],
         overallTimeframe = [0, 0.5],
     }) => {
