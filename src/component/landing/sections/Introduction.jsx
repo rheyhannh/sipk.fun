@@ -100,3 +100,69 @@ const Content = ({ children }) => {
     )
 }
 
+const Title = (
+    {
+        sectionRef,
+        title = 'Lorem ipsum dolor sit amet.',
+        enterAnimation = 'staggerFirst',
+        enterScrollTimeframe = [0, 0.2],
+        exitAnimation = 'staggerLast',
+        exitScrollTimeframe = [0.75, 0.95],
+        overallTimeframe = [0, 0.5],
+    }) => {
+    const [scope, animate] = useAnimate();
+    const { scrollYProgress: sectionScrollProgress } = useScroll({ target: sectionRef });
+    const staggerAnim = {
+        first: stagger(0.1, { startDelay: 0.25, from: 'first' }),
+        last: stagger(0.1, { startDelay: 0.25, from: 'last' })
+    };
+
+    const timeframe = useTransform(sectionScrollProgress, [overallTimeframe[0], overallTimeframe[1]], [0, 1]);
+    const opacity = useTransform(
+        timeframe,
+        [enterScrollTimeframe[0], enterScrollTimeframe[1], exitScrollTimeframe[0], exitScrollTimeframe[1]],
+        [0, 1, 1, 0]
+    )
+    const y = useTransform(
+        timeframe,
+        [enterScrollTimeframe[0], enterScrollTimeframe[1], exitScrollTimeframe[0], exitScrollTimeframe[1]],
+        [-75, 0, 0, -75]
+    )
+
+    // Testing Purposes.
+    // useEffect(() => {
+    //     sectionScrollProgress.on('change', (latest) => {
+    //         const percentage = (latest * 100).toFixed(1);
+    //         console.log(`section: ${percentage}`);
+    //     })
+
+    //     timeframe.on('change', (latest) => {
+    //         const percentage = (latest * 100).toFixed(1);
+    //         console.log(`timeframe: ${percentage}`);
+    //     })
+
+    //     return () => {
+    //         console.log('Clearing Listener.')
+    //         sectionScrollProgress.clearListeners();
+    //         timeframe.clearListeners();
+    //     }
+    // }, [])
+
+    return (
+        <motion.h1
+            ref={scope}
+            style={{
+                fontSize: 'var(--big-font-size)',
+                color: 'var(--dark-color)',
+                opacity,
+                y
+            }}
+        >
+            <span
+            >
+                {title}
+            </span>
+        </motion.h1>
+    )
+}
+
