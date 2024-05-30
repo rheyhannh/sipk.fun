@@ -10,7 +10,7 @@ import { useContext, useRef, useEffect, useState } from 'react'
 
 // #region COMPONENT DEPEDENCY
 import { LandingContext } from '@/component/provider/Landing';
-import { useInView, useAnimate, useScroll, useMotionValueEvent, stagger, motion } from "framer-motion";
+import { useInView, useAnimate, useScroll, useMotionValueEvent, useMotionValue, stagger, motion, useTransform } from "framer-motion";
 // #endregion
 
 // #region ICON DEPEDENCY
