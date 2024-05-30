@@ -201,22 +201,61 @@ const Title = (
     //     }
     // }, [])
 
-    return (
-        <motion.h1
-            ref={scope}
-            style={{
-                fontSize: 'var(--big-font-size)',
-                color: 'var(--dark-color)',
-                opacity,
-                y
-            }}
-        >
-            <span
+    if (useStagger) {
+        return (
+            <div
+                style={{
+                    display: 'flex',
+                    flexWrap: 'wrap',
+                    justifyContent: 'center',
+                    width: '100%',
+                    padding: '1rem 1rem 1rem 1rem',
+                    overflow: 'hidden',
+                }}
             >
-                {title}
-            </span>
-        </motion.h1>
-    )
+                {titleWords.map((item, index) => (
+                    <motion.h1
+                        key={`titleWords-${index}`}
+                        style={{
+                            margin: '0 10px 10px 0',
+                            whiteSpace: 'nowrap',
+                            fontSize: 'var(--big-font-size)',
+                            color: 'var(--dark-color)',
+                            opacity: opacity[index],
+                            y: y[index],
+                        }}
+                    >
+                        {item}
+                    </motion.h1>
+                ))}
+            </div>
+        )
+    } else {
+        return (
+            <div
+                style={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    width: '100%',
+                    padding: '1rem 1rem 1rem 1rem',
+                    overflow: 'hidden',
+                }}
+            >
+                <motion.h1
+                    style={{
+                        margin: '0 10px 10px 0',
+                        fontSize: 'var(--big-font-size)',
+                        color: 'var(--dark-color)',
+                        opacity: opacity[0],
+                        y: y[0],
+                    }}
+                >
+                    {title}
+                </motion.h1>
+            </div>
+        )
+    }
 }
 
 const Description = ({ sectionRef }) => {
