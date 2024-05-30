@@ -127,6 +127,33 @@ const Content = ({ children }) => {
     )
 }
 
+/** 
+ * Render konten teks dengan animasi masuk dan keluar berdasarkan scroll progress dari section atau parent element `sectionRef`
+ * @param {Object} props React props object
+ * @param {any} props.sectionRef 
+ * Ref section atau parent element
+ * @param {string} [props.title]
+ * Konten teks yang ditampilkan
+ * - Default: `'Lorem ipsum dolor sit amet.'` 
+ * @param {[number, number]} [props.enterScrollTimeframe] 
+ * Array dengan 2 indeks dimana indeks ke-1 merepresentasikan kapan animasi masuk mulai dan indeks ke-2 kapan animasi masuk selesai berdasarkan sequence dari `overallTimeframe`
+ * - Kriteria array `arr[0] < arr[1]` & `arr.length === 2`
+ * - Kriteria angka `0 >= x >= 1`
+ * - Default: `[0, 0.2]` 
+ * @param {[number, number]} [props.exitScrollTimeframe] 
+ * Array dengan 2 indeks dimana indeks ke-1 merepresentasikan kapan animasi keluar mulai dan indeks ke-2 kapan animasi keluar selesai berdasarkan sequence dari `overallTimeframe`
+ * - Kriteria array `arr[0] < arr[1]` & `arr.length === 2`
+ * - Kriteria angka `0 >= x >= 1`
+ * - Default: `[0.75, 0.95]` 
+ * @param {[number, number]} [props.overallTimeframe] 
+ * Array dengan 2 indeks yang merepresentasikan durasi total dari progress scroll `sectionRef`
+ * - Kriteria array `arr[0] < arr[1]` & `arr.length === 2`
+ * - Kriteria angka `0 >= x >= 1`
+ * - Default: `[0, 0.5]` 
+ * @param {boolean} [props.useStagger] 
+ * Boolean untuk menggunakan stagger. Stagger akan memberikan efek animasi delay untuk setiap kata pada `title`
+ * - Default : `false`
+ */
 const Title = (
     {
         sectionRef,
