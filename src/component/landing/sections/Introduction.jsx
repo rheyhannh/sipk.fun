@@ -27,16 +27,21 @@ import styles from '../style/landing.module.css'
 export function Introduction() {
     /** @type {ContextTypes.LandingContext} */
     const { isRichContent, isTouchDevice, isAccessTokenExist, data } = useContext(LandingContext);
-    
     const sectionRef = useRef(null);
+    const [sectionScrollProgress, setSectionScrollProgress] = useState(0);
     const isSectionInView = useInView(sectionRef, { once: true });
-    const { scrollYProgress } = useScroll({
-        target: sectionRef
-    });
+    const { scrollYProgress} = useScroll({ target: sectionRef });
 
-    useMotionValueEvent(scrollYProgress, "change", (latest) => {
-        console.log(`Section introduction scroll : ${(latest * 100).toFixed(1)}%`)
-    })
+    useEffect(() => {
+        scrollYProgress.on('change', (latest) => {
+            // console.log(latest);
+            setSectionScrollProgress(latest);
+        });
+
+        return () => {
+            scrollYProgress.clearListeners();
+        }
+    }, [scrollYProgress])
 
     return (
         <Section sectionRef={sectionRef}>
