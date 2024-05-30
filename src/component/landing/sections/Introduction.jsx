@@ -146,11 +146,6 @@ const Title = (
     }) => {
     const [scope, animate] = useAnimate();
     const { scrollYProgress: sectionScrollProgress } = useScroll({ target: sectionRef });
-    const staggerAnim = {
-        first: stagger(0.1, { startDelay: 0.25, from: 'first' }),
-        last: stagger(0.1, { startDelay: 0.25, from: 'last' })
-    };
-
     const timeframe = useTransform(sectionScrollProgress, [overallTimeframe[0], overallTimeframe[1]], [0, 1]);
     const opacity = useTransform(
         timeframe,
