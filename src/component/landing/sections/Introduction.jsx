@@ -151,7 +151,7 @@ const Content = ({ children }) => {
  * - Kriteria angka `0 >= x >= 1`
  * - Default: `[0, 0.5]` 
  * @param {boolean} [props.useStagger] 
- * Boolean untuk menggunakan stagger. Stagger akan memberikan efek animasi delay untuk setiap kata pada `title`
+ * Boolean untuk menggunakan stagger. Stagger akan memberikan efek animasi delay untuk setiap kata
  * - Default : `false`
  */
 const Title = (
