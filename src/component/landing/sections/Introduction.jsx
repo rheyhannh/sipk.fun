@@ -116,7 +116,7 @@ export function Introduction() {
             <Wrapper>
                 <Content>
                     <Title
-                        sectionRef={sectionRef}
+                        sectionScrollProgress={sectionScrollProgress}
                         title={sectionScrollProgressNumber < 0.5 ? textContent.title[0] : textContent.title[1]}
                         enterScrollTimeframe={[0, 0.2]}
                         exitScrollTimeframe={[0.75, 0.95]}
@@ -241,7 +241,7 @@ const Content = ({ children }) => {
  */
 const Title = (
     {
-        sectionRef,
+        sectionScrollProgress,
         title = 'Lorem ipsum dolor sit amet.',
         enterScrollTimeframe = [0, 0.2],
         exitScrollTimeframe = [0.75, 0.95],
@@ -260,7 +260,6 @@ const Title = (
         },
     }) => {
     const titleWords = title.split(' ');
-    const { scrollYProgress: sectionScrollProgress } = useScroll({ target: sectionRef });
     const timeframe = useTransform(sectionScrollProgress, [overallTimeframe[0], overallTimeframe[1]], [0, 1]);
 
     const getOpacity = () => {
