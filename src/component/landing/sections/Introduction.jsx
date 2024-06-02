@@ -35,6 +35,32 @@ const textContent = {
     ],
 }
 
+const optionsProps = [
+    {
+        tag: 'h1',
+        useMotion: true,
+        otherProps: {
+            style: {
+                margin: '0 10px 10px 0',
+                whiteSpace: 'nowrap',
+                fontSize: 'var(--big-font-size)',
+                color: 'var(--dark-color)',
+            },
+        }
+    },
+    {
+        tag: 'h1',
+        useMotion: true,
+        otherProps: {
+            style: {
+                margin: '0 10px 10px 0',
+                fontSize: 'var(--big-font-size)',
+                color: 'var(--dark-color)',
+            },
+        }
+    }
+]
+
 export function Introduction() {
     /** @type {ContextTypes.LandingContext} */
     const { isRichContent, isTouchDevice, isAccessTokenExist, data } = useContext(LandingContext);
