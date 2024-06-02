@@ -188,8 +188,8 @@ const Content = ({ children }) => {
 /** 
  * Render konten teks dengan animasi masuk dan keluar berdasarkan scroll progress dari section atau parent element `sectionRef`
  * @param {Object} props React props object
- * @param {any} props.sectionRef 
- * Ref section atau parent element
+ * @param {any} props.sectionScrollProgress 
+ * Scroll progress section atau parent element yang diperoleh dari hook framer motion `useScroll`
  * @param {string} [props.title]
  * Konten teks yang ditampilkan
  * - Default: `'Lorem ipsum dolor sit amet.'` 
