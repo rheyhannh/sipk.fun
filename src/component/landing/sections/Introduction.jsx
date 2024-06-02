@@ -121,7 +121,10 @@ export function Introduction() {
                         enterScrollTimeframe={[0, 0.2]}
                         exitScrollTimeframe={[0.75, 0.95]}
                         overallTimeframe={sectionScrollProgress < 0.5 ? [0, 0.5] : [0.5, 1]}
-                        useStagger={true}
+                        useStagger={sectionScrollProgress < 0.5 ? true : false}
+                        options={sectionScrollProgress < 0.5 ? optionsProps[0] : optionsProps[1]}
+                        useContainer={sectionScrollProgress < 0.5 ? true : true}
+                        containerOptions={sectionScrollProgress < 0.5 ? containerOptionsProps[0] : containerOptionsProps[1]}
                     />
                 </Content>
             </Wrapper>
