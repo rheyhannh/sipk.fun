@@ -61,6 +61,37 @@ const optionsProps = [
     }
 ]
 
+const containerOptionsProps = [
+    {
+        tag: 'div',
+        useMotion: false,
+        otherProps: {
+            style: {
+                display: 'flex',
+                flexWrap: 'wrap',
+                justifyContent: 'center',
+                width: '100%',
+                padding: '1rem 1rem 1rem 1rem',
+                overflow: 'hidden',
+            },
+        }
+    },
+    {
+        tag: 'div',
+        useMotion: false,
+        otherProps: {
+            style: {
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                width: '100%',
+                padding: '1rem 1rem 1rem 1rem',
+                overflow: 'hidden',
+            },
+        }
+    }
+]
+
 export function Introduction() {
     /** @type {ContextTypes.LandingContext} */
     const { isRichContent, isTouchDevice, isAccessTokenExist, data } = useContext(LandingContext);
