@@ -24,6 +24,17 @@ import {
 import styles from '../style/landing.module.css'
 // #endregion
 
+const textContent = {
+    title: [
+        'Apa itu SIPK ?',
+        'Kenapa pakai SIPK ?',
+    ],
+    description: [
+        'SIPK adalah aplikasi untuk mengorganisir matakuliah dan menghitung IPK yang kalian peroleh. Berbeda dengan portal akademik pada umumnya, SIPK berdiri sendiri sehingga kalian dapat menambah, menghapus bahkan mengubah nilai matakuliah kalian secara dinamis.',
+        'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quos nam fugit assumenda dolor neque, repellat veritatis saepe consequuntur impedit earum dolorem, ut dolores, eaque natus optio tempore? Sapiente, nulla repellat.',
+    ],
+}
+
 export function Introduction() {
     /** @type {ContextTypes.LandingContext} */
     const { isRichContent, isTouchDevice, isAccessTokenExist, data } = useContext(LandingContext);
