@@ -160,6 +160,17 @@ const Title = (
         exitScrollTimeframe = [0.75, 0.95],
         overallTimeframe = [0, 0.5],
         useStagger = false,
+        options = {
+            tag: 'h1',
+            useMotion: false,
+            otherProps: {},
+        },
+        useContainer = false,
+        containerOptions = {
+            tag: 'div',
+            useMotion: false,
+            otherProps: {},
+        },
     }) => {
     const titleWords = title.split(' ');
     const { scrollYProgress: sectionScrollProgress } = useScroll({ target: sectionRef });
