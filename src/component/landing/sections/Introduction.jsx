@@ -58,27 +58,14 @@ export function Introduction() {
         <Section sectionRef={sectionRef}>
             <Wrapper>
                 <Content>
-                    {
-                        sectionScrollProgress < 0.5 ?
-                            <Title
-                                sectionRef={sectionRef}
-                                title={'Apa itu SIPK ?'}
-                                enterScrollTimeframe={[0, 0.2]}
-                                exitScrollTimeframe={[0.75, 0.95]}
-                                overallTimeframe={[0, 0.5]}
-                                useStagger={true}
-                            />
-                            :
-                            <Title
-                                sectionRef={sectionRef}
-                                title={'Kenapa pakai SIPK ?'}
-                                enterScrollTimeframe={[0, 0.2]}
-                                exitScrollTimeframe={[0.75, 0.95]}
-                                overallTimeframe={[0.5, 1]}
-                                useStagger={false}
-                            />
-                    }
-                    <Description sectionRef={sectionRef} />
+                    <Title
+                        sectionRef={sectionRef}
+                        title={sectionScrollProgress < 0.5 ? textContent.title[0] : textContent.title[1]}
+                        enterScrollTimeframe={[0, 0.2]}
+                        exitScrollTimeframe={[0.75, 0.95]}
+                        overallTimeframe={sectionScrollProgress < 0.5 ? [0, 0.5] : [0.5, 1]}
+                        useStagger={true}
+                    />
                 </Content>
             </Wrapper>
         </Section>
