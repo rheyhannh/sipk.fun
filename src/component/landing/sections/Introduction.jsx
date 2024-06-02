@@ -211,6 +211,33 @@ const Content = ({ children }) => {
  * @param {boolean} [props.useStagger] 
  * Boolean untuk menggunakan stagger. Stagger akan memberikan efek animasi delay untuk setiap kata
  * - Default : `false`
+ * @param {Object} [props.options]
+ * Opsi yang digunakan
+ * @param {any} [props.options.tag]
+ * Tag html yang digunakan dalam string
+ * - Default : `'h1'`
+ * @param {boolean} [props.options.useMotion]
+ * Boolean untuk menggunakan komponen `motion` sesuai dengan tag yang digunakan
+ * - Contoh : Jika tag `h1` dan opsi ini `true` maka menggunakan`motion.h1`, jika tidak hanya `h1`
+ * - Default : `false` 
+ * @param {{}} [props.options.otherProps]
+ * Props lainnya yang ingin digunakan seperti onClick, style dan lainnya
+ * - Default : `{}`
+ * @param {boolean} [props.useContainer]
+ * Boolean untuk menggunakan container atau parent element
+ * - Default : `false`
+ * @param {Object} [props.containerOptions]
+ * Opsi yang digunakan pada container
+ * @param {any} [props.containerOptions.tag]
+ * Tag html yang digunakan pada container dalam string
+ * - Default : `'div'`
+ * @param {boolean} [props.containerOptions.useMotion]
+ * Boolean untuk menggunakan komponen `motion` sesuai dengan tag yang digunakan pada container
+ * - Contoh : Jika tag `div` dan opsi ini `true` maka menggunakan`motion.div`, jika tidak hanya `div`
+ * - Default : `false` 
+ * @param {{}} [props.containerOptions.otherProps]
+ * Props lainnya yang ingin digunakan pada container seperti onClick, style dan lainnya
+ * - Default : `{}`
  */
 const Title = (
     {
