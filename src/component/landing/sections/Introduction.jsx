@@ -96,20 +96,20 @@ export function Introduction() {
     /** @type {ContextTypes.LandingContext} */
     const { isRichContent, isTouchDevice, isAccessTokenExist, data } = useContext(LandingContext);
     const sectionRef = useRef(null);
-    const [sectionScrollProgress, setSectionScrollProgress] = useState(0);
+    const [sectionScrollProgressNumber, setSectionScrollProgressNumber] = useState(0);
     const isSectionInView = useInView(sectionRef, { once: true });
-    const { scrollYProgress } = useScroll({ target: sectionRef });
+    const { scrollYProgress: sectionScrollProgress } = useScroll({ target: sectionRef });
 
     useEffect(() => {
-        scrollYProgress.on('change', (latest) => {
+        sectionScrollProgress.on('change', (latest) => {
             // console.log(latest);
-            setSectionScrollProgress(latest);
+            setSectionScrollProgressNumber(latest);
         });
 
         return () => {
-            scrollYProgress.clearListeners();
+            sectionScrollProgress.clearListeners();
         }
-    }, [scrollYProgress])
+    }, [sectionScrollProgress])
 
     return (
         <Section sectionRef={sectionRef}>
@@ -117,14 +117,14 @@ export function Introduction() {
                 <Content>
                     <Title
                         sectionRef={sectionRef}
-                        title={sectionScrollProgress < 0.5 ? textContent.title[0] : textContent.title[1]}
+                        title={sectionScrollProgressNumber < 0.5 ? textContent.title[0] : textContent.title[1]}
                         enterScrollTimeframe={[0, 0.2]}
                         exitScrollTimeframe={[0.75, 0.95]}
-                        overallTimeframe={sectionScrollProgress < 0.5 ? [0, 0.5] : [0.5, 1]}
-                        useStagger={sectionScrollProgress < 0.5 ? true : false}
-                        options={sectionScrollProgress < 0.5 ? optionsProps[0] : optionsProps[1]}
-                        useContainer={sectionScrollProgress < 0.5 ? true : true}
-                        containerOptions={sectionScrollProgress < 0.5 ? containerOptionsProps[0] : containerOptionsProps[1]}
+                        overallTimeframe={sectionScrollProgressNumber < 0.5 ? [0, 0.5] : [0.5, 1]}
+                        useStagger={sectionScrollProgressNumber < 0.5 ? true : false}
+                        options={sectionScrollProgressNumber < 0.5 ? optionsProps[0] : optionsProps[1]}
+                        useContainer={sectionScrollProgressNumber < 0.5 ? true : true}
+                        containerOptions={sectionScrollProgressNumber < 0.5 ? containerOptionsProps[0] : containerOptionsProps[1]}
                     />
                 </Content>
             </Wrapper>
