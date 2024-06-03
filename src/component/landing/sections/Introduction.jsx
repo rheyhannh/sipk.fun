@@ -102,7 +102,7 @@ export function Introduction() {
                         sectionScrollProgress={sectionScrollProgress}
                         title={introductionContent.text.title}
                         enterScrollTimeframe={[0, 0.2]}
-                        exitScrollTimeframe={[0.75, 0.95]}
+                        exitScrollTimeframe={[0.7, 0.9]}
                         overallTimeframe={[0, 1]}
                         useStagger={true}
                         options={introductionContent.optionsProps.title}
@@ -112,8 +112,8 @@ export function Introduction() {
                     <AnimatedScrollingText
                         sectionScrollProgress={sectionScrollProgress}
                         title={introductionContent.text.description}
-                        enterScrollTimeframe={[0, 0.2]}
-                        exitScrollTimeframe={[0.75, 0.95]}
+                        enterScrollTimeframe={[0.1, 0.35]}
+                        exitScrollTimeframe={[0.8, 0.9]}
                         overallTimeframe={[0, 1]}
                         useStagger={true}
                         options={introductionContent.optionsProps.description}
