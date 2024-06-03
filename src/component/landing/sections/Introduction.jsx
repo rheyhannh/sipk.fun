@@ -98,7 +98,7 @@ export function Introduction() {
         <Section sectionRef={sectionRef}>
             <Wrapper>
                 <Content>
-                    <Title
+                    <AnimatedScrollingText
                         sectionScrollProgress={sectionScrollProgress}
                         title={introductionContent.text.title}
                         enterScrollTimeframe={[0, 0.2]}
@@ -109,7 +109,7 @@ export function Introduction() {
                         useContainer={true}
                         containerOptions={introductionContent.containerOptionsProps.title}
                     />
-                    <Title
+                    <AnimatedScrollingText
                         sectionScrollProgress={sectionScrollProgress}
                         title={introductionContent.text.description}
                         enterScrollTimeframe={[0, 0.2]}
@@ -233,7 +233,7 @@ const Content = ({ children }) => {
  * Props lainnya yang ingin digunakan pada container seperti onClick, style dan lainnya
  * - Default : `{}`
  */
-const Title = (
+const AnimatedScrollingText = (
     {
         sectionScrollProgress,
         title = 'Lorem ipsum dolor sit amet.',
