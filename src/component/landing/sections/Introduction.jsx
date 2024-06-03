@@ -91,20 +91,8 @@ export function Introduction() {
     /** @type {ContextTypes.LandingContext} */
     const { isRichContent, isTouchDevice, isAccessTokenExist, data } = useContext(LandingContext);
     const sectionRef = useRef(null);
-    const [sectionScrollProgressNumber, setSectionScrollProgressNumber] = useState(0);
     const isSectionInView = useInView(sectionRef, { once: true });
     const { scrollYProgress: sectionScrollProgress } = useScroll({ target: sectionRef });
-
-    useEffect(() => {
-        sectionScrollProgress.on('change', (latest) => {
-            // console.log(latest);
-            setSectionScrollProgressNumber(latest);
-        });
-
-        return () => {
-            sectionScrollProgress.clearListeners();
-        }
-    }, [sectionScrollProgress])
 
     return (
         <Section sectionRef={sectionRef}>
