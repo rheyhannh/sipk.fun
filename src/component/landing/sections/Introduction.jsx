@@ -24,73 +24,68 @@ import {
 import styles from '../style/landing.module.css'
 // #endregion
 
-const textContent = {
-    title: [
-        'Apa itu SIPK ?',
-        'Kenapa pakai SIPK ?',
-    ],
-    description: [
-        'SIPK adalah aplikasi untuk mengorganisir matakuliah dan menghitung IPK yang kalian peroleh. Berbeda dengan portal akademik pada umumnya, SIPK berdiri sendiri sehingga kalian dapat menambah, menghapus bahkan mengubah nilai matakuliah kalian secara dinamis.',
-        'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quos nam fugit assumenda dolor neque, repellat veritatis saepe consequuntur impedit earum dolorem, ut dolores, eaque natus optio tempore? Sapiente, nulla repellat.',
-    ],
+const introductionContent = {
+    text: {
+        title: 'Apa itu SIPK ?',
+        description: 'SIPK adalah aplikasi untuk mengorganisir matakuliah dan menghitung IPK yang kalian peroleh. Berbeda dengan portal akademik pada umumnya, SIPK berdiri sendiri sehingga kalian dapat menambah, menghapus bahkan mengubah nilai matakuliah kalian secara dinamis.',
+    },
+    optionsProps: {
+        title: {
+            tag: 'h1',
+            useMotion: true,
+            otherProps: {
+                style: {
+                    margin: '0 10px 10px 0',
+                    whiteSpace: 'nowrap',
+                    fontSize: 'var(--big-font-size)',
+                    color: 'var(--dark-color)',
+                },
+            }
+        },
+        description: {
+            tag: 'span',
+            useMotion: true,
+            otherProps: {
+                style: {
+                    margin: '0 10px 10px 0',
+                    whiteSpace: 'nowrap',
+                    fontSize: 'var(--h1-font-size)',
+                    color: 'var(--dark-color)',
+                },
+            }
+        }
+    },
+    containerOptionsProps: {
+        title: {
+            tag: 'div',
+            useMotion: false,
+            otherProps: {
+                style: {
+                    display: 'flex',
+                    flexWrap: 'wrap',
+                    justifyContent: 'center',
+                    width: '100%',
+                    padding: '1rem 1rem 1rem 1rem',
+                    overflow: 'hidden',
+                },
+            }
+        },
+        description: {
+            tag: 'p',
+            useMotion: false,
+            otherProps: {
+                style: {
+                    display: 'flex',
+                    flexWrap: 'wrap',
+                    justifyContent: 'center',
+                    width: '100%',
+                    padding: '1rem 1rem 1rem 1rem',
+                    overflow: 'hidden',
+                },
+            }
+        }
+    }
 }
-
-const optionsProps = [
-    {
-        tag: 'h1',
-        useMotion: true,
-        otherProps: {
-            style: {
-                margin: '0 10px 10px 0',
-                whiteSpace: 'nowrap',
-                fontSize: 'var(--big-font-size)',
-                color: 'var(--dark-color)',
-            },
-        }
-    },
-    {
-        tag: 'h1',
-        useMotion: true,
-        otherProps: {
-            style: {
-                margin: '0 10px 10px 0',
-                fontSize: 'var(--big-font-size)',
-                color: 'var(--dark-color)',
-            },
-        }
-    }
-]
-
-const containerOptionsProps = [
-    {
-        tag: 'div',
-        useMotion: false,
-        otherProps: {
-            style: {
-                display: 'flex',
-                flexWrap: 'wrap',
-                justifyContent: 'center',
-                width: '100%',
-                padding: '1rem 1rem 1rem 1rem',
-                overflow: 'hidden',
-            },
-        }
-    },
-    {
-        tag: 'div',
-        useMotion: false,
-        otherProps: {
-            style: {
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-                width: '100%',
-                padding: '1rem 1rem 1rem 1rem',
-                overflow: 'hidden',
-            },
-        }
-    }
-]
 
 export function Introduction() {
     /** @type {ContextTypes.LandingContext} */
@@ -117,14 +112,25 @@ export function Introduction() {
                 <Content>
                     <Title
                         sectionScrollProgress={sectionScrollProgress}
-                        title={sectionScrollProgressNumber < 0.5 ? textContent.title[0] : textContent.title[1]}
+                        title={introductionContent.text.title}
                         enterScrollTimeframe={[0, 0.2]}
                         exitScrollTimeframe={[0.75, 0.95]}
-                        overallTimeframe={sectionScrollProgressNumber < 0.5 ? [0, 0.5] : [0.5, 1]}
-                        useStagger={sectionScrollProgressNumber < 0.5 ? true : false}
-                        options={sectionScrollProgressNumber < 0.5 ? optionsProps[0] : optionsProps[1]}
-                        useContainer={sectionScrollProgressNumber < 0.5 ? true : true}
-                        containerOptions={sectionScrollProgressNumber < 0.5 ? containerOptionsProps[0] : containerOptionsProps[1]}
+                        overallTimeframe={[0, 1]}
+                        useStagger={true}
+                        options={introductionContent.optionsProps.title}
+                        useContainer={true}
+                        containerOptions={introductionContent.containerOptionsProps.title}
+                    />
+                    <Title
+                        sectionScrollProgress={sectionScrollProgress}
+                        title={introductionContent.text.description}
+                        enterScrollTimeframe={[0, 0.2]}
+                        exitScrollTimeframe={[0.75, 0.95]}
+                        overallTimeframe={[0, 1]}
+                        useStagger={true}
+                        options={introductionContent.optionsProps.description}
+                        useContainer={true}
+                        containerOptions={introductionContent.containerOptionsProps.description}
                     />
                 </Content>
             </Wrapper>
