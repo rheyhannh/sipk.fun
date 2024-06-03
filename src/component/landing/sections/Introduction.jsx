@@ -290,6 +290,23 @@ const AnimatedScrollingText = (
     }
     const y = getY();
 
+    const getX = () => {
+        const enterOffset = (enterScrollTimeframe[1] - enterScrollTimeframe[0]) / titleWords.length;
+        const exitOffset = (exitScrollTimeframe[1] - exitScrollTimeframe[0]) / titleWords.length;
+
+        return titleWords.map((_, index) => {
+            const enterStart = enterScrollTimeframe[0] + (index * enterOffset);
+            const exitStart = exitScrollTimeframe[0] + (index * exitOffset);
+
+            return useTransform(
+                timeframe,
+                [enterStart, enterScrollTimeframe[1], exitStart, exitScrollTimeframe[1]],
+                [-50, 0, 0, -50]
+            );
+        });
+    }
+    const x = getX();
+
     const Content = () => {
         const ContentElement = options.useMotion ? motion[options.tag] : options.tag;
 
