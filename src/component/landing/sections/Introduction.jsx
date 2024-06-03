@@ -321,6 +321,7 @@ const AnimatedScrollingText = (
                                 ...options.otherProps?.style,
                                 opacity: opacity[index],
                                 y: y[index],
+                                x: x[index],
                             }}
                         >
                             {item}
@@ -336,6 +337,7 @@ const AnimatedScrollingText = (
                         ...options.otherProps?.style,
                         opacity: opacity[0],
                         y: y[0],
+                        x: x[0],
                     }}
                 >
                     {title}
