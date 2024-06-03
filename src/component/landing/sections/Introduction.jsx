@@ -133,7 +133,7 @@ const Section = ({ children, sectionRef }) => {
             className={`${styles.section}`}
             style={{
                 display: 'initial',
-                height: '500vh',
+                height: '300vh',
                 border: '7.5px solid red'
             }}
             id={'intro'}
