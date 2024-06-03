@@ -168,8 +168,6 @@ const Content = ({ children }) => {
                 flexDirection: 'column',
                 justifyContent: 'center',
                 alignItems: 'center',
-                gap: '1rem',
-                background: 'red',
                 width: '100%',
                 height: '100%',
             }}
