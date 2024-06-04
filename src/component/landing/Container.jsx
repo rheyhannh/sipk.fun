@@ -46,3 +46,33 @@ export function Container({ children }) {
         </main>
     )
 }
+
+const ThemeChanger = () => {
+    const { data: theme } = useLocalTheme();
+
+    const handleChangeTheme = (newTheme) => {
+        if (theme === newTheme) { return }
+        localStorage.setItem('_theme', theme === 'dark' ? 'light' : 'dark')
+        mutate('localUserTheme');
+    }
+
+    // useEffect(() => {
+    //     const intervalId = setInterval(() => {
+    //         console.log('Change theme every 3.5secs for preview.');
+    //         handleChangeTheme(theme === 'dark' ? 'light' : 'dark');
+    //     }, 3500);
+
+    //     return () => {
+    //         clearInterval(intervalId);
+    //     };
+    // }, [handleChangeTheme, theme]);
+
+    return (
+        <div
+            className={styles.theme_changer}
+            onClick={() => handleChangeTheme(theme === 'dark' ? 'light' : 'dark')}
+        >
+            {theme === 'dark' ? <FiSun size={'18px'} /> : <FiMoon size={'18px'} />}
+        </div>
+    )
+}
