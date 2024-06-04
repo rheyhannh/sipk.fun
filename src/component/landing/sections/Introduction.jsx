@@ -17,6 +17,8 @@ import { useInView, useAnimate, useScroll, useMotionValueEvent, useMotionValue, 
 import {
     FaEye,
     FaEyeSlash,
+    FaChevronLeft,
+    FaChevronRight,
 } from 'react-icons/fa'
 // #endregion
 
