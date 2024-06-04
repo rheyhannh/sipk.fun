@@ -76,9 +76,9 @@ const Cards = ({ children, animateX: x }) => {
     return (
         <motion.div
             style={{
+                x,
                 display: 'flex',
                 gap: '2.5rem',
-                x
             }}
 
         >
