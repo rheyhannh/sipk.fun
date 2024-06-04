@@ -78,56 +78,99 @@ const Title = ({ }) => {
     const title = 'Apa itu SIPK ?';
 
     return (
-        <AnimatePresence>
+        <motion.div
+            style={{
+                position: 'relative',
+                display: 'flex',
+                flexWrap: 'wrap',
+                justifyContent: 'start',
+                width: 'max-content',
+                padding: '.5rem 5rem',
+                overflow: 'hidden',
+                // border: '1.25px solid red'
+            }}
+            variants={{
+                initial: {},
+                show: {
+                    transition: {
+                        delayChildren: 0.2,
+                        staggerChildren: 0.2
+                    }
+                },
+            }}
+            initial={'initial'}
+            whileInView={'show'}
+        // viewport={{ once: true }}
+        >
             <motion.div
                 style={{
-                    display: 'flex',
-                    flexWrap: 'wrap',
-                    justifyContent: 'start',
+                    position: 'absolute',
+                    top: '0',
+                    left: '0',
                     width: '100%',
-                    padding: '.5rem 1rem',
-                    overflow: 'hidden',
-                    border: '1.25px solid red'
+                    height: '100%',
+                    backgroundColor: 'var(--body-color)',
+                    color: 'var(--logo-second-color)',
+                    zIndex: '3',
                 }}
                 variants={{
-                    initial: {},
-                    show: {
-                        transition: {
-                            delayChildren: 0.2,
-                            staggerChildren: 0.2
-                        }
-                    },
+                    initial: { zIndex: '3' },
+                    show: { zIndex: '1' },
                 }}
-                initial={'initial'}
-                whileInView={'show'}
-                // viewport={{ once: true }}
             >
-                {title.split(' ').map((item, index) => (
-                    <motion.h1
-                        key={`ApaItuSipk-Title-${index}`}
-                        style={{
-                            margin: '0 10px 10px 0',
-                            whiteSpace: 'nowrap',
-                            fontSize: 'var(--big-font-size)',
-                            color: 'var(--dark-color)',
-                        }}
-                        variants={{
-                            initial: { opacity: 0 },
-                            show: {
-                                opacity: 1,
-                                transition: {
-                                    type: "spring",
-                                    stiffness: 100,
-                                    mass: 0.3
-                                }
-                            },
-                        }}
-                    >
-                        {item}
-                    </motion.h1>
-                ))}
+                <motion.div
+                    style={{
+                        position: 'absolute',
+                        left: '7.5%',
+                        display: 'flex',
+                        justifyContent: 'flex-end',
+                        alignItems: 'center',
+                        width: '50%',
+                        height: '100%',
+                        // border: '1px solid aqua',
+                    }}
+                    variants={{
+                        initial: { x: 0, scale: 1 },
+                        show: { x: '-70%', scale: 0.8 }
+                    }}
+                >
+                    <FaChevronLeft size={'50%'} />
+                </motion.div>
+
+                <motion.div
+                    style={{
+                        position: 'absolute',
+                        left: '42.5%',
+                        display: 'flex',
+                        justifyContent: 'flex-start',
+                        alignItems: 'center',
+                        width: '50%',
+                        height: '100%',
+                        // border: '1px solid gold',
+                    }}
+                    variants={{
+                        initial: { x: 0, scale: 1 },
+                        show: { x: '70%', scale: 0.8 }
+                    }}
+                >
+                    <FaChevronRight size={'50%'} />
+                </motion.div>
             </motion.div>
-        </AnimatePresence>
+
+            <motion.h1
+                style={{
+                    fontSize: 'var(--big-font-size)',
+                    color: 'var(--dark-color)',
+                    zIndex: '2',
+                }}
+                variants={{
+                    initial: { opacity: 0, scale: 0.8 },
+                    show: { opacity: 1, scale: 1 }
+                }}
+            >
+                {title}
+            </motion.h1>
+        </motion.div>
     )
 }
 
