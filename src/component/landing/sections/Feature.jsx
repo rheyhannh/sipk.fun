@@ -99,10 +99,10 @@ const Cards = ({ children, animateX: x }) => {
 const Card = (
     {
         children,
-        card = [{
+        card = {
             title: 'Feature X',
             description: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Incidunt, vel.'
-        }],
+        },
         style,
         ...props
     }) => {
