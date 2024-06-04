@@ -75,11 +75,11 @@ export function Nav() {
         //         </Link>
         //     ))}
         // </div>
-        <ShiftingDropDown theme={theme} handleChangeTheme={handleChangeTheme} />
+        <ShiftingDropDown/>
     )
 }
 
-const ShiftingDropDown = ({ theme, handleChangeTheme }) => {
+const ShiftingDropDown = () => {
     return (
         <div className={styles.nav}>
             <Tabs />
