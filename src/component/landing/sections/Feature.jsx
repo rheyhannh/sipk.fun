@@ -40,7 +40,7 @@ export function Feature() {
     }
 
     return (
-        <section style={{height: `400vh`}} ref={targetRef} className={`${styles.section} ${styles.feature}`} id={'feature'}>
+        <section style={{ height: `400vh` }} ref={targetRef} className={`${styles.section} ${styles.feature}`} id={'feature'}>
             <div className={styles.card_container}>
                 <motion.div style={{ x }} className={styles.card_wrapper}>
                     {cards.map((card, index) => {
