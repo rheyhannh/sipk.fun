@@ -57,7 +57,20 @@ const Section = ({ children, sectionRef }) => {
 const Wrapper = ({ children }) => {
     return (
         <div
-            className={styles.card_container}
+            style={{
+                position: 'sticky',
+                top: '0',
+                display: 'flex',
+                alignItems: 'center',
+                height: '100vh',
+                overflow: 'hidden',
+                // background: 'aquamarine',
+            }}
+        >
+            {children}
+        </div>
+    )
+}
         >
             {children}
         </div>
