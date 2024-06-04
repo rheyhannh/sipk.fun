@@ -42,17 +42,6 @@ import {
  * @returns {ReactElement} Element react untuk render landing page nav
  */
 export function Nav() {
-    // useEffect(() => {
-    //     const intervalId = setInterval(() => {
-    //         console.log('Change theme every 3.5secs for preview.');
-    //         handleChangeTheme(theme === 'dark' ? 'light' : 'dark');
-    //     }, 3500);
-
-    //     return () => {
-    //         clearInterval(intervalId);
-    //     };
-    // }, [handleChangeTheme, theme]);
-
     return (
         <ShiftingDropDown/>
     )
