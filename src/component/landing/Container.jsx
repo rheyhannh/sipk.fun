@@ -21,6 +21,13 @@ import { useLocalTheme } from '@/data/core';
 import styles from './style/landing.module.css'
 // #endregion
 
+// #region ICON DEPEDENCY
+import {
+    FiSun,
+    FiMoon,
+} from "react-icons/fi";
+// #endregion
+
 /**
  * Render landing page container
  * @param {{children}} props React props object
