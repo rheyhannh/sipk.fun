@@ -54,6 +54,15 @@ const Section = ({ children, sectionRef }) => {
     )
 }
 
+const Wrapper = ({ children }) => {
+    return (
+        <div
+            className={styles.card_container}
+        >
+            {children}
+        </div>
+    )
+}
 const Card = ({ card }) => {
     return (
         <div className={styles.card}>
