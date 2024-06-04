@@ -33,7 +33,16 @@ export function Feature() {
             <Wrapper>
                 <Cards animateX={x}>
                     {cards.map((card, index) => {
-                        return <Card card={card} key={`featureCard-${index}`} />
+                        return <Card
+                            card={card}
+                            key={`featureCard-${index}`}
+                            style={{
+                                display: 'flex',
+                                flexDirection: 'column',
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                            }}
+                        />
                     })}
                 </Cards>
             </Wrapper>
