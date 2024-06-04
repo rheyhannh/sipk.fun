@@ -31,13 +31,6 @@ export function Feature() {
     })
 
     const x = useTransform(scrollYProgress, [0, 1], ["0", "-100%"]);
-    const getSectionHeight = () => {
-        console.log(`Cards Total: ${cards.length}`);
-        console.log(`Cards Gap Count: ${cards.length - 1}`);
-        const cardsMaximum = 500 * (cards.length - 2);
-        const cardsGapMaximum = 14 * 2.5 * (cards.length - 2);
-        return cardsMaximum + cardsGapMaximum + (14 * 5 * 2);
-    }
 
     return (
         <Section sectionRef={sectionRef}>
