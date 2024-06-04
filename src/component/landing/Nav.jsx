@@ -62,19 +62,6 @@ export function Nav() {
     // }, [handleChangeTheme, theme]);
 
     return (
-        // <div className={styles.nav}>
-        //     {landingNavItem.map((item, index) => (
-        //         <Link
-        //             to={item.id}
-        //             offset={-50}
-        //             smooth={true}
-        //             duration={500}
-        //             key={`landingNavItem-${index}`}
-        //         >
-        //             <h3>{item.text}</h3>
-        //         </Link>
-        //     ))}
-        // </div>
         <ShiftingDropDown/>
     )
 }
