@@ -41,6 +41,7 @@ export function Container({ children }) {
     return (
         <main>
             <div className={styles.container}>
+                <ThemeChanger/>
                 {children}
             </div>
         </main>
