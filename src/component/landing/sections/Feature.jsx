@@ -24,12 +24,8 @@ import styles from '../style/landing.module.css'
 export function Feature() {
     /** @type {ContextTypes.LandingContext} */
     const { isRichContent, isTouchDevice, isAccessTokenExist } = useContext(LandingContext);
-
     const sectionRef = useRef(null);
-    const { scrollYProgress } = useScroll({
-        target: sectionRef,
-    })
-
+    const { scrollYProgress } = useScroll({ target: sectionRef })
     const x = useTransform(scrollYProgress, [0, 1], ["0", "-100%"]);
 
     return (
@@ -68,7 +64,7 @@ const Card = ({ card }) => {
                 }}
                 initial={'hide'}
                 whileInView={'show'}
-                // viewport={{ once: true }}
+            // viewport={{ once: true }}
             >
                 {card.title}
             </motion.h2>
@@ -80,7 +76,7 @@ const Card = ({ card }) => {
                 }}
                 initial={'hide'}
                 whileInView={'show'}
-                // viewport={{ once: true }}
+            // viewport={{ once: true }}
             >
                 {card.description}
             </motion.h3>
