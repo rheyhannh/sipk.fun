@@ -200,7 +200,7 @@ const Description = ({ }) => {
                 }}
                 initial={'initial'}
                 whileInView={'show'}
-                // viewport={{ once: true }}
+            // viewport={{ once: true }}
             >
                 {description.split(' ').map((item, index) => (
                     <motion.h1
