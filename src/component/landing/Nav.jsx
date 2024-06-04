@@ -42,14 +42,6 @@ import {
  * @returns {ReactElement} Element react untuk render landing page nav
  */
 export function Nav() {
-    const { data: theme } = useLocalTheme();
-
-    const handleChangeTheme = (newTheme) => {
-        if (theme === newTheme) { return }
-        localStorage.setItem('_theme', theme === 'dark' ? 'light' : 'dark')
-        mutate('localUserTheme');
-    }
-
     // useEffect(() => {
     //     const intervalId = setInterval(() => {
     //         console.log('Change theme every 3.5secs for preview.');
