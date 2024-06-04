@@ -30,7 +30,7 @@ export function Feature() {
         target: targetRef,
     })
 
-    const x = useTransform(scrollYProgress, [0, 1], ["0.5%", "-67.5%"]);
+    const x = useTransform(scrollYProgress, [0, 1], ["0", "-100%"]);
     const getSectionHeight = () => {
         console.log(`Cards Total: ${cards.length}`);
         console.log(`Cards Gap Count: ${cards.length - 1}`);
