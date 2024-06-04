@@ -30,13 +30,13 @@ export function Feature() {
 
     return (
         <Section sectionRef={sectionRef}>
-            <div className={styles.card_container}>
+            <Wrapper>
                 <motion.div style={{ x }} className={styles.card_wrapper}>
                     {cards.map((card, index) => {
                         return <Card card={card} key={`featureCard-${index}`} />
                     })}
                 </motion.div>
-            </div>
+            </Wrapper>
         </Section>
     )
 }
