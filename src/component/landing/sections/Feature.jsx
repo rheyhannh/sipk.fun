@@ -48,6 +48,15 @@ export function Feature() {
                     })}
                 </motion.div>
             </div>
+const Section = ({ children, sectionRef }) => {
+    return (
+        <section
+            ref={sectionRef}
+            id={'feature'}
+            style={{ height: `500vh` }}
+            className={`${styles.section} ${styles.feature}`}
+        >
+            {children}
         </section>
     )
 }
