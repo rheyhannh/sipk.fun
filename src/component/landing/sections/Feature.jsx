@@ -86,9 +86,28 @@ const Cards = ({ children, animateX: x }) => {
         </motion.div>
     )
 }
-const Card = ({ card }) => {
-    return (
-        <div className={styles.card}>
+
+const Card = (
+    {
+        children,
+        card = [{
+            title: 'Feature X',
+            description: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Incidunt, vel.'
+        }],
+        style,
+        ...props
+    }) => {
+    const defaultStyle = {
+        position: 'relative',
+        height: '100vh',
+        width: '100vw',
+        overflow: 'hidden',
+        color: 'var(--dark-color)',
+        border: '2.5px solid pink',
+    }
+
+    const DefaultElement = () => (
+        <>
             <motion.h2
                 variants={{
                     hide: { opacity: 0, y: 50 },
@@ -112,6 +131,18 @@ const Card = ({ card }) => {
             >
                 {card.description}
             </motion.h3>
+        </>
+    )
+
+    return (
+        <div
+            style={{
+                ...defaultStyle,
+                ...style
+            }}
+            {...props}
+        >
+            {children ?? <DefaultElement />}
         </div>
     )
 }
