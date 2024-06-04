@@ -31,11 +31,11 @@ export function Feature() {
     return (
         <Section sectionRef={sectionRef}>
             <Wrapper>
-                <motion.div style={{ x }} className={styles.card_wrapper}>
+                <Cards animateX={x}>
                     {cards.map((card, index) => {
                         return <Card card={card} key={`featureCard-${index}`} />
                     })}
-                </motion.div>
+                </Cards>
             </Wrapper>
         </Section>
     )
