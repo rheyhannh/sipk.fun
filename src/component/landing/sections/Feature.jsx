@@ -71,9 +71,19 @@ const Wrapper = ({ children }) => {
         </div>
     )
 }
+
+const Cards = ({ children, animateX: x }) => {
+    return (
+        <motion.div
+            style={{
+                display: 'flex',
+                gap: '2.5rem',
+                x
+            }}
+
         >
             {children}
-        </div>
+        </motion.div>
     )
 }
 const Card = ({ card }) => {
