@@ -82,9 +82,6 @@ export function Nav() {
 const ShiftingDropDown = ({ theme, handleChangeTheme }) => {
     return (
         <div className={styles.nav}>
-            <div className={styles.theme_changer} onClick={() => handleChangeTheme(theme === 'dark' ? 'light' : 'dark')}>
-                {theme === 'dark' ? <FiSun size={'18px'} /> : <FiMoon size={'18px'} />}
-            </div>
             <Tabs />
         </div>
     )
