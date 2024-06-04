@@ -5,11 +5,16 @@ import * as ContextTypes from '@/types/context';
 // #endregion
 
 // #region REACT DEPEDENCY
-import { useContext } from "react"
+import { useContext, useEffect } from "react"
 // #endregion
 
 // #region COMPONENT DEPEDENCY
 import { LandingContext } from "@/component/provider/Landing"
+import { mutate } from 'swr';
+// #endregion
+
+// #region DATA DEPEDENCY
+import { useLocalTheme } from '@/data/core';
 // #endregion
 
 // #region STYLE DEPEDENCY
