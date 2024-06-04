@@ -55,8 +55,29 @@ export function Feature() {
 const Card = ({ card }) => {
     return (
         <div className={styles.card}>
-            <h2>{card.title}</h2>
-            <h3>{card.description}</h3>
+            <motion.h2
+                variants={{
+                    hide: { opacity: 0, y: 50 },
+                    show: { opacity: 1, y: 0 }
+                }}
+                initial={'hide'}
+                whileInView={'show'}
+                // viewport={{ once: true }}
+            >
+                {card.title}
+            </motion.h2>
+
+            <motion.h3
+                variants={{
+                    hide: { opacity: 0, y: 75 },
+                    show: { opacity: 1, y: 0 }
+                }}
+                initial={'hide'}
+                whileInView={'show'}
+                // viewport={{ once: true }}
+            >
+                {card.description}
+            </motion.h3>
         </div>
     )
 }
