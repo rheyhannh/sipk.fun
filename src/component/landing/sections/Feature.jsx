@@ -104,6 +104,7 @@ const Card = (
         overflow: 'hidden',
         color: 'var(--dark-color)',
         border: '2.5px solid pink',
+        padding: '72px 2rem 2rem 2rem',
     }
 
     const DefaultElement = () => (
