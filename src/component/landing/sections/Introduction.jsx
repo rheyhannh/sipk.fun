@@ -222,7 +222,6 @@ const Description = ({ }) => {
                                 }
                             },
                         }}
-                        onAnimationComplete={() => console.log('selesai')}
                     >
                         {item}
                     </motion.h1>
