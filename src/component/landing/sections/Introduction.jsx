@@ -193,7 +193,7 @@ const Description = ({ }) => {
                     initial: {},
                     show: {
                         transition: {
-                            delayChildren: 0.6,
+                            delayChildren: 0.5,
                             staggerChildren: 0.075,
                         }
                     },
