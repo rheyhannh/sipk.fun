@@ -25,9 +25,9 @@ export function Feature() {
     /** @type {ContextTypes.LandingContext} */
     const { isRichContent, isTouchDevice, isAccessTokenExist } = useContext(LandingContext);
 
-    const targetRef = useRef(null);
+    const sectionRef = useRef(null);
     const { scrollYProgress } = useScroll({
-        target: targetRef,
+        target: sectionRef,
     })
 
     const x = useTransform(scrollYProgress, [0, 1], ["0", "-100%"]);
@@ -40,7 +40,7 @@ export function Feature() {
     }
 
     return (
-        <section style={{ height: `500vh` }} ref={targetRef} className={`${styles.section} ${styles.feature}`} id={'feature'}>
+        <Section sectionRef={sectionRef}>
             <div className={styles.card_container}>
                 <motion.div style={{ x }} className={styles.card_wrapper}>
                     {cards.map((card, index) => {
@@ -48,6 +48,10 @@ export function Feature() {
                     })}
                 </motion.div>
             </div>
+        </Section>
+    )
+}
+
 const Section = ({ children, sectionRef }) => {
     return (
         <section
