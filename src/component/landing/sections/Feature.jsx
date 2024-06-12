@@ -2,6 +2,8 @@
 
 // #region TYPE DEPEDENCY
 import * as ContextTypes from '@/types/context.js'
+import { HTMLProps, CSSProperties } from 'react';
+import { MotionProps, Variants } from 'framer-motion';
 // #endregion
 
 // #region REACT DEPEDENCY
