@@ -10,6 +10,9 @@ import { useContext, useRef } from 'react'
 
 // #region COMPONENT DEPEDENCY
 import { LandingContext } from '@/component/provider/Landing';
+import { motion, useTransform, useScroll, useAnimationControls, useAnimation, useAnimate } from "framer-motion";
+// #endregion
+
 // #region ICON DEPEDENCY
 import { AiOutlineQuestion, AiOutlineDelete, AiOutlinePlus, AiOutlineLike } from "react-icons/ai";
 // #endregion
