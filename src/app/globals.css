@@ -219,11 +219,23 @@
     /* #endregion */
 
     /* #region LANDING '/' */
-    --landing-navbar-bg: rgba(0, 0, 0, .8);
-    --landing-navbar-nub-color: #171717;
-    --landing-navbarBlogThumbnail-bg: rgba(0, 0, 0, .8);
-    /* --landing-navbar-boxShadow: inset 0 -1px 0 0 #eaeaea; */
-    --landing-navbar-boxShadow: inset 0 -1px 0 0 var(--logo-second-color);
+    --landing-primary: #ff6341;
+    --landing-primaryDark: #ff390e;
+    --landing-primaryLight: #ff8d74;
+    --landing-primaryContent: #410c00;
+    --landing-body: #1a1a1a;
+    --landing-foreground: #262626;
+    --landing-border : #404040;
+    --landing-copy: #fbfbfb;
+    --landing-copyLight: #d9d9d9;
+    --landing-copyLighter: #a6a6a6;
+    --landing-copyInverse: #262626;
+    --landing-copyLightInverse: #666666;
+    --landing-copyLighterInverse: #8c8c8c;
+    --landing-navbar-bg: #1a1a1a;
+    --landing-navbar-nub-color: #262626;
+    --landing-navbarBlogThumbnail-bg: #262626;
+    --landing-navbar-boxShadow: inset 0 -1px 0 0 #404040;
     --landing-navbarContent-bg: linear-gradient(to bottom, #171717, #171717, #202020);
     --landing-cloudOutter-bg: linear-gradient(135deg, #314B82, #4B66A1, #162A54);
     --landing-cloudCenter-bg: linear-gradient(135deg, #314B82, #4B66A1, #162A54);
