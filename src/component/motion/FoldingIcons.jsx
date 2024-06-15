@@ -427,7 +427,6 @@ const FoldingIcons = (
             <CurrentContent />
             {(isAnimating && <NextContent />)}
             <Divider />
-
         </Container>
     )
 }
