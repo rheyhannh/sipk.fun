@@ -36,7 +36,7 @@ import styles from './style/folding_icons.module.css'
  * // Animasi akan dimainkan saat animate true, setelah animasi selesai callback parentStateSetter akan dipanggil untuk update state
  * ```
  * @param {Object} props Component props
- * @param {Array<FoldingIconsProps.ContentEntry>} props.contents
+ * @param {Array<FoldingIconsProps.ContentEntry>} [props.contents]
  * Array dengan content entry. Default menggunakan array berikut,
  * ```js
  * const contents = [
