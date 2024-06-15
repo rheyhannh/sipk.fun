@@ -165,7 +165,10 @@ const FoldingIcons = (
             <div
                 className={styles.container}
                 style={{
-                    ...defaultStyles.container
+                    ...(() => {
+                        const { custom, ...restProps } = containerOptions;
+                        return { ...defaultStyles.container, ...restProps, ...custom };
+                    })(),
                 }}
                 {...props}
             >
