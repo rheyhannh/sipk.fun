@@ -279,14 +279,12 @@ const FoldingIcons = (
     }
 
     const handleOnAnimationStart = () => {
-        // console.log('Animation Start');
         if (animationOptions.onStart) {
             animationOptions.onStart(currentContent + 1 >= contents.length ? 0 : currentContent + 1)
         }
     }
 
     const handleOnAnimationComplete = () => {
-        // console.log('Animation Complete');
         setZIndexValue(value => value + 1);
         setCurrentContent(value => value + 1 >= contents.length ? 0 : value + 1);
         setIsAnimating(false);
@@ -407,7 +405,6 @@ const FoldingIcons = (
 
     useEffect(() => {
         if (animationOptions.type !== 'repeat') { return; }
-        // console.log('useEffect repeat');
 
         const startAnimation = () => {
             setIsAnimating(true)
@@ -427,7 +424,6 @@ const FoldingIcons = (
 
     useEffect(() => {
         if (animationOptions.type !== 'stateChanges') { return; }
-        // console.log('useEffect stateChanges');
         if (stateChangesOptions.useParentState) { setIsAnimating(stateChangesOptions.parentStateValue); }
     }, [animationOptions.type, stateChangesOptions.useParentState, stateChangesOptions.parentStateValue])
 
