@@ -424,16 +424,10 @@ const FoldingIcons = (
 
     return (
         <Container {...containerProps}>
-            {
-                isAnimating ?
-                    <>
-                        <CurrentContent />
-                        <NextContent />
-                    </> :
-                    <CurrentContent />
-            }
-
+            <CurrentContent />
+            {(isAnimating && <NextContent />)}
             <Divider />
+
         </Container>
     )
 }
