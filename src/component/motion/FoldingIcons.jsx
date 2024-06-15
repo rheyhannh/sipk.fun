@@ -10,6 +10,10 @@ import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 // #endregion
 
+// #region UTIL DEPEDENCY
+import PropTypes from 'prop-types';
+// #endregion
+
 // #region STYLE DEPEDENCY
 import styles from './style/folding_icons.module.css'
 // #endregion
