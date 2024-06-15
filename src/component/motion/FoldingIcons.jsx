@@ -191,7 +191,11 @@ const FoldingIcons = (
                     style={{
                         ...defaultStyles.content,
                         color: contents[currentContent].color ?? defaultContentsEntry.color,
-                        backgroundColor: contents[currentContent].backgroundColor ?? defaultContentsEntry.backgroundColor
+                        backgroundColor: contents[currentContent].backgroundColor ?? defaultContentsEntry.backgroundColor,
+                        ...(() => {
+                            const { custom, ...restProps } = contentOptions;
+                            return { ...restProps, ...custom };
+                        })()
                     }}
                     className={styles.content}
                 >
@@ -208,7 +212,11 @@ const FoldingIcons = (
                     style={{
                         ...defaultStyles.content,
                         color: contents[currentContent].color ?? defaultContentsEntry.color,
-                        backgroundColor: contents[currentContent].backgroundColor ?? defaultContentsEntry.backgroundColor
+                        backgroundColor: contents[currentContent].backgroundColor ?? defaultContentsEntry.backgroundColor,
+                        ...(() => {
+                            const { custom, ...restProps } = contentOptions;
+                            return { ...restProps, ...custom };
+                        })()
                     }}
                     className={styles.content}
                 >
@@ -229,7 +237,11 @@ const FoldingIcons = (
                     style={{
                         ...defaultStyles.content,
                         color: contents[currentContent + 1 >= contents.length ? 0 : currentContent + 1].color ?? defaultContentsEntry.color,
-                        backgroundColor: contents[currentContent + 1 >= contents.length ? 0 : currentContent + 1].backgroundColor ?? defaultContentsEntry.backgroundColor
+                        backgroundColor: contents[currentContent + 1 >= contents.length ? 0 : currentContent + 1].backgroundColor ?? defaultContentsEntry.backgroundColor,
+                        ...(() => {
+                            const { custom, ...restProps } = contentOptions;
+                            return { ...restProps, ...custom };
+                        })()
                     }}
                     className={styles.content}
                 >
@@ -249,7 +261,11 @@ const FoldingIcons = (
                     style={{
                         ...defaultStyles.content,
                         color: contents[currentContent + 1 >= contents.length ? 0 : currentContent + 1].color ?? defaultContentsEntry.color,
-                        backgroundColor: contents[currentContent + 1 >= contents.length ? 0 : currentContent + 1].backgroundColor ?? defaultContentsEntry.backgroundColor
+                        backgroundColor: contents[currentContent + 1 >= contents.length ? 0 : currentContent + 1].backgroundColor ?? defaultContentsEntry.backgroundColor,
+                        ...(() => {
+                            const { custom, ...restProps } = contentOptions;
+                            return { ...restProps, ...custom };
+                        })()
                     }}
                     className={styles.content}
                 >
