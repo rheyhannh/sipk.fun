@@ -178,8 +178,9 @@ const FoldingIcons = (
     }
 
     const CurrentContent = () => (
-        <div className={styles.current}>
+        <>
             <motion.div
+                className={styles.wrapper}
                 style={{
                     zIndex: zIndexValue * -1
                 }}
@@ -204,6 +205,7 @@ const FoldingIcons = (
             </motion.div>
 
             <div
+                className={styles.wrapper}
                 style={{
                     zIndex: zIndexValue
                 }}
@@ -223,12 +225,13 @@ const FoldingIcons = (
                     {contents[currentContent].icon ?? defaultContentsEntry.icon}
                 </div>
             </div>
-        </div>
+        </>
     )
 
     const NextContent = () => (
-        <div className={styles.next}>
+        <>
             <div
+                className={styles.wrapper}
                 style={{
                     zIndex: (zIndexValue + 1) * -1
                 }}
@@ -250,6 +253,7 @@ const FoldingIcons = (
             </div>
 
             <motion.div
+                className={styles.wrapper}
                 style={{
                     zIndex: zIndexValue + 1
                 }}
@@ -272,7 +276,7 @@ const FoldingIcons = (
                     {contents[currentContent + 1 >= contents.length ? 0 : currentContent + 1].icon ?? defaultContentsEntry.icon}
                 </div>
             </motion.div>
-        </div>
+        </>
     )
 
     const Divider = () => (

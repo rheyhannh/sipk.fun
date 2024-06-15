@@ -8,44 +8,34 @@
     border: 1px solid #404040;
 }
 
-.current,
-.next {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform-style: preserve-3d;
-}
-
-.current>div,
-.next>div {
+.container .wrapper {
     position: absolute;
     backface-visibility: hidden;
 }
 
-.current>div:nth-child(1) {
+.container .wrapper:nth-child(1) {
     clip-path: polygon(0px 0px, 100% 0px, 100% 50%, 0px 50%);
 }
 
-.current>div:nth-child(2) {
+.container .wrapper:nth-child(2) {
     top: 50%;
     left: 50%;
     clip-path: polygon(0px 50%, 100% 50%, 100% 100%, 0px 100%);
     transform: translateX(-50%) translateY(-50%) rotateX(0deg) translateZ(0px);
 }
 
-.next>div:nth-child(1) {
+.container .wrapper:nth-child(3) {
     top: 50%;
     left: 50%;
     clip-path: polygon(0px 0px, 100% 0px, 100% 50%, 0px 50%);
     transform: translateX(-50%) translateY(-50%) rotateX(0deg) translateZ(0px);
 }
 
-.next>div:nth-child(2) {
+.container .wrapper:nth-child(4) {
     clip-path: polygon(0px 50%, 100% 50%, 100% 100%, 0px 100%);
 }
 
-.current .content,
-.next .content {
+.container .content {
     display: grid;
     place-content: center;
     line-height: 1;
