@@ -265,11 +265,6 @@ const FoldingIcons = (
         container: {
             width: `calc(${size} * 3.4)`,
             height: `calc(${size} * 2.4)`,
-            // backgroundColor: containerOptions.backgroundColor ?? '#262626',
-            // borderColor: containerOptions.borderColor ?? '#404040',
-            // borderWidth: containerOptions.borderWidth ?? '1px',
-            // borderStyle: containerOptions.borderStyle ?? 'solid',
-            // borderRadius: containerOptions.borderRadius ?? '.5rem',
         },
         content: {
             width: `calc(${size} * 2.6)`,
