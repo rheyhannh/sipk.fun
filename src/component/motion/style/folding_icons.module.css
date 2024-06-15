@@ -1,0 +1,62 @@
+.container {
+    position: relative;
+    z-index: 0;
+    transform: rotateY(-20deg);
+    transform-style: preserve-3d;
+    border-radius: .5rem;
+    background-color: #262626;
+    border: 1px solid #404040;
+}
+
+.current,
+.next {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform-style: preserve-3d;
+}
+
+.current>div,
+.next>div {
+    position: absolute;
+    backface-visibility: hidden;
+}
+
+.current>div:nth-child(1) {
+    clip-path: polygon(0px 0px, 100% 0px, 100% 50%, 0px 50%);
+}
+
+.current>div:nth-child(2) {
+    top: 50%;
+    left: 50%;
+    clip-path: polygon(0px 50%, 100% 50%, 100% 100%, 0px 100%);
+    transform: translateX(-50%) translateY(-50%) rotateX(0deg) translateZ(0px);
+}
+
+.next>div:nth-child(1) {
+    top: 50%;
+    left: 50%;
+    clip-path: polygon(0px 0px, 100% 0px, 100% 50%, 0px 50%);
+    transform: translateX(-50%) translateY(-50%) rotateX(0deg) translateZ(0px);
+}
+
+.next>div:nth-child(2) {
+    clip-path: polygon(0px 50%, 100% 50%, 100% 100%, 0px 100%);
+}
+
+.current .content,
+.next .content {
+    display: grid;
+    place-content: center;
+    line-height: 1;
+    border-radius: .25rem;
+}
+
+.divider {
+    position: absolute;
+    top: 50%;
+    transform: translateZ(1px);
+    width: 100%;
+    height: 1px;
+    background-color: #262626;
+}
