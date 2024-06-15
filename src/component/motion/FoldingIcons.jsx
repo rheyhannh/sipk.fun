@@ -278,7 +278,13 @@ const FoldingIcons = (
     const Divider = () => (
         <div
             className={styles.divider}
-            style={{ zIndex: zIndexValue + 2 }}
+            style={{
+                ...(() => {
+                    const { custom, ...restProps } = dividerOptions;
+                    return { ...restProps, ...custom };
+                })(),
+                zIndex: zIndexValue + 2
+            }}
         />
     )
 
