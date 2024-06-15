@@ -102,6 +102,10 @@ import { HTMLProps, CSSProperties } from 'react';
  */
 
 /**
+ * @typedef {HTMLProps} ContainerProps
+ */
+
+/**
  * @typedef {Object} AnimationOptions
  * @property {'stateChanges' | 'repeat'} [type]
  * Timing animasi yang digunakan

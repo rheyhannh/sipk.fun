@@ -54,7 +54,8 @@ import styles from './style/folding_icons.module.css'
  * Opsi style `container` yang dapat dirubah
  * @param {FoldingIconsProps.DividerStyleOptions} props.dividerOptions
  * Opsi style `divider` yang dapat dirubah
- * @param {HTMLProps} props.containerProps Props untuk container
+ * @param {FoldingIconsProps.ContainerProps} props.containerProps 
+ * Props untuk `container`
  * @param {FoldingIconsProps.AnimationOptions} props.animationOptions
  * Pengaturan animasi yang digunakan
  * ```js
