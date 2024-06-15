@@ -296,4 +296,53 @@ const FoldingIcons = (
     )
 }
 
+FoldingIcons.propTypes = {
+    contents: PropTypes.arrayOf(
+        PropTypes.shape({
+            icon: PropTypes.oneOfType([PropTypes.string, PropTypes.element, PropTypes.elementType]),
+            color: PropTypes.string,
+            backgroundColor: PropTypes.string
+        })
+    ),
+    contentOptions: PropTypes.shape({
+        fontSize: PropTypes.string,
+        width: PropTypes.string,
+        height: PropTypes.string,
+        borderRadius: PropTypes.string,
+        custom: PropTypes.object // [FIX] If possible should be match to CSSProperties
+    }),
+    containerOptions: PropTypes.shape({
+        width: PropTypes.string,
+        height: PropTypes.string,
+        backgroundColor: PropTypes.string,
+        borderColor: PropTypes.string,
+        borderWidth: PropTypes.string,
+        borderStyle: PropTypes.string,
+        borderRadius: PropTypes.string,
+        custom: PropTypes.object // [FIX] If possible should be match to CSSProperties
+    }),
+    dividerOptions: PropTypes.shape({
+        width: PropTypes.string,
+        height: PropTypes.string,
+        custom: PropTypes.object // [FIX] If possible should be match to CSSProperties
+    }),
+    containerProps: PropTypes.object, // [FIX] If possible should be match to HTMLProps
+    animationOptions: PropTypes.shape({
+        type: PropTypes.oneOf(['stateChanges', 'repeat']),
+        duration: PropTypes.number,
+        onStart: PropTypes.func,
+        onComplete: PropTypes.func
+    }),
+    stateChangesOptions: PropTypes.shape({
+        useParentState: PropTypes.bool,
+        parentStateValue: PropTypes.bool,
+        parentStateSetter: PropTypes.func,
+        autoUpdateParentState: PropTypes.bool
+    }),
+    repeatOptions: PropTypes.shape({
+        delay: PropTypes.number,
+        interval: PropTypes.number
+    })
+}
+
 export default FoldingIcons;
