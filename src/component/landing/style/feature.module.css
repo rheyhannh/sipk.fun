@@ -69,16 +69,3 @@
     gap: 1rem;
     padding: 1rem;
 }
-
-.animated__text_box:before {
-    background-color: var(--landing-body);
-    border-radius: .5rem;
-    content: "";
-    height: 100%;
-    left: .925rem;
-    position: absolute;
-    top: .925rem;
-    width: 100%;
-    opacity: 0.4;
-    z-index: 1;
-}
