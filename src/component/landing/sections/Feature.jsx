@@ -358,6 +358,11 @@ const IntroCard = ({ }) => {
         </Card >
     )
 }
+
+const MATKULDUMMIES = [
+    { type: 'tambah', nama: '', date: '', nilai: '', sks: '' }
+]
+
 /**
  * 
  * @param {Object} props
