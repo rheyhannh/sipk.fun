@@ -39,6 +39,7 @@ export function Feature() {
         <Section sectionRef={sectionRef}>
             <Wrapper>
                 <Cards animateX={x}>
+                    <IntroCard />
                     {cards.map((card, index) => {
                         return <Card
                             card={card}
