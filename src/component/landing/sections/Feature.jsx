@@ -156,56 +156,85 @@ const IntroCard = ({ }) => {
     const [animateState, setAnimateState] = useState(false);
     const descriptionArray = ["Kamu", "bebas", "tambah", "dan", "hapus", "matakuliah", "kamu", "secara", "dinamis.", "Gausah", "binggung", "IPK", "kamu", "jadi", "berapa,", "biar", "SIPK", "yang", "hitungin", "itu", "semua", "buat kamu."];
 
+    const Layout = ({ children }) => (
+        <motion.div
+            className={styles.tambah_hapus}
+            style={{
+                border: '2px solid red',
+            }}
+            initial={'hide'}
+            animate={animControls}
+            whileInView={[
+                'introCardBox_show',
+                'introCardDescription_show'
+            ]}
+            transition={{
+                delayChildren: 0.5,
+                staggerChildren: 0.2
+            }}
+            onAnimationComplete={
+                definition => {
+                    console.log(`${definition} selesai`)
+                }
+            }
+        >
+            {children}
+        </motion.div>
+    )
+
+    const Highlight = ({ children }) => (
+        <motion.div
+            className={styles.highlight}
+            style={{
+                border: '1px solid yellow'
+            }}
+            onClick={() => { setAnimateState((value) => !value) }}
+        >
+            {children}
+        </motion.div>
+    )
+
+    const Box = ({ children }) => (
+        <div
+            className={styles.box}
+            style={{
+                border: '.5px solid purple'
+            }}
+        >
+            {children}
+        </div>
+    )
+
+    const Description = ({ children }) => (
+        <motion.div
+            className={styles.description}
+            style={{
+                overflow: 'hidden',
+                zIndex: 7,
+                border: '1px grey solid'
+            }}
+        >
+            {children}
+        </motion.div>
+    )
+
+    const Demo = ({ children }) => (
+        <motion.div
+            className={styles.demo}
+            style={{
+                border: '1px solid green',
+            }}
+            onClick={() => { console.log(animateState) }}
+        >
+            {children}
+        </motion.div>
+    )
+
     return (
         <Card>
-            <motion.div
-                style={{
-                    position: 'relative',
-                    overflow: 'hidden',
-                    height: '100%',
-                    width: '100%',
-                    display: 'grid',
-                    gridTemplateColumns: '500px 1fr',
-                    gap: '1rem',
-                    border: '2px solid red',
-                }}
-                initial={'hide'}
-                animate={animControls}
-                whileInView={[
-                    'introCardBox_show',
-                    'introCardDescription_show'
-                ]}
-                transition={{
-                    delayChildren: 0.5,
-                    staggerChildren: 0.2
-                }}
-                onAnimationComplete={
-                    definition => {
-                        console.log(`${definition} selesai`)
-                    }
-                }
-            >
-                <motion.div
-                    onClick={() => { setAnimateState((value) => !value) }}
-                    style={{
-                        display: 'flex',
-                        flexDirection: 'column',
-                        justifyContent: 'center',
-                        padding: '.5rem',
-                        border: '1px solid yellow'
-                    }}
-                >
-                    <div
-                        style={{
-                            position: 'relative',
-                            height: '200px',
-                            display: 'flex',
-                            flexDirection: 'column',
-                            justifyContent: 'center',
-                            padding: '1rem',
-                            border: '.5px solid purple'
-                        }}
-                    >
+            <Layout>
+                <Highlight>
+                    <Box>
                         <AnimatedTextBox
                             text='Tambah Matakuliah'
                             fontSize='1.2rem'
@@ -284,16 +313,9 @@ const IntroCard = ({ }) => {
                                 }}
                             />
                         </motion.div>
-                    </div>
+                    </Box>
 
-                    <motion.div
-                        style={{
-                            overflow: 'hidden',
-                            padding: '.5rem',
-                            zIndex: 7,
-                            border: '1px grey solid'
-                        }}
-                    >
+                    <Description>
                         <motion.p
                             style={{
                                 display: 'flex',
@@ -323,24 +345,13 @@ const IntroCard = ({ }) => {
                                 </motion.span>
                             ))}
                         </motion.p>
+                    </Description>
+                </Highlight>
 
-                    </motion.div>
-                </motion.div>
+                <Demo>
 
-                <motion.div
-                    onClick={() => { console.log(animateState) }}
-                    style={{
-                        display: 'grid',
-                        gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))',
-                        gap: '1rem',
-                        padding: '1rem',
-                        border: '1px solid green',
-                        overflow: 'hidden'
-                    }}
-                >
-
-                </motion.div>
-            </motion.div>
+                </Demo>
+            </Layout>
         </Card >
     )
 }
