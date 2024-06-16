@@ -27,9 +27,9 @@ export function Context() {
 
     return (
         <Section>
-            <div className={styles.section__name}>
+            <Title>
                 <h1>Context Provider</h1>
-            </div>
+            </Title>
             <h1>isRichContent : {isRichContent ? 'true' : 'false'}</h1>
             <h1>isTouchDevice : {isTouchDevice ? 'true' : 'false'}</h1>
             <h1>
@@ -68,3 +68,11 @@ const Section = ({ children }) => {
         </section>
     )
 }
+
+const Title = ({ children }) => (
+    <div
+        className={styles.section__name}
+    >
+        {children}
+    </div>
+)
