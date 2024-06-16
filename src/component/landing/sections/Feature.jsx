@@ -205,6 +205,39 @@ const IntroCard = ({ }) => {
         </div>
     )
 
+    const AnimatedFoldingIcons = () => (
+        <motion.div
+            className={styles.folding}
+            variants={{
+                hide: { opacity: 0, scale: 1.25, rotateX: -75, rotateY: -25, top: '50%', left: '90%', translateX: '-90%', translateY: '-50%' },
+                introCardBox_show: { opacity: 1, scale: 1, rotateX: 0, rotateY: 0, transition: { type: 'spring', damping: 10, stiffness: 50 } }
+            }}
+        >
+            <FoldingIcons
+                contents={[
+                    { icon: <AiOutlinePlus style={{ display: 'block', verticalAlign: 'middle' }} />, color: 'var(--landing-copyInverse)', backgroundColor: '#74ff8d' },
+                    { icon: <AiOutlineDelete style={{ display: 'block', verticalAlign: 'middle' }} />, color: 'var(--landing-copyInverse)', backgroundColor: '#ff747d' },
+                    { icon: <AiOutlineLike style={{ display: 'block', verticalAlign: 'middle' }} />, color: 'var(--landing-copyInverse)', backgroundColor: '#ffd274' },
+                ]}
+                contentOptions={{
+                    fontSize: '3.25rem',
+                }}
+                dividerOptions={{
+                    height: '1.5px'
+                }}
+                animationOptions={{
+                    type: 'stateChanges',
+                }}
+                stateChangesOptions={{
+                    useParentState: true,
+                    parentStateValue: animateState,
+                    parentStateSetter: setAnimateState,
+                    autoUpdateParentState: true,
+                }}
+            />
+        </motion.div>
+    )
+
     const Description = ({ children }) => (
         <motion.div
             className={styles.description}
@@ -280,39 +313,7 @@ const IntroCard = ({ }) => {
                             style={{ fontWeight: '600', zIndex: 4, margin: '.5rem 0 0 2rem' }}
                         />
 
-                        <motion.div
-                            style={{
-                                position: 'absolute',
-                                transformOrigin: '200% -200%'
-                            }}
-                            variants={{
-                                hide: { opacity: 0, scale: 1.25, rotateX: -75, rotateY: -25, top: '50%', left: '90%', translateX: '-90%', translateY: '-50%' },
-                                introCardBox_show: { opacity: 1, scale: 1, rotateX: 0, rotateY: 0, transition: { type: 'spring', damping: 10, stiffness: 50 } }
-                            }}
-                        >
-                            <FoldingIcons
-                                contents={[
-                                    { icon: <AiOutlinePlus style={{ display: 'block', verticalAlign: 'middle' }} />, color: 'var(--landing-copyInverse)', backgroundColor: '#74ff8d' },
-                                    { icon: <AiOutlineDelete style={{ display: 'block', verticalAlign: 'middle' }} />, color: 'var(--landing-copyInverse)', backgroundColor: '#ff747d' },
-                                    { icon: <AiOutlineLike style={{ display: 'block', verticalAlign: 'middle' }} />, color: 'var(--landing-copyInverse)', backgroundColor: '#ffd274' },
-                                ]}
-                                contentOptions={{
-                                    fontSize: '3.25rem',
-                                }}
-                                dividerOptions={{
-                                    height: '1.5px'
-                                }}
-                                animationOptions={{
-                                    type: 'stateChanges',
-                                }}
-                                stateChangesOptions={{
-                                    useParentState: true,
-                                    parentStateValue: animateState,
-                                    parentStateSetter: setAnimateState,
-                                    autoUpdateParentState: true,
-                                }}
-                            />
-                        </motion.div>
+                        <AnimatedFoldingIcons />
                     </Box>
 
                     <Description>
