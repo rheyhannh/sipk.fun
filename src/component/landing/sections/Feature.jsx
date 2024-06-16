@@ -2,22 +2,16 @@
 
 // #region TYPE DEPEDENCY
 import * as ContextTypes from '@/types/context.js'
-import { HTMLProps, CSSProperties } from 'react';
-import { MotionProps, Variants } from 'framer-motion';
 // #endregion
 
 // #region REACT DEPEDENCY
-import { useContext, useRef, useState, useEffect } from 'react';
+import { useContext, useRef } from 'react';
 // #endregion
 
 // #region COMPONENT DEPEDENCY
 import { LandingContext } from '@/component/provider/Landing';
-import { motion, useTransform, useScroll, useAnimationControls, useAnimation, useAnimate } from "framer-motion";
-import FoldingIcons from '@/component/motion/FoldingIcons';
-// #endregion
-
-// #region ICON DEPEDENCY
-import { AiOutlineQuestion, AiOutlineDelete, AiOutlinePlus, AiOutlineLike } from "react-icons/ai";
+import { motion, useTransform, useScroll } from "framer-motion";
+import TambahHapus from '../cards/TambahHapus';
 // #endregion
 
 // #region STYLE DEPEDENCY
