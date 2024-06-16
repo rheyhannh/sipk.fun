@@ -41,54 +41,6 @@
     background: var(--landing-body);
 }
 
-.section.feature {
-    display: initial;
-    flex-direction: initial;
-    justify-content: initial;
-    align-items: initial;
-    /* background: salmon; */
-}
-
-.section.feature .card_container {
-    position: sticky;
-    top: 0;
-    display: flex;
-    align-items: center;
-    height: 100vh;
-    overflow: hidden;
-    /* background: aquamarine; */
-}
-
-.section.feature .card_wrapper {
-    display: flex;
-    gap: 2.5rem;
-}
-
-.section.feature .card {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    position: relative;
-    height: 100vh;
-    width: 100vw;
-    overflow: hidden;
-    color: var(--landing-copy);
-}
-
-.animated__text_box:before {
-    background-color: var(--landing-body);
-    border-radius: .5rem;
-    content: "";
-    height: 100%;
-    left: .925rem;
-    position: absolute;
-    top: .925rem;
-    width: 100%;
-    opacity: 0.4;
-    z-index: 1;
-}
-
 .section.landing {
     display: initial;
     position: relative;
