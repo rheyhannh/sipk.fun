@@ -164,6 +164,53 @@ const Card = (
     )
 }
 
+const AnimatedTextBox = (
+    {
+        text = 'Lorem ipsum',
+        fontSize = '1rem',
+        color = 'var(--dark-color)',
+        borderRadius = `calc(0.25 * ${fontSize})`,
+        padding = `calc(0.25 * ${fontSize})`,
+        background = 'none',
+        useBoxShadow = true,
+        enterAnimation = 'throwDown',
+        customEnterAnimation = { hide: { opacity: 0 }, show: { opacity: 1 } },
+        style = {},
+        otherProps = {}
+    }
+) => {
+    const variants = enterAnimation === 'custom' ? { ...customEnterAnimation } : getCommonAnimationVariants(enterAnimation);
+
+    return (
+        <motion.div
+            className={useBoxShadow ? styles.animated__text_box : ''}
+            style={{
+                position: 'relative',
+                width: 'max-content',
+                height: 'max-content',
+                borderRadius,
+                ...style
+            }}
+            variants={variants}
+            {...otherProps}
+        >
+            <motion.span
+                style={{
+                    position: 'relative',
+                    zIndex: 2,
+                    fontSize,
+                    color,
+                    borderRadius,
+                    padding,
+                    background,
+                }}
+            >
+                {text}
+            </motion.span>
+        </motion.div>
+    )
+}
+
 /**
  * @typedef CommonAnimationName
  * @type {'default' | 'flyUp' | 'flyDown'| 'slideLeft'| 'slideRight'| 'throwUp'| 'throwDown'| 'scaleFromSmall'| 'scaleFromBig' | 'diagonalUpLeft' | 'diagonalUpRight' | 'diagonalDownLeft' | 'diagonalDownRight'}
