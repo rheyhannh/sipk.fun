@@ -13,6 +13,7 @@ import { useContext, useRef, useState, useEffect } from 'react';
 // #region COMPONENT DEPEDENCY
 import { LandingContext } from '@/component/provider/Landing';
 import { motion, useTransform, useScroll, useAnimationControls, useAnimation, useAnimate } from "framer-motion";
+import FoldingIcons from '@/component/motion/FoldingIcons';
 // #endregion
 
 // #region ICON DEPEDENCY
