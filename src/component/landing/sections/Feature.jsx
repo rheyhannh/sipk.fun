@@ -21,7 +21,7 @@ import { AiOutlineQuestion, AiOutlineDelete, AiOutlinePlus, AiOutlineLike } from
 // #endregion
 
 // #region STYLE DEPEDENCY
-import styles from '../style/landing.module.css'
+import styles from '../style/feature.module.css'
 // #endregion
 
 /**
