@@ -14,7 +14,7 @@ import toast from 'react-hot-toast';
 // #endregion
 
 // #region STYLE DEPEDENCY
-import styles from '../style/landing.module.css'
+import styles from '../style/context.module.css'
 // #endregion
 
 /**
