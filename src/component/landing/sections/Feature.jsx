@@ -64,7 +64,7 @@ const Section = ({ children, sectionRef }) => {
             ref={sectionRef}
             id={'feature'}
             style={{ height: `500vh` }}
-            className={`${styles.section} ${styles.feature}`}
+            className={styles.section}
         >
             {children}
         </section>
@@ -74,13 +74,8 @@ const Section = ({ children, sectionRef }) => {
 const Wrapper = ({ children }) => {
     return (
         <div
+            className={styles.wrapper}
             style={{
-                position: 'sticky',
-                top: '0',
-                display: 'flex',
-                alignItems: 'center',
-                height: '100vh',
-                overflow: 'hidden',
                 // background: 'aquamarine',
             }}
         >
@@ -92,12 +87,8 @@ const Wrapper = ({ children }) => {
 const Cards = ({ children, animateX: x }) => {
     return (
         <motion.div
-            style={{
-                x,
-                display: 'flex',
-                gap: '2.5rem',
-            }}
-
+            className={styles.cards}
+            style={{ x }}
         >
             {children}
         </motion.div>
@@ -115,13 +106,7 @@ const Card = (
         ...props
     }) => {
     const defaultStyle = {
-        position: 'relative',
-        height: '100vh',
-        width: '100vw',
-        overflow: 'hidden',
-        color: 'var(--dark-color)',
         border: '2.5px solid pink',
-        padding: 'calc(72px + 2rem) 2rem 2rem 2rem',
     }
 
     const DefaultElement = () => (
@@ -154,6 +139,7 @@ const Card = (
 
     return (
         <div
+            className={styles.card}
             style={{
                 ...defaultStyle,
                 ...style
