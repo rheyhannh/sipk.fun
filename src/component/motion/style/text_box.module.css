@@ -1,0 +1,23 @@
+.container {
+    position: relative;
+    width: max-content;
+    height: max-content;
+}
+
+.container.shadow:before {
+    background-color: var(--landing-body);
+    border-radius: .5rem;
+    content: "";
+    height: 100%;
+    left: .925rem;
+    position: absolute;
+    top: .925rem;
+    width: 100%;
+    opacity: 0.4;
+    z-index: 1;
+}
+
+.container .content {
+    position: relative;
+    z-index: 2;
+}
