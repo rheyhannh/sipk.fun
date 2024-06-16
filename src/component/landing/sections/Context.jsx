@@ -30,30 +30,32 @@ export function Context() {
             <Title>
                 <h1>Context Provider</h1>
             </Title>
-            <h1>isRichContent : {isRichContent ? 'true' : 'false'}</h1>
-            <h1>isTouchDevice : {isTouchDevice ? 'true' : 'false'}</h1>
-            <h1>
-                <a href={isAccessTokenExist ? '/dashboard' : '/users'} target={'_blank'}>
-                    {isAccessTokenExist ? 'Dashboard' : 'Login atau Daftar'}
-                </a>
-            </h1>
-            <h1>Toast Notification</h1>
-            <h1>
-                <span onClick={() => { toast.success('Lorem ipsum dolor sit amet.', { position: 'top-left', duration: 2500 }); }}>Success</span> |
-                <span onClick={() => { toast.error('Lorem ipsum dolor sit amet.', { position: 'top-left', duration: 2500 }); }}> Error</span> |
-                <span onClick={() => { toast.loading('Lorem ipsum dolor sit amet.', { position: 'top-left', duration: 5000 }); }}> Loading</span>
-            </h1>
-            <h1>Log Data Deps From Context</h1>
-            <h1>
-                <span onClick={() => { console.log('Universitas data deps'); console.log(data.universitas); }}> Universitas</span> |
-                <span onClick={() => { console.log('Rating data deps'); console.log(data.rating); }}> Rating</span> |
-                <span onClick={() => { console.log('Blog data deps'); console.log(data.notifikasi); }}> Blog/Notification</span>
-            </h1>
-            <h1>Users Viewport</h1>
-            <h1>
-                <span>Width: {window.innerWidth}px | </span>
-                <span>Height : {window.innerHeight}px</span>
-            </h1>
+            <Content>
+                <h1>isRichContent : {isRichContent ? 'true' : 'false'}</h1>
+                <h1>isTouchDevice : {isTouchDevice ? 'true' : 'false'}</h1>
+                <h1>
+                    <a href={isAccessTokenExist ? '/dashboard' : '/users'} target={'_blank'}>
+                        {isAccessTokenExist ? 'Dashboard' : 'Login atau Daftar'}
+                    </a>
+                </h1>
+                <h1>Toast Notification</h1>
+                <h1>
+                    <span onClick={() => { toast.success('Lorem ipsum dolor sit amet.', { position: 'top-left', duration: 2500 }); }}>Success</span> |
+                    <span onClick={() => { toast.error('Lorem ipsum dolor sit amet.', { position: 'top-left', duration: 2500 }); }}> Error</span> |
+                    <span onClick={() => { toast.loading('Lorem ipsum dolor sit amet.', { position: 'top-left', duration: 5000 }); }}> Loading</span>
+                </h1>
+                <h1>Log Data Deps From Context</h1>
+                <h1>
+                    <span onClick={() => { console.log('Universitas data deps'); console.log(data.universitas); }}> Universitas</span> |
+                    <span onClick={() => { console.log('Rating data deps'); console.log(data.rating); }}> Rating</span> |
+                    <span onClick={() => { console.log('Blog data deps'); console.log(data.notifikasi); }}> Blog/Notification</span>
+                </h1>
+                <h1>Users Viewport</h1>
+                <h1>
+                    <span>Width: {window.innerWidth}px | </span>
+                    <span>Height : {window.innerHeight}px</span>
+                </h1>
+            </Content>
         </Section>
     )
 }
@@ -72,6 +74,14 @@ const Section = ({ children }) => {
 const Title = ({ children }) => (
     <div
         className={styles.section__name}
+    >
+        {children}
+    </div>
+)
+
+const Content = ({ children }) => (
+    <div
+        className={styles.content}
     >
         {children}
     </div>
