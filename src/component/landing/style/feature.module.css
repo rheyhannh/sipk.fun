@@ -28,6 +28,43 @@
     padding: calc(72px + 2rem) 2rem 2rem 2rem;
 }
 
+.card .tambah_hapus {
+    position: relative;
+    overflow: hidden;
+    height: 100%;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 500px 1fr;
+    gap: 1rem;
+}
+
+.card .tambah_hapus .highlight {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: .5rem;
+}
+
+.card .tambah_hapus .highlight .box {
+    position: relative;
+    height: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 1rem;
+}
+
+.card .tambah_hapus .highlight .description {
+    padding: .5rem;
+}
+
+.card .tambah_hapus .demo {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1rem;
+    padding: 1rem;
+}
+
 .animated__text_box:before {
     background-color: var(--landing-body);
     border-radius: .5rem;
