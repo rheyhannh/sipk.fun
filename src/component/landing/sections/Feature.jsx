@@ -164,6 +164,22 @@ const Card = (
     )
 }
 
+/**
+ * @typedef CommonAnimationName
+ * @type {'default' | 'flyUp' | 'flyDown'| 'slideLeft'| 'slideRight'| 'throwUp'| 'throwDown'| 'scaleFromSmall'| 'scaleFromBig' | 'diagonalUpLeft' | 'diagonalUpRight' | 'diagonalDownLeft' | 'diagonalDownRight'}
+ */
+
+/**
+ * Method untuk mendapatkan `variants` yang digunakan pada component `motion` dengan tipe animasi tertentu.
+ * 
+ * Jika tipe animasi tidak tersedia, maka akan return animasi default sebagai berikut,
+ * ```js
+ * const hide = { opacity: 0 };
+ * const show = { opacity: 1 };
+ * ```
+ * @param {CommonAnimationName} type Tipe animasi yang digunakan
+ * @returns {{hide:CSSProperties, show:CSSProperties}} Object dengan key `hide` sebagai initial styles dan `show` sebagai animated styles
+ */
 const getCommonAnimationVariants = (
     type
 ) => {
