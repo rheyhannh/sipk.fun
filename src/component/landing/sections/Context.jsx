@@ -26,7 +26,7 @@ export function Context() {
     const { isRichContent, isTouchDevice, isAccessTokenExist, data } = useContext(LandingContext);
 
     return (
-        <section className={`${styles.section} ${styles.context}`} id={'context'}>
+        <Section>
             <div className={styles.section__name}>
                 <h1>Context Provider</h1>
             </div>
@@ -54,6 +54,17 @@ export function Context() {
                 <span>Width: {window.innerWidth}px | </span>
                 <span>Height : {window.innerHeight}px</span>
             </h1>
+        </Section>
+    )
+}
+
+const Section = ({ children }) => {
+    return (
+        <section
+            id={`context-${crypto.randomUUID()}`}
+            className={styles.section}
+        >
+            {children}
         </section>
     )
 }
