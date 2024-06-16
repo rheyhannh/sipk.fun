@@ -54,6 +54,11 @@
     padding: 1rem;
 }
 
+.card .tambah_hapus .highlight .box .folding {
+    position: absolute;
+    transform-origin: 200% -200%;
+}
+
 .card .tambah_hapus .highlight .description {
     padding: .5rem;
 }
