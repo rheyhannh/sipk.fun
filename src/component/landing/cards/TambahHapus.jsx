@@ -189,7 +189,7 @@ const AnimatedFoldingIcons = ({ setFoldingCurrentIndex }) => {
         <motion.div
             className={styles.folding}
             variants={{
-                hide: { opacity: 0, scale: 1.25, rotateX: -75, rotateY: -25, top: '50%', left: '90%', translateX: '-90%', translateY: '-50%' },
+                hide: { opacity: 0, scale: 1.5, rotateX: -75, rotateY: -25, top: '50%', left: '90%', translateX: '-90%', translateY: '-50%' },
                 introCardBox_show: { opacity: 1, scale: 1, rotateX: 0, rotateY: 0, transition: { type: 'spring', damping: 10, stiffness: 50 } }
             }}
         >
