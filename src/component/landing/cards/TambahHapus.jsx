@@ -1,5 +1,5 @@
 // #region REACT DEPEDENCY
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 // #endregion
 
 // #region COMPONENT DEPEDENCY
