@@ -38,8 +38,8 @@ const TambahHapus = () => {
                             customEnterAnimation={{
                                 hide: { opacity: 0, rotateY: -25, rotateX: -75, scale: 0.75 },
                                 introCardBox_show: { opacity: 1, rotateY: 0, rotateX: 0, scale: 1, transition: { type: 'spring', damping: 9, stiffness: 100 } },
-                                introCardBox_tambah_unhighlight: { opacity: 1, y: 0, x: 0, scale: 1, transition: { type: 'spring', damping: 8, stiffness: 100, delay: 0 } },
-                                introCardBox_tambah_highlight: { scale: 1.25, transition: { type: 'spring', damping: 8, stiffness: 100, delay: 0 } }
+                                introCardBox_tambah_unhighlight: { opacity: 1, y: 0, x: 0, scale: 1, zIndex: 6, transition: { type: 'spring', damping: 8, stiffness: 100, delay: 0 } },
+                                introCardBox_tambah_highlight: { scale: 1.15, zIndex: 10, transition: { type: 'spring', damping: 8, stiffness: 100, delay: 0 } }
                             }}
                             style={{ fontWeight: '600', zIndex: 6, transformOrigin: 'bottom left 1.5rem' }}
                         />
@@ -53,8 +53,8 @@ const TambahHapus = () => {
                             customEnterAnimation={{
                                 hide: { opacity: 0, y: (-75 / 2), x: (-75 / 2), scale: 0.25 },
                                 introCardBox_show: { opacity: 1, y: 0, x: 0, scale: 1, transition: { type: 'spring', damping: 8, stiffness: 100 } },
-                                introCardBox_hapus_unhighlight: { opacity: 1, y: 0, x: 0, scale: 1, transition: { type: 'spring', damping: 8, stiffness: 100, delay: 0 } },
-                                introCardBox_hapus_highlight: { scale: 1.25, transition: { type: 'spring', damping: 8, stiffness: 100, delay: 0 } }
+                                introCardBox_hapus_unhighlight: { opacity: 1, y: 0, x: 0, scale: 1, zIndex: 5, transition: { type: 'spring', damping: 8, stiffness: 100, delay: 0 } },
+                                introCardBox_hapus_highlight: { scale: 1.15, zIndex: 10, transition: { type: 'spring', damping: 8, stiffness: 100, delay: 0 } }
                             }}
                             style={{ fontWeight: '600', zIndex: 5, margin: '.5rem 0 0 1rem' }}
                         />
@@ -68,8 +68,8 @@ const TambahHapus = () => {
                             customEnterAnimation={{
                                 hide: { opacity: 0, y: (-75 / 3), x: (-75 / 3), scale: 0.5 },
                                 introCardBox_show: { opacity: 1, y: 0, x: 0, scale: 1, transition: { type: 'spring', damping: 7, stiffness: 100 } },
-                                introCardBox_apapun_unhighlight: { opacity: 1, y: 0, x: 0, scale: 1, transition: { type: 'spring', damping: 8, stiffness: 100, delay: 0 } },
-                                introCardBox_apapun_highlight: { scale: 1.25, transition: { type: 'spring', damping: 8, stiffness: 100, delay: 0 } }
+                                introCardBox_apapun_unhighlight: { opacity: 1, y: 0, x: 0, scale: 1, zIndex: 4, transition: { type: 'spring', damping: 8, stiffness: 100, delay: 0 } },
+                                introCardBox_apapun_highlight: { scale: 1.15, zIndex: 10, transition: { type: 'spring', damping: 8, stiffness: 100, delay: 0 } }
                             }}
                             style={{ fontWeight: '600', zIndex: 4, margin: '.5rem 0 0 2rem' }}
                         />
