@@ -206,15 +206,14 @@ const AnimatedFoldingIcons = ({ setFoldingCurrentIndex }) => {
                     height: '1.5px'
                 }}
                 animationOptions={{
+                    type: 'repeat',
                     onStart: (nextContentIndex) => {
                         setFoldingCurrentIndex(nextContentIndex);
                     },
                 }}
-                stateChangesOptions={{
-                    useParentState: true,
-                    parentStateValue: animateState,
-                    parentStateSetter: setAnimateState,
-                    autoUpdateParentState: true,
+                repeatOptions={{
+                    interval: 5,
+                    delay: 10,
                 }}
             />
         </motion.div>
