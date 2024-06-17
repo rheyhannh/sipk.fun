@@ -23,6 +23,7 @@ import styles from '../style/feature.module.css';
 
 const TambahHapus = () => {
     const descriptionArray = ["Kamu", "bebas", "tambah", "dan", "hapus", "matakuliah", "kamu", "secara", "dinamis.", "Gausah", "binggung", "IPK", "kamu", "jadi", "berapa,", "biar", "SIPK", "yang", "hitungin", "itu", "semua", "buat kamu."];
+    const [foldingCurrentIndex, setFoldingCurrentIndex] = useState(null);
 
     return (
         <Wrapper>
