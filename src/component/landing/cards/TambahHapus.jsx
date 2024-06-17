@@ -75,7 +75,7 @@ const TambahHapus = () => {
                             style={{ fontWeight: '600', zIndex: 4, margin: '.5rem 0 0 2rem' }}
                         />
 
-                        <AnimatedFoldingIcons />
+                        <AnimatedFoldingIcons setFoldingCurrentIndex={setFoldingCurrentIndex} />
                     </Box>
 
                     <Description>
@@ -182,7 +182,7 @@ const Box = ({ children }) => (
     </div>
 )
 
-const AnimatedFoldingIcons = () => {
+const AnimatedFoldingIcons = ({ setFoldingCurrentIndex }) => {
     const [animateState, setAnimateState] = useState(false);
 
     return (
@@ -206,7 +206,9 @@ const AnimatedFoldingIcons = () => {
                     height: '1.5px'
                 }}
                 animationOptions={{
-                    type: 'stateChanges',
+                    onStart: (nextContentIndex) => {
+                        setFoldingCurrentIndex(nextContentIndex);
+                    },
                 }}
                 stateChangesOptions={{
                     useParentState: true,
