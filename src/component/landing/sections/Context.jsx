@@ -24,6 +24,7 @@ import styles from '../style/context.module.css'
 export function Context() {
     /** @type {ContextTypes.LandingContext} */
     const { isRichContent, isTouchDevice, isAccessTokenExist, data } = useContext(LandingContext);
+    const size = useWindowSize();
 
     return (
         <Section>
@@ -52,8 +53,8 @@ export function Context() {
                 </h1>
                 <h1>Users Viewport</h1>
                 <h1>
-                    <span>Width: {window.innerWidth}px | </span>
-                    <span>Height : {window.innerHeight}px</span>
+                    <span>Width: {size.width}px | </span>
+                    <span>Height : {size.height}px</span>
                 </h1>
             </Content>
         </Section>
