@@ -27,7 +27,7 @@ const TambahHapus = () => {
 
     return (
         <Wrapper>
-            <Layout>
+            <Layout foldingCurrentIndex={foldingCurrentIndex}>
                 <Highlight>
                     <Box>
                         <AnimatedTextBox
@@ -130,8 +130,21 @@ const Wrapper = ({ children }) => (
     </div>
 )
 
-const Layout = ({ children }) => {
+const Layout = ({ children, foldingCurrentIndex }) => {
     const animControls = useAnimation();
+
+    useEffect(() => {
+        if (foldingCurrentIndex === 0) {
+            animControls.start('introCardBox_apapun_unhighlight');
+            animControls.start('introCardBox_tambah_highlight');
+        } else if (foldingCurrentIndex === 1) {
+            animControls.start('introCardBox_tambah_unhighlight');
+            animControls.start('introCardBox_hapus_highlight');
+        } else if (foldingCurrentIndex === 2) {
+            animControls.start('introCardBox_hapus_unhighlight');
+            animControls.start('introCardBox_apapun_highlight');
+        }
+    }, [foldingCurrentIndex])
 
     return (
         <motion.div
