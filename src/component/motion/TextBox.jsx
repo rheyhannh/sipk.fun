@@ -51,9 +51,9 @@ const TextBox = (
         text = 'Lorem ipsum',
         useBoxShadow = true,
         enterAnimation = 'throwDown',
-        customEnterAnimation = { hide: { opacity: 0 }, show: { opacity: 1 } },
-        style = {},
-        otherProps = {}
+        customEnterAnimation,
+        style,
+        otherProps
     }
 ) => {
     const variants = enterAnimation === 'custom' ? { ...customEnterAnimation } : getCommonAnimationVariants(enterAnimation);
