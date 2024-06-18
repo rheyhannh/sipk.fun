@@ -65,22 +65,12 @@ const TextBox = (
     return (
         <motion.div
             className={`${styles.container} ${useBoxShadow ? styles.shadow : ''}`}
-            style={{
-                borderRadius,
-                ...style
-            }}
+            style={style}
             variants={variants}
             {...otherProps}
         >
             <motion.span
-                className={styles.content}
-                style={{
-                    fontSize,
-                    color,
-                    borderRadius,
-                    padding,
-                    background,
-                }}
+                className={otherProps.className ? null : styles.content}
             >
                 {text}
             </motion.span>
