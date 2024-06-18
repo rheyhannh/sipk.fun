@@ -3,7 +3,7 @@
     width: max-content;
     height: max-content;
     font-size: 1rem;
-    color: var(--dark-color);
+    color: #edeffd;
     border-radius: calc(0.25 * 1rem);
     padding: calc(0.25 * 1rem);
 }
