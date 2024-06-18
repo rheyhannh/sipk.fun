@@ -26,10 +26,9 @@ import styles from './style/text_box.module.css'
  * @param {MotionTypes.CommonAnimationName | 'custom'} [props.enterAnimation] 
  * Animasi yang digunakan. Jika menggunakan `'custom'`, silahkan pass props `customEnterAnimation`
  * - Default : `'throwDown'`
- * @param {Variants} [props.customEnterAnimation] Object yang berisikan key `hide` yang merupakan initial styles dan `show` yang merupakan animated styles yang diterapkan
- * - Default : `{ hide: { opacity: 0 }, show: { opacity: 1 } }`
- * @param {CSSProperties} [props.style] Object yang berisikan style yang digunakan.
- * Secara default menggunakan style sebagai berikut,
+ * @param {Variants} props.customEnterAnimation Object yang berisikan `variants` animasi yang digunakan
+ * @param {CSSProperties} props.style Object yang berisikan style yang digunakan.
+ * Secara default menggunakan style `.container` dari module `text_box.module.css` sebagai berikut,
  * ```js
  * const style = {};
  * style.position = 'relative';
@@ -41,9 +40,8 @@ import styles from './style/text_box.module.css'
  * style.padding = 'calc(0.25 * 1rem)';
  * style.backgroundColor = 'var(--logo-second-color)';
  * ```
- * @param {HTMLProps | MotionProps} [props.otherProps] Object yang berisikan props lainnya yang digunakan
+ * @param {HTMLProps | MotionProps} props.otherProps Object yang berisikan props lainnya yang digunakan
  * - Note : Props `motion` seperti `animate`, `transition` dan lainnya dapat digunakan
- * - Default : `{}`
  * @returns 
  */
 const TextBox = (
