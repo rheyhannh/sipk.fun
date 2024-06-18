@@ -48,11 +48,6 @@ import styles from './style/text_box.module.css'
 const TextBox = (
     {
         text = 'Lorem ipsum',
-        fontSize = '1rem',
-        color = 'var(--dark-color)',
-        borderRadius = `calc(0.25 * ${fontSize})`,
-        padding = `calc(0.25 * ${fontSize})`,
-        background = 'none',
         useBoxShadow = true,
         enterAnimation = 'throwDown',
         customEnterAnimation = { hide: { opacity: 0 }, show: { opacity: 1 } },
