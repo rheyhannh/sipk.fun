@@ -14,6 +14,8 @@ import { getCommonAnimationVariants } from '@/component/motion/_helper';
 
 // #region ICON DEPEDENCY
 import { AiOutlineDelete, AiOutlinePlus, AiOutlineLike } from "react-icons/ai";
+import { CiTrash } from "react-icons/ci";
+import { IoAddOutline } from "react-icons/io5";
 // #endregion
 
 // #region STYLE DEPEDENCY
