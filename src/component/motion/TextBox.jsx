@@ -66,7 +66,7 @@ const TextBox = (
         >
             <motion.span
                 className={isContainerCustomClass ? null : styles.content}
-                style={{ background: style?.background ?? style?.backgroundColor ?? '#FF6341' }}
+                style={{ background: isContainerCustomClass ? null : style?.background ?? style?.backgroundColor ?? '#FF6341' }}
             >
                 {text}
             </motion.span>
