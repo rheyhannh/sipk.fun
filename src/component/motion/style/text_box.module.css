@@ -11,7 +11,7 @@
 
 .container.shadow:before {
     background-color: var(--landing-body);
-    border-radius: .5rem;
+    border-radius: inherit;
     content: "";
     height: 100%;
     left: .925rem;
