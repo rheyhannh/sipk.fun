@@ -34,9 +34,6 @@ const TambahHapus = () => {
                     <Box>
                         <AnimatedTextBox
                             text='Tambah Matakuliah'
-                            fontSize='1.2rem'
-                            color='var(--landing-copyInverse)'
-                            background='#74ff8d'
                             enterAnimation='custom'
                             customEnterAnimation={{
                                 hide: { opacity: 0, rotateY: -25, rotateX: -75, scale: 0.75 },
@@ -44,14 +41,13 @@ const TambahHapus = () => {
                                 introCardBox_tambah_unhighlight: { opacity: 1, y: 0, x: 0, scale: 1, zIndex: 6, transition: { type: 'spring', damping: 8, stiffness: 100, delay: 0 } },
                                 introCardBox_tambah_highlight: { scale: 1.15, zIndex: 10, transition: { type: 'spring', damping: 8, stiffness: 100, delay: 0 } }
                             }}
-                            style={{ fontWeight: '600', zIndex: 6, transformOrigin: 'bottom left 1.5rem' }}
+                            otherProps={{
+                                className: `${styles.text_box} ${styles.tambah}`
+                            }}
                         />
 
                         <AnimatedTextBox
                             text='Hapus Matakuliah'
-                            fontSize='1.35rem'
-                            color='var(--landing-copyInverse)'
-                            background='#ff747d'
                             enterAnimation='custom'
                             customEnterAnimation={{
                                 hide: { opacity: 0, y: (-75 / 2), x: (-75 / 2), scale: 0.25 },
@@ -59,14 +55,13 @@ const TambahHapus = () => {
                                 introCardBox_hapus_unhighlight: { opacity: 1, y: 0, x: 0, scale: 1, zIndex: 5, transition: { type: 'spring', damping: 8, stiffness: 100, delay: 0 } },
                                 introCardBox_hapus_highlight: { scale: 1.15, zIndex: 10, transition: { type: 'spring', damping: 8, stiffness: 100, delay: 0 } }
                             }}
-                            style={{ fontWeight: '600', zIndex: 5, margin: '.5rem 0 0 1rem' }}
+                            otherProps={{
+                                className: `${styles.text_box} ${styles.hapus}`
+                            }}
                         />
 
                         <AnimatedTextBox
                             text='Apapun Sesukamu'
-                            fontSize='1.5rem'
-                            color='var(--landing-copyInverse)'
-                            background='#ffd274'
                             enterAnimation='custom'
                             customEnterAnimation={{
                                 hide: { opacity: 0, y: (-75 / 3), x: (-75 / 3), scale: 0.5 },
@@ -74,7 +69,9 @@ const TambahHapus = () => {
                                 introCardBox_apapun_unhighlight: { opacity: 1, y: 0, x: 0, scale: 1, zIndex: 4, transition: { type: 'spring', damping: 8, stiffness: 100, delay: 0 } },
                                 introCardBox_apapun_highlight: { scale: 1.15, zIndex: 10, transition: { type: 'spring', damping: 8, stiffness: 100, delay: 0 } }
                             }}
-                            style={{ fontWeight: '600', zIndex: 4, margin: '.5rem 0 0 2rem' }}
+                            otherProps={{
+                                className: `${styles.text_box} ${styles.apapun}`
+                            }}
                         />
 
                         <AnimatedFoldingIcons setFoldingCurrentIndex={setFoldingCurrentIndex} />
