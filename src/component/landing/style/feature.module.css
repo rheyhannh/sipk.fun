@@ -63,8 +63,13 @@
 }
 
 .card .tambah_hapus .demo {
+    padding: 2rem;
+    overflow: hidden;
+    opacity: 1
+}
+
+.card .tambah_hapus .demo .grid_container {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 1rem;
-    padding: 1rem;
+    grid-template-columns: repeat(auto-fill, minmax(225px, 1fr));
+    gap: 1.25rem;
 }
