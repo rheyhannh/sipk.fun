@@ -259,4 +259,357 @@ const Demo = ({ children }) => (
     </motion.div>
 )
 
+const MATKULDUMMIES = [
+    {
+        "type": "hapus",
+        "nama": "incididunt aute",
+        "date": "Fri May 07 2021 08:27:35 GMT+0700 (Waktu Indonesia Barat)",
+        "nilai": "B+",
+        "sks": 2
+    },
+    {
+        "type": "hapus",
+        "nama": "nisi in",
+        "date": "Sun May 25 2014 22:21:03 GMT+0700 (Waktu Indonesia Barat)",
+        "nilai": "B+",
+        "sks": 1
+    },
+    {
+        "type": "tambah",
+        "nama": "aute laborum",
+        "date": "Wed Nov 01 2023 12:15:47 GMT+0700 (Waktu Indonesia Barat)",
+        "nilai": "C",
+        "sks": 4
+    },
+    {
+        "type": "hapus",
+        "nama": "velit magna",
+        "date": "Sun Oct 26 2014 00:25:09 GMT+0700 (Waktu Indonesia Barat)",
+        "nilai": "B",
+        "sks": 2
+    },
+    {
+        "type": "tambah",
+        "nama": "enim commodo",
+        "date": "Fri Dec 03 2021 12:32:13 GMT+0700 (Waktu Indonesia Barat)",
+        "nilai": "E",
+        "sks": 4
+    },
+    {
+        "type": "tambah",
+        "nama": "magna consectetur",
+        "date": "Fri Nov 19 2021 04:35:27 GMT+0700 (Waktu Indonesia Barat)",
+        "nilai": "E",
+        "sks": 1
+    },
+    {
+        "type": "tambah",
+        "nama": "dolor eu",
+        "date": "Sun Sep 20 2020 20:10:33 GMT+0700 (Waktu Indonesia Barat)",
+        "nilai": "C",
+        "sks": 2
+    },
+    {
+        "type": "tambah",
+        "nama": "fugiat esse",
+        "date": "Fri Mar 15 2024 03:25:27 GMT+0700 (Waktu Indonesia Barat)",
+        "nilai": "C",
+        "sks": 3
+    },
+    {
+        "type": "hapus",
+        "nama": "culpa ex",
+        "date": "Mon Feb 01 2021 23:41:59 GMT+0700 (Waktu Indonesia Barat)",
+        "nilai": "E",
+        "sks": 2
+    },
+    {
+        "type": "hapus",
+        "nama": "ex nisi",
+        "date": "Thu Mar 26 2020 19:22:50 GMT+0700 (Waktu Indonesia Barat)",
+        "nilai": "C+",
+        "sks": 4
+    },
+    {
+        "type": "tambah",
+        "nama": "in qui",
+        "date": "Wed Feb 01 2023 07:21:18 GMT+0700 (Waktu Indonesia Barat)",
+        "nilai": "A",
+        "sks": 3
+    },
+    {
+        "type": "tambah",
+        "nama": "aute id",
+        "date": "Sun Nov 27 2022 20:09:25 GMT+0700 (Waktu Indonesia Barat)",
+        "nilai": "C",
+        "sks": 1
+    },
+    {
+        "type": "tambah",
+        "nama": "ut enim",
+        "date": "Wed Mar 03 2021 18:29:26 GMT+0700 (Waktu Indonesia Barat)",
+        "nilai": "B",
+        "sks": 4
+    },
+    {
+        "type": "hapus",
+        "nama": "dolor fugiat",
+        "date": "Thu Jan 22 2015 14:04:51 GMT+0700 (Waktu Indonesia Barat)",
+        "nilai": "E",
+        "sks": 3
+    },
+    {
+        "type": "tambah",
+        "nama": "voluptate exercitation",
+        "date": "Sat Sep 27 2014 17:38:50 GMT+0700 (Waktu Indonesia Barat)",
+        "nilai": "B+",
+        "sks": 1
+    },
+    {
+        "type": "hapus",
+        "nama": "dolor eu",
+        "date": "Fri Feb 03 2017 17:56:22 GMT+0700 (Waktu Indonesia Barat)",
+        "nilai": "C+",
+        "sks": 1
+    },
+    {
+        "type": "tambah",
+        "nama": "do qui",
+        "date": "Fri Sep 06 2019 00:42:16 GMT+0700 (Waktu Indonesia Barat)",
+        "nilai": "D+",
+        "sks": 3
+    },
+    {
+        "type": "tambah",
+        "nama": "proident tempor",
+        "date": "Fri Jan 19 2024 14:37:33 GMT+0700 (Waktu Indonesia Barat)",
+        "nilai": "D",
+        "sks": 3
+    },
+    {
+        "type": "hapus",
+        "nama": "eiusmod laborum",
+        "date": "Sat Apr 02 2022 23:22:28 GMT+0700 (Waktu Indonesia Barat)",
+        "nilai": "B+",
+        "sks": 1
+    },
+    {
+        "type": "tambah",
+        "nama": "ut sunt",
+        "date": "Sat Apr 18 2015 11:30:35 GMT+0700 (Waktu Indonesia Barat)",
+        "nilai": "C",
+        "sks": 4
+    },
+    {
+        "type": "tambah",
+        "nama": "enim anim",
+        "date": "Wed Oct 05 2022 11:07:37 GMT+0700 (Waktu Indonesia Barat)",
+        "nilai": "A",
+        "sks": 2
+    },
+    {
+        "type": "hapus",
+        "nama": "esse reprehenderit",
+        "date": "Tue Jan 02 2024 14:31:24 GMT+0700 (Waktu Indonesia Barat)",
+        "nilai": "C",
+        "sks": 4
+    },
+    {
+        "type": "hapus",
+        "nama": "est est",
+        "date": "Mon Dec 31 2018 12:19:34 GMT+0700 (Waktu Indonesia Barat)",
+        "nilai": "E",
+        "sks": 1
+    },
+    {
+        "type": "tambah",
+        "nama": "labore labore",
+        "date": "Fri Mar 06 2020 13:59:09 GMT+0700 (Waktu Indonesia Barat)",
+        "nilai": "C",
+        "sks": 2
+    },
+    {
+        "type": "hapus",
+        "nama": "veniam elit",
+        "date": "Mon Oct 24 2022 10:03:06 GMT+0700 (Waktu Indonesia Barat)",
+        "nilai": "C+",
+        "sks": 4
+    },
+    {
+        "type": "tambah",
+        "nama": "excepteur mollit",
+        "date": "Mon Aug 28 2023 12:56:17 GMT+0700 (Waktu Indonesia Barat)",
+        "nilai": "A",
+        "sks": 4
+    },
+    {
+        "type": "tambah",
+        "nama": "minim dolore",
+        "date": "Sat Jul 28 2018 04:13:49 GMT+0700 (Waktu Indonesia Barat)",
+        "nilai": "E",
+        "sks": 2
+    },
+    {
+        "type": "hapus",
+        "nama": "do duis",
+        "date": "Tue Oct 16 2018 11:47:51 GMT+0700 (Waktu Indonesia Barat)",
+        "nilai": "E",
+        "sks": 3
+    },
+    {
+        "type": "tambah",
+        "nama": "exercitation laboris",
+        "date": "Mon Jun 15 2015 16:14:36 GMT+0700 (Waktu Indonesia Barat)",
+        "nilai": "B+",
+        "sks": 4
+    },
+    {
+        "type": "hapus",
+        "nama": "ea veniam",
+        "date": "Tue Jan 21 2014 09:48:39 GMT+0700 (Waktu Indonesia Barat)",
+        "nilai": "C",
+        "sks": 2
+    },
+    {
+        "type": "tambah",
+        "nama": "est irure",
+        "date": "Thu Sep 01 2022 11:54:35 GMT+0700 (Waktu Indonesia Barat)",
+        "nilai": "D+",
+        "sks": 1
+    },
+    {
+        "type": "tambah",
+        "nama": "laboris id",
+        "date": "Mon Oct 09 2017 11:23:07 GMT+0700 (Waktu Indonesia Barat)",
+        "nilai": "E",
+        "sks": 1
+    },
+    {
+        "type": "hapus",
+        "nama": "qui laboris",
+        "date": "Tue Dec 06 2022 05:04:41 GMT+0700 (Waktu Indonesia Barat)",
+        "nilai": "D",
+        "sks": 4
+    },
+    {
+        "type": "tambah",
+        "nama": "ea reprehenderit",
+        "date": "Mon Dec 19 2016 23:10:01 GMT+0700 (Waktu Indonesia Barat)",
+        "nilai": "B+",
+        "sks": 2
+    },
+    {
+        "type": "tambah",
+        "nama": "reprehenderit aliquip",
+        "date": "Sun Jun 12 2016 22:40:41 GMT+0700 (Waktu Indonesia Barat)",
+        "nilai": "D",
+        "sks": 2
+    },
+    {
+        "type": "hapus",
+        "nama": "mollit labore",
+        "date": "Sun Sep 23 2018 19:12:36 GMT+0700 (Waktu Indonesia Barat)",
+        "nilai": "E",
+        "sks": 1
+    },
+    {
+        "type": "tambah",
+        "nama": "qui qui",
+        "date": "Fri Jul 21 2023 03:43:50 GMT+0700 (Waktu Indonesia Barat)",
+        "nilai": "B",
+        "sks": 3
+    },
+    {
+        "type": "hapus",
+        "nama": "velit nisi",
+        "date": "Thu Apr 07 2016 07:42:09 GMT+0700 (Waktu Indonesia Barat)",
+        "nilai": "A",
+        "sks": 4
+    },
+    {
+        "type": "tambah",
+        "nama": "qui et",
+        "date": "Mon Mar 11 2019 21:04:34 GMT+0700 (Waktu Indonesia Barat)",
+        "nilai": "C+",
+        "sks": 4
+    },
+    {
+        "type": "hapus",
+        "nama": "velit labore",
+        "date": "Sun May 16 2021 10:07:01 GMT+0700 (Waktu Indonesia Barat)",
+        "nilai": "D",
+        "sks": 3
+    },
+    {
+        "type": "hapus",
+        "nama": "sint est",
+        "date": "Fri Feb 10 2017 15:56:20 GMT+0700 (Waktu Indonesia Barat)",
+        "nilai": "D+",
+        "sks": 4
+    },
+    {
+        "type": "tambah",
+        "nama": "fugiat anim",
+        "date": "Sun Dec 26 2021 17:34:09 GMT+0700 (Waktu Indonesia Barat)",
+        "nilai": "A",
+        "sks": 3
+    },
+    {
+        "type": "hapus",
+        "nama": "enim nisi",
+        "date": "Fri Mar 24 2017 02:03:06 GMT+0700 (Waktu Indonesia Barat)",
+        "nilai": "C",
+        "sks": 4
+    },
+    {
+        "type": "tambah",
+        "nama": "dolore occaecat",
+        "date": "Tue Oct 22 2019 12:50:32 GMT+0700 (Waktu Indonesia Barat)",
+        "nilai": "C+",
+        "sks": 3
+    },
+    {
+        "type": "tambah",
+        "nama": "commodo ullamco",
+        "date": "Thu Aug 03 2017 04:32:57 GMT+0700 (Waktu Indonesia Barat)",
+        "nilai": "C+",
+        "sks": 4
+    },
+    {
+        "type": "hapus",
+        "nama": "irure labore",
+        "date": "Tue Jun 13 2017 12:53:54 GMT+0700 (Waktu Indonesia Barat)",
+        "nilai": "E",
+        "sks": 1
+    },
+    {
+        "type": "hapus",
+        "nama": "adipisicing labore",
+        "date": "Wed Sep 06 2023 01:59:31 GMT+0700 (Waktu Indonesia Barat)",
+        "nilai": "C",
+        "sks": 2
+    },
+    {
+        "type": "hapus",
+        "nama": "cupidatat eu",
+        "date": "Tue Oct 16 2018 18:32:41 GMT+0700 (Waktu Indonesia Barat)",
+        "nilai": "E",
+        "sks": 2
+    },
+    {
+        "type": "hapus",
+        "nama": "aute ad",
+        "date": "Tue Nov 10 2015 03:35:00 GMT+0700 (Waktu Indonesia Barat)",
+        "nilai": "D",
+        "sks": 2
+    },
+    {
+        "type": "hapus",
+        "nama": "do amet",
+        "date": "Mon Jul 31 2023 07:36:28 GMT+0700 (Waktu Indonesia Barat)",
+        "nilai": "C+",
+        "sks": 1
+    }
+]
+
 export default TambahHapus;
