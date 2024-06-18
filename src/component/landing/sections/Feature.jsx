@@ -33,6 +33,14 @@ export function Feature() {
         <Section sectionRef={sectionRef}>
             <Wrapper>
                 <Cards animateX={x}>
+                    <Card
+                        style={{
+                            display: 'flex',
+                            flexDirection: 'column',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                        }}
+                    />
                     <TambahHapus />
                     {cards.map((card, index) => {
                         return <Card
