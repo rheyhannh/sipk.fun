@@ -28,17 +28,17 @@ import styles from './style/text_box.module.css'
  * - Default : `'throwDown'`
  * @param {Variants} props.customEnterAnimation Object yang berisikan `variants` animasi yang digunakan
  * @param {CSSProperties} props.style Object yang berisikan style yang digunakan.
- * Secara default menggunakan style `.container` dari module `text_box.module.css` sebagai berikut,
+ * Secara default menggunakan style `.container` dari css module `text_box` sebagai berikut,
  * ```js
  * const style = {};
  * style.position = 'relative';
  * style.width = 'max-content';
  * style.height = 'max-content';
  * style.fontSize = '1rem';
- * style.color = 'var(--dark-color)';
+ * style.color = '#edeffd';
  * style.borderRadius = 'calc(0.25 * 1rem)';
  * style.padding = 'calc(0.25 * 1rem)';
- * style.backgroundColor = 'var(--logo-second-color)';
+ * style.background = '#FF6341';
  * ```
  * @param {HTMLProps | MotionProps} props.otherProps Object yang berisikan props lainnya yang digunakan
  * - Note : Props `motion` seperti `animate`, `transition` dan lainnya dapat digunakan
