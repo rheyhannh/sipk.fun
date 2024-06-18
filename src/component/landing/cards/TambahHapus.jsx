@@ -111,7 +111,11 @@ const TambahHapus = () => {
                 </Highlight>
 
                 <Demo>
-
+                    <GridContainer>
+                        {MATKULDUMMIES.map((item, index) => (
+                            <Matkul item={item} index={index} key={`introCardMatkul_${index}`} />
+                        ))}
+                    </GridContainer>
                 </Demo>
             </Layout>
         </Wrapper >
