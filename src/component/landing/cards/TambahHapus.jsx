@@ -249,14 +249,100 @@ const Description = ({ children }) => (
 )
 
 const Demo = ({ children }) => (
-    <motion.div
+    <div
         className={styles.demo}
         style={{
             border: '1px solid green',
+            width: '100%',
+            height: '100%',
         }}
     >
         {children}
+    </div>
+)
+
+const GridContainer = ({ children }) => (
+    <div
+        className={styles.grid_container}
+    >
+        {children}
+    </div>
+)
+
+const Matkul = ({ item, index, ...props }) => (
+    <motion.div
+        style={{
+            height: '80px',
+            background: 'var(--landing-foreground)',
+            padding: '1.4rem 1.8rem',
+            border: '1px solid var(--landing-border)',
+            borderRadius: '1.2rem',
+        }}
+        initial={'hide'}
+        whileInView={'introCardMatkul_show'}
+        variants={{
+            hide: { ...getCommonAnimationVariants('slideRight').hide },
+            introCardMatkul_show: { ...getCommonAnimationVariants('slideRight').show, transition: { delay: 0.4 } },
+        }}
+        {...props}
+    >
+        <div
+            style={{
+                display: 'grid',
+                gridTemplateColumns: '40px auto 40px',
+                gridGap: '1rem',
+                gap: '1rem',
+                color: 'var(--landing-copyLighter)',
+                fontWeight: '500',
+            }}
+
+        >
+            <div
+                style={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    width: '40px',
+                    height: '40px',
+                    padding: '.6rem',
+                    color: 'var(--landing-copyInverse)',
+                    borderRadius: '50%',
+                    background: item.type === 'hapus' ? 'var(--danger-color)' : 'var(--primary-color)'
+                }}
+            >
+                {item.type === 'hapus' ? <CiTrash size={'24px'} /> : <IoAddOutline size={'24px'} />}
+            </div>
+
+            <div
+                style={{
+                    whiteSpace: 'nowrap',
+                    overflow: 'hidden',
+                    margin: 'auto 0'
+                }}
+            >
+                <span
+                    style={{
+                        textTransform: 'capitalize',
+                    }}
+                >
+                    {item.nama}
+                </span>
+            </div>
+
+            <div
+                style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignSelf: 'center',
+                    textAlign: 'center',
+                }}
+            >
+                <span>{item.nilai}</span>
+                <span>{item.sks} SKS</span>
+            </div>
+        </div>
     </motion.div>
+
 )
 
 const MATKULDUMMIES = [
