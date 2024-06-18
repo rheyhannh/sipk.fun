@@ -53,6 +53,75 @@
     padding: 1rem;
 }
 
+.card .tambah_hapus .highlight .box .text_box {
+    position: relative;
+    width: max-content;
+    height: max-content;
+    font-weight: 600;
+    color: var(--landing-copyInverse);
+}
+
+.card .tambah_hapus .highlight .box .text_box span {
+    position: relative;
+    z-index: 2;
+    font-size: inherit;
+    color: inherit;
+    border-radius: inherit;
+    padding: inherit;
+}
+
+/* #region font-size, border-radius and padding should be adjust in higher viewport [IMPORTANT] */
+.card .tambah_hapus .highlight .box .text_box.tambah {
+    z-index: 6;
+    transform-origin: bottom left 1.5rem;
+    font-size: 1.2rem;
+    border-radius: calc(0.25 * 1.2rem);
+    padding: calc(0.25 * 1.2rem);
+}
+
+.card .tambah_hapus .highlight .box .text_box.tambah span {
+    background-color: #74ff8d;
+}
+
+.card .tambah_hapus .highlight .box .text_box.hapus {
+    z-index: 5;
+    margin: .25rem 0 0 1.25rem;
+    font-size: 1.35rem;
+    border-radius: calc(0.25 * 1.35rem);
+    padding: calc(0.25 * 1.35rem);
+}
+
+.card .tambah_hapus .highlight .box .text_box.hapus span {
+    background-color: #ff747d;
+}
+
+.card .tambah_hapus .highlight .box .text_box.apapun {
+    z-index: 4;
+    margin: .25rem 0 0 2.5rem;
+    font-size: 1.5rem;
+    border-radius: calc(0.25 * 1.5rem);
+    padding: calc(0.25 * 1.5rem);
+}
+
+.card .tambah_hapus .highlight .box .text_box.apapun span {
+    background-color: #ffd274;
+}
+
+/* #endregion */
+
+.card .tambah_hapus .highlight .box .text_box:before {
+    background-color: var(--landing-body);
+    content: "";
+    height: 100%;
+    left: .925rem;
+    position: absolute;
+    top: .925rem;
+    width: 100%;
+    opacity: 0.4;
+    z-index: 1;
+    border-radius: inherit;
+}
+
 .card .tambah_hapus .highlight .box .folding {
     position: absolute;
     transform-origin: 200% -200%;
