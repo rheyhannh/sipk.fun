@@ -55,6 +55,7 @@ const TextBox = (
     }
 ) => {
     const variants = enterAnimation === 'custom' ? { ...customEnterAnimation } : getCommonAnimationVariants(enterAnimation);
+    const isContainerCustomClass = otherProps?.className ? true : false;
 
     return (
         <motion.div
@@ -64,7 +65,8 @@ const TextBox = (
             {...otherProps}
         >
             <motion.span
-                className={otherProps.className ? null : styles.content}
+                className={isContainerCustomClass ? null : styles.content}
+                style={{ background: style?.background ?? style?.backgroundColor ?? '#FF6341' }}
             >
                 {text}
             </motion.span>

@@ -6,7 +6,6 @@
     color: var(--dark-color);
     border-radius: calc(0.25 * 1rem);
     padding: calc(0.25 * 1rem);
-    background-color: var(--logo-second-color);
 }
 
 .container.shadow:before {
@@ -29,5 +28,4 @@
     color: inherit;
     border-radius: inherit;
     padding: inherit;
-    background: inherit;
 }
