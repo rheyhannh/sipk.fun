@@ -167,7 +167,6 @@ const Layout = ({ children, foldingCurrentIndex }) => {
             }}
             onAnimationComplete={
                 definition => {
-                    console.log(`${definition} selesai`)
                 }
             }
         >
