@@ -143,3 +143,76 @@
     grid-template-columns: repeat(auto-fill, minmax(225px, 1fr));
     gap: 1.25rem;
 }
+
+.card .tambah_hapus .demo .matkul {
+    background: var(--landing-foreground);
+    padding: 1.4rem 1.8rem;
+    border: 1px solid var(--landing-border);
+    border-radius: 1.2rem;
+}
+
+.card .tambah_hapus .demo .matkul .layout {
+    color: var(--landing-copyLighter);
+    font-weight: 500;
+}
+
+.card .tambah_hapus .demo .matkul .icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: .5rem;
+    color: var(--landing-copyInverse);
+    border-radius: 50%;
+    background-color: #FF6341;
+}
+
+.card .tambah_hapus .demo .matkul .icon.tambah {
+    background-color: var(--primary-color);
+}
+
+.card .tambah_hapus .demo .matkul .icon.hapus {
+    background-color: var(--danger-color);
+}
+
+.card .tambah_hapus .demo .matkul .nama {
+    white-space: nowrap;
+    overflow: hidden;
+    text-transform: capitalize;
+}
+
+.card .tambah_hapus .demo .matkul.medium {
+    height: 80px;
+}
+
+.card .tambah_hapus .demo .matkul.medium .layout {
+    display: grid;
+    grid-template-columns: 2.85rem auto 2.85rem;
+    gap: 1rem;
+}
+
+.card .tambah_hapus .demo .matkul.medium .nama {
+    margin: auto 0;
+}
+
+.card .tambah_hapus .demo .matkul.medium .icon {
+    font-size: 1.7rem;
+}
+
+.card .tambah_hapus .demo .matkul.medium .details {
+    display: flex;
+    flex-direction: column;
+    align-self: center;
+    text-align: center;
+}
+
+.card .tambah_hapus .demo .matkul.large {
+    height: 160px;
+}
+
+.card .tambah_hapus .demo .matkul.large .layout {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-rows: repeat(3, minmax(0, 1fr));
+    height: 450px;
+    gap: 0.25rem;
+}
