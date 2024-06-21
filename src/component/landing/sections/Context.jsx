@@ -70,7 +70,6 @@ export function Context({ sectionProps, titleProps, contentProps }) {
 const Section = ({ children, ...props }) => {
     return (
         <section
-            id={`context-${crypto.randomUUID()}`}
             className={styles.section}
             {...props}
         >
