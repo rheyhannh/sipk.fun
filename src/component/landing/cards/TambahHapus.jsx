@@ -249,7 +249,7 @@ const DemoMedium = () => {
     return (
         <div
             ref={demoRef}
-            className={styles.demo}
+            className={`${styles.demo} ${styles.medium}`}
             style={{
                 border: '1px solid green',
             }}
@@ -364,7 +364,7 @@ const MatkulMedium = ({ item, index, demoRef, gridScroll, ...props }) => {
 
     return (
         <motion.div
-            className={`${styles.matkul} ${styles.medium}`}
+            className={styles.matkul}
             ref={matkulRef}
             style={{
                 opacity,
