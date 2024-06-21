@@ -74,9 +74,10 @@ export default async function LandingPage() {
       <Container>
         <Wrapper>
           {/* <Landing /> */}
-          <Introduction/>
+          <Context sectionProps={{ id: 'context-1' }} />
+          <Introduction />
           <Feature />
-          <Context />
+          <Context sectionProps={{ id: 'context-2' }} />
         </Wrapper>
       </Container>
     </LandingProvider>
