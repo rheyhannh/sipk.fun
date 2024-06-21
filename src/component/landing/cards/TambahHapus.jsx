@@ -110,13 +110,7 @@ const TambahHapus = () => {
                     </Description>
                 </Highlight>
 
-                <Demo>
-                    <GridContainer>
-                        {MATKULDUMMIES.map((item, index) => (
-                            <Matkul item={item} index={index} key={`introCardMatkul_${index}`} />
-                        ))}
-                    </GridContainer>
-                </Demo>
+                <Demo />
             </Layout>
         </Wrapper >
     )
@@ -158,6 +152,7 @@ const Layout = ({ children, foldingCurrentIndex }) => {
             initial={'hide'}
             animate={animControls}
             whileInView={[
+                'gridContainer_scroll',
                 'introCardBox_show',
                 'introCardDescription_show'
             ]}
@@ -248,102 +243,221 @@ const Description = ({ children }) => (
     </motion.div>
 )
 
-const Demo = ({ children }) => (
-    <div
-        className={styles.demo}
-        style={{
-            border: '1px solid green',
-            width: '100%',
-            height: '100%',
-        }}
-    >
-        {children}
-    </div>
-)
+const Demo = () => {
+    const demoRef = useRef(null);
 
-const GridContainer = ({ children }) => (
-    <div
-        className={styles.grid_container}
-    >
-        {children}
-    </div>
-)
-
-const Matkul = ({ item, index, ...props }) => (
-    <motion.div
-        style={{
-            height: '80px',
-            background: 'var(--landing-foreground)',
-            padding: '1.4rem 1.8rem',
-            border: '1px solid var(--landing-border)',
-            borderRadius: '1.2rem',
-        }}
-        initial={'hide'}
-        whileInView={'introCardMatkul_show'}
-        variants={{
-            hide: { ...getCommonAnimationVariants('slideRight').hide },
-            introCardMatkul_show: { ...getCommonAnimationVariants('slideRight').show, transition: { delay: 0.4 } },
-        }}
-        {...props}
-    >
+    return (
         <div
+            ref={demoRef}
+            className={styles.demo}
             style={{
-                display: 'grid',
-                gridTemplateColumns: '40px auto 40px',
-                gridGap: '1rem',
-                gap: '1rem',
-                color: 'var(--landing-copyLighter)',
-                fontWeight: '500',
+                border: '1px solid green',
             }}
-
         >
             <div
                 style={{
-                    display: 'flex',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    width: '40px',
-                    height: '40px',
-                    padding: '.6rem',
-                    color: 'var(--landing-copyInverse)',
-                    borderRadius: '50%',
-                    background: item.type === 'hapus' ? 'var(--danger-color)' : 'var(--primary-color)'
+                    position: 'absolute',
+                    top: '4rem',
+                    left: '2rem',
+                    width: 'calc(100% - (2 * 2rem))',
+                    height: 'calc(100% - (2 * 4rem))',
+                    border: '1px solid red',
+                    overflow: 'hidden',
+                    zIndex: -1,
                 }}
-            >
-                {item.type === 'hapus' ? <CiTrash size={'24px'} /> : <IoAddOutline size={'24px'} />}
-            </div>
+            />
 
+            <GridContainer
+                demoRef={demoRef}
+                matkuls={MATKULDUMMIES}
+            />
+
+        </div>
+    )
+}
+
+const GridContainer = ({ demoRef, matkuls }) => {
+    const gridRef = useRef(null);
+    const [gridScroll, setGridScroll] = useState(0);
+    const [gridBoundingClientRect, setGridBoundingClientRect] = useState(null);
+    const scrollSpeed = matkuls.length * 2;
+
+    useEffect(() => {
+        const updateBoundingClientRect = () => {
+            if (gridRef.current) {
+                setGridBoundingClientRect(gridRef.current.getBoundingClientRect());
+            }
+        };
+
+        updateBoundingClientRect();
+
+        window.addEventListener('resize', updateBoundingClientRect);
+
+        return () => window.removeEventListener('resize', updateBoundingClientRect);
+    }, []);
+
+    return (
+        <motion.div
+            ref={gridRef}
+            className={styles.grid_container}
+            style={{
+                y: (demoRef.current ? (demoRef.current.getBoundingClientRect().height - parseFloat(getComputedStyle(demoRef.current).paddingTop) - parseFloat(getComputedStyle(demoRef.current).paddingBottom)) : 0)
+            }}
+            variants={{
+                gridContainer_scroll: {
+                    y: (gridBoundingClientRect ? (gridBoundingClientRect.height * -1) : -5000),
+                },
+            }}
+            transition={{
+                duration: scrollSpeed, ease: 'linear', repeat: Infinity, repeatType: 'reverse'
+            }}
+            onUpdate={(latest) => setGridScroll(latest.y)}
+        >
+            {matkuls.map((item, index) => (
+                <Matkul
+                    item={item}
+                    index={index}
+                    demoRef={demoRef}
+                    gridScroll={gridScroll}
+                    key={`tambahHapus_Matkul_${index}`}
+                />
+            ))}
+        </motion.div>
+    )
+}
+
+const Matkul = ({ item, index, demoRef, gridScroll, ...props }) => {
+    const matkulRef = useRef(null);
+    const matkulInDemo = useMotionValue(0);
+    const [timingArray, setTimingArray] = useState([0, 1, 1, 0]);
+    const opacity = useTransform(matkulInDemo, timingArray, [0, 1, 1, 0]);
+    const scale = useTransform(matkulInDemo, timingArray, [0.75, 1, 1, 0.75]);
+
+    useEffect(() => {
+        const updateTimingArray = () => {
+            if (demoRef.current) {
+                const demoPadding = { top: parseFloat(getComputedStyle(demoRef.current).paddingTop), bottom: parseFloat(getComputedStyle(demoRef.current).paddingBottom) };
+                const demoHeight = demoRef.current.getBoundingClientRect().height - demoPadding.top - demoPadding.bottom;
+                setTimingArray([demoHeight - (demoPadding.bottom / 2), demoHeight - (demoPadding.bottom + (demoPadding.bottom / 2)), 0, demoPadding.top * -1]);
+            }
+        }
+
+        updateTimingArray();
+
+        window.addEventListener('resize', updateTimingArray);
+
+        return () => window.removeEventListener('resize', updateTimingArray);
+    }, [])
+
+    useEffect(() => {
+        const demoRect = demoRef.current.getBoundingClientRect();
+        const demoPaddingTop = parseFloat(getComputedStyle(demoRef.current).paddingTop);
+        const matkulRect = matkulRef.current.getBoundingClientRect();
+        const cardTopInDemo = matkulRect.top - demoRect.top - demoPaddingTop;
+        matkulInDemo.set(cardTopInDemo);
+
+        // if (index === 0) {
+        //     console.log(`cardTopInDemo: ${cardTopInDemo}, opacity: ${opacity.get()}`);
+        //     matkulInDemo.set(cardTopInDemo);
+        // }
+    }, [gridScroll])
+
+    return (
+        <motion.div
+            ref={matkulRef}
+            style={{
+                height: '80px',
+                background: 'var(--landing-foreground)',
+                padding: '1.4rem 1.8rem',
+                border: '1px solid var(--landing-border)',
+                borderRadius: '1.2rem',
+                opacity,
+                scale,
+            }}
+            {...props}
+        >
             <div
                 style={{
-                    whiteSpace: 'nowrap',
-                    overflow: 'hidden',
-                    margin: 'auto 0'
+                    display: 'grid',
+                    gridTemplateColumns: '40px auto 40px',
+                    gridGap: '1rem',
+                    gap: '1rem',
+                    color: 'var(--landing-copyLighter)',
+                    fontWeight: '500',
                 }}
+
             >
-                <span
+                <div
                     style={{
-                        textTransform: 'capitalize',
+                        display: 'flex',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        width: '40px',
+                        height: '40px',
+                        padding: '.6rem',
+                        color: 'var(--landing-copyInverse)',
+                        borderRadius: '50%',
+                        background: item.type === 'hapus' ? 'var(--danger-color)' : 'var(--primary-color)'
                     }}
                 >
-                    {item.nama}
-                </span>
-            </div>
+                    {item.type === 'hapus' ? <CiTrash size={'24px'} /> : <IoAddOutline size={'24px'} />}
+                </div>
 
-            <div
-                style={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignSelf: 'center',
-                    textAlign: 'center',
-                }}
-            >
-                <span>{item.nilai}</span>
-                <span>{item.sks} SKS</span>
-            </div>
-        </div>
-    </motion.div>
+                <div
+                    style={{
+                        whiteSpace: 'nowrap',
+                        overflow: 'hidden',
+                        margin: 'auto 0'
+                    }}
+                >
+                    <span
+                        style={{
+                            textTransform: 'capitalize',
+                        }}
+                    >
+                        {item.nama}
+                    </span>
+                </div>
 
-)
+                <div
+                    style={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignSelf: 'center',
+                        textAlign: 'center',
+                    }}
+                >
+                    <span>{item.nilai}</span>
+                    <span>{item.sks} SKS</span>
+                </div>
+            </div>
+        </motion.div>
+    )
+}
+
+const MATKULDUMMIESTEST = [
+    {
+        "type": "hapus",
+        "nama": "incididunt aute",
+        "date": "Fri May 07 2021 08:27:35 GMT+0700 (Waktu Indonesia Barat)",
+        "nilai": "B+",
+        "sks": 2
+    },
+    {
+        "type": "hapus",
+        "nama": "nisi in",
+        "date": "Sun May 25 2014 22:21:03 GMT+0700 (Waktu Indonesia Barat)",
+        "nilai": "B+",
+        "sks": 1
+    },
+    {
+        "type": "tambah",
+        "nama": "aute laborum",
+        "date": "Wed Nov 01 2023 12:15:47 GMT+0700 (Waktu Indonesia Barat)",
+        "nilai": "C",
+        "sks": 4
+    },
+]
 
 const MATKULDUMMIES = [
     {
