@@ -20,6 +20,11 @@ import styles from '../style/context.module.css'
 
 /**
  * Render landing page section `context`
+ * @param {Object} props
+ * @param {HTMLProps} props.sectionProps Props yang digunakan pada `Section`
+ * @param {HTMLProps} props.titleProps Props yang digunakan pada `Title`
+ * @param {HTMLProps} props.contentProps Props yang digunakan pada `Content`
+ * 
  * @returns {ReactElement} Element react untuk render landing page section `context`
  */
 export function Context({ sectionProps, titleProps, contentProps }) {
