@@ -2,6 +2,7 @@
 
 // #region TYPE DEPEDENCY
 import * as ContextTypes from '@/types/context';
+import { HTMLProps } from 'react';
 // #endregion
 
 // #region REACT DEPEDENCY
