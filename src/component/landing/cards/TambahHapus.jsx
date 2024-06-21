@@ -364,69 +364,24 @@ const Matkul = ({ item, index, demoRef, gridScroll, ...props }) => {
 
     return (
         <motion.div
+            className={`${styles.matkul} ${styles.medium}`}
             ref={matkulRef}
             style={{
-                height: '80px',
-                background: 'var(--landing-foreground)',
-                padding: '1.4rem 1.8rem',
-                border: '1px solid var(--landing-border)',
-                borderRadius: '1.2rem',
                 opacity,
                 scale,
             }}
             {...props}
         >
-            <div
-                style={{
-                    display: 'grid',
-                    gridTemplateColumns: '40px auto 40px',
-                    gridGap: '1rem',
-                    gap: '1rem',
-                    color: 'var(--landing-copyLighter)',
-                    fontWeight: '500',
-                }}
-
-            >
-                <div
-                    style={{
-                        display: 'flex',
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        width: '40px',
-                        height: '40px',
-                        padding: '.6rem',
-                        color: 'var(--landing-copyInverse)',
-                        borderRadius: '50%',
-                        background: item.type === 'hapus' ? 'var(--danger-color)' : 'var(--primary-color)'
-                    }}
-                >
-                    {item.type === 'hapus' ? <CiTrash size={'24px'} /> : <IoAddOutline size={'24px'} />}
+            <div className={styles.layout}>
+                <div className={`${styles.icon} ${item.type === 'hapus' ? styles.hapus : styles.tambah}`} >
+                    {item.type === 'hapus' ? <CiTrash /> : <IoAddOutline />}
                 </div>
 
-                <div
-                    style={{
-                        whiteSpace: 'nowrap',
-                        overflow: 'hidden',
-                        margin: 'auto 0'
-                    }}
-                >
-                    <span
-                        style={{
-                            textTransform: 'capitalize',
-                        }}
-                    >
-                        {item.nama}
-                    </span>
+                <div className={styles.nama}>
+                    {item.nama}
                 </div>
 
-                <div
-                    style={{
-                        display: 'flex',
-                        flexDirection: 'column',
-                        alignSelf: 'center',
-                        textAlign: 'center',
-                    }}
-                >
+                <div className={styles.details}>
                     <span>{item.nilai}</span>
                     <span>{item.sks} SKS</span>
                 </div>
