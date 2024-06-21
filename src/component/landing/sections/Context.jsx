@@ -22,17 +22,17 @@ import styles from '../style/context.module.css'
  * Render landing page section `context`
  * @returns {ReactElement} Element react untuk render landing page section `context`
  */
-export function Context() {
+export function Context({ sectionProps, titleProps, contentProps }) {
     /** @type {ContextTypes.LandingContext} */
     const { isRichContent, isTouchDevice, isAccessTokenExist, data } = useContext(LandingContext);
     const size = useWindowSize();
 
     return (
-        <Section>
-            <Title>
+        <Section {...sectionProps}>
+            <Title {...titleProps}>
                 <h1>Context Provider</h1>
             </Title>
-            <Content>
+            <Content {...contentProps}>
                 <h1>isRichContent : {isRichContent ? 'true' : 'false'}</h1>
                 <h1>isTouchDevice : {isTouchDevice ? 'true' : 'false'}</h1>
                 <h1>
@@ -62,28 +62,31 @@ export function Context() {
     )
 }
 
-const Section = ({ children }) => {
+const Section = ({ children, ...props }) => {
     return (
         <section
             id={`context-${crypto.randomUUID()}`}
             className={styles.section}
+            {...props}
         >
             {children}
         </section>
     )
 }
 
-const Title = ({ children }) => (
+const Title = ({ children, ...props }) => (
     <div
         className={styles.section__name}
+        {...props}
     >
         {children}
     </div>
 )
 
-const Content = ({ children }) => (
+const Content = ({ children, ...props }) => (
     <div
         className={styles.content}
+        {...props}
     >
         {children}
     </div>
