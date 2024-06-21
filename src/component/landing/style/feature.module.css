@@ -132,7 +132,8 @@
 }
 
 .card .tambah_hapus .demo {
-    padding: 2rem;
+    position: relative;
+    padding: 4rem 2rem;
     overflow: hidden;
     opacity: 1
 }
