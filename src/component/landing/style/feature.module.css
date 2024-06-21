@@ -133,13 +133,18 @@
 
 .card .tambah_hapus .demo {
     position: relative;
-    padding: 4rem 2rem;
     overflow: hidden;
-    opacity: 1
+}
+
+.card .tambah_hapus .demo.medium {
+    padding: 4rem 2rem;
 }
 
 .card .tambah_hapus .demo .grid_container {
     display: grid;
+}
+
+.card .tambah_hapus .demo.medium .grid_container {
     grid-template-columns: repeat(auto-fill, minmax(225px, 1fr));
     gap: 1.25rem;
 }
@@ -180,25 +185,25 @@
     text-transform: capitalize;
 }
 
-.card .tambah_hapus .demo .matkul.medium {
+.card .tambah_hapus .demo.medium .matkul {
     height: 80px;
 }
 
-.card .tambah_hapus .demo .matkul.medium .layout {
+.card .tambah_hapus .demo.medium .matkul .layout {
     display: grid;
     grid-template-columns: 2.85rem auto 2.85rem;
     gap: 1rem;
 }
 
-.card .tambah_hapus .demo .matkul.medium .nama {
+.card .tambah_hapus .demo.medium .matkul .nama {
     margin: auto 0;
 }
 
-.card .tambah_hapus .demo .matkul.medium .icon {
+.card .tambah_hapus .demo.medium .matkul .icon {
     font-size: 1.7rem;
 }
 
-.card .tambah_hapus .demo .matkul.medium .details {
+.card .tambah_hapus .demo.medium .matkul .details {
     display: flex;
     flex-direction: column;
     align-self: center;
