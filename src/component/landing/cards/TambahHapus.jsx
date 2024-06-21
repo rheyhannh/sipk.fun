@@ -13,7 +13,7 @@ import { getCommonAnimationVariants } from '@/component/motion/_helper';
 // #endregion
 
 // #region ICON DEPEDENCY
-import { AiOutlineDelete, AiOutlinePlus, AiOutlineLike } from "react-icons/ai";
+import { AiOutlineDelete, AiOutlinePlus, AiOutlineLike, AiOutlineMinus } from "react-icons/ai";
 import { CiTrash } from "react-icons/ci";
 import { IoAddOutline } from "react-icons/io5";
 // #endregion
