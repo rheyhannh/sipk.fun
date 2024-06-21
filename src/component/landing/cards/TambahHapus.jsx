@@ -3,7 +3,7 @@ import { useState, useEffect, useRef } from 'react';
 // #endregion
 
 // #region COMPONENT DEPEDENCY
-import { motion, useAnimation } from "framer-motion";
+import { motion, useAnimation, useTransform, useMotionValue, useSpring, useVelocity } from "framer-motion";
 import FoldingIcons from '@/component/motion/FoldingIcons';
 import AnimatedTextBox from '@/component/motion/TextBox';
 // #endregion
