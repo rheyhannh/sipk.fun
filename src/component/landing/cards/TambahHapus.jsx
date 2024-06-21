@@ -110,7 +110,7 @@ const TambahHapus = () => {
                     </Description>
                 </Highlight>
 
-                <Demo />
+                {/* <DemoMedium /> */}
             </Layout>
         </Wrapper >
     )
@@ -243,7 +243,7 @@ const Description = ({ children }) => (
     </motion.div>
 )
 
-const Demo = () => {
+const DemoMedium = () => {
     const demoRef = useRef(null);
 
     return (
@@ -267,7 +267,7 @@ const Demo = () => {
                 }}
             />
 
-            <GridContainer
+            <GridContainerMedium
                 demoRef={demoRef}
                 matkuls={MATKULDUMMIES}
             />
@@ -276,7 +276,7 @@ const Demo = () => {
     )
 }
 
-const GridContainer = ({ demoRef, matkuls }) => {
+const GridContainerMedium = ({ demoRef, matkuls }) => {
     const gridRef = useRef(null);
     const [gridScroll, setGridScroll] = useState(0);
     const [gridBoundingClientRect, setGridBoundingClientRect] = useState(null);
@@ -314,7 +314,7 @@ const GridContainer = ({ demoRef, matkuls }) => {
             onUpdate={(latest) => setGridScroll(latest.y)}
         >
             {matkuls.map((item, index) => (
-                <Matkul
+                <MatkulMedium
                     item={item}
                     index={index}
                     demoRef={demoRef}
@@ -326,7 +326,7 @@ const GridContainer = ({ demoRef, matkuls }) => {
     )
 }
 
-const Matkul = ({ item, index, demoRef, gridScroll, ...props }) => {
+const MatkulMedium = ({ item, index, demoRef, gridScroll, ...props }) => {
     const matkulRef = useRef(null);
     const matkulInDemo = useMotionValue(0);
     const [timingArray, setTimingArray] = useState([0, 1, 1, 0]);
