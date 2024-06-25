@@ -390,6 +390,159 @@ const MatkulMedium = ({ item, index, demoRef, gridScroll, ...props }) => {
     )
 }
 
+const DemoLarge = ({ foldingCurrentIndex }) => {
+    return (
+        <div
+            className={`${styles.demo} ${styles.large}`}
+            style={{
+                border: '1px solid green',
+            }}
+        >
+            <GridContainerLarge foldingCurrentIndex={foldingCurrentIndex} />
+        </div>
+    )
+}
+
+const GridContainerLarge = ({ foldingCurrentIndex }) => {
+    const [matkuls, setMatkuls] = useState(MATKULDUMMIESTEST2);
+    const [maximumMatkul, setMaximumMatkul] = useState(12);
+    const [minimumMatkul, setMinimumMatkul] = useState(3);
+
+    const addMatkul = () => {
+        if (matkuls.length >= maximumMatkul) return;
+
+        const maxAddable = maximumMatkul - matkuls.length;
+        const numToAdd = Math.floor(Math.random() * (maxAddable - 1 + 1)) + 1;
+
+        const availableMatkuls = MATKULDUMMIES.filter(dummy =>
+            !matkuls.some(matkul => matkul.id === dummy.id)
+        );
+
+        if (availableMatkuls.length === 0) return;
+
+        const newEntries = [];
+        for (let i = 0; i < numToAdd && availableMatkuls.length > 0; i++) {
+            const randomIndex = Math.floor(Math.random() * availableMatkuls.length);
+            newEntries.push(availableMatkuls.splice(randomIndex, 1)[0]);
+        }
+
+        const updatedMatkuls = [...matkuls];
+        newEntries.forEach(newMatkul => {
+            const placeAt = Math.floor(Math.random() * (updatedMatkuls.length + 1));
+            updatedMatkuls.splice(placeAt, 0, newMatkul);
+        });
+
+        setMatkuls(updatedMatkuls);
+    }
+
+    const removeMatkul = () => {
+        if (matkuls.length <= minimumMatkul) return;
+
+        const maxRemove = matkuls.length - minimumMatkul;
+        const countRemove = Math.floor(Math.random() * (maxRemove - 1 + 1)) + 1;
+
+        const indexToRemove = new Set();
+        while (indexToRemove.size < countRemove) {
+            const randomIndex = Math.floor(Math.random() * matkuls.length);
+            indexToRemove.add(randomIndex);
+        }
+
+        const updatedMatkuls = matkuls.filter((_, index) => !indexToRemove.has(index));
+
+        setMatkuls(updatedMatkuls);
+    }
+
+    const shuffleMatkul = () => {
+        if (matkuls.length < 2) return;
+
+        const shuffledMatkuls = [...matkuls];
+        for (let i = shuffledMatkuls.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [shuffledMatkuls[i], shuffledMatkuls[j]] = [shuffledMatkuls[j], shuffledMatkuls[i]];
+        }
+        setMatkuls(shuffledMatkuls);
+    }
+
+    useEffect(() => {
+        if (foldingCurrentIndex === 0) {
+            addMatkul();
+        } else if (foldingCurrentIndex === 1) {
+            removeMatkul();
+        } else if (foldingCurrentIndex === 2) {
+            shuffleMatkul();
+        }
+    }, [foldingCurrentIndex])
+
+    return (
+        <motion.div
+            className={styles.grid_container}
+        >
+            <AnimatePresence>
+                {matkuls.map((item) => (
+                    <MatkulLarge key={`matkulDemo-${item.id}`} item={item} foldingCurrentIndex={foldingCurrentIndex} />
+                ))}
+            </AnimatePresence>
+        </motion.div>
+    )
+}
+
+const MatkulLarge = ({ item, foldingCurrentIndex, ...props }) => {
+    return (
+        <motion.div
+            className={styles.matkul}
+            initial={{ scale: 0 }}
+            animate={{
+                scale: 1,
+            }}
+            exit={{
+                opacity: 0,
+                transition: { duration: 2 }
+            }}
+            layout
+            {...props}
+        >
+            <div className={styles.layout}>
+                <motion.div
+                    className={styles.icon}
+                    animate={{
+                        backgroundColor: foldingCurrentIndex === 2 ? '#ffd274' : 'var(--primary-color)'
+                    }}
+                >
+                    <motion.div
+                        style={{
+                            position: 'absolute',
+                            top: '50%',
+                            left: '50%',
+                            width: '100%',
+                            height: '100%',
+                            display: 'inherit',
+                            justifyContent: 'inherit',
+                            alignItems: 'inherit',
+                            transform: 'translate(-50%,-50%)',
+                            backgroundColor: 'var(--danger-color)',
+                        }}
+                        initial={{ opacity: 0 }}
+                        exit={{ opacity: 1 }}
+                    >
+                        <CiTrash />
+                    </motion.div>
+
+                    {foldingCurrentIndex === 2 ? <AiOutlineLike /> : <IoAddOutline />}
+                </motion.div>
+
+                <div className={styles.nama}>
+                    {item.nama}
+                </div>
+
+                <div className={styles.details}>
+                    <span>{item.nilai}</span>
+                    <span>{item.sks} SKS</span>
+                </div>
+            </div>
+        </motion.div>
+    )
+}
+
 const MATKULDUMMIESTEST2 = [
     {
         "id": "a86bfd11-9f8c-40f1-9f57-511f7a3daa6d",
