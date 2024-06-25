@@ -140,6 +140,12 @@
     padding: 4rem 2rem;
 }
 
+.card .tambah_hapus .demo.large {
+    display: flex;
+    align-items: center;
+    padding: 2rem;
+}
+
 .card .tambah_hapus .demo .grid_container {
     display: grid;
 }
@@ -147,6 +153,13 @@
 .card .tambah_hapus .demo.medium .grid_container {
     grid-template-columns: repeat(auto-fill, minmax(225px, 1fr));
     gap: 1.25rem;
+}
+
+.card .tambah_hapus .demo.large .grid_container {
+    position: relative;
+    width: 100%;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1rem;
 }
 
 .card .tambah_hapus .demo .matkul {
@@ -210,14 +223,29 @@
     text-align: center;
 }
 
-.card .tambah_hapus .demo .matkul.large {
-    height: 160px;
+.card .tambah_hapus .demo.large .matkul {
+    height: 80px;
 }
 
-.card .tambah_hapus .demo .matkul.large .layout {
+.card .tambah_hapus .demo.large .matkul .layout {
     display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    grid-template-rows: repeat(3, minmax(0, 1fr));
-    height: 450px;
-    gap: 0.25rem;
+    grid-template-columns: 2.85rem auto 2.85rem;
+    gap: 1rem;
+}
+
+.card .tambah_hapus .demo.large .matkul .nama {
+    margin: auto 0;
+}
+
+.card .tambah_hapus .demo.large .matkul .icon {
+    position: relative;
+    font-size: 1.7rem;
+    overflow: hidden;
+}
+
+.card .tambah_hapus .demo.large .matkul .details {
+    display: flex;
+    flex-direction: column;
+    align-self: center;
+    text-align: center;
 }
