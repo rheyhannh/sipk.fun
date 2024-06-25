@@ -171,7 +171,7 @@ const FoldingIcons = (
 
     const Container = ({ children, ...props }) => {
         return (
-            <div
+            <motion.div
                 className={styles.container}
                 style={{
                     ...(() => {
@@ -182,7 +182,7 @@ const FoldingIcons = (
                 {...props}
             >
                 {children}
-            </div>
+            </motion.div>
         )
     }
 
