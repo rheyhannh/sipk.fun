@@ -197,6 +197,20 @@ const AnimatedFoldingIcons = ({ setFoldingCurrentIndex, interval = 10, onlyPlayI
     const [animateState, setAnimateState] = useState(false);
     const [inView, setInView] = useState(false);
 
+    useEffect(() => {
+        let intervalId;
+
+        if (!onlyPlayInView || inView) {
+            intervalId = setInterval(() => {
+                setAnimateState(true);
+            }, interval * 1000);
+        }
+
+        return () => {
+            clearInterval(intervalId);
+        };
+    }, [interval, onlyPlayInView, inView]);
+
     return (
         <motion.div
             className={styles.folding}
@@ -204,6 +218,8 @@ const AnimatedFoldingIcons = ({ setFoldingCurrentIndex, interval = 10, onlyPlayI
                 hide: { opacity: 0, scale: 1.5, rotateX: -75, rotateY: -25, top: '50%', left: '90%', translateX: '-90%', translateY: '-50%' },
                 introCardBox_show: { opacity: 1, scale: 1, rotateX: 0, rotateY: 0, transition: { type: 'spring', damping: 10, stiffness: 50 } }
             }}
+            onViewportEnter={() => { setInView(true); }}
+            onViewportLeave={() => { setInView(false); }}
         >
             <FoldingIcons
                 contents={[
@@ -218,14 +234,16 @@ const AnimatedFoldingIcons = ({ setFoldingCurrentIndex, interval = 10, onlyPlayI
                     height: '1.5px'
                 }}
                 animationOptions={{
-                    type: 'repeat',
+                    type: 'stateChanges',
                     onStart: (nextContentIndex) => {
                         setFoldingCurrentIndex(nextContentIndex);
                     },
                 }}
-                repeatOptions={{
-                    interval: 5,
-                    delay: 10,
+                stateChangesOptions={{
+                    useParentState: true,
+                    parentStateValue: animateState,
+                    parentStateSetter: setAnimateState,
+                    autoUpdateParentState: true,
                 }}
             />
         </motion.div>
