@@ -80,7 +80,7 @@
 }
 
 .card .tambah_hapus .highlight .box .text_box.tambah span {
-    background-color: #74ff8d;
+    background-color: var(--primary-color); 
 }
 
 .card .tambah_hapus .highlight .box .text_box.hapus {
@@ -92,7 +92,7 @@
 }
 
 .card .tambah_hapus .highlight .box .text_box.hapus span {
-    background-color: #ff747d;
+    background-color: var(--danger-color);
 }
 
 .card .tambah_hapus .highlight .box .text_box.apapun {
