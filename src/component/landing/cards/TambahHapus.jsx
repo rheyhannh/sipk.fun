@@ -195,6 +195,7 @@ const Box = ({ children }) => (
 
 const AnimatedFoldingIcons = ({ setFoldingCurrentIndex, interval = 10, onlyPlayInView = true }) => {
     const [animateState, setAnimateState] = useState(false);
+    const [inView, setInView] = useState(false);
 
     return (
         <motion.div
