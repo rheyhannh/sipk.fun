@@ -111,6 +111,7 @@ const TambahHapus = () => {
                 </Highlight>
 
                 {/* <DemoMedium /> */}
+                <DemoLarge foldingCurrentIndex={foldingCurrentIndex} />
             </Layout>
         </Wrapper >
     )
