@@ -142,6 +142,7 @@ const FoldingIcons = (
     }
 
     const handleOnAnimationStart = () => {
+        // Call onStart callback if provided
         if (animationOptions.onStart) {
             animationOptions.onStart(currentContent + 1 >= contents.length ? 0 : currentContent + 1)
         }
@@ -151,6 +152,9 @@ const FoldingIcons = (
         setZIndexValue(value => value + 1);
         setCurrentContent(value => value + 1 >= contents.length ? 0 : value + 1);
         setIsAnimating(false);
+
+        // Call parentStateSetter callback to update state, only when :
+        // autoUpdateParentState === true && parentStateSetter provided
         if (
             animationOptions.type === 'stateChanges' &&
             stateChangesOptions.autoUpdateParentState &&
@@ -158,6 +162,8 @@ const FoldingIcons = (
         ) {
             stateChangesOptions.parentStateSetter(!isAnimating);
         }
+
+        // Call onComplete callback if provided
         if (animationOptions.onComplete) {
             animationOptions.onComplete(currentContent + 1 >= contents.length ? 0 : currentContent + 1)
         }
