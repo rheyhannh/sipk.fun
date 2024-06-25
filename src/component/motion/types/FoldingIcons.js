@@ -2,6 +2,10 @@
 import { HTMLProps, CSSProperties } from 'react';
 // #endregion
 
+// #region COMPONENT DEPEDENCY
+import { MotionProps } from 'framer-motion';
+// #endregion
+
 /**
  * @typedef {Object} ContentEntry
  * Object yang merepresentasikan content
