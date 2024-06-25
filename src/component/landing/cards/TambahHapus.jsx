@@ -24,7 +24,7 @@ import styles from '../style/feature.module.css';
 // #endregion
 
 const TambahHapus = () => {
-    const descriptionArray = ["Kamu", "bebas", "tambah", "dan", "hapus", "matakuliah", "kamu", "secara", "dinamis.", "Gausah", "binggung", "IPK", "kamu", "jadi", "berapa,", "biar", "SIPK", "yang", "hitungin", "itu", "semua", "buat kamu."];
+    const descriptionArray = DESCRIPTIONTEXT.split(' ');
     const [foldingCurrentIndex, setFoldingCurrentIndex] = useState(null);
 
     return (
@@ -766,5 +766,7 @@ const MATKULDUMMIES = [
         "sks": 1
     }
 ]
+
+const DESCRIPTIONTEXT = 'Apapun jurusan yang sedang kamu tempuh maupun nama matakuliah nya, kamu bebas buat tambah atau hapus itu semua secara dinamis.'
 
 export default TambahHapus;
