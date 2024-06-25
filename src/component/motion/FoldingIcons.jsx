@@ -66,7 +66,9 @@ import styles from './style/folding_icons.module.css'
  * // Default animationOptions
  * const type = 'stateChanges';
  * const duration = 0.5;
- * const animationOptions = {type, duration}
+ * const onStart = undefined;
+ * const onComplete = undefined;
+ * const animationOptions = {type, duration, onStart, onComplete}
  * ```
  * @param {FoldingIconsProps.StateChangesOptions} props.stateChangesOptions
  * Pengaturan animasi tipe `'stateChanges'`
@@ -74,8 +76,9 @@ import styles from './style/folding_icons.module.css'
  * // Default stateChangesOptions
  * const useParentState = false;
  * const parentStateValue = false;
+ * const parentStateSetter = undefined;
  * const autoUpdateParentState = false;
- * const stateChangesOptions = {useParentState, parentStateSetter, autoUpdateParentState}
+ * const stateChangesOptions = {useParentState, parentStateValue, parentStateSetter, autoUpdateParentState}
  * ```
  * @param {FoldingIconsProps.RepeatOptions} props.repeatOptions
  * Pengaturan animasi tipe `'repeatOptions'`
