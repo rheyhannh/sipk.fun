@@ -319,7 +319,7 @@ const GridContainerMedium = ({ demoRef, matkuls }) => {
                     index={index}
                     demoRef={demoRef}
                     gridScroll={gridScroll}
-                    key={`tambahHapus_Matkul_${index}`}
+                    key={`tambahHapus_MatkulMedium_${index}`}
                 />
             ))}
         </motion.div>
