@@ -106,7 +106,7 @@ import { MotionProps } from 'framer-motion';
  */
 
 /**
- * @typedef {HTMLProps} ContainerProps
+ * @typedef {HTMLProps|MotionProps} ContainerProps
  */
 
 /**
