@@ -77,6 +77,7 @@ export default async function LandingPage() {
           {/* <Landing /> */}
           <Context sectionProps={{ id: 'context-1' }} />
           <Introduction />
+          <TambahHapus/>
           <Feature />
           <Context sectionProps={{ id: 'context-2' }} />
         </Wrapper>
