@@ -1,0 +1,177 @@
+.container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    color: var(--landing-copy);
+}
+
+.layout {
+    position: relative;
+    height: 100%;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 500px 1fr;
+    gap: 1rem;
+}
+
+.highlight {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: .5rem;
+}
+
+.highlight .box {
+    position: relative;
+    height: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 1rem;
+}
+
+.highlight .box .text_box {
+    position: relative;
+    width: max-content;
+    height: max-content;
+    font-weight: 600;
+    color: var(--landing-copyInverse);
+}
+
+.highlight .box .text_box span {
+    position: relative;
+    z-index: 2;
+    font-size: inherit;
+    color: inherit;
+    border-radius: inherit;
+    padding: inherit;
+}
+
+/* #region font-size, border-radius and padding should be adjust in higher viewport [IMPORTANT] */
+.highlight .box .text_box.tambah {
+    z-index: 6;
+    transform-origin: bottom left 1.5rem;
+    font-size: 1.2rem;
+    border-radius: calc(0.25 * 1.2rem);
+    padding: calc(0.25 * 1.2rem);
+}
+
+.highlight .box .text_box.tambah span {
+    background-color: var(--primary-color);
+}
+
+.highlight .box .text_box.hapus {
+    z-index: 5;
+    margin: .25rem 0 0 1.25rem;
+    font-size: 1.35rem;
+    border-radius: calc(0.25 * 1.35rem);
+    padding: calc(0.25 * 1.35rem);
+}
+
+.highlight .box .text_box.hapus span {
+    background-color: var(--danger-color);
+}
+
+.highlight .box .text_box.apapun {
+    z-index: 4;
+    margin: .25rem 0 0 2.5rem;
+    font-size: 1.5rem;
+    border-radius: calc(0.25 * 1.5rem);
+    padding: calc(0.25 * 1.5rem);
+}
+
+.highlight .box .text_box.apapun span {
+    background-color: #ffd274;
+}
+
+/* #endregion */
+
+.highlight .box .text_box:before {
+    background-color: var(--landing-body);
+    content: "";
+    height: 100%;
+    left: .925rem;
+    position: absolute;
+    top: .925rem;
+    width: 100%;
+    opacity: 0.4;
+    z-index: 1;
+    border-radius: inherit;
+}
+
+.highlight .box .folding {
+    position: absolute;
+    transform-origin: 200% -200%;
+}
+
+.highlight .description {
+    padding: .5rem;
+}
+
+.demo {
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    padding: 2rem;
+}
+
+.demo .matkul_grid {
+    position: relative;
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1rem;
+}
+
+.demo .matkul_card {
+    height: 80px;
+    background: var(--landing-foreground);
+    color: var(--landing-copyLighter);
+    padding: 1.4rem 1.8rem;
+    border: 1px solid var(--landing-border);
+    border-radius: 1.2rem;
+    font-weight: 500;
+}
+
+.demo .matkul_card_layout {
+    display: grid;
+    grid-template-columns: 2.85rem auto 2.85rem;
+    gap: 1rem;
+}
+
+.demo .matkul_card_icon {
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: .5rem;
+    color: var(--landing-copyInverse);
+    border-radius: 50%;
+    background-color: #FF6341;
+    font-size: 1.7rem;
+}
+
+.demo .matkul_card_icon.tambah {
+    background-color: var(--primary-color);
+}
+
+.demo .matkul_card_icon.hapus {
+    background-color: var(--danger-color);
+}
+
+.demo .matkul_card_name {
+    white-space: nowrap;
+    overflow: hidden;
+    text-transform: capitalize;
+    margin: auto 0;
+}
+
+.demo .matkul_card_details {
+    display: flex;
+    flex-direction: column;
+    align-self: center;
+    text-align: center;
+}
