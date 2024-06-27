@@ -8,6 +8,7 @@ import { Container } from '@/component/landing/Container';
 import { Wrapper } from '@/component/landing/Wrapper';
 import { Landing } from '@/component/landing/sections/Landing';
 import { Introduction } from '@/component/landing/sections/Introduction';
+import TambahHapus from '@/component/landing/sections/TambahHapus';
 import { Feature } from '@/component/landing/sections/Feature';
 import { Context } from '@/component/landing/sections/Context';
 import { Header } from '@/component/landing/Header';
