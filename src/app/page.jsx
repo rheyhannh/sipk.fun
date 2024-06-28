@@ -79,6 +79,7 @@ export default async function LandingPage() {
           <Context sectionProps={{ id: 'context-1' }} />
           <Introduction />
           <TambahHapus/>
+          <Universitas/>
           <Feature />
           <Context sectionProps={{ id: 'context-2' }} />
         </Wrapper>
