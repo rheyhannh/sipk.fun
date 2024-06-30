@@ -5,27 +5,16 @@ import * as ContextTypes from '@/types/context';
 // #endregion
 
 // #region REACT DEPEDENCY
-import { useContext, useEffect } from "react"
+import { useContext } from "react"
 // #endregion
 
 // #region COMPONENT DEPEDENCY
 import { LandingContext } from "@/component/provider/Landing"
-import { mutate } from 'swr';
-// #endregion
-
-// #region DATA DEPEDENCY
-import { useLocalTheme } from '@/data/core';
+import ThemeChanger from '../_test/ThemeChanger';
 // #endregion
 
 // #region STYLE DEPEDENCY
 import styles from './style/landing.module.css'
-// #endregion
-
-// #region ICON DEPEDENCY
-import {
-    FiSun,
-    FiMoon,
-} from "react-icons/fi";
 // #endregion
 
 /**
