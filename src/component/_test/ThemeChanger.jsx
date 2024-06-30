@@ -4,6 +4,10 @@
 import { HTMLProps, CSSProperties } from 'react';
 // #endregion
 
+// #region REACT DEPEDENCY
+import { useEffect } from 'react';
+// #endregion
+
 // #region COMPONENT DEPEDENCY
 import { mutate } from 'swr';
 // #endregion
