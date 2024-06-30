@@ -179,6 +179,44 @@ const ThemeChanger = (
     )
 }
 
+ThemeChanger.propTypes = {
+    options: PropTypes.shape({
+        size: PropTypes.oneOfType([
+            PropTypes.number,
+            PropTypes.string,
+        ]),
+        sizeIcon: PropTypes.oneOfType([
+            PropTypes.number,
+            PropTypes.string,
+        ]),
+        position: PropTypes.shape({
+            type: PropTypes.string,
+            preset: PropTypes.oneOf([
+                'top-left',
+                'top-center',
+                'top-right',
+                'bottom-left',
+                'bottom-center',
+                'bottom-right',
+                'middle-left',
+                'middle-center',
+                'middle-right',
+                'none'
+            ]),
+            offsetX: PropTypes.oneOfType([
+                PropTypes.number,
+                PropTypes.string,
+            ]),
+            offsetY: PropTypes.oneOfType([
+                PropTypes.number,
+                PropTypes.string,
+            ]),
+        }),
+    }),
+    style: PropTypes.object,
+    onClick: PropTypes.func,
+}
+
 // #region Utils
 
 /**
