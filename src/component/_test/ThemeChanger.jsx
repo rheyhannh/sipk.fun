@@ -177,6 +177,31 @@ const ThemeChanger = (
 
 // #region Utils
 
+/**
+ * Method untuk konversi parameter `offset` ke format tertentu dan mengidentifikasi apakah negatif atau tidak
+ * ```js
+ * // 'offset' dapat berupa salah satu dari kriteria berikut
+ * // 1. Angka (positif atau negatif, bulat atau decimal)
+ * const angka = [5, -2.25, 1.95, ...]; // Secara otomatis dikonversi ke 'px'
+ * // 2. String Angka (positif atau negatif, bulat atau decimal)
+ * const stringAngka = ['10', '-3.5', ...]; // Secara otomatis dikonversi ke 'px'
+ * // 3. String Angka dengan CSS Unit
+ * const cssUnit = ['25px', '-2rem', '-25vw', '2vmax', '-25%', ...];
+ * ```
+ * Untuk contoh output dapat lihat pada `example`
+ * @param {string|number} offset Nilai yang ingin dikonversi
+ * @returns {{value:string, negative:boolean}} Object dengan key `value` yang merupakan nilainya dan `negative` boolean apakah negatif
+ * @example 
+ * ```js
+ * console.log(convertOffset('50')); // {value: '50px', negative: false}
+ * console.log(convertOffset('-2.5')); // {value: '2.5px', negative: true}
+ * console.log(convertOffset('5rem')); // {value: '5rem', negative: false}
+ * console.log(convertOffset('-10%')); // {value: '10%', negative: true}
+ * console.log(convertOffset('invalid')); // {value: '0px', negative: false}
+ * console.log(convertOffset(1.25)); // {value: '1.25px', negative: false}
+ * console.log(convertOffset(-15)); // {value: '15px', negative: true}
+ * ```
+ */
 const convertOffset = (offset) => {
     const result = {
         value: '0px',
