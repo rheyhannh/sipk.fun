@@ -65,7 +65,7 @@ import {
 
 /**
  * Box dengan button untuk mengubah tema yang digunakan pada hook `useLocalTheme`. Hanya gunakan component ini untuk tujuan `testing` tidak untuk `production`
- * @param {HTMLProps & ThemeChangerProps}
+ * @param {HTMLProps & ThemeChangerProps} props Component props
  * @returns {JSX.Element} Rendered component
  */
 const ThemeChanger = (
