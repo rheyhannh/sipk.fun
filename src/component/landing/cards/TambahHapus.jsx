@@ -484,6 +484,33 @@ const GridContainerLarge = ({ foldingCurrentIndex }) => {
     }
 
     useEffect(() => {
+        const adjustMatkulSize = () => {
+            const width = window.innerWidth;
+
+            if (width >= 1414) {
+                setMaximumMatkul(12);
+                setMinimumMatkul(3);
+            } else if (width >= 1150) {
+                setMaximumMatkul(8);
+                setMinimumMatkul(2);
+            } else if (width >= 1024) {
+                setMaximumMatkul(4);
+                setMinimumMatkul(1);
+            } else {
+                return
+            }
+        }
+
+        adjustMatkulSize();
+
+        window.addEventListener('resize', adjustMatkulSize);
+
+        return () => {
+            window.removeEventListener('resize', adjustMatkulSize);
+        }
+    }, [])
+
+    useEffect(() => {
         if (foldingCurrentIndex === 0) {
             addMatkul();
         } else if (foldingCurrentIndex === 1) {
