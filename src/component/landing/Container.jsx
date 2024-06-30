@@ -30,7 +30,16 @@ export function Container({ children }) {
     return (
         <main>
             <div className={styles.container}>
-                <ThemeChanger/>
+                <ThemeChanger
+                    options={{
+                        position: {
+                            type: 'fixed',
+                            preset: 'top-left',
+                            offsetY: 92,
+                            offsetX: 42
+                        }
+                    }}
+                />
                 {children}
             </div>
         </main>
