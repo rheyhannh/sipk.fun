@@ -19,6 +19,47 @@ import {
 } from 'react-icons/fi';
 // #endregion
 
+/**
+ * @typedef {Object} ThemeChangerProps
+ * @property {Object} options
+ * Opsi yang dapat digunakan pada component `ThemeChanger`
+ * @property {string|number} [options.size]
+ * Box width dan height berupa angka atau string angka dengan unit css
+ * - Contoh : `15`, `'25px'`, `'1rem'`
+ * - Default : `42`
+ * @property {string|number} [options.sizeIcon]
+ * Icon size berupa angka atau string angka dengan unit css
+ * - Contoh : `15`, `'25px'`, `'1rem'`
+ * - Default : `'40%'`
+ * @property {Object} options.position
+ * @property {'absolute'|'fixed'|'sticky'} [options.position.type]
+ * Tipe `position` yang digunakan
+ * - Jika menggunakan `preset` posisi pada `options.position`, pilih salah satu dari `'absolute'|'fixed'|'sticky'` (default: `'absolute'`)
+ * @property {'top-left'|'top-center'|'top-right'|'bottom-left'|'bottom-center'|'bottom-right'|'middle-left'|'middle-center'|'middle-right'|'none'} [options.position.preset]
+ * Preset posisi yang digunakan untuk meletakan component
+ * - Default : `'none'`
+ * @property {string|number} options.position.offsetX
+ * Offset untuk menggeser component secara horizontal, dapat berupa angka, string angka atau string angka dengan unit css.
+ * - Angka atau string angka (`3.25, -25, '10', '-12.5', etc`) secara otomatis akan dikonversi ke `px`
+ * - String angka dengan unit css (`'2rem', '-3.25vw', '25px', '0.25vmax', '-35%', etc`)
+ * 
+ * Hanya dapat digunakan jika preset posisi tidak `'none'`
+ * @property {string|number} options.position.offsetY
+ * Offset untuk menggeser component secara vertikal, dapat berupa angka, string angka atau string angka dengan unit css
+ * - Angka atau string angka (`3.25, -25, '10', '-12.5', etc`) secara otomatis akan dikonversi ke `px`
+ * - String angka dengan unit css (`'2rem', '-3.25vw', '25px', '0.25vmax', '-35%', etc`)
+ * 
+ * Hanya dapat digunakan jika preset posisi tidak `'none'`
+ * @property {CSSProperties} style
+ * Custom style yang digunakan
+ * - Note : Style yang digunakan pada props ini akan mengoverride opsi style yang digunakan pada `options`
+ */
+
+/**
+ * Box dengan button untuk mengubah tema yang digunakan pada hook `useLocalTheme`. Hanya gunakan component ini untuk tujuan `testing` tidak untuk `production`
+ * @param {HTMLProps & ThemeChangerProps}
+ * @returns {JSX.Element} Rendered component
+ */
 const ThemeChanger = (
     {
         options = {
