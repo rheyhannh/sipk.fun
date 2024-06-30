@@ -125,20 +125,25 @@
 /**
  * @typedef UniversitasData
  * @type {object}
- * @property {number} id Id universitas
- * @property {string} nama Nama universitas
- * @property {string} short Singkatan universitas, ex: `'UB', 'ITB', etc`
+ * @property {number} id Id universitas dalam bentuk integer
+ * @property {string} nama Nama universitas dengan format pascal case
+ * - Contoh : `'Universitas Brawijaya'`
+ * @property {string} short Singkatan universitas dengan format uppercase
+ * - Contoh : `'UB', 'ITB', 'UNDIP'`
  * @property {object} penilaian Penilaian universitas
- * @property {string} penilaian.cat Kategori penilaian, ex: `'baik', 'kurang', etc`
+ * @property {?string} penilaian.cat Kategori penilaian
+ * - Contoh : `'baik', 'kurang', etc`
+ * - Note : Pada beberapa universitas kategori tidak tersedia, gunakan optional chaining `?.` atau nullish coalescing `??` untuk menghindari error
  * @property {'success'|'warning'|'danger'|'crimson'} penilaian.style Style color penilaian
  * @property {float} penilaian.weight Bobot penilaian
  * @property {object} assets Assets universitas
- * @property {string} assets.logo Logo universitas dalam link atau path, ex: `https://static-assets.com/logo_itb.png`
+ * @property {string} assets.logo Logo universitas dalam bentuk filename
+ * - Contoh : `'logo_itb.png'`
  * @property {string} assets.desc Deskripsi universitas
  * @property {object} assets.style Universitas custom style
- * @property {object} assets.style.color Universitas custom color
- * @property {string} assets.style.color.primary Universitas primary color
- * @property {string} assets.style.color.secondary Universitas secondary color
+ * @property {object} assets.style.color Universitas custom color dalam bentuk `hex`
+ * @property {string} assets.style.color.primary Universitas primary hex color, ex: `'#FBEA04'`
+ * @property {string} assets.style.color.secondary Universitas secondary hex color, ex: `'#252422'`
  * @property {Date} created_at Tanggal universitas ditambahkan
  */
 
