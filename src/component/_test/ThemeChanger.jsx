@@ -12,6 +12,10 @@ import { mutate } from 'swr';
 import { useLocalTheme } from '@/data/core';
 // #endregion
 
+// #region UTIL DEPEDENCY
+import PropTypes from 'prop-types';
+// #endregion
+
 // #region ICON DEPEDENCY
 import {
     FiSun,
