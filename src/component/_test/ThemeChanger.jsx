@@ -164,7 +164,7 @@ const ThemeChanger = (
     }
 
     const handleOnClick = (event) => {
-        handleChangeTheme(theme === 'dark' ? 'light' : 'dark')
+        handleChangeTheme(theme === 'dark' ? 'light' : 'dark');
         if (onClickCallback) { onClickCallback(event); }
     }
 
