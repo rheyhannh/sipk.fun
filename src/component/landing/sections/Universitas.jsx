@@ -139,6 +139,12 @@ const ShowCase = () => {
  * State berupa index dari `universitas` yang aktif
  * - Note : Intial state bernilai `null`
  */
+
+/**
+ * Element yang menampilkan detail universitas yang aktif pada state `selectedUniversitas`
+ * @param {HTMLProps & DetailsProps} props Component props
+ * @returns {JSX.Element} Rendered component
+ */
 const Details = ({ universitas, selectedUniversitas, ...props }) => {
     return (
         <div
