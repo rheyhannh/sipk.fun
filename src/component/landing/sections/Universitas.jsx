@@ -4,6 +4,10 @@
 import * as ContextTypes from '@/types/context.js'
 // #endregion
 
+// #region NEXT DEPEDENCY
+import Image from 'next/image'
+// #endregion
+
 // #region REACT DEPEDENCY
 import { useContext } from 'react';
 // #endregion
