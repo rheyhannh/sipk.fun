@@ -158,6 +158,17 @@ const Details = ({ universitas, selectedUniversitas, ...props }) => {
     )
 }
 
+/**
+ * Props yang digunakan pada component `Carousel`
+ * @typedef {Object} CarouselProps
+ * @property {Array<SupabaseTypes.UniversitasData>} universitas
+ * Array yang berisikan data universitas yang tersedia
+ * @property {?number} selectedUniversitas
+ * State berupa index dari `universitas` yang aktif
+ * - Note : Intial state bernilai `null`
+ * @property {(value:number) => void} setSelectedUniversitas
+ * Method untuk set `selectedUniversitas` dengan parameter `value` berupa number dari `universitas` yang aktif
+ */
 const Carousel = ({ universitas, selectedUniversitas, setSelectedUniversitas, ...props }) => {
     const [test, setTest] = useState([]);
 
