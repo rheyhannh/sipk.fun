@@ -102,6 +102,8 @@ const Highlight = ({ children }) => {
 // #region Showcase Components 
 
 const ShowCase = () => {
+    const [selectedUniversitas, setSelectedUniversitas] = useState(null);
+
     return (
         <div
             className={universitasStyles.showcase}
