@@ -121,7 +121,7 @@ const ShowCase = () => {
     )
 }
 
-const Details = ({ ...props }) => {
+const Details = ({ selectedUniversitas, ...props }) => {
     return (
         <div
             className={universitasStyles.details}
@@ -134,7 +134,7 @@ const Details = ({ ...props }) => {
     )
 }
 
-const Carousel = ({ ...props }) => {
+const Carousel = ({ selectedUniversitas, setSelectedUniversitas, ...props }) => {
     /** @type {ContextTypes.LandingContext} */
     const { data: { universitas } } = useContext(LandingContext);
     const [test, setTest] = useState([]);
