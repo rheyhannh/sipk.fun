@@ -169,6 +169,12 @@ const Details = ({ universitas, selectedUniversitas, ...props }) => {
  * @property {(value:number) => void} setSelectedUniversitas
  * Method untuk set `selectedUniversitas` dengan parameter `value` berupa number dari `universitas` yang aktif
  */
+
+/**
+ * Element yang menampilkan universitas yang tersedia
+ * @param {HTMLProps & CarouselProps} props Component props
+ * @returns {JSX.Element} Rendered component
+ */
 const Carousel = ({ universitas, selectedUniversitas, setSelectedUniversitas, ...props }) => {
     const [test, setTest] = useState([]);
 
