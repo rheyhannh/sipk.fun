@@ -14,6 +14,7 @@ import { useContext, useState } from 'react';
 
 // #region COMPONENT DEPEDENCY
 import { LandingContext } from '@/component/provider/Landing';
+import { motion, AnimatePresence } from 'framer-motion';
 // #endregion
 
 // #region STYLE DEPEDENCY
