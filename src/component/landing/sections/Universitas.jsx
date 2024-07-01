@@ -130,6 +130,15 @@ const ShowCase = () => {
     )
 }
 
+/**
+ * Props yang digunakan pada component `Details`
+ * @typedef {Object} DetailsProps
+ * @property {Array<SupabaseTypes.UniversitasData>} universitas
+ * Array yang berisikan data universitas yang tersedia
+ * @property {?number} selectedUniversitas
+ * State berupa index dari `universitas` yang aktif
+ * - Note : Intial state bernilai `null`
+ */
 const Details = ({ universitas, selectedUniversitas, ...props }) => {
     return (
         <div
