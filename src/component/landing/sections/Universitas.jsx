@@ -28,7 +28,18 @@ const Universitas = () => {
 
     return (
         <Section>
-            <h1>Universitas Section</h1>
+            <Container>
+                <Layout>
+                    <Highlight>
+
+                    </Highlight>
+
+                    <ShowCase>
+                        <Details key={'universitas_details'} />
+                        <Carousel key={'universitas_carousel'} />
+                    </ShowCase>
+                </Layout>
+            </Container>
         </Section>
     )
 }
