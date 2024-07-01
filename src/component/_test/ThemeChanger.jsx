@@ -196,6 +196,8 @@ const ThemeChanger = (
 }
 
 ThemeChanger.propTypes = {
+    useInterval: PropTypes.bool,
+    interval: PropTypes.number,
     options: PropTypes.shape({
         size: PropTypes.oneOfType([
             PropTypes.number,
