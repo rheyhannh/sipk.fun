@@ -29,6 +29,12 @@ import {
 
 /**
  * @typedef {Object} ThemeChangerProps
+ * @property {boolean} [useInterval] 
+ * Boolean untuk mengganti tema secara otomatis tanpa perlu klik element. Ubah interval pada props `interval`
+ * - Default : `false`
+ * @property {number} [interval]
+ * Interval pergantian tema secara otomatis dalam detik
+ * - Default : `5`
  * @property {Object} options
  * Opsi yang dapat digunakan pada component `ThemeChanger`
  * @property {string|number} [options.size]
