@@ -106,6 +106,18 @@ const ShowCase = ({ children }) => {
     )
 }
 
+const Details = ({ ...props }) => {
+    return (
+        <div
+            className={universitasStyles.details}
+            style={{
+                border: '1px solid aqua',
+            }}
+            {...props}
+        >
+        </div>
+    )
+}
 // #endregion
 
 export default Universitas;
