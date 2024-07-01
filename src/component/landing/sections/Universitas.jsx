@@ -90,6 +90,22 @@ const Highlight = ({ children }) => {
 }
 
 // #endregion
+
+// #region Showcase Components 
+
+const ShowCase = ({ children }) => {
+    return (
+        <div
+            className={universitasStyles.showcase}
+            style={{
+                border: '1.5px solid yellow'
+            }}
+        >
+            {children}
+        </div>
+    )
+}
+
 // #endregion
 
 export default Universitas;
