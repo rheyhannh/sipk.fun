@@ -9,7 +9,7 @@ import Image from 'next/image'
 // #endregion
 
 // #region REACT DEPEDENCY
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 // #endregion
 
 // #region COMPONENT DEPEDENCY
