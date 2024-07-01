@@ -170,6 +170,16 @@ const ThemeChanger = (
         if (onClickCallback) { onClickCallback(event); }
     }
 
+    useEffect(() => {
+        if (useInterval) {
+            const intervalId = setInterval(() => {
+                handleChangeTheme(theme === 'dark' ? 'light' : 'dark');
+            }, interval * 1000);
+
+            return () => clearInterval(intervalId);
+        }
+    }, [useInterval, interval, handleChangeTheme, theme]);
+
     return (
         <div
             style={{
