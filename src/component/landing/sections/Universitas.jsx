@@ -46,6 +46,18 @@ const Section = ({ children }) => {
     )
 }
 
+const Container = ({ children }) => {
+    return (
+        <div
+            className={universitasStyles.container}
+            style={{
+                border: '2.5px solid pink',
+            }}
+        >
+            {children}
+        </div>
+    )
+}
 // #endregion
 
 export default Universitas;
