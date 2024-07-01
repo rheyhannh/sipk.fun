@@ -70,6 +70,8 @@ import {
  */
 const ThemeChanger = (
     {
+        useInterval = false,
+        interval = 5,
         options = {
             size: 42,
             sizeIcon: '40%',
