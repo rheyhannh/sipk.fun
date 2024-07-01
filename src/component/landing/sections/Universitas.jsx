@@ -73,6 +73,23 @@ const Layout = ({ children }) => {
 }
 
 // #endregion
+
+// #region Highlight Components
+
+const Highlight = ({ children }) => {
+    return (
+        <div
+            className={universitasStyles.highlight}
+            style={{
+                border: '1.5px solid green'
+            }}
+        >
+            {children}
+        </div>
+    )
+}
+
+// #endregion
 // #endregion
 
 export default Universitas;
