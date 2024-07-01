@@ -112,9 +112,12 @@ const ShowCase = () => {
             }}
         >
             <Details
+                selectedUniversitas={selectedUniversitas}
                 key={'universitas_details'}
             />
             <Carousel
+                selectedUniversitas={selectedUniversitas}
+                setSelectedUniversitas={setSelectedUniversitas}
                 key={'universitas_carousel'}
             />
         </div>
@@ -138,7 +141,6 @@ const Carousel = ({ selectedUniversitas, setSelectedUniversitas, ...props }) => 
     /** @type {ContextTypes.LandingContext} */
     const { data: { universitas } } = useContext(LandingContext);
     const [test, setTest] = useState([]);
-    const [selectedItem, setSelectedItem] = useState(null);
 
     const addTest = () => {
         const placeAt = test.length > 0 ? Math.floor(Math.random() * test.length) : 0;
@@ -197,13 +199,13 @@ const Carousel = ({ selectedUniversitas, setSelectedUniversitas, ...props }) => 
                         initial={{ scale: 0 }}
                         animate={{
                             scale: 1,
-                            boxShadow: selectedItem === index ?
+                            boxShadow: selectedUniversitas === index ?
                                 `0 3px 10px ${item.assets.style.color.primary ?? 'rgba(0,0,0,.5)'}`
                                 :
                                 `0 3px 10px rgba(0,0,0,.25)`
                         }}
                         exit={{ opacity: 0 }}
-                        onTap={() => setSelectedItem(index)}
+                        onTap={() => setSelectedUniversitas(index)}
                         layout
                     >
                         <Image
