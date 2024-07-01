@@ -2,6 +2,8 @@
 
 // #region TYPE DEPEDENCY
 import * as ContextTypes from '@/types/context.js';
+import * as SupabaseTypes from '@/types/supabase.js';
+import { HTMLProps } from 'react';
 // #endregion
 
 // #region NEXT DEPEDENCY
