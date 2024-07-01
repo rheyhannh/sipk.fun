@@ -102,6 +102,8 @@ const Highlight = ({ children }) => {
 // #region Showcase Components 
 
 const ShowCase = () => {
+    /** @type {ContextTypes.LandingContext} */
+    const { data: { universitas } } = useContext(LandingContext);
     const [selectedUniversitas, setSelectedUniversitas] = useState(null);
 
     return (
