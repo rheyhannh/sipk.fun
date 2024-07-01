@@ -34,10 +34,7 @@ const Universitas = () => {
 
                     </Highlight>
 
-                    <ShowCase>
-                        <Details key={'universitas_details'} />
-                        <Carousel key={'universitas_carousel'} />
-                    </ShowCase>
+                    <ShowCase />
                 </Layout>
             </Container>
         </Section>
@@ -104,7 +101,7 @@ const Highlight = ({ children }) => {
 
 // #region Showcase Components 
 
-const ShowCase = ({ children }) => {
+const ShowCase = () => {
     return (
         <div
             className={universitasStyles.showcase}
@@ -112,7 +109,12 @@ const ShowCase = ({ children }) => {
                 border: '1.5px solid yellow'
             }}
         >
-            {children}
+            <Details
+                key={'universitas_details'}
+            />
+            <Carousel
+                key={'universitas_carousel'}
+            />
         </div>
     )
 }
