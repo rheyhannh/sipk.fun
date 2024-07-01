@@ -58,6 +58,21 @@ const Container = ({ children }) => {
         </div>
     )
 }
+
+const Layout = ({ children }) => {
+    return (
+        <div
+            className={universitasStyles.layout}
+            style={{
+                border: '2px solid red',
+            }}
+        >
+            {children}
+        </div>
+    )
+}
+
+// #endregion
 // #endregion
 
 export default Universitas;
