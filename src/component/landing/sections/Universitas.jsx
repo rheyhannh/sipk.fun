@@ -3,7 +3,6 @@
 // #region TYPE DEPEDENCY
 import * as ContextTypes from '@/types/context.js';
 import * as SupabaseTypes from '@/types/supabase.js';
-import { HTMLProps } from 'react';
 // #endregion
 
 // #region NEXT DEPEDENCY
@@ -11,7 +10,7 @@ import Image from 'next/image'
 // #endregion
 
 // #region REACT DEPEDENCY
-import { useContext, useState } from 'react';
+import * as React from 'react';
 // #endregion
 
 // #region COMPONENT DEPEDENCY
@@ -26,7 +25,7 @@ import universitasStyles from '../style/universitas.module.css';
 
 const Universitas = () => {
     /** @type {ContextTypes.LandingContext} */
-    const { isRichContent, isTouchDevice, isAccessTokenExist } = useContext(LandingContext);
+    const { isRichContent, isTouchDevice, isAccessTokenExist } = React.useContext(LandingContext);
 
     return (
         <Section>
@@ -105,8 +104,8 @@ const Highlight = ({ children }) => {
 
 const ShowCase = () => {
     /** @type {ContextTypes.LandingContext} */
-    const { data: { universitas } } = useContext(LandingContext);
-    const [selectedUniversitas, setSelectedUniversitas] = useState(null);
+    const { data: { universitas } } = React.useContext(LandingContext);
+    const [selectedUniversitas, setSelectedUniversitas] = React.useState(null);
 
     return (
         <div
@@ -142,8 +141,8 @@ const ShowCase = () => {
 
 /**
  * Element yang menampilkan detail universitas yang aktif pada state `selectedUniversitas`
- * @param {HTMLProps & DetailsProps} props Component props
- * @returns {JSX.Element} Rendered component
+ * @param {React.HTMLAttributes<HTMLDivElement> & DetailsProps} props Component props
+ * @returns {React.ReactElement} Rendered component
  */
 const Details = ({ universitas, selectedUniversitas, ...props }) => {
     return (
@@ -172,11 +171,11 @@ const Details = ({ universitas, selectedUniversitas, ...props }) => {
 
 /**
  * Element yang menampilkan universitas yang tersedia
- * @param {HTMLProps & CarouselProps} props Component props
- * @returns {JSX.Element} Rendered component
+ * @param {React.HTMLAttributes<HTMLDivElement> & CarouselProps} props Component props
+ * @returns {React.ReactElement} Rendered component
  */
 const Carousel = ({ universitas, selectedUniversitas, setSelectedUniversitas, ...props }) => {
-    const [test, setTest] = useState([]);
+    const [test, setTest] = React.useState([]);
 
     const addTest = () => {
         const placeAt = test.length > 0 ? Math.floor(Math.random() * test.length) : 0;
