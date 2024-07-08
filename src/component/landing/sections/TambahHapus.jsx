@@ -231,6 +231,12 @@ const Layout = ({ children, foldingCurrentIndex }) => {
 
 // #region Highlight Components
 
+/**
+ * Children wrapper dengan css class `.highlight`
+ * - Module : `tambah_hapus.module.css`
+ * @param {React.HTMLAttributes<HTMLDivElement>} props Highlight props
+ * @returns {React.ReactElement} Rendered component
+ */
 const Highlight = ({ children }) => (
     <motion.div
         className={tambahHapusStyles.highlight}
