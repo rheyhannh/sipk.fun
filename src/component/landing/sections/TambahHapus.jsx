@@ -331,6 +331,17 @@ const AnimatedFoldingIcons = ({ setFoldingCurrentIndex, interval = 10, onlyPlayI
     )
 }
 
+/**
+ * Children wrapper dengan css class `.description`
+ * - Module : `tambah_hapus.module.css`
+ * 
+ * Juga menggunakan tambahan style sebagai berikut,
+ * ```js
+ * const style = { overflow: 'hidden', zIndex: 7 }
+ * ```
+ * @param {React.HTMLAttributes<HTMLDivElement>} props Description props
+ * @returns {React.ReactElement} Rendered component
+ */
 const Description = ({ children }) => (
     <motion.div
         className={tambahHapusStyles.description}
