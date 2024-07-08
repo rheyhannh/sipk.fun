@@ -15,6 +15,10 @@ import FoldingIcons from '@/component/motion/FoldingIcons';
 import AnimatedTextBox from '@/component/motion/TextBox';
 // #endregion
 
+// #region DATA DEPEDENCY
+import { MatkulDummies, MatkulDummiesProps } from '../variables/MatkulDummies';
+// #endregion
+
 // #region UTIL DEPEDENCY
 import { getCommonAnimationVariants } from '@/component/motion/_helper';
 // #endregion
