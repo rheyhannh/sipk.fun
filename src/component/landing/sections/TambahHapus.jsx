@@ -358,6 +358,12 @@ const Description = ({ children }) => (
 
 // #region Demo Components
 
+/**
+ * Children wrapper dengan css class `.demo`
+ * - Module : `tambah_hapus.module.css`
+ * @param {React.HTMLAttributes<HTMLDivElement>} props Demo props
+ * @returns {React.ReactElement} Rendered component
+ */
 const Demo = ({ children }) => (
     <div
         className={tambahHapusStyles.demo}
