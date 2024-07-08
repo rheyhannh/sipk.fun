@@ -90,7 +90,11 @@ const TambahHapus = () => {
                                 }}
                             />
 
-                            <AnimatedFoldingIcons setFoldingCurrentIndex={setFoldingCurrentIndex} />
+                            <AnimatedFoldingIcons
+                                setFoldingCurrentIndex={setFoldingCurrentIndex}
+                                interval={4}
+                                onlyPlayInView={true}
+                            />
                         </Box>
 
                         <Description>
