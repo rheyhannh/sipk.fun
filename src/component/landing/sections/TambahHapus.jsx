@@ -156,6 +156,12 @@ const Section = ({ children }) => (
     </section>
 )
 
+/**
+ * Children wrapper dengan css class `.container`
+ * - Module : `tambah_hapus.module.css`
+ * @param {React.HTMLAttributes<HTMLDivElement>} props Container props
+ * @returns {React.ReactElement} Rendered component
+ */
 const Container = ({ children }) => (
     <div
         className={tambahHapusStyles.container}
