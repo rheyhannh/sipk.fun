@@ -493,6 +493,24 @@ const MatkulGrid = ({ foldingCurrentIndex }) => {
     )
 }
 
+/**
+ * Props yang digunakan component `MatkulCard`
+ * @typedef {Object} MatkulCardProps
+ * @property {MatkulDummiesProps} item
+ * Matakuliah dummies
+ * @property {?number} foldingCurrentIndex
+ * State indeks component `folding` yang sedang aktif berupa angka dengan penjelasan berikut,
+ * - `0` : State tambah dengan icon plus 
+ * - `1` : State hapus dengan icon trash
+ * - `2` : State sesukamu dengan icon like
+ * - Initial : `null`
+ */
+
+/**
+ * Matakuliah Card
+ * @param {React.HTMLAttributes<HTMLDivElement> & MotionProps & MatkulCardProps} props MatkulCard props
+ * @returns {React.ReactElement} Rendered component
+ */
 const MatkulCard = ({ item, foldingCurrentIndex, ...props }) => (
     <motion.div
         className={tambahHapusStyles.matkul_card}
