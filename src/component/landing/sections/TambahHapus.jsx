@@ -170,6 +170,23 @@ const Container = ({ children }) => (
     </div>
 )
 
+/**
+ * Props yang digunakan component `Layout`
+ * @typedef {Object} LayoutProps
+ * @property {?number} foldingCurrentIndex
+ * State indeks component `folding` yang sedang aktif berupa angka dengan penjelasan berikut,
+ * - `0` : State tambah dengan icon plus 
+ * - `1` : State hapus dengan icon trash
+ * - `2` : State sesukamu dengan icon like
+ * - Initial : `null`
+ */
+
+/**
+ * Children wrapper dengan css class `.layout`
+ * - Module : `tambah_hapus.module.css`
+ * @param {React.HTMLAttributes<HTMLDivElement> & LayoutProps} props Layout props
+ * @returns {React.ReactElement} Rendered component
+ */
 const Layout = ({ children, foldingCurrentIndex }) => {
     const animControls = useAnimation();
 
