@@ -156,15 +156,13 @@ const Section = ({ children }) => (
     </section>
 )
 
-const Container = ({ children }) => {
-    return (
-        <div
-            className={tambahHapusStyles.container}
-        >
-            {children}
-        </div>
-    )
-}
+const Container = ({ children }) => (
+    <div
+        className={tambahHapusStyles.container}
+    >
+        {children}
+    </div>
+)
 
 const Layout = ({ children, foldingCurrentIndex }) => {
     const animControls = useAnimation();
