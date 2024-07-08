@@ -141,6 +141,12 @@ const TambahHapus = () => {
 
 // #region Main Components
 
+/**
+ * Children wrapper dengan css class `.section .tambah_hapus` dengan atribut html id `'tambah_hapus'`
+ * - Module : `main.module.css`
+ * @param {React.HTMLAttributes<HTMLDivElement>} props Section props
+ * @returns {React.ReactElement} Rendered component
+ */
 const Section = ({ children }) => (
     <section
         id='tambah_hapus'
