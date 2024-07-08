@@ -5,7 +5,7 @@ import * as ContextTypes from '@/types/context.js'
 // #endregion
 
 // #region REACT DEPEDENCY
-import { useState, useContext, useEffect, useRef } from 'react';
+import * as React from 'react';
 // #endregion
 
 // #region COMPONENT DEPEDENCY
@@ -36,10 +36,10 @@ import tambahHapusStyles from '../style/tambah_hapus.module.css';
 
 const TambahHapus = () => {
     /** @type {ContextTypes.LandingContext} */
-    const { isRichContent, isTouchDevice, isAccessTokenExist } = useContext(LandingContext);
+    const { isRichContent, isTouchDevice, isAccessTokenExist } = React.useContext(LandingContext);
 
     const descriptionArray = DESCRIPTIONTEXT.split(' ');
-    const [foldingCurrentIndex, setFoldingCurrentIndex] = useState(null);
+    const [foldingCurrentIndex, setFoldingCurrentIndex] = React.useState(null);
 
     return (
         <Section>
@@ -160,7 +160,7 @@ const Container = ({ children }) => {
 const Layout = ({ children, foldingCurrentIndex }) => {
     const animControls = useAnimation();
 
-    useEffect(() => {
+    React.useEffect(() => {
         if (foldingCurrentIndex === 0) {
             animControls.start('introCardBox_apapun_unhighlight');
             animControls.start('introCardBox_tambah_highlight');
@@ -218,10 +218,10 @@ const Box = ({ children }) => (
 )
 
 const AnimatedFoldingIcons = ({ setFoldingCurrentIndex, interval = 10, onlyPlayInView = true }) => {
-    const [animateState, setAnimateState] = useState(false);
-    const [inView, setInView] = useState(false);
+    const [animateState, setAnimateState] = React.useState(false);
+    const [inView, setInView] = React.useState(false);
 
-    useEffect(() => {
+    React.useEffect(() => {
         let intervalId;
 
         if (!onlyPlayInView || inView) {
@@ -299,9 +299,9 @@ const Demo = ({ children }) => (
 )
 
 const MatkulGrid = ({ foldingCurrentIndex }) => {
-    const [matkuls, setMatkuls] = useState(MatkulDummies.slice(0, 3));
-    const [maximumMatkul, setMaximumMatkul] = useState(3);
-    const [minimumMatkul, setMinimumMatkul] = useState(1);
+    const [matkuls, setMatkuls] = React.useState(MatkulDummies.slice(0, 3));
+    const [maximumMatkul, setMaximumMatkul] = React.useState(3);
+    const [minimumMatkul, setMinimumMatkul] = React.useState(1);
 
     const addMatkul = () => {
         if (matkuls.length >= maximumMatkul) return;
@@ -358,7 +358,7 @@ const MatkulGrid = ({ foldingCurrentIndex }) => {
         setMatkuls(shuffledMatkuls);
     }
 
-    useEffect(() => {
+    React.useEffect(() => {
         const adjustMatkulSize = () => {
             const width = window.innerWidth;
 
@@ -385,7 +385,7 @@ const MatkulGrid = ({ foldingCurrentIndex }) => {
         }
     }, [])
 
-    useEffect(() => {
+    React.useEffect(() => {
         if (foldingCurrentIndex === 0) {
             addMatkul();
         } else if (foldingCurrentIndex === 1) {
