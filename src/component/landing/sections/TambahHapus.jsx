@@ -122,7 +122,7 @@ const TambahHapus = () => {
                     </Highlight>
 
                     <Demo>
-                        <MatkulGrid foldingCurrentIndex={foldingCurrentIndex}/>
+                        <MatkulGrid foldingCurrentIndex={foldingCurrentIndex} />
                     </Demo>
                 </Layout>
             </Container>
