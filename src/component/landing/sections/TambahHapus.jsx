@@ -141,16 +141,14 @@ const TambahHapus = () => {
 
 // #region Main Components
 
-const Section = ({ children }) => {
-    return (
-        <section
-            id='tambah_hapus'
-            className={`${mainStyles.section} ${mainStyles.tambah_hapus}`}
-        >
-            {children}
-        </section>
-    )
-}
+const Section = ({ children }) => (
+    <section
+        id='tambah_hapus'
+        className={`${mainStyles.section} ${mainStyles.tambah_hapus}`}
+    >
+        {children}
+    </section>
+)
 
 const Container = ({ children }) => {
     return (
