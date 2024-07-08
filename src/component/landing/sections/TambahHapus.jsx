@@ -259,6 +259,21 @@ const Box = ({ children }) => (
     </div>
 )
 
+/**
+ * Wrapper component `FoldingIcons` dengan css class `.folding`
+ * - Module : `tambah_hapus.module.css`
+ * @param {Object} props AnimatedFoldingIcons props
+ * @param {(newState:number) => void} props.setFoldingCurrentIndex
+ * Callback untuk update `foldingCurrentIndex` state
+ * @param {number} [props.interval]
+ * Interval animasi pergantian state atau icon yang digunakan dalam detik
+ * - Default : `10`
+ * @param {boolean} [props.onlyPlayInView]
+ * Saat `true` animasi hanya akan dimainkan saat element terlihat atau scroll posisi berada pada element terletak.
+ * Sedangkan saat `false` animasi tetap dimainkan walaupun element tidak terlihat.
+ * - Default : `true`
+ * @returns {React.ReactElement} Rendered component
+ */
 const AnimatedFoldingIcons = ({ setFoldingCurrentIndex, interval = 10, onlyPlayInView = true }) => {
     const [animateState, setAnimateState] = React.useState(false);
     const [inView, setInView] = React.useState(false);
