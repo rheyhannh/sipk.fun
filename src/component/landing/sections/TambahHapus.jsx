@@ -245,6 +245,12 @@ const Highlight = ({ children }) => (
     </motion.div>
 )
 
+/**
+ * Children wrapper dengan css class `.box`
+ * - Module : `tambah_hapus.module.css`
+ * @param {React.HTMLAttributes<HTMLDivElement>} props Box props
+ * @returns {React.ReactElement} Rendered component
+ */
 const Box = ({ children }) => (
     <div
         className={tambahHapusStyles.box}
