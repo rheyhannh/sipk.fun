@@ -147,9 +147,6 @@ const Container = ({ children }) => {
     return (
         <div
             className={tambahHapusStyles.container}
-            style={{
-                border: '2.5px solid pink',
-            }}
         >
             {children}
         </div>
@@ -175,9 +172,6 @@ const Layout = ({ children, foldingCurrentIndex }) => {
     return (
         <motion.div
             className={tambahHapusStyles.layout}
-            style={{
-                border: '2px solid red',
-            }}
             initial={'hide'}
             animate={animControls}
             whileInView={[
@@ -206,9 +200,6 @@ const Layout = ({ children, foldingCurrentIndex }) => {
 const Highlight = ({ children }) => (
     <motion.div
         className={tambahHapusStyles.highlight}
-        style={{
-            border: '1px solid yellow'
-        }}
     >
         {children}
     </motion.div>
@@ -217,9 +208,6 @@ const Highlight = ({ children }) => (
 const Box = ({ children }) => (
     <div
         className={tambahHapusStyles.box}
-        style={{
-            border: '.5px solid purple'
-        }}
     >
         {children}
     </div>
@@ -288,7 +276,6 @@ const Description = ({ children }) => (
         style={{
             overflow: 'hidden',
             zIndex: 7,
-            border: '1px grey solid'
         }}
     >
         {children}
@@ -302,9 +289,6 @@ const Description = ({ children }) => (
 const Demo = ({ children }) => (
     <div
         className={tambahHapusStyles.demo}
-        style={{
-            border: '1px solid green',
-        }}
     >
         {children}
     </div>
