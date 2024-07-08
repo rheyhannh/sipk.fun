@@ -372,6 +372,17 @@ const Demo = ({ children }) => (
     </div>
 )
 
+/**
+ * Matakuliah Grid Wrapper
+ * @param {Object} props MatkulGrid props
+ * @param {?number} props.foldingCurrentIndex
+ * State indeks component `folding` yang sedang aktif berupa angka dengan penjelasan berikut,
+ * - `0` : State tambah dengan icon plus 
+ * - `1` : State hapus dengan icon trash
+ * - `2` : State sesukamu dengan icon like
+ * - Initial : `null`
+ * @returns {React.ReactElement} Rendered component
+ */
 const MatkulGrid = ({ foldingCurrentIndex }) => {
     const [matkuls, setMatkuls] = React.useState(MatkulDummies.slice(0, 3));
     const [maximumMatkul, setMaximumMatkul] = React.useState(3);
