@@ -1,7 +1,8 @@
 'use client'
 
 // #region TYPE DEPEDENCY
-import * as ContextTypes from '@/types/context.js'
+import * as ContextTypes from '@/types/context.js';
+import { MotionProps } from 'framer-motion';
 // #endregion
 
 // #region REACT DEPEDENCY
