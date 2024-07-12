@@ -140,8 +140,14 @@ const MatkulList = (
             }
 
             const x = indexArray[i];
-            clone.splice(x, 1, available[Math.floor(Math.random() * available.length)]);
-            setMatkul([...clone]);
+
+            if (available.length) {
+                const indexNewItem = Math.floor(Math.random() * available.length);
+                const newItem = available[indexNewItem];
+                available.splice(indexNewItem, 1); // Remove picked item in available array to ensure matkul always unique
+                clone.splice(x, 1, newItem); // Update clone array
+                setMatkul([...clone]); // setMatkul
+            }
 
             setTimeout(() => {
                 updateWithDelay(indexArray, i + 1);
