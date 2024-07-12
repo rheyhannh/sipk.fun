@@ -825,6 +825,19 @@ const MatkulDummies = [
     }
 ]
 
+/**
+ * @default
+ * @constant 
+ * @description
+ * Object dengan pair `key` nilai string dan `value` bobot number yang digunakan `MatkulDummies`
+ * @example
+ * ```js
+ * console.log(MatkulDummiesNilaiBobot['A']) // 4
+ * console.log(MatkulDummiesNilaiBobot['B']) // 3
+ * console.log(MatkulDummiesNilaiBobot['D+']) // 1.75
+ * console.log(MatkulDummiesNilaiBobot['E']) // 1
+ * ```
+ */
 const MatkulDummiesNilaiBobot = {
     'A+': 4,
     'A': 3.75,
@@ -841,6 +854,19 @@ const MatkulDummiesNilaiBobot = {
     'E': 1,
 }
 
+/**
+ * @default
+ * @constant 
+ * @description
+ * Object dengan pair `key` nilai string dan `value` color preset string yang digunakan `MatkulDummies`
+ * @example
+ * ```js
+ * console.log(MatkulDummiesNilaiColorPreset['A']) // 'success'
+ * console.log(MatkulDummiesNilaiColorPreset['B']) // 'warning'
+ * console.log(MatkulDummiesNilaiColorPreset['D+']) // 'danger'
+ * console.log(MatkulDummiesNilaiColorPreset['D+']) // 'crimson'
+ * ```
+ */
 const MatkulDummiesNilaiColorPreset = {
     'A+': 'success',
     'A': 'success',
