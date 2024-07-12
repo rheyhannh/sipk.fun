@@ -73,6 +73,24 @@ const MatkulList = (
         setIsAnimating(false);
     }
 
+    /**
+     * Hapus beberapa item matakuliah dari state `matkul` secara acak dengan batas tertentu,
+     * ```js
+     * const maxCount = matkul.length - minimumMatkul;
+     * ```
+     * Jika `count` melebihi batas atau bernilai `<= 0`, maka `count` akan dipilih ulang secara acak.
+     * @param {number} [count] - Jumlah item yang ingin dihapus
+     * @example 
+     * ```js
+     * const maxCount = 4;
+     * popSome() // Hapus 'x' item secara acak
+     * popSome(4) // Hapus 4 item secara acak 
+     * popSome(5) // Hapus 'x' item secara acak
+     * popSome(3) // Hapus 3 item secara acak 
+     * popSome(0) // Hapus 'x' item secara acak
+     * popSome(-2) // Hapus 'x' item secara acak
+     * ```
+     */
     const popSome = (count) => {
         if (!shouldAnimate()) return;
 
@@ -152,6 +170,24 @@ const MatkulList = (
         setMatkul(clone);
     }
 
+    /**
+     * Update beberapa item matakuliah dari state `matkul` secara acak dengan batas tertentu,
+     * ```js
+     * const maxCount = matkul.length - minimumMatkul;
+     * ```
+     * Jika `count` melebihi batas atau bernilai `<= 0`, maka `count` akan dipilih ulang secara acak.
+     * @param {number} [count] - Jumlah item yang ingin diupdate
+     * @example 
+     * ```js
+     * const maxCount = 4;
+     * mixSome() // Update 'x' item secara acak
+     * mixSome(4) // Update 4 item secara acak 
+     * mixSome(5) // Update 'x' item secara acak
+     * mixSome(3) // Update 3 item secara acak 
+     * mixSome(0) // Update 'x' item secara acak
+     * mixSome(-2) // Update 'x' item secara acak
+     * ```
+     */
     const mixSome = (count) => {
         if (!shouldAnimate()) return;
 
