@@ -73,12 +73,12 @@ const MatkulList = (
         setIsAnimating(false);
     }
 
-    const popSome = () => {
+    const popSome = (count) => {
         if (!shouldAnimate()) return;
 
         setIsAnimating(true);
         const maxPop = matkul.length - minimumMatkul;
-        const countPop = Math.floor(Math.random() * (maxPop - 1 + 1)) + 1;
+        const countPop = (count && count > 0 && count <= maxPop) ? count : Math.floor(Math.random() * (maxPop - 1 + 1)) + 1;
 
         const indexToPop = new Set();
         while (indexToPop.size < countPop) {
@@ -152,12 +152,12 @@ const MatkulList = (
         setMatkul(clone);
     }
 
-    const mixSome = () => {
+    const mixSome = (count) => {
         if (!shouldAnimate()) return;
 
         setIsAnimating(true);
         const maxMix = matkul.length - minimumMatkul;
-        const countMix = Math.floor(Math.random() * (maxMix - 1 + 1)) + 1;
+        const countMix = (count && count > 0 && count <= maxMix) ? count : Math.floor(Math.random() * (maxMix - 1 + 1)) + 1;
 
         const indexToMix = new Set();
         while (indexToMix.size < countMix) {
