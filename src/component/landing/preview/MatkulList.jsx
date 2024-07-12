@@ -41,7 +41,7 @@ const MatkulList = (
     const containerAnimDuration = 0.4;
     // #endregion
 
-    const shouldAnimate = () => {
+    const isMatkulReady = () => {
         if (isAnimating) { console.warn('Animation still playing!'); return false; }
         if (matkul.length <= minimumMatkul) { console.warn('Matkul reach minimum length!'); return false; }
 
@@ -92,7 +92,7 @@ const MatkulList = (
      * ```
      */
     const popSome = (count) => {
-        if (!shouldAnimate()) return;
+        if (!isMatkulReady()) return;
 
         setIsAnimating(true);
         const maxPop = matkul.length - minimumMatkul;
@@ -189,7 +189,7 @@ const MatkulList = (
      * ```
      */
     const mixSome = (count) => {
-        if (!shouldAnimate()) return;
+        if (!isMatkulReady()) return;
 
         setIsAnimating(true);
         const maxMix = matkul.length - minimumMatkul;
