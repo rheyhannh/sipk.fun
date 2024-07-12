@@ -74,14 +74,7 @@ const MatkulList = (
     }
 
     const popSome = () => {
-        if (isAnimating) {
-            console.warn('Animation still playing');
-            return;
-        }
-        if (matkul.length <= minimumMatkul) {
-            console.warn('Cant pop matkul item, matkul length reach minimum length');
-            return;
-        }
+        if (!shouldAnimate()) return;
 
         setIsAnimating(true);
         const maxPop = matkul.length - minimumMatkul;
@@ -160,14 +153,7 @@ const MatkulList = (
     }
 
     const mixSome = () => {
-        if (isAnimating) {
-            console.warn('Animation still playing');
-            return;
-        }
-        if (matkul.length <= minimumMatkul) {
-            console.warn('Cant pop matkul item, matkul length reach minimum length');
-            return;
-        }
+        if (!shouldAnimate()) return;
 
         setIsAnimating(true);
         const maxMix = matkul.length - minimumMatkul;
