@@ -53,31 +53,6 @@ const MatkulList = (
         return true;
     }
 
-    const pop = (targetIndex = Math.floor(Math.random() * matkul.length)) => {
-        // Pop one item in matkul with specific index 'targetIndex'. 
-        // If targetIndex not provided, index will picked randomly
-        // Return when matkul.length <= 1 (to make sure matkul not empty)
-        // Return when targetIndex >= matkul.length or targetIndex < 0
-        if (isAnimating) {
-            console.warn('Animation still playing');
-            return;
-        }
-        if (matkul.length <= minimumMatkul) {
-            console.warn('Cant pop matkul item, matkul length reach minimum length');
-            return;
-        }
-        if (targetIndex >= matkul.length || targetIndex < 0) {
-            console.warn('Target index cant be negative or more than equal matkul length');
-            return;
-        }
-
-        setIsAnimating(true);
-        const clone = [...matkul];
-        clone.splice(targetIndex, 1);
-        setMatkul(clone);
-        setIsAnimating(false);
-    }
-
     /**
      * Hapus beberapa item matakuliah dari state `matkul` secara acak dengan batas tertentu,
      * ```js
@@ -144,35 +119,6 @@ const MatkulList = (
         const reset = MatkulDummies.slice(dummiesRange[0], dummiesRange[1]).slice(0, maximumMatkul);
         setMatkul(reset);
         setIsAnimating(false);
-    }
-
-    const mix = (targetIndex = Math.floor(Math.random() * matkul.length)) => {
-        // Mix (pop & add new unique one) item in matkul with specific index 'targetIndex'. 
-        // If targetIndex not provided, index will picked randomly
-        // Return when matkul.length <= 1 (to make sure matkul not empty)
-        // Return when targetIndex >= matkul.length or targetIndex < 0
-        if (isAnimating) {
-            console.warn('Animation still playing');
-            return;
-        }
-        if (matkul.length <= minimumMatkul) {
-            console.warn('Cant mix matkul item, matkul length reach minimum length');
-            return;
-        }
-        if (targetIndex >= matkul.length || targetIndex < 0) {
-            console.warn('Target index cant be negative or more than equal matkul length');
-            return;
-        }
-
-        setIsAnimating(true);
-        const clone = [...matkul];
-        const available = MatkulDummies.slice(dummiesRange[0], dummiesRange[1]).filter(x =>
-            !matkul.some(y => y.id === x.id)
-        );
-        const newItem = available[Math.floor(Math.random() * (available.length - 1))];
-        clone.splice(targetIndex, 1, newItem)
-        setLastItemId(newItem.id);
-        setMatkul(clone);
     }
 
     /**
@@ -273,8 +219,6 @@ const MatkulList = (
                 }}
             >
                 <span style={{ marginLeft: '5px', marginBottom: '5px' }} onClick={() => { reset() }}>Reset</span>
-                <span style={{ marginLeft: '5px', marginBottom: '5px' }} onClick={() => { pop() }}>Pop</span>
-                <span style={{ marginLeft: '5px', marginBottom: '5px' }} onClick={() => { mix() }}>Mix</span>
                 <span style={{ marginLeft: '5px', marginBottom: '5px' }} onClick={() => { popSome() }}>Pop Some</span>
                 <span style={{ marginLeft: '5px', marginBottom: '5px' }} onClick={() => { mixSome() }}>Mix Some</span>
             </div>
