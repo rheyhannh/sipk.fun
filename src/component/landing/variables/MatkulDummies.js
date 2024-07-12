@@ -18,6 +18,11 @@
  */
 
 /**
+ * Nilai matakuliah dalam string yang digunakan MatkulDummies
+ * @typedef {'A+' | 'A' | 'A-' | 'B+' | 'B' | 'B-' | 'C+' | 'C' | 'C-' | 'D+' | 'D' | 'D-' | 'E'} MatkulDummiesNilai
+ */
+
+/**
  * @type {Array<MatkulDummiesProps>}
  * @constant
  * Array dengan length `50` yang berisikan matkul dummies atau matakuliah palsu untuk preview
