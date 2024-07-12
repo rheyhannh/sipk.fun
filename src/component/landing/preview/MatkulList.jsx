@@ -241,7 +241,7 @@ const MatkulList = (
                 <span style={{ marginLeft: '5px', marginBottom: '5px' }} onClick={() => { reset() }}>Reset</span>
                 <span style={{ marginLeft: '5px', marginBottom: '5px' }} onClick={() => { pop() }}>Pop</span>
                 <span style={{ marginLeft: '5px', marginBottom: '5px' }} onClick={() => { mix() }}>Mix</span>
-                <span style={{ marginLeft: '5px', marginBottom: '5px' }} >Pop Some</span>
+                <span style={{ marginLeft: '5px', marginBottom: '5px' }} onClick={() => { popSome() }}>Pop Some</span>
                 <span style={{ marginLeft: '5px', marginBottom: '5px' }} onClick={() => { mixSome() }}>Mix Some</span>
             </div>
             <div className={styles.title}>
