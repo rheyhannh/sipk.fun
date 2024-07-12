@@ -49,7 +49,7 @@ const MatkulList = (
             console.warn('Animation still playing');
             return;
         }
-        if (matkul.length <= 1) {
+        if (matkul.length <= minimumMatkul) {
             console.warn('Cant pop matkul item, matkul length reach minimum length');
             return;
         }
@@ -70,7 +70,7 @@ const MatkulList = (
             console.warn('Animation still playing');
             return;
         }
-        if (matkul.length >= 5) return;
+        if (matkul.length >= maximumMatkul) return;
 
         setIsAnimating(true);
         const reset = MatkulDummies.slice(dummiesRange[0], dummiesRange[1]).slice(0, maximumMatkul);
@@ -87,7 +87,7 @@ const MatkulList = (
             console.warn('Animation still playing');
             return;
         }
-        if (matkul.length <= 1) {
+        if (matkul.length <= minimumMatkul) {
             console.warn('Cant mix matkul item, matkul length reach minimum length');
             return;
         }
