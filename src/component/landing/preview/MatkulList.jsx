@@ -41,6 +41,11 @@ const MatkulList = (
     const containerAnimDuration = 0.4;
     // #endregion
 
+    /**
+     * Cek apakah perubahan pada state `matkul` dapat dilakukan. 
+     * Selalu gunakan method ini jika ingin melakukan perubahan pada state `matkul` untuk menghindari konflik
+     * perubahan state atau animasi yang tidak biasa.
+     */
     const isMatkulReady = () => {
         if (isAnimating) { console.warn('Animation still playing!'); return false; }
         if (matkul.length <= minimumMatkul) { console.warn('Matkul reach minimum length!'); return false; }
