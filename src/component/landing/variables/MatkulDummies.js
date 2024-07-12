@@ -825,4 +825,40 @@ const MatkulDummies = [
     }
 ]
 
-export { MatkulDummies };
+const MatkulDummiesNilaiBobot = {
+    'A+': 4,
+    'A': 3.75,
+    'A-': 3.5,
+    'B+': 3.25,
+    'B': 3,
+    'B-': 2.75,
+    'C+': 2.5,
+    'C': 2.25,
+    'C-': 2,
+    'D+': 1.75,
+    'D': 1.5,
+    'D-': 1.25,
+    'E': 1,
+}
+
+const MatkulDummiesNilaiColorPreset = {
+    'A+': 'success',
+    'A': 'success',
+    'A-': 'success',
+    'B+': 'success',
+    'B': 'warning',
+    'B-': 'warning',
+    'C+': 'warning',
+    'C': 'warning',
+    'C-': 'danger',
+    'D+': 'danger',
+    'D': 'danger',
+    'D-': 'danger',
+    'E': 'crimson',
+}
+
+export {
+    MatkulDummies,
+    MatkulDummiesNilaiBobot,
+    MatkulDummiesNilaiColorPreset,
+};
