@@ -132,13 +132,7 @@ const MatkulList = (
         const delay = 750;
 
         const updateWithDelay = (indexArray, i) => {
-            if (i >= indexArray.length) {
-                setTimeout(() => {
-                    console.log('Completed');
-                    setIsAnimating(false);
-                }, delay);
-                return;
-            }
+            if (i >= indexArray.length) return;
 
             const x = indexArray[i];
 
@@ -148,6 +142,10 @@ const MatkulList = (
                 available.splice(indexNewItem, 1); // Remove picked item in available array to ensure matkul always unique
                 clone.splice(x, 1, newItem); // Update clone array
                 setMatkul([...clone]); // setMatkul
+
+                if (i + 1 >= indexArray.length) {
+                    setLastItemId(newItem.id);
+                }
             }
 
             setTimeout(() => {
@@ -233,6 +231,12 @@ const MatkulList = (
                             }
                         }}
                         onClick={() => { editNilaiClick(item.id); }}
+                        onAnimationComplete={() => {
+                            if (lastItemId && lastItemId === item.id) {
+                                setIsAnimating(false);
+                                setLastItemId(null);
+                            }
+                        }}
                         layout
                     >
                         <div className={styles.nama}>
