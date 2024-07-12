@@ -113,7 +113,10 @@ const MatkulList = (
             console.warn('Animation still playing');
             return;
         }
-        if (matkul.length <= minimumMatkul) return;
+        if (matkul.length <= minimumMatkul) {
+            console.warn('Cant pop matkul item, matkul length reach minimum length');
+            return;
+        }
 
         setIsAnimating(true);
         const maxMix = matkul.length - minimumMatkul;
