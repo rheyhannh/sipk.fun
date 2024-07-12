@@ -66,6 +66,50 @@ const MatkulList = (
         setIsAnimating(false);
     }
 
+    const popSome = () => {
+        if (isAnimating) {
+            console.warn('Animation still playing');
+            return;
+        }
+        if (matkul.length <= minimumMatkul) {
+            console.warn('Cant pop matkul item, matkul length reach minimum length');
+            return;
+        }
+
+        setIsAnimating(true);
+        const maxPop = matkul.length - minimumMatkul;
+        const countPop = Math.floor(Math.random() * (maxPop - 1 + 1)) + 1;
+
+        const indexToPop = new Set();
+        while (indexToPop.size < countPop) {
+            const randomIndex = Math.floor(Math.random() * matkul.length);
+            indexToPop.add(randomIndex);
+        }
+
+        const clone = [...matkul];
+        const delay = 750;
+
+        const popWithDelay = (indexArray, i) => {
+            if (i >= indexArray.length) {
+                setTimeout(() => {
+                    setIsAnimating(false);
+                }, (delay / 2));
+                return;
+            }
+
+            const x = indexArray[i];
+
+            clone.splice(x, 1, undefined);
+            setMatkul([...clone].filter(item => typeof item === 'object'));
+
+            setTimeout(() => {
+                popWithDelay(indexArray, i + 1);
+            }, delay);
+        }
+
+        popWithDelay([...indexToPop], 0);
+    }
+
     const reset = () => {
         if (isAnimating) {
             console.warn('Animation still playing');
