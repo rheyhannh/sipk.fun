@@ -41,6 +41,13 @@ const MatkulList = (
     const containerAnimDuration = 0.4;
     // #endregion
 
+    const shouldAnimate = () => {
+        if (isAnimating) { console.warn('Animation still playing!'); return false; }
+        if (matkul.length <= minimumMatkul) { console.warn('Matkul reach minimum length!'); return false; }
+
+        return true;
+    }
+
     const pop = (targetIndex = Math.floor(Math.random() * matkul.length)) => {
         // Pop one item in matkul with specific index 'targetIndex'. 
         // If targetIndex not provided, index will picked randomly
