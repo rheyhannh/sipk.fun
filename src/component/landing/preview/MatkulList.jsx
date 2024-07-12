@@ -132,7 +132,7 @@ const MatkulList = (
         const clone = [...matkul];
         const delay = 750;
 
-        const updateWithDelay = (indexArray, i) => {
+        const mixWithDelay = (indexArray, i) => {
             if (i >= indexArray.length) return;
 
             const x = indexArray[i];
@@ -150,11 +150,11 @@ const MatkulList = (
             }
 
             setTimeout(() => {
-                updateWithDelay(indexArray, i + 1);
+                mixWithDelay(indexArray, i + 1);
             }, delay);
         };
 
-        updateWithDelay([...indexToMix], 0);
+        mixWithDelay([...indexToMix], 0);
     }
 
     const editNilaiClick = (id) => {
