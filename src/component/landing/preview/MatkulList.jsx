@@ -102,9 +102,10 @@ const MatkulList = (
         const available = MatkulDummies.slice(dummiesRange[0], dummiesRange[1]).filter(x =>
             !matkul.some(y => y.id === x.id)
         );
-        clone.splice(targetIndex, 1, available[Math.floor(Math.random() * (available.length - 1))])
+        const newItem = available[Math.floor(Math.random() * (available.length - 1))];
+        clone.splice(targetIndex, 1, newItem)
+        setLastItemId(newItem.id);
         setMatkul(clone);
-        setIsAnimating(false);
     }
 
     const mixSome = () => {
