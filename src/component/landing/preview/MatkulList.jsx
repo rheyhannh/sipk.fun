@@ -128,7 +128,6 @@ const MatkulList = (
         );
 
         const clone = [...matkul];
-
         const delay = 750;
 
         const updateWithDelay = (indexArray, i) => {
