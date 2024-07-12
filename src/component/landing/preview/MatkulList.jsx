@@ -244,18 +244,31 @@ const MatkulList = (
                 <span style={{ marginLeft: '5px', marginBottom: '5px' }} onClick={() => { popSome() }}>Pop Some</span>
                 <span style={{ marginLeft: '5px', marginBottom: '5px' }} onClick={() => { mixSome() }}>Mix Some</span>
             </div>
-            <div className={styles.title}>
-                Semester 1
+            <div
+                style={{
+                    position: 'absolute',
+                    top: '15%',
+                    left: '90%',
+                    transform: 'translate(-90%, -15%)',
+                    display: 'flex',
+                    width: '50%',
+                    border: 'none',
+                    gap: '.5rem',
+                    zIndex: 99
+                }}
+            >
+                <span>{isAnimating ? 'Loading' : 'Shuffle'}</span>
                 <span
-                    style={{
-                        position: 'absolute',
-                        top: '50%',
-                        left: '90%',
-                        transform: 'translate(-90%, -50%)',
+                    onClick={() => {
+                        setIsAnimating(false);
+                        setLastItemId(null);
                     }}
                 >
-                    {isAnimating ? 'Loading' : 'Shuffle'}
+                    Reset State
                 </span>
+            </div>
+            <div className={styles.title}>
+                Semester 1
             </div>
             <AnimatePresence>
                 {matkul.map((item, index) => (
