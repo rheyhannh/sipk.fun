@@ -33,6 +33,7 @@ const MatkulList = (
 ) => {
     const [isAnimating, setIsAnimating] = React.useState(false);
     const [matkul, setMatkul] = React.useState(MatkulDummies.slice(dummiesRange[0], dummiesRange[1]).slice(0, maximumMatkul));
+    const [lastItemId, setLastItemId] = React.useState(null);
     const nilaiColorEntries = Object.entries(MatkulDummiesNilaiColorPreset);
 
     // #region Refactorable Variables
