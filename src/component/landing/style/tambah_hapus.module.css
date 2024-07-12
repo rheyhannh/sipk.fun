@@ -4,6 +4,7 @@
     height: 100%;
     overflow: hidden;
     color: var(--landing-copy);
+    padding: 3rem;
 }
 
 .layout {
@@ -19,7 +20,6 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    padding: .5rem;
 }
 
 .highlight .box {
@@ -28,7 +28,6 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    padding: 1rem;
 }
 
 .highlight .box .text_box {
@@ -103,10 +102,6 @@
 .highlight .box .folding {
     position: absolute;
     transform-origin: 200% -200%;
-}
-
-.highlight .description {
-    padding: .5rem;
 }
 
 .demo {
