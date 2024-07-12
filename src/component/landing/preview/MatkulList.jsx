@@ -24,7 +24,13 @@ import { MatkulDummies, MatkulDummiesNilaiBobot, MatkulDummiesNilaiColorPreset }
 import styles from '../style/matkul_list.module.css';
 // #endregion
 
-const MatkulList = () => {
+const MatkulList = (
+    {
+        dummiesRange = [0, 15],
+        maximumMatkul = 5,
+        minimumMatkul = 1,
+    }
+) => {
     const [isAnimating, setIsAnimating] = React.useState(false);
     const [matkul, setMatkul] = React.useState(MatkulDummies.slice(0, 5));
     const nilaiColorEntries = Object.entries(MatkulDummiesNilaiColorPreset);
@@ -32,7 +38,6 @@ const MatkulList = () => {
     // #region Refactorable Variables
     const baseAnimDelay = 0.3;
     const containerAnimDuration = 0.4;
-    const minimumMatkul = 1;
     // #endregion
 
     const pop = (targetIndex = Math.floor(Math.random() * matkul.length)) => {
