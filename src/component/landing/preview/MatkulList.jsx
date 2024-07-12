@@ -32,7 +32,7 @@ const MatkulList = (
     }
 ) => {
     const [isAnimating, setIsAnimating] = React.useState(false);
-    const [matkul, setMatkul] = React.useState(MatkulDummies.slice(0, 5));
+    const [matkul, setMatkul] = React.useState(MatkulDummies.slice(dummiesRange[0], dummiesRange[1]).slice(0, maximumMatkul));
     const nilaiColorEntries = Object.entries(MatkulDummiesNilaiColorPreset);
 
     // #region Refactorable Variables
@@ -73,7 +73,7 @@ const MatkulList = (
         if (matkul.length >= 5) return;
 
         setIsAnimating(true);
-        const reset = MatkulDummies.slice(0, 5);
+        const reset = MatkulDummies.slice(dummiesRange[0], dummiesRange[1]).slice(0, maximumMatkul);
         setMatkul(reset);
         setIsAnimating(false);
     }
@@ -98,7 +98,7 @@ const MatkulList = (
 
         setIsAnimating(true);
         const clone = [...matkul];
-        const available = MatkulDummies.filter(x =>
+        const available = MatkulDummies.slice(dummiesRange[0], dummiesRange[1]).filter(x =>
             !matkul.some(y => y.id === x.id)
         );
         clone.splice(targetIndex, 1, available[Math.floor(Math.random() * (available.length - 1))])
@@ -123,7 +123,7 @@ const MatkulList = (
             indexToMix.add(randomIndex);
         }
 
-        const available = MatkulDummies.filter(x =>
+        const available = MatkulDummies.slice(dummiesRange[0], dummiesRange[1]).filter(x =>
             !matkul.some(y => y.id === x.id)
         );
 
