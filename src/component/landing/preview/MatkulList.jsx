@@ -45,6 +45,7 @@ const MatkulList = (
      * Cek apakah perubahan pada state `matkul` dapat dilakukan. 
      * Selalu gunakan method ini jika ingin melakukan perubahan pada state `matkul` untuk menghindari konflik
      * perubahan state atau animasi yang tidak biasa.
+     * @param {'mix' | 'pop' | 'add' | 'reset'} type Tipe operasi yang dilakukan
      */
     const isMatkulReady = (type) => {
         if (isAnimating) { console.warn('Animation still playing!'); return false; }
