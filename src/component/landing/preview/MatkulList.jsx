@@ -74,7 +74,7 @@ const MatkulList = (
      * ```
      */
     const popSome = (count) => {
-        if (!isMatkulReady()) return;
+        if (!isMatkulReady('pop')) return;
 
         setIsAnimating(true);
         const maxPop = matkul.length - minimumMatkul;
@@ -142,7 +142,7 @@ const MatkulList = (
      * ```
      */
     const mixSome = (count) => {
-        if (!isMatkulReady()) return;
+        if (!isMatkulReady('mix')) return;
 
         setIsAnimating(true);
         const maxMix = matkul.length - minimumMatkul;
