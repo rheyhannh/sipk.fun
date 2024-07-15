@@ -18,6 +18,10 @@ import toast from 'react-hot-toast';
 import styles from '../style/context.module.css'
 // #endregion
 
+// #region HOOKS DEPEDENCY
+import useWindowSize from '@/hooks/useWindowSize';
+// #endregion
+
 /**
  * Render landing page section `context`
  * @param {Object} props
@@ -95,25 +99,3 @@ const Content = ({ children, ...props }) => (
         {children}
     </div>
 )
-
-function useWindowSize() {
-    const [windowSize, setWindowSize] = useState({
-        width: undefined,
-        height: undefined,
-    });
-
-    useEffect(() => {
-        function handleResize() {
-            setWindowSize({
-                width: window.innerWidth,
-                height: window.innerHeight,
-            });
-        }
-
-        window.addEventListener("resize", handleResize);
-        handleResize();
-
-        return () => window.removeEventListener("resize", handleResize);
-    }, []);
-    return windowSize;
-}
