@@ -46,9 +46,10 @@ const MatkulList = (
      * Selalu gunakan method ini jika ingin melakukan perubahan pada state `matkul` untuk menghindari konflik
      * perubahan state atau animasi yang tidak biasa.
      */
-    const isMatkulReady = () => {
+    const isMatkulReady = (type) => {
         if (isAnimating) { console.warn('Animation still playing!'); return false; }
-        if (matkul.length <= minimumMatkul) { console.warn('Matkul reach minimum length!'); return false; }
+        if ((type === 'mix' || type === 'pop') && matkul.length <= minimumMatkul) { console.warn('Matkul reach minimum length!'); return false; }
+        if (type === 'add' && matkul.length >= maximumMatkul) { console.warn('Matkul reach maximum length!'); return false; }
 
         return true;
     }
