@@ -55,6 +55,51 @@ const MatkulList = (
         return true;
     }
 
+    const addSome = (count) => {
+        if (!isMatkulReady('add')) return;
+
+        setIsAnimating(true);
+        const maxAdd = maximumMatkul - matkul.length;
+        const countAdd = (count && count > 0 && count <= maxAdd) ? count : Math.floor(Math.random() * (maxAdd - 1 + 1) + 1);
+
+        const indexToAdd = new Set();
+        while (indexToAdd.size < countAdd) {
+            const randomIndex = Math.floor(Math.random() * matkul.length);
+            indexToAdd.add(randomIndex);
+        }
+
+        const available = MatkulDummies.slice(dummiesRange[0], dummiesRange[1]).filter(x =>
+            !matkul.some(y => y.id === x.id)
+        );
+
+        const clone = [...matkul];
+        const delay = 350;
+
+        const addWithDelay = (indexArray, i) => {
+            if (i >= indexArray.length) return;
+
+            const x = indexArray[i];
+
+            if (available.length) {
+                const indexNewItem = Math.floor(Math.random() * available.length);
+                const newItem = available[indexNewItem];
+                available.splice(indexNewItem, 1); // Remove picked item in available array to ensure matkul always unique
+                clone.splice(x, 0, newItem); // Update clone array
+                setMatkul([...clone]); // setMatkul
+
+                if (i + 1 >= indexArray.length) {
+                    setLastItemId(newItem.id);
+                }
+            }
+
+            setTimeout(() => {
+                addWithDelay(indexArray, i + 1);
+            }, delay);
+        }
+
+        addWithDelay([...indexToAdd], 0);
+    }
+
     /**
      * Hapus beberapa item matakuliah dari state `matkul` secara acak dengan batas tertentu,
      * ```js
@@ -221,6 +266,7 @@ const MatkulList = (
                 }}
             >
                 <span style={{ marginLeft: '5px', marginBottom: '5px' }} onClick={() => { reset() }}>Reset</span>
+                <span style={{ marginLeft: '5px', marginBottom: '5px' }} onClick={() => { addSome() }}>Add Some</span>
                 <span style={{ marginLeft: '5px', marginBottom: '5px' }} onClick={() => { popSome() }}>Pop Some</span>
                 <span style={{ marginLeft: '5px', marginBottom: '5px' }} onClick={() => { mixSome() }}>Mix Some</span>
             </div>
