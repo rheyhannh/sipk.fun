@@ -53,6 +53,14 @@ import styles from '../style/matkul_list.module.css';
  * @typedef {Array<MatkulDummiesProps>} Matkul 
  */
 
+/**
+ * State dengan object yang berisikan detail dari matkul yang digunakan dengan key `totalNilai`, `totalSks` dan `ip`
+ * @typedef {Object} MatkulDetails 
+ * @property {number} totalNilai Total nilai dari matkul yang digunakan
+ * @property {number} totalSks Total sks dari matkul yang digunakan
+ * @property {number} ip Indeks prestasi dari `(totalNilai / totalSks)`
+ */
+
 // #endregion
 
 const MatkulList = (
@@ -68,6 +76,7 @@ const MatkulList = (
     const [matkul, setMatkul] = React.useState(MatkulDummies.slice(dummiesRange[0], dummiesRange[1]).slice(0, maximumMatkul));
     /** @type {ReturnType<typeof React.useState<LastItemId>>} */
     const [lastItemId, setLastItemId] = React.useState(null);
+    /** @type {ReturnType<typeof React.useState<MatkulDetails>>} */
     const [matkulDetails, setMatkulDetails] = React.useState({ totalNilai: 0, totalSks: 0, ip: 0 });
     const nilaiColorEntries = Object.entries(MatkulDummiesNilaiColorPreset);
 
