@@ -375,6 +375,27 @@ const MatkulList = (
                     Reset State
                 </span>
             </div>
+            <div
+                style={{
+                    position: 'absolute',
+                    top: '90%',
+                    left: '50%',
+                    transform: 'translate(-50%, -90%)',
+                    border: '1px solid purple',
+                    width: '50%',
+                    height: '25%',
+                    borderRadius: '.2rem',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    zIndex: 99,
+                }}
+            >
+                <h3>Total Nilai: {matkulDetails.totalNilai}</h3>
+                <h3>Total SKS: {matkulDetails.totalSks}</h3>
+                <h3>IP: {matkulDetails.ip}</h3>
+            </div>
             <div className={styles.title}>
                 Semester 1
             </div>
