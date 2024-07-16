@@ -62,6 +62,7 @@ const MatkulList = (
      * ```
      * Jika `count` melebihi batas atau bernilai `<= 0`, maka `count` akan dipilih ulang secara acak.
      * @param {number} [count] - Jumlah item yang ingin ditambah
+     * @param {number} [delay] - Delay animasi dalam `ms`, default : `350`
      * @example 
      * ```js
      * const maxCount = 4;
@@ -124,6 +125,7 @@ const MatkulList = (
      * ```
      * Jika `count` melebihi batas atau bernilai `<= 0`, maka `count` akan dipilih ulang secara acak.
      * @param {number} [count] - Jumlah item yang ingin dihapus
+     * @param {number} [delay] - Delay animasi dalam `ms`, default : `750`
      * @example 
      * ```js
      * const maxCount = 4;
@@ -178,6 +180,7 @@ const MatkulList = (
      * ```
      * Jika `count` melebihi batas atau bernilai `<= 0`, maka `count` akan dipilih ulang secara acak.
      * @param {number} [count] - Jumlah item yang ingin diupdate
+     * @param {number} [delay] - Delay animasi dalam `ms`, default : `750`
      * @example 
      * ```js
      * const maxCount = 4;
