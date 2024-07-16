@@ -78,6 +78,7 @@ const MatkulList = (
     const [lastItemId, setLastItemId] = React.useState(null);
     /** @type {ReturnType<typeof React.useState<MatkulDetails>>} */
     const [matkulDetails, setMatkulDetails] = React.useState({ totalNilai: 0, totalSks: 0, ip: 0 });
+    const [swipers, setSwipers] = React.useState({});
     const nilaiColorEntries = Object.entries(MatkulDummiesNilaiColorPreset);
 
     // #region Refactorable Variables
