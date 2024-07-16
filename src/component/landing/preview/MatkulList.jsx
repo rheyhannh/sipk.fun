@@ -55,6 +55,24 @@ const MatkulList = (
         return true;
     }
 
+    /**
+     * Tambah beberapa item matakuliah dari state `matkul` secara acak dengan batas tertentu,
+     * ```js
+     * const maxCount = maximumMatkul - matkul.length;
+     * ```
+     * Jika `count` melebihi batas atau bernilai `<= 0`, maka `count` akan dipilih ulang secara acak.
+     * @param {number} [count] - Jumlah item yang ingin ditambah
+     * @example 
+     * ```js
+     * const maxCount = 4;
+     * addSome() // Tambah 'x' item secara acak
+     * addSome(4) // Tambah 4 item secara acak 
+     * addSome(5) // Tambah 'x' item secara acak
+     * addSome(3) // Tambah 3 item secara acak 
+     * addSome(0) // Tambah 'x' item secara acak
+     * addSome(-2) // Tambah 'x' item secara acak
+     * ```
+     */
     const addSome = (count) => {
         if (!isMatkulReady('add')) return;
 
