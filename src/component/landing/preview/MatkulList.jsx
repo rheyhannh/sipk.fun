@@ -298,6 +298,22 @@ const MatkulList = (
         );
     }
 
+    // Hapus x item pada 'matkul' agar tidak melebihi 'maximumMatkul'
+    React.useEffect(() => {
+        if (matkul.length > maximumMatkul) {
+            popSome(matkul.length - maximumMatkul);
+        }
+    }, [maximumMatkul])
+
+    // Perbarui 'matkulDetails' setiap ada perubahan pada 'matkul'
+    React.useEffect(() => {
+        const totalNilai = Math.round((matkul.reduce((acc, x) => acc + (MatkulDummiesNilaiBobot[x.nilai] * x.sks), 0)) * 100 / 100);
+        const totalSks = matkul.reduce((acc, x) => acc + x.sks, 0);
+        const ip = Math.round(((totalNilai / totalSks)) * 100 / 100);
+
+        setMatkulDetails({ totalNilai, totalSks, ip });
+    }, [matkul])
+
     return (
         <motion.div
             className={styles.container}
