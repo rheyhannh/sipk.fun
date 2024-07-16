@@ -440,11 +440,15 @@ const MatkulList = (
                         </div>
 
                         <Swiper
+                            onBeforeInit={(swiper) => setSwipers((prev) => ({ ...prev, [item.id]: swiper }))}
+                            onBeforeDestroy={(swiper) => setSwipers((prev) => ({ ...prev, [item.id]: null }))}
                             slidesPerView={1}
                             spaceBetween={50}
                             centeredSlides={true}
                             className={styles.swiper}
                             initialSlide={nilaiColorEntries.findIndex(([nilai]) => nilai === item.nilai)}
+                            allowTouchMove={false}
+                            onSlideChangeTransitionEnd={(swiper) => editNilaiOnScroll(item.id, nilaiColorEntries[swiper.activeIndex]['0'])}
                         >
                             {nilaiColorEntries.map(([key, value]) => (
                                 <SwiperSlide
