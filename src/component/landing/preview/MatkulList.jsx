@@ -290,10 +290,16 @@ const MatkulList = (
         setIsAnimating(false);
     }
 
-    const editNilaiClick = (id) => {
+    const setSwiperSlide = (id, index, speed = 1000) => {
+        if (!swipers[id] || swipers[id] === null) return;
+
+        swipers[id].slideTo(index, speed);
+    }
+
+    const editNilaiOnScroll = (id, nilai) => {
         setMatkul((prevMatkul) =>
             prevMatkul.map((item) =>
-                item.id === id ? { ...item, nilai: generateNilai(item.nilai) } : item
+                item.id === id ? { ...item, nilai: nilai ?? generateNilai(item.nilai) } : item
             )
         );
     }
@@ -393,7 +399,7 @@ const MatkulList = (
                                 duration: baseAnimDelay
                             }
                         }}
-                        onClick={() => { editNilaiClick(item.id); }}
+                        onClick={() => { setSwiperSlide(item.id, Math.floor(Math.random() * nilaiColorEntries.length)) }}
                         onAnimationComplete={() => {
                             if (lastItemId && lastItemId === item.id) {
                                 setIsAnimating(false);
