@@ -73,7 +73,7 @@ const MatkulList = (
      * addSome(-2) // Tambah 'x' item secara acak
      * ```
      */
-    const addSome = (count) => {
+    const addSome = (count, delay = 350) => {
         if (!isMatkulReady('add')) return;
 
         setIsAnimating(true);
@@ -91,7 +91,6 @@ const MatkulList = (
         );
 
         const clone = [...matkul];
-        const delay = 350;
 
         const addWithDelay = (indexArray, i) => {
             if (i >= indexArray.length) return;
@@ -136,7 +135,7 @@ const MatkulList = (
      * popSome(-2) // Hapus 'x' item secara acak
      * ```
      */
-    const popSome = (count) => {
+    const popSome = (count, delay = 750) => {
         if (!isMatkulReady('pop')) return;
 
         setIsAnimating(true);
@@ -150,7 +149,6 @@ const MatkulList = (
         }
 
         const clone = [...matkul];
-        const delay = 750;
 
         const popWithDelay = (indexArray, i) => {
             if (i >= indexArray.length) {
@@ -191,7 +189,7 @@ const MatkulList = (
      * mixSome(-2) // Update 'x' item secara acak
      * ```
      */
-    const mixSome = (count) => {
+    const mixSome = (count, delay = 750) => {
         if (!isMatkulReady('mix')) return;
 
         setIsAnimating(true);
@@ -209,7 +207,6 @@ const MatkulList = (
         );
 
         const clone = [...matkul];
-        const delay = 750;
 
         const mixWithDelay = (indexArray, i) => {
             if (i >= indexArray.length) return;
