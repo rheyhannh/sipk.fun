@@ -173,15 +173,6 @@ const MatkulList = (
         popWithDelay([...indexToPop], 0);
     }
 
-    const reset = () => {
-        if (!isMatkulReady('reset')) return;
-
-        setIsAnimating(true);
-        const reset = MatkulDummies.slice(dummiesRange[0], dummiesRange[1]).slice(0, maximumMatkul);
-        setMatkul(reset);
-        setIsAnimating(false);
-    }
-
     /**
      * Update beberapa item matakuliah dari state `matkul` secara acak dengan batas tertentu,
      * ```js
@@ -243,6 +234,15 @@ const MatkulList = (
         };
 
         mixWithDelay([...indexToMix], 0);
+    }
+
+    const reset = () => {
+        if (!isMatkulReady('reset')) return;
+
+        setIsAnimating(true);
+        const reset = MatkulDummies.slice(dummiesRange[0], dummiesRange[1]).slice(0, maximumMatkul);
+        setMatkul(reset);
+        setIsAnimating(false);
     }
 
     const editNilaiClick = (id) => {
