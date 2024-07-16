@@ -348,7 +348,7 @@ const MatkulList = (
             <AnimatePresence>
                 {matkul.map((item, index) => (
                     <motion.div
-                        key={`aserehe-${item.id}`}
+                        key={`MatkulListItem-${item.id}`}
                         className={styles.matkul}
                         initial={{ opacity: 0, scale: 0 }}
                         whileInView={{
