@@ -24,6 +24,37 @@ import { MatkulDummies, MatkulDummiesNilaiBobot, MatkulDummiesNilaiColorPreset }
 import styles from '../style/matkul_list.module.css';
 // #endregion
 
+// #region Types 
+
+/**
+ * State apakah animasi sedang berjalan atau tidak. Gunakan state ini agar tidak ada konflik saat melakukan perubahan pada state `matkul`
+ * @typedef {boolean} isAnimating
+ */
+
+/**
+ * State id item matakuliah terakhir saat animasi berakhir atau saat perubahan `matkul` selesai. 
+ * Item dengan id ini akan mengupdate state `isAnimating` yang menandakan animasi atau perubahan telah selesai
+ * @typedef {string} LastItemId
+ */
+
+/**
+ * State dengan array yang berisikan `MatkulDummies` digunakan untuk preview.
+ * Kontrol jumlah dan range index yang digunakan melalui component props `dummiesRange`, jumlah maksimal
+ * dan minimal matakuliah yang tampil pada props `maximumMatkul` dan `minimumMatkul`.
+ * 
+ * ```js
+ * // Menggunakan 15 item dari 'MatkulDummies' dengan index 0 - 14
+ * const dummiesRange = [0, 15]; 
+ * // Maksimal matakuliah yang tampil berjumlah 5
+ * const maximumMatkul = 5; 
+ * // Minimum matakuliah yang tampil berjumlah 1
+ * const minimumMatkul = 1;
+ * ```
+ * @typedef {Array<MatkulDummiesProps>} Matkul 
+ */
+
+// #endregion
+
 const MatkulList = (
     {
         dummiesRange = [0, 15],
@@ -31,8 +62,11 @@ const MatkulList = (
         minimumMatkul = 1,
     }
 ) => {
+    /** @type {ReturnType<typeof React.useState<isAnimating>>} */
     const [isAnimating, setIsAnimating] = React.useState(false);
+    /** @type {ReturnType<typeof React.useState<Matkul>>} */
     const [matkul, setMatkul] = React.useState(MatkulDummies.slice(dummiesRange[0], dummiesRange[1]).slice(0, maximumMatkul));
+    /** @type {ReturnType<typeof React.useState<LastItemId>>} */
     const [lastItemId, setLastItemId] = React.useState(null);
     const nilaiColorEntries = Object.entries(MatkulDummiesNilaiColorPreset);
 
