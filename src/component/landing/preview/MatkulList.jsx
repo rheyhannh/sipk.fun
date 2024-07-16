@@ -174,11 +174,7 @@ const MatkulList = (
     }
 
     const reset = () => {
-        if (isAnimating) {
-            console.warn('Animation still playing');
-            return;
-        }
-        if (matkul.length >= maximumMatkul) return;
+        if (!isMatkulReady('reset')) return;
 
         setIsAnimating(true);
         const reset = MatkulDummies.slice(dummiesRange[0], dummiesRange[1]).slice(0, maximumMatkul);
