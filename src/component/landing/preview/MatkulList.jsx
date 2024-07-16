@@ -50,7 +50,7 @@ const MatkulList = (
     const isMatkulReady = (type) => {
         if (isAnimating) { console.warn('Animation still playing!'); return false; }
         if ((type === 'mix' || type === 'pop') && matkul.length <= minimumMatkul) { console.warn('Matkul reach minimum length!'); return false; }
-        if (type === 'add' && matkul.length >= maximumMatkul) { console.warn('Matkul reach maximum length!'); return false; }
+        if ((type === 'add' || type === 'reset') && matkul.length >= maximumMatkul) { console.warn('Matkul reach maximum length!'); return false; }
 
         return true;
     }
