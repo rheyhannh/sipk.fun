@@ -411,7 +411,7 @@ const MatkulList = (
             <div className={styles.title}>
                 {title}
             </div>
-            
+
             <AnimatePresence>
                 {matkul.map((item, index) => (
                     <motion.div
