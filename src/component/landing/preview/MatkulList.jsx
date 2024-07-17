@@ -391,6 +391,7 @@ const MatkulList = (
                 <span style={{ marginLeft: '5px', marginBottom: '5px' }} onClick={() => { popSome() }}>Pop Some</span>
                 <span style={{ marginLeft: '5px', marginBottom: '5px' }} onClick={() => { mixSome() }}>Mix Some</span>
                 <span style={{ marginLeft: '5px', marginBottom: '5px' }} onClick={() => { matkul.forEach((item) => console.log(`${item.nama} : ${item.nilai}`)) }}>Log Nilai</span>
+                <span style={{ marginLeft: '5px', marginBottom: '5px' }} onClick={() => { mixSomeNilai(5) }}>Mix Some Nilai</span>
             </div>
             <div
                 style={{
