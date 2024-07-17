@@ -126,11 +126,14 @@ const MatkulList = (
         setIsAnimating(true);
         const maxAdd = maximumMatkul - matkul.length;
         const countAdd = (count && count > 0 && count <= maxAdd) ? count : Math.floor((Math.random() * maxAdd) + 1);
+        const countArray = (Array.isArray(count) && count.length > 0 && count.length <= maxAdd && count.every((x) => (typeof x === 'number' && x < maximumMatkul))) ? count : undefined;
 
-        const arrIndex = [];
-        while (arrIndex.length < countAdd) {
-            const randomIndex = Math.floor(Math.random() * matkul.length);
-            arrIndex.push(randomIndex);
+        const arrIndex = countArray ?? [];
+        if (!countArray) {
+            while (arrIndex.length < countAdd) {
+                const randomIndex = Math.floor(Math.random() * matkul.length);
+                arrIndex.push(randomIndex);
+            }
         }
 
         const indexToAdd = new Set(arrIndex);
@@ -190,11 +193,14 @@ const MatkulList = (
         setIsAnimating(true);
         const maxPop = matkul.length - minimumMatkul;
         const countPop = (count && count > 0 && count <= maxPop) ? count : Math.floor(Math.random() * maxPop) + 1;
+        const countArray = (Array.isArray(count) && count.length > 0 && count.length <= maxPop && count.every((x) => (typeof x === 'number' && x < matkul.length))) ? count : undefined;
 
-        const arrIndex = [];
-        while (arrIndex.length < countPop) {
-            const randomIndex = Math.floor(Math.random() * matkul.length);
-            arrIndex.push(randomIndex);
+        const arrIndex = countArray ?? [];
+        if (!countArray) {
+            while (arrIndex.length < countPop) {
+                const randomIndex = Math.floor(Math.random() * matkul.length);
+                arrIndex.push(randomIndex);
+            }
         }
 
         const indexToPop = new Set(arrIndex);
@@ -246,11 +252,14 @@ const MatkulList = (
         setIsAnimating(true);
         const maxMix = matkul.length - minimumMatkul;
         const countMix = (count && count > 0 && count <= maxMix) ? count : Math.floor(Math.random() * maxMix) + 1;
+        const countArray = (Array.isArray(count) && count.length > 0 && count.length <= maxMix && count.every((x) => (typeof x === 'number' && x < matkul.length))) ? count : undefined;
 
-        const arrIndex = [];
-        while (arrIndex.length < countMix) {
-            const randomIndex = Math.floor(Math.random() * matkul.length);
-            arrIndex.push(randomIndex);
+        const arrIndex = countArray ?? [];
+        if (!countArray) {
+            while (arrIndex.length < countMix) {
+                const randomIndex = Math.floor(Math.random() * matkul.length);
+                arrIndex.push(randomIndex);
+            }
         }
 
         const indexToMix = new Set(arrIndex);
@@ -291,11 +300,14 @@ const MatkulList = (
         setIsAnimating(true);
         const maxMix = matkul.length;
         const countMix = (count && count > 0 && count <= maxMix) ? count : Math.floor(Math.random() * maxMix) + 1;
+        const countArray = (Array.isArray(count) && count.length > 0 && count.length <= maxMix && count.every((x) => (typeof x === 'number' && x < matkul.length))) ? count : undefined;
 
-        const arrIndex = [];
-        while (arrIndex.length < countMix) {
-            const randomIndex = Math.floor(Math.random() * matkul.length);
-            arrIndex.push(randomIndex);
+        const arrIndex = countArray ?? [];
+        if (!countArray) {
+            while (arrIndex.length < countMix) {
+                const randomIndex = Math.floor(Math.random() * matkul.length);
+                arrIndex.push(randomIndex);
+            }
         }
 
         const indexToMix = new Set(arrIndex);
