@@ -87,7 +87,7 @@ import styles from '../style/matkul_list.module.css';
  * @property {(count:number | Array<number>, delay:number) => void} apply.addSome
  * @property {(count:number | Array<number>, delay:number) => void} apply.popSome
  * @property {(count:number | Array<number>, delay:number) => void} apply.mixSome
- * @property {((count:number | Array<number>, delay:number, duration:number) => void) => void} apply.mixSomeNilai
+ * @property {(count:number | Array<number>, delay:number, duration:number) => void} apply.mixSomeNilai
  * @property {() => void} apply.reset
  */
 
