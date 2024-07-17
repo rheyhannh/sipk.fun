@@ -8,8 +8,7 @@ import * as React from 'react';
 
 // #region COMPONENT DEPEDENCY
 import { motion, AnimatePresence } from 'framer-motion';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { Autoplay, EffectCoverflow } from 'swiper/modules';
+import { Swiper, SwiperSlide, SwiperClass } from 'swiper/react';
 // #endregion
 
 // #region UTIL DEPEDENCY
