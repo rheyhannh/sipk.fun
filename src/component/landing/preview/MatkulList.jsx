@@ -76,6 +76,20 @@ import styles from '../style/matkul_list.module.css';
  * @typedef {Object<string,SwiperClass>} Swipers
  */
 
+/**
+ * @typedef {Object} MatkulListInstance
+ * @property {isAnimating} isAnimating
+ * @property {Matkul} matkul
+ * @property {LastItemId} lastItemId
+ * @property {MatkulDetails} matkulDetails
+ * @property {Swipers} swipers
+ * @property {Object} apply
+ * @property {(count:number | Array<number>, delay:number) => void} apply.addSome
+ * @property {(count:number | Array<number>, delay:number) => void} apply.popSome
+ * @property {(count:number | Array<number>, delay:number) => void} apply.mixSome
+ * @property {((count:number | Array<number>, delay:number, duration:number) => void) => void} apply.mixSomeNilai
+ * @property {() => void} apply.reset
+ */
 // #endregion
 
 const MatkulList = (
