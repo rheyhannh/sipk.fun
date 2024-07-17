@@ -404,9 +404,9 @@ const MatkulList = (
                 duration: containerAnimDuration,
             }}
         >
-            <AnimationControllerTest matkul={matkul} reset={reset} addSome={addSome} popSome={popSome} mixSome={mixSome} mixSomeNilai={mixSomeNilai} />
-            <AnimationStateTest isAnimating={isAnimating} setIsAnimating={setIsAnimating} setLastItemId={setLastItemId} />
-            <MatkulDetailsTest matkulDetails={matkulDetails} />
+            {renderTestElement && <AnimationControllerTest matkul={matkul} reset={reset} addSome={addSome} popSome={popSome} mixSome={mixSome} mixSomeNilai={mixSomeNilai} />}
+            {renderTestElement && <AnimationStateTest isAnimating={isAnimating} setIsAnimating={setIsAnimating} setLastItemId={setLastItemId} />}
+            {renderTestElement && <MatkulDetailsTest matkulDetails={matkulDetails} />}
 
             <div className={styles.title}>
                 {title}
