@@ -509,7 +509,6 @@ const MatkulList = (
                                 duration: baseAnimDelay
                             }
                         }}
-                        onClick={() => { setSwiperSlide(item.id, Math.floor(Math.random() * nilaiColorEntries.length)) }}
                         onAnimationComplete={() => {
                             if (lastItemId && lastItemId === item.id) {
                                 setIsAnimating(false);
