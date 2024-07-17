@@ -410,6 +410,22 @@ const MatkulList = (
         setMatkulDetails({ totalNilai, totalSks, ip });
     }, [matkul])
 
+    // Call callback 'onStateChanges' saat ada perubahan pada state yang digunakan
+    React.useEffect(() => {
+        if (onStateChanges) {
+            onStateChanges(
+                {
+                    isAnimating,
+                    matkul,
+                    lastItemId,
+                    matkulDetails,
+                    swipers,
+                    apply: { addSome, popSome, mixSome, mixSomeNilai, reset }
+                }
+            )
+        }
+    }, [isAnimating, matkul, lastItemId, matkulDetails, swipers])
+
     return (
         <motion.div
             className={styles.container}
