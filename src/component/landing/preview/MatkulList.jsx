@@ -664,4 +664,4 @@ const generateNilai = (exclude) => {
 
 // #endregion
 
-export default MatkulList;
+export { MatkulList };
