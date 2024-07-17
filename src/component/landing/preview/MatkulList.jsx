@@ -125,7 +125,7 @@ const MatkulList = (
 
         setIsAnimating(true);
         const maxAdd = maximumMatkul - matkul.length;
-        const countAdd = (count && count > 0 && count <= maxAdd) ? count : Math.floor(Math.random() * (maxAdd - 1 + 1) + 1);
+        const countAdd = (count && count > 0 && count <= maxAdd) ? count : Math.floor((Math.random() * maxAdd) + 1);
 
         const arrIndex = [];
         while (arrIndex.length < countAdd) {
@@ -189,7 +189,7 @@ const MatkulList = (
 
         setIsAnimating(true);
         const maxPop = matkul.length - minimumMatkul;
-        const countPop = (count && count > 0 && count <= maxPop) ? count : Math.floor(Math.random() * (maxPop - 1 + 1)) + 1;
+        const countPop = (count && count > 0 && count <= maxPop) ? count : Math.floor(Math.random() * maxPop) + 1;
 
         const arrIndex = [];
         while (arrIndex.length < countPop) {
@@ -245,7 +245,7 @@ const MatkulList = (
 
         setIsAnimating(true);
         const maxMix = matkul.length - minimumMatkul;
-        const countMix = (count && count > 0 && count <= maxMix) ? count : Math.floor(Math.random() * (maxMix - 1 + 1)) + 1;
+        const countMix = (count && count > 0 && count <= maxMix) ? count : Math.floor(Math.random() * maxMix) + 1;
 
         const arrIndex = [];
         while (arrIndex.length < countMix) {
@@ -290,7 +290,7 @@ const MatkulList = (
 
         setIsAnimating(true);
         const maxMix = matkul.length;
-        const countMix = (count && count > 0 && count <= maxMix) ? count : Math.floor(Math.random() * (maxMix - 1 + 1)) + 1;
+        const countMix = (count && count > 0 && count <= maxMix) ? count : Math.floor(Math.random() * maxMix) + 1;
 
         const arrIndex = [];
         while (arrIndex.length < countMix) {
