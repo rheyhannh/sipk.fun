@@ -481,7 +481,10 @@ const MatkulList = (
 
                         <Swiper
                             onBeforeInit={(swiper) => setSwipers((prev) => ({ ...prev, [item.id]: swiper }))}
-                            onBeforeDestroy={(swiper) => setSwipers((prev) => ({ ...prev, [item.id]: null }))}
+                            onBeforeDestroy={(swiper) => setSwipers((prev) => {
+                                const { [item.id]: _, ...updated } = prev;
+                                return updated;
+                            })}
                             slidesPerView={1}
                             spaceBetween={50}
                             centeredSlides={true}
