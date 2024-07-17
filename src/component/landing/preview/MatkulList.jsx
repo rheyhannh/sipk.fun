@@ -313,7 +313,7 @@ const MatkulList = (
             if (swipers[item.id]) {
                 const newNilai = generateNilai(item.nilai);
                 const newNilaiSlideIndex = nilaiColorEntries.findIndex(([nilai]) => nilai === newNilai);
-                if (newNilaiSlideIndex > 0) {
+                if (newNilaiSlideIndex >= 0) {
                     swipers[item.id].slideTo(newNilaiSlideIndex, duration);
                 }
             }
