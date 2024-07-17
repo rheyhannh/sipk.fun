@@ -90,8 +90,37 @@ import styles from '../style/matkul_list.module.css';
  * @property {((count:number | Array<number>, delay:number, duration:number) => void) => void} apply.mixSomeNilai
  * @property {() => void} apply.reset
  */
+
+/**
+ * Props yang digunakan component `MatkulList`
+ * @typedef {Object} MatkulListProps
+ * @property {[number, number]} [dummiesRange]
+ * Range dan jumlah matkul dummies yang digunakan dalam array
+ * - Contoh : `[0, 25]` menggunakan item index 0 sampai dengan 25
+ * - Default : `[0, 15]`
+ * @property {number} [maximumMatkul]
+ * Jumlah maksimal matkul dummies yang tampil
+ * - Default : `5`
+ * @property {number} [minimumMatkul]
+ * Jumlah minimal matkul dummies yang tampil
+ * - Default : `1`
+ * @property {React.ReactNode} title
+ * Judul matkul list
+ * @property {boolean} [renderTestElement]
+ * Boolean untuk render element untuk testing
+ * - Default : `false`
+ * @property {(x:MatkulListInstance) => void} onStateChanges
+ * Callback saat state pada component berubah dengan parameter `x` object yang berisikan state yang digunakan
+ * juga method yang digunakan pada key `apply`
+ */
+
 // #endregion
 
+/**
+ * List dari `MatkulDummies` 
+ * @param {MatkulListProps} props MatkulList props
+ * @returns {React.ReactElement} Rendered component
+ */
 const MatkulList = (
     {
         dummiesRange = [0, 15],
