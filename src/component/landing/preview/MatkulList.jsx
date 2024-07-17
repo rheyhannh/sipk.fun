@@ -60,6 +60,22 @@ import styles from '../style/matkul_list.module.css';
  * @property {number} ip Indeks prestasi dari `(totalNilai / totalSks)`
  */
 
+/**
+ * State object dengan key id swiper instances diperoleh dari id matakuliah dalam bentuk uuid dengan value swiper instance.
+ * Gunakan state ini untuk menggunakan swiper dengan method atau atribute tertentu berdasarkan id nya
+ * ```js
+ * // Contoh
+ * swipers[validId].someSwiperMethodOrAttribute;
+ * // swiper.slideTo()
+ * swipers['bc5a256e-3034-4cde-be90-34efa1b25e89'].slideTo(); 
+ * // swiper.activeIndex
+ * swipers['bc5a256e-3034-4cde-be90-34efa1b25e89'].activeIndex;
+ * ```
+ * State ini diperbarui secara otomatis saat event `swiper.destroy` dengan menghapus entries dan saat
+ * event `swiper.init` dengan menambahkan entries
+ * @typedef {Object<string,SwiperClass>} Swipers
+ */
+
 // #endregion
 
 const MatkulList = (
@@ -79,6 +95,7 @@ const MatkulList = (
     const [lastItemId, setLastItemId] = React.useState(null);
     /** @type {ReturnType<typeof React.useState<MatkulDetails>>} */
     const [matkulDetails, setMatkulDetails] = React.useState({ totalNilai: 0, totalSks: 0, ip: 0 });
+    /** @type {ReturnType<typeof React.useState<Swipers>>} */
     const [swipers, setSwipers] = React.useState({});
     const nilaiColorEntries = Object.entries(MatkulDummiesNilaiColorPreset);
 
