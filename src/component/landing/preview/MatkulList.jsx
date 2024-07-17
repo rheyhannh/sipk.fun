@@ -196,7 +196,7 @@ const MatkulList = (
             const randomIndex = Math.floor(Math.random() * matkul.length);
             arrIndex.push(randomIndex);
         }
-        
+
         const indexToPop = new Set(arrIndex);
         const clone = [...matkul];
 
@@ -252,7 +252,7 @@ const MatkulList = (
             const randomIndex = Math.floor(Math.random() * matkul.length);
             arrIndex.push(randomIndex);
         }
-        
+
         const indexToMix = new Set(arrIndex);
         const available = MatkulDummies.slice(dummiesRange[0], dummiesRange[1]).filter(x =>
             !matkul.some(y => y.id === x.id)
@@ -297,7 +297,7 @@ const MatkulList = (
             const randomIndex = Math.floor(Math.random() * matkul.length);
             arrIndex.push(randomIndex);
         }
-        
+
         const indexToMix = new Set(arrIndex);
 
         const mixWithDelay = (indexArray, i) => {
