@@ -106,8 +106,9 @@ const MatkulList = (
      * ```js
      * const maxCount = maximumMatkul - matkul.length;
      * ```
-     * Jika `count` melebihi batas atau bernilai `<= 0`, maka `count` akan dipilih ulang secara acak.
-     * @param {number} [count] - Jumlah item yang ingin ditambah
+     * - Jika count angka dan `> maxCount` atau bernilai `<= 0`, maka `count` akan dipilih ulang secara acak.
+     * - Jika count array dengan length `>= maxCount` atau `<= 0` atau setiap element array bukan `number` atau setiap element array `>= maximumMatkul`, maka `count` akan dipilih ulang secara acak.
+     * @param {number | Array<number>} [count] - Jumlah item yang ingin ditambah dalam number atau array dengan index yang ingin ditambah
      * @param {number} [delay] - Delay animasi dalam `ms`, default : `350`
      * @example 
      * ```js
@@ -118,6 +119,10 @@ const MatkulList = (
      * addSome(3) // Tambah 3 item secara acak 
      * addSome(0) // Tambah 'x' item secara acak
      * addSome(-2) // Tambah 'x' item secara acak
+     * addSome(['0', 2]) // Tambah 'x' item secara acak
+     * addSome([0, 3, 2]) // Tambah 3 item pada index 0, 3 dan 2
+     * addSome([0, 3, 4, 1, 2]) // Tambah 'x' item secara acak
+     * addSome([0, 1, 1, 0]) // Tambah 2 item pada index 0 dan 1
      * ```
      */
     const addSome = (count, delay = 350) => {
@@ -173,8 +178,9 @@ const MatkulList = (
      * ```js
      * const maxCount = matkul.length - minimumMatkul;
      * ```
-     * Jika `count` melebihi batas atau bernilai `<= 0`, maka `count` akan dipilih ulang secara acak.
-     * @param {number} [count] - Jumlah item yang ingin dihapus
+     * - Jika count angka dan `> maxCount` atau bernilai `<= 0`, maka `count` akan dipilih ulang secara acak.
+     * - Jika count array dengan length `>= maxCount` atau `<= 0` atau setiap element array bukan `number` atau setiap element array `>= matkul.length`, maka `count` akan dipilih ulang secara acak.
+     * @param {number | Array<number>} [count] - Jumlah item yang ingin dihapus dalam number atau array dengan index yang ingin dihapus
      * @param {number} [delay] - Delay animasi dalam `ms`, default : `750`
      * @example 
      * ```js
@@ -185,6 +191,10 @@ const MatkulList = (
      * popSome(3) // Hapus 3 item secara acak 
      * popSome(0) // Hapus 'x' item secara acak
      * popSome(-2) // Hapus 'x' item secara acak
+     * popSome(['0', 2]) // Hapus 'x' item secara acak
+     * popSome([0, 3, 2]) // Hapus 3 item pada index 0, 3 dan 2
+     * popSome([0, 3, 4, 1, 2]) // Hapus 'x' item secara acak
+     * popSome([0, 1, 1, 0]) // Hapus 2 item pada index 0 dan 1
      * ```
      */
     const popSome = (count, delay = 750) => {
@@ -232,8 +242,9 @@ const MatkulList = (
      * ```js
      * const maxCount = matkul.length - minimumMatkul;
      * ```
-     * Jika `count` melebihi batas atau bernilai `<= 0`, maka `count` akan dipilih ulang secara acak.
-     * @param {number} [count] - Jumlah item yang ingin diupdate
+     * - Jika count angka dan `> maxCount` atau bernilai `<= 0`, maka `count` akan dipilih ulang secara acak.
+     * - Jika count array dengan length `>= maxCount` atau `<= 0` atau setiap element array bukan `number` atau setiap element array `>= matkul.length`, maka `count` akan dipilih ulang secara acak.
+     * @param {number | Array<number>} [count] - Jumlah item yang ingin diupdate dalam number atau array dengan index yang ingin diupdate
      * @param {number} [delay] - Delay animasi dalam `ms`, default : `750`
      * @example 
      * ```js
@@ -244,6 +255,10 @@ const MatkulList = (
      * mixSome(3) // Update 3 item secara acak 
      * mixSome(0) // Update 'x' item secara acak
      * mixSome(-2) // Update 'x' item secara acak
+     * mixSome(['0', 2]) // Update 'x' item secara acak
+     * mixSome([0, 3, 2]) // Update 3 item pada index 0, 3 dan 2
+     * mixSome([0, 3, 4, 1, 2]) // Update 'x' item secara acak
+     * mixSome([0, 1, 1, 0]) // Update 2 item pada index 0 dan 1
      * ```
      */
     const mixSome = (count, delay = 750) => {
