@@ -68,6 +68,7 @@ const MatkulList = (
         dummiesRange = [0, 15],
         maximumMatkul = 5,
         minimumMatkul = 1,
+        title,
     }
 ) => {
     /** @type {ReturnType<typeof React.useState<isAnimating>>} */
@@ -397,7 +398,7 @@ const MatkulList = (
                 <h3>IP: {matkulDetails.ip}</h3>
             </div>
             <div className={styles.title}>
-                Semester 1
+                {title}
             </div>
             <AnimatePresence>
                 {matkul.map((item, index) => (
