@@ -403,75 +403,14 @@ const MatkulList = (
                 duration: containerAnimDuration,
             }}
         >
-            <div
-                style={{
-                    position: 'absolute',
-                    top: '50%',
-                    left: '50%',
-                    transform: 'translate(-50%, -50%)',
-                    border: '1px solid red',
-                    width: '60%',
-                    height: '25%',
-                    borderRadius: '.2rem',
-                    display: 'flex',
-                    flexWrap: 'wrap',
-                    zIndex: 99,
-                }}
-            >
-                <span style={{ marginLeft: '5px', marginBottom: '5px' }} onClick={() => { reset() }}>Reset</span>
-                <span style={{ marginLeft: '5px', marginBottom: '5px' }} onClick={() => { addSome() }}>Add Some</span>
-                <span style={{ marginLeft: '5px', marginBottom: '5px' }} onClick={() => { popSome() }}>Pop Some</span>
-                <span style={{ marginLeft: '5px', marginBottom: '5px' }} onClick={() => { mixSome() }}>Mix Some</span>
-                <span style={{ marginLeft: '5px', marginBottom: '5px' }} onClick={() => { matkul.forEach((item) => console.log(`${item.nama} : ${item.nilai}`)) }}>Log Nilai</span>
-                <span style={{ marginLeft: '5px', marginBottom: '5px' }} onClick={() => { mixSomeNilai(Array.from({ length: matkul.length }, (_, index) => index)) }}>Mix Some Nilai</span>
-            </div>
-            <div
-                style={{
-                    position: 'absolute',
-                    top: '15%',
-                    left: '90%',
-                    transform: 'translate(-90%, -15%)',
-                    display: 'flex',
-                    width: '50%',
-                    border: 'none',
-                    gap: '.5rem',
-                    zIndex: 99
-                }}
-            >
-                <span>{isAnimating ? 'Loading' : 'Shuffle'}</span>
-                <span
-                    onClick={() => {
-                        setIsAnimating(false);
-                        setLastItemId(null);
-                    }}
-                >
-                    Reset State
-                </span>
-            </div>
-            <div
-                style={{
-                    position: 'absolute',
-                    top: '90%',
-                    left: '50%',
-                    transform: 'translate(-50%, -90%)',
-                    border: '1px solid purple',
-                    width: '50%',
-                    height: '25%',
-                    borderRadius: '.2rem',
-                    display: 'flex',
-                    flexDirection: 'column',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    zIndex: 99,
-                }}
-            >
-                <h3>Total Nilai: {matkulDetails.totalNilai}</h3>
-                <h3>Total SKS: {matkulDetails.totalSks}</h3>
-                <h3>IP: {matkulDetails.ip}</h3>
-            </div>
+            <AnimationControllerTest matkul={matkul} reset={reset} addSome={addSome} popSome={popSome} mixSome={mixSome} mixSomeNilai={mixSomeNilai} />
+            <AnimationStateTest isAnimating={isAnimating} setIsAnimating={setIsAnimating} setLastItemId={setLastItemId} />
+            <MatkulDetailsTest matkulDetails={matkulDetails} />
+
             <div className={styles.title}>
                 {title}
             </div>
+            
             <AnimatePresence>
                 {matkul.map((item, index) => (
                     <motion.div
@@ -544,6 +483,85 @@ const MatkulList = (
         </motion.div>
     )
 }
+
+// #region Testing Element
+
+const AnimationStateTest = ({ isAnimating, setIsAnimating, setLastItemId, }) => (
+    <div
+        style={{
+            position: 'absolute',
+            top: '15%',
+            left: '90%',
+            transform: 'translate(-90%, -15%)',
+            display: 'flex',
+            width: '50%',
+            border: 'none',
+            gap: '.5rem',
+            zIndex: 99
+        }}
+    >
+        <span>{isAnimating ? 'Loading' : 'Shuffle'}</span>
+        <span
+            onClick={() => {
+                setIsAnimating(false);
+                setLastItemId(null);
+            }}
+        >
+            Reset State
+        </span>
+    </div>
+)
+
+const AnimationControllerTest = ({ matkul, reset, addSome, popSome, mixSome, mixSomeNilai }) => (
+    <div
+        style={{
+            position: 'absolute',
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+            border: '1px solid red',
+            width: '60%',
+            height: '25%',
+            borderRadius: '.2rem',
+            display: 'flex',
+            flexWrap: 'wrap',
+            zIndex: 99,
+        }}
+    >
+        <span style={{ marginLeft: '5px', marginBottom: '5px' }} onClick={() => { reset() }}>Reset</span>
+        <span style={{ marginLeft: '5px', marginBottom: '5px' }} onClick={() => { addSome() }}>Add Some</span>
+        <span style={{ marginLeft: '5px', marginBottom: '5px' }} onClick={() => { popSome() }}>Pop Some</span>
+        <span style={{ marginLeft: '5px', marginBottom: '5px' }} onClick={() => { mixSome() }}>Mix Some</span>
+        <span style={{ marginLeft: '5px', marginBottom: '5px' }} onClick={() => { matkul.forEach((item) => console.log(`${item.nama} : ${item.nilai}`)) }}>Log Nilai</span>
+        <span style={{ marginLeft: '5px', marginBottom: '5px' }} onClick={() => { mixSomeNilai(Array.from({ length: matkul.length }, (_, index) => index)) }}>Mix Some Nilai</span>
+    </div>
+)
+
+const MatkulDetailsTest = ({ matkulDetails }) => (
+    <div
+        style={{
+            position: 'absolute',
+            top: '90%',
+            left: '50%',
+            transform: 'translate(-50%, -90%)',
+            border: '1px solid purple',
+            width: '50%',
+            height: '25%',
+            borderRadius: '.2rem',
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
+            alignItems: 'center',
+            zIndex: 99,
+        }}
+    >
+        <h3>Total Nilai: {matkulDetails.totalNilai}</h3>
+        <h3>Total SKS: {matkulDetails.totalSks}</h3>
+        <h3>IP: {matkulDetails.ip}</h3>
+    </div>
+)
+
+// #endregion
 
 // #region Utils
 
