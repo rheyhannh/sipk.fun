@@ -127,12 +127,13 @@ const MatkulList = (
         const maxAdd = maximumMatkul - matkul.length;
         const countAdd = (count && count > 0 && count <= maxAdd) ? count : Math.floor(Math.random() * (maxAdd - 1 + 1) + 1);
 
-        const indexToAdd = new Set();
-        while (indexToAdd.size < countAdd) {
+        const arrIndex = [];
+        while (arrIndex.length < countAdd) {
             const randomIndex = Math.floor(Math.random() * matkul.length);
-            indexToAdd.add(randomIndex);
+            arrIndex.push(randomIndex);
         }
 
+        const indexToAdd = new Set(arrIndex);
         const available = MatkulDummies.slice(dummiesRange[0], dummiesRange[1]).filter(x =>
             !matkul.some(y => y.id === x.id)
         );
@@ -190,12 +191,13 @@ const MatkulList = (
         const maxPop = matkul.length - minimumMatkul;
         const countPop = (count && count > 0 && count <= maxPop) ? count : Math.floor(Math.random() * (maxPop - 1 + 1)) + 1;
 
-        const indexToPop = new Set();
-        while (indexToPop.size < countPop) {
+        const arrIndex = [];
+        while (arrIndex.length < countPop) {
             const randomIndex = Math.floor(Math.random() * matkul.length);
-            indexToPop.add(randomIndex);
+            arrIndex.push(randomIndex);
         }
-
+        
+        const indexToPop = new Set(arrIndex);
         const clone = [...matkul];
 
         const popWithDelay = (indexArray, i) => {
@@ -245,12 +247,13 @@ const MatkulList = (
         const maxMix = matkul.length - minimumMatkul;
         const countMix = (count && count > 0 && count <= maxMix) ? count : Math.floor(Math.random() * (maxMix - 1 + 1)) + 1;
 
-        const indexToMix = new Set();
-        while (indexToMix.size < countMix) {
+        const arrIndex = [];
+        while (arrIndex.length < countMix) {
             const randomIndex = Math.floor(Math.random() * matkul.length);
-            indexToMix.add(randomIndex);
+            arrIndex.push(randomIndex);
         }
-
+        
+        const indexToMix = new Set(arrIndex);
         const available = MatkulDummies.slice(dummiesRange[0], dummiesRange[1]).filter(x =>
             !matkul.some(y => y.id === x.id)
         );
@@ -289,11 +292,13 @@ const MatkulList = (
         const maxMix = matkul.length;
         const countMix = (count && count > 0 && count <= maxMix) ? count : Math.floor(Math.random() * (maxMix - 1 + 1)) + 1;
 
-        const indexToMix = new Set();
-        while (indexToMix.size < countMix) {
+        const arrIndex = [];
+        while (arrIndex.length < countMix) {
             const randomIndex = Math.floor(Math.random() * matkul.length);
-            indexToMix.add(randomIndex);
+            arrIndex.push(randomIndex);
         }
+        
+        const indexToMix = new Set(arrIndex);
 
         const mixWithDelay = (indexArray, i) => {
             if (i >= indexArray.length) {
