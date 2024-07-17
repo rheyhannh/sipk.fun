@@ -282,6 +282,45 @@ const MatkulList = (
         mixWithDelay([...indexToMix], 0);
     }
 
+    const mixSomeNilai = (count, delay = 300, duration = 1000) => {
+        if (!isMatkulReady('mix')) return;
+
+        setIsAnimating(true);
+        const maxMix = matkul.length;
+        const countMix = (count && count > 0 && count <= maxMix) ? count : Math.floor(Math.random() * (maxMix - 1 + 1)) + 1;
+
+        const indexToMix = new Set();
+        while (indexToMix.size < countMix) {
+            const randomIndex = Math.floor(Math.random() * matkul.length);
+            indexToMix.add(randomIndex);
+        }
+
+        const mixWithDelay = (indexArray, i) => {
+            if (i >= indexArray.length) {
+                setTimeout(() => {
+                    setIsAnimating(false);
+                }, (delay / 2));
+                return;
+            }
+
+            const item = matkul[indexArray[i]];
+
+            if (swipers[item.id]) {
+                const newNilai = generateNilai(item.nilai);
+                const newNilaiSlideIndex = nilaiColorEntries.findIndex(([nilai]) => nilai === newNilai);
+                if (newNilaiSlideIndex > 0) {
+                    swipers[item.id].slideTo(newNilaiSlideIndex, duration);
+                }
+            }
+
+            setTimeout(() => {
+                mixWithDelay(indexArray, i + 1);
+            }, delay);
+        };
+
+        mixWithDelay([...indexToMix], 0);
+    }
+
     const reset = () => {
         if (!isMatkulReady('reset')) return;
 
