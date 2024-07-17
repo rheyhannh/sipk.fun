@@ -2302,7 +2302,7 @@ export const Rating = () => {
                                                     height: '100%'
                                                 }}
                                             >
-                                                <Spinner size={'32px'} color={'var(--first-color)'} />
+                                                <Spinner size={'32px'} color={'var(--logo-second-color)'} />
                                             </div>
                                             :
                                             <div className={styles.inner}>
