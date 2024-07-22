@@ -10,7 +10,7 @@ import * as React from 'react';
 
 // #region COMPONENT DEPEDENCY
 import { LandingContext } from '@/component/provider/Landing';
-import { motion, useTransform, useScroll } from "framer-motion";
+import { MotionProps, motion, useTransform, useScroll, MotionValue } from "framer-motion";
 import { MatkulList, MatkulListInstance } from '../preview/MatkulList';
 import { animateScroll as scroll } from 'react-scroll';
 // #endregion
