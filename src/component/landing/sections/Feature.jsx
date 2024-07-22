@@ -360,4 +360,23 @@ const calculateHooksX = () => {
 
 // #endregion
 
+// #region Types
+
+/**
+ * Progress scroll pada section `'feature'`
+ * @typedef {MotionValue} scrollProgress
+ */
+
+/**
+ * Ref pada component `Section`
+ * @typedef {React.RefObject<HTMLElement>} sectionRef
+ */
+
+/**
+ * Card slide yang aktif
+ * @typedef {number} activeSlide
+ */
+
+// #endregion
+
 export { Feature, contents }
