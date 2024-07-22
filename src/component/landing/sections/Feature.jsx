@@ -151,7 +151,7 @@ const Progress = ({ scrollProgress, sectionRef, ...props }) => {
             viewport={{ amount: 0.5 }}
             {...props}
         >
-            <Circle activeSlide={activeSlide} sectionRef={sectionRef}/>
+            <Circle activeSlide={activeSlide} sectionRef={sectionRef} />
             <Line scrollProgress={scrollProgress} />
         </motion.div>
     )
