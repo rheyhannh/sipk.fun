@@ -68,9 +68,6 @@ const Container = ({ children }) => {
     return (
         <div
             className={universitasStyles.container}
-            style={{
-                border: '2.5px solid pink',
-            }}
         >
             {children}
         </div>
@@ -81,9 +78,6 @@ const Layout = ({ children }) => {
     return (
         <div
             className={universitasStyles.layout}
-            style={{
-                border: '2px solid red',
-            }}
         >
             {children}
         </div>
