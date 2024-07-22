@@ -87,6 +87,16 @@ function Feature() {
     )
 }
 
+/**
+ * Element section menggunakan css className `.section`
+ * ```jsx
+ * <section className={styles.section}>
+ *      {children}
+ * </section>
+ * ```
+ * @param {React.HTMLAttributes & {sectionRef:sectionRef}} props Section props
+ * @returns {React.ReactElement} Rendered component
+ */
 const Section = ({ children, sectionRef, ...props }) => {
     const cardCount = contents.length;
     const cardWidth = '100vw';
