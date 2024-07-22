@@ -14,6 +14,12 @@ import { motion, useTransform, useScroll } from "framer-motion";
 import { MatkulList, MatkulListInstance } from '../preview/MatkulList';
 import { animateScroll as scroll } from 'react-scroll';
 // #endregion
+
+// #region ICON DEPEDENCY
+import { GoChecklist } from "react-icons/go";
+import { TbAdjustmentsStar, TbQuestionMark, TbCurrencyDollarOff } from "react-icons/tb";
+import { MdEditNote } from "react-icons/md";
+import { GiProgression } from "react-icons/gi";
 // #endregion
 
 // #region STYLE DEPEDENCY
