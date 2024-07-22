@@ -41,16 +41,38 @@ function Feature() {
         <Section sectionRef={sectionRef}>
             <Wrapper>
                 <Cards animateX={x}>
-                    <Card
-                        style={{
-                            display: 'flex',
-                            flexDirection: 'column',
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                        }}
-                    />
-                    <TambahHapus />
-                    {cards.map((card, index) => {
+                    {/* <Card>
+                        <div
+                            style={{
+                                display: 'grid',
+                                gridTemplateColumns: 'repeat(3,315px)',
+                                gap: '1rem',
+                                height: '350px',
+                            }}
+                        >
+                            <MatkulList
+                                title={'Semester 1'}
+                                dummiesRange={[0, 24]}
+                                maximumMatkul={5}
+                                minimumMatkul={1}
+                            />
+
+                            <MatkulList
+                                title={'Semester 2'}
+                                dummiesRange={[25, 48]}
+                                maximumMatkul={5}
+                                minimumMatkul={1}
+                            />
+
+                            <MatkulList
+                                title={'Semester 3'}
+                                dummiesRange={[50, 74]}
+                                maximumMatkul={5}
+                                minimumMatkul={1}
+                            />
+
+                        </div>
+                    </Card> */}
                         return <Card
                             card={card}
                             key={`featureCard-${index}`}
