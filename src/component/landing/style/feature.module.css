@@ -14,6 +14,63 @@
     overflow: hidden;
 }
 
+/* #region Progress */
+.progress {
+    --base-width: 512px;
+    --base-height: 4rem;
+    --base-bottom: 16px;
+    --base-size: 35px;
+    --circle-horizontalPadding: 2rem;
+    z-index: 999;
+    position: absolute;
+    left: 50%;
+    bottom: var(--base-bottom);
+    transform: translate(-50%, calc(var(--base-bottom) * -1));
+    width: var(--base-width);
+    height: var(--base-height);
+}
+
+.progress .circle {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0%;
+    left: 0%;
+    z-index: 3;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: var(--base-size);
+    padding: 0 var(--circle-horizontalPadding);
+}
+
+.progress .circle .item {
+    width: 1em;
+    height: 1em;
+    border-radius: 50%;
+    background-color: var(--landing-copyInverse);
+    color: var(--landing-copyLightInverse);
+    cursor: pointer;
+}
+
+.progress .circle .item .icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    font-size: .4em;
+}
+
+.progress .line {
+    width: calc(100% - (var(--circle-horizontalPadding) * 2));
+    height: 100%;
+    position: absolute;
+    top: 0%;
+    left: var(--circle-horizontalPadding);
+}
+/*  #endregion */
+
 .cards {
     display: flex;
     gap: 2.5rem;
