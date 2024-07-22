@@ -119,7 +119,7 @@ const Wrapper = ({ children, ...props }) => {
     )
 }
 
-const Progress = ({ scrollProgress, sectionRef }) => {
+const Progress = ({ scrollProgress, sectionRef, ...props }) => {
     const [activeSlide, setActiveSlide] = React.useState(0);
 
     scrollProgress.on('change', (val) => {
@@ -149,6 +149,7 @@ const Progress = ({ scrollProgress, sectionRef }) => {
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ amount: 0.5 }}
+            {...props}
         >
             <Circle activeSlide={activeSlide} sectionRef={sectionRef}/>
             <Line scrollProgress={scrollProgress} />
