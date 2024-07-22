@@ -182,6 +182,11 @@ const Progress = ({ scrollProgress, sectionRef, ...props }) => {
     )
 }
 
+/**
+ * Circle component
+ * @param {React.HTMLAttributes<HTMLDivElement> & {activeSlide:activeSlide, sectionRef:sectionRef}} props Circle props
+ * @returns {React.ReactElement} Rendered component
+ */
 const Circle = ({ activeSlide, sectionRef, ...props }) => (
     <div className={styles.circle} {...props}>
         {contents.map((item, index) => (
