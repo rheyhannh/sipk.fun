@@ -20,6 +20,9 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, EffectCoverflow } from 'swiper/modules';
 import TextBox from '@/component/motion/TextBox';
 // #endregion
+
+// #region UTIL DEPEDENCY
+import { getCommonAnimationVariants } from '@/component/motion/_helper';
 // #endregion
 
 // #region STYLE DEPEDENCY
