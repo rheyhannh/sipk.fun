@@ -129,6 +129,21 @@ const Highlight = () => {
 
 // #region Showcase Components 
 
+/**
+ * Component sebagai container element yang menggunakan beberapa state dan hook untuk digunakan pada component `Carousel` dan `List`
+ * ```jsx
+ * const ShowCase = () => {
+ *      const [state, setState] = React.useState();
+ *      const data = React.useContext();
+ *      return (
+ *          <div className={styles.showcase}>
+ *              <Carousel state={state} setState={setState} data={data}/>
+ *              <List state={state} setState={setState} data={data}/>
+ *          </div>
+ *      )
+ * }
+ * ```
+ */
 const ShowCase = () => {
     /** @type {ContextTypes.LandingContext} */
     const { data: { universitas } } = React.useContext(LandingContext);
