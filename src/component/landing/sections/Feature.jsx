@@ -119,6 +119,99 @@ const Wrapper = ({ children }) => {
     )
 }
 
+const Progress = ({ scrollProgress, sectionRef }) => {
+    const [activeSlide, setActiveSlide] = useState(0);
+
+    scrollProgress.on('change', (val) => {
+        const current = val * 100;
+        const offset = 2;
+        const contentsRange = (100 / (contents.length - 1)) - offset;
+        const halfContentsRange = contentsRange / 2;
+
+        for (let i = 0; i < contents.length; i++) {
+            const start = i * contentsRange;
+            const middle = start + halfContentsRange;
+            const end = start + contentsRange;
+
+            if (current >= start && current < middle) {
+                setActiveSlide(i);
+                return;
+            } else if (current >= middle && current < end) {
+                setActiveSlide(null);
+                return;
+            }
+        }
+    })
+
+    return (
+        <motion.div
+            className={styles.progress}
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ amount: 0.5 }}
+        >
+            <div className={styles.circle}>
+                {contents.map((item, index) => (
+                    <motion.div
+                        key={`featureCardProgress-${index}`}
+                        className={styles.item}
+                        animate={index === activeSlide ? 'highlight' : {}}
+                        variants={{
+                            highlight: {
+                                scale: 1.35, backgroundColor: 'var(--logo-second-color)', color: 'var(--landing-copyInverse)'
+                            }
+                        }}
+                        whileHover={'highlight'}
+                        onClick={() => {
+                            if (sectionRef) {
+                                const rect = sectionRef.current.getBoundingClientRect();
+                                const cardGap = 2.5 * 14;
+                                const section = window.scrollY + rect.top;
+                                const offset = (window.innerWidth + (cardGap * 3)) * index;
+                                const y = section + offset;
+                                console.log('scrolling to ', y);
+                                scroll.scrollTo(y)
+                            }
+                        }}
+                    >
+                        <div className={styles.icon}>
+                            {item.icon}
+                        </div>
+
+                    </motion.div>
+                ))}
+            </div>
+
+            <motion.svg
+                viewBox="0 0 100% 100%"
+                className={styles.line}
+            >
+                <motion.line
+                    x1="0%"
+                    y1="50%"
+                    x2="100%"
+                    y2="50%"
+                    pathLength={scrollProgress}
+                    stroke={'var(--logo-second-color)'}
+                    style={{
+                        zIndex: 2
+                    }}
+                />
+
+                <motion.line
+                    x1="0%"
+                    y1="50%"
+                    x2="100%"
+                    y2="50%"
+                    stroke={'var(--landing-copyInverse)'}
+                    style={{
+                        zIndex: 1
+                    }}
+                />
+            </motion.svg>
+        </motion.div>
+    )
+}
 const Cards = ({ children, animateX: x }) => {
     return (
         <motion.div
