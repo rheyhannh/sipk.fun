@@ -35,7 +35,7 @@ function Feature() {
     const { isRichContent, isTouchDevice, isAccessTokenExist } = useContext(LandingContext);
     const sectionRef = useRef(null);
     const { scrollYProgress } = useScroll({ target: sectionRef })
-    const x = useTransform(scrollYProgress, [0, 1], ["0", "-100%"]);
+    const x = useTransform(scrollYProgress, calculateHooksX().input, calculateHooksX().output);
 
     return (
         <Section sectionRef={sectionRef}>
