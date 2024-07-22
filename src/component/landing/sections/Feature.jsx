@@ -220,6 +220,11 @@ const Circle = ({ activeSlide, sectionRef, ...props }) => (
     </div>
 )
 
+/**
+ * Line component
+ * @param {React.HTMLAttributes<HTMLDivElement> & MotionProps & {scrollProgress:scrollProgress}} props Line props
+ * @returns {React.ReactElement} Rendered component
+ */
 const Line = ({ scrollProgress, ...props }) => (
     <motion.svg
         viewBox="0 0 100% 100%"
