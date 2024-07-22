@@ -111,9 +111,6 @@ const Wrapper = ({ children }) => {
     return (
         <div
             className={styles.wrapper}
-            style={{
-                // background: 'aquamarine',
-            }}
         >
             {children}
         </div>
