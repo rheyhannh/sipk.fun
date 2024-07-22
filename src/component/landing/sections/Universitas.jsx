@@ -148,6 +148,7 @@ const ShowCase = () => {
     /** @type {ContextTypes.LandingContext} */
     const { data: { universitas } } = React.useContext(LandingContext);
     const [selectedUniversitas, setSelectedUniversitas] = React.useState(null);
+    const [swiperCarousel, setSwiperCarousel] = React.useState(null);
 
     return (
         <div
