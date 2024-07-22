@@ -76,12 +76,6 @@ function Feature() {
                         return <Card
                             card={card}
                             key={`featureCard-${index}`}
-                            style={{
-                                display: 'flex',
-                                flexDirection: 'column',
-                                justifyContent: 'center',
-                                alignItems: 'center',
-                            }}
                         />
                     })}
                 </Cards>
