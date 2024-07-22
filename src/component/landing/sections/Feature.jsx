@@ -182,36 +182,40 @@ const Progress = ({ scrollProgress, sectionRef }) => {
                 ))}
             </div>
 
-            <motion.svg
-                viewBox="0 0 100% 100%"
-                className={styles.line}
-            >
-                <motion.line
-                    x1="0%"
-                    y1="50%"
-                    x2="100%"
-                    y2="50%"
-                    pathLength={scrollProgress}
-                    stroke={'var(--logo-second-color)'}
-                    style={{
-                        zIndex: 2
-                    }}
-                />
-
-                <motion.line
-                    x1="0%"
-                    y1="50%"
-                    x2="100%"
-                    y2="50%"
-                    stroke={'var(--landing-copyInverse)'}
-                    style={{
-                        zIndex: 1
-                    }}
-                />
-            </motion.svg>
+            <Line scrollProgress={scrollProgress}/>
         </motion.div>
     )
 }
+
+const Line = ({ scrollProgress }) => (
+    <motion.svg
+        viewBox="0 0 100% 100%"
+        className={styles.line}
+    >
+        <motion.line
+            x1="0%"
+            y1="50%"
+            x2="100%"
+            y2="50%"
+            pathLength={scrollProgress}
+            stroke={'var(--logo-second-color)'}
+            style={{
+                zIndex: 2
+            }}
+        />
+
+        <motion.line
+            x1="0%"
+            y1="50%"
+            x2="100%"
+            y2="50%"
+            stroke={'var(--landing-copyInverse)'}
+            style={{
+                zIndex: 1
+            }}
+        />
+    </motion.svg>
+)
 
 const Cards = ({ children, animateX: x }) => {
     return (
