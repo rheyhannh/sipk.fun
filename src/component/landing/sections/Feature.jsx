@@ -36,6 +36,7 @@ function Feature() {
     const sectionRef = useRef(null);
     const { scrollYProgress } = useScroll({ target: sectionRef })
     const x = useTransform(scrollYProgress, calculateHooksX().input, calculateHooksX().output);
+    const scrollProgress = useTransform(scrollYProgress, [0, 1], [0, 1]);
 
     return (
         <Section sectionRef={sectionRef}>
