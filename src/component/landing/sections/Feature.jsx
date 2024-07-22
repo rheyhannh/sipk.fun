@@ -170,7 +170,6 @@ const Progress = ({ scrollProgress, sectionRef }) => {
                                 const section = window.scrollY + rect.top;
                                 const offset = (window.innerWidth + (cardGap * 3)) * index;
                                 const y = section + offset;
-                                console.log('scrolling to ', y);
                                 scroll.scrollTo(y)
                             }
                         }}
