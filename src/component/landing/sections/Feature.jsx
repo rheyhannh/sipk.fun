@@ -151,41 +151,44 @@ const Progress = ({ scrollProgress, sectionRef }) => {
             whileInView={{ opacity: 1 }}
             viewport={{ amount: 0.5 }}
         >
-            <div className={styles.circle}>
-                {contents.map((item, index) => (
-                    <motion.div
-                        key={`featureCardProgress-${index}`}
-                        className={styles.item}
-                        animate={index === activeSlide ? 'highlight' : {}}
-                        variants={{
-                            highlight: {
-                                scale: 1.35, backgroundColor: 'var(--logo-second-color)', color: 'var(--landing-copyInverse)'
-                            }
-                        }}
-                        whileHover={'highlight'}
-                        onClick={() => {
-                            if (sectionRef) {
-                                const rect = sectionRef.current.getBoundingClientRect();
-                                const cardGap = 2.5 * 14;
-                                const section = window.scrollY + rect.top;
-                                const offset = (window.innerWidth + (cardGap * 3)) * index;
-                                const y = section + offset;
-                                scroll.scrollTo(y)
-                            }
-                        }}
-                    >
-                        <div className={styles.icon}>
-                            {item.icon}
-                        </div>
-
-                    </motion.div>
-                ))}
-            </div>
-
-            <Line scrollProgress={scrollProgress}/>
+            <Circle activeSlide={activeSlide} sectionRef={sectionRef}/>
+            <Line scrollProgress={scrollProgress} />
         </motion.div>
     )
 }
+
+const Circle = ({ activeSlide, sectionRef }) => (
+    <div className={styles.circle}>
+        {contents.map((item, index) => (
+            <motion.div
+                key={`featureCardProgress-${index}`}
+                className={styles.item}
+                animate={index === activeSlide ? 'highlight' : {}}
+                variants={{
+                    highlight: {
+                        scale: 1.35, backgroundColor: 'var(--logo-second-color)', color: 'var(--landing-copyInverse)'
+                    }
+                }}
+                whileHover={'highlight'}
+                onClick={() => {
+                    if (sectionRef) {
+                        const rect = sectionRef.current.getBoundingClientRect();
+                        const cardGap = 2.5 * 14;
+                        const section = window.scrollY + rect.top;
+                        const offset = (window.innerWidth + (cardGap * 3)) * index;
+                        const y = section + offset;
+                        scroll.scrollTo(y)
+                    }
+                }}
+            >
+                <div className={styles.icon}>
+                    {item.icon}
+                </div>
+
+            </motion.div>
+        ))}
+    </div>
+)
 
 const Line = ({ scrollProgress }) => (
     <motion.svg
