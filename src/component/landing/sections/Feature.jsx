@@ -11,7 +11,9 @@ import { useContext, useRef, useState, useEffect } from 'react';
 // #region COMPONENT DEPEDENCY
 import { LandingContext } from '@/component/provider/Landing';
 import { motion, useTransform, useScroll } from "framer-motion";
-import TambahHapus from '../cards/TambahHapus';
+import { MatkulList, MatkulListInstance } from '../preview/MatkulList';
+import { animateScroll as scroll } from 'react-scroll';
+// #endregion
 // #endregion
 
 // #region STYLE DEPEDENCY
