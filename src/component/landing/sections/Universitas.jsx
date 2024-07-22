@@ -277,67 +277,68 @@ const Carousel = ({ universitas, selectedUniversitas, setSelectedUniversitas, se
     }
 
     return (
-        <div
-            className={universitasStyles.carousel}
-            style={{
-                border: '1px solid pink',
-                position: 'relative'
+        <Swiper
+            breakpoints={{
+                1024: {
+                    slidesPerView: 2,
+                    spaceBetween: 30
+                },
+                1440: {
+                    slidesPerView: 3,
+                    spaceBetween: 40,
+                }
             }}
-            {...props}
+            centeredSlides={true}
+            loop={true}
+            autoplay={{
+                delay: 3000,
+                disableOnInteraction: false,
+            }}
+            effect={'coverflow'}
+            coverflowEffect={{
+                depth: 200,
+                modifier: 2,
+                rotate: 0,
+                scale: 0.8,
+                slideShadows: false,
+                stretch: 0,
+            }}
+            modules={[Autoplay, EffectCoverflow]}
+            className={universitasStyles.swiper}
+            onSwiper={(swiper) => { setSwiperCarousel(swiper) }}
+            onRealIndexChange={(swiper) => { setSelectedUniversitas(swiper.realIndex + 1) }}
         >
-            <div
-                style={{
-                    width: '50px',
-                    height: '25px',
-                    position: 'absolute',
-                    top: '1rem',
-                    left: '50%',
-                    transform: 'translate(-50%, -1rem)',
-                    border: '0.5px solid purple',
-                    display: 'flex',
-                    justifyContent: 'space-evenly'
-                }}
-            >
-                <span
-                    onClick={deleteTest}
+            {universitas.map((item, index) => (
+                <SwiperSlide
+                    className={universitasStyles.swiper_slide}
+                    key={`universitasCarouselItem-${item.id}`}
                 >
-                    -
-                </span>
-
-                <span
-                    onClick={addTest}
-                >
-                    +
-                </span>
-            </div>
-            <AnimatePresence>
-                {universitas.map((item, index) => (
-                    <motion.div
-                        key={`universitasItem-${item.id}`}
-                        className={universitasStyles.item}
-                        initial={{ scale: 0 }}
-                        animate={{
-                            scale: 1,
-                            boxShadow: selectedUniversitas === index ?
-                                `0 3px 10px ${item.assets.style.color.primary ?? 'rgba(0,0,0,.5)'}`
-                                :
-                                `0 3px 10px rgba(0,0,0,.25)`
-                        }}
-                        exit={{ opacity: 0 }}
-                        onTap={() => setSelectedUniversitas(index)}
-                        layout
-                    >
-                        <Image
-                            src={`/universitas/${item.assets.logo}`}
-                            alt={`Logo ${item.short}`}
-                            width={100}
-                            height={100}
-                            className={item.short === 'TELKOM' ? universitasStyles.telkom : item.short === 'UNPAD' ? universitasStyles.unpad : null}
-                        />
-                    </motion.div>
-                ))}
-            </AnimatePresence>
-        </div>
+                    {({ isPrev, isActive, isNext, isVisible }) => (
+                        <motion.div
+                            className={universitasStyles.item}
+                            initial={getCommonAnimationVariants('flyUp').hide}
+                            animate={{
+                                boxShadow: isActive ?
+                                    `0 3px 10px ${item.assets.style.color.primary}` : `0 3px 10px rgba(0,0,0,.5)`,
+                            }}
+                            whileInView={getCommonAnimationVariants('flyUp').show}
+                            transition={{
+                                delay: 0.4
+                            }}
+                            layout
+                        >
+                            <Image
+                                src={`/universitas/${item.assets.logo}`}
+                                alt={`Logo ${item.short}`}
+                                width={100}
+                                height={100}
+                                className={item.short === 'TELKOM' ? universitasStyles.telkom : item.short === 'UNPAD' ? universitasStyles.unpad : null}
+                            />
+                        </motion.div>
+                    )}
+                </SwiperSlide>
+            ))}
+        </Swiper>
     )
 }
 
