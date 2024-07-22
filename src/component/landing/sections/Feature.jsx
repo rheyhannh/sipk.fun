@@ -139,6 +139,11 @@ const Wrapper = ({ children, ...props }) => {
     )
 }
 
+/**
+ * Progress component
+ * @param {React.HTMLAttributes<HTMLDivElement> & MotionProps & {scrollProgress:scrollProgress, sectionRef:sectionRef}} props Progress props
+ * @returns {React.ReactElement} Rendered component
+ */
 const Progress = ({ scrollProgress, sectionRef, ...props }) => {
     const [activeSlide, setActiveSlide] = React.useState(0);
 
