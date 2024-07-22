@@ -69,11 +69,18 @@ function Feature() {
 }
 
 const Section = ({ children, sectionRef }) => {
+    const cardCount = contents.length;
+    const cardWidth = '100vw';
+    const cardGap = '2.5rem';
+    const cardTotalGap = `${cardCount - 1} * ${cardGap}`;
+    const cardsPadding = '3rem'
+    const cardsTotalPadding = `2 * ${cardsPadding}`;
+    const count = `calc((${cardCount} * ${cardWidth}) + ${cardTotalGap} + ${cardsTotalPadding})`;
     return (
         <section
             ref={sectionRef}
             id={'feature'}
-            style={{ height: `500vh` }}
+            style={{ height: count }}
             className={styles.section}
         >
             {children}
