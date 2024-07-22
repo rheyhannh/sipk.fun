@@ -157,11 +157,56 @@ const MATKULDUMMIES = [
     { type: 'tambah', nama: '', date: '', nilai: '', sks: '' }
 ]
 
-
-
-
-
-
+const contents = [
+    {
+        title: 'Kenapa harus pakai SIPK',
+        short: 'Kenapa SIPK',
+        description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur ducimus natus minus ex accusamus sapiente?',
+        icon: <TbQuestionMark />,
+        iconName: 'TbQuestionMark',
+        icobLib: 'tb',
+    },
+    {
+        title: 'Rencanakan Studimu',
+        short: 'Perencanaan',
+        description: 'Mulai rencanakan matakuliah kamu sedini mungkin dengan perkiraan IPK yang aktual.',
+        icon: <GoChecklist />,
+        iconName: 'GoChecklist',
+        icobLib: 'go',
+    },
+    {
+        title: 'Ubah Sesukamu',
+        short: 'Dinamis',
+        description: 'Gaperlu binggung lagi kalau ingin mengulang atau perbaiki matakuliah IPK kamu jadi berapa nantinya, tinggal ubah dan simulasikan sesukamu.',
+        icon: <MdEditNote />,
+        iconName: 'MdEditNote',
+        icobLib: 'md',
+    },
+    {
+        title: 'Petakan Mimpimu',
+        short: 'Kustom',
+        description: 'Atur target IPK yang kamu ingin raih beserta dengan jumlah matakuliah dan sks yang ingin dicapai.',
+        icon: <TbAdjustmentsStar />,
+        iconName: 'TbAdjustmentsStar',
+        icobLib: 'tb',
+    },
+    {
+        title: 'Lacak Progressmu',
+        short: 'Track',
+        description: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Incidunt, vel.',
+        icon: <GiProgression />,
+        iconName: 'GiProgression',
+        icobLib: 'gi',
+    },
+    {
+        title: 'Gratisss',
+        short: 'Gratis',
+        description: 'Cuma butuh wifi kampus atau nyolong hotspot temen kamu',
+        icon: <TbCurrencyDollarOff />,
+        iconName: 'TbCurrencyDollarOff',
+        icobLib: 'tb',
+    }
+]
 
 const cards = [
     {
