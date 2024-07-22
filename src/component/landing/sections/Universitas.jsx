@@ -157,16 +157,19 @@ const ShowCase = () => {
                 border: '1.5px solid yellow'
             }}
         >
-            <Details
-                universitas={universitas}
-                selectedUniversitas={selectedUniversitas}
-                key={'universitas_details'}
-            />
             <Carousel
                 universitas={universitas}
                 selectedUniversitas={selectedUniversitas}
                 setSelectedUniversitas={setSelectedUniversitas}
+                setSwiperCarousel={setSwiperCarousel}
                 key={'universitas_carousel'}
+            />
+
+            <List
+                universitas={universitas}
+                selectedUniversitas={selectedUniversitas}
+                swiperCarousel={swiperCarousel}
+                key={'universitas_details'}
             />
         </div>
     )
