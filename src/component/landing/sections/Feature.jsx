@@ -157,8 +157,8 @@ const Progress = ({ scrollProgress, sectionRef, ...props }) => {
     )
 }
 
-const Circle = ({ activeSlide, sectionRef }) => (
-    <div className={styles.circle}>
+const Circle = ({ activeSlide, sectionRef, ...props }) => (
+    <div className={styles.circle} {...props}>
         {contents.map((item, index) => (
             <motion.div
                 key={`featureCardProgress-${index}`}
