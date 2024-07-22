@@ -5,7 +5,7 @@ import * as ContextTypes from '@/types/context.js'
 // #endregion
 
 // #region REACT DEPEDENCY
-import { useContext, useRef, useState, useEffect } from 'react';
+import * as React from 'react';
 // #endregion
 
 // #region COMPONENT DEPEDENCY
@@ -32,8 +32,8 @@ import styles from '../style/feature.module.css'
  */
 function Feature() {
     /** @type {ContextTypes.LandingContext} */
-    const { isRichContent, isTouchDevice, isAccessTokenExist } = useContext(LandingContext);
-    const sectionRef = useRef(null);
+    const { isRichContent, isTouchDevice, isAccessTokenExist } = React.useContext(LandingContext);
+    const sectionRef = React.useRef(null);
     const { scrollYProgress } = useScroll({ target: sectionRef })
     const x = useTransform(scrollYProgress, calculateHooksX().input, calculateHooksX().output);
     const scrollProgress = useTransform(scrollYProgress, [0, 1], [0, 1]);
@@ -121,7 +121,7 @@ const Wrapper = ({ children }) => {
 }
 
 const Progress = ({ scrollProgress, sectionRef }) => {
-    const [activeSlide, setActiveSlide] = useState(0);
+    const [activeSlide, setActiveSlide] = React.useState(0);
 
     scrollProgress.on('change', (val) => {
         const current = val * 100;
