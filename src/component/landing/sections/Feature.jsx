@@ -108,10 +108,11 @@ const Section = ({ children, sectionRef, ...props }) => {
     )
 }
 
-const Wrapper = ({ children }) => {
+const Wrapper = ({ children, ...props }) => {
     return (
         <div
             className={styles.wrapper}
+            {...props}
         >
             {children}
         </div>
