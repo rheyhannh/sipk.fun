@@ -41,6 +41,7 @@ function Feature() {
     return (
         <Section sectionRef={sectionRef}>
             <Wrapper>
+                <Progress scrollProgress={scrollProgress} sectionRef={sectionRef} />
                 <Cards animateX={x}>
                     {/* <Card>
                         <div
