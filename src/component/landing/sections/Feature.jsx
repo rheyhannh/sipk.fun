@@ -189,3 +189,12 @@ const cards = [
         description: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Incidunt, vel.'
     },
 ]
+
+const calculateHooksX = () => {
+    const step = 100 / (contents.length);
+    return {
+        input: [0, 1],
+        output: [`0%`, `-${step * (contents.length - 1) + 2.5}%`]
+    }
+}
+
