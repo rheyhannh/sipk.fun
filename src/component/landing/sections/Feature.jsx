@@ -22,7 +22,7 @@ import styles from '../style/feature.module.css'
  * Render landing page section `feature`
  * @returns {ReactElement} Element react untuk render landing page section `feature`
  */
-export function Feature() {
+function Feature() {
     /** @type {ContextTypes.LandingContext} */
     const { isRichContent, isTouchDevice, isAccessTokenExist } = useContext(LandingContext);
     const sectionRef = useRef(null);
@@ -247,3 +247,4 @@ const calculateHooksX = () => {
     }
 }
 
+export { Feature, contents }
