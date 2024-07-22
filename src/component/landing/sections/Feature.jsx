@@ -108,6 +108,10 @@ const Card = (
         ...props
     }) => {
     const defaultStyle = {
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
         border: '2.5px solid pink',
     }
 
