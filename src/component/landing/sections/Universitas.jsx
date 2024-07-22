@@ -88,16 +88,40 @@ const Layout = ({ children }) => {
 
 // #region Highlight Components
 
-const Highlight = ({ children }) => {
+const Highlight = () => {
+    const highlight = 'Lebih dari 10 universitas bisa pakai SIPK';
+    const highlightArray = highlight.split(' ');
     return (
-        <div
+        <motion.div
             className={universitasStyles.highlight}
-            style={{
-                border: '1.5px solid green'
+            initial={'hide'}
+            whileInView={[
+                'highlightText_show'
+            ]}
+            transition={{
+                delayChildren: 0.3,
+                staggerChildren: 0.1
             }}
         >
-            {children}
-        </div>
+            {highlightArray.map((item, index) => (
+                <TextBox
+                    key={`universitas_highlight_text-${index}`}
+                    text={item}
+                    useBoxShadow={false}
+                    enterAnimation={'custom'}
+                    customEnterAnimation={{
+                        hide: getCommonAnimationVariants('flyUp').hide,
+                        highlightText_show: getCommonAnimationVariants('flyUp').show,
+                    }}
+                    style={{
+                        fontSize: 'inherit',
+                        fontWeight: 'inherit',
+                        backgroundColor: 'none',
+                        textTransform: 'capitalize',
+                    }}
+                />
+            ))}
+        </motion.div>
     )
 }
 
