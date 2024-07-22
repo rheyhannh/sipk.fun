@@ -213,6 +213,7 @@ const Progress = ({ scrollProgress, sectionRef }) => {
         </motion.div>
     )
 }
+
 const Cards = ({ children, animateX: x }) => {
     return (
         <motion.div
