@@ -258,7 +258,7 @@ const List = ({ universitas, selectedUniversitas, swiperCarousel, ...props }) =>
  * @param {React.HTMLAttributes<HTMLDivElement> & CarouselProps} props Component props
  * @returns {React.ReactElement} Rendered component
  */
-const Carousel = ({ universitas, selectedUniversitas, setSelectedUniversitas, ...props }) => {
+const Carousel = ({ universitas, selectedUniversitas, setSelectedUniversitas, setSwiperCarousel, ...props }) => {
     const [test, setTest] = React.useState([]);
 
     const addTest = () => {
