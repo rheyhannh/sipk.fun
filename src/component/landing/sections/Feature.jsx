@@ -118,6 +118,16 @@ const Section = ({ children, sectionRef, ...props }) => {
     )
 }
 
+/**
+ * Element wrapper menggunakan css className `.wrapper`
+ * ```jsx
+ * <div className={styles.wrapper}>
+ *      {children}
+ * </div>
+ * ```
+ * @param {React.HTMLAttributes<HTMLDivElement>} props Wrapper props
+ * @returns {React.ReactElement} Rendered component
+ */
 const Wrapper = ({ children, ...props }) => {
     return (
         <div
