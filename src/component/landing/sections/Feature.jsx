@@ -87,7 +87,7 @@ function Feature() {
     )
 }
 
-const Section = ({ children, sectionRef }) => {
+const Section = ({ children, sectionRef, ...props }) => {
     const cardCount = contents.length;
     const cardWidth = '100vw';
     const cardGap = '2.5rem';
@@ -101,6 +101,7 @@ const Section = ({ children, sectionRef }) => {
             id={'feature'}
             style={{ height: count }}
             className={styles.section}
+            {...props}
         >
             {children}
         </section>
