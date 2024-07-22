@@ -157,18 +157,20 @@ const ShowCase = () => {
 }
 
 /**
- * Props yang digunakan pada component `Details`
- * @typedef {Object} DetailsProps
+ * Props yang digunakan pada component `List`
+ * @typedef {Object} ListProps
  * @property {Array<SupabaseTypes.UniversitasData>} universitas
  * Array yang berisikan data universitas yang tersedia
  * @property {?number} selectedUniversitas
  * State berupa index dari `universitas` yang aktif
  * - Note : Intial state bernilai `null`
+ * @property {any} swiperCarousel 
+ * Reference swiper element pada component `Carousel`
  */
 
 /**
  * Element yang menampilkan detail universitas yang aktif pada state `selectedUniversitas`
- * @param {React.HTMLAttributes<HTMLDivElement> & DetailsProps} props Component props
+ * @param {React.HTMLAttributes<HTMLDivElement> & ListProps} props Component props
  * @returns {React.ReactElement} Rendered component
  */
 const List = ({ universitas, selectedUniversitas, swiperCarousel, ...props }) => {
