@@ -221,11 +221,12 @@ const Line = ({ scrollProgress, ...props }) => (
     </motion.svg>
 )
 
-const Cards = ({ children, animateX: x }) => {
+const Cards = ({ children, animateX: x, ...props }) => {
     return (
         <motion.div
             className={styles.cards}
             style={{ x }}
+            {...props}
         >
             {children}
         </motion.div>
