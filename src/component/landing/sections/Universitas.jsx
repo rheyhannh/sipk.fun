@@ -28,6 +28,8 @@ import { getCommonAnimationVariants } from '@/component/motion/_helper';
 // #region STYLE DEPEDENCY
 import mainStyles from '../style/main.module.css';
 import universitasStyles from '../style/universitas.module.css';
+import 'swiper/css';
+import 'swiper/css/effect-coverflow';
 // #endregion
 
 const Universitas = () => {
