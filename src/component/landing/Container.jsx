@@ -35,7 +35,7 @@ export function Container({ children }) {
                         position: {
                             type: 'fixed',
                             preset: 'top-left',
-                            offsetY: 92,
+                            offsetY: 21,
                             offsetX: 42
                         }
                     }}
