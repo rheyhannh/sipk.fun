@@ -256,6 +256,11 @@ const Line = ({ scrollProgress, ...props }) => (
     </motion.svg>
 )
 
+/**
+ * Cards component
+ * @param {React.HTMLAttributes<HTMLDivElement> & MotionProps & {animateX:MotionValue}} props Cards props
+ * @returns {React.ReactElement} Rendered component
+ */
 const Cards = ({ children, animateX: x, ...props }) => {
     return (
         <motion.div
