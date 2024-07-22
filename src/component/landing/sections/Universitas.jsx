@@ -268,6 +268,8 @@ const List = ({ universitas, selectedUniversitas, swiperCarousel, ...props }) =>
  * - Note : Intial state bernilai `null`
  * @property {(value:number) => void} setSelectedUniversitas
  * Method untuk set `selectedUniversitas` dengan parameter `value` berupa number dari `universitas` yang aktif
+ * @property {(swiper:any) => void} setSwiperCarousel
+ * Method untuk set `swiperCarousel` dengan parameter `swiper` berupa instance dari swiper element pada component `Carousel`
  */
 
 /**
