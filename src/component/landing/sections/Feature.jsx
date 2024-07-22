@@ -190,10 +190,11 @@ const Circle = ({ activeSlide, sectionRef, ...props }) => (
     </div>
 )
 
-const Line = ({ scrollProgress }) => (
+const Line = ({ scrollProgress, ...props }) => (
     <motion.svg
         viewBox="0 0 100% 100%"
         className={styles.line}
+        {...props}
     >
         <motion.line
             x1="0%"
