@@ -15,7 +15,11 @@ import * as React from 'react';
 
 // #region COMPONENT DEPEDENCY
 import { LandingContext } from '@/component/provider/Landing';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Autoplay, EffectCoverflow } from 'swiper/modules';
+import TextBox from '@/component/motion/TextBox';
+// #endregion
 // #endregion
 
 // #region STYLE DEPEDENCY
