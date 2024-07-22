@@ -291,10 +291,6 @@ const Card = (
     )
 }
 
-const MATKULDUMMIES = [
-    { type: 'tambah', nama: '', date: '', nilai: '', sks: '' }
-]
-
 const contents = [
     {
         title: 'Kenapa harus pakai SIPK',
@@ -344,33 +340,6 @@ const contents = [
         iconName: 'TbCurrencyDollarOff',
         icobLib: 'tb',
     }
-]
-
-const cards = [
-    {
-        title: 'Feature 1',
-        description: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Incidunt, vel.'
-    },
-    {
-        title: 'Feature 2',
-        description: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Incidunt, vel.'
-    },
-    {
-        title: 'Feature 3',
-        description: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Incidunt, vel.'
-    },
-    {
-        title: 'Feature 4',
-        description: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Incidunt, vel.'
-    },
-    {
-        title: 'Feature 5',
-        description: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Incidunt, vel.'
-    },
-    {
-        title: 'Feature 6',
-        description: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Incidunt, vel.'
-    },
 ]
 
 const calculateHooksX = () => {
