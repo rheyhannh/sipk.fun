@@ -73,6 +73,7 @@ function Feature() {
 
                         </div>
                     </Card> */}
+                    {contents.map((card, index) => {
                         return <Card
                             card={card}
                             key={`featureCard-${index}`}
