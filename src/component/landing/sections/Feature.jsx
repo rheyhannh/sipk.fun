@@ -291,6 +291,8 @@ const Card = (
     )
 }
 
+// #region Variables
+
 const contents = [
     {
         title: 'Kenapa harus pakai SIPK',
@@ -342,6 +344,10 @@ const contents = [
     }
 ]
 
+// #endregion
+
+// #region Utils
+
 const calculateHooksX = () => {
     const step = 100 / (contents.length);
     return {
@@ -349,5 +355,7 @@ const calculateHooksX = () => {
         output: [`0%`, `-${step * (contents.length - 1) + 2.5}%`]
     }
 }
+
+// #endregion
 
 export { Feature, contents }
