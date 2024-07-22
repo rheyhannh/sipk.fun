@@ -150,9 +150,6 @@ const ShowCase = () => {
     return (
         <div
             className={universitasStyles.showcase}
-            style={{
-                border: '1.5px solid yellow'
-            }}
         >
             <Carousel
                 universitas={universitas}
