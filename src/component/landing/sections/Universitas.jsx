@@ -40,10 +40,7 @@ const Universitas = () => {
         <Section>
             <Container>
                 <Layout>
-                    <Highlight>
-
-                    </Highlight>
-
+                    <Highlight />
                     <ShowCase />
                 </Layout>
             </Container>
