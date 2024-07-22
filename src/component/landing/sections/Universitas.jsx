@@ -171,15 +171,72 @@ const ShowCase = () => {
  * @param {React.HTMLAttributes<HTMLDivElement> & DetailsProps} props Component props
  * @returns {React.ReactElement} Rendered component
  */
-const Details = ({ universitas, selectedUniversitas, ...props }) => {
+const List = ({ universitas, selectedUniversitas, swiperCarousel, ...props }) => {
+    const [shuffledUniversitas, setShuffledUniversitas] = React.useState(universitas);
+
+    const shuffleUniversitas = () => {
+        const shuffled = [...shuffledUniversitas];
+        for (let i = shuffled.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+        }
+        setShuffledUniversitas(shuffled);
+    }
+
+    React.useEffect(() => {
+        shuffleUniversitas();
+    }, [])
+
     return (
         <div
-            className={universitasStyles.details}
-            style={{
-                border: '1px solid aqua',
-            }}
+            className={universitasStyles.list}
             {...props}
         >
+            <motion.div
+                style={{
+                    display: 'flex',
+                    flexWrap: 'wrap',
+                    justifyContent: 'center',
+                    overflow: 'hidden',
+                    maxWidth: 1000,
+                }}
+                initial={'hide'}
+                whileInView={[
+                    'listUniversitasItem_show'
+                ]}
+                transition={{
+                    delayChildren: 0.5,
+                    staggerChildren: 0.1
+                }}
+            >
+                {shuffledUniversitas.map((item, index) => (
+                    <TextBox
+                        key={`universitasListItem-${item.id}`}
+                        text={item.nama}
+                        useBoxShadow={false}
+                        enterAnimation={'custom'}
+                        customEnterAnimation={{
+                            hide: getCommonAnimationVariants('scaleFromSmall').hide,
+                            listUniversitasItem_show: getCommonAnimationVariants('scaleFromSmall').show,
+                        }}
+                        style={{
+                            margin: selectedUniversitas === item.id ? '2.5px 5px 5px 2.5px' : '1.25px 2.5px 2.5px 1.25px',
+                            fontSize: selectedUniversitas === item.id ? '1.5rem' : '1rem',
+                            padding: selectedUniversitas === item.id ? 'calc(0.4 * 1.5rem)' : 'calc(0.4 * 1rem)',
+                            borderRadius: selectedUniversitas === item.id ? 'calc(0.4 * 1.5rem)' : 'calc(0.4 * 1rem)',
+                            color: 'var(--landing-copyInverse)',
+                            fontWeight: selectedUniversitas === item.id ? '600' : '500',
+                            cursor: 'pointer',
+                        }}
+                        otherProps={{
+                            layout: true,
+                            onClick: () => {
+                                if (swiperCarousel) { swiperCarousel.slideToLoop(item.id - 1) }
+                            },
+                        }}
+                    />
+                ))}
+            </motion.div>
         </div>
     )
 }
