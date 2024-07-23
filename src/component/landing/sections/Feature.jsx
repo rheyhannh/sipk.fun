@@ -34,6 +34,7 @@ import styles from '../style/feature.module.css'
 function Feature() {
     /** @type {ContextTypes.LandingContext} */
     const { isRichContent, isTouchDevice, isAccessTokenExist } = React.useContext(LandingContext);
+    /** @type {sectionRef} */
     const sectionRef = React.useRef(null);
     const { scrollYProgress } = useScroll({ target: sectionRef })
     const x = useTransform(scrollYProgress, calculateHooksX().input, calculateHooksX().output);
