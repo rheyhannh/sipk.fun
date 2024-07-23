@@ -95,7 +95,7 @@ function Feature() {
  *      {children}
  * </section>
  * ```
- * @param {React.HTMLAttributes & {sectionRef:sectionRef}} props Section props
+ * @param {React.HTMLProps & {sectionRef:sectionRef}} props Section props
  * @returns {React.ReactElement} Rendered component
  */
 const Section = ({ children, sectionRef, ...props }) => {
@@ -126,7 +126,7 @@ const Section = ({ children, sectionRef, ...props }) => {
  *      {children}
  * </div>
  * ```
- * @param {React.HTMLAttributes<HTMLDivElement>} props Wrapper props
+ * @param {React.HTMLProps<HTMLDivElement>} props Wrapper props
  * @returns {React.ReactElement} Rendered component
  */
 const Wrapper = ({ children, ...props }) => {
@@ -141,8 +141,7 @@ const Wrapper = ({ children, ...props }) => {
 }
 
 /**
- * Progress component
- * @param {React.HTMLAttributes<HTMLDivElement> & MotionProps & {scrollProgress:scrollProgress, sectionRef:sectionRef}} props Progress props
+ * @param {React.HTMLProps<HTMLDivElement> & HTMLMotionProps<'div'> & {scrollProgress:scrollProgress, sectionRef:sectionRef}} props Progress props
  * @returns {React.ReactElement} Rendered component
  */
 const Progress = ({ scrollProgress, sectionRef, ...props }) => {
@@ -184,8 +183,7 @@ const Progress = ({ scrollProgress, sectionRef, ...props }) => {
 }
 
 /**
- * Circle component
- * @param {React.HTMLAttributes<HTMLDivElement> & {activeSlide:activeSlide, sectionRef:sectionRef}} props Circle props
+ * @param {React.HTMLProps<HTMLDivElement> & {activeSlide:activeSlide, sectionRef:sectionRef}} props Circle props
  * @returns {React.ReactElement} Rendered component
  */
 const Circle = ({ activeSlide, sectionRef, ...props }) => (
@@ -222,8 +220,7 @@ const Circle = ({ activeSlide, sectionRef, ...props }) => (
 )
 
 /**
- * Line component
- * @param {React.HTMLAttributes<HTMLDivElement> & MotionProps & {scrollProgress:scrollProgress}} props Line props
+ * @param {React.SVGProps<SVGElement> & SVGMotionProps<SVGElement> & {scrollProgress:scrollProgress}} props Line props
  * @returns {React.ReactElement} Rendered component
  */
 const Line = ({ scrollProgress, ...props }) => (
@@ -258,8 +255,7 @@ const Line = ({ scrollProgress, ...props }) => (
 )
 
 /**
- * Cards component
- * @param {React.HTMLAttributes<HTMLDivElement> & MotionProps & {animateX:MotionValue}} props Cards props
+ * @param {React.HTMLProps<HTMLDivElement> & HTMLMotionProps<'div'> & {animateX:MotionValue}} props Cards props
  * @returns {React.ReactElement} Rendered component
  */
 const Cards = ({ children, animateX: x, ...props }) => {
