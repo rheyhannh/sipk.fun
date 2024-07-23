@@ -156,6 +156,7 @@ const Wrapper = ({ children, ...props }) => {
  * @returns {React.ReactElement} Rendered component
  */
 const Progress = ({ scrollProgress, sectionRef, ...props }) => {
+    /** @type {ReturnType<typeof React.useState<activeSlide>>} */
     const [activeSlide, setActiveSlide] = React.useState(0);
 
     scrollProgress.on('change', (val) => {
