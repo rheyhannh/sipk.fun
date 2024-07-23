@@ -2,6 +2,7 @@
 
 // #region TYPE DEPEDENCY
 import * as ContextTypes from '@/types/context.js';
+import { HTMLMotionProps, SVGMotionProps } from 'framer-motion';
 // #endregion
 
 // #region REACT DEPEDENCY
