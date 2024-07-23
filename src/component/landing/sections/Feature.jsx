@@ -11,7 +11,7 @@ import * as React from 'react';
 
 // #region COMPONENT DEPEDENCY
 import { LandingContext } from '@/component/provider/Landing';
-import { MotionProps, motion, useTransform, useScroll, MotionValue } from "framer-motion";
+import { motion, useTransform, useScroll, MotionValue } from "framer-motion";
 import { MatkulList, MatkulListInstance } from '../preview/MatkulList';
 import { animateScroll as scroll } from 'react-scroll';
 // #endregion
