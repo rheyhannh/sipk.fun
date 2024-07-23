@@ -29,7 +29,7 @@ import styles from '../style/feature.module.css'
 
 /**
  * Render landing page section `feature`
- * @returns {ReactElement} Element react untuk render landing page section `feature`
+ * @returns {ReactElement} Rendered component
  */
 function Feature() {
     /** @type {ContextTypes.LandingContext} */
@@ -141,6 +141,16 @@ const Wrapper = ({ children, ...props }) => {
 }
 
 /**
+ * Element container dari component `Circle` dan `Line` yang akan tampil saat `whileInView`.
+ * 
+ * ```jsx
+ * <motion.div className={styles.progress} {...props}>
+ *      <Circle/>
+ *      <Line/>
+ * </motion.div>
+ * ```
+ * 
+ * Dapat menggunakan props element `div` dan props component `motion.div`.
  * @param {React.HTMLProps<HTMLDivElement> & HTMLMotionProps<'div'> & {scrollProgress:scrollProgress, sectionRef:sectionRef}} props Progress props
  * @returns {React.ReactElement} Rendered component
  */
@@ -183,6 +193,15 @@ const Progress = ({ scrollProgress, sectionRef, ...props }) => {
 }
 
 /**
+ * Element `div` sebagai container dengan child `motion.div` berupa lingkaran yang menampilkan jumlah fitur pada section `'feature'`.
+ * 
+ * ```jsx
+ * <div className={styles.circle} {...props}>
+ *      <motion.div/> 
+ * </div>
+ * ```
+ * 
+ * Circle akan membesar dengan scale saat `hover` atau `activeSlide` sesuai dengan index circle.
  * @param {React.HTMLProps<HTMLDivElement> & {activeSlide:activeSlide, sectionRef:sectionRef}} props Circle props
  * @returns {React.ReactElement} Rendered component
  */
@@ -220,6 +239,9 @@ const Circle = ({ activeSlide, sectionRef, ...props }) => (
 )
 
 /**
+ * Element svg berupa garis yang menampilkan progress scroll dari section `'feature'`.
+ * 
+ * Dapat menggunakan props element `svg` dan props component `motion.svg`.
  * @param {React.SVGProps<SVGElement> & SVGMotionProps<SVGElement> & {scrollProgress:scrollProgress}} props Line props
  * @returns {React.ReactElement} Rendered component
  */
@@ -255,6 +277,16 @@ const Line = ({ scrollProgress, ...props }) => (
 )
 
 /**
+ * Element wrapper component `Card` menggunakan css classname `.cards` dengan tipe element `motion.div`.
+ * 
+ * ```jsx
+ * <motion.div className={styles.cards} style={{x:animateX}} {...props}>
+ *      <Card/>
+ * </motion.div>
+ * ```
+ * 
+ * Wrapper ini memberikan efek scroll secara horizontal dengan translateX dari param `animateX`.
+ * Dapat menggunakan props element `div` dan props component `motion.div`.
  * @param {React.HTMLProps<HTMLDivElement> & HTMLMotionProps<'div'> & {animateX:MotionValue}} props Cards props
  * @returns {React.ReactElement} Rendered component
  */
