@@ -19,21 +19,6 @@
     /* background: yellow; */
 }
 
-.theme_changer {
-    position: fixed;
-    top: 92px;
-    left: 46px;
-    width: 42px;
-    height: 42px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: var(--box-color-main);
-    color: var(--logo-second-color);
-    border-radius: .5rem;
-    z-index: var(--z-fixed);
-}
-
 .section {
     position: relative;
     width: 100%;
