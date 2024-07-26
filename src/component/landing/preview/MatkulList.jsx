@@ -130,6 +130,7 @@ const MatkulList = (
         title,
         renderTestElement = false,
         onStateChanges,
+        ...props
     }
 ) => {
     /** @type {ReturnType<typeof React.useState<isAnimating>>} */
@@ -480,6 +481,7 @@ const MatkulList = (
                 delay: baseAnimDelay,
                 duration: containerAnimDuration,
             }}
+            {...props}
         >
             {renderTestElement && <AnimationControllerTest matkul={matkul} reset={reset} addSome={addSome} popSome={popSome} mixSome={mixSome} mixSomeNilai={mixSomeNilai} />}
             {renderTestElement && <AnimationStateTest isAnimating={isAnimating} setIsAnimating={setIsAnimating} setLastItemId={setLastItemId} />}
