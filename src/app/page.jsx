@@ -6,7 +6,6 @@ import * as SupabaseTypes from '@/types/supabase';
 import { LandingProvider } from '@/component/provider/Landing';
 import { Container } from '@/component/landing/Container';
 import { Wrapper } from '@/component/landing/Wrapper';
-import { Landing } from '@/component/landing/sections/Landing';
 import { Introduction } from '@/component/landing/sections/Introduction';
 import TambahHapus from '@/component/landing/sections/TambahHapus';
 import Universitas from '@/component/landing/sections/Universitas';
@@ -75,7 +74,6 @@ export default async function LandingPage() {
       <Header />
       <Container>
         <Wrapper>
-          {/* <Landing /> */}
           <Context sectionProps={{ id: 'context-1' }} />
           <Introduction />
           <TambahHapus/>
