@@ -119,7 +119,7 @@ import styles from '../style/matkul_list.module.css';
 
 /**
  * List dari `MatkulDummies` 
- * @param {MatkulListProps} props MatkulList props
+ * @param {React.HTMLProps<HTMLDivElement> & HTMLMotionProps<'div'> & MatkulListProps} props MatkulList props
  * @returns {React.ReactElement} Rendered component
  */
 const MatkulList = (
