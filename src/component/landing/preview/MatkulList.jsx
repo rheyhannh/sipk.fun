@@ -1,5 +1,6 @@
 // #region TYPE DEPEDENCY
 import { MatkulDummiesProps, MatkulDummiesNilai } from '../variables/MatkulDummies';
+import { HTMLMotionProps } from 'framer-motion';
 // #endregion
 
 // #region REACT DEPEDENCY
