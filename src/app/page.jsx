@@ -9,6 +9,7 @@ import { Wrapper } from '@/component/landing/Wrapper';
 import { Introduction } from '@/component/landing/sections/Introduction';
 import TambahHapus from '@/component/landing/sections/TambahHapus';
 import Universitas from '@/component/landing/sections/Universitas';
+import { How } from '@/component/landing/sections/How';
 import { Feature } from '@/component/landing/sections/Feature';
 import { Context } from '@/component/landing/sections/Context';
 import { Header } from '@/component/landing/Header';
@@ -76,6 +77,7 @@ export default async function LandingPage() {
         <Wrapper>
           <Context sectionProps={{ id: 'context-1' }} />
           <Introduction />
+          <How/>
           <TambahHapus/>
           <Universitas/>
           <Feature />
