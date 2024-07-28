@@ -1,0 +1,82 @@
+.section {
+    position: relative;
+    width: 100%;
+    height: 500vh;
+    background-color: var(--landing-body);
+}
+
+.wrapper {
+    position: sticky;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    padding: calc(2rem + 72px) 2rem 2rem 2rem;
+    display: grid;
+    grid-template-columns: max-content 1fr;
+    --base-size: 35px;
+    --base-padding: 2rem;
+}
+
+.progress {
+    --progress-width: 4rem;
+    --progress-height: 512px;
+    --progress-size: var(--base-size);
+    z-index: 999;
+    width: var(--progress-width);
+    height: var(--progress-height);
+}
+
+.progress .circles {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    font-size: var(--progress-size);
+    padding: var(--base-padding) 0;
+}
+
+.progress .circle {
+    width: 1em;
+    height: 1em;
+    border-radius: 50%;
+    background-color: var(--landing-copyInverse);
+    color: var(--landing-copyLightInverse);
+    cursor: pointer;
+}
+
+.progress .circle .icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    font-size: 0.4em;
+}
+
+.content {
+    position: relative;
+}
+
+.content .titles {
+    --title-size: 24px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    font-size: var(--title-size);
+    font-weight: 700;
+    color: var(--landing-copy);
+    padding: var(--base-padding) 0;
+}
+
+.content .title {
+    position: relative;
+    width: 400px;
+    height: var(--base-size);
+    margin-left: 1rem;
+}
