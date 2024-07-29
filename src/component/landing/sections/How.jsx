@@ -116,6 +116,35 @@ const Titles = ({ scrollYProgress }) => (
     </div>
 )
 
+const Title = ({ sectionScroll, item, index, ...props }) => {
+    const { input, output } = getTransform()[index];
+    const progress = useTransform(sectionScroll, input, output);
+
+    return (
+        <motion.svg
+            className={styles.title}
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            {...props}
+        >
+            <mask id={`mask-title-${index}`}>
+                <rect width={'100%'} height={'100%'} fill={'var(--logo-second-color)'} />
+                <text x={'0%'} y={'70%'}>
+                    {item.title}
+                </text>
+            </mask>
+
+            <motion.rect
+                width={progress}
+                height={'100%'}
+                fill={'var(--logo-second-color)'}
+                mask={`url(#mask-title-${index})`}
+            />
+        </motion.svg>
+    )
+}
+
 const Cards = () => (
     <div
         className={styles.cards}
@@ -154,35 +183,6 @@ const Card = ({ item, index, ...props }) => {
                 Content {index} End
             </div>
         </div>
-    )
-}
-
-const Title = ({ sectionScroll, item, index, ...props }) => {
-    const { input, output } = getTransform()[index];
-    const progress = useTransform(sectionScroll, input, output);
-
-    return (
-        <motion.svg
-            className={styles.title}
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            {...props}
-        >
-            <mask id={`mask-title-${index}`}>
-                <rect width={'100%'} height={'100%'} fill={'var(--logo-second-color)'} />
-                <text x={'0%'} y={'70%'}>
-                    {item.title}
-                </text>
-            </mask>
-
-            <motion.rect
-                width={progress}
-                height={'100%'}
-                fill={'var(--logo-second-color)'}
-                mask={`url(#mask-title-${index})`}
-            />
-        </motion.svg>
     )
 }
 
