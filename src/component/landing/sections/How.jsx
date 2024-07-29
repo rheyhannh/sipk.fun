@@ -94,7 +94,7 @@ const Progress = ({ children, ...props }) => (
 
 /**
  * Component Description
- * @param {{activeCard:activeCard} & React.HTMLProps<HTMLDivElement>} props Circles props
+ * @param {{sectionScrollProgress:sectionScrollProgress, activeCard:activeCard} & React.HTMLProps<HTMLDivElement>} props Circles props
  * @returns {React.ReactElement} Rendered component
  */
 const Circles = ({ sectionScrollProgress, activeCard, ...props }) => (
@@ -118,7 +118,7 @@ const Circles = ({ sectionScrollProgress, activeCard, ...props }) => (
 
 /**
  * Component Description
- * @param {{activeCard:activeCard, item:contentsItem, index:number} & HTMLMotionProps<'div'>} props Circle props
+ * @param {{sectionScrollProgress:sectionScrollProgress, activeCard:activeCard, item:contentsItem, index:number} & HTMLMotionProps<'div'>} props Circle props
  * @returns {React.ReactElement} Rendered component
  */
 const Circle = ({ sectionScrollProgress, activeCard, item, index, ...props }) => (
