@@ -102,6 +102,7 @@ const How = () => {
 
 const CONTENTS = [
     {
+        id: 'how_tambah',
         title: 'Tambah Matakuliahmu',
         short: 'Tambah',
         description: 'Tambah matakuliahmu yang sudah ditempuh',
@@ -110,6 +111,7 @@ const CONTENTS = [
         iconLib: 'tb',
     },
     {
+        id: 'how_rencana',
         title: 'Rencanakan Studimu',
         short: 'Rencanakan',
         description: 'Buat rencana studimu untuk semester yang akan datang dengan perhitungan IPK yang aktual',
@@ -118,6 +120,7 @@ const CONTENTS = [
         iconLib: 'tb',
     },
     {
+        id: 'how_ubah',
         title: 'Ubah Sesukamu',
         short: 'Ubah',
         description: 'Simulasikan perubahan IPK dengan mengubah sks maupun nilai',
@@ -126,6 +129,7 @@ const CONTENTS = [
         iconLib: 'tb',
     },
     {
+        id: 'how_atur',
         title: 'Atur Targetmu',
         short: 'Atur',
         description: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Incidunt, vel.',
@@ -134,6 +138,7 @@ const CONTENTS = [
         iconLib: 'tb',
     },
     {
+        id: 'how_lacak',
         title: 'Lacak Progressmu',
         short: 'Lacak',
         description: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Incidunt, vel.',
