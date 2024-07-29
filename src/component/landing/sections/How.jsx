@@ -52,32 +52,34 @@ const How = () => {
     )
 }
 
-const Section = ({ sectionRef, children }) => (
+const Section = ({ sectionRef, children, ...props }) => (
     <section
         ref={sectionRef}
         id={'how'}
         className={styles.section}
         style={{ '--card-count': CONTENTS.length }}
+        {...props}
     >
         {children}
     </section>
 )
 
-const Wrapper = ({ children }) => (
-    <div className={styles.wrapper}>
+const Wrapper = ({ children, ...props }) => (
+    <div className={styles.wrapper} {...props}>
         {children}
     </div>
 )
 
-const Progress = ({ children }) => (
-    <div className={styles.progress}>
+const Progress = ({ children, ...props }) => (
+    <div className={styles.progress} {...props}>
         {children}
     </div>
 )
 
-const Circles = ({ activeCard }) => (
+const Circles = ({ activeCard, ...props }) => (
     <div
         className={styles.circles}
+        {...props}
     >
         {CONTENTS.map((item, index) => (
             <Link
@@ -93,7 +95,7 @@ const Circles = ({ activeCard }) => (
     </div>
 )
 
-const Circle = ({ activeCard, item, index }) => (
+const Circle = ({ activeCard, item, index, ...props }) => (
     <motion.div
         className={styles.circle}
         variants={{
@@ -101,6 +103,7 @@ const Circle = ({ activeCard, item, index }) => (
         }}
         animate={activeCard === index ? 'highlight' : {}}
         whileHover={'highlight'}
+        {...props}
     >
         <div className={styles.icon}>
             {item.icon}
@@ -108,15 +111,16 @@ const Circle = ({ activeCard, item, index }) => (
     </motion.div>
 )
 
-const Content = ({ children }) => (
-    <div className={styles.content}>
+const Content = ({ children, ...props }) => (
+    <div className={styles.content} {...props}>
         {children}
     </div>
 )
 
-const Titles = ({ sectionScrollProgress }) => (
+const Titles = ({ sectionScrollProgress, ...props }) => (
     <div
         className={styles.titles}
+        {...props}
     >
         {CONTENTS.map((item, index) => (
             <Title key={`how_content_title-${index}`} sectionScrollProgress={sectionScrollProgress} item={item} index={index} />
@@ -153,9 +157,10 @@ const Title = ({ sectionScrollProgress, item, index, ...props }) => {
     )
 }
 
-const Cards = () => (
+const Cards = ({...props}) => (
     <div
         className={styles.cards}
+        {...props}
     >
         {CONTENTS.map((item, index) => (
             <Card key={`how_cards_card-${index}`} item={item} index={index} />
