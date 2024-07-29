@@ -40,9 +40,7 @@ const How = () => {
             className={styles.section}
             style={{ '--card-count': CONTENTS.length }}
         >
-            <div
-                className={styles.wrapper}
-            >
+            <Wrapper>
                 <div
                     className={styles.progress}
                 >
@@ -88,7 +86,7 @@ const How = () => {
                         ))}
                     </div>
                 </div>
-            </div>
+            </Wrapper>
 
             <div
                 className={styles.cards}
@@ -104,6 +102,12 @@ const How = () => {
         </section>
     )
 }
+
+const Wrapper = ({ children }) => (
+    <div className={styles.wrapper}>
+        {children}
+    </div>
+)
 
 const Card = ({ item, index, ...props }) => {
     const cardRef = React.useRef(null);
