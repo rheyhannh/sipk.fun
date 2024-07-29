@@ -187,6 +187,11 @@ const Title = ({ sectionScrollProgress, item, index, ...props }) => {
     )
 }
 
+/**
+ * Component Description
+ * @param {{titleLength:number, progress:MotionValue<number>, char:string, index:number} & HTMLMotionProps<'div'>} props TitleChar props
+ * @returns {React.ReactElement} Rendered component
+ */
 const TitleChar = ({ titleLength, progress, char, index, ...props }) => {
     const scaleStart = 4 / (index + 1);
     const marginRightStart = 50 / (index + 1);
