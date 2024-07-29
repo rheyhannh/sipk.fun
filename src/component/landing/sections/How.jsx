@@ -11,6 +11,7 @@ import * as React from 'react';
 // #region COMPONENT DEPEDENCY
 import { LandingContext } from '@/component/provider/Landing';
 import { motion, useTransform, useScroll } from 'framer-motion';
+import { Link } from 'react-scroll';
 // #endregion
 
 // #region ICON DEPEDENCY
