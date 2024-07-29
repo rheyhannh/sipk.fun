@@ -46,21 +46,11 @@ const How = () => {
                 </Progress>
 
                 <Content>
-                    <Titles scrollYProgress={scrollYProgress}/>
+                    <Titles scrollYProgress={scrollYProgress} />
                 </Content>
             </Wrapper>
 
-            <div
-                className={styles.cards}
-            >
-                {CONTENTS.map((item, index) => (
-                    <Card
-                        key={`asasasaewdsc-${index}`}
-                        item={item}
-                        index={index}
-                    />
-                ))}
-            </div>
+            <Cards/>
         </section>
     )
 }
@@ -122,6 +112,16 @@ const Titles = ({ scrollYProgress }) => (
     >
         {CONTENTS.map((item, index) => (
             <Title key={`how_content_title-${index}`} sectionScroll={scrollYProgress} item={item} index={index} />
+        ))}
+    </div>
+)
+
+const Cards = () => (
+    <div
+        className={styles.cards}
+    >
+        {CONTENTS.map((item, index) => (
+            <Card key={`how_cards_card-${index}`} item={item} index={index} />
         ))}
     </div>
 )
