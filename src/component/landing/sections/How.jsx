@@ -157,7 +157,7 @@ const Title = ({ sectionScrollProgress, item, index, ...props }) => {
     )
 }
 
-const Cards = ({...props}) => (
+const Cards = ({ ...props }) => (
     <div
         className={styles.cards}
         {...props}
