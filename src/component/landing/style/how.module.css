@@ -1,12 +1,18 @@
 .section {
     position: relative;
     width: 100%;
-    height: 500vh;
+    height: calc(var(--card-count) * 300vh);
     background-color: var(--landing-body);
+    --base-size: 35px;
+    --base-padding: 2rem;
+    --progress-width: 4rem;
+    --progress-height: 512px;
+    --progress-size: var(--base-size);
 }
 
 .wrapper {
     position: sticky;
+    z-index: 2;
     top: 0;
     left: 0;
     width: 100vw;
@@ -14,14 +20,49 @@
     padding: calc(2rem + 72px) 2rem 2rem 2rem;
     display: grid;
     grid-template-columns: max-content 1fr;
-    --base-size: 35px;
-    --base-padding: 2rem;
+}
+
+.cards {
+    position: absolute;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    padding: calc(2rem + 72px) 2rem 2rem calc(2rem + var(--progress-width));
+    display: grid;
+    grid-auto-rows: calc(300vh - (2rem + 72px + 2rem));
+}
+
+.cards .card {
+    position: relative;
+}
+
+.cards .card .start,
+.cards .card .center,
+.cards .card .end {
+    position: absolute;
+    left: 0%;
+    width: 100%;
+    height: calc(100vh - 72px);
+}
+
+.cards .card .start {
+    top: 0%;
+    transform: translate(-0%, -0%);
+}
+
+.cards .card .center {
+    top: 50%;
+    transform: translate(-0%, -50%);
+}
+
+.cards .card .end {
+    bottom: 0%;
+    transform: translate(-0%, 0%);
 }
 
 .progress {
-    --progress-width: 4rem;
-    --progress-height: 512px;
-    --progress-size: var(--base-size);
     z-index: 999;
     width: var(--progress-width);
     height: var(--progress-height);
