@@ -73,6 +73,7 @@ const Tabs = () => {
                         key={t.id}
                         selected={selected}
                         handleSetSelected={handleSetSelected}
+                        item={t}
                         tab={t.id}
                         useDropdown={t.useDropdown}
                     >
@@ -88,12 +89,15 @@ const Tabs = () => {
     )
 }
 
-const Tab = ({ children, tab, useDropdown, handleSetSelected, selected }) => {
+const Tab = ({ children, item, tab, useDropdown, handleSetSelected, selected }) => {
     return (
-        <button
+        <Link
             id={`shift-tab-${tab}`}
+            to={item.sectionId}
+            offset={-72}
+            smooth={'easeInOutQuart'}
+            duration={1500}
             onMouseEnter={() => handleSetSelected(useDropdown ? tab : null)}
-            onClick={() => handleSetSelected(useDropdown ? tab : null)}
             className={`${styles.tab} ${!useDropdown ? styles.simple : ''} ${selected === tab ? styles.active : ''}`}
         >
             <span>{children}</span>
@@ -102,7 +106,7 @@ const Tab = ({ children, tab, useDropdown, handleSetSelected, selected }) => {
                 :
                 null
             }
-        </button>
+        </Link>
     );
 };
 
@@ -185,13 +189,16 @@ const Nub = ({ selected }) => {
  * @param props.dropdown Dropdown yang tesedia pada `landingNavItem` dengan `sectionId=feature`. Props ini dipass secara otomatis jika dropdown tersedia (lihat component `Content`) atau null
  * @returns {ReactElement} Element react untuk render nav item `feature` dropdown 
  */
-const Feature = ({ dropdown = null }) => {
+const How = ({ dropdown = null }) => {
     return (
         <div className={styles.nav__item_feature}>
             {dropdown.map((item, index) => {
                 return (
-                    <a
-                        href={`#${item.sectionId}`}
+                    <Link
+                        to={item.sectionId}
+                        offset={-72}
+                        smooth={'easeInOutQuart'}
+                        duration={1500}
                         className={styles.link}
                         key={`landingNavFeatureItem-${index}`}
                     >
@@ -199,7 +206,7 @@ const Feature = ({ dropdown = null }) => {
                             <Icon name={item.icon} lib={item.lib} />
                         </div>
                         <span className={styles.text}>{item.text}</span>
-                    </a>
+                    </Link>
                 )
             })}
         </div>
@@ -249,5 +256,5 @@ const Blog = ({ dropdown = null }) => {
     );
 };
 
-const COMPONENTS = { feature: Feature, blog: Blog }
+const COMPONENTS = { how: How, blog: Blog }
 const TABS = landingNavItem.map((x, index) => ({ ...x, id: index + 1, useDropdown: x?.dropdown ? true : false, Component: COMPONENTS[x.sectionId] || null }));

@@ -1,3 +1,5 @@
+import { CONTENTS as howContents } from "@/component/landing/sections/How";
+
 /**
  * @typedef {Object} NavItem Object yang merepresentasikan navigation item link
  * @property {string} text Display teks item
@@ -18,15 +20,10 @@ const dashboardNavItem = [
 const landingNavItem = [
     { text: 'Home', sectionId: 'landing', href: null, icon: 'AiOutlineAppstore', lib: 'ai' },
     {
-        text: 'Feature', sectionId: 'feature', href: null, icon: 'AiOutlineAppstore', lib: 'ai',
-        dropdown: [
-            { text: 'Feature 1', sectionId: 'feature1', href: null, icon: 'AiFillAndroid', lib: 'ai' },
-            { text: 'Feature 2', sectionId: 'feature2', href: null, icon: 'AiFillDollarCircle', lib: 'ai' },
-            { text: 'Feature 3', sectionId: 'feature3', href: null, icon: 'AiFillGift', lib: 'ai' },
-            { text: 'Feature 4', sectionId: 'feature4', href: null, icon: 'AiFillWechat', lib: 'ai' },
-            { text: 'Feature 5', sectionId: 'feature5', href: null, icon: 'AiFillThunderbolt', lib: 'ai' },
-            { text: 'Feature 6', sectionId: 'feature5', href: null, icon: 'AiFillShop', lib: 'ai' }
-        ]
+        text: 'How', sectionId: 'how', href: null, icon: 'AiOutlineAppstore', lib: 'ai',
+        dropdown: howContents.map((x) => ({
+            text: x.short, sectionId: x.id, href: null, icon: x.iconName, lib: x.iconLib,
+        }))
     },
     { text: 'Universitas', sectionId: 'universitas', href: null, icon: 'AiOutlineAppstore', lib: 'ai' },
     { text: 'Testimoni', sectionId: 'testimoni', href: null, icon: 'AiOutlineAppstore', lib: 'ai' },
