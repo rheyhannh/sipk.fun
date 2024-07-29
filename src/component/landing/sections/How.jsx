@@ -30,8 +30,6 @@ import styles from '../style/how.module.css';
 // #endregion
 
 const How = () => {
-    /** @type {ReturnType<typeof React.useState<activeCard>} */
-    const [activeCard, setActiveCard] = React.useState(null);
     /** @type {sectionRef} */
     const sectionRef = React.useRef(null);
     const { scrollYProgress: sectionScrollProgress } = useScroll({ target: sectionRef });
@@ -40,7 +38,7 @@ const How = () => {
         <Section sectionRef={sectionRef}>
             <Wrapper>
                 <Progress>
-                    <Circles sectionScrollProgress={sectionScrollProgress} activeCard={activeCard} />
+                    <Circles sectionScrollProgress={sectionScrollProgress} />
                 </Progress>
 
                 <Content>
@@ -97,45 +95,71 @@ const Progress = ({ children, ...props }) => (
  * @param {{sectionScrollProgress:sectionScrollProgress, activeCard:activeCard} & React.HTMLProps<HTMLDivElement>} props Circles props
  * @returns {React.ReactElement} Rendered component
  */
-const Circles = ({ sectionScrollProgress, activeCard, ...props }) => (
-    <div
-        className={styles.circles}
-        {...props}
-    >
-        {CONTENTS.map((item, index) => (
-            <Link
-                key={`how_progress_circle-${index}`}
-                to={item.id}
-                offset={-72}
-                smooth={'easeInOutQuart'}
-                duration={2000}
-            >
-                <Circle sectionScrollProgress={sectionScrollProgress} activeCard={activeCard} item={item} index={index} />
-            </Link>
-        ))}
-    </div>
-)
+const Circles = ({ sectionScrollProgress, ...props }) => {
+    /** @type {ReturnType<typeof React.useState<activeCard>} */
+    const [activeCard, setActiveCard] = React.useState(null);
+
+    return (
+        <div
+            className={styles.circles}
+            {...props}
+        >
+            {CONTENTS.map((item, index) => (
+                <Link
+                    key={`how_progress_circle-${index}`}
+                    to={item.id}
+                    offset={-72}
+                    smooth={'easeInOutQuart'}
+                    duration={2000}
+                >
+                    <Circle
+                        sectionScrollProgress={sectionScrollProgress}
+                        activeCard={activeCard}
+                        setActiveCard={setActiveCard}
+                        item={item}
+                        index={index} />
+                </Link>
+            ))}
+        </div>
+    )
+}
 
 /**
  * Component Description
  * @param {{sectionScrollProgress:sectionScrollProgress, activeCard:activeCard, item:contentsItem, index:number} & HTMLMotionProps<'div'>} props Circle props
  * @returns {React.ReactElement} Rendered component
  */
-const Circle = ({ sectionScrollProgress, activeCard, item, index, ...props }) => (
-    <motion.div
-        className={styles.circle}
-        variants={{
-            highlight: { scale: 1.35, backgroundColor: 'var(--logo-second-color)', color: 'var(--landing-copyInverse)' }
-        }}
-        animate={activeCard === index ? 'highlight' : {}}
-        whileHover={'highlight'}
-        {...props}
-    >
-        <div className={styles.icon}>
-            {item.icon}
-        </div>
-    </motion.div>
-)
+const Circle = ({ sectionScrollProgress, activeCard, setActiveCard, item, index, ...props }) => {
+    const input = getTitleTransformArray()[index];
+    const hook = useTransform(sectionScrollProgress, input, [0, 1, 1, 0]);
+
+    React.useEffect(() => {
+        hook.on('change', (val) => {
+            if (val > 0) setActiveCard(index);
+            else setActiveCard(null);
+        })
+
+        return () => {
+            hook.clearListeners();
+        }
+    }, []);
+
+    return (
+        <motion.div
+            className={styles.circle}
+            variants={{
+                highlight: { scale: 1.35, backgroundColor: 'var(--logo-second-color)', color: 'var(--landing-copyInverse)' }
+            }}
+            animate={activeCard === index ? 'highlight' : {}}
+            whileHover={'highlight'}
+            {...props}
+        >
+            <div className={styles.icon}>
+                {item.icon}
+            </div>
+        </motion.div>
+    )
+}
 
 /**
  * Component Description
