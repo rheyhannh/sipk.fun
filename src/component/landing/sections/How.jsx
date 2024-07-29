@@ -41,9 +41,7 @@ const How = () => {
             style={{ '--card-count': CONTENTS.length }}
         >
             <Wrapper>
-                <div
-                    className={styles.progress}
-                >
+                <Progress>
                     <div
                         className={styles.circles}
                     >
@@ -70,7 +68,7 @@ const How = () => {
                             </Link>
                         ))}
                     </div>
-                </div>
+                </Progress>
 
                 <div className={styles.content}>
                     <div
@@ -105,6 +103,12 @@ const How = () => {
 
 const Wrapper = ({ children }) => (
     <div className={styles.wrapper}>
+        {children}
+    </div>
+)
+
+const Progress = ({ children }) => (
+    <div className={styles.progress}>
         {children}
     </div>
 )
