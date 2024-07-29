@@ -46,18 +46,7 @@ const How = () => {
                 </Progress>
 
                 <Content>
-                    <div
-                        className={styles.titles}
-                    >
-                        {CONTENTS.map((item, index) => (
-                            <Title
-                                key={`asasasasasax-${index}`}
-                                sectionScroll={scrollYProgress}
-                                item={item}
-                                index={index}
-                            />
-                        ))}
-                    </div>
+                    <Titles scrollYProgress={scrollYProgress}/>
                 </Content>
             </Wrapper>
 
@@ -124,6 +113,16 @@ const Circle = ({ activeSlide, item, index }) => (
 const Content = ({ children }) => (
     <div className={styles.content}>
         {children}
+    </div>
+)
+
+const Titles = ({ scrollYProgress }) => (
+    <div
+        className={styles.titles}
+    >
+        {CONTENTS.map((item, index) => (
+            <Title key={`how_content_title-${index}`} sectionScroll={scrollYProgress} item={item} index={index} />
+        ))}
     </div>
 )
 
