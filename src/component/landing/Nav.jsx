@@ -11,13 +11,11 @@ import { useEffect, useState, useContext } from "react";
 // #region COMPONENT DEPEDENCY
 import { Link } from 'react-scroll';
 import { AnimatePresence, motion } from "framer-motion";
-import { mutate } from 'swr';
 import { Icon } from '@/component/loader/ReactIcons';
 import { LandingContext } from "@/component/provider/Landing";
 // #endregion
 
 // #region DATA DEPEDENCY
-import { useLocalTheme } from '@/data/core';
 import { landingNavItem } from '@/constant/client';
 // #endregion
 
@@ -28,12 +26,7 @@ import styles from './style/landing.module.css'
 // #region ICON DEPEDENCY
 import {
     FiArrowRight,
-    FiBarChart2,
     FiChevronDown,
-    FiHome,
-    FiPieChart,
-    FiSun,
-    FiMoon,
 } from "react-icons/fi";
 // #endregion
 
