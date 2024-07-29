@@ -42,32 +42,7 @@ const How = () => {
         >
             <Wrapper>
                 <Progress>
-                    <div
-                        className={styles.circles}
-                    >
-                        {CONTENTS.map((item, index) => (
-                            <Link
-                                to={item.id}
-                                offset={-72}
-                                smooth={'easeInOutQuart'}
-                                duration={2000}
-                            >
-                                <motion.div
-                                    key={`asereheaha-${index}`}
-                                    className={styles.circle}
-                                    variants={{
-                                        highlight: { scale: 1.35, backgroundColor: 'var(--logo-second-color)', color: 'var(--landing-copyInverse)' }
-                                    }}
-                                    animate={activeSlide === index ? 'highlight' : {}}
-                                    whileHover={'highlight'}
-                                >
-                                    <div className={styles.icon}>
-                                        {item.icon}
-                                    </div>
-                                </motion.div>
-                            </Link>
-                        ))}
-                    </div>
+                    <Circles activeSlide={activeSlide} />
                 </Progress>
 
                 <div className={styles.content}>
@@ -111,6 +86,39 @@ const Progress = ({ children }) => (
     <div className={styles.progress}>
         {children}
     </div>
+)
+
+const Circles = ({ activeSlide }) => (
+    <div
+        className={styles.circles}
+    >
+        {CONTENTS.map((item, index) => (
+            <Link
+                key={`how_progress_circle-${index}`}
+                to={item.id}
+                offset={-72}
+                smooth={'easeInOutQuart'}
+                duration={2000}
+            >
+                <Circle activeSlide={activeSlide} item={item} index={index} />
+            </Link>
+        ))}
+    </div>
+)
+
+const Circle = ({ activeSlide, item, index }) => (
+    <motion.div
+        className={styles.circle}
+        variants={{
+            highlight: { scale: 1.35, backgroundColor: 'var(--logo-second-color)', color: 'var(--landing-copyInverse)' }
+        }}
+        animate={activeSlide === index ? 'highlight' : {}}
+        whileHover={'highlight'}
+    >
+        <div className={styles.icon}>
+            {item.icon}
+        </div>
+    </motion.div>
 )
 
 const Card = ({ item, index, ...props }) => {
