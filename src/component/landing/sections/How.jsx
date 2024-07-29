@@ -415,4 +415,4 @@ const CONTENTS = [
 
 // #endregion
 
-export { How }
+export { How, CONTENTS }
