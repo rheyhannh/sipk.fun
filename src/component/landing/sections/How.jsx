@@ -277,4 +277,50 @@ const CONTENTS = [
 
 // #endregion
 
+// #region Types
+
+/** 
+ * State indeks card yang sedang aktif atau sedang tampil.
+ * - Initial : `null`
+ * @typedef {?number} activeCard
+*/
+
+/** 
+ * React ref object dari root element atau component `Section`
+ * @typedef {React.RefObject} sectionRef
+*/
+
+/** 
+ * Progress scroll section
+ * @typedef {MotionValue<number>} sectionScrollProgress
+*/
+
+/** 
+ * Contents item
+ * @typedef {Object} contentsItem
+ * @property {string} id 
+ * Id yang digunakan berfungsi sebagai attribut `id` pada elemen terkait
+ * - Contoh : `'how_tambah'`
+ * @property {string} title
+ * Judul yang digunakan 
+ * - Contoh : `'Tambah Matakuliahmu'`
+ * @property {string} short 
+ * Judul singkat yang digunakan
+ * - Contoh : `'Rencanakan'`
+ * @property {string} description 
+ * Deskripsi yang digunakan
+ * - Contoh : `'Tambah matakuliahmu yang sudah ditempuh'`
+ * @property {React.ReactElement} icon 
+ * Icon yang digunakan dari `react-icons`
+ * - Contoh : `<TbPlaylistAdd />`
+ * @property {string} iconName
+ * Nama icon yang digunakan dari `react-icons`
+ * - Contoh : `'TbPlaylistAdd'`
+ * @property {string} iconLib 
+ * Library icon yang digunakan dari `react-icons`
+ * - Contoh : `'tb'`
+*/
+
+// #endregion
+
 export { How }
