@@ -149,6 +149,7 @@
     color: var(--landing-copyLighter);
     background: transparent;
     transition: color var(--transition-default);
+    cursor: pointer;
 }
 
 .tab.simple:hover {
@@ -234,6 +235,7 @@
     padding-bottom: 0.5rem;
     color: var(--landing-copy);
     transition: color 0.2s;
+    cursor: pointer;
 }
 
 .nav__item_feature .link:hover {
