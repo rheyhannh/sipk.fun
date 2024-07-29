@@ -170,31 +170,39 @@ const Titles = ({ sectionScrollProgress, ...props }) => (
  * @returns {React.ReactElement} Rendered component
  */
 const Title = ({ sectionScrollProgress, item, index, ...props }) => {
-    const { input, output } = getTransform()[index];
-    const progress = useTransform(sectionScrollProgress, input, output);
+    const { input } = getTransform()[index];
+    const progress = useTransform(sectionScrollProgress, input, [0, 1, 1, 0]);
+    const titleChar = item.title.split('');
 
     return (
-        <motion.svg
+        <motion.div
             className={styles.title}
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
+            onClick={() => console.log(titleChar)}
             {...props}
         >
-            <mask id={`mask-title-${index}`}>
-                <rect width={'100%'} height={'100%'} fill={'var(--logo-second-color)'} />
-                <text x={'0%'} y={'70%'}>
-                    {item.title}
-                </text>
-            </mask>
+            {titleChar.map((char, charIndex) => (
+                <TitleChar titleLength={titleChar.length} progress={progress} char={char} index={charIndex} key={`how_titles_title_${index}_char-${charIndex}`} />
+            ))}
+        </motion.div>
+    )
+}
 
-            <motion.rect
-                width={progress}
-                height={'100%'}
-                fill={'var(--logo-second-color)'}
-                mask={`url(#mask-title-${index})`}
-            />
-        </motion.svg>
+const TitleChar = ({ titleLength, progress, char, index, ...props }) => {
+    const scaleStart = 4 / (index + 1);
+    const marginRightStart = 50 / (index + 1);
+    const opacityTfStart = (1 / titleLength) * index;
+    const scale = useTransform(progress, [0, 1], [scaleStart, 1]);
+    const marginRight = useTransform(progress, [0, 1], [marginRightStart, 2.5]);
+    const opacity = useTransform(progress, [opacityTfStart, 1], [0, 1]);
+
+    const Spaces = () => (
+        <div className={styles.space} />
+    )
+
+    return char === ' ' ? <Spaces /> : (
+        <motion.div style={{ opacity, scale, marginRight }} {...props}>
+            {char === ' ' ? 'MEMEQ' : char}
+        </motion.div>
     )
 }
 
@@ -264,7 +272,8 @@ const getTransform = () => {
         const one = i * overallStep;
         const three = (timeframeStep * 2) + one;
         const two = timeframeStep + one;
-        const output = itemNumber === 1 ? ['100%', '100%', '0%', '0%'] : itemNumber === CONTENTS.length ? ['0%', '100%', '100%', '100%'] : ['0%', '100%', '100%', '0%'];
+        // const output = itemNumber === 1 ? [0, 0, -350, -350] : itemNumber === CONTENTS.length ? [-350, 0, 0, 0] : [-350, 0, 0, -350];
+        const output = [0, 1, 1, 0];
         input.push(
             {
                 input: [
