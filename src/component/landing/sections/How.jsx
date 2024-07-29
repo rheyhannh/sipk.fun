@@ -20,7 +20,7 @@ import {
     TbLayoutGridAdd,
     TbEdit,
     TbTargetArrow,
-    TbChartInfographic
+    TbChartInfographic,
 } from "react-icons/tb";
 // #endregion
 
