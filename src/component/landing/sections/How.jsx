@@ -39,6 +39,7 @@ const How = () => {
             ref={sectionRef}
             id={'how'}
             className={styles.section}
+            style={{ '--card-count': CONTENTS.length }}
         >
             <div
                 className={styles.wrapper}
