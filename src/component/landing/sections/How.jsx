@@ -186,6 +186,8 @@ const Card = ({ item, index, ...props }) => {
     )
 }
 
+// #region Utils
+
 const roundThreeDecimals = (x) => Math.round(x * 1000) / 1000;
 
 const getTransform = () => {
@@ -214,6 +216,10 @@ const getTransform = () => {
 
     return input;
 }
+
+// #endregion
+
+// #region Variables
 
 const CONTENTS = [
     {
@@ -262,5 +268,7 @@ const CONTENTS = [
         iconLib: 'tb',
     },
 ]
+
+// #endregion
 
 export { How }
