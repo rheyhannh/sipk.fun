@@ -36,7 +36,7 @@ import {
  */
 export function Nav() {
     return (
-        <ShiftingDropDown/>
+        <ShiftingDropDown />
     )
 }
 
