@@ -116,8 +116,13 @@
 }
 
 .content .title {
+    display: flex;
     position: relative;
-    width: 400px;
+    padding: 0 1rem;
     height: var(--base-size);
-    margin-left: 1rem;
+}
+
+.content .title .space {
+    width: 10px;
+    height: 100%;
 }
