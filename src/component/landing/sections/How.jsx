@@ -29,19 +29,19 @@ import styles from '../style/how.module.css';
 // #endregion
 
 const How = () => {
-    const [activeSlide, setActiveSlide] = React.useState(null);
+    const [activeCard, setActiveCard] = React.useState(null);
     const sectionRef = React.useRef(null);
-    const { scrollYProgress } = useScroll({ target: sectionRef });
+    const { scrollYProgress: sectionScrollProgress } = useScroll({ target: sectionRef });
 
     return (
         <Section sectionRef={sectionRef}>
             <Wrapper>
                 <Progress>
-                    <Circles activeSlide={activeSlide} />
+                    <Circles activeCard={activeCard} />
                 </Progress>
 
                 <Content>
-                    <Titles scrollYProgress={scrollYProgress} />
+                    <Titles sectionScrollProgress={sectionScrollProgress} />
                 </Content>
             </Wrapper>
 
@@ -73,7 +73,7 @@ const Progress = ({ children }) => (
     </div>
 )
 
-const Circles = ({ activeSlide }) => (
+const Circles = ({ activeCard }) => (
     <div
         className={styles.circles}
     >
@@ -85,19 +85,19 @@ const Circles = ({ activeSlide }) => (
                 smooth={'easeInOutQuart'}
                 duration={2000}
             >
-                <Circle activeSlide={activeSlide} item={item} index={index} />
+                <Circle activeCard={activeCard} item={item} index={index} />
             </Link>
         ))}
     </div>
 )
 
-const Circle = ({ activeSlide, item, index }) => (
+const Circle = ({ activeCard, item, index }) => (
     <motion.div
         className={styles.circle}
         variants={{
             highlight: { scale: 1.35, backgroundColor: 'var(--logo-second-color)', color: 'var(--landing-copyInverse)' }
         }}
-        animate={activeSlide === index ? 'highlight' : {}}
+        animate={activeCard === index ? 'highlight' : {}}
         whileHover={'highlight'}
     >
         <div className={styles.icon}>
@@ -112,19 +112,19 @@ const Content = ({ children }) => (
     </div>
 )
 
-const Titles = ({ scrollYProgress }) => (
+const Titles = ({ sectionScrollProgress }) => (
     <div
         className={styles.titles}
     >
         {CONTENTS.map((item, index) => (
-            <Title key={`how_content_title-${index}`} sectionScroll={scrollYProgress} item={item} index={index} />
+            <Title key={`how_content_title-${index}`} sectionScrollProgress={sectionScrollProgress} item={item} index={index} />
         ))}
     </div>
 )
 
-const Title = ({ sectionScroll, item, index, ...props }) => {
+const Title = ({ sectionScrollProgress, item, index, ...props }) => {
     const { input, output } = getTransform()[index];
-    const progress = useTransform(sectionScroll, input, output);
+    const progress = useTransform(sectionScrollProgress, input, output);
 
     return (
         <motion.svg
