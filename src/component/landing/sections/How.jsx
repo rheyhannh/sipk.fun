@@ -29,7 +29,9 @@ import styles from '../style/how.module.css';
 // #endregion
 
 const How = () => {
+    /** @type {ReturnType<typeof React.useState<activeCard>} */
     const [activeCard, setActiveCard] = React.useState(null);
+    /** @type {sectionRef} */
     const sectionRef = React.useRef(null);
     const { scrollYProgress: sectionScrollProgress } = useScroll({ target: sectionRef });
 
@@ -227,6 +229,7 @@ const getTransform = () => {
 
 // #region Variables
 
+/** @type {Array<contentsItem>} */
 const CONTENTS = [
     {
         id: 'how_tambah',
