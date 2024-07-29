@@ -287,7 +287,7 @@ const CONTENTS = [
 
 /** 
  * React ref object dari root element atau component `Section`
- * @typedef {React.RefObject} sectionRef
+ * @typedef {React.RefObject<HTMLDivElement>} sectionRef
 */
 
 /** 
