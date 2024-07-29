@@ -40,7 +40,7 @@ const How = () => {
         <Section sectionRef={sectionRef}>
             <Wrapper>
                 <Progress>
-                    <Circles activeCard={activeCard} />
+                    <Circles sectionScrollProgress={sectionScrollProgress} activeCard={activeCard} />
                 </Progress>
 
                 <Content>
@@ -97,7 +97,7 @@ const Progress = ({ children, ...props }) => (
  * @param {{activeCard:activeCard} & React.HTMLProps<HTMLDivElement>} props Circles props
  * @returns {React.ReactElement} Rendered component
  */
-const Circles = ({ activeCard, ...props }) => (
+const Circles = ({ sectionScrollProgress, activeCard, ...props }) => (
     <div
         className={styles.circles}
         {...props}
@@ -110,7 +110,7 @@ const Circles = ({ activeCard, ...props }) => (
                 smooth={'easeInOutQuart'}
                 duration={2000}
             >
-                <Circle activeCard={activeCard} item={item} index={index} />
+                <Circle sectionScrollProgress={sectionScrollProgress} activeCard={activeCard} item={item} index={index} />
             </Link>
         ))}
     </div>
@@ -121,7 +121,7 @@ const Circles = ({ activeCard, ...props }) => (
  * @param {{activeCard:activeCard, item:contentsItem, index:number} & HTMLMotionProps<'div'>} props Circle props
  * @returns {React.ReactElement} Rendered component
  */
-const Circle = ({ activeCard, item, index, ...props }) => (
+const Circle = ({ sectionScrollProgress, activeCard, item, index, ...props }) => (
     <motion.div
         className={styles.circle}
         variants={{
