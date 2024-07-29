@@ -45,7 +45,7 @@ const How = () => {
                     <Circles activeSlide={activeSlide} />
                 </Progress>
 
-                <div className={styles.content}>
+                <Content>
                     <div
                         className={styles.titles}
                     >
@@ -58,7 +58,7 @@ const How = () => {
                             />
                         ))}
                     </div>
-                </div>
+                </Content>
             </Wrapper>
 
             <div
@@ -119,6 +119,12 @@ const Circle = ({ activeSlide, item, index }) => (
             {item.icon}
         </div>
     </motion.div>
+)
+
+const Content = ({ children }) => (
+    <div className={styles.content}>
+        {children}
+    </div>
 )
 
 const Card = ({ item, index, ...props }) => {
