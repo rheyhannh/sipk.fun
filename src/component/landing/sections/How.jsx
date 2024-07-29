@@ -34,12 +34,7 @@ const How = () => {
     const { scrollYProgress } = useScroll({ target: sectionRef });
 
     return (
-        <section
-            ref={sectionRef}
-            id={'how'}
-            className={styles.section}
-            style={{ '--card-count': CONTENTS.length }}
-        >
+        <Section sectionRef={sectionRef}>
             <Wrapper>
                 <Progress>
                     <Circles activeSlide={activeSlide} />
@@ -50,10 +45,21 @@ const How = () => {
                 </Content>
             </Wrapper>
 
-            <Cards/>
-        </section>
+            <Cards />
+        </Section>
     )
 }
+
+const Section = ({ sectionRef, children }) => (
+    <section
+        ref={sectionRef}
+        id={'how'}
+        className={styles.section}
+        style={{ '--card-count': CONTENTS.length }}
+    >
+        {children}
+    </section>
+)
 
 const Wrapper = ({ children }) => (
     <div className={styles.wrapper}>
