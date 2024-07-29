@@ -32,7 +32,6 @@ const How = () => {
     const [activeSlide, setActiveSlide] = React.useState(null);
     const sectionRef = React.useRef(null);
     const { scrollYProgress } = useScroll({ target: sectionRef });
-    const titleOverlay = useTransform(scrollYProgress, [0, 0.5], ['0%', '100%'])
 
     return (
         <section
@@ -51,20 +50,26 @@ const How = () => {
                         className={styles.circles}
                     >
                         {CONTENTS.map((item, index) => (
-                            <motion.div
-                                key={`asereheaha-${index}`}
-                                className={styles.circle}
-                                variants={{
-                                    highlight: { scale: 1.35, backgroundColor: 'var(--logo-second-color)', color: 'var(--landing-copyInverse)' }
-                                }}
-                                animate={activeSlide === index ? 'highlight' : {}}
-                                whileHover={'highlight'}
-                                onClick={() => setActiveSlide(index)}
+                            <Link
+                                to={item.id}
+                                offset={-72}
+                                smooth={'easeInOutQuart'}
+                                duration={2000}
                             >
-                                <div className={styles.icon}>
-                                    {item.icon}
-                                </div>
-                            </motion.div>
+                                <motion.div
+                                    key={`asereheaha-${index}`}
+                                    className={styles.circle}
+                                    variants={{
+                                        highlight: { scale: 1.35, backgroundColor: 'var(--logo-second-color)', color: 'var(--landing-copyInverse)' }
+                                    }}
+                                    animate={activeSlide === index ? 'highlight' : {}}
+                                    whileHover={'highlight'}
+                                >
+                                    <div className={styles.icon}>
+                                        {item.icon}
+                                    </div>
+                                </motion.div>
+                            </Link>
                         ))}
                     </div>
                 </div>
@@ -74,30 +79,119 @@ const How = () => {
                         className={styles.titles}
                     >
                         {CONTENTS.map((item, index) => (
-                            <svg
-                                key={`asaswasdz-${index}`}
-                                className={styles.title}
-                            >
-                                <mask id={`mask-title-${index}`}>
-                                    <rect width={'100%'} height={'100%'} fill={'var(--logo-second-color)'} />
-                                    <text x={'0%'} y={'70%'}>
-                                        {item.title}
-                                    </text>
-                                </mask>
-
-                                <motion.rect
-                                    width={titleOverlay}
-                                    height={'100%'}
-                                    fill={'var(--logo-second-color)'}
-                                    mask={`url(#mask-title-${index})`}
-                                />
-                            </svg>
+                            <Title
+                                key={`asasasasasax-${index}`}
+                                sectionScroll={scrollYProgress}
+                                item={item}
+                                index={index}
+                            />
                         ))}
                     </div>
                 </div>
             </div>
+
+            <div
+                className={styles.cards}
+            >
+                {CONTENTS.map((item, index) => (
+                    <Card
+                        key={`asasasaewdsc-${index}`}
+                        item={item}
+                        index={index}
+                    />
+                ))}
+            </div>
         </section>
     )
+}
+
+const Card = ({ item, index, ...props }) => {
+    const cardRef = React.useRef(null);
+    const { scrollYProgress: cardScrollProgress } = useScroll({
+        target: cardRef,
+        offset: ["start", "end"],
+    })
+
+    return (
+        <div
+            ref={cardRef}
+            className={styles.card}
+            style={{
+                border: '1px dashed red'
+            }}
+            {...props}
+        >
+            <div id={`${item.id}_s`} className={styles.start} style={{ border: '.5px solid purple' }}>
+                Content {index} Start
+            </div>
+
+            <div id={item.id} className={styles.center} style={{ border: '.5px solid gray' }}>
+                Content {index} Center
+            </div>
+
+            <div id={`${item.id}_e`} className={styles.end} style={{ border: '.5px solid aqua' }}>
+                Content {index} End
+            </div>
+        </div>
+    )
+}
+
+const Title = ({ sectionScroll, item, index, ...props }) => {
+    const { input, output } = getTransform()[index];
+    const progress = useTransform(sectionScroll, input, output);
+
+    return (
+        <motion.svg
+            className={styles.title}
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            {...props}
+        >
+            <mask id={`mask-title-${index}`}>
+                <rect width={'100%'} height={'100%'} fill={'var(--logo-second-color)'} />
+                <text x={'0%'} y={'70%'}>
+                    {item.title}
+                </text>
+            </mask>
+
+            <motion.rect
+                width={progress}
+                height={'100%'}
+                fill={'var(--logo-second-color)'}
+                mask={`url(#mask-title-${index})`}
+            />
+        </motion.svg>
+    )
+}
+
+const roundThreeDecimals = (x) => Math.round(x * 1000) / 1000;
+
+const getTransform = () => {
+    const input = [];
+    const overallStep = (100 / CONTENTS.length) / 100;
+    const timeframeStep = overallStep / 3;
+    for (let i = 0; i < CONTENTS.length; i++) {
+        const itemNumber = i + 1;
+        const four = (itemNumber * overallStep);
+        const one = i * overallStep;
+        const three = (timeframeStep * 2) + one;
+        const two = timeframeStep + one;
+        const output = itemNumber === 1 ? ['100%', '100%', '0%', '0%'] : itemNumber === CONTENTS.length ? ['0%', '100%', '100%', '100%'] : ['0%', '100%', '100%', '0%'];
+        input.push(
+            {
+                input: [
+                    roundThreeDecimals(one),
+                    roundThreeDecimals(two),
+                    roundThreeDecimals(three),
+                    roundThreeDecimals(four)
+                ],
+                output
+            }
+        )
+    }
+
+    return input;
 }
 
 const CONTENTS = [
