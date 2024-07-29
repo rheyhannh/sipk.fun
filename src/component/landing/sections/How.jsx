@@ -53,6 +53,11 @@ const How = () => {
     )
 }
 
+/**
+ * Component Description
+ * @param {{sectionRef:sectionRef} & React.HTMLProps<HTMLElement>} props Section props
+ * @returns {React.ReactElement} Rendered component
+ */
 const Section = ({ sectionRef, children, ...props }) => (
     <section
         ref={sectionRef}
@@ -65,18 +70,33 @@ const Section = ({ sectionRef, children, ...props }) => (
     </section>
 )
 
+/**
+ * Component Description
+ * @param {React.HTMLProps<HTMLDivElement>} props Wrapper props
+ * @returns {React.ReactElement} Rendered component
+ */
 const Wrapper = ({ children, ...props }) => (
     <div className={styles.wrapper} {...props}>
         {children}
     </div>
 )
 
+/**
+ * Component Description
+ * @param {React.HTMLProps<HTMLDivElement>} props Progress props
+ * @returns {React.ReactElement} Rendered component
+ */
 const Progress = ({ children, ...props }) => (
     <div className={styles.progress} {...props}>
         {children}
     </div>
 )
 
+/**
+ * Component Description
+ * @param {{activeCard:activeCard} & React.HTMLProps<HTMLDivElement>} props Circles props
+ * @returns {React.ReactElement} Rendered component
+ */
 const Circles = ({ activeCard, ...props }) => (
     <div
         className={styles.circles}
@@ -96,6 +116,11 @@ const Circles = ({ activeCard, ...props }) => (
     </div>
 )
 
+/**
+ * Component Description
+ * @param {{activeCard:activeCard, item:contentsItem, index:number} & HTMLMotionProps<'div'>} props Circle props
+ * @returns {React.ReactElement} Rendered component
+ */
 const Circle = ({ activeCard, item, index, ...props }) => (
     <motion.div
         className={styles.circle}
@@ -112,12 +137,22 @@ const Circle = ({ activeCard, item, index, ...props }) => (
     </motion.div>
 )
 
+/**
+ * Component Description
+ * @param {React.HTMLProps<HTMLDivElement>} props Content props
+ * @returns {React.ReactElement} Rendered component
+ */
 const Content = ({ children, ...props }) => (
     <div className={styles.content} {...props}>
         {children}
     </div>
 )
 
+/**
+ * Component Description
+ * @param {{sectionScrollProgress:sectionScrollProgress} & React.HTMLProps<HTMLDivElement>} props Titles props
+ * @returns {React.ReactElement} Rendered component
+ */
 const Titles = ({ sectionScrollProgress, ...props }) => (
     <div
         className={styles.titles}
@@ -129,6 +164,11 @@ const Titles = ({ sectionScrollProgress, ...props }) => (
     </div>
 )
 
+/**
+ * Component Description
+ * @param {{sectionScrollProgress:sectionScrollProgress,item:contentsItem, index:number} & SVGMotionProps} props Title props
+ * @returns {React.ReactElement} Rendered component
+ */
 const Title = ({ sectionScrollProgress, item, index, ...props }) => {
     const { input, output } = getTransform()[index];
     const progress = useTransform(sectionScrollProgress, input, output);
@@ -158,6 +198,11 @@ const Title = ({ sectionScrollProgress, item, index, ...props }) => {
     )
 }
 
+/**
+ * Component Description
+ * @param {React.HTMLProps<HTMLDivElement>} props Cards props
+ * @returns {React.ReactElement} Rendered component
+ */
 const Cards = ({ ...props }) => (
     <div
         className={styles.cards}
@@ -169,6 +214,11 @@ const Cards = ({ ...props }) => (
     </div>
 )
 
+/**
+ * Component Description
+ * @param {{item:contentsItem, index:number} & React.HTMLProps<HTMLDivElement>} props Card props
+ * @returns {React.ReactElement} Rendered component
+ */
 const Card = ({ item, index, ...props }) => {
     const cardRef = React.useRef(null);
     const { scrollYProgress: cardScrollProgress } = useScroll({
