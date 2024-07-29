@@ -170,7 +170,7 @@ const Titles = ({ sectionScrollProgress, ...props }) => (
  * @returns {React.ReactElement} Rendered component
  */
 const Title = ({ sectionScrollProgress, item, index, ...props }) => {
-    const { input } = getTransform()[index];
+    const input = getTitleTransformArray()[index];
     const progress = useTransform(sectionScrollProgress, input, [0, 1, 1, 0]);
     const titleChar = item.title.split('');
 
@@ -267,7 +267,7 @@ const Card = ({ item, index, ...props }) => {
 
 const roundThreeDecimals = (x) => Math.round(x * 1000) / 1000;
 
-const getTransform = () => {
+const getTitleTransformArray = () => {
     const input = [];
     const overallStep = (100 / CONTENTS.length) / 100;
     const timeframeStep = overallStep / 3;
@@ -277,18 +277,13 @@ const getTransform = () => {
         const one = i * overallStep;
         const three = (timeframeStep * 2) + one;
         const two = timeframeStep + one;
-        // const output = itemNumber === 1 ? [0, 0, -350, -350] : itemNumber === CONTENTS.length ? [-350, 0, 0, 0] : [-350, 0, 0, -350];
-        const output = [0, 1, 1, 0];
         input.push(
-            {
-                input: [
-                    roundThreeDecimals(one),
-                    roundThreeDecimals(two),
-                    roundThreeDecimals(three),
-                    roundThreeDecimals(four)
-                ],
-                output
-            }
+            [
+                roundThreeDecimals(one),
+                roundThreeDecimals(two),
+                roundThreeDecimals(three),
+                roundThreeDecimals(four)
+            ],
         )
     }
 
