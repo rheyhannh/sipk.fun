@@ -1,30 +1,38 @@
 'use client'
 
-// ========== TYPE DEPEDENCY ========== //
-import * as ContextTypes from '../types/context.js'
+// #region TYPE DEPEDENCY
+import * as ContextTypes from '@/types/context.js';
+// #endregion
 
-// ========== NEXT DEPEDENCY ========== //
+// #region NEXT DEPEDENCY
 import Link from 'next/link';
+// #endregion
 
-// ========== REACT DEPEDENCY ========== //
-import { useContext, useEffect } from 'react'
+// #region REACT DEPEDENCY
+import { useContext, useEffect } from 'react';
+// #endregion
 
-// ========== COMPONENT DEPEDENCY ========== //
+// #region COMPONENT DEPEDENCY
 import { DashboardContext } from './provider/Dashboard';
 import { ModalContext } from './provider/Modal';
 import { Icon } from './loader/ReactIcons';
-import { PiUserCircleLight } from "react-icons/pi";
+// #endregion
 
-// ========== DATA DEPEDENCY ========== //
+// #region HOOKS DEPEDENCY
 import { useUser } from '@/data/core';
-import { dashboardNavItem } from '@/constant/client'
+// #endregion
 
-// ========== STYLE DEPEDENCY ========== //
-import styles from './style/nav.module.css'
+// #region VARIABLE DEPEDENCY
+import { dashboardNavItem } from '@/constant/client';
+// #endregion
 
-/*
-============================== CODE START HERE ==============================
-*/
+// #region ICON DEPEDENCY
+import { PiUserCircleLight } from "react-icons/pi";
+// #endregion
+
+// #region STYLE DEPEDENCY
+import styles from './style/nav.module.css';
+// #endregion
 
 export default function Nav({ children }) {
     const { data, error } = useUser();
@@ -309,7 +317,3 @@ export default function Nav({ children }) {
         </>
     )
 }
-
-/*
-============================== CODE END HERE ==============================
-*/
