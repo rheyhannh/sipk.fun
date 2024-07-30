@@ -1,3 +1,7 @@
+// #region TYPE DEPEDENCY
+import { IconBaseProps } from 'react-icons';
+// #endregion
+
 // #region COMPONENT DEPEDENCY
 import loadable from '@loadable/component';
 // #endregion
