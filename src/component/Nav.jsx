@@ -13,9 +13,9 @@ import { useContext, useEffect } from 'react';
 // #endregion
 
 // #region COMPONENT DEPEDENCY
-import { DashboardContext } from './provider/Dashboard';
-import { ModalContext } from './provider/Modal';
-import { Icon } from './loader/ReactIcons';
+import { DashboardContext } from '@/component/provider/Dashboard';
+import { ModalContext } from '@/component/provider/Modal';
+import { Icon } from '@/component/loader/ReactIcons';
 // #endregion
 
 // #region HOOKS DEPEDENCY
