@@ -1,23 +1,22 @@
-// ========== REACT DEPEDENCY ========== //
+// #region REACT DEPEDENCY
 import { Suspense } from 'react';
-import Header from '@/component/Header';
-import Navbar from '@/component/Nav'
+// #endregion
 
-// ========== COMPONENT DEPEDENCY ========== //
+// #region COMPONENT DEPEDENCY
 import { NavigationEvents } from '@/component/NavigationEvents';
 import { DashboardProvider } from '@/component/provider/Dashboard';
 import { ModalProvider } from '@/component/provider/Modal';
+import Header from '@/component/Header';
+import Navbar from '@/component/Nav';
+// #endregion
 
-// ========== TAG / METADATA ========== //
+// #region TAG OR METADATA
 export const metadata = {
   title: 'SIPK | Dashboard',
   description: 'SIPK Dashboard',
   keywords: 'sipk, sistem indeks prestasi kumulatif, kalkulator ipk, kalkulator nilai, kalkulator kuliah, ipk, indeks prestasi kumulatif, kuliah, sipk website, sipk dashboard, dashboard',
 }
-
-/*
-============================== CODE START HERE ==============================
-*/
+// #endregion
 
 export default function DashboardLayout({
   children,
@@ -40,7 +39,3 @@ export default function DashboardLayout({
     </>
   )
 }
-
-/*
-============================== CODE END HERE ==============================
-*/
