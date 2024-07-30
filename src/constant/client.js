@@ -35,7 +35,7 @@ import { CONTENTS as howContents } from "@/component/landing/sections/How";
  * @property {Array<NavItem>|null} dropdown 
  * List dropdown jika tersedia
  * - Property ini dapat bernilai `null`
- * @property {React.AnchorHTMLAttributes<HTMLAnchorElement & NextLinkProps} routingOptions 
+ * @property {React.AnchorHTMLAttributes<HTMLAnchorElement> & NextLinkProps} routingOptions 
  * Props atau opsi yang digunakan untuk routing dengan component Link pada `'next/link'`.
  * @property {ReactScrollProps} scrollOptions 
  * Props atau opsi yang digunakan untuk scroll dengan component Link pada `'react-scroll'`.
