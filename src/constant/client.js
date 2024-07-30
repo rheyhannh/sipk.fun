@@ -1,4 +1,15 @@
+// #region TYPE DEPEDENCY
+import { LinkProps as NextLinkProps } from "next/link";
+import { LinkProps as ReactScrollProps } from "react-scroll";
+// #endregion
+
+// #region REACT DEPEDENCY
+import * as React from 'react';
+// #endregion
+
+// #region VARIABLE DEPEDENCY
 import { CONTENTS as howContents } from "@/component/landing/sections/How";
+// #endregion
 
 /**
  * @typedef {Object} NavItem Object yang merepresentasikan navigation item link
