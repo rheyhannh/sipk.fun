@@ -1,9 +1,6 @@
-// ========== COMPONENT DEPEDENCY ========== //
+// #region COMPONENT DEPEDENCY
 import loadable from '@loadable/component';
-
-/*
-============================== CODE START HERE ==============================
-*/
+// #endregion
 
 export function Icon({ name, lib, props }) {
     const ElementIcon = loadable(() => import(`react-icons/${lib}/index.js`), {
@@ -12,7 +9,3 @@ export function Icon({ name, lib, props }) {
 
     return <ElementIcon {...props} />;
 }
-
-/*
-============================== CODE END HERE ==============================
-*/
