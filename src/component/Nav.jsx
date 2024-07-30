@@ -4,10 +4,6 @@
 import * as ContextTypes from '@/types/context.js';
 // #endregion
 
-// #region NEXT DEPEDENCY
-import Link from 'next/link';
-// #endregion
-
 // #region REACT DEPEDENCY
 import { useContext, useEffect } from 'react';
 // #endregion
@@ -16,6 +12,7 @@ import { useContext, useEffect } from 'react';
 import { DashboardContext } from '@/component/provider/Dashboard';
 import { ModalContext } from '@/component/provider/Modal';
 import { Icon } from '@/component/loader/ReactIcons';
+import Link from '@/component/Link';
 // #endregion
 
 // #region HOOKS DEPEDENCY
@@ -155,13 +152,12 @@ export default function Nav({ children }) {
 
                                         {dashboardNavItem.map((item, index) => (
                                             <Link
-                                                href={item.href}
+                                                item={item}
                                                 className={`${styles.link} ${activeLink === item.href ? styles.active : ''}`}
-                                                prefetch={false}
-                                                key={crypto.randomUUID()}
+                                                key={`rich_dashboard_nav_item-${index}`}
                                             >
                                                 <span className={styles.link__icon}>
-                                                    <Icon name={item.icon} lib={item.lib} props={{ size: '24px' }} />
+                                                    <Icon name={item.iconName} lib={item.iconLib} props={{ size: '24px' }} />
                                                 </span>
 
                                                 <h4 className={styles.link__text} >
@@ -252,10 +248,9 @@ export default function Nav({ children }) {
 
                                     {dashboardNavItem.map((item, index) => (
                                         <Link
-                                            href={item.href}
+                                            item={item}
                                             className={`${styles.link} ${activeLink === item.href ? styles.active : ''}`}
-                                            prefetch={false}
-                                            key={crypto.randomUUID()}
+                                            key={`small_dashboard_nav_item-${index}`}
                                         >
                                             <span className={styles.link__icon}>
                                                 <Icon name={item.iconName} lib={item.iconLib} props={{ size: '24px' }} />
