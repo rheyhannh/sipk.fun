@@ -250,7 +250,7 @@ export default function Nav({ children }) {
                                             key={crypto.randomUUID()}
                                         >
                                             <span className={styles.link__icon}>
-                                                <Icon name={item.icon} lib={item.lib} props={{ size: '24px' }} />
+                                                <Icon name={item.iconName} lib={item.iconLib} props={{ size: '24px' }} />
                                             </span>
 
                                             <h4 className={styles.link__text} >

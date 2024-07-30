@@ -21,28 +21,21 @@ import { CONTENTS as howContents } from "@/component/landing/sections/How";
  * @property {Array<NavItem>|null} dropdown List dropdown jika tersedia. Property ini dapat bernilai `null`. 
  */
 
-/** @type {Array<NavItem>} Dashboard page navigation item */
-const dashboardNavItem = [
-    { text: 'Dashboard', sectionId: null, href: '/dashboard', icon: 'AiOutlineAppstore', lib: 'ai' },
-    { text: 'Matakuliah', sectionId: null, href: '/dashboard/matakuliah', icon: 'BsJournalBookmark', lib: 'bs' },
+export const dashboardNavItem = [
+    { text: 'Dashboard', elementId: null, href: '/dashboard', iconName: 'AiOutlineAppstore', iconLib: 'ai' },
+    { text: 'Matakuliah', elementId: null, href: '/dashboard/matakuliah', iconName: 'BsJournalBookmark', iconLib: 'bs' },
 ];
 
-/** @type {Array<NavItem>} Landing page navigation item */
-const landingNavItem = [
-    { text: 'Home', sectionId: 'landing', href: null, icon: 'AiOutlineAppstore', lib: 'ai' },
+export const landingNavItem = [
+    { text: 'Home', elementId: 'landing', href: null, iconName: 'AiOutlineAppstore', iconLib: 'ai' },
     {
-        text: 'How', sectionId: 'how', href: null, icon: 'AiOutlineAppstore', lib: 'ai',
+        text: 'How', elementId: 'how', href: null, iconName: 'AiOutlineAppstore', iconLib: 'ai',
         dropdown: howContents.map((x) => ({
-            text: x.short, sectionId: x.id, href: null, icon: x.iconName, lib: x.iconLib,
+            text: x.short, elementId: x.id, href: null, iconName: x.iconName, iconLib: x.iconLib,
         }))
     },
-    { text: 'Universitas', sectionId: 'universitas', href: null, icon: 'AiOutlineAppstore', lib: 'ai' },
-    { text: 'Testimoni', sectionId: 'testimoni', href: null, icon: 'AiOutlineAppstore', lib: 'ai' },
-    { text: 'Blog', sectionId: 'blog', href: null, icon: 'AiOutlineAppstore', lib: 'ai', dropdown: [] },
-    { text: 'Context', sectionId: 'context', href: null, icon: 'AiOutlineAppstore', lib: 'ai' },
+    { text: 'Universitas', elementId: 'universitas', href: null, iconName: 'AiOutlineAppstore', iconLib: 'ai' },
+    { text: 'Testimoni', elementId: 'testimoni', href: null, iconName: 'AiOutlineAppstore', iconLib: 'ai' },
+    { text: 'Blog', elementId: 'blog', href: null, iconName: 'AiOutlineAppstore', iconLib: 'ai', dropdown: [] },
+    { text: 'Context', elementId: 'context', href: null, iconName: 'AiOutlineAppstore', iconLib: 'ai' },
 ]
-
-export {
-    dashboardNavItem,
-    landingNavItem
-};

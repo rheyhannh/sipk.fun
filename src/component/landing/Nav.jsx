@@ -93,7 +93,7 @@ const Tab = ({ children, item, tab, useDropdown, handleSetSelected, selected }) 
     return (
         <Link
             id={`shift-tab-${tab}`}
-            to={item.sectionId}
+            to={item.elementId}
             offset={-72}
             smooth={'easeInOutQuart'}
             duration={1500}
@@ -195,7 +195,7 @@ const How = ({ dropdown = null }) => {
             {dropdown.map((item, index) => {
                 return (
                     <Link
-                        to={item.sectionId}
+                        to={item.elementId}
                         offset={-72}
                         smooth={'easeInOutQuart'}
                         duration={1500}
@@ -203,7 +203,7 @@ const How = ({ dropdown = null }) => {
                         key={`landingNavFeatureItem-${index}`}
                     >
                         <div className={styles.icon}>
-                            <Icon name={item.icon} lib={item.lib} />
+                            <Icon name={item.iconName} lib={item.iconLib} />
                         </div>
                         <span className={styles.text}>{item.text}</span>
                     </Link>
@@ -257,4 +257,4 @@ const Blog = ({ dropdown = null }) => {
 };
 
 const COMPONENTS = { how: How, blog: Blog }
-const TABS = landingNavItem.map((x, index) => ({ ...x, id: index + 1, useDropdown: x?.dropdown ? true : false, Component: COMPONENTS[x.sectionId] || null }));
+const TABS = landingNavItem.map((x, index) => ({ ...x, id: index + 1, useDropdown: x?.dropdown ? true : false, Component: COMPONENTS[x.elementId] || null }));
