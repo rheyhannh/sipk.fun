@@ -13,19 +13,47 @@ import { CONTENTS as howContents } from "@/component/landing/sections/How";
 
 /**
  * @typedef {Object} NavItem Object yang merepresentasikan navigation item link
- * @property {string} text Display teks item
- * @property {string|null} sectionId Section id saat item diklik, ex: `'feature'` (tanpa `'#'`). Property ini dapat bernilai `null`.
- * @property {string|null} href URL path saat item diklik, ex: `'/dashboard'`. Property ini dapat bernilai `null`.
- * @property {string} icon Nama icon yang digunakan. Lihat {@link https://react-icons.github.io/react-icons/ react-icons}, ex: `'FaRocket', 'IoAdd', etc`
- * @property {string} lib Library icon yang digunakan. Lihat {@link https://react-icons.github.io/react-icons/ react-icons}, ex: `'fa', 'io5', etc`
- * @property {Array<NavItem>|null} dropdown List dropdown jika tersedia. Property ini dapat bernilai `null`. 
+ * @property {string} text 
+ * Display teks item
+ * @property {?string} elementId 
+ * Id element saat item diklik tanpa tanda pagar `'#'`
+ * - Contoh : `'feature'`
+ * - Property ini dapat bernilai `null`
+ * @property {?string} href 
+ * URL atau path saat item diklik
+ * - Contoh : `'/dashboard'`
+ * - Property ini dapat bernilai `null`
+ * @property {React.ReactElement} icon 
+ * Element icon yang digunakan
+ * - Contoh : `<FaRocket/>`
+ * @property {string} iconName 
+ * Nama icon yang digunakan
+ * - Contoh : `'FaRocket'`
+ * @property {string} iconLib 
+ * Library icon yang digunakan
+ * - Contoh : `'fa'`
+ * @property {Array<NavItem>|null} dropdown 
+ * List dropdown jika tersedia
+ * - Property ini dapat bernilai `null`
+ * @property {React.AnchorHTMLAttributes<HTMLAnchorElement & NextLinkProps} routingOptions 
+ * Props atau opsi yang digunakan untuk routing dengan component Link pada `'next/link'`.
+ * @property {ReactScrollProps} scrollOptions 
+ * Props atau opsi yang digunakan untuk scroll dengan component Link pada `'react-scroll'`.
  */
 
+/** 
+ * Dashboard page navigation item
+ * @type {Array<NavItem>}
+ */
 export const dashboardNavItem = [
     { text: 'Dashboard', elementId: null, href: '/dashboard', iconName: 'AiOutlineAppstore', iconLib: 'ai' },
     { text: 'Matakuliah', elementId: null, href: '/dashboard/matakuliah', iconName: 'BsJournalBookmark', iconLib: 'bs' },
 ];
 
+/** 
+ * Landing page navigation item
+ * @type {Array<NavItem>}
+ */
 export const landingNavItem = [
     { text: 'Home', elementId: 'landing', href: null, iconName: 'AiOutlineAppstore', iconLib: 'ai' },
     {
