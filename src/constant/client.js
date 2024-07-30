@@ -46,8 +46,26 @@ import { CONTENTS as howContents } from "@/component/landing/sections/How";
  * @type {Array<NavItem>}
  */
 export const dashboardNavItem = [
-    { text: 'Dashboard', elementId: null, href: '/dashboard', iconName: 'AiOutlineAppstore', iconLib: 'ai' },
-    { text: 'Matakuliah', elementId: null, href: '/dashboard/matakuliah', iconName: 'BsJournalBookmark', iconLib: 'bs' },
+    {
+        text: 'Dashboard',
+        elementId: null,
+        href: '/dashboard',
+        iconName: 'AiOutlineAppstore',
+        iconLib: 'ai',
+        routingOptions: {
+            prefetch: false
+        },
+    },
+    {
+        text: 'Matakuliah',
+        elementId: null,
+        href: '/dashboard/matakuliah',
+        iconName: 'BsJournalBookmark',
+        iconLib: 'bs',
+        routingOptions: {
+            prefetch: false
+        },
+    },
 ];
 
 /** 
