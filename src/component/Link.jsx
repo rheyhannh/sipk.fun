@@ -62,13 +62,13 @@ const Link = ({ item, children, routingOptions, scrollOptions, ...props }) => {
     }
     if (item?.href) {
         return (
-            <LinkTo href={item.href} {...item.routingOptions} {...routingOptions} {...props}>
+            <LinkTo {...props} href={item.href} {...routingOptions} {...item.routingOptions}>
                 {children}
             </LinkTo>
         );
     } else if (item?.elementId) {
         return (
-            <ScrollTo to={item.elementId} {...item.scrollOptions} {...scrollOptions} {...props}>
+            <ScrollTo {...props} to={item.elementId} {...scrollOptions} {...item.scrollOptions}>
                 {children}
             </ScrollTo>
         )
