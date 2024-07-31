@@ -17,6 +17,13 @@ import LinkTo from 'next/link';
  * Props yang digunakan component `Link`
  * @typedef {Object} LinkProps
  * @property {NavItem} item
+ * - Tag : `required`
+ * @property {LinkToProps} [routingOptions]
+ * Opsi yang digunakan untuk routing
+ * - Tag : `optional`
+ * @property {ScrollToProps} [scrollOptions]
+ * Opsi yang digunakan untuk scroll
+ * - Tag : `optional`
  */
 
 /**
