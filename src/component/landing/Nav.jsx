@@ -9,10 +9,10 @@ import { useEffect, useState, useContext } from "react";
 // #endregion
 
 // #region COMPONENT DEPEDENCY
-import { Link } from 'react-scroll';
 import { AnimatePresence, motion } from "framer-motion";
 import { Icon } from '@/component/loader/ReactIcons';
 import { LandingContext } from "@/component/provider/Landing";
+import Link from '@/component/Link';
 // #endregion
 
 // #region DATA DEPEDENCY
@@ -93,7 +93,7 @@ const Tab = ({ children, item, tab, useDropdown, handleSetSelected, selected }) 
     return (
         <Link
             id={`shift-tab-${tab}`}
-            to={item.elementId}
+            item={item}
             offset={-72}
             smooth={'easeInOutQuart'}
             duration={1500}
@@ -195,7 +195,7 @@ const How = ({ dropdown = null }) => {
             {dropdown.map((item, index) => {
                 return (
                     <Link
-                        to={item.elementId}
+                        item={item}
                         offset={-72}
                         smooth={'easeInOutQuart'}
                         duration={1500}
