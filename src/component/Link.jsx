@@ -32,6 +32,10 @@ import LinkTo from 'next/link';
  * @returns {React.ReactElement} Rendered component
  */
 const Link = ({ item, children, ...props }) => {
+    if (!item) {
+        console.warn('item should exist!');
+        return null;
+    }
     if (item?.href) {
         return (
             <LinkTo href={item.href} {...item.routingOptions} {...props}>
