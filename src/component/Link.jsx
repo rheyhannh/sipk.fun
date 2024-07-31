@@ -30,6 +30,23 @@ import LinkTo from 'next/link';
  * 
  * @param {React.HTMLProps<HTMLElement> & LinkProps} props Link props
  * @returns {React.ReactElement<React.HTMLProps<HTMLElement> & LinkProps, any>} Rendered component
+ * @example
+ * ```jsx
+ * const navItems = [
+ *      {elementId: 'universitas', scrollOptions: { offset: 50 }},
+ *      {href: '/dashboard', routingOptions: { prefetch: false }}
+ * ]
+ * 
+ * // Scroll to elementId
+ * <Link item={navItems[0]} scrollOptions={{offset:100}} />
+ * // Props yang digunakan pada Link akan override opsi yang digunakan pada item
+ * // Sehingga component tersebut akan scroll ke #universitas dengan offset 100
+ * 
+ * // Routing to href
+ * <Link item={navItems[1]} routingOptions={{prefetch:true}} />
+ * // Props yang digunakan pada Link akan override opsi yang digunakan pada item
+ * // Sehingga component tersebut akan routing ke /dashboard dengan prefetch
+ * ```
  */
 const Link = ({ item, children, ...props }) => {
     if (!item) {
