@@ -94,9 +94,11 @@ const Tab = ({ children, item, tab, useDropdown, handleSetSelected, selected }) 
         <Link
             id={`shift-tab-${tab}`}
             item={item}
-            offset={-72}
-            smooth={'easeInOutQuart'}
-            duration={1500}
+            scrollOptions={{
+                offset: -72,
+                smooth: 'easeInOutQuart',
+                duration: 1500
+            }}
             onMouseEnter={() => handleSetSelected(useDropdown ? tab : null)}
             className={`${styles.tab} ${!useDropdown ? styles.simple : ''} ${selected === tab ? styles.active : ''}`}
         >
@@ -196,9 +198,11 @@ const How = ({ dropdown = null }) => {
                 return (
                     <Link
                         item={item}
-                        offset={-72}
-                        smooth={'easeInOutQuart'}
-                        duration={1500}
+                        scrollOptions={{
+                            offset: -72,
+                            smooth: 'easeInOutQuart',
+                            duration: 1500,
+                        }}
                         className={styles.link}
                         key={`landingNavFeatureItem-${index}`}
                     >

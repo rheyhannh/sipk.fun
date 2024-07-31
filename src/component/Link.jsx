@@ -48,20 +48,20 @@ import LinkTo from 'next/link';
  * // Sehingga component tersebut akan routing ke /dashboard dengan prefetch
  * ```
  */
-const Link = ({ item, children, ...props }) => {
+const Link = ({ item, children, routingOptions, scrollOptions, ...props }) => {
     if (!item) {
         console.warn('item should exist!');
         return null;
     }
     if (item?.href) {
         return (
-            <LinkTo href={item.href} {...item.routingOptions} {...props}>
+            <LinkTo href={item.href} {...item.routingOptions} {...routingOptions} {...props}>
                 {children}
             </LinkTo>
         );
     } else if (item?.elementId) {
         return (
-            <ScrollTo to={item.elementId} {...item.scrollOptions} {...props}>
+            <ScrollTo to={item.elementId} {...item.scrollOptions} {...scrollOptions} {...props}>
                 {children}
             </ScrollTo>
         )
