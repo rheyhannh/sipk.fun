@@ -21,12 +21,12 @@ import LinkTo from 'next/link';
 
 /**
  * Component untuk melakukan routing atau scroll ke elemen tertentu.
- * Property `href` atau `elementId` pada item harus tersedia, dimana `href` sebagai tujuan routing
+ * Props `item` harus dipass dengan property `href` atau `elementId`, dimana `href` sebagai tujuan routing
  * dan `elementId` sebagai target scroll element.
  * 
  * - Saat href tersedia maka akan menggunakan component Link pada `'next/link'` untuk routing ke `href`
  * - Saat elementId tersedia maka akan menggunakan component Link pada `'react-scroll'` untuk scroll ke `elementId`
- * - Jika keduanya tidak tersedia, maka akan return `null`
+ * - Jika keduanya tidak tersedia atau item tidak dipass, maka akan return `null`
  * 
  * @param {React.HTMLProps<HTMLElement> & LinkProps} props Link props
  * @returns {React.ReactElement} Rendered component
