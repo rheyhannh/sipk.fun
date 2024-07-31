@@ -1,5 +1,7 @@
 // #region TYPE DEPEDENCY
 import { NavItem } from '@/constant/client';
+import { LinkProps as LinkToProps } from 'next/link';
+import { LinkProps as ScrollToProps } from 'react-scroll';
 // #endregion
 
 // #region REACT DEPEDENCY
