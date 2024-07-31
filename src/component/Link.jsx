@@ -41,18 +41,24 @@ import LinkTo from 'next/link';
  * ```jsx
  * const navItems = [
  *      {elementId: 'universitas', scrollOptions: { offset: 50 }},
- *      {href: '/dashboard', routingOptions: { prefetch: false }}
+ *      {href: '/dashboard', routingOptions: { prefetch: false }},
+ *      {href: 'https://www.tiktok.com/', elementId: 'feature'},
  * ]
  * 
  * // Scroll to elementId
  * <Link item={navItems[0]} scrollOptions={{offset:100}} />
- * // Props yang digunakan pada Link akan override opsi yang digunakan pada item
- * // Sehingga component tersebut akan scroll ke #universitas dengan offset 100
+ * // Opsi yang digunakan item akan mengoverride opsi pada Link props
+ * // Sehingga component tersebut akan scroll ke #universitas dengan offset 50
  * 
  * // Routing to href
  * <Link item={navItems[1]} routingOptions={{prefetch:true}} />
- * // Props yang digunakan pada Link akan override opsi yang digunakan pada item
- * // Sehingga component tersebut akan routing ke /dashboard dengan prefetch
+ * // Opsi yang digunakan item akan mengoverride opsi pada Link props
+ * // Sehingga component tersebut akan routing ke /dashboard tanpa prefetch
+ * 
+ * // Another Example
+ * <Link item={navItems[2]} />
+ * // Jika href dan elementId tersedia, routing akan digunakan
+ * // Sehingga component tersebut akan routing ke https://www.tiktok.com/
  * ```
  */
 const Link = ({ item, children, routingOptions, scrollOptions, ...props }) => {
