@@ -18,10 +18,10 @@ import LinkTo from 'next/link';
  * @typedef {Object} LinkProps
  * @property {NavItem} item
  * - Tag : `required`
- * @property {LinkToProps} [routingOptions]
+ * @property {Omit<LinkToProps, 'href'>} [routingOptions]
  * Opsi yang digunakan untuk routing
  * - Tag : `optional`
- * @property {ScrollToProps} [scrollOptions]
+ * @property {Omit<ScrollToProps, 'to'>} [scrollOptions]
  * Opsi yang digunakan untuk scroll
  * - Tag : `optional`
  */
