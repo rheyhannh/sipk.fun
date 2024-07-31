@@ -29,7 +29,7 @@ import LinkTo from 'next/link';
  * - Jika keduanya tidak tersedia atau item tidak dipass, maka akan return `null`
  * 
  * @param {React.HTMLProps<HTMLElement> & LinkProps} props Link props
- * @returns {React.ReactElement} Rendered component
+ * @returns {React.ReactElement<React.HTMLProps<HTMLElement> & LinkProps, any>} Rendered component
  */
 const Link = ({ item, children, ...props }) => {
     if (!item) {
