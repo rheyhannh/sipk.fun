@@ -31,6 +31,7 @@ const How = () => {
             <Wrapper>
                 <Progress>
                     <Circles sectionScrollProgress={sectionScrollProgress} />
+                    <Lines sectionScrollProgress={sectionScrollProgress} />
                 </Progress>
 
                 <Content>
@@ -144,6 +145,38 @@ const Circle = ({ sectionScrollProgress, item, index, ...props }) => {
                 <ReactIconsLoader name={item.iconName} lib={item.iconLib} />
             </LazyWrapper>
         </motion.div>
+    )
+}
+
+const Lines = ({ sectionScrollProgress }) => {
+    const input = getTitleTransformArray().map(timeframe => timeframe[1]);
+    const output = [0, ...input.slice(1, -1), 1];
+    const hook = useTransform(sectionScrollProgress, input, output);
+
+    return (
+        <svg
+            className={styles.lines}
+        >
+            <motion.line
+                x1="50%"
+                y1="0%"
+                x2="50%"
+                y2="100%"
+                pathLength={hook}
+                stroke={'var(--logo-second-color)'}
+                style={{ zIndex: 2 }}
+            />
+
+            <motion.line
+                x1="50%"
+                y1="0%"
+                x2="50%"
+                y2="100%"
+                pathLength={1}
+                stroke={'var(--landing-copyInverse)'}
+                style={{ zIndex: 1 }}
+            />
+        </svg>
     )
 }
 
