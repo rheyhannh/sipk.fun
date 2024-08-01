@@ -312,6 +312,67 @@ const Card = ({ item, index, ...props }) => {
 
 const roundThreeDecimals = (x) => Math.round(x * 1000) / 1000;
 
+/**
+ * Method untuk menghitung timeframe dari setiap content.
+ * ```js
+ * const timeframe = [0, 0.067, 0.133, 0.2]; // timeframe content x
+ * ```
+ * Timeframe didefinisikan sebagai array dengan panjang 4 yang berisikan angka dimana setiap angka `>= 0`, `<= 1 ` dan berurutan dari index terkecil.
+ * - Index pertama menuju kedua mendefinisikan kapan transisi content mulai masuk hingga selesai. 
+ * - Index kedua menuju ketiga mendefinisikan kapan content aktif. 
+ * - Index ketiga menuju keempat mendefinisikan kapan transisi content mulai keluar hingga selesai. 
+ * 
+ * Semua dihitung secara `otomatis` berdasarkan jumlah `CONTENTS` yang tersedia. 
+ * 
+ * ```js
+ * const CONTENTS = ['Konten 1', 'Konten 2', 'Konten 3'];
+ * const timeframes = getContentsTimeframes();
+ * console.log(timeframes()[0]) // [a, b, c, d] timeframe konten 1 
+ * console.log(timeframes()[1]) // [i, j, k, l] timeframe konten 2 
+ * console.log(timeframes()[3]) // [w, x, y, z] timeframe konten 3
+ * console.log(timeframes()) // [[a, b, c, d], [i, j, k, l], [w, x, y, z]]
+ * ```
+ * 
+ * Selanjutnya dari output timeframe yang dihasilkan dapat digunakan sebagai input hook `useTransform`
+ * pada `framer-motion` untuk menganimasikan suatu element secara sekuensial berdasarkan `MotionValue` tertentu.
+ * 
+ * Lihat `example` untuk melihat contoh penggunaan method ini
+ * 
+ * @returns {Array<Array<number>>} Array yang berisikan `timeframe` setiap content yang digunakan
+ * @example 
+ * ```jsx
+ * import * as React from 'react';
+ * import { useTransform, useScroll } from 'framer-motion';
+ * 
+ * const Wrapper = () => {
+ *      const wrapperRef = React.useRef(null);
+ *      const { scrollYProgress:wrapperProgress} = useScroll({target:wrapperRef});
+ * 
+ *      return (
+ *          <div ref={wrapperRef}>
+ *              <TextPadaContentSatu scrolls={wrapperProgress}/>
+ *         </div>
+ *      )
+ * }
+ * 
+ * const TextPadaContentSatu = ({scrolls}) => {
+ *      const contentSatuTimeframe = getContentsTimeframes()[0];
+ *      const hook = useTransform(scrolls, contentSatuTimeframe, [0, 1, 1, 0]);
+ *      
+ *      return (
+ *          ...do something with hook
+ *      )
+ * }
+ * ```
+ * 
+ * Dari contoh diatas kita dapat membuat sebuah animasi dari scroll progress dengan 
+ * batasan atau timeframe tertentu berdasarkan scroll dari suatu container. Sehingga setiap component
+ * atau element dapat tampil sesuai dengan timeframenya.
+ * 
+ * Element `TextPadaContentSatu` hanya akan tampil pada timeframe content 1 karna menggunakan timeframe content tersebut.
+ * Mudahnya `timeframe` mendefinisikan persentase dari scroll kapan sebuah content harus masuk dan keluar.
+ * 
+ */
 const getContentsTimeframes = () => {
     const input = [];
     const overallStep = (100 / CONTENTS.length) / 100;
