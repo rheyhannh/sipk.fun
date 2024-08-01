@@ -119,7 +119,7 @@ const Circles = ({ sectionScrollProgress, ...props }) => (
 
 /**
  * Component Description
- * @param {{sectionScrollProgress:sectionScrollProgress, activeCard:activeCard, setActiveCard:(x:number) => void, item:contentsItem, index:number} & HTMLMotionProps<'div'>} props Circle props
+ * @param {{sectionScrollProgress:sectionScrollProgress, item:contentsItem, index:number} & HTMLMotionProps<'div'>} props Circle props
  * @returns {React.ReactElement} Rendered component
  */
 const Circle = ({ sectionScrollProgress, item, index, ...props }) => {
@@ -364,12 +364,6 @@ const CONTENTS = [
 // #endregion
 
 // #region Types
-
-/** 
- * State indeks card yang sedang aktif atau sedang tampil.
- * - Initial : `null`
- * @typedef {?number} activeCard
-*/
 
 /** 
  * React ref object dari root element atau component `Section`
