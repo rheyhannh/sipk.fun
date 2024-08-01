@@ -95,48 +95,42 @@ const Progress = ({ children, ...props }) => (
  * @param {{sectionScrollProgress:sectionScrollProgress} & React.HTMLProps<HTMLDivElement>} props Circles props
  * @returns {React.ReactElement} Rendered component
  */
-const Circles = ({ sectionScrollProgress, ...props }) => {
-    /** @type {ReturnType<typeof React.useState<activeCard>} */
-    const [activeCard, setActiveCard] = React.useState(null);
-
-    return (
-        <div
-            className={styles.circles}
-            {...props}
-        >
-            {CONTENTS.map((item, index) => (
-                <Link
-                    key={`how_progress_circle-${index}`}
-                    to={item.id}
-                    offset={-72}
-                    smooth={'easeInOutQuart'}
-                    duration={2000}
-                >
-                    <Circle
-                        sectionScrollProgress={sectionScrollProgress}
-                        activeCard={activeCard}
-                        setActiveCard={setActiveCard}
-                        item={item}
-                        index={index} />
-                </Link>
-            ))}
-        </div>
-    )
-}
+const Circles = ({ sectionScrollProgress, ...props }) => (
+    <div
+        className={styles.circles}
+        {...props}
+    >
+        {CONTENTS.map((item, index) => (
+            <Link
+                key={`how_progress_circle-${index}`}
+                to={item.id}
+                offset={-72}
+                smooth={'easeInOutQuart'}
+                duration={2000}
+            >
+                <Circle
+                    sectionScrollProgress={sectionScrollProgress}
+                    item={item}
+                    index={index} />
+            </Link>
+        ))}
+    </div>
+)
 
 /**
  * Component Description
  * @param {{sectionScrollProgress:sectionScrollProgress, activeCard:activeCard, setActiveCard:(x:number) => void, item:contentsItem, index:number} & HTMLMotionProps<'div'>} props Circle props
  * @returns {React.ReactElement} Rendered component
  */
-const Circle = ({ sectionScrollProgress, activeCard, setActiveCard, item, index, ...props }) => {
+const Circle = ({ sectionScrollProgress, item, index, ...props }) => {
+    const [active, setActive] = React.useState(false);
     const input = getTitleTransformArray()[index];
     const hook = useTransform(sectionScrollProgress, input, [0, 1, 1, 0]);
 
     React.useEffect(() => {
         hook.on('change', (val) => {
-            if (val > 0) setActiveCard(index);
-            else setActiveCard(null);
+            if (val > 0) setActive(true);
+            else setActive(false);
         })
 
         return () => {
@@ -150,7 +144,7 @@ const Circle = ({ sectionScrollProgress, activeCard, setActiveCard, item, index,
             variants={{
                 highlight: { scale: 1.35, backgroundColor: 'var(--logo-second-color)', color: 'var(--landing-copyInverse)' }
             }}
-            animate={activeCard === index ? 'highlight' : {}}
+            animate={active ? 'highlight' : {}}
             whileHover={'highlight'}
             {...props}
         >
