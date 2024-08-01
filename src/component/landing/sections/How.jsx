@@ -13,6 +13,8 @@ import * as React from 'react';
 import { LandingContext } from '@/component/provider/Landing';
 import { motion, useTransform, useScroll, MotionValue } from 'framer-motion';
 import { Link } from 'react-scroll';
+import LazyWrapper from '@/component/LazyWrapper';
+import ReactIconsLoader from '@/component/ReactIconsLoader';
 // #endregion
 
 // #region ICON DEPEDENCY
@@ -148,9 +150,9 @@ const Circle = ({ sectionScrollProgress, item, index, ...props }) => {
             whileHover={'highlight'}
             {...props}
         >
-            <div className={styles.icon}>
-                {item.icon}
-            </div>
+            <LazyWrapper as='div' className={styles.icon}>
+                <ReactIconsLoader name={item.iconName} lib={item.iconLib} />
+            </LazyWrapper>
         </motion.div>
     )
 }
