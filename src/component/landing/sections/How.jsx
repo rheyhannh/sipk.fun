@@ -117,7 +117,7 @@ const Circles = ({ sectionScrollProgress, ...props }) => (
  */
 const Circle = ({ sectionScrollProgress, item, index, ...props }) => {
     const [active, setActive] = React.useState(false);
-    const input = getTitleTransformArray()[index];
+    const input = getContentsTimeframes()[index];
     const hook = useTransform(sectionScrollProgress, input, [0, 1, 1, 0]);
 
     React.useEffect(() => {
@@ -152,7 +152,7 @@ const Circle = ({ sectionScrollProgress, item, index, ...props }) => {
 }
 
 const Lines = ({ sectionScrollProgress }) => {
-    const input = getTitleTransformArray().map(timeframe => timeframe[1]);
+    const input = getContentsTimeframes().map(timeframe => timeframe[1]);
     const output = [0, ...input.slice(1, -1), 1];
     const hook = useTransform(sectionScrollProgress, input, output);
 
@@ -216,7 +216,7 @@ const Titles = ({ sectionScrollProgress, ...props }) => (
  * @returns {React.ReactElement} Rendered component
  */
 const Title = ({ sectionScrollProgress, item, index, ...props }) => {
-    const input = getTitleTransformArray()[index];
+    const input = getContentsTimeframes()[index];
     const progress = useTransform(sectionScrollProgress, input, [0, 1, 1, 0]);
     const titleChar = item.title.split('');
 
@@ -312,7 +312,7 @@ const Card = ({ item, index, ...props }) => {
 
 const roundThreeDecimals = (x) => Math.round(x * 1000) / 1000;
 
-const getTitleTransformArray = () => {
+const getContentsTimeframes = () => {
     const input = [];
     const overallStep = (100 / CONTENTS.length) / 100;
     const timeframeStep = overallStep / 3;
