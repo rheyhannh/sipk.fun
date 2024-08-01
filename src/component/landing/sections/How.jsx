@@ -195,7 +195,6 @@ const Title = ({ sectionScrollProgress, item, index, ...props }) => {
     return (
         <motion.div
             className={styles.title}
-            onClick={() => console.log(titleChar)}
             {...props}
         >
             {titleChar.map((char, charIndex) => (
@@ -224,7 +223,7 @@ const TitleChar = ({ titleLength, progress, char, index, ...props }) => {
 
     return char === ' ' ? <Spaces /> : (
         <motion.div style={{ opacity, scale, marginRight }} {...props}>
-            {char === ' ' ? 'MEMEQ' : char}
+            {char}
         </motion.div>
     )
 }
