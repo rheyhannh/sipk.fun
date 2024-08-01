@@ -17,16 +17,6 @@ import LazyWrapper from '@/component/LazyWrapper';
 import ReactIconsLoader from '@/component/ReactIconsLoader';
 // #endregion
 
-// #region ICON DEPEDENCY
-import {
-    TbPlaylistAdd,
-    TbLayoutGridAdd,
-    TbEdit,
-    TbTargetArrow,
-    TbChartInfographic,
-} from "react-icons/tb";
-// #endregion
-
 // #region STYLE DEPEDENCY
 import styles from '../style/how.module.css';
 // #endregion
