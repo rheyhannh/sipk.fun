@@ -316,7 +316,10 @@ const Card = ({ item, index, ...props }) => {
 
 // #region Utils
 
-const roundThreeDecimals = (x) => Math.round(x * 1000) / 1000;
+const roundDecimals = (x, digit = 3) => {
+    const factor = Math.pow(10, digit);
+    return Math.round(x * factor) / factor;
+};
 
 /**
  * Method untuk menghitung timeframe dari setiap content.
@@ -391,10 +394,10 @@ const getContentsTimeframes = () => {
         const two = timeframeStep + one;
         input.push(
             [
-                roundThreeDecimals(one),
-                roundThreeDecimals(two),
-                roundThreeDecimals(three),
-                roundThreeDecimals(four)
+                roundDecimals(one),
+                roundDecimals(two),
+                roundDecimals(three),
+                roundDecimals(four)
             ],
         )
     }
