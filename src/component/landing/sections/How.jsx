@@ -151,7 +151,7 @@ const Circle = ({ sectionScrollProgress, item, index, ...props }) => {
     )
 }
 
-const Lines = ({ sectionScrollProgress }) => {
+const Lines = ({ sectionScrollProgress, ...props }) => {
     const input = getContentsTimeframes().map(timeframe => timeframe[1]);
     const output = [0, ...input.slice(1, -1), 1];
     const hook = useTransform(sectionScrollProgress, input, output);
@@ -159,6 +159,7 @@ const Lines = ({ sectionScrollProgress }) => {
     return (
         <svg
             className={styles.lines}
+            {...props}
         >
             <motion.line
                 x1="50%"
