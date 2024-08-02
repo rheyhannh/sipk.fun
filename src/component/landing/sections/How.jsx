@@ -316,6 +316,19 @@ const Card = ({ item, index, ...props }) => {
 
 // #region Utils
 
+/**
+ * Method untuk membulatkan angka `x` dengan jumlah digit dibelakang koma `digit`
+ * @param {number} x Angka yang ingin dibulatkan
+ * @param {number} [digit=3] Jumlah digit dibelakang koma, default : `3`
+ * @returns {number} Angka yang sudah dibulatkan
+ * @example
+ * 
+ * ```js
+ * console.log(roundDecimals(5.231, 2)) // 5.23
+ * console.log(roundDecimals(0.682252, 4)) // 0.6822
+ * ```
+ * 
+ */
 const roundDecimals = (x, digit = 3) => {
     const factor = Math.pow(10, digit);
     return Math.round(x * factor) / factor;
