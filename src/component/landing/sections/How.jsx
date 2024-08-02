@@ -151,6 +151,11 @@ const Circle = ({ sectionScrollProgress, item, index, ...props }) => {
     )
 }
 
+/**
+ * Component Description
+ * @param {{sectionScrollProgress:sectionScrollProgress} & React.SVGProps<SVGElement>} props Circles props
+ * @returns {React.ReactElement} Rendered component
+ */
 const Lines = ({ sectionScrollProgress, ...props }) => {
     const input = getContentsTimeframes().map(timeframe => timeframe[1]);
     const output = [0, ...input.slice(1, -1), 1];
