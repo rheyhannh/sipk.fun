@@ -153,7 +153,7 @@ const Circle = ({ sectionScrollProgress, item, index, ...props }) => {
 
 /**
  * Component Description
- * @param {{sectionScrollProgress:sectionScrollProgress} & React.SVGProps<SVGElement>} props Circles props
+ * @param {{sectionScrollProgress:sectionScrollProgress} & React.SVGProps<SVGElement>} props Lines props
  * @returns {React.ReactElement} Rendered component
  */
 const Lines = ({ sectionScrollProgress, ...props }) => {
