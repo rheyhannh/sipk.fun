@@ -346,6 +346,11 @@ small {
     font-size: 0.75rem;
 }
 
+mark {
+    background-color: transparent;
+    color: inherit;
+}
+
 ::-webkit-scrollbar {
     width: .60rem;
     background-color: var(--scroll-bar-color);
