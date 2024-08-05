@@ -15,6 +15,7 @@ import { motion, useTransform, useScroll, MotionValue } from 'framer-motion';
 import { Link } from 'react-scroll';
 import LazyWrapper from '@/component/LazyWrapper';
 import ReactIconsLoader from '@/component/ReactIconsLoader';
+import HighlightText from '@/component/motion/HighlightText';
 // #endregion
 
 // #region STYLE DEPEDENCY
