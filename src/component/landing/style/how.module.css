@@ -139,3 +139,20 @@
     width: 10px;
     height: 100%;
 }
+
+.intro {
+    --intro-size: 36px;
+    position: absolute;
+    top: 0%;
+    left: 0%;
+    width: 100%;
+    height: calc(2rem + 72px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.intro .text {
+    font-size: var(--intro-size);
+    color: var(--landing-copy);
+}

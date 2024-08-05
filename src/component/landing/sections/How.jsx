@@ -273,6 +273,8 @@ const Cards = ({ ...props }) => (
         className={styles.cards}
         {...props}
     >
+        <Intro />
+
         {CONTENTS.map((item, index) => (
             <Card key={`how_cards_card-${index}`} item={item} index={index} />
         ))}
@@ -314,6 +316,27 @@ const Card = ({ item, index, ...props }) => {
         </div>
     )
 }
+
+const Intro = () => (
+    <div
+        className={styles.intro}
+    >
+        <h3
+            className={styles.text}
+        >
+            <HighlightText
+                text={INTRO_TEXT}
+                preset='wavingTranslate'
+                hookOptions={{
+                    amount: 1
+                }}
+                adjustWavingTranslate={{
+                    perspective: 250,
+                }}
+            />
+        </h3>
+    </div>
+)
 
 // #region Utils
 
