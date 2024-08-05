@@ -93,12 +93,12 @@ import styles from './style/highlight_text.module.css'
  * @property {boolean} [once]
  * Boolean untuk trigger animasi saat masuk viewport sekali saja
  * - Tag : `optional`
- * - Default : `true`
+ * - Default : `false`
  * @property {number} [amount]
  * Persentase untuk trigger animasi dalam skala `0` hingga `1`.
  * Semakin besar maka semakin besar element harus masuk viewport untuk trigger animasi
  * - Tag : `optional`
- * - Default : `1`
+ * - Default : `0`
  */
 
 /** Props yang digunakan component `TextWavingColor`
