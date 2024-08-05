@@ -472,6 +472,7 @@ const CONTENTS = [
     },
 ]
 
+const INTRO_TEXT = 'Cara Pakai SIPK';
 // #endregion
 
 // #region Types
