@@ -1,0 +1,6 @@
+.container,
+.wrapper,
+.word,
+.char {
+    display: inline-block;
+}
