@@ -397,6 +397,11 @@ const HighlightText = (
     )
 }
 
+/**
+ * Component Description
+ * @param {Pick<React.HTMLProps<HTMLSpanElement>, 'children' | 'style'>}
+ * @returns {React.ReactElement} Rendered component
+ */
 const Wrapper = ({ style, children }) => (
     <span
         className={styles.wrapper}
@@ -406,6 +411,21 @@ const Wrapper = ({ style, children }) => (
     </span>
 )
 
+/**
+ * Props yang digunakan component `Word`
+ * @typedef {Object} WordProps
+ * @property {inViewHook} inViewHook
+ * @property {MotionStyle} style
+ * @property {wordAnimate} wordAnimate
+ * @property {flatIndex} flatIndex
+ * @property {React.ReactNode} children
+ */
+
+/**
+ * Component Description
+ * @param {WordProps} props Word props
+ * @returns {React.ReactElement} Rendered component
+ */
 const Word = ({ inViewHook, style, wordAnimate, flatIndex, children }) => {
     const updatedPresetDelay = !wordAnimate ? {} : {
         ...wordAnimate,
@@ -428,6 +448,20 @@ const Word = ({ inViewHook, style, wordAnimate, flatIndex, children }) => {
     )
 }
 
+/**
+ * Props yang digunakan component `Char`
+ * @typedef {Object} CharProps
+ * @property {inViewHook} inViewHook
+ * @property {charAnimate} charAnimate
+ * @property {flatIndex} flatIndex
+ * @property {React.ReactNode} children
+ */
+
+/**
+ * Component Description
+ * @param {CharProps} props Char props
+ * @returns {React.ReactElement} Rendered component
+ */
 const Char = ({ inViewHook, charAnimate, flatIndex, children }) => {
     const updatedPresetDelay = !charAnimate ? {} : {
         ...charAnimate,
