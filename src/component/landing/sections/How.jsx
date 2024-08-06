@@ -528,7 +528,13 @@ const INTRO_TEXT = 'Cara Pakai SIPK';
  * Judul singkat yang digunakan
  * - Contoh : `'Rencanakan'`
  * @property {string} description 
- * Deskripsi yang digunakan
+ * Deskripsi yang digunakan. Dapat menggunakan prefix `[` dan postfix `]` untuk menghighlight suatu kata
+ * ```js
+ * // Highlight digunakan untuk conditional rendering tertentu
+ * const contoh = '[Tambah] matakuliahmu yang sudah [ditempuh]'
+ * ```
+ * @property {string} descriptionPlain
+ * Deskripsi yang digunakan tanpa prefix atau postfix apapun
  * - Contoh : `'Tambah matakuliahmu yang sudah ditempuh'`
  * @property {React.ReactElement} icon 
  * Icon yang digunakan dari `react-icons`
