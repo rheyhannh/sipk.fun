@@ -1,3 +1,7 @@
+// #region TYPE DEPEDENCY
+import { MotionStyle } from 'framer-motion';
+// #endregion
+
 // #region REACT DEPEDENCY
 import * as React from 'react';
 // #endregion
