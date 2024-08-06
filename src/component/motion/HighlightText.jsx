@@ -21,6 +21,9 @@ import styles from './style/highlight_text.module.css'
  * @property {number} duration 
  * Lorem
  * - Default : `0.3`
+ * @property {number} baseDelay
+ * Lorem
+ * - Default : `0`
  * @property {number} stagger 
  * Lorem
  * - Default : `0.05`
@@ -57,6 +60,9 @@ import styles from './style/highlight_text.module.css'
  * @property {number} duration 
  * Lorem
  * - Default : `0.8`
+ * @property {number} baseDelay
+ * Lorem
+ * - Default : `0`
  * @property {number} stagger 
  * Lorem
  * - Default : `0.04`
@@ -90,6 +96,9 @@ import styles from './style/highlight_text.module.css'
  * @property {number} duration 
  * Lorem
  * - Default : `1.2`
+ * @property {number} baseDelay
+ * Lorem
+ * - Default : `0`
  * @property {number} stagger 
  * Lorem
  * - Default : `0.2`
