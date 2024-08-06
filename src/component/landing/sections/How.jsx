@@ -3,6 +3,7 @@
 // #region TYPE DEPEDENCY
 import * as ContextTypes from '@/types/context.js';
 import { HTMLMotionProps, SVGMotionProps } from 'framer-motion';
+import { HighlightTextProps, adjustWavingColor } from '@/component/motion/HighlightText';
 // #endregion
 
 // #region REACT DEPEDENCY
