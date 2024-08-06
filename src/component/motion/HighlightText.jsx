@@ -157,7 +157,7 @@ import styles from './style/highlight_text.module.css'
  */
 
 /**
- * Component Description
+ * Component untuk highlight suatu teks dengan preset animasi tertentu yang dapat diadjust
  * @param {TextWavingColorProps} props TextWavingColor props
  * @returns {React.ReactElement} Rendered component
  */
