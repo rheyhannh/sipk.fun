@@ -13,111 +13,113 @@ import styles from './style/highlight_text.module.css'
 /** Opsi atau atribut yang dapat dicustom saat menggunakan preset `wavingColor`
  * @typedef {Object} adjustWavingColor
  * @property {[number, number, number]} scale
- * Lorem
+ * Animasikan `scale` dalam keyframe tertentu. Keyframe pertama dapat bernilai `null` untuk menggunakan current scale value
  * - Default : `[null, 1.45, 1]`
  * @property {[string, string, string]} color 
- * Lorem
+ * Animasikan `color` dalam keyframe tertentu. Keyframe pertama dapat bernilai `null` untuk menggunakan current color value.
+ * Setiap keyframe dapat menggunakan warna dalam `hex` maupun `rgb`
  * - Default : `[null, '#556b9d', '#FF6341']`
  * @property {number} duration 
- * Lorem
+ * Durasi animasi untuk setiap huruf dalam satuan `detik`
  * - Default : `0.3`
  * @property {number} baseDelay
- * Lorem
+ * Delay animasi untuk setiap huruf dalam satuan `detik`
  * - Default : `0`
  * @property {number} stagger 
- * Lorem
+ * Stagger animasi untuk setiap huruf dalam satuan `detik`
  * - Default : `0.05`
  * @property {number} repeat 
- * Lorem
+ * Jumlah pengulangan animasi
  * - Default : `0`
- * @property {number} repeatDelay 
- * Lorem
+ * @property {number} repeatDelay
+ * Delay pengulangan animasi dalam satuan `detik` 
  * - Default : `0.1`
  * @property {Object} options
- * Lorem
+ * Opsi tambahan yang dapat digunakan
  * @property {boolean} options.makeVariant
- * Lorem
+ * Buat animasi dalam variant sehingga dapat dimainkan melalui `motion` parent element
  * - Default : `false`
  * @property {string} options.variantName
- * Lorem 
+ * Nama variant yang digunakan
  * - Default : `'wavingColor'`
  */
 
 /** Opsi atau atribut yang dapat dicustom saat menggunakan preset `wavingTranslate`
  * @typedef {Object} adjustWavingTranslate
  * @property {number} perspective
- * Lorem
+ * Perspective yang digunakan untuk memberikan efek 3d
  * - Default : `500`
  * @property {[number, number]} z
- * Lorem
+ * Animasikan `z` dalam keyframe tertentu. Keyframe pertama dapat bernilai `null` untuk menggunakan current z value
  * - Default : `[300, 0]`
  * @property {[number, number]} rotateX 
- * Lorem
+ * Animasikan `rotateX` dalam keyframe tertentu. Keyframe pertama dapat bernilai `null` untuk menggunakan current rotateX value
  * - Default : `[-45, 0]`
  * @property {[number, number]} opacity 
- * Lorem
+ * Animasikan `opacity` dalam keyframe tertentu. Keyframe pertama dapat bernilai `null` untuk menggunakan current opacity value
  * - Default : `[0, 1]`
  * @property {number} duration 
- * Lorem
+ * Durasi animasi untuk setiap huruf dalam satuan `detik`
  * - Default : `0.8`
  * @property {number} baseDelay
- * Lorem
+ * Delay animasi untuk setiap huruf dalam satuan `detik`
  * - Default : `0`
  * @property {number} stagger 
- * Lorem
+ * Stagger animasi untuk setiap huruf dalam satuan `detik`
  * - Default : `0.04`
  * @property {number} repeat 
- * Lorem
+ * Jumlah pengulangan animasi
  * - Default : `0`
  * @property {number} repeatDelay 
- * Lorem
+ * Delay pengulangan animasi dalam satuan `detik` 
  * - Default : `0.1`
  * @property {Object} options
- * Lorem
+ * Opsi tambahan yang dapat digunakan
  * @property {boolean} options.makeVariant
- * Lorem
+ * Buat animasi dalam variant sehingga dapat dimainkan melalui `motion` parent element
  * - Default : `false`
  * @property {string} options.variantName
- * Lorem 
+ * Nama variant yang digunakan
  * - Default : `'wavingTranslate'`
  */
 
 /** Opsi atau atribut yang dapat dicustom saat menggunakan preset `springRotate`
  * @typedef {Object} adjustSpringRotate
  * @property {string} transformOrigin
- * Lorem
+ * Transform origin yang digunakan
  * - Default : `'0% 50%'`
  * @property {[number, number]} rotateZ
- * Lorem
+ * Animasikan `rotateZ` dalam keyframe tertentu. Keyframe pertama dapat bernilai `null` untuk menggunakan current rotateZ value
  * - Default : `[-30, 0]`
  * @property {[number, number]} opacity 
- * Lorem
+ * Animasikan `opacity` dalam keyframe tertentu. Keyframe pertama dapat bernilai `null` untuk menggunakan current opacity value
  * - Default : `[0, 1]`
  * @property {number} duration 
- * Lorem
+ * Durasi animasi untuk setiap kata dalam satuan `detik`
  * - Default : `1.2`
  * @property {number} baseDelay
- * Lorem
+ * Delay animasi untuk setiap kata dalam satuan `detik`
  * - Default : `0`
  * @property {number} stagger 
- * Lorem
+ * Stagger animasi untuk setiap kata dalam satuan `detik`
  * - Default : `0.2`
  * @property {number} repeat 
- * Lorem
+ * Jumlah pengulangan animasi
  * - Default : `0`
  * @property {number} bounce
- * Lorem
+ * Efek `bounce` yang digunakan dalam skala `0` hingga `1`.
+ * Semakin besar maka efek bounce akan semakin besar
  * - Default : `0.5`
  * @property {number} repeatDelay 
- * Lorem
+ * Delay pengulangan animasi dalam satuan `detik` 
  * - Default : `0.1`
  * @property {Object} options
- * Lorem
+ * Opsi tambahan yang dapat digunakan
  * @property {boolean} options.makeVariant
- * Lorem
+ * Buat animasi dalam variant sehingga dapat dimainkan melalui `motion` parent element
  * - Default : `false`
  * @property {string} options.variantName
- * Lorem 
+ * Nama variant yang digunakan
  * - Default : `'springRotate'`
  */
 
@@ -125,12 +127,10 @@ import styles from './style/highlight_text.module.css'
  * @typedef {Object} hookOptions
  * @property {boolean} [once]
  * Boolean untuk trigger animasi saat masuk viewport sekali saja
- * - Tag : `optional`
  * - Default : `false`
  * @property {number} [amount]
  * Persentase untuk trigger animasi dalam skala `0` hingga `1`.
  * Semakin besar maka semakin besar element harus masuk viewport untuk trigger animasi
- * - Tag : `optional`
  * - Default : `0`
  */
 
@@ -138,7 +138,6 @@ import styles from './style/highlight_text.module.css'
  * @typedef {Object} TextWavingColorProps
  * @property {string} [text]
  * Teks yang digunakan 
- * - Tag : `optional`
  * - Default : `'highlighted text'`
  * @property {boolean} [useHook]
  * Boolean untuk menggunakan hook `'useInView'` atau tidak. 
@@ -150,8 +149,11 @@ import styles from './style/highlight_text.module.css'
  * Preset animasi yang digunakan
  * - Default : `'wavingColor'`
  * @property {adjustWavingColor} adjustWavingColor
+ * Opsi atribut animasi yang digunakan dan pengaturan lainnya yang dapat diadjust pada preset `'wavingColor'`
  * @property {adjustWavingTranslate} adjustWavingTranslate
+ * Opsi atribut animasi yang digunakan dan pengaturan lainnya yang dapat diadjust pada preset `'wavingTranslate'`
  * @property {adjustSpringRotate} adjustSpringRotate
+ * Opsi atribut animasi yang digunakan dan pengaturan lainnya yang dapat diadjust pada preset `'springRotate'`
  */
 
 /**
