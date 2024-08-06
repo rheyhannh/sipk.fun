@@ -479,6 +479,28 @@ const getContentsTimeframes = () => {
     return input;
 }
 
+const highlightProps = {
+    /**
+     * Generate props untuk `HighlighText` dengan preset `wavingColor`
+     * @param {adjustWavingColor} x Opsi yang dapat diadjust
+     * @returns {Omit<HighlightTextProps, 'text' | 'hookOptions' | 'adjustWavingTranslate' | 'adjustSpringRotate'} Generated props
+     */
+    wavingColor: (x) => ({
+        useHook: false,
+        preset: 'wavingColor',
+        presetOptions: {
+            makeVariant: true,
+            variantName: 'highlighted_text'
+        },
+        adjustWavingColor: {
+            repeat: Infinity,
+            repeatDelay: 5,
+            ...x
+        },
+
+    })
+}
+
 // #endregion
 
 // #region Variables
