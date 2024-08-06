@@ -140,6 +140,11 @@ import styles from './style/highlight_text.module.css'
  * Teks yang digunakan 
  * - Tag : `optional`
  * - Default : `'highlighted text'`
+ * @property {boolean} [useHook]
+ * Boolean untuk menggunakan hook `'useInView'` atau tidak. 
+ * - Default : `true`
+ * - Tips : Jika tidak menggunakan hook, dapat trigger animasi melalui variant dengan mengaktifkan
+ * `makeVariant` terlebih dahulu pada pengaturan preset yang digunakan
  * @property {hookOptions} hookOptions
  * @property {'wavingColor'|'wavingTranslate'|'springRotate'} [preset]
  * Preset animasi yang digunakan
