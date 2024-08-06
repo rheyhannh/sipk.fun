@@ -271,6 +271,7 @@ const HighlightText = (
         useHook = true,
         hookOptions,
         preset,
+        presetOptions,
         adjustWavingColor,
         adjustWavingTranslate,
         adjustSpringRotate
@@ -311,8 +312,8 @@ const HighlightText = (
                         repeatDelay: adjustWavingTranslate?.repeatDelay ?? 0.1,
                     },
                     options: {
-                        makeVariant: adjustWavingTranslate?.options?.makeVariant ?? false,
-                        variantName: adjustWavingTranslate?.options?.variantName ?? 'wavingTranslate'
+                        makeVariant: presetOptions?.makeVariant ?? false,
+                        variantName: presetOptions?.variantName ?? 'highlight_text'
                     }
                 }
             }
@@ -334,8 +335,8 @@ const HighlightText = (
                         repeatDelay: adjustSpringRotate?.repeatDelay ?? 0.1,
                     },
                     options: {
-                        makeVariant: adjustSpringRotate?.options?.makeVariant ?? false,
-                        variantName: adjustSpringRotate?.options?.variantName ?? 'springRotate'
+                        makeVariant: presetOptions?.makeVariant ?? false,
+                        variantName: presetOptions?.variantName ?? 'highlight_text'
                     }
                 },
                 charAnimate: undefined
@@ -357,8 +358,8 @@ const HighlightText = (
                         repeatDelay: adjustWavingColor?.repeatDelay ?? 0.1,
                     },
                     options: {
-                        makeVariant: adjustWavingColor?.options?.makeVariant ?? false,
-                        variantName: adjustWavingColor?.options?.variantName ?? 'wavingColor'
+                        makeVariant: presetOptions?.makeVariant ?? false,
+                        variantName: presetOptions?.variantName ?? 'highlight_text'
                     }
                 }
             }
