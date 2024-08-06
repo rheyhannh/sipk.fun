@@ -14,6 +14,105 @@ import { motion, useInView } from 'framer-motion';
 import styles from './style/highlight_text.module.css'
 // #endregion
 
+/** 
+ * Ref dari element `mark` yang digunakan sebagai `Container` 
+ * @typedef {React.RefObject<HTMLElement>} markRef
+ */
+
+/** 
+ * Hook `useInView` yang digunakan. 
+ * Saat `useHook` false, variable ini akan selalu bernilai false
+ * @typedef {boolean} inViewHook
+ */
+
+/** 
+ * Array yang berisikan setiap kata dari `text` yang digunakan.
+ * Setiap spasi akan diubah menjadi `'_spaces_'`
+ * 
+ * ```js
+ * const text = 'Contoh text'
+ * const textWords = ['Contoh', '_spaces_', 'text']
+ * ```
+ * @typedef {Array<string>} textWords
+ */
+
+/** 
+ * Array yang berisikan array setiap huruf dari `text` yang digunakan.
+ * Setiap spasi tetap berbentuk `'_spaces_'`
+ * 
+ * ```js
+ * const text = 'Contoh text'
+ * const textWords = ['Contoh', '_spaces_', 'text']
+ * const textChars = [
+ *      ['C', 'o', 'n', 't', 'o', 'h'], 
+ *      '_spaces_',
+ *      ['t', 'e', 'x', 't']
+ * ]
+ * ```
+ * @typedef {Array<Array<string> | string>} textChars
+ */
+
+/** 
+ * Style yang digunakan element mark sebagai `Container`
+ * @typedef {React.CSSProperties} containerStyle
+ */
+
+/** 
+ * Style yang digunakan component `Wrapper`
+ * @typedef {React.CSSProperties} wrapperStyle
+ */
+
+/** 
+ * Style yang digunakan component `Word`
+ * @typedef {MotionStyle} wordStyle
+ */
+
+/** 
+ * Style atau animasi yang digunakan component `Word`
+ * @typedef {MotionStyle} wordAnimate
+ */
+
+/** 
+ * Style atau animasi yang digunakan component `Char`
+ * @typedef {MotionStyle} charAnimate
+ */
+
+/** 
+ * Indeks relatif sebuah huruf atau kata yang dihitung tanpa adanya item `'_spaces_'`
+ * 
+ * ```js
+ * // Example Word
+ * const x = ['Word', '_spaces_', 'Word2']; 
+ * // flatIndex 'Word2' === 1
+ * 
+ * // Example Character
+ * const y = [
+ *      ['A', 'b', 'c'], 
+ *      '_spaces_', 
+ *      ['X', 'y', 'z']
+ * ]; 
+ * // flatIndex ['X', 'y', 'z'] === 1
+ * ```
+ * 
+ * Digunakan untuk menghitung perhitungan delay atau efek stagger kata maupun huruf tanpa menghitung adanya spasi
+ * 
+ * @typedef {number} flatIndex
+ */
+
+/** 
+ * @typedef {Object} resolvedPreset
+ * @property {containerStyle} containerStyle
+ * Style yang digunakan element mark sebagai `Container`, dapat bernilai `undefined`
+ * @property {wrapperStyle} wrapperStyle
+ * Style yang digunakan component `Wrapper`, dapat bernilai `undefined`
+ * @property {wordStyle} wordStyle
+ * Style yang digunakan component `Word`, dapat bernilai `undefined`
+ * @property {wordAnimate} wordAnimate
+ * Variant animasi yang digunakan component `Word`, dapat bernilai `undefined`
+ * @property {charAnimate & {options:presetOptions}} charAnimate
+ * Variant animasi yang digunakan component `Char` dan opsi preset yang digunakan, dapat bernilai `undefined`
+ */
+
 /** Opsi atau atribut yang dapat dicustom saat menggunakan preset `wavingColor`
  * @typedef {Object} adjustWavingColor
  * @property {[number, number, number]} scale
@@ -127,7 +226,7 @@ import styles from './style/highlight_text.module.css'
  * - Default : `'springRotate'`
  */
 
-/** Opsi yang dapat digunakan untuk hook `'useInView'` yang digunakan
+/**
  * @typedef {Object} hookOptions
  * @property {boolean} [once]
  * Boolean untuk trigger animasi saat masuk viewport sekali saja
@@ -149,6 +248,7 @@ import styles from './style/highlight_text.module.css'
  * - Tips : Jika tidak menggunakan hook, dapat trigger animasi melalui variant dengan mengaktifkan
  * `makeVariant` terlebih dahulu pada pengaturan preset yang digunakan
  * @property {hookOptions} hookOptions
+ * Opsi yang dapat digunakan untuk hook `'useInView'` yang digunakan
  * @property {'wavingColor'|'wavingTranslate'|'springRotate'} [preset]
  * Preset animasi yang digunakan
  * - Default : `'wavingColor'`
@@ -176,13 +276,22 @@ const HighlightText = (
         adjustSpringRotate
     }
 ) => {
+    /** @type {ReturnType<typeof React.useState<resolvedPreset>>} */
     const [usedPreset, setUsedPreset] = React.useState(null);
+    /** @type {markRef} */
     const markRef = React.useRef(null);
+    /** @type {inViewHook} */
     const inViewHook = useHook ? useInView(markRef, hookOptions) : false;
 
+    /** @type {textWords} */
     const textWords = text.split(' ').flatMap((word, index, arr) => index < arr.length - 1 ? [word, '_spaces_'] : [word]);
+    /** @type {textChars} */
     const textChars = textWords.map(word => word === '_spaces_' ? word : word.split(''));
 
+    /**
+     * Method untuk resolve preset, opsi atribut, assign default value
+     * @returns {resolvedPreset} Resolved preset
+     */
     const resolvePreset = () => {
         if (preset === 'wavingTranslate') {
             return {
