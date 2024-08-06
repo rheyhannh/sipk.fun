@@ -154,6 +154,10 @@ const HighlightText = (
                         delay: adjustWavingTranslate?.stagger ?? 0.04,
                         repeat: adjustWavingTranslate?.repeat ?? 0,
                         repeatDelay: adjustWavingTranslate?.repeatDelay ?? 0.1,
+                    },
+                    options: {
+                        makeVariant: adjustWavingTranslate?.options?.makeVariant ?? false,
+                        variantName: adjustWavingTranslate?.options?.variantName ?? 'wavingTranslate'
                     }
                 }
             }
@@ -172,6 +176,10 @@ const HighlightText = (
                         type: 'spring',
                         bounce: adjustSpringRotate?.bounce ?? 0.5,
                         repeatDelay: adjustSpringRotate?.repeatDelay ?? 0.1,
+                    },
+                    options: {
+                        makeVariant: adjustSpringRotate?.options?.makeVariant ?? false,
+                        variantName: adjustSpringRotate?.options?.variantName ?? 'springRotate'
                     }
                 },
                 charAnimate: undefined
@@ -190,6 +198,10 @@ const HighlightText = (
                         delay: adjustWavingColor?.stagger ?? 0.05,
                         repeat: adjustWavingColor?.repeat ?? 0,
                         repeatDelay: adjustWavingColor?.repeatDelay ?? 0.1,
+                    },
+                    options: {
+                        makeVariant: adjustWavingColor?.options?.makeVariant ?? false,
+                        variantName: adjustWavingColor?.options?.variantName ?? 'wavingColor'
                     }
                 }
             }
@@ -245,12 +257,14 @@ const Word = ({ inViewHook, style, wordAnimate, flatIndex, children }) => {
             delay: (flatIndex * wordAnimate.transition.delay)
         }
     };
+    const { options, ...wordAnimateWithoutOptions } = updatedPresetDelay;
 
     return (
         <motion.span
             className={styles.word}
             style={style}
-            animate={inViewHook ? updatedPresetDelay : {}}
+            animate={inViewHook ? wordAnimateWithoutOptions : {}}
+            variants={options?.makeVariant ? { [options.variantName]: wordAnimateWithoutOptions } : {}}
         >
             {children}
         </motion.span>
@@ -265,11 +279,13 @@ const Char = ({ inViewHook, charAnimate, flatIndex, children }) => {
             delay: (flatIndex * charAnimate.transition.delay)
         }
     };
+    const { options, ...charAnimateWithoutOptions } = updatedPresetDelay;
 
     return (
         <motion.span
             className={styles.char}
-            animate={inViewHook ? updatedPresetDelay : {}}
+            animate={inViewHook ? charAnimateWithoutOptions : {}}
+            variants={options?.makeVariant ? { [options.variantName]: charAnimateWithoutOptions } : {}}
         >
             {children}
         </motion.span>
