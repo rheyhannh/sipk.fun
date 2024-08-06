@@ -175,6 +175,7 @@ const HighlightText = (
                     opacity: adjustWavingTranslate?.opacity ?? [0, 1],
                     transition: {
                         duration: adjustWavingTranslate?.duration ?? 0.8,
+                        baseDelay: adjustWavingTranslate?.baseDelay ?? 0,
                         delay: adjustWavingTranslate?.stagger ?? 0.04,
                         repeat: adjustWavingTranslate?.repeat ?? 0,
                         repeatDelay: adjustWavingTranslate?.repeatDelay ?? 0.1,
@@ -195,6 +196,7 @@ const HighlightText = (
                     opacity: adjustSpringRotate?.opacity ?? [0, 1],
                     transition: {
                         duration: adjustSpringRotate?.duration ?? 1.2,
+                        baseDelay: adjustSpringRotate?.baseDelay ?? 0,
                         delay: adjustSpringRotate?.stagger ?? 0.2,
                         repeat: adjustSpringRotate?.repeat ?? 0,
                         type: 'spring',
@@ -219,6 +221,7 @@ const HighlightText = (
                     color: adjustWavingColor?.color ?? [null, '#556b9d', '#FF6341'],
                     transition: {
                         duration: adjustWavingColor?.duration ?? 0.3,
+                        baseDelay: adjustWavingColor?.baseDelay ?? 0,
                         delay: adjustWavingColor?.stagger ?? 0.05,
                         repeat: adjustWavingColor?.repeat ?? 0,
                         repeatDelay: adjustWavingColor?.repeatDelay ?? 0.1,
@@ -278,7 +281,7 @@ const Word = ({ inViewHook, style, wordAnimate, flatIndex, children }) => {
         ...wordAnimate,
         transition: {
             ...wordAnimate.transition,
-            delay: (flatIndex * wordAnimate.transition.delay)
+            delay: (flatIndex * wordAnimate.transition.delay) + wordAnimate.transition.baseDelay
         }
     };
     const { options, ...wordAnimateWithoutOptions } = updatedPresetDelay;
@@ -300,7 +303,7 @@ const Char = ({ inViewHook, charAnimate, flatIndex, children }) => {
         ...charAnimate,
         transition: {
             ...charAnimate.transition,
-            delay: (flatIndex * charAnimate.transition.delay)
+            delay: (flatIndex * charAnimate.transition.delay) + charAnimate.transition.baseDelay
         }
     };
     const { options, ...charAnimateWithoutOptions } = updatedPresetDelay;
