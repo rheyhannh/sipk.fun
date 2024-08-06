@@ -223,8 +223,8 @@ import styles from './style/highlight_text.module.css'
  * - Default : `0`
  */
 
-/** Props yang digunakan component `TextWavingColor`
- * @typedef {Object} TextWavingColorProps
+/** Props yang digunakan component `HighlightText`
+ * @typedef {Object} HighlightTextProps
  * @property {string} [text]
  * Teks yang digunakan 
  * - Default : `'highlighted text'`
@@ -250,7 +250,7 @@ import styles from './style/highlight_text.module.css'
 
 /**
  * Component untuk highlight suatu teks dengan preset animasi tertentu yang dapat diadjust
- * @param {TextWavingColorProps} props TextWavingColor props
+ * @param {HighlightTextProps} props HighlightText props
  * @returns {React.ReactElement} Rendered component
  */
 const HighlightText = (
