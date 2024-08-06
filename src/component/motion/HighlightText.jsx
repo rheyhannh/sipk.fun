@@ -157,6 +157,7 @@ import styles from './style/highlight_text.module.css'
 const HighlightText = (
     {
         text = 'highlighted text',
+        useHook = true,
         hookOptions,
         preset,
         adjustWavingColor,
@@ -166,7 +167,7 @@ const HighlightText = (
 ) => {
     const [usedPreset, setUsedPreset] = React.useState(null);
     const markRef = React.useRef(null);
-    const inViewHook = useInView(markRef, hookOptions);
+    const inViewHook = useHook ? useInView(markRef, hookOptions) : false;
 
     const textWords = text.split(' ').flatMap((word, index, arr) => index < arr.length - 1 ? [word, '_spaces_'] : [word]);
     const textChars = textWords.map(word => word === '_spaces_' ? word : word.split(''));
