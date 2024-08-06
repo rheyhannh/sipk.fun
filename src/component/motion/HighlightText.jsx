@@ -100,6 +100,16 @@ import styles from './style/highlight_text.module.css'
  */
 
 /** 
+ * @typedef {Object} presetOptions
+ * @property {boolean} makeVariant
+ * Buat animasi dalam variant sehingga dapat dimainkan melalui `motion` parent element
+ * - Default : `false`
+ * @property {string} variantName
+ * Nama variant yang digunakan
+ * - Default : `'highlight_text'` 
+ */
+
+/** 
  * @typedef {Object} resolvedPreset
  * @property {containerStyle} containerStyle
  * Style yang digunakan element mark sebagai `Container`, dapat bernilai `undefined`
@@ -137,14 +147,6 @@ import styles from './style/highlight_text.module.css'
  * @property {number} repeatDelay
  * Delay pengulangan animasi dalam satuan `detik` 
  * - Default : `0.1`
- * @property {Object} options
- * Opsi tambahan yang dapat digunakan
- * @property {boolean} options.makeVariant
- * Buat animasi dalam variant sehingga dapat dimainkan melalui `motion` parent element
- * - Default : `false`
- * @property {string} options.variantName
- * Nama variant yang digunakan
- * - Default : `'wavingColor'`
  */
 
 /** Opsi atau atribut yang dapat dicustom saat menggunakan preset `wavingTranslate`
@@ -176,14 +178,6 @@ import styles from './style/highlight_text.module.css'
  * @property {number} repeatDelay 
  * Delay pengulangan animasi dalam satuan `detik` 
  * - Default : `0.1`
- * @property {Object} options
- * Opsi tambahan yang dapat digunakan
- * @property {boolean} options.makeVariant
- * Buat animasi dalam variant sehingga dapat dimainkan melalui `motion` parent element
- * - Default : `false`
- * @property {string} options.variantName
- * Nama variant yang digunakan
- * - Default : `'wavingTranslate'`
  */
 
 /** Opsi atau atribut yang dapat dicustom saat menggunakan preset `springRotate`
@@ -216,14 +210,6 @@ import styles from './style/highlight_text.module.css'
  * @property {number} repeatDelay 
  * Delay pengulangan animasi dalam satuan `detik` 
  * - Default : `0.1`
- * @property {Object} options
- * Opsi tambahan yang dapat digunakan
- * @property {boolean} options.makeVariant
- * Buat animasi dalam variant sehingga dapat dimainkan melalui `motion` parent element
- * - Default : `false`
- * @property {string} options.variantName
- * Nama variant yang digunakan
- * - Default : `'springRotate'`
  */
 
 /**
@@ -252,6 +238,8 @@ import styles from './style/highlight_text.module.css'
  * @property {'wavingColor'|'wavingTranslate'|'springRotate'} [preset]
  * Preset animasi yang digunakan
  * - Default : `'wavingColor'`
+ * @property {presetOptions} presetOptions
+ * Opsi preset yang dapat digunakan
  * @property {adjustWavingColor} adjustWavingColor
  * Opsi atribut animasi yang digunakan dan pengaturan lainnya yang dapat diadjust pada preset `'wavingColor'`
  * @property {adjustWavingTranslate} adjustWavingTranslate
