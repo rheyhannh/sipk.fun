@@ -235,6 +235,8 @@ const Title = ({ sectionScrollProgress, item, index, ...props }) => {
             {titleChar.map((char, charIndex) => (
                 <TitleChar titleLength={titleChar.length} progress={progress} char={char} index={charIndex} key={`how_titles_title_${index}_char-${charIndex}`} />
             ))}
+
+            <Description item={item} progress={progress} />
         </motion.div>
     )
 }
@@ -260,6 +262,40 @@ const TitleChar = ({ titleLength, progress, char, index, ...props }) => {
         <motion.div style={{ opacity, scale, marginRight }} {...props}>
             {char}
         </motion.div>
+    )
+}
+
+const Description = ({ item, progress }) => {
+    const words = item.description.split(' ').map((word, index) => {
+        if (word.startsWith('[') && word.endsWith(']')) {
+            const cleanWord = word.slice(1, -1);
+            return (
+                <HighlightText
+                    key={index}
+                    text={cleanWord}
+                    useHook={false}
+                    preset={'wavingColor'}
+                    adjustWavingColor={{
+                        options: {
+                            makeVariant: true,
+                            variantName: 'test_xxx'
+                        }
+                    }}
+                />
+            )
+        }
+        return <span key={index}>{word}</span>;
+    });
+
+    const opacity = useTransform(progress, [0, 1], [0, 1]);
+    const x = useTransform(progress, [0, 1], [-200, 0]);
+
+    return (
+        <motion.p className={styles.description} whileHover={'test_xxx'}>
+            <motion.span className={styles.text} style={{ opacity, x }}>
+                {words.map((word, index) => <React.Fragment key={index}>{word} </React.Fragment>)}
+            </motion.span>
+        </motion.p>
     )
 }
 
