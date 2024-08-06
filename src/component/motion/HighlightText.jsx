@@ -30,6 +30,14 @@ import styles from './style/highlight_text.module.css'
  * @property {number} repeatDelay 
  * Lorem
  * - Default : `0.1`
+ * @property {Object} options
+ * Lorem
+ * @property {boolean} options.makeVariant
+ * Lorem
+ * - Default : `false`
+ * @property {string} options.variantName
+ * Lorem 
+ * - Default : `'wavingColor'`
  */
 
 /** Opsi atau atribut yang dapat dicustom saat menggunakan preset `wavingTranslate`
@@ -58,6 +66,14 @@ import styles from './style/highlight_text.module.css'
  * @property {number} repeatDelay 
  * Lorem
  * - Default : `0.1`
+ * @property {Object} options
+ * Lorem
+ * @property {boolean} options.makeVariant
+ * Lorem
+ * - Default : `false`
+ * @property {string} options.variantName
+ * Lorem 
+ * - Default : `'wavingTranslate'`
  */
 
 /** Opsi atau atribut yang dapat dicustom saat menggunakan preset `springRotate`
@@ -86,6 +102,14 @@ import styles from './style/highlight_text.module.css'
  * @property {number} repeatDelay 
  * Lorem
  * - Default : `0.1`
+ * @property {Object} options
+ * Lorem
+ * @property {boolean} options.makeVariant
+ * Lorem
+ * - Default : `false`
+ * @property {string} options.variantName
+ * Lorem 
+ * - Default : `'springRotate'`
  */
 
 /** Opsi yang dapat digunakan untuk hook `'useInView'` yang digunakan
