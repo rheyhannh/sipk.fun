@@ -6,7 +6,7 @@
     --base-size: 35px;
     --base-padding: 2rem;
     --progress-width: 4rem;
-    --progress-height: 512px;
+    --progress-height: 100%;
     --progress-size: var(--base-size);
 }
 
