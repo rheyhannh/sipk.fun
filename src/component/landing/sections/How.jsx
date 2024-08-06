@@ -267,34 +267,13 @@ const TitleChar = ({ titleLength, progress, char, index, ...props }) => {
 }
 
 const Description = ({ item, progress }) => {
-    const words = item.description.split(' ').map((word, index) => {
-        if (word.startsWith('[') && word.endsWith(']')) {
-            const cleanWord = word.slice(1, -1);
-            return (
-                <HighlightText
-                    key={index}
-                    text={cleanWord}
-                    useHook={false}
-                    preset={'wavingColor'}
-                    adjustWavingColor={{
-                        options: {
-                            makeVariant: true,
-                            variantName: 'test_xxx'
-                        }
-                    }}
-                />
-            )
-        }
-        return <span key={index}>{word}</span>;
-    });
-
     const opacity = useTransform(progress, [0, 1], [0, 1]);
     const x = useTransform(progress, [0, 1], [-200, 0]);
 
     return (
-        <motion.p className={styles.description} whileHover={'test_xxx'}>
-            <motion.span className={styles.text} style={{ opacity, x }}>
-                {words.map((word, index) => <React.Fragment key={index}>{word} </React.Fragment>)}
+        <motion.p className={styles.description}>
+            <motion.span className={styles.text} whileInView={'highlighted_text'} viewport={{ amount: 1 }} style={{ opacity, x }}>
+                {item.descriptionElement.map((element, index) => <React.Fragment key={index}>{element} </React.Fragment>)}
             </motion.span>
         </motion.p>
     )
