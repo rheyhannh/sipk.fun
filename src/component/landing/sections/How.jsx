@@ -204,7 +204,7 @@ const Lines = ({ sectionScrollProgress, ...props }) => {
  * @returns {React.ReactElement} Rendered component
  */
 const Contents = ({ children, ...props }) => (
-    <div className={styles.content} {...props}>
+    <div className={styles.contents} {...props}>
         {children}
     </div>
 )
