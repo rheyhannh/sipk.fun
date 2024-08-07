@@ -309,6 +309,10 @@ const Card = ({ item, index, ...props }) => {
         offset: ["start", "end"],
     })
 
+    const demo = [
+
+    ]
+
     return (
         <div
             ref={cardRef}
@@ -318,17 +322,11 @@ const Card = ({ item, index, ...props }) => {
             }}
             {...props}
         >
-            <div id={`${item.id}_s`} className={styles.start} style={{ border: '.5px solid purple' }}>
-                Content {index} Start
-            </div>
-
-            <div id={item.id} className={styles.center} style={{ border: '.5px solid gray' }}>
-                Content {index} Center
-            </div>
-
-            <div id={`${item.id}_e`} className={styles.end} style={{ border: '.5px solid aqua' }}>
-                Content {index} End
-            </div>
+            {demo[index] ?? (
+                <div id={item.id} className={styles.center} style={{ border: '.5px solid gray' }}>
+                    Content {index} Start
+                </div>
+            )}
         </div>
     )
 }
