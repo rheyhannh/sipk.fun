@@ -15,7 +15,7 @@
     z-index: 2;
     top: 0;
     left: 0;
-    width: 100vw;
+    width: 100%;
     height: 100vh;
     padding: calc(2rem + 72px) 2rem 2rem 2rem;
     display: grid;
