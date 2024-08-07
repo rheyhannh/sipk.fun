@@ -200,7 +200,7 @@ const Lines = ({ sectionScrollProgress, ...props }) => {
 
 /**
  * Component Description
- * @param {React.HTMLProps<HTMLDivElement>} props Content props
+ * @param {React.HTMLProps<HTMLDivElement>} props Contents props
  * @returns {React.ReactElement} Rendered component
  */
 const Contents = ({ children, ...props }) => (
