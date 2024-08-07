@@ -32,13 +32,16 @@ const How = () => {
         <Section sectionRef={sectionRef}>
             <Wrapper>
                 <Progress>
-                    <Circles sectionScrollProgress={sectionScrollProgress} />
-                    <Lines sectionScrollProgress={sectionScrollProgress} />
+                    <Circles sectionScrollProgress={sectionScrollProgress}>
+                        <Lines sectionScrollProgress={sectionScrollProgress} />
+                    </Circles>
                 </Progress>
 
-                <Content>
-                    <Titles sectionScrollProgress={sectionScrollProgress} />
-                </Content>
+                <Titles sectionScrollProgress={sectionScrollProgress} />
+
+                <Contents>
+
+                </Contents>
             </Wrapper>
 
             <Cards />
@@ -90,7 +93,7 @@ const Progress = ({ children, ...props }) => (
  * @param {{sectionScrollProgress:sectionScrollProgress} & React.HTMLProps<HTMLDivElement>} props Circles props
  * @returns {React.ReactElement} Rendered component
  */
-const Circles = ({ sectionScrollProgress, ...props }) => (
+const Circles = ({ sectionScrollProgress, children, ...props }) => (
     <div
         className={styles.circles}
         {...props}
@@ -98,6 +101,7 @@ const Circles = ({ sectionScrollProgress, ...props }) => (
         {CONTENTS.map((item, index) => (
             <Link
                 key={`how_progress_circle-${index}`}
+                className={styles.btn}
                 to={item.id}
                 offset={-72}
                 smooth={'easeInOutQuart'}
@@ -106,9 +110,12 @@ const Circles = ({ sectionScrollProgress, ...props }) => (
                 <Circle
                     sectionScrollProgress={sectionScrollProgress}
                     item={item}
-                    index={index} />
+                    index={index}
+                />
             </Link>
         ))}
+
+        {children}
     </div>
 )
 
@@ -196,7 +203,7 @@ const Lines = ({ sectionScrollProgress, ...props }) => {
  * @param {React.HTMLProps<HTMLDivElement>} props Content props
  * @returns {React.ReactElement} Rendered component
  */
-const Content = ({ children, ...props }) => (
+const Contents = ({ children, ...props }) => (
     <div className={styles.content} {...props}>
         {children}
     </div>
