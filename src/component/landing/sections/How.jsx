@@ -317,9 +317,6 @@ const Card = ({ item, index, ...props }) => {
         <div
             ref={cardRef}
             className={styles.card}
-            style={{
-                border: '1px dashed red'
-            }}
             {...props}
         >
             {demo[index] ?? (
