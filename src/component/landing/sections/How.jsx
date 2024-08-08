@@ -209,7 +209,11 @@ const Lines = ({ sectionScrollProgress, ...props }) => {
 const Contents = ({ activeContent, setActiveContent }) => {
     const [activeEl, setActiveEl] = React.useState({ component: null, props: {} });
     const content = [
-
+        { component: ContentTambah, props: {} },
+        { component: ContentRencana, props: {} },
+        { component: ContentDinamis, props: {} },
+        { component: ContentTarget, props: {} },
+        { component: ContentProgress, props: {} }
     ]
 
     React.useEffect(() => {
