@@ -28,7 +28,7 @@ const How = () => {
     const sectionRef = React.useRef(null);
     const { scrollYProgress: sectionScrollProgress } = useScroll({ target: sectionRef });
     /** @type {ReturnType<typeof React.useState<activeContent>>} */
-    const [activeContent, setActiveContent] = React.useState(0);
+    const [activeContent, setActiveContent] = React.useState(null);
 
     return (
         <Section sectionRef={sectionRef}>
@@ -217,6 +217,7 @@ const Contents = ({ activeContent, setActiveContent }) => {
     ]
 
     React.useEffect(() => {
+        if (activeContent === null) return;
         setActiveEl(content[activeContent] ?? { component: Content, props: {} });
     }, [activeContent, CONTENTS])
 
