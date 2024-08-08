@@ -27,21 +27,21 @@ const How = () => {
     /** @type {sectionRef} */
     const sectionRef = React.useRef(null);
     const { scrollYProgress: sectionScrollProgress } = useScroll({ target: sectionRef });
+    const [activeContent, setActiveContent] = React.useState(0);
 
     return (
         <Section sectionRef={sectionRef}>
             <Wrapper>
                 <Progress>
-                    <Circles sectionScrollProgress={sectionScrollProgress}>
+                    <Circles sectionScrollProgress={sectionScrollProgress} setActiveContent={setActiveContent}>
                         <Lines sectionScrollProgress={sectionScrollProgress} />
                     </Circles>
                 </Progress>
 
                 <Titles sectionScrollProgress={sectionScrollProgress} />
 
-                <Contents>
+                <Contents activeContent={activeContent} setActiveContent={setActiveContent} />
 
-                </Contents>
             </Wrapper>
 
             <Cards />
@@ -93,7 +93,7 @@ const Progress = ({ children, ...props }) => (
  * @param {{sectionScrollProgress:sectionScrollProgress} & React.HTMLProps<HTMLDivElement>} props Circles props
  * @returns {React.ReactElement} Rendered component
  */
-const Circles = ({ sectionScrollProgress, children, ...props }) => (
+const Circles = ({ sectionScrollProgress, setActiveContent, children, ...props }) => (
     <div
         className={styles.circles}
         {...props}
@@ -109,6 +109,7 @@ const Circles = ({ sectionScrollProgress, children, ...props }) => (
             >
                 <Circle
                     sectionScrollProgress={sectionScrollProgress}
+                    setActiveContent={setActiveContent}
                     item={item}
                     index={index}
                 />
@@ -124,7 +125,7 @@ const Circles = ({ sectionScrollProgress, children, ...props }) => (
  * @param {{sectionScrollProgress:sectionScrollProgress, item:contentsItem, index:number} & HTMLMotionProps<'div'>} props Circle props
  * @returns {React.ReactElement} Rendered component
  */
-const Circle = ({ sectionScrollProgress, item, index, ...props }) => {
+const Circle = ({ sectionScrollProgress, setActiveContent, item, index, ...props }) => {
     const [active, setActive] = React.useState(false);
     const input = getContentsTimeframes()[index];
     const hook = useTransform(sectionScrollProgress, input, [0, 1, 1, 0]);
@@ -133,6 +134,7 @@ const Circle = ({ sectionScrollProgress, item, index, ...props }) => {
         hook.on('change', (val) => {
             if (val > 0.95) {
                 setActive(true)
+                setActiveContent(index);
             } else {
                 setActive(false)
             }
@@ -203,10 +205,79 @@ const Lines = ({ sectionScrollProgress, ...props }) => {
  * @param {React.HTMLProps<HTMLDivElement>} props Contents props
  * @returns {React.ReactElement} Rendered component
  */
-const Contents = ({ children, ...props }) => (
-    <div className={styles.contents} {...props}>
+const Contents = ({ activeContent, setActiveContent }) => {
+    const [activeEl, setActiveEl] = React.useState({ component: null, props: {} });
+    const content = [
+
+    ]
+
+    const Default = ({ text, backgroundColor = 'var(--logo-second-color)' }) => (
+        <motion.div
+            className={styles.content}
+            initial={{ scale: 0 }}
+            animate={{ scale: 1 }}
+            exit={{ scale: 0, transition: { duration: 0.3 } }}
+        >
+            <div
+                style={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    height: '100%',
+                    width: '100%',
+                    backgroundColor
+                }}
+            >
+                {text} Content
+            </div>
+        </motion.div>
+    )
+
+    React.useEffect(() => {
+        const item = CONTENTS[activeContent];
+        setActiveEl(content[activeContent] ?? { component: Default, props: { text: item.short, key: item.id } });
+    }, [activeContent, CONTENTS])
+
+    return (
+        <div className={styles.contents}>
+            <AnimatePresence mode='wait'>
+                {activeEl.component && React.createElement(activeEl.component, activeEl.props)}
+            </AnimatePresence>
+
+            <div
+                style={{
+                    position: 'absolute',
+                    top: '100%',
+                    left: '0%',
+                    width: '100%',
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    transform: 'translate(-0%, -100%)'
+                }}
+            >
+                {CONTENTS.map((item, index) => (
+                    <span
+                        key={index}
+                        style={{ cursor: 'pointer' }}
+                        onClick={() => { setActiveContent(index) }}
+                    >
+                        {item.short}
+                    </span>
+                ))}
+            </div>
+        </div>
+    )
+}
+const Content = ({ className, children, ...props }) => (
+    <motion.div
+        className={className ?? styles.content}
+        initial={{ scale: 0 }}
+        animate={{ scale: 1 }}
+        exit={{ scale: 0, transition: { duration: 0.3 } }}
+        {...props}
+    >
         {children}
-    </div>
+    </motion.div>
 )
 
 /**
