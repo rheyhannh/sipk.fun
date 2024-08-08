@@ -134,10 +134,12 @@ const Circle = ({ sectionScrollProgress, setActiveContent, item, index, ...props
     React.useEffect(() => {
         hook.on('change', (val) => {
             if (val > 0.95) {
-                setActive(true)
+                setActive(true);
                 setActiveContent(index);
+            } else if (val < 0.05) {
+                setActiveContent(null);
             } else {
-                setActive(false)
+                setActive(false);
             }
         })
 
@@ -217,7 +219,10 @@ const Contents = ({ activeContent, setActiveContent }) => {
     ]
 
     React.useEffect(() => {
-        if (activeContent === null) return;
+        if (activeContent === null) {
+            setActiveEl({ component: null, props: {} });
+            return;
+        }
         setActiveEl(content[activeContent] ?? { component: Content, props: {} });
     }, [activeContent, CONTENTS])
 
