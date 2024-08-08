@@ -273,9 +273,6 @@ const Contents = ({ activeContent, setActiveContent }) => {
 /**
  * Props yang digunakan component `Content`
  * @typedef {Object} ContentProps
- * @property {string} className
- * Classname yang digunakan
- * - Default: `'styles.content'`
  * @property {boolean | Target | VariantLabels} initial
  * Attribut `initial` yang digunakan sebagai animasi inisial 
  * 
