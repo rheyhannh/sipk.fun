@@ -301,9 +301,8 @@ const Contents = ({ activeContent, setActiveContent }) => {
  * @param {Omit<HTMLMotionProps<'div'>, 'initial' | 'animate' | 'exit'> & ContentProps} props Content props
  * @returns {React.ReactElement} Rendered component
  */
-const Content = ({ className, initial, animate, exit, children, ...props }) => (
+const Content = ({ initial, animate, exit, children, ...props }) => (
     <motion.div
-        className={className ?? styles.content}
         initial={initial ?? { scale: 0 }}
         animate={animate ?? { scale: 1 }}
         exit={exit ?? { scale: 0, transition: { duration: 0.3 } }}
