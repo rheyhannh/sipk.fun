@@ -269,12 +269,12 @@ const Contents = ({ activeContent, setActiveContent }) => {
         </div>
     )
 }
-const Content = ({ className, children, ...props }) => (
+const Content = ({ className, initial, animate, exit, children, ...props }) => (
     <motion.div
         className={className ?? styles.content}
-        initial={{ scale: 0 }}
-        animate={{ scale: 1 }}
-        exit={{ scale: 0, transition: { duration: 0.3 } }}
+        initial={initial ?? { scale: 0 }}
+        animate={animate ?? { scale: 1 }}
+        exit={exit ?? { scale: 0, transition: { duration: 0.3 } }}
         {...props}
     >
         {children}
