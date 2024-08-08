@@ -212,31 +212,8 @@ const Contents = ({ activeContent, setActiveContent }) => {
 
     ]
 
-    const Default = ({ text, backgroundColor = 'var(--logo-second-color)' }) => (
-        <motion.div
-            className={styles.content}
-            initial={{ scale: 0 }}
-            animate={{ scale: 1 }}
-            exit={{ scale: 0, transition: { duration: 0.3 } }}
-        >
-            <div
-                style={{
-                    display: 'flex',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    height: '100%',
-                    width: '100%',
-                    backgroundColor
-                }}
-            >
-                {text} Content
-            </div>
-        </motion.div>
-    )
-
     React.useEffect(() => {
-        const item = CONTENTS[activeContent];
-        setActiveEl(content[activeContent] ?? { component: Default, props: { text: item.short, key: item.id } });
+        setActiveEl(content[activeContent] ?? { component: Content, props: {} });
     }, [activeContent, CONTENTS])
 
     return (
