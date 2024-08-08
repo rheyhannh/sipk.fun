@@ -118,6 +118,14 @@
     padding: var(--base-padding) 0;
 }
 
+.content {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
 .titles {
     --title-size: 24px;
     --description-size: 16px;
