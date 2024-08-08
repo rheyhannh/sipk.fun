@@ -27,6 +27,7 @@ const How = () => {
     /** @type {sectionRef} */
     const sectionRef = React.useRef(null);
     const { scrollYProgress: sectionScrollProgress } = useScroll({ target: sectionRef });
+    /** @type {ReturnType<typeof React.useState<activeContent>>} */
     const [activeContent, setActiveContent] = React.useState(0);
 
     return (
@@ -90,7 +91,7 @@ const Progress = ({ children, ...props }) => (
 
 /**
  * Component Description
- * @param {{sectionScrollProgress:sectionScrollProgress} & React.HTMLProps<HTMLDivElement>} props Circles props
+ * @param {{sectionScrollProgress:sectionScrollProgress, setActiveContent:React.Dispatch<React.SetStateAction<activeContent>>} & React.HTMLProps<HTMLDivElement>} props Circles props
  * @returns {React.ReactElement} Rendered component
  */
 const Circles = ({ sectionScrollProgress, setActiveContent, children, ...props }) => (
@@ -122,7 +123,7 @@ const Circles = ({ sectionScrollProgress, setActiveContent, children, ...props }
 
 /**
  * Component Description
- * @param {{sectionScrollProgress:sectionScrollProgress, item:contentsItem, index:number} & HTMLMotionProps<'div'>} props Circle props
+ * @param {{sectionScrollProgress:sectionScrollProgress, setActiveContent:React.Dispatch<React.SetStateAction<activeContent>>, item:contentsItem, index:number} & HTMLMotionProps<'div'>} props Circle props
  * @returns {React.ReactElement} Rendered component
  */
 const Circle = ({ sectionScrollProgress, setActiveContent, item, index, ...props }) => {
@@ -202,7 +203,7 @@ const Lines = ({ sectionScrollProgress, ...props }) => {
 
 /**
  * Component Description
- * @param {React.HTMLProps<HTMLDivElement>} props Contents props
+ * @param {{activeContent:activeContent, setActiveContent:React.Dispatch<React.SetStateAction<activeContent>>} & React.HTMLProps<HTMLDivElement>} props Contents props
  * @returns {React.ReactElement} Rendered component
  */
 const Contents = ({ activeContent, setActiveContent }) => {
