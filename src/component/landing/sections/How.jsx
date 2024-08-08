@@ -433,6 +433,96 @@ const Intro = () => (
     </div>
 )
 
+const ContentTambah = () => {
+    return (
+        <Content
+            className={`${styles.content} ${styles.tambah}`}
+            style={{
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                width: '100%',
+                height: '100%',
+                border: '1px solid orchid',
+            }}
+        >
+            Content Tambah
+        </Content>
+    )
+}
+
+const ContentRencana = () => {
+    return (
+        <Content
+            className={`${styles.content} ${styles.rencana}`}
+            style={{
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                width: '100%',
+                height: '100%',
+                border: '1px solid lavender'
+            }}
+        >
+            Content Rencana
+        </Content>
+    )
+}
+
+const ContentDinamis = () => {
+    return (
+        <Content
+            className={`${styles.content} ${styles.dinamis}`}
+            style={{
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                width: '100%',
+                height: '100%',
+                border: '1px solid green'
+            }}
+        >
+            Content Dinamis
+        </Content>
+    )
+}
+
+const ContentTarget = () => {
+    return (
+        <Content
+            className={`${styles.content} ${styles.target}`}
+            style={{
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                width: '100%',
+                height: '100%',
+                border: '1px solid red'
+            }}
+        >
+            Content Target
+        </Content>
+    )
+}
+
+const ContentProgress = () => {
+    return (
+        <Content
+            className={`${styles.content} ${styles.progress}`}
+            style={{
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                width: '100%',
+                height: '100%',
+                border: '1px solid aqua'
+            }}
+        >
+            Content Progress
+        </Content>
+    )
+}
+
 // #region Utils
 
 /**
