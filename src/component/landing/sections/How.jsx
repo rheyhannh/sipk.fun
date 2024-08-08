@@ -638,6 +638,11 @@ const INTRO_TEXT = 'Cara Pakai SIPK';
 */
 
 /** 
+ * Demo content yang sedang aktif yang merupakan `index` dari `CONTENTS`
+ * @typedef {number} activeContent
+*/
+
+/** 
  * Progress scroll section
  * @typedef {MotionValue<number>} sectionScrollProgress
 */
