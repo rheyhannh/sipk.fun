@@ -269,6 +269,38 @@ const Contents = ({ activeContent, setActiveContent }) => {
         </div>
     )
 }
+
+/**
+ * Props yang digunakan component `Content`
+ * @typedef {Object} ContentProps
+ * @property {string} className
+ * Classname yang digunakan
+ * - Default: `'styles.content'`
+ * @property {boolean | Target | VariantLabels} initial
+ * Attribut `initial` yang digunakan sebagai animasi inisial 
+ * 
+ * ```js
+ * const default = { scale: 0 }
+ * ```
+ * @property {AnimationControls | TargetAndTransition | VariantLabels | boolean} animate
+ * Attribut `animate` yang digunakan
+ * 
+ * ```js
+ * const default = { scale: 1 }
+ * ```
+ * @property {TargetAndTransition | VariantLabels} exit
+ * Attribut `exit` yang digunakan sebagai animasi exit
+ * 
+ * ```js
+ * const default = { scale: 0, transition: { duration: 0.3 } }
+ * ```
+ */
+
+/**
+ * Component untuk wrapper content demo dengan animasi saat mount `initial` & `animate` serta saat unmount `exit`
+ * @param {Omit<HTMLMotionProps<'div'>, 'initial' | 'animate' | 'exit'> & ContentProps} props Content props
+ * @returns {React.ReactElement} Rendered component
+ */
 const Content = ({ className, initial, animate, exit, children, ...props }) => (
     <motion.div
         className={className ?? styles.content}
