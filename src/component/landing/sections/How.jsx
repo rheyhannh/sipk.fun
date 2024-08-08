@@ -12,7 +12,7 @@ import * as React from 'react';
 
 // #region COMPONENT DEPEDENCY
 import { LandingContext } from '@/component/provider/Landing';
-import { motion, useTransform, useScroll, MotionValue } from 'framer-motion';
+import { motion, useTransform, useScroll, MotionValue, AnimatePresence } from 'framer-motion';
 import { Link } from 'react-scroll';
 import LazyWrapper from '@/component/LazyWrapper';
 import ReactIconsLoader from '@/component/ReactIconsLoader';
