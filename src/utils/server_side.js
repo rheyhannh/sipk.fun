@@ -4,22 +4,21 @@
 import * as CookiesTypes from '@/types/cookies';
 // #endregion
 
+// #region NEXT DEPEDENCY
+import { NextRequest } from 'next/server';
+// #endregion
 
-// ========== COMPONENT DEPEDENCY ========== //
+// #region UTIL DEPEDENCY
 import CryptoJS from 'crypto-js';
 import { LRUCache } from 'lru-cache';
 import jwt from 'jsonwebtoken';
 import isJWT from 'validator/lib/isJWT';
 import isUUID from 'validator/lib/isUUID';
 import isNumeric from 'validator/lib/isNumeric';
-import { NextRequest } from 'next/server';
+// #endregion
 
-/*
-============================== CODE START HERE ==============================
-*/
+// #region Security, Encryptor, Decryptor
 
-// Security
-// Encryptor & Decryptor
 /**
  * Method async untuk enkripsi teks atau data dengan algoritma AES
  * @param {string} message Teks atau data yang ingin diencrypt (ex: `'encryptAku'`)
@@ -53,7 +52,10 @@ export async function decryptAES(ciphertext, parse = false) {
     }
 }
 
-// Ratelimit
+// #endregion
+
+// #region Ratelimit
+
 /**
  * Membuat rate limiter yang dapat mengecek rate limit dari token
  * @param {object} options - Opsi untuk rate limit.
@@ -93,7 +95,10 @@ export async function rateLimit(options) {
     };
 }
 
-// Validator, Input Validator, Sanitizer.
+// #endregion
+
+// #region Validator, Input Validator, Sanitizer
+
 /**
  * Method untuk validasi token JWT supabase
  * @param {string} token Token JWT valid (`algorithms=[...env]`, `audience='authenticated'`, `issuer=[...env]`, `subject=userId`)
@@ -183,7 +188,10 @@ export async function getEtag(data, algorithm = 'MD5', etagFormat = true) {
     }
 }
 
-// Options
+// #endregion
+
+// #region Options, Cookies
+
 /**
  * Method untuk mendapatkan cookies options.
  * @param {'auth'|'service'} type Jika `'auth'` maka secure dan httpOnly bernilai `true`, jika `'service'` maka secure dan httpOnly bernilai `false`.
@@ -219,6 +227,4 @@ export async function getSipkCookies(request) {
     });
 }
 
-/*
-============================== CODE END HERE ==============================
-*/
+// #endregion
