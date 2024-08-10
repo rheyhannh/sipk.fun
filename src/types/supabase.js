@@ -165,4 +165,23 @@ import {
  * @property {Date} updated_at Tanggal fakta diperbarui
  */
 
+/**
+ * @typedef UserMetadata
+ * @type {object}
+ * @property {string} fullname
+ * Nama lengkap user
+ * @property {string} university
+ * Universitas user
+ * @property {number} university_id
+ * Id universitas user
+ */
+
+/**
+ * @typedef {Omit<SupabaseUser, 'user_metadata'> & {user_metadata:UserMetadata}} User
+ */
+
+/**
+ * @typedef {Omit<SupabaseSession, 'user'> & {user:User}} Session
+ */
+
 export const SupabaseTypes = {}
