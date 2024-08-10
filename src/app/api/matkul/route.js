@@ -34,6 +34,10 @@ const cookieAuthDeleteOptions = await getCookieOptions('auth', 'remove');
 ============================== CODE START HERE ==============================
 */
 
+/**
+ * Route Handler untuk `PATCH` `'/api/matkul'`
+ * @param {NextRequest} request
+ */
 export async function PATCH(request) {
     const newHeaders = {};
     const userAccessToken = request.cookies.get(`${process.env.USER_SESSION_COOKIES_NAME}`)?.value;
@@ -101,7 +105,7 @@ export async function PATCH(request) {
             headers: newHeaders
         })
     }
-    
+
     const supabase = createServerClient(
         process.env.SUPABASE_URL,
         process.env.SUPABASE_ANON_KEY,
@@ -176,6 +180,10 @@ export async function PATCH(request) {
     return NextResponse.json({ matkul: matkulUpdated[0], ref: matkulHistory[0] }, { status: 200, headers: newHeaders });
 }
 
+/**
+ * Route Handler untuk `DELETE` `'/api/matkul'`
+ * @param {NextRequest} request
+ */
 export async function DELETE(request) {
     const newHeaders = {};
     const userAccessToken = request.cookies.get(`${process.env.USER_SESSION_COOKIES_NAME}`)?.value;
@@ -317,6 +325,10 @@ export async function DELETE(request) {
     return NextResponse.json({ ref: matkulHistory[0] }, { status: 200, headers: newHeaders })
 }
 
+/**
+ * Route Handler untuk `POST` `'/api/matkul'`
+ * @param {NextRequest} request
+ */
 export async function POST(request) {
     const newHeaders = {};
     const userAccessToken = request.cookies.get(`${process.env.USER_SESSION_COOKIES_NAME}`)?.value;
@@ -459,6 +471,10 @@ export async function POST(request) {
     return NextResponse.json({ matkul: matkulBaru[0], ref: matkulBaruHistory[0] }, { status: 200, headers: newHeaders })
 }
 
+/**
+ * Route Handler untuk `GET` `'/api/matkul'`
+ * @param {NextRequest} request
+ */
 export async function GET(request) {
     const userAccessToken = request.cookies.get(`${process.env.USER_SESSION_COOKIES_NAME}`)?.value;
     const cookieStore = cookies();
@@ -481,7 +497,7 @@ export async function GET(request) {
 
         return NextResponse.json(data, { status: 200 })
     }
-    
+
     if (!userAccessToken || !authorizationHeader || !authorizationToken) {
         return NextResponse.json({ message: 'Unauthorized - Missing access token' }, {
             status: 401,

@@ -34,6 +34,10 @@ const cookieServiceOptions = await getCookieOptions('service', 'set');
 ============================== CODE START HERE ==============================
 */
 
+/**
+ * Route Handler untuk `POST` `'/api/register'`
+ * @param {NextRequest} request
+ */
 export async function POST(request) {
     const newHeaders = {};
     const serviceGuestCookie = request.cookies.get('s_guest_id')?.value;

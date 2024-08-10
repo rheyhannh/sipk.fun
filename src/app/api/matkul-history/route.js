@@ -33,6 +33,10 @@ const cookieAuthDeleteOptions = await getCookieOptions('auth', 'remove');
 ============================== CODE START HERE ==============================
 */
 
+/**
+ * Route Handler untuk `GET` `'/api/matkul-history'`
+ * @param {NextRequest} request
+ */
 export async function GET(request) {
     const userAccessToken = request.cookies.get(`${process.env.USER_SESSION_COOKIES_NAME}`)?.value;
     const authorizationHeader = headers().get('Authorization');
@@ -149,6 +153,10 @@ export async function GET(request) {
     });
 }
 
+/**
+ * Route Handler untuk `DELETE` `'/api/matkul-history'`
+ * @param {NextRequest} request
+ */
 export async function DELETE(request) {
     const newHeaders = {};
     const userAccessToken = request.cookies.get(`${process.env.USER_SESSION_COOKIES_NAME}`)?.value;

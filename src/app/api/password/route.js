@@ -32,6 +32,10 @@ const cookieAuthDeleteOptions = await getCookieOptions('auth', 'remove');
 ============================== CODE START HERE ==============================
 */
 
+/**
+ * Route Handler untuk `PATCH` `'/api/password'`
+ * @param {NextRequest} request
+ */
 export async function PATCH(request) {
     const newHeaders = {};
     const userAccessToken = request.cookies.get(`${process.env.USER_SESSION_COOKIES_NAME}`)?.value;

@@ -31,6 +31,10 @@ const cookieServiceOptions = await getCookieOptions('service', 'set');
 ============================== CODE START HERE ==============================
 */
 
+/**
+ * Route Handler untuk `GET` `'/api/auth/confirm/login'`
+ * @param {NextRequest} request
+ */
 export async function GET(request) {
     const newHeaders = {};
     const serviceGuestCookie = request.cookies.get('s_guest_id')?.value;

@@ -36,6 +36,10 @@ const cookieServiceOptions = await getCookieOptions('service', 'set');
 ============================== CODE START HERE ==============================
 */
 
+/**
+ * Route Handler untuk `GET` `'/api/universitas'`
+ * @param {NextRequest} request
+ */
 export async function GET(request) {
     const cookieStore = cookies();
     const newHeaders = {};

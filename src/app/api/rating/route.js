@@ -34,6 +34,10 @@ const cookieAuthDeleteOptions = await getCookieOptions('auth', 'remove');
 ============================== CODE START HERE ==============================
 */
 
+/**
+ * Route Handler untuk `GET` `'/api/rating'`
+ * @param {NextRequest} request
+ */
 export async function GET(request) {
     const userAccessToken = request.cookies.get(`${process.env.USER_SESSION_COOKIES_NAME}`)?.value;
     const cookieStore = cookies();
@@ -150,6 +154,10 @@ export async function GET(request) {
     });
 }
 
+/**
+ * Route Handler untuk `POST` `'/api/rating'`
+ * @param {NextRequest} request
+ */
 export async function POST(request) {
     const newHeaders = {};
     const userAccessToken = request.cookies.get(`${process.env.USER_SESSION_COOKIES_NAME}`)?.value;
@@ -292,6 +300,10 @@ export async function POST(request) {
     return NextResponse.json({ rating: data[0] }, { status: 200, headers: newHeaders })
 }
 
+/**
+ * Route Handler untuk `PATCH` `'/api/rating'`
+ * @param {NextRequest} request
+ */
 export async function PATCH(request) {
     const newHeaders = {};
     const userAccessToken = request.cookies.get(`${process.env.USER_SESSION_COOKIES_NAME}`)?.value;

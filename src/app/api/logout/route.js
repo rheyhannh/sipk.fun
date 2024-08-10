@@ -31,6 +31,10 @@ const cookieAuthDeleteOptions = await getCookieOptions('auth', 'remove');
 ============================== CODE START HERE ==============================
 */
 
+/**
+ * Route Handler untuk `POST` `'/api/logout'`
+ * @param {NextRequest} request
+ */
 export async function POST(request) {
     const userAccessToken = request.cookies.get(`${process.env.USER_SESSION_COOKIES_NAME}`)?.value;
     const authorizationHeader = headers().get('Authorization');

@@ -33,6 +33,10 @@ const cookieAuthDeleteOptions = await getCookieOptions('auth', 'remove');
 ============================== CODE START HERE ==============================
 */
 
+/**
+ * Route Handler untuk `GET` `'/api/me'`
+ * @param {NextRequest} request
+ */
 export async function GET(request) {
     const userAccessToken = request.cookies.get(`${process.env.USER_SESSION_COOKIES_NAME}`)?.value;
     const authorizationHeader = headers().get('Authorization');
@@ -149,6 +153,10 @@ export async function GET(request) {
     });
 }
 
+/**
+ * Route Handler untuk `PATCH` `'/api/me'`
+ * @param {NextRequest} request
+ */
 export async function PATCH(request) {
     const newHeaders = {};
     const userAccessToken = request.cookies.get(`${process.env.USER_SESSION_COOKIES_NAME}`)?.value;
