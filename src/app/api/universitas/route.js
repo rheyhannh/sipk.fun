@@ -2,15 +2,17 @@
 import * as SIPK from '@/types/supabase';
 // #endregion
 
-// ========== NEXT DEPEDENCY ========== //
+// #region NEXT DEPEDENCY
 import { NextResponse, NextRequest } from 'next/server';
 import { cookies, headers } from 'next/headers';
+// #endregion
 
-// ========== SUPABASE DEPEDENCY ========== //
+// #region SUPABASE DEPEDENCY
 import { createServerClient } from '@supabase/ssr';
 import { createClient } from '@supabase/supabase-js';
+// #endregion
 
-// ========== UTIL DEPEDENCY ========== //
+// #region UTIL DEPEDENCY
 import {
     encryptAES,
     decryptAES,
@@ -21,6 +23,7 @@ import {
 import isUUID from 'validator/lib/isUUID';
 import isNumeric from 'validator/lib/isNumeric';
 import isInt from 'validator/lib/isint';
+// #endregion
 
 const limitRequest = parseInt(process.env.API_UNIVERSITAS_REQUEST_LIMIT);
 const limiter = await rateLimit({
@@ -31,10 +34,6 @@ const limiter = await rateLimit({
 const cookieAuthOptions = await getCookieOptions('auth', 'set');
 const cookieAuthDeleteOptions = await getCookieOptions('auth', 'remove');
 const cookieServiceOptions = await getCookieOptions('service', 'set');
-
-/*
-============================== CODE START HERE ==============================
-*/
 
 /**
  * Route Handler untuk `GET` `'/api/universitas'`
@@ -191,7 +190,3 @@ export async function GET(request) {
 
     return NextResponse.json(data, { status: 200, headers: newHeaders })
 }
-
-/*
-============================== CODE END HERE ==============================
-*/

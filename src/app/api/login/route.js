@@ -2,14 +2,16 @@
 import * as SIPK from '@/types/supabase';
 // #endregion
 
-// ========== NEXT DEPEDENCY ========== //
+// #region NEXT DEPEDENCY
 import { NextResponse, NextRequest } from 'next/server';
 import { cookies, headers } from 'next/headers';
+// #endregion
 
-// ========== SUPABASE DEPEDENCY ========== //
+// #region SUPABASE DEPEDENCY
 import { createServerClient } from '@supabase/ssr';
+// #endregion
 
-// ========== UTIL DEPEDENCY ========== //
+// #region UTIL DEPEDENCY
 import {
     encryptAES,
     decryptAES,
@@ -19,6 +21,7 @@ import {
 } from '@/utils/server_side';
 import Joi from 'joi'
 import isUUID from 'validator/lib/isUUID';
+// #endregion
 
 const limitRequest = parseInt(process.env.API_LOGIN_REQUEST_LIMIT);
 const limiter = await rateLimit({
@@ -29,10 +32,6 @@ const limiter = await rateLimit({
 const cookieAuthOptions = await getCookieOptions('auth', 'set');
 const cookieAuthDeleteOptions = await getCookieOptions('auth', 'remove');
 const cookieServiceOptions = await getCookieOptions('service', 'set');
-
-/*
-============================== CODE START HERE ==============================
-*/
 
 /**
  * Route Handler untuk `POST` `'/api/login'`
@@ -173,7 +172,3 @@ export async function POST(request) {
 
     return NextResponse.json({ success: true }, { status: 200, headers: newHeaders })
 }
-
-/*
-============================== CODE END HERE ==============================
-*/

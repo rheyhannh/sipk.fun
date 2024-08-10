@@ -2,14 +2,16 @@
 import * as SIPK from '@/types/supabase';
 // #endregion
 
-// ========== NEXT DEPEDENCY ========== //
+// #region NEXT DEPEDENCY
 import { NextResponse, NextRequest } from 'next/server';
 import { cookies, headers } from 'next/headers';
+// #endregion
 
-// ========== SUPABASE DEPEDENCY ========== //
+// #region SUPABASE DEPEDENCY
 import { createServerClient } from '@supabase/ssr';
+// #endregion
 
-// ========== UTIL DEPEDENCY ========== //
+// #region UTIL DEPEDENCY
 import {
     encryptAES,
     decryptAES,
@@ -17,6 +19,7 @@ import {
     validateJWT,
     getCookieOptions
 } from '@/utils/server_side';
+// #endregion
 
 const limitRequest = parseInt(process.env.API_LOGOUT_REQUEST_LIMIT);
 const limiter = await rateLimit({
@@ -26,10 +29,6 @@ const limiter = await rateLimit({
 
 const cookieAuthOptions = await getCookieOptions('auth', 'set');
 const cookieAuthDeleteOptions = await getCookieOptions('auth', 'remove');
-
-/*
-============================== CODE START HERE ==============================
-*/
 
 /**
  * Route Handler untuk `POST` `'/api/logout'`
@@ -123,7 +122,3 @@ export async function POST(request) {
         status: 204
     })
 }
-
-/*
-============================== CODE END HERE ==============================
-*/
