@@ -6,6 +6,7 @@ import * as CookiesTypes from '@/types/cookies';
 
 // #region NEXT DEPEDENCY
 import { NextRequest } from 'next/server';
+import { headers } from 'next/headers';
 // #endregion
 
 // #region UTIL DEPEDENCY
