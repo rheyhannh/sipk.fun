@@ -201,6 +201,19 @@ export async function getCookieOptions(type, action, custom = {}) {
     }
 }
 
+export async function getSipkCookies(request) {
+    return new Promise((resolve) => {
+        /** @type {CookiesTypes.AllCookies} */
+        const cookies = {
+            serviceGuestCookie: request.cookies.get('s_guest_id')?.value,
+            serviceUserIdCookie: request.cookies.get('s_user_id')?.value,
+            serviceAccessTokenCookie: request.cookies.get('s_access_token')?.value,
+            secureSessionCookie: request.cookies.get(process.env.USER_SESSION_COOKIES_NAME)?.value,
+        };
+        resolve(cookies);
+    });
+}
+
 /*
 ============================== CODE END HERE ==============================
 */
