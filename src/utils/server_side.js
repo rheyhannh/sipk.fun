@@ -1,12 +1,18 @@
 'use server'
 
+// #region TYPE DEPEDENCY
+import * as CookiesTypes from '@/types/cookies';
+// #endregion
+
+
 // ========== COMPONENT DEPEDENCY ========== //
 import CryptoJS from 'crypto-js';
 import { LRUCache } from 'lru-cache';
 import jwt from 'jsonwebtoken';
 import isJWT from 'validator/lib/isJWT';
 import isUUID from 'validator/lib/isUUID';
-import isNumeric from 'validator/lib/isNumeric'
+import isNumeric from 'validator/lib/isNumeric';
+import { NextRequest } from 'next/server';
 
 /*
 ============================== CODE START HERE ==============================
