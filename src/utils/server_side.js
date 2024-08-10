@@ -232,4 +232,11 @@ export async function getSipkCookies(request) {
     });
 }
 
+export async function getIpFromHeaders() {
+    return new Promise((resolve) => {
+        const ip = headers().get('X-Client-IP') ?? headers().get('X-Forwarded-For') ?? headers().get('X-Real-IP');
+        resolve(ip);
+    });
+}
+
 // #endregion
