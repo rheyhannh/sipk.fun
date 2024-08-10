@@ -1,5 +1,9 @@
+// #region TYPE DEPEDENCY
+import * as SIPK from '@/types/supabase';
+// #endregion
+
 // ========== NEXT DEPEDENCY ========== //
-import { NextResponse } from 'next/server';
+import { NextResponse, NextRequest } from 'next/server';
 import { cookies, headers } from 'next/headers';
 
 // ========== SUPABASE DEPEDENCY ========== //
