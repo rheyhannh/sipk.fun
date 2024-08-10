@@ -232,6 +232,13 @@ export async function getSipkCookies(request) {
     });
 }
 
+/**
+ * Method untuk mencoba mendapatkan ip dari beberapa header berikut,
+ * - `'X-Client-IP'`
+ * - `'X-Forwarded-For'`
+ * - `'X-Real-IP'`
+ * @returns {Promise<string>} Promise dengan resolve string ip jika tersedia, `null` jika tidak tersedia
+ */
 export async function getIpFromHeaders() {
     return new Promise((resolve) => {
         const ip = headers().get('X-Client-IP') ?? headers().get('X-Forwarded-For') ?? headers().get('X-Real-IP');
