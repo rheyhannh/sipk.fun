@@ -195,7 +195,7 @@ export async function getEtag(data, algorithm = 'MD5', etagFormat = true) {
 
 // #endregion
 
-// #region Options, Cookies
+// #region Options, Cookies, Headers
 
 /**
  * Method untuk mendapatkan cookies options.
