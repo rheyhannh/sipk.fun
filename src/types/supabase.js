@@ -1,3 +1,10 @@
+// #region TYPE DEPEDENCY
+import {
+    User as SupabaseUser,
+    Session as SupabaseSession
+} from '@supabase/supabase-js';
+// #endregion
+
 /**
  * @typedef UserData
  * @type {object}
