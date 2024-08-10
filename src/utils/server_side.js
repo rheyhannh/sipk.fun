@@ -58,11 +58,21 @@ export async function decryptAES(ciphertext, parse = false) {
 // #region Ratelimit
 
 /**
+ * @typedef {Object} rateLimitInstance
+ * @property {(limit:number, token:string) => Promise<number>} check
+ * Method untuk mengecek rate limit dari sebuah token dengan parameter berikut,
+ * - `limit` : Limit maksimum jumlah penggunaan
+ * - `token` : Token untuk mengecek ratelimit
+ * 
+ * `Resolve` dengan jumlah penggunaan, `Reject` saat penggunaan sudah lebih dari limit
+ */
+
+/**
  * Membuat rate limiter yang dapat mengecek rate limit dari token
- * @param {object} options - Opsi untuk rate limit.
- * @param {number} [options.uniqueTokenPerInterval=500] - Angka maksimal untuk setiap token unik yang dapat diterima dalam suatu interval.
- * @param {number} [options.interval=60000] - Interval waktu dalam millisekon untuk rate limit.
- * @returns {object} Ratelimiter dengan method `check`.
+ * @param {object} options - Opsi untuk rate limit
+ * @param {number} [options.uniqueTokenPerInterval=500] - Angka maksimal untuk setiap token unik yang dapat diterima dalam suatu interval, default : `500`
+ * @param {number} [options.interval=60000] - Interval waktu dalam millisekon untuk rate limit, default : `60000`
+ * @returns {rateLimitInstance} Instance ratelimit beserta object dengan method `check` untuk mengecek rate limit dari sebuah token
  */
 export async function rateLimit(options) {
     const tokenCache = new LRUCache({
@@ -70,12 +80,6 @@ export async function rateLimit(options) {
         ttl: options?.interval || 60000,
     });
 
-    /**
-     * Method untuk mengecek rate limit dari sebuah token
-     * @param {number} limit Limit maksimum jumlah penggunaan.
-     * @param {string} token Token untuk mengecek ratelimit.
-     * @returns {Promise<number>} Resolve dengan jumlah penggunaan, Reject saat penggunaan sudah lebih dari limit.
-     */
     const check = async (limit, token) => {
         const tokenCount = tokenCache.get(token) || [0];
 
