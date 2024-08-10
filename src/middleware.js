@@ -1,5 +1,5 @@
 // ========== NEXT DEPEDENCY ========== //
-import { NextResponse } from 'next/server'
+import { NextResponse, NextRequest } from 'next/server'
 
 // ========== SUPABASE DEPEDENCY ========== //
 import { createServerClient } from '@supabase/ssr'
@@ -16,6 +16,9 @@ import isUUID from 'validator/lib/isUUID';
 ============================== CODE START HERE ==============================
 */
 
+/**
+ * @param {NextRequest} request
+ */
 export default async function middleware(request) {
     const cookieAuthOptions = await getCookieOptions('auth', 'set');
     const cookieAuthDeleteOptions = await getCookieOptions('auth', 'remove');
