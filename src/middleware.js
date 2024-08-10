@@ -1,20 +1,19 @@
-// ========== NEXT DEPEDENCY ========== //
-import { NextResponse, NextRequest } from 'next/server'
+// #region NEXT DEPEDENCY
+import { NextResponse, NextRequest } from 'next/server';
+// #endregion
 
-// ========== SUPABASE DEPEDENCY ========== //
-import { createServerClient } from '@supabase/ssr'
+// #region SUPABASE DEPEDENCY
+import { createServerClient } from '@supabase/ssr';
+// #endregion
 
-// ========== UTIL DEPEDENCY ========== //
+// #region UTIL DEPEDENCY
 import {
     encryptAES,
     decryptAES,
     getCookieOptions
 } from '@/utils/server_side';
 import isUUID from 'validator/lib/isUUID';
-
-/*
-============================== CODE START HERE ==============================
-*/
+// #endregion
 
 /**
  * @param {NextRequest} request
@@ -155,7 +154,3 @@ export default async function middleware(request) {
 export const config = {
     matcher: ['/dashboard/:path*', '/users/:path*', '/magiclink/:path*'],
 }
-
-/*
-============================== CODE END HERE ==============================
-*/
