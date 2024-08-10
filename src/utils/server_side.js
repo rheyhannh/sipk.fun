@@ -201,6 +201,11 @@ export async function getCookieOptions(type, action, custom = {}) {
     }
 }
 
+/**
+ * Method untuk mendapatkan cookies yang digunakan pada sipk
+ * @param {NextRequest} request 
+ * @returns {Promise<CookiesTypes.AllCookies>} Promise dengan resolve object yang berisikan cookies yang digunakan pada sipk. Jika cookie tidak tersedia, value bernilai `null`
+ */
 export async function getSipkCookies(request) {
     return new Promise((resolve) => {
         /** @type {CookiesTypes.AllCookies} */
