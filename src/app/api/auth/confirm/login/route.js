@@ -113,6 +113,7 @@ export async function GET(request) {
     )
     // #endregion
 
+    // #region Handle Response
     var { data, error } = await supabase.auth.verifyOtp({
         type,
         token_hash,
