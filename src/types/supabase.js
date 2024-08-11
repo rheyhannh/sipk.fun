@@ -189,7 +189,19 @@ import {
  * Override `Session` type yang direturn dari `supabase.auth.getSession()`
  * @typedef {Object} getSession
  * @property {Object} data
- * Data yang diresolve dari supabase saat autentikasi berhasil
+ * Data yang diresolve dari supabase
+ * @property {Session | null} data.session
+ * Session user, jika autentikasi gagal maka bernilai `null`
+ * @property {SupabaseAuthError} error
+ */
+
+/**
+ * Override `User` dan `Session` type yang direturn dari `supabase.auth.verifyOtp()`
+ * @typedef {Object} verifyOtp
+ * @property {Object} data
+ * Data yang diresolve dari supabase
+ * @property {User | null} data.user
+ * Data user, jika autentikasi gagal maka bernilai `null`
  * @property {Session | null} data.session
  * Session user, jika autentikasi gagal maka bernilai `null`
  * @property {SupabaseAuthError} error
