@@ -1,10 +1,10 @@
 // #region TYPE DEPEDENCY
-import * as SIPK from '@/types/supabase';
+import * as SupabaseTypes from '@/types/supabase';
 // #endregion
 
 // #region NEXT DEPEDENCY
 import { NextResponse, NextRequest } from 'next/server';
-import { cookies, headers } from 'next/headers';
+import { cookies } from 'next/headers';
 // #endregion
 
 // #region SUPABASE DEPEDENCY
@@ -16,7 +16,9 @@ import {
     encryptAES,
     decryptAES,
     rateLimit,
-    getCookieOptions
+    getCookieOptions,
+    getSipkCookies,
+    getIpFromHeaders,
 } from '@/utils/server_side';
 // #endregion
 
