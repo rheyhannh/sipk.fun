@@ -64,6 +64,7 @@ export async function GET(request) {
             }
         })
     }
+    // #endregion
 
     if (!secureSessionCookie) {
         return NextResponse.json({ message: 'Unauthorized - Missing access token' }, {
@@ -71,8 +72,7 @@ export async function GET(request) {
             headers: newHeaders
         })
     }
-    // #endregion
-
+    
     // #region Initiate Supabase Instance
     const cookieStore = cookies();
     const supabase = createServerClient(
