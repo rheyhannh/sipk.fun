@@ -38,16 +38,9 @@ const cookieServiceOptions = await getCookieOptions('service', 'set');
  */
 export async function GET(request) {
     const newHeaders = {};
-    const serviceGuestCookie = request.cookies.get('s_guest_id')?.value;
+    const { serviceGuestCookie } = await getSipkCookies(request);
 
-    // guestKey (IP or guest_Id) to create key for rate limiter
-    const guestKey =
-        headers().get('X-Client-IP') ||
-        headers().get('X-Forwarded-For') ||
-        headers().get('X-Real-IP') ||
-        serviceGuestCookie ||
-        'public'
-        ;
+    const guestKey = await getIpFromHeaders() ?? serviceGuestCookie ?? 'public';
 
     // Try checking rate limit
     try {
