@@ -40,9 +40,10 @@ export async function GET(request) {
     const newHeaders = {};
     const { serviceGuestCookie } = await getSipkCookies(request);
 
+    // Identifier for Ratelimiting
     const guestKey = await getIpFromHeaders() ?? serviceGuestCookie ?? 'public';
 
-    // Try checking rate limit
+    // #region Checking Ratelimit
     try {
         var currentUsage = await limiter.check(limitRequest, guestKey);
         // Log Here, ex: '{TIMESTAMP} userId {ROUTE} limit {currentUsage}/{limitRequest}'
@@ -58,7 +59,9 @@ export async function GET(request) {
             }
         })
     }
+    // #endregion
 
+    // #region Get Query Params and Handling It
     const searchParams = request.nextUrl.searchParams;
     const token_hash = searchParams.get('token_hash');
     const type = searchParams.get('type');
@@ -76,7 +79,9 @@ export async function GET(request) {
     if (cookieStore.has(process.env.USER_SESSION_COOKIES_NAME)) {
         return NextResponse.redirect(dashboardUrl);
     }
+    // #endregion
 
+    // #region Initiate Supabase Instance
     const supabase = createServerClient(
         process.env.SUPABASE_URL,
         process.env.SUPABASE_ANON_KEY,
@@ -106,6 +111,7 @@ export async function GET(request) {
             },
         }
     )
+    // #endregion
 
     var { data, error } = await supabase.auth.verifyOtp({
         type,
@@ -129,4 +135,5 @@ export async function GET(request) {
         status: 204,
         headers: newHeaders
     })
+    // #endregion
 }
