@@ -1,7 +1,8 @@
 // #region TYPE DEPEDENCY
 import {
     User as SupabaseUser,
-    Session as SupabaseSession
+    Session as SupabaseSession,
+    AuthError as SupabaseAuthError,
 } from '@supabase/supabase-js';
 // #endregion
 
