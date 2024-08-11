@@ -185,4 +185,14 @@ import {
  * @typedef {Omit<SupabaseSession, 'user'> & {user:User}} Session
  */
 
+/**
+ * Override `Session` type yang direturn dari `supabase.auth.getSession()`
+ * @typedef {Object} getSession
+ * @property {Object} data
+ * Data yang diresolve dari supabase saat autentikasi berhasil
+ * @property {Session | null} data.session
+ * Session user, jika autentikasi gagal maka bernilai `null`
+ * @property {SupabaseAuthError} error
+ */
+
 export const SupabaseTypes = {}
