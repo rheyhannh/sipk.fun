@@ -42,12 +42,11 @@ const cookieServiceOptions = await getCookieOptions('service', 'set');
 export async function GET(request) {
     const cookieStore = cookies();
     const newHeaders = {};
-    var serviceGuestCookie = request.cookies.get('s_guest_id')?.value;
-    var serviceUserIdCookie = request.cookies.get('s_user_id')?.value;
-    const apiKeyHeader = headers().get('X-API-KEY');
+    var { serviceGuestCookie, serviceUserIdCookie } = await getSipkCookies(request);
+    const serviceApiKey = await getApiKey(request);
 
-    if (apiKeyHeader) {
-        if (apiKeyHeader !== process.env.SUPABASE_SERVICE_KEY) {
+    if (serviceApiKey) {
+        if (serviceApiKey !== process.env.SUPABASE_SERVICE_KEY) {
             return NextResponse.json({ message: `Invalid API key` }, {
                 status: 401,
             })
@@ -79,15 +78,7 @@ export async function GET(request) {
         }
     }
 
-    // guestKey (IP or guest_Id) to create key for rate limiter
-    const guestKey =
-        headers().get('X-Client-IP') ||
-        headers().get('X-Forwarded-For') ||
-        headers().get('X-Real-IP') ||
-        serviceUserIdCookie ||
-        serviceGuestCookie ||
-        'public'
-        ;
+    const guestKey = await getIpFromHeaders() ?? serviceGuestCookie ?? 'public';
 
     // Try checking rate limit
     try {
