@@ -246,6 +246,11 @@ export async function getIpFromHeaders() {
     });
 }
 
+/**
+ * Method untuk mencoba mendapatkan api key dari query param `'apiKey'` atau header `'X-Api-Key'` 
+ * @param {NextRequest} request 
+ * @returns {Promise<string>} Promise dengan resolve string api key jika tersedia, `null` jika tidak tersedia
+ */
  export async function getApiKey(request) {
     return new Promise((resolve) => {
         const apiKey = headers().get('X-Api-Key') ?? request.nextUrl.searchParams.get('apiKey');
