@@ -106,11 +106,26 @@ export async function rateLimit(options) {
 // #region Validator, Input Validator, Sanitizer
 
 /**
- * Method untuk validasi token JWT supabase
- * @param {string} token Token JWT valid (`algorithms=[...env]`, `audience='authenticated'`, `issuer=[...env]`, `subject=userId`)
- * @param {string} userId User UUID untuk validasi JWT subject.
- * @returns {object} JWT payload data
- * @throws Throw error saat token invalid (bukan expired) atau `type(token) !== JWT` atau `type(userId) !== uuid` 
+ * Method untuk validasi supabase `JWT` atau access token atau cookie `'s_access_token'` dengan menggunakan 
+ * ```js
+ * jwt.verify(); // import jwt from 'jsonwebtoken'
+ * ```
+ * 
+ * Secara default token dinyatakan valid dengan kriteria berikut, 
+ * - Algorithms match dengan salah satu algoritma yang digunakan pada `process.env.JWT_ALGORITHM`
+ * - Audience bernilai `'authenticated'`
+ * - Issuer match dengan salah satu issuer yang tersedia pada `process.env.JWT_ISSUER`
+ * - Subject match dengan param `userId`
+ * 
+ * @param {string} token Encoded string `JWT` atau access token atau cookie `'s_access_token'`
+ * @param {string} userId User id `uuid-v4`
+ * @param {boolean} [ignoreExpiration=true] Boolean untuk tetap kategorikan token sebagai `valid` walaupun sudah kadaluwarsa atau `expired`, default: `true`
+ * @param {Omit<VerifyOptions, 'algorithms' | 'audience' | 'issuer' | 'ignoreExpiration' | 'subject'} otherOptions Opsi lainnya untuk mempertimbangkan token `valid` atau tidak
+ * @returns {SupabaseTypes.AccessTokenPayload} Decoded payload `JWT` atau access token atau cookie `'s_access_token'`
+ * @throws
+ * - Token invalid atau tidak memenuhi semua kriteria diatas
+ * - Tipe `token` bukan `JWT`
+ * - Tipe `userId` bukan `UUID`
  */
 export async function validateJWT(token, userId, ignoreExpiration = true, otherOptions) {
     if (!isUUID(userId) || !userId) { throw new Error(`Unauthorized - Invalid or empty user id`) }
