@@ -112,7 +112,7 @@ export async function rateLimit(options) {
  * @returns {object} JWT payload data
  * @throws Throw error saat token invalid (bukan expired) atau `type(token) !== JWT` atau `type(userId) !== uuid` 
  */
-export async function validateJWT(token, userId) {
+export async function validateJWT(token, userId, ignoreExpiration = true, otherOptions) {
     if (!isUUID(userId) || !userId) { throw new Error(`Unauthorized - Invalid or empty user id`) }
     if (!isJWT(token) || !token) { throw new Error(`Unauthorized - Invalid or empty access token`) }
     try {
@@ -122,8 +122,9 @@ export async function validateJWT(token, userId) {
                 algorithms: process.env.JWT_ALGORITHM.split(','),
                 audience: 'authenticated',
                 issuer: process.env.JWT_ISSUER.split(','),
-                ignoreExpiration: true,
-                subject: userId
+                ignoreExpiration,
+                subject: userId,
+                ...otherOptions
             }
         )
 
