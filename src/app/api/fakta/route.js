@@ -45,6 +45,7 @@ export async function GET(request) {
     var { serviceGuestCookie, serviceUserIdCookie } = await getSipkCookies(request);
     const serviceApiKey = await getApiKey(request);
 
+    // #region Handler when serviceApiKey exist
     if (serviceApiKey) {
         if (serviceApiKey !== process.env.SUPABASE_SERVICE_KEY) {
             return NextResponse.json({ message: `Invalid API key` }, {
@@ -61,7 +62,9 @@ export async function GET(request) {
 
         return NextResponse.json(data, { status: 200 })
     }
+    // #endregion
 
+    // #region Verifying serviceGuestCookie and serviceUserIdCookie
     const setNewServiceGuestCookie = () => {
         const newId = crypto.randomUUID();
         cookieStore.set({ name: 's_guest_id', value: newId, ...cookieServiceOptions });
@@ -78,10 +81,12 @@ export async function GET(request) {
             serviceUserIdCookie = 'public';
         }
     }
+    // #endregion
 
+    // Identifier for Ratelimiting
     const guestKey = await getIpFromHeaders() ?? serviceGuestCookie ?? 'public';
 
-    // Try checking rate limit
+    // #region Checking Ratelimit
     try {
         var currentUsage = await limiter.check(limitRequest, guestKey);
         // Log Here, ex: '{TIMESTAMP} userId {ROUTE} limit {currentUsage}/{limitRequest}'
@@ -97,8 +102,9 @@ export async function GET(request) {
             }
         })
     }
+    // #endregion
 
-    // Create connection to 'supabase' using createServerClient
+    // #region Initiate Supabase Instance
     const supabase = createServerClient(
         process.env.SUPABASE_URL,
         process.env.SUPABASE_ANON_KEY,
@@ -127,7 +133,9 @@ export async function GET(request) {
             },
         }
     )
+    // #endregion
 
+    // #region Handle Response
     /** @type {SupabaseTypes._from<SupabaseTypes.FaktaData>} */
     const { data, error } = await supabase.from('fakta').select('*');
 
@@ -137,4 +145,5 @@ export async function GET(request) {
     }
 
     return NextResponse.json(data, { status: 200, headers: newHeaders })
+    // #endregion
 }
