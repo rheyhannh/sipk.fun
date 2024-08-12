@@ -3,6 +3,7 @@ import {
     User as SupabaseUser,
     Session as SupabaseSession,
     AuthError as SupabaseAuthError,
+    PostgrestError as SupabasePostgrestError
 } from '@supabase/supabase-js';
 // #endregion
 
