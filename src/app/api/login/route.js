@@ -161,6 +161,7 @@ export async function POST(request) {
     }
 
     // #region Handle Response
+    /** @type {SupabaseTypes._auth_signInWithPassword} */
     const { data, error } = await supabase.auth.signInWithPassword(signInOptions);
 
     if (error) {
