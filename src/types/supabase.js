@@ -4,7 +4,10 @@ import {
     Session as SupabaseSession,
     AuthError as SupabaseAuthError,
     PostgrestError as SupabasePostgrestError,
-    WeakPassword as SupabaseWeakPassword
+    WeakPassword as SupabaseWeakPassword,
+    AuthenticatorAssuranceLevels,
+    AMREntry,
+
 } from '@supabase/supabase-js';
 // #endregion
 
