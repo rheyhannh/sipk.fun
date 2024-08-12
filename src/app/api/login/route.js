@@ -43,9 +43,10 @@ export async function POST(request) {
     const newHeaders = {};
     const { serviceGuestCookie } = await getSipkCookies(request);
 
+    // Identifier for Ratelimiting
     const guestKey = await getIpFromHeaders() ?? serviceGuestCookie ?? 'public';
 
-    // Try checking rate limit
+    // #region Checking Ratelimit
     try {
         var currentUsage = await limiter.check(limitRequest, guestKey);
         // Log Here, ex: '{TIMESTAMP} userId {ROUTE} limit {currentUsage}/{limitRequest}'
@@ -61,6 +62,7 @@ export async function POST(request) {
             }
         })
     }
+    // #endregion
 
     const cookieStore = cookies();
     if (!serviceGuestCookie || !isUUID(serviceGuestCookie)) {
@@ -72,6 +74,7 @@ export async function POST(request) {
         })
     }
 
+    // #region Get and Handle Required Query Params
     const searchParams = request.nextUrl.searchParams;
     const stamp = searchParams.get('stamp');
     const identifier = searchParams.get('identifier');
@@ -82,7 +85,7 @@ export async function POST(request) {
         })
     }
 
-    // Verify 'identifier'
+    // Verifying query 'identifier'
     try {
         await validateIdentifier(serviceGuestCookie, stamp, identifier);
     } catch (error) {
@@ -91,8 +94,9 @@ export async function POST(request) {
             headers: newHeaders
         })
     }
+    // #endregion
 
-    // Try parsing formData JSON
+    // #region Parsing and Handle formData
     try {
         var formData = await request.json();
     } catch (error) {
@@ -102,8 +106,9 @@ export async function POST(request) {
             headers: newHeaders
         })
     }
+    // #endregion
 
-    // Try checking are formData equal to schema using 'Joi'
+    // #region Validating and Handle formData
     try {
         const formDataSchema = Joi.object({
             email: Joi.string().min(6).max(100).email().required(),
@@ -115,8 +120,9 @@ export async function POST(request) {
         console.error(error);
         return NextResponse.json({ message: error.message }, { status: 400, headers: newHeaders })
     }
+    // #endregion
 
-    // Create connection to 'supabase' using createServerClient
+    // #region Initiate Supabase Instance
     const supabase = createServerClient(
         process.env.SUPABASE_URL,
         process.env.SUPABASE_ANON_KEY,
@@ -145,6 +151,7 @@ export async function POST(request) {
             },
         }
     )
+    // #endregion
 
     // Attempting to signInWithPassword
     const signInOptions = {
@@ -153,6 +160,7 @@ export async function POST(request) {
         options: { captchaToken: formData.token },
     }
 
+    // #region Handle Response
     const { data, error } = await supabase.auth.signInWithPassword(signInOptions);
 
     if (error) {
@@ -166,4 +174,5 @@ export async function POST(request) {
     }
 
     return NextResponse.json({ success: true }, { status: 200, headers: newHeaders })
+    // #endregion
 }
