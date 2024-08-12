@@ -4,7 +4,7 @@ import * as SupabaseTypes from '@/types/supabase';
 
 // #region NEXT DEPEDENCY
 import { NextResponse, NextRequest } from 'next/server';
-import { cookies, headers } from 'next/headers';
+import { cookies } from 'next/headers';
 // #endregion
 
 // #region SUPABASE DEPEDENCY
@@ -168,7 +168,7 @@ export async function POST(request) {
         console.error(error);
         return NextResponse.json({ message: error.message }, { status: 403, headers: newHeaders })
     }
-    
+
     if (data.session) {
         cookieStore.set({ name: 's_user_id', value: data.session.user.id, ...cookieServiceOptions });
         cookieStore.set({ name: 's_access_token', value: data.session.access_token, ...cookieServiceOptions });
