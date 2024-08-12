@@ -187,7 +187,7 @@ import {
 
 /**
  * Override `Session` type yang direturn dari `supabase.auth.getSession()`
- * @typedef {Object} getSession
+ * @typedef {Object} _auth_getSession
  * @property {Object} data
  * Data yang diresolve dari supabase
  * @property {Session | null} data.session
@@ -197,7 +197,7 @@ import {
 
 /**
  * Override `User` dan `Session` type yang direturn dari `supabase.auth.verifyOtp()`
- * @typedef {Object} verifyOtp
+ * @typedef {Object} _auth_verifyOtp
  * @property {Object} data
  * Data yang diresolve dari supabase
  * @property {User | null} data.user

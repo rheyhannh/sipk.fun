@@ -107,7 +107,7 @@ export async function GET(request) {
     // #endregion
 
     // #region Handle Response
-    /** @type {SupabaseTypes.getSession} */
+    /** @type {SupabaseTypes._auth_getSession} */
     const { data, error } = await supabase.auth.getSession();
 
     if (error) {
