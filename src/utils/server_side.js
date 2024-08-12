@@ -2,6 +2,7 @@
 
 // #region TYPE DEPEDENCY
 import * as CookiesTypes from '@/types/cookies';
+import * as SupabaseTypes from '@/types/supabase';
 // #endregion
 
 // #region NEXT DEPEDENCY
@@ -12,7 +13,7 @@ import { headers } from 'next/headers';
 // #region UTIL DEPEDENCY
 import CryptoJS from 'crypto-js';
 import { LRUCache } from 'lru-cache';
-import jwt from 'jsonwebtoken';
+import jwt, { VerifyOptions } from 'jsonwebtoken';
 import isJWT from 'validator/lib/isJWT';
 import isUUID from 'validator/lib/isUUID';
 import isNumeric from 'validator/lib/isNumeric';
