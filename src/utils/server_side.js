@@ -121,34 +121,42 @@ export async function rateLimit(options) {
  * @param {string} userId User id `uuid-v4`
  * @param {boolean} [ignoreExpiration=true] Boolean untuk tetap kategorikan token sebagai `valid` walaupun sudah kadaluwarsa atau `expired`, default: `true`
  * @param {Omit<VerifyOptions, 'algorithms' | 'audience' | 'issuer' | 'ignoreExpiration' | 'subject'} otherOptions Opsi lainnya untuk mempertimbangkan token `valid` atau tidak
- * @returns {SupabaseTypes.AccessTokenPayload} Decoded payload `JWT` atau access token atau cookie `'s_access_token'`
+ * @returns {Promise<SupabaseTypes.AccessTokenPayload>} Promise dengan `resolve` decoded payload `JWT` atau access token atau cookie `'s_access_token'` dan `reject` dengan error
  * @throws
  * - Token invalid atau tidak memenuhi semua kriteria diatas
  * - Tipe `token` bukan `JWT`
  * - Tipe `userId` bukan `UUID`
  */
 export async function validateJWT(token, userId, ignoreExpiration = true, otherOptions) {
-    if (!isUUID(userId) || !userId) { throw new Error(`Unauthorized - Invalid or empty user id`) }
-    if (!isJWT(token) || !token) { throw new Error(`Unauthorized - Invalid or empty access token`) }
-    try {
-        const decoded = jwt.verify(
-            token, process.env.JWT_SECRET_KEY,
-            {
-                algorithms: process.env.JWT_ALGORITHM.split(','),
-                audience: 'authenticated',
-                issuer: process.env.JWT_ISSUER.split(','),
-                ignoreExpiration,
-                subject: userId,
-                ...otherOptions
-            }
-        )
+    return new Promise((resolve, reject) => {
+        if (!isUUID(userId) || !userId) {
+            return reject(new Error(`Unauthorized - Invalid or empty user id`));
+        }
+        if (!isJWT(token) || !token) {
+            return reject(new Error(`Unauthorized - Invalid or empty access token`));
+        }
 
-        return decoded;
-    } catch (error) {
-        const { name, message } = error;
-        console.error(name && message ? `${name} - ${message}` : 'Error when validating JWT')
-        throw new Error(`Unauthorized - Invalid access token`);
-    }
+        try {
+            const decoded = jwt.verify(
+                token,
+                process.env.JWT_SECRET_KEY,
+                {
+                    algorithms: process.env.JWT_ALGORITHM.split(','),
+                    audience: 'authenticated',
+                    issuer: process.env.JWT_ISSUER.split(','),
+                    ignoreExpiration,
+                    subject: userId,
+                    ...otherOptions
+                }
+            );
+
+            resolve(decoded);
+        } catch (error) {
+            const { name, message } = error;
+            console.error(name && message ? `${name} - ${message}` : 'Error when validating JWT');
+            reject(new Error(`Unauthorized - Invalid access token`));
+        }
+    });
 }
 
 /**
