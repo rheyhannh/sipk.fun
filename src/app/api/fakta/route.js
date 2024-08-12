@@ -52,6 +52,7 @@ export async function GET(request) {
             })
         }
         const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_SERVICE_KEY);
+        /** @type {SupabaseTypes._from<SupabaseTypes.FaktaData>} */
         const { data, error } = await supabase.from('fakta').select('*');
         if (error) {
             console.error(error);
@@ -127,6 +128,7 @@ export async function GET(request) {
         }
     )
 
+    /** @type {SupabaseTypes._from<SupabaseTypes.FaktaData>} */
     const { data, error } = await supabase.from('fakta').select('*');
 
     if (error) {
