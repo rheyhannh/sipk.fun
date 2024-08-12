@@ -208,4 +208,9 @@ import {
  * @property {SupabaseAuthError} error
  */
 
+/** 
+ * @typedef {{ data: Array<T>, error: SupabasePostgrestError}} _from<T>
+ * @template T
+ */
+
 export const SupabaseTypes = {}
