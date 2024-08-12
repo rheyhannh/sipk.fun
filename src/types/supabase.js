@@ -231,4 +231,30 @@ import {
  * @property {SupabaseAuthError} error
  */
 
+/**
+ * Decoded payload `JWT` atau access token atau cookie `'s_access_token'` tanpa `User`
+ * @typedef {Object} AccessTokenBasePayload
+ * @property {string} iss
+ * Domain atau URL beserta endpoint dari pembuat `issuer` token
+ * @property {string} sub
+ * Id user `uuid-v4` yang merepresentasikan subject token
+ * @property {number} exp
+ * Unix timestamp kapan token kadaluwarsa `expired`
+ * @property {number} iat
+ * Unix timestamp kapan token dibuat `issuedAt`
+ * @property {AuthenticatorAssuranceLevels} aal
+ * Level autentikasi atau `Authenticator Assurance Level` untuk session yang terkait dengan keterangan berikut,
+ * - `'aal1'` atau `null` menandakan user telah terverifikasi hanya dengan login konvensional seperti `email+password`, `OTP`, `magic link`, `social login`, dan lainnya
+ * - `'aal2'` menandakan user telah terverifikasi dengan login konvensional dan setidaknya satu `MFA factor`
+ * @property {Array<AMREntry>} amr
+ * Array yang berisikan referensi metode autentikasi atau `Authentication Method Reference`
+ * @property {string} session_id
+ * Id session `uuid-v4`
+ */
+
+/**
+ * Decoded payload `JWT` atau access token atau cookie `'s_access_token'`
+ * @typedef {AccessTokenBasePayload & Pick<User, 'email' | 'phone' | 'app_metadata' | 'user_metadata' | 'role' | 'is_anonymous' | 'aud'} AccessTokenPayload
+ */
+
 export const SupabaseTypes = {}
