@@ -246,4 +246,11 @@ export async function getIpFromHeaders() {
     });
 }
 
+ export async function getApiKey(request) {
+    return new Promise((resolve) => {
+        const apiKey = headers().get('X-Api-Key') ?? request.nextUrl.searchParams.get('apiKey');
+        resolve(apiKey);
+    });
+}
+
 // #endregion
