@@ -214,4 +214,18 @@ import {
  * @template T
  */
 
+/**
+ * Override `User` dan `Session` type yang direturn dari `supabase.auth.signInWithPassword()`
+ * @typedef {Object} _auth_signInWithPassword
+ * @property {Object} data
+ * Data yang diresolve dari supabase
+ * @property {User | null} data.user
+ * Data user, jika autentikasi gagal maka bernilai `null`
+ * @property {Session | null} data.session
+ * Session user, jika autentikasi gagal maka bernilai `null`
+ * @property {SupabaseWeakPassword | null} data.weakPassword
+ * Weak password object, jika autentikasi gagal maka bernilai `null`
+ * @property {SupabaseAuthError} error
+ */
+
 export const SupabaseTypes = {}
