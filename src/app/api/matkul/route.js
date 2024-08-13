@@ -165,6 +165,7 @@ export async function PATCH(request) {
     const unixNow = Math.floor(Date.now() / 1000);
 
     // #region Update Matkul
+    /** @type {SupabaseTypes._from<SupabaseTypes.MatkulData>} */
     var { data: matkulUpdated, error } = await supabase.from('matkul').update({ ...formData, updated_at: unixNow }).eq('id', matkulId).select();
 
     if (error) {
@@ -174,6 +175,7 @@ export async function PATCH(request) {
     // #endregion
 
     // #region Update Matkul-History Related to Matkul
+    /** @type {SupabaseTypes._from<SupabaseTypes.MatkulHistoryData>} */
     var { data, error } = await supabase.from('matkul_history').select().eq('matkul_id', matkulId);
     if (!data.length) {
         // Should rollback previous transaction (.update)
@@ -187,6 +189,7 @@ export async function PATCH(request) {
         return NextResponse.json({ message: `Gagal memperbarui riwayat matakuliah` }, { status: 500, headers: newHeaders })
     }
 
+    /** @type {SupabaseTypes._from<SupabaseTypes.MatkulHistoryData>} */
     var { data: matkulHistory, error } = await supabase.from('matkul_history').update(
         {
             current:
@@ -333,6 +336,7 @@ export async function DELETE(request) {
     // #endregion
 
     // #region Update Matkul-History Related to Matkul
+    /** @type {SupabaseTypes._from<SupabaseTypes.MatkulHistoryData>} */
     var { data, error } = await supabase.from('matkul_history').select().eq('matkul_id', matkulId);
     if (!data.length) {
         return NextResponse.json({ message: `Gagal menghapus matakuliah, id tidak ditemukan` }, { status: 400, headers: newHeaders })
@@ -345,6 +349,7 @@ export async function DELETE(request) {
         return NextResponse.json({ message: `Gagal memperbarui riwayat` }, { status: 500, headers: newHeaders })
     }
 
+    /** @type {SupabaseTypes._from<SupabaseTypes.MatkulHistoryData>} */
     var { data: matkulHistory, error } = await supabase.from('matkul_history').update(
         {
             matkul_id: data[0].matkul_id,
@@ -505,6 +510,7 @@ export async function POST(request) {
     const unixNow = Math.floor(Date.now() / 1000);
 
     // #region Add Matkul
+    /** @type {SupabaseTypes._from<SupabaseTypes.MatkulData>} */
     var { data: matkulBaru, error } = await supabase.from('matkul').insert({ ...formData, owned_by: userId, created_at: unixNow }).select();
 
     if (error) {
@@ -514,6 +520,7 @@ export async function POST(request) {
     // #endregion
 
     // #region Update or Add Matkul-History Related to Matkul
+    /** @type {SupabaseTypes._from<SupabaseTypes.MatkulHistoryData>} */
     var { data: matkulBaruHistory, error } = ref ?
         await supabase.from('matkul_history')
             .update({ matkul_id: matkulBaru[0].id, current: { ...formData, type: 'tambah', stamp: unixNow }, prev: null, owned_by: userId, last_change_at: unixNow })
@@ -642,6 +649,7 @@ export async function GET(request) {
     // #endregion
 
     // #region Get Matkul and Handle Response
+    /** @type {SupabaseTypes._from<SupabaseTypes.MatkulData>} */
     let { data, error } = await supabase.from('matkul').select('*').order('created_at', { ascending: true });
 
     if (error) {
