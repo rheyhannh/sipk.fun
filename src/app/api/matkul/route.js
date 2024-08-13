@@ -57,6 +57,15 @@ export async function PATCH(request) {
     const decryptedSession = await decryptAES(secureSessionCookie, true);
     const userId = decryptedSession?.user?.id;
 
+    if (!decryptedSession || !userId) {
+        cookieStore.set({ name: process.env.USER_SESSION_COOKIES_NAME, value: '', ...cookieAuthDeleteOptions })
+        cookieStore.set({ name: 's_user_id', value: '', ...cookieAuthDeleteOptions })
+        cookieStore.set({ name: 's_access_token', value: '', ...cookieAuthDeleteOptions })
+        return NextResponse.json({ message: 'Unauthorized - Invalid access token' }, {
+            status: 401
+        })
+    }
+
     try {
         var decoded = await validateJWT(authorizationToken, userId);
         // Log Here, ex: '{TIMESTAMP} decoded.id {METHOD} {ROUTE} {BODY} {PARAMS}'
