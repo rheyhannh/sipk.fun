@@ -48,11 +48,13 @@ export async function PATCH(request) {
     const searchParams = request.nextUrl.searchParams;
     const matkulId = searchParams.get('id');
 
+    // #region Handler Unauthenticated User
     if (!secureSessionCookie || !authorizationHeader || !authorizationToken) {
         return NextResponse.json({ message: 'Unauthorized - Missing access token' }, {
             status: 401,
         })
     }
+    // #endregion
 
     /** @type {SupabaseTypes.Session} */
     const decryptedSession = await decryptAES(secureSessionCookie, true);
@@ -67,6 +69,7 @@ export async function PATCH(request) {
         })
     }
 
+    // #region Validating and Decoding JWT or 's_access_token' cookie
     try {
         var decoded = await validateJWT(authorizationToken, userId);
         // Log Here, ex: '{TIMESTAMP} decoded.id {METHOD} {ROUTE} {BODY} {PARAMS}'
@@ -75,7 +78,9 @@ export async function PATCH(request) {
             status: 401
         })
     }
+    // #endregion
 
+    // #region Checking Ratelimit
     try {
         var currentUsage = await limiter.check(limitRequest, `matkul-${userId}`);
         // Log Here, ex: '{TIMESTAMP} userId {ROUTE} limit {currentUsage}/{limitRequest}'
@@ -91,7 +96,9 @@ export async function PATCH(request) {
             }
         })
     }
+    // #endregion
 
+    // #region Validating 'matkulId'
     if (!matkulId) {
         return NextResponse.json({ message: `Gagal memperbarui matakuliah, 'id' dibutuhkan` }, {
             status: 400,
@@ -105,8 +112,9 @@ export async function PATCH(request) {
             headers: newHeaders
         })
     }
+    // #endregion
 
-    // Check are formData equal to schema using 'Joi'
+    // #region Parsing and Handle formData
     try {
         var formData = await request.json();
     } catch (error) {
@@ -116,7 +124,13 @@ export async function PATCH(request) {
             headers: newHeaders
         })
     }
+    // #endregion
 
+    // #region Validating and Handle formData
+    // joi code here
+    // #endregion
+
+    // #region Initiate Supabase Instance
     const supabase = createServerClient(
         process.env.SUPABASE_URL,
         process.env.SUPABASE_ANON_KEY,
@@ -146,16 +160,20 @@ export async function PATCH(request) {
             },
         }
     )
+    // #endregion
 
     const unixNow = Math.floor(Date.now() / 1000);
 
+    // #region Update Matkul
     var { data: matkulUpdated, error } = await supabase.from('matkul').update({ ...formData, updated_at: unixNow }).eq('id', matkulId).select();
 
     if (error) {
         console.error(error);
         return NextResponse.json({ message: `Gagal memperbarui matakuliah` }, { status: 500, headers: newHeaders })
     }
+    // #endregion
 
+    // #region Update Matkul-History Related to Matkul
     var { data, error } = await supabase.from('matkul_history').select().eq('matkul_id', matkulId);
     if (!data.length) {
         // Should rollback previous transaction (.update)
@@ -189,6 +207,7 @@ export async function PATCH(request) {
     }
 
     return NextResponse.json({ matkul: matkulUpdated[0], ref: matkulHistory[0] }, { status: 200, headers: newHeaders });
+    // #endregion
 }
 
 /**
@@ -204,11 +223,13 @@ export async function DELETE(request) {
     const searchParams = request.nextUrl.searchParams;
     const matkulId = searchParams.get('id');
 
+    // #region Handler Unauthenticated User
     if (!secureSessionCookie || !authorizationHeader || !authorizationToken) {
         return NextResponse.json({ message: 'Unauthorized - Missing access token' }, {
             status: 401,
         })
     }
+    // #endregion
 
     /** @type {SupabaseTypes.Session} */
     const decryptedSession = await decryptAES(secureSessionCookie, true);
@@ -223,6 +244,7 @@ export async function DELETE(request) {
         })
     }
 
+    // #region Validating and Decoding JWT or 's_access_token' cookie
     try {
         var decoded = await validateJWT(authorizationToken, userId);
         // Log Here, ex: '{TIMESTAMP} decoded.id {METHOD} {ROUTE} {BODY} {PARAMS}'
@@ -231,7 +253,9 @@ export async function DELETE(request) {
             status: 401
         })
     }
+    // #endregion
 
+    // #region Checking Ratelimit
     try {
         var currentUsage = await limiter.check(limitRequest, `matkul-${userId}`);
         // Log Here, ex: '{TIMESTAMP} userId {ROUTE} limit {currentUsage}/{limitRequest}'
@@ -247,7 +271,9 @@ export async function DELETE(request) {
             }
         })
     }
+    // #endregion
 
+    // #region Validating 'matkulId'
     if (!matkulId) {
         return NextResponse.json({ message: `Gagal menghapus matakuliah, 'id' dibutuhkan` }, {
             status: 400,
@@ -261,7 +287,9 @@ export async function DELETE(request) {
             headers: newHeaders
         })
     }
+    // #endregion
 
+    // #region Initiate Supabase Instance
     const supabase = createServerClient(
         process.env.SUPABASE_URL,
         process.env.SUPABASE_ANON_KEY,
@@ -291,16 +319,20 @@ export async function DELETE(request) {
             },
         }
     )
+    // #endregion
 
     const unixNow = Math.floor(Date.now() / 1000);
 
+    // #region Delete Matkul
     var { error } = await supabase.from('matkul').delete().eq('id', matkulId)
 
     if (error) {
         console.error(error);
         return NextResponse.json({ message: `Gagal menghapus matakuliah` }, { status: 500, headers: newHeaders })
     }
+    // #endregion
 
+    // #region Update Matkul-History Related to Matkul
     var { data, error } = await supabase.from('matkul_history').select().eq('matkul_id', matkulId);
     if (!data.length) {
         return NextResponse.json({ message: `Gagal menghapus matakuliah, id tidak ditemukan` }, { status: 400, headers: newHeaders })
@@ -335,6 +367,7 @@ export async function DELETE(request) {
     }
 
     return NextResponse.json({ ref: matkulHistory[0] }, { status: 200, headers: newHeaders })
+    // #endregion
 }
 
 /**
@@ -350,11 +383,13 @@ export async function POST(request) {
     const searchParams = request.nextUrl.searchParams;
     const ref = searchParams.get('ref');
 
+    // #region Handler Unauthenticated User
     if (!secureSessionCookie || !authorizationHeader || !authorizationToken) {
         return NextResponse.json({ message: 'Unauthorized - Missing access token' }, {
             status: 401,
         })
     }
+    // #endregion
 
     /** @type {SupabaseTypes.Session} */
     const decryptedSession = await decryptAES(secureSessionCookie, true);
@@ -369,6 +404,7 @@ export async function POST(request) {
         })
     }
 
+    // #region Validating and Decoding JWT or 's_access_token' cookie
     try {
         var decoded = await validateJWT(authorizationToken, userId);
         // Log Here, ex: '{TIMESTAMP} decoded.id {METHOD} {ROUTE} {BODY} {PARAMS}'
@@ -377,7 +413,9 @@ export async function POST(request) {
             status: 401
         })
     }
+    // #endregion
 
+    // #region Checking Ratelimit
     try {
         var currentUsage = await limiter.check(limitRequest, `matkul-${userId}`);
         // Log Here, ex: '{TIMESTAMP} userId {ROUTE} limit {currentUsage}/{limitRequest}'
@@ -393,8 +431,9 @@ export async function POST(request) {
             }
         })
     }
+    // #endregion
 
-    // Check are formData equal to schema using 'Joi'
+    // #region Parsing and Handle formData
     try {
         var formData = await request.json();
     } catch (error) {
@@ -404,7 +443,9 @@ export async function POST(request) {
             headers: newHeaders
         })
     }
+    // #endregion
 
+    // #region Validating and Handle formData
     // const formDataSchema = Joi.object({
     //     nama: Joi.string().min(3).max(50).required(),
     //     semester: Joi.number().min(0).max(50).required(),
@@ -427,7 +468,9 @@ export async function POST(request) {
     //     console.error(error);
     //     return NextResponse.json({ message: error.message }, { status: 400, headers: newHeaders })
     // }
+    // #endregion
 
+    // #region Initiate Supabase Instance
     const supabase = createServerClient(
         process.env.SUPABASE_URL,
         process.env.SUPABASE_ANON_KEY,
@@ -457,16 +500,20 @@ export async function POST(request) {
             },
         }
     )
+    // #endregion
 
     const unixNow = Math.floor(Date.now() / 1000);
 
+    // #region Add Matkul
     var { data: matkulBaru, error } = await supabase.from('matkul').insert({ ...formData, owned_by: userId, created_at: unixNow }).select();
 
     if (error) {
         console.error(error);
         return NextResponse.json({ message: `Gagal menambahkan ${formData.nama}` }, { status: 500, headers: newHeaders })
     }
+    // #endregion
 
+    // #region Update or Add Matkul-History Related to Matkul
     var { data: matkulBaruHistory, error } = ref ?
         await supabase.from('matkul_history')
             .update({ matkul_id: matkulBaru[0].id, current: { ...formData, type: 'tambah', stamp: unixNow }, prev: null, owned_by: userId, last_change_at: unixNow })
@@ -482,6 +529,7 @@ export async function POST(request) {
     }
 
     return NextResponse.json({ matkul: matkulBaru[0], ref: matkulBaruHistory[0] }, { status: 200, headers: newHeaders })
+    // #endregion
 }
 
 /**
@@ -495,6 +543,7 @@ export async function GET(request) {
     const authorizationToken = authorizationHeader ? authorizationHeader.split(' ')[1] : null;
     const serviceApiKey = await getApiKey(request);
 
+    // #region Handler when serviceApiKey exist
     if (serviceApiKey) {
         if (serviceApiKey !== process.env.SUPABASE_SERVICE_KEY) {
             return NextResponse.json({ message: `Invalid API key` }, {
@@ -510,12 +559,15 @@ export async function GET(request) {
 
         return NextResponse.json(data, { status: 200 })
     }
+    // #endregion
 
+    // #region Handler Unauthenticated User
     if (!secureSessionCookie || !authorizationHeader || !authorizationToken) {
         return NextResponse.json({ message: 'Unauthorized - Missing access token' }, {
             status: 401,
         })
     }
+    // #endregion
 
     /** @type {SupabaseTypes.Session} */
     const decryptedSession = await decryptAES(secureSessionCookie, true);
@@ -530,6 +582,7 @@ export async function GET(request) {
         })
     }
 
+    // #region Validating and Decoding JWT or 's_access_token' cookie
     try {
         var decoded = await validateJWT(authorizationToken, userId);
         // Log Here, ex: '{TIMESTAMP} decoded.id {METHOD} {ROUTE} {BODY} {PARAMS}'
@@ -538,7 +591,9 @@ export async function GET(request) {
             status: 401
         })
     }
+    // #endregion
 
+    // #region Checking Ratelimit
     try {
         var currentUsage = await limiter.check(limitRequest, `matkul-${userId}`);
         // Log Here, ex: '{TIMESTAMP} userId {ROUTE} limit {currentUsage}/{limitRequest}'
@@ -552,7 +607,9 @@ export async function GET(request) {
             }
         })
     }
+    // #endregion
 
+    // #region Initiate Supabase Instance
     const supabase = createServerClient(
         process.env.SUPABASE_URL,
         process.env.SUPABASE_ANON_KEY,
@@ -582,7 +639,9 @@ export async function GET(request) {
             },
         }
     )
+    // #endregion
 
+    // #region Get Matkul and Handle Response
     let { data, error } = await supabase.from('matkul').select('*').order('created_at', { ascending: true });
 
     if (error) {
@@ -603,4 +662,5 @@ export async function GET(request) {
             'X-Ratelimit-Remaining': limitRequest - currentUsage,
         }
     });
+    // #endregion
 }
