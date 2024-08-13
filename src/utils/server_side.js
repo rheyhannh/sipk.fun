@@ -27,13 +27,15 @@ import isNumeric from 'validator/lib/isNumeric';
  * @return {Promise<string|number>} Resolve dengan string yang sudah terenkripsi (ex: `'U2s5AsDs12uX...'`), Reject dengan `0`
  */
 export async function encryptAES(message) {
-    try {
-        const ciphertext = CryptoJS.AES.encrypt(message, process.env.SECRET_KEY).toString();
-        return ciphertext;
-    } catch (error) {
-        console.error(error);
-        return 0;
-    }
+    return new Promise((resolve) => {
+        try {
+            const ciphertext = CryptoJS.AES.encrypt(message, process.env.SECRET_KEY).toString();
+            resolve(ciphertext);
+        } catch (error) {
+            console.error(error);
+            resolve(null);
+        }
+    })
 }
 
 /**
@@ -43,15 +45,20 @@ export async function encryptAES(message) {
  * @return {Promise<string|object|number>} Resolve dengan string atau object yang sudah terdekripsi (ex: `'decrypted'`, `{data: 'decrypted'}`), Reject dengan `0`
  */
 export async function decryptAES(ciphertext, parse = false) {
-    try {
-        const bytes = CryptoJS.AES.decrypt(ciphertext, process.env.SECRET_KEY);
-        const decryptedData = bytes.toString(CryptoJS.enc.Utf8);
-        if (parse) { return JSON.parse(decryptedData) }
-        else { return decryptedData; }
-    } catch (error) {
-        console.error(error);
-        return 0;
-    }
+    return new Promise((resolve) => {
+        try {
+            const bytes = CryptoJS.AES.decrypt(ciphertext, process.env.SECRET_KEY);
+            const decryptedData = bytes.toString(CryptoJS.enc.Utf8);
+            if (parse) {
+                resolve(JSON.parse(decryptedData));
+            } else {
+                resolve(decryptedData);
+            }
+        } catch (error) {
+            console.error(error);
+            resolve(null);
+        }
+    });
 }
 
 // #endregion
