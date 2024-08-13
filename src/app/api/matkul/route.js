@@ -54,6 +54,7 @@ export async function PATCH(request) {
         })
     }
 
+    /** @type {SupabaseTypes.Session} */
     const decryptedSession = await decryptAES(secureSessionCookie, true);
     const userId = decryptedSession?.user?.id;
 
@@ -209,6 +210,7 @@ export async function DELETE(request) {
         })
     }
 
+    /** @type {SupabaseTypes.Session} */
     const decryptedSession = await decryptAES(secureSessionCookie, true);
     const userId = decryptedSession?.user?.id;
 
@@ -354,6 +356,7 @@ export async function POST(request) {
         })
     }
 
+    /** @type {SupabaseTypes.Session} */
     const decryptedSession = await decryptAES(secureSessionCookie, true);
     const userId = decryptedSession?.user?.id;
 
@@ -514,6 +517,7 @@ export async function GET(request) {
         })
     }
 
+    /** @type {SupabaseTypes.Session} */
     const decryptedSession = await decryptAES(secureSessionCookie, true);
     const userId = decryptedSession?.user?.id;
 
