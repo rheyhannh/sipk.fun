@@ -101,7 +101,7 @@ export async function PATCH(request) {
         var formData = await request.json();
     } catch (error) {
         console.error(error);
-        return NextResponse.json({ message: 'Invalid JSON Format' }, {
+        return NextResponse.json({ message: 'Bad Request - Invalid JSON Format' }, {
             status: 400,
             headers: newHeaders
         })
@@ -387,7 +387,7 @@ export async function POST(request) {
         var formData = await request.json();
     } catch (error) {
         console.error(error);
-        return NextResponse.json({ message: 'Invalid JSON Format' }, {
+        return NextResponse.json({ message: 'Bad Request - Invalid JSON Format' }, {
             status: 400,
             headers: newHeaders
         })
