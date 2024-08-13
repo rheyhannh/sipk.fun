@@ -22,9 +22,32 @@ import isNumeric from 'validator/lib/isNumeric';
 // #region Security, Encryptor, Decryptor
 
 /**
- * Method async untuk enkripsi teks atau data dengan algoritma AES
- * @param {string} message Teks atau data yang ingin diencrypt (ex: `'encryptAku'`)
- * @return {Promise<string|number>} Resolve dengan string yang sudah terenkripsi (ex: `'U2s5AsDs12uX...'`), Reject dengan `0`
+ * Method untuk enkripsi teks atau data dengan algoritma `AES` dengan key
+ * 
+ * ```js
+ * process.env.SECRET_KEY
+ * ```
+ * 
+ * @param {string} message Teks atau data berbentuk `string` yang ingin diencrypt
+ * @return {Promise<string | null>} Promise dengan resolve encrypted teks atau data sebagai `string` saat berhasil dan `null` saat gagal
+ * @example 
+ * ```js
+ * // Stringified Data
+ * const data = {
+ *      email: 'john@gmail.com',     
+ *      session_id: '3fbacbd6-b429-4eb8-87a4-d6aeec54f6c9',
+ *      refresh_token: '04aad8a5-aa2a-424c-8c10-e7c058980a00'    
+ * }
+ * const stringifiedData = JSON.stringify(data);
+ * console.log(await encryptAES(stringifiedData)) // '...'
+ * 
+ * // Plain Text
+ * const text = 'pleaseEncryptMe'
+ * console.log(await encryptAES(text)) // '...'
+
+ * // Error
+ * console.log(await encryptAES(data)) // null
+ * ```
  */
 export async function encryptAES(message) {
     return new Promise((resolve) => {
@@ -39,10 +62,31 @@ export async function encryptAES(message) {
 }
 
 /**
- * Method async untuk dekripsi teks atau data yang menggunakan algoritma AES
- * @param {string} ciphertext Teks atau string yang terenkripsi (ex: `'U2s5AsDs12uX...'`)
- * @param {boolean} [parse=false]  Opsi boolean untuk parse(`JSON.parse`) hasil dekripsi
- * @return {Promise<string|object|number>} Resolve dengan string atau object yang sudah terdekripsi (ex: `'decrypted'`, `{data: 'decrypted'}`), Reject dengan `0`
+ * Method untuk dekripsi teks atau data dengan algoritma `AES` dengan key
+ * 
+ * ```js
+ * process.env.SECRET_KEY
+ * ```
+ * 
+ * @param {string} ciphertext Teks atau data berbentuk `string` yang ingin didecrypt
+ * @param {boolean} [parse=false] Opsi boolean untuk parse hasil dekripsi, default: `false`
+ * @return {Promise<string | Object | null>} Promise dengan resolve decrypted teks atau data sebagai `string` atau `Object` saat berhasil dan `null` saat gagal
+ * @example 
+ * ```js
+ * // Only Decrypt
+ * const encryptedObject = 'someEncryptedText';
+ * const x = await decryptAES(encryptedObject);
+ * console.log(x); // "{email:'john@gmail.com'}"
+ * console.log(typeof x); // string
+ * 
+ * // Decrypt and Parse Data
+ * const y = await decryptAES(encryptedObject, true);
+ * console.log(y); // {email:'john@gmail.com'}
+ * console.log(typeof y); // object
+ * 
+ * // Error
+ * console.log(await decryptAES(null, true)) // null
+ * ```
  */
 export async function decryptAES(ciphertext, parse = false) {
     return new Promise((resolve) => {
