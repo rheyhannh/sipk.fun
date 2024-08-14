@@ -7,8 +7,8 @@ import {
     WeakPassword as SupabaseWeakPassword,
     AuthenticatorAssuranceLevels,
     AMREntry,
-
 } from '@supabase/supabase-js';
+import * as Sipk from './sipk';
 // #endregion
 
 /**
