@@ -452,31 +452,6 @@ export async function POST(request) {
     }
     // #endregion
 
-    // #region Validating and Handle formData
-    // const formDataSchema = Joi.object({
-    //     nama: Joi.string().min(3).max(50).required(),
-    //     semester: Joi.number().min(0).max(50).required(),
-    //     sks: Joi.number().min(0).max(50).required(),
-    //     nilai: Joi.object({
-    //         indeks: Joi.string().allow('A', 'B+', 'B', 'C+', 'C', 'D+', 'D', 'E').required(),
-    //         bobot: Joi.string().allow('4', '3.5', '3', '2.5', '2', '1.5', '1', '0').required(),
-    //         akhir: Joi.number()
-    //     }),
-    //     dapat_diulang: Joi.boolean(),
-    //     target_nilai: Joi.object({
-    //         indeks: Joi.string().allow('A', 'B+', 'B', 'C+', 'C', 'D+', 'D', 'E').required(),
-    //         bobot: Joi.string().allow('4', '3.5', '3', '2.5', '2', '1.5', '1', '0').required(),
-    //     })
-    // })
-
-    // try {
-    //     await formDataSchema.validateAsync(formData);
-    // } catch (error) {
-    //     console.error(error);
-    //     return NextResponse.json({ message: error.message }, { status: 400, headers: newHeaders })
-    // }
-    // #endregion
-
     // #region Initiate Supabase Instance
     const supabase = createServerClient(
         process.env.SUPABASE_URL,
