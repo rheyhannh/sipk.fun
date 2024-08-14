@@ -12,8 +12,7 @@ import * as Sipk from './sipk';
 // #endregion
 
 /**
- * @typedef UserData
- * @type {object}
+ * @typedef {Object} UserData
  * @property {string} id Id user
  * @property {string} email Email user
  * @property {boolean} is_email_confirmed Boolean apakah email sudah dikonfirmasi
@@ -31,103 +30,160 @@ import * as Sipk from './sipk';
  * @property {float} ipk_target Target ipk user
  * @property {Date} created_at Tanggal user daftar
  * @property {Date} updated_at Tanggal terakhir user memperbarui datanya
- * @property {object} preferences User preferences
- * @property {object} preferences.table User table preferences
- * @property {number} preferences.table.size Jumlah matakuliah yang ditampilkan pada table
- * @property {0|1|2} preferences.table.controlPosition Posisi kontrol table
- * @property {['nomor'|'matakuliah'|'semester'|'sks'|'nilai'|'diulang'|'target'|'ontarget']} preferences.table.columnOrder Array untuk urutan table dari kiri ke kanan (index terkecil ke terbesar)
- * @property {object} preferences.table.columnVisibility Object untuk visibilitas kolom
- * @property {boolean} preferences.table.columnVisibility.nomor Boolean untuk menampilkan kolom `nomor` pada table
- * @property {boolean} preferences.table.columnVisibility.matakuliah Boolean untuk menampilkan kolom `matakuliah` pada table
- * @property {boolean} preferences.table.columnVisibility.semester Boolean untuk menampilkan kolom `semester` pada table
- * @property {boolean} preferences.table.columnVisibility.sks Boolean untuk menampilkan kolom `sks` pada table
- * @property {boolean} preferences.table.columnVisibility.nilai Boolean untuk menampilkan kolom `nilai` pada table
- * @property {boolean} preferences.table.columnVisibility.diulang Boolean untuk menampilkan kolom `diulang` pada table
- * @property {boolean} preferences.table.columnVisibility.target Boolean untuk menampilkan kolom `target` pada table
- * @property {boolean} preferences.table.columnVisibility.ontarget Boolean untuk menampilkan kolom `ontarget` pada table
+ * @property {Object} preferences User preferences
+ * @property {UserTablePreferencesProps} preferences.table User table preferences
  */
 
 /**
- * @typedef MatkulData
- * @type {object}
- * @property {string} id Id matakuliah
- * @property {string} nama Nama matakuliah
- * @property {number} semester Semester matakuliah
- * @property {number} sks Sks matakuliah
- * @property {object} nilai Nilai matakuliah
- * @property {string} nilai.indeks Indeks nilai matakuliah
- * @property {float} nilai.bobot Bobot nilai matakuliah
- * @property {float} nilai.akhir Nilai akhir matakuliah
- * @property {boolean} dapat_diulang Boolean matakuliah dapat diulang atau tidak
- * @property {string} owned_by Id user pemilik matakuliah
- * @property {object} target_nilai Target nilai matakuliah
- * @property {string} target_nilai.indeks Indeks target nilai matakuliah
- * @property {float} target_nilai.bobot Bobot target nilai matakuliah
- * @property {number} created_at Unix timestamp matakuliah dibuat
- * @property {number} updated_at Unix timestamp terakhir matakuliah diperbarui
- * @property {number} deleted_at Unix timestamp matakuliah dihapus
+ * @typedef {'nomor' | 'matakuliah' | 'semester' | 'sks' | 'nilai' | 'diulang' | 'target' | 'ontarget'} UserTableColumnsId
  */
 
 /**
- * @typedef MatkulHistoryData
- * @type {object}
- * @property {string} id Id history matakuliah
- * @property {object} current Current history matakuliah
- * @property {string} current.nama Nama matakuliah
- * @property {number} current.semester Semester matakuliah
- * @property {number} current.sks Sks matakuliah
- * @property {object} current.nilai Nilai matakuliah
- * @property {string} current.nilai.indeks Indeks nilai matakuliah
- * @property {float} current.nilai.bobot Bobot nilai matakuliah
- * @property {float} current.nilai.akhir Nilai akhir matakuliah
- * @property {boolean} current.dapat_diulang Boolean matakuliah dapat diulang atau tidak
- * @property {object} current.target_nilai Target nilai matakuliah
- * @property {string} current.target_nilai.indeks Indeks target nilai matakuliah
- * @property {float} current.target_nilai.bobot Bobot target nilai matakuliah
- * @property {'tambah'|'hapus'|'ubah'} current.type Tipe history matakuliah
- * @property {number} current.stamp Unix timestamp history matakuliah
- * @property {object} prev Previous history matakuliah
- * @property {string} prev.nama Nama matakuliah
- * @property {number} prev.semester Semester matakuliah
- * @property {number} prev.sks Sks matakuliah
- * @property {object} prev.nilai Nilai matakuliah
- * @property {string} prev.nilai.indeks Indeks nilai matakuliah
- * @property {float} prev.nilai.bobot Bobot nilai matakuliah
- * @property {float} prev.nilai.akhir Nilai akhir matakuliah
- * @property {boolean} prev.dapat_diulang Boolean matakuliah dapat diulang atau tidak
- * @property {object} prev.target_nilai Target nilai matakuliah
- * @property {string} prev.target_nilai.indeks Indeks target nilai matakuliah
- * @property {float} prev.target_nilai.bobot Bobot target nilai matakuliah
- * @property {'tambah'|'hapus'|'ubah'} prev.type Tipe history matakuliah
- * @property {number} prev.stamp Unix timestamp history matakuliah
- * @property {string} owned_by Id user pemilik history matakuliah
- * @property {number} last_change_at Unix timestamp perubahan terakhir history matakuliah
- * @property {string} matkul_id Id matakuliah
+ * @typedef {Object} UserTablePreferencesProps
+ * @property {number} size 
+ * Jumlah maksimal matakuliah yang tampil pada tabel untuk 1 halaman
+ * @property {0|1|2} controlPosition 
+ * Letak kontrol table untuk mengganti halaman tabel dengan keterangan berikut,
+ * - `0` : Terletak pada bawah tabel
+ * - `1` : Terletak pada atas tabel
+ * - `2` : Terletak pada bawah dan atas tabel
+ * @property {Array<UserTableColumnsId} columnOrder 
+ * Array yang berisikan `columnId` dimana urutan indexnya merepresentasikan urutan column. Index terkecil berada paling kiri, dan index terbesar berada paling kanan
+ * ```js
+ * const columnOrder = ['nomor', ..., 'sks'] 
+ * // Column 'nomor' akan berada paling kiri sisi tabel, dan 'sks' akan berada paling kanan 
+ * ```
+ * @property {Record<UserTableColumnsId, boolean>} columnVisibility 
+ * Object dengan key `columnId` dengan value `boolean`. Saat `true`, maka column tersebut akan tampil jika `false` maka tidak akan tampil
+ * ```js
+ * const columnVisibility = {
+ *      nomor: true,
+ *      sks: false, 
+ *      ...
+ * }
+ * // Column 'nomor' tampil dan 'sks' tidak tampil
+ * ```
  */
 
 /**
- * @typedef RatingData
- * @type {object}
- * @property {string} id Id rating
- * @property {number} rating Jumlah bintang atau rating (`1 - 5`)
- * @property {string} review Ulasan atau review
- * @property {string} owned_by Id user pemilik rating
- * @property {Date} created_at Tanggal rating dibuat
- * @property {number} unix_created_at Unix timestamp rating dibuat
- * @property {number} unix_updated_at Unix timestamp terakhir rating diperbarui
- * @property {object} details Details rating
- * @property {string} details.author Nama user pemilik rating
- * @property {0|1|2} details.authorType Tipe author rating
- * @property {string} details.universitas Universitas user pemilik rating
+ * @typedef {Object} MatkulData
+ * @property {string} id 
+ * Id matakuliah dalam bentuk `uuid-v4`
+ * - Note : Diresolve dari `supabase`
+ * @property {string} nama 
+ * Nama matakuliah dengan kriteria
+ * - min_length : `3`
+ * - max_length : `50`
+ * - Note : Diinput melalui form oleh user `client-side`
+ * @property {number} semester 
+ * Semester matakuliah dengan kriteria
+ * - min : `0`
+ * - max : `50`
+ * - Note : Diinput melalui form oleh user `client-side`
+ * @property {number} sks 
+ * Sks matakuliah dengan kriteria
+ * - min: `0`
+ * - max : `50`
+ * - Note : Diinput melalui form oleh user `client-side`
+ * @property {Object} nilai Object yang merepresentasikan nilai matakuliah
+ * @property {Sipk.DefaultIndeksNilai} nilai.indeks 
+ * Indeks nilai matakuliah
+ * - Note : Diinput melalui form oleh user `client-side`
+ * @property {float} nilai.bobot 
+ * Bobot nilai matakuliah untuk indeks nilai yang digunakan
+ * - Note : Diinput pada `api/matkul`
+ * @property {float} nilai.akhir 
+ * Nilai akhir matakuliah dihitung dari `bobot` * `sks`
+ * - Note: Dihitung pada `api/matkul`
+ * @property {boolean} dapat_diulang 
+ * Boolean matakuliah dapat diulang atau tidak
+ * - Note : Diinput melalui form oleh user `client-side`
+ * @property {string} owned_by 
+ * Id user pemilik matakuliah
+ * - Note : Diresolve dari `supabase`
+ * @property {Object} target_nilai Object yang merepresentasikan nilai target matakuliah
+ * @property {Sipk.DefaultIndeksNilai} target_nilai.indeks 
+ * Indeks nilai target matakuliah
+ * - Note : Diinput melalui form oleh user `client-side`
+ * @property {float} target_nilai.bobot 
+ * Bobot nilai matakuliah untuk indeks nilai target yang digunakan
+ * - Note : Diinput pada `api/matkul`
+ * @property {number} created_at 
+ * Unix timestamp matakuliah dibuat
+ * - Note : Diresolve dari `api/matkul`
+ * @property {number} updated_at 
+ * Unix timestamp terakhir matakuliah diperbarui
+ * - Note : Diresolve dari `api/matkul`
+ * @property {number} deleted_at 
+ * Unix timestamp matakuliah dihapus
+ * - Note : Diresolve dari `api/matkul`
  */
 
 /**
- * @typedef NotifikasiData
- * @type {object}
+ * @typedef {Object} MatkulHistoryData
+ * @property {string} id 
+ * Id matakuliah history dalam bentuk `uuid-v4`
+ * @property {Pick<MatkulData, 'nama' | 'semester' | 'sks' | 'nilai' | 'dapat_diulang' | 'target_nilai'>} current 
+ * Current history matakuliah
+ * @property {'tambah'|'hapus'|'ubah'} current.type 
+ * Tipe history matakuliah
+ * @property {number} current.stamp 
+ * Unix timestamp history matakuliah
+ * @property {Pick<MatkulData, 'nama' | 'semester' | 'sks' | 'nilai' | 'dapat_diulang' | 'target_nilai'>} prev 
+ * Previous history matakuliah
+ * @property {'tambah'|'hapus'|'ubah'} prev.type 
+ * Tipe history matakuliah
+ * @property {number} prev.stamp 
+ * Unix timestamp history matakuliah
+ * @property {string} owned_by 
+ * Id user pemilik history matakuliah
+ * @property {number} last_change_at 
+ * Unix timestamp perubahan terakhir history matakuliah
+ * @property {string} matkul_id 
+ * Id matakuliah
+ */
+
+/**
+ * @typedef {Object} RatingData
+ * @property {string} id 
+ * Id rating dalam bentuk `uuid-v4`
+ * @property {number} rating 
+ * Jumlah bintang atau rating dengan kriteria
+ * - min: `1`
+ * - max : `5`
+ * @property {string} review 
+ * Ulasan atau review dengan kriteria
+ * - min_length : `0`
+ * - max_length : `200`
+ * - Tidak mengandung simbol `>` , `<` , `&` , `'` , `"` dan `/`
+ * - Tidak mengandung kata `'http'`, `'https'`, `'www'`
+ * @property {string} owned_by 
+ * Id user pemilik rating
+ * @property {Date} created_at 
+ * Tanggal rating dibuat
+ * @property {number} unix_created_at 
+ * Unix timestamp rating dibuat
+ * @property {number} unix_updated_at 
+ * Unix timestamp terakhir rating diperbarui
+ * @property {Object} details
+ * Rating details
+ * @property {string} details.author 
+ * Dapat bernilai nama lengkap atau nickname user dan `'Anonim'` tergantung dengan `authorType` yang digunakan
+ * @property {0|1|2} details.authorType 
+ * Tipe author rating dengan keterangan berikut,
+ * - `0` : Nama lengkap user akan digunakan pada `author`
+ * - `1` : Nickname user akan digunakan pada `author`
+ * - `2` : `'Anonim'` akan digunakan pada `author`
+ * @property {string} details.universitas 
+ * Nama universitas user pemilik rating
+ */
+
+/**
+ * @typedef {Object} NotifikasiData
  * @property {string} title Judul atau headline notifikasi
  * @property {string} description Deskripsi notifikasi
  * @property {string} href Path atau link notifikasi
- * @property {object} icon Icon {@link https://react-icons.github.io/react-icons/ react-icons} yang digunakan
+ * @property {Object} icon Icon {@link https://react-icons.github.io/react-icons/ react-icons} yang digunakan
  * @property {string} icon.lib Library icon pada {@link https://react-icons.github.io/react-icons/ react-icons}, ex: `'fa', 'io5', etc`
  * @property {string} icon.name Nama icon pada {@link https://react-icons.github.io/react-icons/ react-icons}, ex: `'FaRocket', 'IoAdd', etc`
  * @property {string} color Warna atau variabel warna yang digunakan, ex: `'red', 'var(--some-color)', etc`
@@ -136,44 +192,52 @@ import * as Sipk from './sipk';
  */
 
 /**
- * @typedef UniversitasData
- * @type {object}
- * @property {number} id Id universitas dalam bentuk integer
+ * @typedef {Object} UniversitasData
+ * @property {number} id Id universitas dalam bentuk integer dimulai dari `1`
  * @property {string} nama Nama universitas dengan format pascal case
  * - Contoh : `'Universitas Brawijaya'`
  * @property {string} short Singkatan universitas dengan format uppercase
  * - Contoh : `'UB', 'ITB', 'UNDIP'`
- * @property {object} penilaian Penilaian universitas
- * @property {?string} penilaian.cat Kategori penilaian
- * - Contoh : `'baik', 'kurang', etc`
- * - Note : Pada beberapa universitas kategori tidak tersedia, gunakan optional chaining `?.` atau nullish coalescing `??` untuk menghindari error
- * @property {'success'|'warning'|'danger'|'crimson'} penilaian.style Style color penilaian
- * @property {float} penilaian.weight Bobot penilaian
- * @property {object} assets Assets universitas
+ * @property {Record<Sipk.DefaultIndeksNilai, PenilaianProps>} penilaian 
+ * Indeks nilai yang digunakan pada universitas tertentu.
+ * Perlu diingat setiap universitas mungkin menggunakan indeks nilai yang berbeda, sehingga beberapa key dari property ini dapat bernilai `null`
+ * - Note : Selalu gunakan optional chaining atau nullish coalescing saat mengakses key dari property ini untuk menghindari error
+ * @property {Object} assets Assets universitas
  * @property {string} assets.logo Logo universitas dalam bentuk filename
  * - Contoh : `'logo_itb.png'`
  * @property {string} assets.desc Deskripsi universitas
- * @property {object} assets.style Universitas custom style
- * @property {object} assets.style.color Universitas custom color dalam bentuk `hex`
+ * @property {Object} assets.style Universitas custom style
+ * @property {Object} assets.style.color Universitas custom color dalam bentuk `hex`
  * @property {string} assets.style.color.primary Universitas primary hex color, ex: `'#FBEA04'`
  * @property {string} assets.style.color.secondary Universitas secondary hex color, ex: `'#252422'`
  * @property {Date} created_at Tanggal universitas ditambahkan
  */
 
 /**
- * @typedef FaktaData
- * @type {object}
+ * @typedef {Object} PenilaianProps
+ * @property {?string} cat 
+ * Kategori penilaian
+ * - Contoh : `'baik', 'kurang', etc`
+ * 
+ * Pada beberapa universitas kategori penilaian tidak tersedia sehingga bernilai `null`
+ * - Note : Selalu gunakan optional chaining atau nullish coalescing saat mengakses property ini untuk menghindari error
+ * @property {'success'|'warning'|'danger'|'crimson'} style 
+ * Style color penilaian
+ * @property {float} weight Bobot penilaian
+ */
+
+/**
+ * @typedef {Object} FaktaData
  * @property {string} id Id fakta
  * @property {string} text Konten fakta
- * @property {object} details Details fakta
+ * @property {Object} details Details fakta
  * @property {Array<string>} details.tags Tags atau tagar fakta
  * @property {Date} created_at Tanggal fakta dibuat
  * @property {Date} updated_at Tanggal fakta diperbarui
  */
 
 /**
- * @typedef UserMetadata
- * @type {object}
+ * @typedef {Object} UserMetadata
  * @property {string} fullname
  * Nama lengkap user
  * @property {string} university
