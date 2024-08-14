@@ -1248,19 +1248,9 @@ export const TambahMatkul = () => {
                                 nama: nama,
                                 semester: Number(semester),
                                 sks: Number(sks),
-                                nilai: {
-                                    indeks: penilaianKey.find((key) => `${penilaian[key].weight}` === `${nilai}`),
-                                    bobot: Number(nilai),
-                                    akhir: +(Number(sks) * Number(nilai)).toFixed(2)
-                                },
+                                nilai: { indeks: penilaianKey.find((key) => `${penilaian[key].weight}` === `${nilai}`) },
                                 dapat_diulang: dapatDiulang === 'true' ? true : false,
-                                target_nilai: {
-                                    indeks:
-                                        penilaianKey.find(
-                                            (key) => `${penilaian[key].weight}` === `${targetNilai}`
-                                        ) || 'A',
-                                    bobot: targetNilai >= 0 ? Number(targetNilai) : 4,
-                                }
+                                target_nilai: { indeks: penilaianKey.find((key) => `${penilaian[key].weight}` === `${targetNilai}`) || 'A' }
                             })
                         } catch (error) { reject(error); }
                     })
