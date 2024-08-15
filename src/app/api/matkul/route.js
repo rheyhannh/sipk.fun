@@ -127,10 +127,6 @@ export async function PATCH(request) {
     }
     // #endregion
 
-    // #region Validating and Handle formData
-    // joi code here
-    // #endregion
-
     // #region Initiate Supabase Instance
     const supabase = createServerClient(
         process.env.SUPABASE_URL,
