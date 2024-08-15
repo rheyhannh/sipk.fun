@@ -159,6 +159,53 @@ export async function PATCH(request) {
     )
     // #endregion
 
+    const userUniversitasId = decryptedSession?.user?.user_metadata?.university_id;
+    if (!userUniversitasId) {
+        return NextResponse.json({ message: `Gagal memperbarui matakuliah` }, { status: 500, headers: newHeaders })
+    }
+
+    // #region Get Penilaian User
+    /** @type {SupabaseTypes._from<SupabaseTypes.UniversitasData} */
+    var { data: universitas, error } = await supabase.from('universitas').select('*').eq('id', userUniversitasId);
+
+    if (!universitas.length || error) {
+        return NextResponse.json({ message: `Gagal memperbarui matakuliah` }, { status: 500, headers: newHeaders })
+    }
+    // #endregion
+
+    const nilaiRef = universitas[0].penilaian;
+    const nilaiKeys = Object.keys(nilaiRef);
+
+    // #region Validating and Handle formData
+    const formDataSchema = Joi.object({
+        nama: Joi.string().min(3).max(50).required(),
+        semester: Joi.number().min(0).max(50).required(),
+        sks: Joi.number().min(0).max(50).required(),
+        nilai: Joi.object({ indeks: Joi.string().valid(...nilaiKeys).required() }).required(),
+        dapat_diulang: Joi.boolean().required(),
+        target_nilai: Joi.object({ indeks: Joi.string().valid(...nilaiKeys).required() }).required()
+    });
+
+    try {
+        await formDataSchema.validateAsync(formData);
+    } catch (error) {
+        console.error(error);
+        return NextResponse.json({ message: error.message }, { status: 400, headers: newHeaders })
+    }
+    // #endregion
+
+    // #region Resolve Bobot Indeks and Calculate Nilai Akhir
+    const { indeks: nilaiIndeks } = formData.nilai;
+    const { indeks: targetIndeks } = formData.target_nilai;
+
+    const nilaiWeight = nilaiRef[nilaiIndeks].weight;
+    const targetNilaiWeight = nilaiRef[targetIndeks].weight;
+
+    formData.nilai.bobot = nilaiWeight;
+    formData.nilai.akhir = formData.sks * nilaiWeight;
+    formData.target_nilai.bobot = targetNilaiWeight;
+    // #endregion
+
     const unixNow = Math.floor(Date.now() / 1000);
 
     // #region Update Matkul

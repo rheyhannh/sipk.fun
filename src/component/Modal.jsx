@@ -3396,14 +3396,11 @@ export const DetailMatkul = () => {
                                 semester: Number(semester),
                                 sks: Number(sks),
                                 nilai: {
-                                    indeks: nilai,
-                                    bobot: penilaian[nilai].weight,
-                                    akhir: +(Number(sks) * penilaian[nilai].weight).toFixed(2)
+                                    indeks: nilai
                                 },
                                 dapat_diulang: dapatDiulang === 'ya' ? true : false,
                                 target_nilai: {
-                                    indeks: targetNilai || 'A',
-                                    bobot: targetNilai ? penilaian[targetNilai].weight : 4,
+                                    indeks: targetNilai || 'A'
                                 }
                             })
                         } catch (error) { reject(error); }
