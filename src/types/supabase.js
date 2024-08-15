@@ -12,7 +12,8 @@ import * as Sipk from './sipk';
 import * as TableMatakuliah from './table_matakuliah';
 // #endregion
 
-/**
+// #region [CORE]
+/** Entry user yang diperoleh dari API `'/api/me'` atau supabase database table `user`
  * @typedef {Object} UserData
  * @property {string} id Id user
  * @property {string} email Email user
@@ -35,7 +36,7 @@ import * as TableMatakuliah from './table_matakuliah';
  * @property {TableMatakuliah.PreferencesProps} preferences.table User table preferences
  */
 
-/**
+/** Entry matakuliah yang diperoleh dari API `'/api/matkul'` atau supabase database table `matkul`
  * @typedef {Object} MatkulData
  * @property {string} id 
  * Id matakuliah dalam bentuk `uuid-v4`
@@ -89,7 +90,7 @@ import * as TableMatakuliah from './table_matakuliah';
  * - Note : Diresolve dari `api/matkul`
  */
 
-/**
+/** Entry matakuliah history yang diperoleh dari API `'/api/matkul-history'` atau supabase database table `matkul_history`
  * @typedef {Object} MatkulHistoryData
  * @property {string} id 
  * Id matakuliah history dalam bentuk `uuid-v4`
@@ -113,7 +114,7 @@ import * as TableMatakuliah from './table_matakuliah';
  * Id matakuliah
  */
 
-/**
+/** Entry rating yang diperoleh dari API `'/api/rating'` atau supabase database table `rating`
  * @typedef {Object} RatingData
  * @property {string} id 
  * Id rating dalam bentuk `uuid-v4`
@@ -148,7 +149,7 @@ import * as TableMatakuliah from './table_matakuliah';
  * Nama universitas user pemilik rating
  */
 
-/**
+/** Entry notifikasi yang diperoleh dari API `'/api/notifikasi'` atau supabase database table `notifikasi`
  * @typedef {Object} NotifikasiData
  * @property {string} title Judul atau headline notifikasi
  * @property {string} description Deskripsi notifikasi
@@ -161,7 +162,7 @@ import * as TableMatakuliah from './table_matakuliah';
  * @property {number} unix_created_at Unix timestamp notifikasi dibuat
  */
 
-/**
+/** Entry universitas yang diperoleh dari API `'/api/universitas'` atau supabase database table `universitas`
  * @typedef {Object} UniversitasData
  * @property {number} id Id universitas dalam bentuk integer dimulai dari `1`
  * @property {string} nama Nama universitas dengan format pascal case
@@ -183,20 +184,7 @@ import * as TableMatakuliah from './table_matakuliah';
  * @property {Date} created_at Tanggal universitas ditambahkan
  */
 
-/**
- * @typedef {Object} PenilaianProps
- * @property {?string} cat 
- * Kategori penilaian
- * - Contoh : `'baik', 'kurang', etc`
- * 
- * Pada beberapa universitas kategori penilaian tidak tersedia sehingga bernilai `null`
- * - Note : Selalu gunakan optional chaining atau nullish coalescing saat mengakses property ini untuk menghindari error
- * @property {'success'|'warning'|'danger'|'crimson'} style 
- * Style color penilaian
- * @property {float} weight Bobot penilaian
- */
-
-/**
+/** Entry fakta yang diperoleh dari API `'/api/fakta'` atau supabase database table `fakta`
  * @typedef {Object} FaktaData
  * @property {string} id Id fakta
  * @property {string} text Konten fakta
@@ -205,27 +193,18 @@ import * as TableMatakuliah from './table_matakuliah';
  * @property {Date} created_at Tanggal fakta dibuat
  * @property {Date} updated_at Tanggal fakta diperbarui
  */
+// #endregion
 
-/**
- * @typedef {Object} UserMetadata
- * @property {string} fullname
- * Nama lengkap user
- * @property {string} university
- * Universitas user
- * @property {number} university_id
- * Id universitas user
- */
-
-/**
+// #region [OVERRIDE_SUPABASE_METHOD_RETURNTYPE]
+/** Override `user_metadata` pada `User` yang diresolve dari supabase
  * @typedef {Omit<SupabaseUser, 'user_metadata'> & {user_metadata:UserMetadata}} User
  */
 
-/**
+/** Override `User` pada `Session` yang diresolve dari supabase
  * @typedef {Omit<SupabaseSession, 'user'> & {user:User}} Session
  */
 
-/**
- * Override `Session` type yang direturn dari `supabase.auth.getSession()`
+/** Override `Session` type yang direturn dari `supabase.auth.getSession()`
  * @typedef {Object} _auth_getSession
  * @property {Object} data
  * Data yang diresolve dari supabase
@@ -234,8 +213,7 @@ import * as TableMatakuliah from './table_matakuliah';
  * @property {SupabaseAuthError} error
  */
 
-/**
- * Override `User` dan `Session` type yang direturn dari `supabase.auth.verifyOtp()`
+/** Override `User` dan `Session` type yang direturn dari `supabase.auth.verifyOtp()`
  * @typedef {Object} _auth_verifyOtp
  * @property {Object} data
  * Data yang diresolve dari supabase
@@ -246,13 +224,12 @@ import * as TableMatakuliah from './table_matakuliah';
  * @property {SupabaseAuthError} error
  */
 
-/** 
+/** Override `data` dan `error` type yang direturn dari `supabase.from()` dengan template T entry CORE data
  * @typedef {{ data: Array<T>, error: SupabasePostgrestError}} _from<T>
  * @template T
  */
 
-/**
- * Override `User` dan `Session` type yang direturn dari `supabase.auth.signInWithPassword()`
+/** Override `User` dan `Session` type yang direturn dari `supabase.auth.signInWithPassword()`
  * @typedef {Object} _auth_signInWithPassword
  * @property {Object} data
  * Data yang diresolve dari supabase
@@ -264,9 +241,10 @@ import * as TableMatakuliah from './table_matakuliah';
  * Weak password object, jika autentikasi gagal maka bernilai `null`
  * @property {SupabaseAuthError} error
  */
+// #endregion
 
-/**
- * Decoded payload `JWT` atau access token atau cookie `'s_access_token'` tanpa `User`
+// #region [MISC]
+/** Decoded payload `JWT` atau access token atau cookie `'s_access_token'` tanpa `User`
  * @typedef {Object} AccessTokenBasePayload
  * @property {string} iss
  * Domain atau URL beserta endpoint dari pembuat `issuer` token
@@ -286,9 +264,34 @@ import * as TableMatakuliah from './table_matakuliah';
  * Id session `uuid-v4`
  */
 
-/**
- * Decoded payload `JWT` atau access token atau cookie `'s_access_token'`
+/** Decoded payload `JWT` atau access token atau cookie `'s_access_token'`
  * @typedef {AccessTokenBasePayload & Pick<User, 'email' | 'phone' | 'app_metadata' | 'user_metadata' | 'role' | 'is_anonymous' | 'aud'} AccessTokenPayload
  */
+// #endregion
+
+// #region [HELPER]
+/** Tipe `penilaian` pada entry universitas atau `UniversitasData`
+ * @typedef {Object} PenilaianProps
+ * @property {?string} cat 
+ * Kategori penilaian
+ * - Contoh : `'baik', 'kurang', etc`
+ * 
+ * Pada beberapa universitas kategori penilaian tidak tersedia sehingga bernilai `null`
+ * - Note : Selalu gunakan optional chaining atau nullish coalescing saat mengakses property ini untuk menghindari error
+ * @property {'success'|'warning'|'danger'|'crimson'} style 
+ * Style color penilaian
+ * @property {float} weight Bobot penilaian
+ */
+
+/** Tipe `user_metadata` pada `User`
+ * @typedef {Object} UserMetadata
+ * @property {string} fullname
+ * Nama lengkap user
+ * @property {string} university
+ * Universitas user
+ * @property {number} university_id
+ * Id universitas user
+ */
+// #endregion
 
 export const SupabaseTypes = {}
