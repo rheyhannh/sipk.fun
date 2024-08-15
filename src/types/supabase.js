@@ -10,6 +10,9 @@ import {
 } from '@supabase/supabase-js';
 import * as Sipk from './sipk';
 import * as TableMatakuliah from './table_matakuliah';
+import {
+    Names as UniversitasNames
+} from './universitas';
 // #endregion
 
 // #region [CORE]
