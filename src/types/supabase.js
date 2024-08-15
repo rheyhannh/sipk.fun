@@ -9,6 +9,7 @@ import {
     AMREntry,
 } from '@supabase/supabase-js';
 import * as Sipk from './sipk';
+import * as TableMatakuliah from './table_matakuliah';
 // #endregion
 
 /**
@@ -31,38 +32,7 @@ import * as Sipk from './sipk';
  * @property {Date} created_at Tanggal user daftar
  * @property {Date} updated_at Tanggal terakhir user memperbarui datanya
  * @property {Object} preferences User preferences
- * @property {UserTablePreferencesProps} preferences.table User table preferences
- */
-
-/**
- * @typedef {'nomor' | 'matakuliah' | 'semester' | 'sks' | 'nilai' | 'diulang' | 'target' | 'ontarget'} UserTableColumnsId
- */
-
-/**
- * @typedef {Object} UserTablePreferencesProps
- * @property {number} size 
- * Jumlah maksimal matakuliah yang tampil pada tabel untuk 1 halaman
- * @property {0|1|2} controlPosition 
- * Letak kontrol table untuk mengganti halaman tabel dengan keterangan berikut,
- * - `0` : Terletak pada bawah tabel
- * - `1` : Terletak pada atas tabel
- * - `2` : Terletak pada bawah dan atas tabel
- * @property {Array<UserTableColumnsId} columnOrder 
- * Array yang berisikan `columnId` dimana urutan indexnya merepresentasikan urutan column. Index terkecil berada paling kiri, dan index terbesar berada paling kanan
- * ```js
- * const columnOrder = ['nomor', ..., 'sks'] 
- * // Column 'nomor' akan berada paling kiri sisi tabel, dan 'sks' akan berada paling kanan 
- * ```
- * @property {Record<UserTableColumnsId, boolean>} columnVisibility 
- * Object dengan key `columnId` dengan value `boolean`. Saat `true`, maka column tersebut akan tampil jika `false` maka tidak akan tampil
- * ```js
- * const columnVisibility = {
- *      nomor: true,
- *      sks: false, 
- *      ...
- * }
- * // Column 'nomor' tampil dan 'sks' tidak tampil
- * ```
+ * @property {TableMatakuliah.PreferencesProps} preferences.table User table preferences
  */
 
 /**
