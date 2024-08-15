@@ -949,13 +949,10 @@ export const PerubahanTerakhirConfirm = () => {
                                             sks: context?.data?.current?.sks,
                                             nilai: {
                                                 indeks: context?.data?.current?.nilai?.indeks,
-                                                bobot: context?.data?.current?.nilai?.bobot,
-                                                akhir: context?.data?.current?.nilai?.akhir,
                                             },
                                             dapat_diulang: context?.data?.current?.dapat_diulang,
                                             target_nilai: {
                                                 indeks: context?.data?.current?.target_nilai?.indeks,
-                                                bobot: context?.data?.current?.target_nilai?.bobot,
                                             },
                                         }),
                                     });
