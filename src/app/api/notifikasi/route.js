@@ -44,6 +44,7 @@ export async function GET(request) {
     const cookieStore = cookies();
     const serviceApiKey = await getApiKey(request);
 
+    // #region Handler when serviceApiKey exist
     if (serviceApiKey) {
         if (serviceApiKey !== process.env.SUPABASE_SERVICE_KEY) {
             return NextResponse.json({ message: `Invalid API key` }, {
@@ -59,12 +60,15 @@ export async function GET(request) {
 
         return NextResponse.json(data, { status: 200 })
     }
+    // #endregion
 
+    // #region Handler Unauthenticated User
     if (!secureSessionCookie || !authorizationHeader || !authorizationToken) {
         return NextResponse.json({ message: 'Unauthorized - Missing access token' }, {
             status: 401,
         })
     }
+    // #endregion
 
     /** @type {SupabaseTypes.Session} */
     const decryptedSession = await decryptAES(secureSessionCookie, true);
@@ -79,6 +83,7 @@ export async function GET(request) {
         })
     }
 
+    // #region Validating and Decoding JWT or 's_access_token' cookie
     try {
         var decoded = await validateJWT(authorizationToken, userId);
         // Log Here, ex: '{TIMESTAMP} decoded.id {METHOD} {ROUTE} {BODY} {PARAMS}'
@@ -87,7 +92,9 @@ export async function GET(request) {
             status: 401
         })
     }
+    // #endregion
 
+    // #region Checking Ratelimit
     try {
         var currentUsage = await limiter.check(limitRequest, `notifikasi-${userId}`);
         // Log Here, ex: '{TIMESTAMP} userId {ROUTE} limit {currentUsage}/{limitRequest}'
@@ -101,7 +108,9 @@ export async function GET(request) {
             }
         })
     }
+    // #endregion
 
+    // #region Initiate Supabase Instance
     const supabase = createServerClient(
         process.env.SUPABASE_URL,
         process.env.SUPABASE_ANON_KEY,
@@ -126,15 +135,17 @@ export async function GET(request) {
                 remove(name, options) {
                     cookieStore.set({ name: process.env.USER_SESSION_COOKIES_NAME, value: '', ...cookieAuthDeleteOptions })
                     cookieStore.set({ name: 's_user_id', value: '', ...cookieAuthDeleteOptions })
-                    cookieStore.set({ name: 's_access_token', value: '', ...cookieAuthDeleteOptions})
+                    cookieStore.set({ name: 's_access_token', value: '', ...cookieAuthDeleteOptions })
                 },
             },
         }
     )
+    // #endregion
 
+    // #region Get Notifikasi and Handle Response
     /** @type {SupabaseTypes._from<SupabaseTypes.NotifikasiData>} */
     let { data, error } = await supabase.from('notifikasi').select('*').limit(10).order('unix_created_at', { ascending: false });
-
+    
     if (error) {
         console.error(error);
         return NextResponse.json({ message: 'Terjadi kesalahan pada server' }, {
@@ -153,4 +164,5 @@ export async function GET(request) {
             'X-Ratelimit-Remaining': limitRequest - currentUsage,
         }
     });
+    // #endregion
 }
