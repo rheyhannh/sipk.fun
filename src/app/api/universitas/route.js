@@ -45,15 +45,14 @@ const cookieServiceOptions = await getCookieOptions('service', 'set');
 export async function GET(request) {
     const cookieStore = cookies();
     const newHeaders = {};
-    const userAccessToken = request.cookies.get(`${process.env.USER_SESSION_COOKIES_NAME}`)?.value;
+    const { secureSessionCookie } = await getSipkCookies(request);
+    var { serviceGuestCookie, serviceUserIdCookie } = await getSipkCookies(request);
     const authorizationHeader = headers().get('Authorization');
     const authorizationToken = authorizationHeader ? authorizationHeader.split(' ')[1] : null;
-    const apiKeyHeader = headers().get('X-API-KEY');
-    var serviceGuestCookie = request.cookies.get('s_guest_id')?.value;
-    var serviceUserIdCookie = request.cookies.get('s_user_id')?.value;
+    const serviceApiKey = await getApiKey(request);
 
-    if (apiKeyHeader) {
-        if (apiKeyHeader !== process.env.SUPABASE_SERVICE_KEY) {
+    if (serviceApiKey) {
+        if (serviceApiKey !== process.env.SUPABASE_SERVICE_KEY) {
             return NextResponse.json({ message: `Invalid API key` }, {
                 status: 401,
             })
@@ -83,15 +82,7 @@ export async function GET(request) {
         }
     }
 
-    // guestKey (IP or guest_Id) to create key for rate limiter
-    const guestKey =
-        headers().get('X-Client-IP') ||
-        headers().get('X-Forwarded-For') ||
-        headers().get('X-Real-IP') ||
-        serviceUserIdCookie ||
-        serviceGuestCookie ||
-        'public'
-        ;
+    const guestKey = await getIpFromHeaders() ?? serviceGuestCookie ?? 'public';
 
     // Try checking rate limit
     try {
@@ -121,14 +112,14 @@ export async function GET(request) {
         if (!isNumeric(id) || !isInt(id, { min: 1, max: parseInt(process.env.DATA_UNIVERSITAS_LENGTH) })) {
             return NextResponse.json({ message: 'Bad Request - Invalid id' }, { status: 400, headers: newHeaders })
         }
-        if (!userAccessToken || !authorizationHeader || !authorizationToken) {
+        if (!secureSessionCookie || !authorizationHeader || !authorizationToken) {
             return NextResponse.json({ message: 'Unauthorized - Missing access token' }, {
                 status: 401,
                 headers: newHeaders
             })
         }
 
-        const decryptedSession = await decryptAES(userAccessToken, true);
+        const decryptedSession = await decryptAES(secureSessionCookie, true);
         const userId = decryptedSession?.user?.id;
 
         if (!decryptedSession || !userId) {
