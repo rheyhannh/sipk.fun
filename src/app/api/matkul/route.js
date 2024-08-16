@@ -117,7 +117,7 @@ export async function PATCH(request) {
 
     // #region Parsing and Handle formData
     try {
-        /** @type {MatkulFormDataServer} */
+        /** @type {SupabaseTypes.MatkulData} */
         var formData = await request.json();
     } catch (error) {
         console.error(error);
@@ -485,7 +485,7 @@ export async function POST(request) {
 
     // #region Parsing and Handle formData
     try {
-        /** @type {MatkulFormDataServer} */
+        /** @type {SupabaseTypes.MatkulData} */
         var formData = await request.json();
     } catch (error) {
         console.error(error);
