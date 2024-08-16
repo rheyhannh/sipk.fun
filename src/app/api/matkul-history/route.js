@@ -45,6 +45,7 @@ export async function GET(request) {
     const cookieStore = cookies();
     const serviceApiKey = await getApiKey(request);
 
+    // #region Handler when serviceApiKey exist
     if (serviceApiKey) {
         if (serviceApiKey !== process.env.SUPABASE_SERVICE_KEY) {
             return NextResponse.json({ message: `Invalid API key` }, {
@@ -60,12 +61,15 @@ export async function GET(request) {
 
         return NextResponse.json(data, { status: 200 })
     }
+    // #endregion
 
+    // #region Handler Unauthenticated User
     if (!secureSessionCookie || !authorizationHeader || !authorizationToken) {
         return NextResponse.json({ message: 'Unauthorized - Missing access token' }, {
             status: 401,
         })
     }
+    // #endregion
 
     /** @type {SupabaseTypes.Session} */
     const decryptedSession = await decryptAES(secureSessionCookie, true);
@@ -80,6 +84,7 @@ export async function GET(request) {
         })
     }
 
+    // #region Validating and Decoding JWT or 's_access_token' cookie
     try {
         var decoded = await validateJWT(authorizationToken, userId);
         // Log Here, ex: '{TIMESTAMP} decoded.id {METHOD} {ROUTE} {BODY} {PARAMS}'
@@ -88,7 +93,9 @@ export async function GET(request) {
             status: 401
         })
     }
+    // #endregion
 
+    // #region Checking Ratelimit
     try {
         var currentUsage = await limiter.check(limitRequest, `matkul-history-${userId}`);
         // Log Here, ex: '{TIMESTAMP} userId {ROUTE} limit {currentUsage}/{limitRequest}'
@@ -102,7 +109,9 @@ export async function GET(request) {
             }
         })
     }
+    // #endregion
 
+    // #region Initiate Supabase Instance
     const supabase = createServerClient(
         process.env.SUPABASE_URL,
         process.env.SUPABASE_ANON_KEY,
@@ -132,7 +141,9 @@ export async function GET(request) {
             },
         }
     )
+    // #endregion
 
+    // #region Get Matkul History and Handle Response
     /** @type {SupabaseTypes._from<SupabaseTypes.MatkulHistoryData>} */
     let { data, error } = await supabase.from('matkul_history').select('*').order('last_change_at', { ascending: true });
 
@@ -154,6 +165,7 @@ export async function GET(request) {
             'X-Ratelimit-Remaining': limitRequest - currentUsage,
         }
     });
+    // #endregion
 }
 
 /**
@@ -170,11 +182,13 @@ export async function DELETE(request) {
     const id = searchParams.get('id');
     const matkulId = searchParams.get('mid');
 
+    // #region Handler Unauthenticated User
     if (!secureSessionCookie || !authorizationHeader || !authorizationToken) {
         return NextResponse.json({ message: 'Unauthorized - Missing access token' }, {
             status: 401,
         })
     }
+    // #endregion
 
     /** @type {SupabaseTypes.Session} */
     const decryptedSession = await decryptAES(secureSessionCookie, true);
@@ -188,6 +202,8 @@ export async function DELETE(request) {
             status: 401
         })
     }
+
+    // #region Validating and Decoding JWT or 's_access_token' cookie
     try {
         var decoded = await validateJWT(authorizationToken, userId);
         // Log Here, ex: '{TIMESTAMP} decoded.id {METHOD} {ROUTE} {BODY} {PARAMS}'
@@ -196,7 +212,9 @@ export async function DELETE(request) {
             status: 401
         })
     }
+    // #endregion
 
+    // #region Checking Ratelimit
     try {
         var currentUsage = await limiter.check(limitRequest, `matkul-${userId}`);
         // Log Here, ex: '{TIMESTAMP} userId {ROUTE} limit {currentUsage}/{limitRequest}'
@@ -212,7 +230,9 @@ export async function DELETE(request) {
             }
         })
     }
+    // #endregion
 
+    // #region Validating 'id' and 'matkulId'
     if (!id || !matkulId) {
         return NextResponse.json({ message: `Gagal menghapus matakuliah, 'id' dan 'mid' dibutuhkan` }, {
             status: 400,
@@ -226,7 +246,9 @@ export async function DELETE(request) {
             headers: newHeaders
         })
     }
+    // #endregion
 
+    // #region Initiate Supabase Instance
     const supabase = createServerClient(
         process.env.SUPABASE_URL,
         process.env.SUPABASE_ANON_KEY,
@@ -256,13 +278,17 @@ export async function DELETE(request) {
             },
         }
     )
+    // #endregion
 
+    // #region Delete Matkul
     var { error } = await supabase.from('matkul').delete().eq('id', matkulId);
     if (error) {
         console.error(error);
         return NextResponse.json({ message: `Gagal menghapus matakuliah` }, { status: 500, headers: newHeaders })
     }
+    // #endregion
 
+    // #region Delete Matkul History
     var { error } = await supabase.from('matkul_history').delete().eq('id', id);
     if (error) {
         console.error(error);
@@ -273,4 +299,5 @@ export async function DELETE(request) {
         status: 204,
         headers: newHeaders
     })
+    // #endregion
 }
