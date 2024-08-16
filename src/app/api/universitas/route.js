@@ -119,6 +119,7 @@ export async function GET(request) {
             })
         }
 
+        /** @type {SupabaseTypes.Session} */
         const decryptedSession = await decryptAES(secureSessionCookie, true);
         const userId = decryptedSession?.user?.id;
 
@@ -173,6 +174,7 @@ export async function GET(request) {
         }
     )
 
+    /** @type {SupabaseTypes._from<SupabaseTypes.UniversitasData>} */
     const { data, error } = type === 'user' ?
         await supabase.from('universitas').select('id,nama,penilaian').eq('id', id) :
         await supabase.from('universitas').select('id,nama,short,assets').order('id', { ascending: true })
