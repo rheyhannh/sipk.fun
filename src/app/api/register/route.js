@@ -1,5 +1,6 @@
 // #region TYPE DEPEDENCY
-import * as SIPK from '@/types/supabase';
+import * as SupabaseTypes from '@/types/supabase';
+import { RegisterFormData } from '@/types/form_data';
 // #endregion
 
 // #region NEXT DEPEDENCY
@@ -17,7 +18,9 @@ import {
     decryptAES,
     rateLimit,
     validateIdentifier,
-    getCookieOptions
+    getCookieOptions,
+    getSipkCookies,
+    getIpFromHeaders,
 } from '@/utils/server_side';
 import Joi from 'joi';
 import isUUID from 'validator/lib/isUUID';
