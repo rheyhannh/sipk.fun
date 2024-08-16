@@ -1,6 +1,5 @@
 // #region TYPE DEPEDENCY
 import * as SupabaseTypes from '@/types/supabase';
-import { MatkulFormDataServer } from '@/types/form_data';
 // #endregion
 
 // #region NEXT DEPEDENCY
