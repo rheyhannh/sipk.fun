@@ -98,6 +98,7 @@ export async function POST(request) {
 
     // #region Parsing and Handle formData
     try {
+        /** @type {LoginMagiclinkFormData} */
         var formData = await request.json();
     } catch (error) {
         console.error(error);
