@@ -1,5 +1,5 @@
 // #region TYPE DEPEDENCY
-import * as SIPK from '@/types/supabase';
+import * as SupabaseTypes from '@/types/supabase';
 // #endregion
 
 // #region NEXT DEPEDENCY
@@ -18,7 +18,9 @@ import {
     decryptAES,
     rateLimit,
     validateJWT,
-    getCookieOptions
+    getCookieOptions,
+    getSipkCookies,
+    getApiKey,
 } from '@/utils/server_side';
 import isUUID from 'validator/lib/isUUID';
 // #endregion
