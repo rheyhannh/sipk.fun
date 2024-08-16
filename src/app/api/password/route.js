@@ -1,5 +1,6 @@
 // #region TYPE DEPEDENCY
-import * as SIPK from '@/types/supabase';
+import * as SupabaseTypes from '@/types/supabase';
+import { PasswordFormData } from '@/types/form_data';
 // #endregion
 
 // #region NEXT DEPEDENCY
@@ -17,7 +18,8 @@ import {
     decryptAES,
     rateLimit,
     validateJWT,
-    getCookieOptions
+    getCookieOptions,
+    getSipkCookies,
 } from '@/utils/server_side';
 import Joi from 'joi';
 // #endregion
