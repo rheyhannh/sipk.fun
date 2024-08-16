@@ -394,6 +394,15 @@ import {
  * Weak password object, jika autentikasi gagal maka bernilai `null`
  * @property {SupabaseAuthError} error
  */
+
+/** Override `User` type yang direturn dari `supabase.auth.updateUser()`
+ * @typedef {Object} _auth_updateUser
+ * @property {Object} data
+ * Data yang diresolve dari supabase
+ * @property {User | null} data.user
+ * Data user, jika autentikasi atau `updateUser` gagal maka bernilai `null`
+ * @property {SupabaseAuthError} error
+ */
 // #endregion
 
 // #region [MISC]
