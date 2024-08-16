@@ -1,3 +1,7 @@
+// #region TYPE DEPEDENCY
+import { LoginMagiclinkFormData } from '@/types/form_data';
+// #endregion
+
 // #region NEXT DEPEDENCY
 import { NextResponse, NextRequest } from 'next/server';
 import { cookies } from 'next/headers';

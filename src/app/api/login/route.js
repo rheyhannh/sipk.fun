@@ -1,5 +1,6 @@
 // #region TYPE DEPEDENCY
 import * as SupabaseTypes from '@/types/supabase';
+import { LoginFormData } from '@/types/form_data';
 // #endregion
 
 // #region NEXT DEPEDENCY
