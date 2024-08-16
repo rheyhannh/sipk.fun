@@ -10,4 +10,12 @@ import * as Supabase from './supabase';
  * @typedef {Pick<Supabase.UserData, 'fullname' | 'nickname' | 'jurusan' | 'sks_target' | 'matkul_target' | 'ipk_target' | 'preferences'>} UserFormData
  */
 
+/**
+ * @typedef {Object} PasswordFormData
+ * @property {string} password
+ * Password user dengan kriteria
+ * - min_length : `6`
+ * - max_length : `50`
+ */
+
 export const FormDataTypes = {}
