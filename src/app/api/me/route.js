@@ -68,6 +68,7 @@ export async function GET(request) {
         })
     }
 
+    /** @type {SupabaseTypes.Session} */
     const decryptedSession = await decryptAES(secureSessionCookie, true);
     const userId = decryptedSession?.user?.id;
 
@@ -133,6 +134,7 @@ export async function GET(request) {
         }
     )
 
+    /** @type {SupabaseTypes._from<SupabaseTypes.UserData>} */
     let { data, error } = await supabase.from('user').select('*');
 
     if (error) {
@@ -172,6 +174,7 @@ export async function PATCH(request) {
         })
     }
 
+    /** @type {SupabaseTypes.Session} */
     const decryptedSession = await decryptAES(secureSessionCookie, true);
     const userId = decryptedSession?.user?.id;
 
@@ -219,6 +222,7 @@ export async function PATCH(request) {
 
     // Check are formData equal to schema using 'Joi'
     try {
+        /** @type {UserFormData} */
         var formData = await request.json();
     } catch (error) {
         console.error(error);
@@ -304,6 +308,7 @@ export async function PATCH(request) {
         }
     )
 
+    /** @type {SupabaseTypes._from<SupabaseTypes.UserData>} */
     var { data: profilBaru, error } =
         type === 'preferences' ?
             await supabase.from('user').update({ preferences: formData }).eq('id', userId).select()
