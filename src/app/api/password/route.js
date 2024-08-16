@@ -39,18 +39,18 @@ const cookieAuthDeleteOptions = await getCookieOptions('auth', 'remove');
  */
 export async function PATCH(request) {
     const newHeaders = {};
-    const userAccessToken = request.cookies.get(`${process.env.USER_SESSION_COOKIES_NAME}`)?.value;
+    const { secureSessionCookie } = await getSipkCookies(request);
     const authorizationHeader = headers().get('Authorization');
     const authorizationToken = authorizationHeader ? authorizationHeader.split(' ')[1] : null;
     const cookieStore = cookies();
 
-    if (!userAccessToken || !authorizationHeader || !authorizationToken) {
+    if (!secureSessionCookie || !authorizationHeader || !authorizationToken) {
         return NextResponse.json({ message: 'Unauthorized - Missing access token' }, {
             status: 401,
         })
     }
 
-    const decryptedSession = await decryptAES(userAccessToken, true);
+    const decryptedSession = await decryptAES(secureSessionCookie, true);
     const userId = decryptedSession?.user?.id;
 
     if (!decryptedSession || !userId) {
