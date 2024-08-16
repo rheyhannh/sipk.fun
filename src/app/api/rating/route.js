@@ -42,14 +42,14 @@ const cookieAuthDeleteOptions = await getCookieOptions('auth', 'remove');
  * @param {NextRequest} request
  */
 export async function GET(request) {
-    const userAccessToken = request.cookies.get(`${process.env.USER_SESSION_COOKIES_NAME}`)?.value;
+    const { secureSessionCookie } = await getSipkCookies(request);
     const cookieStore = cookies();
     const authorizationHeader = headers().get('Authorization');
     const authorizationToken = authorizationHeader ? authorizationHeader.split(' ')[1] : null;
-    const apiKeyHeader = headers().get('X-API-KEY');
+    const serviceApiKey = await getApiKey(request);
 
-    if (apiKeyHeader) {
-        if (apiKeyHeader !== process.env.SUPABASE_SERVICE_KEY) {
+    if (serviceApiKey) {
+        if (serviceApiKey !== process.env.SUPABASE_SERVICE_KEY) {
             return NextResponse.json({ message: `Invalid API key` }, {
                 status: 401,
             })
@@ -64,13 +64,13 @@ export async function GET(request) {
         return NextResponse.json(data, { status: 200 })
     }
 
-    if (!userAccessToken || !authorizationHeader || !authorizationToken) {
+    if (!secureSessionCookie || !authorizationHeader || !authorizationToken) {
         return NextResponse.json({ message: 'Unauthorized - Missing access token' }, {
             status: 401,
         })
     }
 
-    const decryptedSession = await decryptAES(userAccessToken, true);
+    const decryptedSession = await decryptAES(secureSessionCookie, true);
     const userId = decryptedSession?.user?.id;
 
     if (!decryptedSession || !userId) {
@@ -163,18 +163,18 @@ export async function GET(request) {
  */
 export async function POST(request) {
     const newHeaders = {};
-    const userAccessToken = request.cookies.get(`${process.env.USER_SESSION_COOKIES_NAME}`)?.value;
+    const { secureSessionCookie } = await getSipkCookies(request);
     const authorizationHeader = headers().get('Authorization');
     const authorizationToken = authorizationHeader ? authorizationHeader.split(' ')[1] : null;
     const cookieStore = cookies();
 
-    if (!userAccessToken || !authorizationHeader || !authorizationToken) {
+    if (!secureSessionCookie || !authorizationHeader || !authorizationToken) {
         return NextResponse.json({ message: 'Unauthorized - Missing access token' }, {
             status: 401,
         })
     }
 
-    const decryptedSession = await decryptAES(userAccessToken, true);
+    const decryptedSession = await decryptAES(secureSessionCookie, true);
     const userId = decryptedSession?.user?.id;
 
     if (!decryptedSession || !userId) {
@@ -309,20 +309,20 @@ export async function POST(request) {
  */
 export async function PATCH(request) {
     const newHeaders = {};
-    const userAccessToken = request.cookies.get(`${process.env.USER_SESSION_COOKIES_NAME}`)?.value;
+    const { secureSessionCookie } = await getSipkCookies(request);
     const authorizationHeader = headers().get('Authorization');
     const authorizationToken = authorizationHeader ? authorizationHeader.split(' ')[1] : null;
     const cookieStore = cookies();
     const searchParams = request.nextUrl.searchParams;
     const ratingId = searchParams.get('id');
 
-    if (!userAccessToken || !authorizationHeader || !authorizationToken) {
+    if (!secureSessionCookie || !authorizationHeader || !authorizationToken) {
         return NextResponse.json({ message: 'Unauthorized - Missing access token' }, {
             status: 401,
         })
     }
 
-    const decryptedSession = await decryptAES(userAccessToken, true);
+    const decryptedSession = await decryptAES(secureSessionCookie, true);
     const userId = decryptedSession?.user?.id;
 
     if (!decryptedSession || !userId) {
