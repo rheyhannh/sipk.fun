@@ -46,6 +46,7 @@ export async function GET(request) {
     const cookieStore = cookies();
     const serviceApiKey = await getApiKey(request);
 
+    // #region Handler when serviceApiKey exist
     if (serviceApiKey) {
         if (serviceApiKey !== process.env.SUPABASE_SERVICE_KEY) {
             return NextResponse.json({ message: `Invalid API key` }, {
@@ -61,12 +62,15 @@ export async function GET(request) {
 
         return NextResponse.json(data, { status: 200 })
     }
+    // #endregion
 
+    // #region Handler Unauthenticated User
     if (!secureSessionCookie || !authorizationHeader || !authorizationToken) {
         return NextResponse.json({ message: 'Unauthorized - Missing access token' }, {
             status: 401,
         })
     }
+    // #endregion
 
     /** @type {SupabaseTypes.Session} */
     const decryptedSession = await decryptAES(secureSessionCookie, true);
@@ -81,6 +85,7 @@ export async function GET(request) {
         })
     }
 
+    // #region Validating and Decoding JWT or 's_access_token' cookie
     try {
         var decoded = await validateJWT(authorizationToken, userId);
         // Log Here, ex: '{TIMESTAMP} decoded.id {METHOD} {ROUTE} {BODY} {PARAMS}'
@@ -89,7 +94,9 @@ export async function GET(request) {
             status: 401
         })
     }
+    // #endregion
 
+    // #region Checking Ratelimit
     try {
         var currentUsage = await limiter.check(limitRequest, `me-${userId}`);
         // Log Here, ex: '{TIMESTAMP} userId {ROUTE} limit {currentUsage}/{limitRequest}'
@@ -103,7 +110,9 @@ export async function GET(request) {
             }
         })
     }
+    // #endregion
 
+    // #region Initiate Supabase Instance
     const supabase = createServerClient(
         process.env.SUPABASE_URL,
         process.env.SUPABASE_ANON_KEY,
@@ -133,7 +142,9 @@ export async function GET(request) {
             },
         }
     )
+    // #endregion
 
+    // #region Get User Data and Handle Response
     /** @type {SupabaseTypes._from<SupabaseTypes.UserData>} */
     let { data, error } = await supabase.from('user').select('*');
 
@@ -155,6 +166,7 @@ export async function GET(request) {
             'X-Ratelimit-Remaining': limitRequest - currentUsage,
         }
     });
+    // #endregion
 }
 
 /**
@@ -168,11 +180,13 @@ export async function PATCH(request) {
     const authorizationToken = authorizationHeader ? authorizationHeader.split(' ')[1] : null;
     const cookieStore = cookies();
 
+    // #region Handler Unauthenticated User
     if (!secureSessionCookie || !authorizationHeader || !authorizationToken) {
         return NextResponse.json({ message: 'Unauthorized - Missing access token' }, {
             status: 401,
         })
     }
+    // #endregion
 
     /** @type {SupabaseTypes.Session} */
     const decryptedSession = await decryptAES(secureSessionCookie, true);
@@ -187,6 +201,7 @@ export async function PATCH(request) {
         })
     }
 
+    // #region Validating and Decoding JWT or 's_access_token' cookie
     try {
         var decoded = await validateJWT(authorizationToken, userId);
         // Log Here, ex: '{TIMESTAMP} decoded.id {METHOD} {ROUTE} {BODY} {PARAMS}'
@@ -195,7 +210,9 @@ export async function PATCH(request) {
             status: 401
         })
     }
+    // #endregion
 
+    // #region Checking Ratelimit
     try {
         var currentUsage = await limiter.check(limitRequest, `me-${userId}`);
         // Log Here, ex: '{TIMESTAMP} userId {ROUTE} limit {currentUsage}/{limitRequest}'
@@ -211,16 +228,19 @@ export async function PATCH(request) {
             }
         })
     }
+    // #endregion
 
     const searchParams = request.nextUrl.searchParams;
     const type = searchParams.get('type');
     const allowedType = ['preferences'];
 
+    // #region Validating Query Params
     if (type && !allowedType.includes(type)) {
         return NextResponse.json({ message: 'Bad Request - Invalid type' }, { status: 400, headers: newHeaders })
     }
+    // #endregion
 
-    // Check are formData equal to schema using 'Joi'
+    // #region Parsing and Handle formData
     try {
         /** @type {UserFormData} */
         var formData = await request.json();
@@ -231,7 +251,9 @@ export async function PATCH(request) {
             headers: newHeaders
         })
     }
+    // #endregion
 
+    // #region Validating and Handle formData
     const allowedColumn = ['nomor', 'matakuliah', 'semester', 'sks', 'nilai', 'diulang', 'target', 'ontarget'];
     const formDataSchema =
         type === 'preferences' ?
@@ -277,7 +299,9 @@ export async function PATCH(request) {
         console.error(error);
         return NextResponse.json({ message: error.message }, { status: 400, headers: newHeaders })
     }
+    // #endregion
 
+    // #region Initiate Supabase Instance
     const supabase = createServerClient(
         process.env.SUPABASE_URL,
         process.env.SUPABASE_ANON_KEY,
@@ -307,7 +331,9 @@ export async function PATCH(request) {
             },
         }
     )
+    // #endregion
 
+    // #region Update User Data
     /** @type {SupabaseTypes._from<SupabaseTypes.UserData>} */
     var { data: profilBaru, error } =
         type === 'preferences' ?
@@ -322,4 +348,5 @@ export async function PATCH(request) {
     }
 
     return NextResponse.json({ profil: profilBaru[0] }, { status: 200, headers: newHeaders })
+    // #endregion
 }
