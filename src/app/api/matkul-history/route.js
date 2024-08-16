@@ -67,6 +67,7 @@ export async function GET(request) {
         })
     }
 
+    /** @type {SupabaseTypes.Session} */
     const decryptedSession = await decryptAES(secureSessionCookie, true);
     const userId = decryptedSession?.user?.id;
 
@@ -132,6 +133,7 @@ export async function GET(request) {
         }
     )
 
+    /** @type {SupabaseTypes._from<SupabaseTypes.MatkulHistoryData>} */
     let { data, error } = await supabase.from('matkul_history').select('*').order('last_change_at', { ascending: true });
 
     if (error) {
@@ -174,6 +176,7 @@ export async function DELETE(request) {
         })
     }
 
+    /** @type {SupabaseTypes.Session} */
     const decryptedSession = await decryptAES(secureSessionCookie, true);
     const userId = decryptedSession?.user?.id;
 
