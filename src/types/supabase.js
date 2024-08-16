@@ -454,6 +454,21 @@ import {
  * @property {number} university_id
  * Id universitas user
  */
+
+/** User credentials untuk proses login dengan email dan password melalui `'/api/login'`
+ * @typedef {Pick<UserData, 'email'> & UserCredentialsBase} UserCredentials
+ */
+
+/** User credentials tanpa `email`
+ * @typedef {Object} UserCredentialsBase
+ * @property {string} password
+ * Password user dengan kriteria
+ * - min_length : `6`
+ * - max_length : `50`
+ * @property {string} token
+ * Token yang diresolve `hCaptcha` setelah menyelesaikan challange captcha. 
+ * Saat production token ini `required` untuk proses login, jika tidak maka `optional`
+ */
 // #endregion
 
 export const SupabaseTypes = {}
