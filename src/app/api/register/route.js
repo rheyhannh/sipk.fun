@@ -95,6 +95,7 @@ export async function POST(request) {
 
     // Try parsing formData JSON
     try {
+        /** @type {RegisterFormData} */
         var formData = await request.json();
     } catch (error) {
         console.error(error);
@@ -157,6 +158,7 @@ export async function POST(request) {
         }
     )
 
+    /** @type {SupabaseTypes._auth_signUp} */
     const { data, error } = await supabase.auth.signUp({
         email: formData.email,
         password: formData.password,
