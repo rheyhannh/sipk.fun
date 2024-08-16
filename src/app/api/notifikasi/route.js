@@ -66,6 +66,7 @@ export async function GET(request) {
         })
     }
 
+    /** @type {SupabaseTypes.Session} */
     const decryptedSession = await decryptAES(secureSessionCookie, true);
     const userId = decryptedSession?.user?.id;
 
@@ -131,6 +132,7 @@ export async function GET(request) {
         }
     )
 
+    /** @type {SupabaseTypes._from<SupabaseTypes.NotifikasiData>} */
     let { data, error } = await supabase.from('notifikasi').select('*').limit(10).order('unix_created_at', { ascending: false });
 
     if (error) {
