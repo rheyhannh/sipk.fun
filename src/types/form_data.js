@@ -3,6 +3,14 @@ import * as Supabase from './supabase';
 // #endregion
 
 /**
+ * @typedef {Supabase.UserCredentials} LoginFormData
+ */
+
+/**
+ * @typedef {Pick<Supabase.UserCredentials, 'email' | 'token'>} LoginMagiclinkFormData
+ */
+
+/**
  * @typedef {Pick<Supabase.MatkulData, 'nama' | 'semester' | 'sks' | 'dapat_diulang'> & {nilai:Pick<Supabase.MatkulData['nilai'], 'indeks'>} & {target_nilai:Pick<Supabase.MatkulData['target_nilai'], 'indeks'>}} MatkulFormData
  */
 
@@ -11,11 +19,7 @@ import * as Supabase from './supabase';
  */
 
 /**
- * @typedef {Object} PasswordFormData
- * @property {string} password
- * Password user dengan kriteria
- * - min_length : `6`
- * - max_length : `50`
+ * @typedef {Pick<Supabase.UserCredentials, 'password'>} PasswordFormData
  */
 
 /**
