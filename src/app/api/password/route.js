@@ -44,11 +44,13 @@ export async function PATCH(request) {
     const authorizationToken = authorizationHeader ? authorizationHeader.split(' ')[1] : null;
     const cookieStore = cookies();
 
+    // #region Handler Unauthenticated User
     if (!secureSessionCookie || !authorizationHeader || !authorizationToken) {
         return NextResponse.json({ message: 'Unauthorized - Missing access token' }, {
             status: 401,
         })
     }
+    // #endregion
 
     /** @type {SupabaseTypes.Session} */
     const decryptedSession = await decryptAES(secureSessionCookie, true);
@@ -63,6 +65,7 @@ export async function PATCH(request) {
         })
     }
 
+    // #region Validating and Decoding JWT or 's_access_token' cookie
     try {
         var decoded = await validateJWT(authorizationToken, userId);
         // Log Here, ex: '{TIMESTAMP} decoded.id {METHOD} {ROUTE} {BODY} {PARAMS}'
@@ -71,7 +74,9 @@ export async function PATCH(request) {
             status: 401
         })
     }
+    // #endregion
 
+    // #region Checking Ratelimit
     try {
         var currentUsage = await limiter.check(limitRequest, `password-${userId}`);
         // Log Here, ex: '{TIMESTAMP} userId {ROUTE} limit {currentUsage}/{limitRequest}'
@@ -87,8 +92,9 @@ export async function PATCH(request) {
             }
         })
     }
+    // #endregion
 
-    // Check are formData equal to schema using 'Joi'
+    // #region Parsing and Handle formData
     try {
         /** @type {PasswordFormData} */
         var formData = await request.json();
@@ -99,7 +105,9 @@ export async function PATCH(request) {
             headers: newHeaders
         })
     }
+    // #endregion
 
+    // #region Validating and Handle formData
     const formDataSchema = Joi.object({
         password: Joi.string().min(6).max(50).required()
     }).required()
@@ -110,7 +118,9 @@ export async function PATCH(request) {
         console.error(error);
         return NextResponse.json({ message: error.message }, { status: 400, headers: newHeaders })
     }
+    // #endregion
 
+    // #region Initiate Supabase Instance
     const supabase = createServerClient(
         process.env.SUPABASE_URL,
         process.env.SUPABASE_ANON_KEY,
@@ -140,7 +150,9 @@ export async function PATCH(request) {
             },
         }
     )
+    // #endregion
 
+    // #region Update Password and Handle Response
     /** @type {SupabaseTypes._auth_updateUser} */
     const { data, error } = await supabase.auth.updateUser({
         password: formData.password
@@ -154,4 +166,5 @@ export async function PATCH(request) {
     return new Response(null, {
         status: 204
     })
+    // #endregion
 }
