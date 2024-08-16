@@ -48,6 +48,7 @@ export async function GET(request) {
     const authorizationToken = authorizationHeader ? authorizationHeader.split(' ')[1] : null;
     const serviceApiKey = await getApiKey(request);
 
+    // #region Handler when serviceApiKey exist
     if (serviceApiKey) {
         if (serviceApiKey !== process.env.SUPABASE_SERVICE_KEY) {
             return NextResponse.json({ message: `Invalid API key` }, {
@@ -63,12 +64,15 @@ export async function GET(request) {
 
         return NextResponse.json(data, { status: 200 })
     }
+    // #endregion
 
+    // #region Handler Unauthenticated User
     if (!secureSessionCookie || !authorizationHeader || !authorizationToken) {
         return NextResponse.json({ message: 'Unauthorized - Missing access token' }, {
             status: 401,
         })
     }
+    // #endregion
 
     /** @type {SupabaseTypes.Session} */
     const decryptedSession = await decryptAES(secureSessionCookie, true);
@@ -83,6 +87,7 @@ export async function GET(request) {
         })
     }
 
+    // #region Validating and Decoding JWT or 's_access_token' cookie
     try {
         var decoded = await validateJWT(authorizationToken, userId);
         // Log Here, ex: '{TIMESTAMP} decoded.id {METHOD} {ROUTE} {BODY} {PARAMS}'
@@ -91,7 +96,9 @@ export async function GET(request) {
             status: 401
         })
     }
+    // #endregion
 
+    // #region Checking Ratelimit
     try {
         var currentUsage = await limiter.check(limitRequest, `rating-${userId}`);
         // Log Here, ex: '{TIMESTAMP} userId {ROUTE} limit {currentUsage}/{limitRequest}'
@@ -105,7 +112,9 @@ export async function GET(request) {
             }
         })
     }
+    // #endregion
 
+    // #region Initiate Supabase Instance
     const supabase = createServerClient(
         process.env.SUPABASE_URL,
         process.env.SUPABASE_ANON_KEY,
@@ -135,7 +144,9 @@ export async function GET(request) {
             },
         }
     )
+    // #endregion
 
+    // #region Get Rating and Handle Response
     /** @type {SupabaseTypes._from<SupabaseTypes.RatingData>} */
     let { data, error } = await supabase.from('rating').select('*');
 
@@ -157,6 +168,7 @@ export async function GET(request) {
             'X-Ratelimit-Remaining': limitRequest - currentUsage,
         }
     });
+    // #endregion
 }
 
 /**
@@ -170,11 +182,13 @@ export async function POST(request) {
     const authorizationToken = authorizationHeader ? authorizationHeader.split(' ')[1] : null;
     const cookieStore = cookies();
 
+    // #region Handler Unauthenticated User
     if (!secureSessionCookie || !authorizationHeader || !authorizationToken) {
         return NextResponse.json({ message: 'Unauthorized - Missing access token' }, {
             status: 401,
         })
     }
+    // #endregion
 
     /** @type {SupabaseTypes.Session} */
     const decryptedSession = await decryptAES(secureSessionCookie, true);
@@ -189,6 +203,7 @@ export async function POST(request) {
         })
     }
 
+    // #region Validating and Decoding JWT or 's_access_token' cookie
     try {
         var decoded = await validateJWT(authorizationToken, userId);
         // Log Here, ex: '{TIMESTAMP} decoded.id {METHOD} {ROUTE} {BODY} {PARAMS}'
@@ -197,7 +212,9 @@ export async function POST(request) {
             status: 401
         })
     }
+    // #endregion
 
+    // #region Checking Ratelimit
     try {
         var currentUsage = await limiter.check(limitRequest, `rating-${userId}`);
         // Log Here, ex: '{TIMESTAMP} userId {ROUTE} limit {currentUsage}/{limitRequest}'
@@ -213,8 +230,9 @@ export async function POST(request) {
             }
         })
     }
+    // #endregion
 
-    // Refactorable from here
+    // #region Parsing and Handle formData
     try {
         /** @type {RatingFormData} */
         var formData = await request.json();
@@ -225,7 +243,9 @@ export async function POST(request) {
             headers: newHeaders
         })
     }
+    // #endregion
 
+    // #region Validating and Handle formData
     const formDataSchema = Joi.object({
         rating: Joi.number().min(1).max(5).required(),
         review: Joi.string().allow('').max(200).required(),
@@ -252,8 +272,9 @@ export async function POST(request) {
     if (unallowedSymbols.some(symbol => formData.review.includes(symbol))) {
         return NextResponse.json({ message: `Review tidak dapat mengandung simbol > , < , & , ' , " dan /` }, { status: 400, headers: newHeaders })
     }
-    // to here
+    // #endregion
 
+    // #region Initiate Supabase Instance
     const supabase = createServerClient(
         process.env.SUPABASE_URL,
         process.env.SUPABASE_ANON_KEY,
@@ -283,7 +304,9 @@ export async function POST(request) {
             },
         }
     )
+    // #endregion
 
+    // #region Check are User Rating already exist
     /** @type {SupabaseTypes._from<SupabaseTypes.RatingData} */
     var { data, error } = await supabase.from('rating').select('*');
 
@@ -295,9 +318,11 @@ export async function POST(request) {
     if (data.length) {
         return NextResponse.json({ message: `Gagal menambahkan rating, rating sudah tersedia`, resolve: `Silahkan edit atau hapus rating yang sudah tersedia` }, { status: 400, headers: newHeaders })
     }
+    // #endregion
 
     const unixNow = Math.floor(Date.now() / 1000);
 
+    // #region Add Rating and Handle Response
     /** @type {SupabaseTypes._from<SupabaseTypes.RatingData} */
     var { data, error } = await supabase.from('rating').insert({ ...formData, owned_by: userId, unix_created_at: unixNow }).select();
 
@@ -307,6 +332,7 @@ export async function POST(request) {
     }
 
     return NextResponse.json({ rating: data[0] }, { status: 200, headers: newHeaders })
+    // #endregion
 }
 
 /**
@@ -322,11 +348,13 @@ export async function PATCH(request) {
     const searchParams = request.nextUrl.searchParams;
     const ratingId = searchParams.get('id');
 
+    // #region Handler Unauthenticated User
     if (!secureSessionCookie || !authorizationHeader || !authorizationToken) {
         return NextResponse.json({ message: 'Unauthorized - Missing access token' }, {
             status: 401,
         })
     }
+    // #endregion
 
     /** @type {SupabaseTypes.Session} */
     const decryptedSession = await decryptAES(secureSessionCookie, true);
@@ -341,6 +369,7 @@ export async function PATCH(request) {
         })
     }
 
+    // #region Validating and Decoding JWT or 's_access_token' cookie
     try {
         var decoded = await validateJWT(authorizationToken, userId);
         // Log Here, ex: '{TIMESTAMP} decoded.id {METHOD} {ROUTE} {BODY} {PARAMS}'
@@ -349,7 +378,9 @@ export async function PATCH(request) {
             status: 401
         })
     }
+    // #endregion
 
+    // #region Checking Ratelimit
     try {
         var currentUsage = await limiter.check(limitRequest, `rating-${userId}`);
         // Log Here, ex: '{TIMESTAMP} userId {ROUTE} limit {currentUsage}/{limitRequest}'
@@ -365,7 +396,9 @@ export async function PATCH(request) {
             }
         })
     }
+    // #endregion
 
+    // #region Validating 'ratingId'
     if (!ratingId) {
         return NextResponse.json({ message: `Gagal memperbarui rating, 'id' dibutuhkan` }, {
             status: 400,
@@ -379,8 +412,9 @@ export async function PATCH(request) {
             headers: newHeaders
         })
     }
+    // #endregion
 
-    // Refactorable from here
+    // #region Parsing and Handle formData
     try {
         /** @type {RatingFormData} */
         var formData = await request.json();
@@ -391,7 +425,9 @@ export async function PATCH(request) {
             headers: newHeaders
         })
     }
+    // #endregion
 
+    // #region Validating and Handle formData
     const formDataSchema = Joi.object({
         rating: Joi.number().min(1).max(5).required(),
         review: Joi.string().allow('').max(200).required(),
@@ -418,8 +454,9 @@ export async function PATCH(request) {
     if (unallowedSymbols.some(symbol => formData.review.includes(symbol))) {
         return NextResponse.json({ message: `Review tidak dapat mengandung simbol > , < , & , ' , " dan /` }, { status: 400, headers: newHeaders })
     }
-    // to here
+    // #endregion
 
+    // #region Initiate Supabase Instance
     const supabase = createServerClient(
         process.env.SUPABASE_URL,
         process.env.SUPABASE_ANON_KEY,
@@ -449,9 +486,11 @@ export async function PATCH(request) {
             },
         }
     )
+    // #endregion
 
     const unixNow = Math.floor(Date.now() / 1000);
 
+    // #region Update Matkul and Handle Response
     /** @type {SupabaseTypes._from<SupabaseTypes.RatingData>} */
     const { data, error } = await supabase.from('rating').update(
         {
@@ -472,4 +511,5 @@ export async function PATCH(request) {
     }
 
     return NextResponse.json({ rating: data[0] }, { status: 200, headers: newHeaders })
+    // #endregion
 }
