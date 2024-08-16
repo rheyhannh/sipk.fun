@@ -11,6 +11,10 @@ import * as Supabase from './supabase';
  */
 
 /**
+ * @typedef {Supabase.UserCredentials & Pick<Supabase.UserData, 'fullname'> & {university:Supabase.UniversitasData['nama'], university_id:Supabase.UniversitasData['id']}} RegisterFormData
+ */
+
+/**
  * @typedef {Pick<Supabase.MatkulData, 'nama' | 'semester' | 'sks' | 'dapat_diulang'> & {nilai:Pick<Supabase.MatkulData['nilai'], 'indeks'>} & {target_nilai:Pick<Supabase.MatkulData['target_nilai'], 'indeks'>}} MatkulFormData
  */
 
