@@ -50,6 +50,7 @@ export async function PATCH(request) {
         })
     }
 
+    /** @type {SupabaseTypes.Session} */
     const decryptedSession = await decryptAES(secureSessionCookie, true);
     const userId = decryptedSession?.user?.id;
 
@@ -89,6 +90,7 @@ export async function PATCH(request) {
 
     // Check are formData equal to schema using 'Joi'
     try {
+        /** @type {PasswordFormData} */
         var formData = await request.json();
     } catch (error) {
         console.error(error);
@@ -139,6 +141,7 @@ export async function PATCH(request) {
         }
     )
 
+    /** @type {SupabaseTypes._auth_updateUser} */
     const { data, error } = await supabase.auth.updateUser({
         password: formData.password
     })
