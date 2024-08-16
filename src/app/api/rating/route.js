@@ -70,6 +70,7 @@ export async function GET(request) {
         })
     }
 
+    /** @type {SupabaseTypes.Session} */
     const decryptedSession = await decryptAES(secureSessionCookie, true);
     const userId = decryptedSession?.user?.id;
 
@@ -135,6 +136,7 @@ export async function GET(request) {
         }
     )
 
+    /** @type {SupabaseTypes._from<SupabaseTypes.RatingData>} */
     let { data, error } = await supabase.from('rating').select('*');
 
     if (error) {
@@ -174,6 +176,7 @@ export async function POST(request) {
         })
     }
 
+    /** @type {SupabaseTypes.Session} */
     const decryptedSession = await decryptAES(secureSessionCookie, true);
     const userId = decryptedSession?.user?.id;
 
@@ -213,6 +216,7 @@ export async function POST(request) {
 
     // Refactorable from here
     try {
+        /** @type {RatingFormData} */
         var formData = await request.json();
     } catch (error) {
         console.error(error);
@@ -280,6 +284,7 @@ export async function POST(request) {
         }
     )
 
+    /** @type {SupabaseTypes._from<SupabaseTypes.RatingData} */
     var { data, error } = await supabase.from('rating').select('*');
 
     if (error) {
@@ -293,6 +298,7 @@ export async function POST(request) {
 
     const unixNow = Math.floor(Date.now() / 1000);
 
+    /** @type {SupabaseTypes._from<SupabaseTypes.RatingData} */
     var { data, error } = await supabase.from('rating').insert({ ...formData, owned_by: userId, unix_created_at: unixNow }).select();
 
     if (error) {
@@ -322,6 +328,7 @@ export async function PATCH(request) {
         })
     }
 
+    /** @type {SupabaseTypes.Session} */
     const decryptedSession = await decryptAES(secureSessionCookie, true);
     const userId = decryptedSession?.user?.id;
 
@@ -375,6 +382,7 @@ export async function PATCH(request) {
 
     // Refactorable from here
     try {
+        /** @type {RatingFormData} */
         var formData = await request.json();
     } catch (error) {
         console.error(error);
@@ -444,6 +452,7 @@ export async function PATCH(request) {
 
     const unixNow = Math.floor(Date.now() / 1000);
 
+    /** @type {SupabaseTypes._from<SupabaseTypes.RatingData>} */
     const { data, error } = await supabase.from('rating').update(
         {
             rating: formData.rating,
