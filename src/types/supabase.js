@@ -403,6 +403,17 @@ import {
  * Data user, jika autentikasi atau `updateUser` gagal maka bernilai `null`
  * @property {SupabaseAuthError} error
  */
+
+/** Override `User` dan `Session` type yang direturn dari `supabase.auth.signUp()`
+ * @typedef {Object} _auth_signUp
+ * @property {Object} data
+ * Data yang diresolve dari supabase
+ * @property {User | null} data.user
+ * Data user, jika autentikasi atau `signUp()` gagal maka bernilai `null`
+ * @property {Session | null} data.session
+ * Session user, jika autentikasi atau `signUp()` gagal maka bernilai `null`
+ * @property {SupabaseAuthError} error
+ */
 // #endregion
 
 // #region [MISC]
@@ -467,7 +478,7 @@ import {
  * - max_length : `50`
  * @property {string} token
  * Token yang diresolve `hCaptcha` setelah menyelesaikan challange captcha. 
- * Saat production token ini `required` untuk proses login, jika tidak maka `optional`
+ * Saat production token ini `required` untuk proses login dan register, jika tidak maka `optional`
  */
 // #endregion
 
