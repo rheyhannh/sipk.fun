@@ -51,6 +51,7 @@ export async function GET(request) {
     const authorizationToken = authorizationHeader ? authorizationHeader.split(' ')[1] : null;
     const serviceApiKey = await getApiKey(request);
 
+    // #region Handler when serviceApiKey exist
     if (serviceApiKey) {
         if (serviceApiKey !== process.env.SUPABASE_SERVICE_KEY) {
             return NextResponse.json({ message: `Invalid API key` }, {
@@ -66,7 +67,9 @@ export async function GET(request) {
 
         return NextResponse.json(data, { status: 200 })
     }
+    // #endregion
 
+    // #region Verifying serviceGuestCookie and serviceUserIdCookie
     if (serviceGuestCookie) {
         if (!isUUID(serviceGuestCookie)) {
             const newId = crypto.randomUUID();
@@ -81,10 +84,12 @@ export async function GET(request) {
             serviceUserIdCookie = 'public';
         }
     }
+    // #endregion
 
+    // Identifier for Ratelimiting
     const guestKey = await getIpFromHeaders() ?? serviceGuestCookie ?? 'public';
 
-    // Try checking rate limit
+    // #region Checking Ratelimit
     try {
         var currentUsage = await limiter.check(limitRequest, guestKey);
         // Log Here, ex: '{TIMESTAMP} userId {ROUTE} limit {currentUsage}/{limitRequest}'
@@ -100,24 +105,30 @@ export async function GET(request) {
             }
         })
     }
+    // #endregion
 
     const searchParams = request.nextUrl.searchParams;
     const type = searchParams.get('type');
     const id = searchParams.get('id');
 
+    // #region Validating 'type' Query Params
     if (!type) { return NextResponse.json({ message: 'Bad Request - Missing type params' }, { status: 400, headers: newHeaders }) }
     if (type !== 'public' && type !== 'user') { return NextResponse.json({ message: 'Bad Request - Invalid type' }, { status: 400, headers: newHeaders }) }
+    
     if (type === 'user') {
         if (!id) { return NextResponse.json({ message: 'Bad Request - Missing id params' }, { status: 400, headers: newHeaders }) }
         if (!isNumeric(id) || !isInt(id, { min: 1, max: parseInt(process.env.DATA_UNIVERSITAS_LENGTH) })) {
             return NextResponse.json({ message: 'Bad Request - Invalid id' }, { status: 400, headers: newHeaders })
         }
+
+        // #region Handler Unauthenticated User
         if (!secureSessionCookie || !authorizationHeader || !authorizationToken) {
             return NextResponse.json({ message: 'Unauthorized - Missing access token' }, {
                 status: 401,
                 headers: newHeaders
             })
         }
+        // #endregion
 
         /** @type {SupabaseTypes.Session} */
         const decryptedSession = await decryptAES(secureSessionCookie, true);
@@ -133,6 +144,7 @@ export async function GET(request) {
             })
         }
 
+        // #region Validating and Decoding JWT or 's_access_token' cookie
         try {
             var decoded = await validateJWT(authorizationToken, userId);
             // Log Here, ex: '{TIMESTAMP} decoded.id {METHOD} {ROUTE} {BODY} {PARAMS}'
@@ -142,9 +154,11 @@ export async function GET(request) {
                 headers: newHeaders
             })
         }
+        // #endregion
     }
+    // #endregion
 
-    // Create connection to 'supabase' using createServerClient
+    // #region Initiate Supabase Instance
     const supabase = createServerClient(
         process.env.SUPABASE_URL,
         process.env.SUPABASE_ANON_KEY,
@@ -173,7 +187,9 @@ export async function GET(request) {
             },
         }
     )
+    // #endregion
 
+    // #region Get Universitas and Handle Response
     /** @type {SupabaseTypes._from<SupabaseTypes.UniversitasData>} */
     const { data, error } = type === 'user' ?
         await supabase.from('universitas').select('id,nama,penilaian').eq('id', id) :
@@ -185,4 +201,5 @@ export async function GET(request) {
     }
 
     return NextResponse.json(data, { status: 200, headers: newHeaders })
+    // #endregion
 }
