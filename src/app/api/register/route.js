@@ -5,7 +5,7 @@ import { RegisterFormData } from '@/types/form_data';
 
 // #region NEXT DEPEDENCY
 import { NextResponse, NextRequest } from 'next/server';
-import { cookies, headers } from 'next/headers';
+import { cookies } from 'next/headers';
 // #endregion
 
 // #region SUPABASE DEPEDENCY
