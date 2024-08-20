@@ -130,6 +130,7 @@ export async function rateLimit(options) {
     const tokenCache = new LRUCache({
         max: options?.uniqueTokenPerInterval || 500,
         ttl: options?.interval || 60000,
+        ttlAutopurge: true,
     });
 
     const check = async (limit, token) => {
