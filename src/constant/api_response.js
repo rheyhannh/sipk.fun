@@ -32,7 +32,7 @@
  * General message untuk ditampilkan kepada user menggunakan `toast`. Gunakan bahasa yang sederhana, pendek dan mudah dimengerti user
  * @property {Object} error 
  * Object yang merepresentasikan error yang terjadi
- * @property {AuthErrorCodes} error.code
+ * @property {AuthErrorCodes | RatelimitErrorCodes} error.code
  * Kode referensi error pada SIPK
  * - Contoh : `'AUTH_00'`
  * @property {string} error.message
@@ -150,6 +150,54 @@ export const AuthErrorResponse = {
     }),
 }
 
+/** @typedef {'RL_00' | 'RL_01'} RatelimitErrorCodes */
+
+/** 
+ * @typedef {Object} RatelimitErrorResponseType
+ * @property {(message:string, errorHintUrl:string, errorDetails:any, customProps:Object) => Omit<APIResponseBodyProps, 'data'>} maximum_usage
+ * Method untuk generate payload response body saat penggunaan akses atau rate limit `token` mencapai maksimal dengan parameter berikut,
+ * - `message` : String untuk override default message yang ditampilkan ke user dengan `toast`
+ * - `errorHintUrl` : Link atau pathname yang dapat digunakan sebagai call to action untuk user mengetahui lebih lanjut `error` yang terjadi 
+ * - `errorDetails` : Error details dapat berupa object untuk mendeskripsikan field tertentu atau lainnya
+ * - `customProps` : Object untuk menambah props tertentu selain status, message, code dan error
+ * 
+ * ```js
+ * const payload = {
+ *      status: 'error',
+ *      code: 429,
+ *      message: message ?? 'Terlalu banyak request, coba lagi nanti',
+ *      error: {
+ *          code: 'RL_00',
+ *          message: 'Too Many Request - Rate limit exceeded'
+ *      },
+ *      ...customProps
+ * }
+ * ```
+ * @property {(message:string, errorHintUrl:string, errorDetails:any, customProps:Object) => Omit<APIResponseBodyProps, 'data'>} maximum_token
+ * Method untuk generate payload response body saat jumlah rate limit `token` mencapai maksimal dengan parameter berikut,
+ * - `message` : String untuk override default message yang ditampilkan ke user dengan `toast`
+ * - `errorHintUrl` : Link atau pathname yang dapat digunakan sebagai call to action untuk user mengetahui lebih lanjut `error` yang terjadi 
+ * - `errorDetails` : Error details dapat berupa object untuk mendeskripsikan field tertentu atau lainnya
+ * - `customProps` : Object untuk menambah props tertentu selain status, message, code dan error
+ * 
+ * ```js
+ * const payload = {
+ *      status: 'error',
+ *      code: 503,
+ *      message: message ?? 'Server sibuk, coba lagi nanti',
+ *      error: {
+ *          code: 'RL_01',
+ *          message: 'Service Unavailable - Server is currently busy'
+ *      },
+ *      ...customProps
+ * }
+ * ```
+*/
+
+/** 
+ * Generate payload response body saat `RatelimitError` dimana setiap key merepresentasikan tipe error
+ * @type {RatelimitErrorResponseType} 
+ */
 export const RatelimitErrorResponse = {
     maximum_usage: (message, errorHintUrl, errorDetails, customProps) => ({
         status: 'error',
