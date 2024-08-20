@@ -151,5 +151,28 @@ export const AuthErrorResponse = {
 }
 
 export const RatelimitErrorResponse = {
-    
+    maximum_usage: (message, errorHintUrl, errorDetails, customProps) => ({
+        status: 'error',
+        code: 429,
+        message: message ?? 'Terlalu banyak request, coba lagi nanti',
+        error: {
+            code: 'RL_00',
+            message: 'Too Many Request - Rate limit exceeded',
+            hintUrl: errorHintUrl,
+            details: errorDetails,
+        },
+        ...((({ status, code, message, error, ...rest }) => rest)(customProps || {}))
+    }),
+    maximum_token: (message, errorHintUrl, errorDetails, customProps) => ({
+        status: 'error',
+        code: 503,
+        message: message ?? 'Server sibuk, coba lagi nanti',
+        error: {
+            code: 'RL_01',
+            message: 'Service Unavailable - Server is currently busy',
+            hintUrl: errorHintUrl,
+            details: errorDetails,
+        },
+        ...((({ status, code, message, error, ...rest }) => rest)(customProps || {}))
+    }),
 }
