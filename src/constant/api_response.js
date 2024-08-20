@@ -4,6 +4,28 @@
  * Response status
  * @property {number} code
  * Http response code
+ * @property {Object<string,any>} headers
+ * Headers response. Initial value `undefined`, jika ingin digunakan dapat ditambahkan pada `customProps`
+ * - Note : Selalu destructure props ini sehingga tidak masuk ke response body
+ * 
+ * Lihat contoh berikut,
+ * ```js
+ * // Assume throwing this error
+ * const error = AuthErrorResponseType.missing_access_token(
+ *      null, // use default message
+ *      undefined, // no url hint
+ *      undefined, // no error details
+ *      {
+ *          headers: {
+ *              'X-Custom-Header': 'CustomHeaderValue',
+ *          }
+ *      }
+ * );
+ * 
+ * // Assume some catch block to handle response
+ * const { headers, ...body } = error; // Destructure 'headers'
+ * return NextResponse.json(body, { status: body.code, headers })
+ * ```
  * @property {any | null} data 
  * Data yang berhasil diresolve
  * @property {string} message
