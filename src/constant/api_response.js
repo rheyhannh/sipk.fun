@@ -2,6 +2,8 @@
  * @typedef {Object} APIResponseBodyProps
  * @property {'success' | 'error'} status
  * Response status
+ * @property {number} code
+ * Http response code
  * @property {any | null} data 
  * Data yang berhasil diresolve
  * @property {string} message
@@ -29,11 +31,12 @@
  * - `message` : String untuk override default message yang ditampilkan ke user dengan `toast`
  * - `errorHintUrl` : Link atau pathname yang dapat digunakan sebagai call to action untuk user mengetahui lebih lanjut `error` yang terjadi 
  * - `errorDetails` : Error details dapat berupa object untuk mendeskripsikan field tertentu atau lainnya
- * - `customProps` : Object untuk menambah props tertentu selain status, message dan error
+ * - `customProps` : Object untuk menambah props tertentu selain status, message, code dan error
  * 
  * ```js
  * const payload = {
  *      status: 'error',
+ *      code: 401,
  *      message: message ?? 'Session tidak ditemukan, silahkan login ulang',
  *      error: {
  *          code: 'AUTH_00',
@@ -47,11 +50,12 @@
  * - `message` : String untuk override default message yang ditampilkan ke user dengan `toast`
  * - `errorHintUrl` : Link atau pathname yang dapat digunakan sebagai call to action untuk user mengetahui lebih lanjut `error` yang terjadi 
  * - `errorDetails` : Error details dapat berupa object untuk mendeskripsikan field tertentu atau lainnya
- * - `customProps` : Object untuk menambah props tertentu selain status, message dan error
+ * - `customProps` : Object untuk menambah props tertentu selain status, message, code dan error
  * 
  * ```js
  * const payload = {
  *      status: 'error',
+ *      code: 401,
  *      message: message ?? 'Session tidak valid, silahkan login ulang',
  *      error: {
  *          code: 'AUTH_01',
@@ -65,11 +69,12 @@
  * - `message` : String untuk override default message yang ditampilkan ke user dengan `toast`
  * - `errorHintUrl` : Link atau pathname yang dapat digunakan sebagai call to action untuk user mengetahui lebih lanjut `error` yang terjadi 
  * - `errorDetails` : Error details dapat berupa object untuk mendeskripsikan field tertentu atau lainnya
- * - `customProps` : Object untuk menambah props tertentu selain status, message dan error
+ * - `customProps` : Object untuk menambah props tertentu selain status, message, code dan error
  * 
  * ```js
  * const payload = {
  *      status: 'error',
+ *      code: 401,
  *      message: message ?? 'Session sudah expired, silahkan login ulang',
  *      error: {
  *          code: 'AUTH_02',
