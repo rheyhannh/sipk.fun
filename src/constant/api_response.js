@@ -87,6 +87,7 @@
 export const AuthErrorResponse = {
     missing_access_token: (message, errorHintUrl, errorDetails, customProps) => ({
         status: 'error',
+        code: 401,
         message: message ?? 'Session tidak ditemukan, silahkan login ulang',
         error: {
             code: 'AUTH_00',
@@ -94,10 +95,11 @@ export const AuthErrorResponse = {
             hintUrl: errorHintUrl,
             details: errorDetails,
         },
-        ...((({ status, message, error, ...rest }) => rest)(customProps || {}))
+        ...((({ status, code, message, error, ...rest }) => rest)(customProps || {}))
     }),
     invalid_access_token: (message, errorHintUrl, errorDetails, customProps) => ({
         status: 'error',
+        code: 401,
         message: message ?? 'Session tidak valid, silahkan login ulang',
         error: {
             code: 'AUTH_01',
@@ -105,10 +107,11 @@ export const AuthErrorResponse = {
             hintUrl: errorHintUrl,
             details: errorDetails,
         },
-        ...((({ status, message, error, ...rest }) => rest)(customProps || {}))
+        ...((({ status, code, message, error, ...rest }) => rest)(customProps || {}))
     }),
     expired_access_token: (message, errorHintUrl, errorDetails, customProps) => ({
         status: 'error',
+        code: 401,
         message: message ?? 'Session sudah expired, silahkan login ulang',
         error: {
             code: 'AUTH_02',
@@ -116,7 +119,7 @@ export const AuthErrorResponse = {
             hintUrl: errorHintUrl,
             details: errorDetails,
         },
-        ...((({ status, message, error, ...rest }) => rest)(customProps || {}))
+        ...((({ status, code, message, error, ...rest }) => rest)(customProps || {}))
     }),
 }
 
