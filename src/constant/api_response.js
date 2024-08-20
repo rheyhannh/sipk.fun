@@ -91,8 +91,8 @@ export const AuthErrorResponse = {
         error: {
             code: 'AUTH_00',
             message: 'Unauthorized - Missing access token',
-            hintUrl: errorHintUrl ?? '',
-            details: errorDetails ?? {},
+            hintUrl: errorHintUrl,
+            details: errorDetails,
         },
         ...((({ status, message, error, ...rest }) => rest)(customProps || {}))
     }),
@@ -102,8 +102,8 @@ export const AuthErrorResponse = {
         error: {
             code: 'AUTH_01',
             message: 'Unauthorized - Invalid access token',
-            hintUrl: errorHintUrl ?? '',
-            details: errorDetails ?? {},
+            hintUrl: errorHintUrl,
+            details: errorDetails,
         },
         ...((({ status, message, error, ...rest }) => rest)(customProps || {}))
     }),
@@ -113,8 +113,8 @@ export const AuthErrorResponse = {
         error: {
             code: 'AUTH_02',
             message: 'Unauthorized - Expired access token',
-            hintUrl: errorHintUrl ?? '',
-            details: errorDetails ?? {},
+            hintUrl: errorHintUrl,
+            details: errorDetails,
         },
         ...((({ status, message, error, ...rest }) => rest)(customProps || {}))
     }),
