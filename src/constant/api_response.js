@@ -61,7 +61,7 @@
  * Error details dapat berupa object untuk mendeskripsikan field tertentu atau lainnya
  */
 
-/** @typedef {'AUTH_00' | 'AUTH_01' | 'AUTH_02'} AuthErrorCodes */
+/** @typedef {'AUTH_00' | 'AUTH_01' | 'AUTH_02' | 'AUTH_03' | 'AUTH_04'} AuthErrorCodes */
 
 /** 
  * @typedef {Object} AuthErrorResponseType
@@ -122,6 +122,48 @@
  *      error: {
  *          code: 'AUTH_02',
  *          message: 'Unauthorized - Expired access token',
+ *          hintUrl: errorHintUrl,
+ *          details: errorDetails,
+ *      },
+ *      ...customProps
+ * }
+ * ```
+ * @property {(message?:string, errorHintUrl?:string, errorDetails?:Object<string,any>, customProps?:Object<string,any>) => APIResponseErrorProps} missing_session
+ * Method untuk generate payload response body saat session atau cookie `'_Secure-auth.session-token'` tidak tersedia dengan `optional` parameter berikut,
+ * - `message` : String untuk override default message yang ditampilkan ke user dengan `toast`
+ * - `errorHintUrl` : Link atau pathname yang dapat digunakan sebagai call to action untuk user mengetahui lebih lanjut `error` yang terjadi 
+ * - `errorDetails` : Error details dapat berupa object untuk mendeskripsikan field tertentu atau lainnya
+ * - `customProps` : Object untuk menambah props tertentu selain status, message, code dan error
+ * 
+ * ```js
+ * const payload = {
+ *      status: 'error',
+ *      code: 401,
+ *      message: message ?? 'Session tidak ditemukan',
+ *      error: {
+ *          code: 'AUTH_03',
+ *          message: 'Unauthorized - Missing session',
+ *          hintUrl: errorHintUrl,
+ *          details: errorDetails,
+ *      },
+ *      ...customProps
+ * }
+ * ```
+ * @property {(message?:string, errorHintUrl?:string, errorDetails?:Object<string,any>, customProps?:Object<string,any>) => APIResponseErrorProps} invalid_session
+ * Method untuk generate payload response body saat session atau cookie `'_Secure-auth.session-token'` tidak valid dengan `optional` parameter berikut,
+ * - `message` : String untuk override default message yang ditampilkan ke user dengan `toast`
+ * - `errorHintUrl` : Link atau pathname yang dapat digunakan sebagai call to action untuk user mengetahui lebih lanjut `error` yang terjadi 
+ * - `errorDetails` : Error details dapat berupa object untuk mendeskripsikan field tertentu atau lainnya
+ * - `customProps` : Object untuk menambah props tertentu selain status, message, code dan error
+ * 
+ * ```js
+ * const payload = {
+ *      status: 'error',
+ *      code: 401,
+ *      message: message ?? 'Session tidak valid',
+ *      error: {
+ *          code: 'AUTH_04',
+ *          message: 'Unauthorized - Invalid session',
  *          hintUrl: errorHintUrl,
  *          details: errorDetails,
  *      },
