@@ -3508,7 +3508,7 @@ export const DetailMatkul = () => {
                                     !userIdCookie ||
                                     !context?.data?.id ||
                                     !context?.data?.nama
-                                    ) {
+                                ) {
                                     router.refresh();
                                     throw new Error('Terjadi kesalahan, silahkan coba lagi');
                                 }
