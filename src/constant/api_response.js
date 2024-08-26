@@ -1,5 +1,5 @@
 /**
- * @typedef {Object} APIResponseBodyProps
+ * @typedef {Object} APIResponseBaseProps
  * @property {'success' | 'error'} status
  * Response status
  * @property {number} code
@@ -62,10 +62,14 @@
  */
 
 /** @typedef {'AUTH_00' | 'AUTH_01' | 'AUTH_02' | 'AUTH_03' | 'AUTH_04'} AuthErrorCodes */
+/** @typedef {Omit<APIResponseBaseProps, 'data'>} APIResponseErrorProps */
+/** @typedef {Omit<APIResponseBaseProps, 'error'>} APIResponseSuccessProps */
+/** @typedef {Omit<APIResponseBaseProps, 'data' | 'code' | 'headers'>} ClientAPIResponseErrorProps */
+/** @typedef {Omit<APIResponseBaseProps, 'error' | 'code' | 'headers'>} ClientAPIResponseSuccessProps */
 
 /** 
  * @typedef {Object} AuthErrorResponseType
- * @property {(message?:string, errorHintUrl?:string, errorDetails?:Object<string,any>, customProps?:Object<string,any>) => Omit<APIResponseBodyProps, 'data'>} missing_access_token
+ * @property {(message?:string, errorHintUrl?:string, errorDetails?:Object<string,any>, customProps?:Object<string,any>) => APIResponseErrorProps} missing_access_token
  * Method untuk generate payload response body saat user access token atau cookie `'s_access_token'` tidak tersedia dengan `optional` parameter berikut,
  * - `message` : String untuk override default message yang ditampilkan ke user dengan `toast`
  * - `errorHintUrl` : Link atau pathname yang dapat digunakan sebagai call to action untuk user mengetahui lebih lanjut `error` yang terjadi 
@@ -86,7 +90,7 @@
  *      ...customProps
  * }
  * ```
- * @property {(message?:string, errorHintUrl?:string, errorDetails?:Object<string,any>, customProps?:Object<string,any>) => Omit<APIResponseBodyProps, 'data'>} invalid_access_token
+ * @property {(message?:string, errorHintUrl?:string, errorDetails?:Object<string,any>, customProps?:Object<string,any>) => APIResponseErrorProps} invalid_access_token
  * Method untuk generate payload response body saat user access token atau cookie `'s_access_token'` tidak valid dengan `optional` parameter berikut,
  * - `message` : String untuk override default message yang ditampilkan ke user dengan `toast`
  * - `errorHintUrl` : Link atau pathname yang dapat digunakan sebagai call to action untuk user mengetahui lebih lanjut `error` yang terjadi 
@@ -107,7 +111,7 @@
  *      ...customProps
  * }
  * ```
- * @property {(message?:string, errorHintUrl?:string, errorDetails?:Object<string,any>, customProps?:Object<string,any>) => Omit<APIResponseBodyProps, 'data'>} expired_access_token
+ * @property {(message?:string, errorHintUrl?:string, errorDetails?:Object<string,any>, customProps?:Object<string,any>) => APIResponseErrorProps} expired_access_token
  * Method untuk generate payload response body saat user access token atau cookie `'s_access_token'` expired atau kadaluwarsa dengan `optional` parameter berikut,
  * - `message` : String untuk override default message yang ditampilkan ke user dengan `toast`
  * - `errorHintUrl` : Link atau pathname yang dapat digunakan sebagai call to action untuk user mengetahui lebih lanjut `error` yang terjadi 
@@ -243,7 +247,7 @@ export const AuthErrorResponse = {
 
 /** 
  * @typedef {Object} RatelimitErrorResponseType
- * @property {(message?:string, errorHintUrl?:string, errorDetails?:Object<string,any>, customProps?:Object<string,any>) => Omit<APIResponseBodyProps, 'data'>} maximum_usage
+ * @property {(message?:string, errorHintUrl?:string, errorDetails?:Object<string,any>, customProps?:Object<string,any>) => APIResponseErrorProps} maximum_usage
  * Method untuk generate payload response body saat penggunaan akses atau rate limit `token` mencapai maksimal dengan `optional` parameter berikut,
  * - `message` : String untuk override default message yang ditampilkan ke user dengan `toast`
  * - `errorHintUrl` : Link atau pathname yang dapat digunakan sebagai call to action untuk user mengetahui lebih lanjut `error` yang terjadi 
@@ -264,7 +268,7 @@ export const AuthErrorResponse = {
  *      ...customProps
  * }
  * ```
- * @property {(message?:string, errorHintUrl?:string, errorDetails?:Object<string,any>, customProps?:Object<string,any>) => Omit<APIResponseBodyProps, 'data'>} maximum_token
+ * @property {(message?:string, errorHintUrl?:string, errorDetails?:Object<string,any>, customProps?:Object<string,any>) => APIResponseErrorProps} maximum_token
  * Method untuk generate payload response body saat jumlah rate limit `token` mencapai maksimal dengan `optional` parameter berikut,
  * - `message` : String untuk override default message yang ditampilkan ke user dengan `toast`
  * - `errorHintUrl` : Link atau pathname yang dapat digunakan sebagai call to action untuk user mengetahui lebih lanjut `error` yang terjadi 
