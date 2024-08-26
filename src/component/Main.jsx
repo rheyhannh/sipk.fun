@@ -1,7 +1,11 @@
 'use client'
 
 // #region NEXT DEPENDENCY
-import Image from "next/image";
+import Image, { ImageProps } from "next/image";
+// #endregion
+
+// #region REACT DEPEDENCY
+import * as React from 'react';
 // #endregion
 
 // #region STYLE DEPEDENCY
