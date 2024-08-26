@@ -1,20 +1,23 @@
-// ========== TYPE DEPEDENCY ========== //
+// #region TYPE DEPEDENCY
 import * as ContextTypes from '../types/context.js'
 import {
     ClientAPIResponseErrorProps as ApiResponseError,
     ClientAPIResponseSuccessProps as ApiResponseSuccess,
 } from '@/constant/api_response';
+// #endregion
 
-// ========== NEXT DEPEDENCY ========== //
+// #region NEXT DEPEDENCY
 import Link from "next/link";
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { League_Spartan } from 'next/font/google';
+// #endregion
 
-// ========== REACT DEPEDENCY ========== //
+// #region REACT DEPEDENCY
 import { useState, useContext, useRef } from "react";
+// #endregion
 
-// ========== COMPONENTS DEPEDENCY ========== //
+// #region COMPONENT DEPEDENCY
 import { mutate } from 'swr';
 import { useCookies } from 'next-client-cookies';
 import toast from 'react-hot-toast';
@@ -22,18 +25,21 @@ import { ModalContext } from "./provider/Modal";
 import { Accordion } from '@/component/Accordion';
 import { unixToDate, getLoadingMessage, checkStrongPassword } from "@/utils/client_side";
 import { Spinner } from './loader/Loading.jsx';
+// #endregion
 
-// ========== UTIL DEPEDENCY ========== //
+// #region UTIL DEPEDENCY
 import isLength from 'validator/lib/isLength';
 import isInt from 'validator/lib/isInt';
 import isEmpty from 'validator/lib/isEmpty';
 import isFloat from 'validator/lib/isFloat'
 import isAlpha from 'validator/lib/isAlpha';
+// #endregion
 
-// ========== DATA DEPEDENCY ========== //
+// #region HOOKS DEPEDENCY
 import { useUser, useUniversitas, useRating } from "@/data/core";
+// #endregion
 
-// ========== ICON DEPEDENCY ========== //
+// #region ICON DEPEDENCY
 import { FaTimes, FaRegTimesCircle, FaEye, FaEyeSlash, FaCheckCircle, FaExclamationCircle, FaExclamation, FaInfo, FaBook, FaTelegramPlane, FaTiktok } from 'react-icons/fa'
 import { FaRegCircleCheck, FaPlus, FaCircleInfo, FaGear, FaArrowUpRightFromSquare } from "react-icons/fa6";
 import { AiOutlineStar, AiFillStar, AiOutlineDrag } from "react-icons/ai";
@@ -44,8 +50,9 @@ import {
     IoPlayBack,
     IoArrowBack
 } from "react-icons/io5";
+// #endregion
 
-// ========== STYLE DEPEDENCY ========== //
+// #region STYLE DEPEDENCY
 import styles from './style/modal.module.css'
 const league_spartan = League_Spartan({
     subsets: ['latin'],
@@ -53,6 +60,7 @@ const league_spartan = League_Spartan({
     variable: '--leaguespartan-font',
     weight: ['100', '200', '300', '400', '500', '600', '700', '800', '900']
 })
+// #endregion
 
 /*
 ============================== CODE START HERE ==============================
