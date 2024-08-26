@@ -61,11 +61,13 @@
  * Error details dapat berupa object untuk mendeskripsikan field tertentu atau lainnya
  */
 
-/** @typedef {'AUTH_00' | 'AUTH_01' | 'AUTH_02' | 'AUTH_03' | 'AUTH_04'} AuthErrorCodes */
 /** @typedef {Omit<APIResponseBaseProps, 'data'>} APIResponseErrorProps */
 /** @typedef {Omit<APIResponseBaseProps, 'error'>} APIResponseSuccessProps */
+
 /** @typedef {Omit<APIResponseBaseProps, 'data' | 'code' | 'headers'>} ClientAPIResponseErrorProps */
 /** @typedef {Omit<APIResponseBaseProps, 'error' | 'code' | 'headers'>} ClientAPIResponseSuccessProps */
+
+/** @typedef {'AUTH_00' | 'AUTH_01' | 'AUTH_02' | 'AUTH_03' | 'AUTH_04'} AuthErrorCodes */
 
 /** 
  * @typedef {Object} AuthErrorResponseType
