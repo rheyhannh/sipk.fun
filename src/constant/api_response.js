@@ -171,6 +171,30 @@ export const AuthErrorResponse = {
         },
         ...((({ status, code, message, error, ...rest }) => rest)(customProps || {}))
     }),
+    missing_session: (message, errorHintUrl, errorDetails, customProps) => ({
+        status: 'error',
+        code: 401,
+        message: message ?? 'Session tidak ditemukan',
+        error: {
+            code: 'AUTH_03',
+            message: 'Unauthorized - Missing session',
+            hintUrl: errorHintUrl,
+            details: errorDetails,
+        },
+        ...((({ status, code, message, error, ...rest }) => rest)(customProps || {}))
+    }),
+    invalid_session: (message, errorHintUrl, errorDetails, customProps) => ({
+        status: 'error',
+        code: 401,
+        message: message ?? 'Session tidak valid',
+        error: {
+            code: 'AUTH_04',
+            message: 'Unauthorized - Invalid session',
+            hintUrl: errorHintUrl,
+            details: errorDetails,
+        },
+        ...((({ status, code, message, error, ...rest }) => rest)(customProps || {}))
+    }),
 }
 
 /** @typedef {'RL_00' | 'RL_01'} RatelimitErrorCodes */
