@@ -25,6 +25,7 @@ import { ModalContext } from "./provider/Modal";
 import { Accordion } from '@/component/Accordion';
 import { unixToDate, getLoadingMessage, checkStrongPassword } from "@/utils/client_side";
 import { Spinner } from './loader/Loading.jsx';
+import { Logo } from './Main.jsx';
 // #endregion
 
 // #region UTIL DEPEDENCY
@@ -54,12 +55,6 @@ import {
 
 // #region STYLE DEPEDENCY
 import styles from './style/modal.module.css'
-const league_spartan = League_Spartan({
-    subsets: ['latin'],
-    display: 'swap',
-    variable: '--leaguespartan-font',
-    weight: ['100', '200', '300', '400', '500', '600', '700', '800', '900']
-})
 // #endregion
 
 export const Default = () => {
@@ -4456,19 +4451,19 @@ export const Tentang = () => {
 
                             <div className={styles.inner}>
                                 <div className={styles.content}>
-                                    <div className={styles.content__logo}>
-                                        <Image
-                                            src={'/logo_fill.png'}
-                                            width={128}
-                                            height={128}
-                                            alt={'SIPK Logo'}
-                                            priority
-                                        />
-                                        <h2 className={league_spartan.variable} style={{ fontFamily: 'var(--leaguespartan-font)' }}>
-                                            <span style={{ color: 'var(--logo-first-color)' }}>SIP</span>
-                                            <span style={{ color: 'var(--logo-second-color)' }}>K</span>
-                                        </h2>
-                                    </div>
+                                    <Logo
+                                        containerProps={{
+                                            className: styles.content__logo,
+                                        }}
+                                        image={{
+                                            src: '/logo_fill.png',
+                                            width: 128,
+                                            height: 128,
+                                            imageProps: {
+                                                priority: true,
+                                            }
+                                        }}
+                                    />
 
                                     <div className={styles.content__section}>
                                         <Section title={'Info'}>
