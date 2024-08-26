@@ -14,27 +14,27 @@ import { league_spartan } from "@/fonts/fonts";
 
 /**
  * @typedef LogoTextProps
- * @type {object}
- * @property {JSX.Element|string} as Custom element atau string sebagai container, default: `'h2'`
- * @property {object} textProps Custom props yang digunakan selain 'className', default: `{}`
- * @property {object} styles Custom style yang digunakan selain 'fontFamily', default: `{}`
+ * @type {Object}
+ * @property {JSX.Element | keyof JSX.IntrinsicElements} as Custom element atau string sebagai container, default: `'h2'`
+ * @property {Omit<React.HTMLProps, 'className'>} textProps Custom props yang digunakan selain `className`, default: `{}`
+ * @property {Omit<React.CSSProperties, 'fontFamily'>} styles Custom style yang digunakan selain `fontFamily`, default: `{}`
  */
 
 /**
  * @typedef LogoImageProps
- * @type {object}
+ * @type {Object}
  * @property {string} src Source image logo, default: `'/logo.png'`
  * @property {number} width Width image logo, default: `96`
  * @property {number} height Height image logo, default: `96`
  * @property {string} alt Alt image logo, default: `'SIPK Logo'`
- * @property {object} imageProps Custom props lainnya yang tersedia pada component next image, default: `{}`
+ * @property {Omit<ImageProps, 'src' | 'width' | 'height' | 'alt'>} imageProps Custom props lainnya yang tersedia pada component next image, default: `{}`
  */
 
 /**
  * @typedef LogoProps
- * @type {object}
+ * @type {Object}
  * @property {JSX.Element|string} container Custom element atau string sebagai container, default: `'div'`
- * @property {object} containerProps Custom container props yang digunakan, default: `{}`
+ * @property {React.HTMLProps} containerProps Custom container props yang digunakan, default: `{}`
  * @property {LogoImageProps} image
  * @property {LogoTextProps} text
  */
