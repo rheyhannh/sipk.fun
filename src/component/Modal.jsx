@@ -62,10 +62,6 @@ const league_spartan = League_Spartan({
 })
 // #endregion
 
-/*
-============================== CODE START HERE ==============================
-*/
-
 export const Default = () => {
     return (
         <ModalContext.Consumer>
@@ -325,21 +321,12 @@ export const PerubahanTerakhirDetail = () => {
                     const deleteMatkul = () => {
                         return new Promise(async (resolve, reject) => {
                             try {
-                                if (!accessToken) {
-                                    router.refresh();
-                                    throw new Error('Terjadi kesalahan, silahkan coba lagi');
-                                }
-                                if (!userIdCookie) {
-                                    router.refresh();
-                                    throw new Error('Terjadi kesalahan, silahkan coba lagi');
-                                }
-
-                                if (!context?.data?.matkul_id) {
-                                    router.refresh();
-                                    throw new Error('Terjadi kesalahan, silahkan coba lagi');
-                                }
-
-                                if (!context?.data?.current?.nama) {
+                                if (
+                                    !accessToken ||
+                                    !userIdCookie ||
+                                    !context?.data?.matkul_id ||
+                                    !context?.data?.current?.nama
+                                ) {
                                     router.refresh();
                                     throw new Error('Terjadi kesalahan, silahkan coba lagi');
                                 }
@@ -842,11 +829,7 @@ export const PerubahanTerakhirConfirm = () => {
                         const deleteMatkul = () => {
                             return new Promise(async (resolve, reject) => {
                                 try {
-                                    if (!accessToken) {
-                                        router.refresh();
-                                        throw new Error('Terjadi kesalahan, silahkan coba lagi');
-                                    }
-                                    if (!userIdCookie) {
+                                    if (!accessToken || !userIdCookie) {
                                         router.refresh();
                                         throw new Error('Terjadi kesalahan, silahkan coba lagi');
                                     }
@@ -940,11 +923,7 @@ export const PerubahanTerakhirConfirm = () => {
                         const addMatkul = () => {
                             return new Promise(async (resolve, reject) => {
                                 try {
-                                    if (!accessToken) {
-                                        router.refresh();
-                                        throw new Error('Terjadi kesalahan, silahkan coba lagi');
-                                    }
-                                    if (!userIdCookie) {
+                                    if (!accessToken || !userIdCookie) {
                                         router.refresh();
                                         throw new Error('Terjadi kesalahan, silahkan coba lagi');
                                     }
@@ -1050,22 +1029,12 @@ export const PerubahanTerakhirConfirm = () => {
                         const editMatkul = () => {
                             return new Promise(async (resolve, reject) => {
                                 try {
-                                    if (!accessToken) {
-                                        router.refresh();
-                                        throw new Error('Terjadi kesalahan, silahkan coba lagi');
-                                    }
-
-                                    if (!userIdCookie) {
-                                        router.refresh();
-                                        throw new Error('Terjadi kesalahan, silahkan coba lagi');
-                                    }
-
-                                    if (!context?.data?.matkul_id) {
-                                        router.refresh();
-                                        throw new Error('Terjadi kesalahan, silahkan coba lagi');
-                                    }
-
-                                    if (!context?.data?.prev) {
+                                    if (
+                                        !accessToken ||
+                                        !userIdCookie ||
+                                        !context?.data?.matkul_id ||
+                                        !context?.data?.prev
+                                    ) {
                                         router.refresh();
                                         throw new Error('Terjadi kesalahan, silahkan coba lagi');
                                     }
@@ -1284,11 +1253,7 @@ export const TambahMatkul = () => {
                     const addMatkul = () => {
                         return new Promise(async (resolve, reject) => {
                             try {
-                                if (!accessToken) {
-                                    router.refresh();
-                                    throw new Error('Terjadi kesalahan, silahkan coba lagi');
-                                }
-                                if (!userIdCookie) {
+                                if (!accessToken || !userIdCookie) {
                                     router.refresh();
                                     throw new Error('Terjadi kesalahan, silahkan coba lagi');
                                 }
@@ -1667,11 +1632,7 @@ export const Profil = () => {
                     const editProfil = () => {
                         return new Promise(async (resolve, reject) => {
                             try {
-                                if (!accessToken) {
-                                    router.refresh();
-                                    throw new Error('Terjadi kesalahan, silahkan coba lagi');
-                                }
-                                if (!userIdCookie) {
+                                if (!accessToken || !userIdCookie) {
                                     router.refresh();
                                     throw new Error('Terjadi kesalahan, silahkan coba lagi');
                                 }
@@ -2083,11 +2044,7 @@ export const Rating = () => {
                         const addRating = () => {
                             return new Promise(async (resolve, reject) => {
                                 try {
-                                    if (!accessToken) {
-                                        router.refresh();
-                                        throw new Error('Terjadi kesalahan, silahkan coba lagi');
-                                    }
-                                    if (!userIdCookie) {
+                                    if (!accessToken || !userIdCookie) {
                                         router.refresh();
                                         throw new Error('Terjadi kesalahan, silahkan coba lagi');
                                     }
@@ -2179,17 +2136,13 @@ export const Rating = () => {
                                 try {
                                     const ratingId = ratingData[0]?.id;
 
-                                    if (!accessToken) {
+                                    if (
+                                        !accessToken ||
+                                        !userIdCookie ||
+                                        !ratingId
+                                    ) {
                                         router.refresh();
                                         throw new Error('Terjadi kesalahan, silahkan coba lagi');
-                                    }
-                                    if (!userIdCookie) {
-                                        router.refresh();
-                                        throw new Error('Terjadi kesalahan, silahkan coba lagi');
-                                    }
-                                    if (!ratingId) {
-                                        router.refresh();
-                                        throw new Error('Terjadi kesahalan, silahkan coba lagi');
                                     }
 
                                     const response = await fetch(`/api/rating?id=${ratingId}`, {
@@ -2649,11 +2602,7 @@ export const TabelSetting = () => {
                     const editSetting = () => {
                         return new Promise(async (resolve, reject) => {
                             try {
-                                if (!accessToken) {
-                                    router.refresh();
-                                    throw new Error('Terjadi kesalahan, silahkan coba lagi');
-                                }
-                                if (!userIdCookie) {
+                                if (!accessToken || !userIdCookie) {
                                     router.refresh();
                                     throw new Error('Terjadi kesalahan, silahkan coba lagi');
                                 }
@@ -3451,22 +3400,12 @@ export const DetailMatkul = () => {
                     const editMatkul = () => {
                         return new Promise(async (resolve, reject) => {
                             try {
-                                if (!accessToken) {
-                                    router.refresh();
-                                    throw new Error('Terjadi kesalahan, silahkan coba lagi');
-                                }
-
-                                if (!userIdCookie) {
-                                    router.refresh();
-                                    throw new Error('Terjadi kesalahan, silahkan coba lagi');
-                                }
-
-                                if (!context?.data?.id) {
-                                    router.refresh();
-                                    throw new Error('Terjadi kesalahan, silahkan coba lagi');
-                                }
-
-                                if (!context?.data?.nama) {
+                                if (
+                                    !accessToken ||
+                                    !userIdCookie ||
+                                    !context?.data?.id ||
+                                    !context?.data?.nama
+                                ) {
                                     router.refresh();
                                     throw new Error('Terjadi kesalahan, silahkan coba lagi');
                                 }
@@ -3564,21 +3503,12 @@ export const DetailMatkul = () => {
                     const deleteMatkul = () => {
                         return new Promise(async (resolve, reject) => {
                             try {
-                                if (!accessToken) {
-                                    router.refresh();
-                                    throw new Error('Terjadi kesalahan, silahkan coba lagi');
-                                }
-                                if (!userIdCookie) {
-                                    router.refresh();
-                                    throw new Error('Terjadi kesalahan, silahkan coba lagi');
-                                }
-
-                                if (!context?.data?.id) {
-                                    router.refresh();
-                                    throw new Error('Terjadi kesalahan, silahkan coba lagi');
-                                }
-
-                                if (!context?.data?.nama) {
+                                if (
+                                    !accessToken ||
+                                    !userIdCookie ||
+                                    !context?.data?.id ||
+                                    !context?.data?.nama
+                                    ) {
                                     router.refresh();
                                     throw new Error('Terjadi kesalahan, silahkan coba lagi');
                                 }
@@ -3950,11 +3880,7 @@ export const HapusPermanentConfirm = () => {
                     const deletePermanent = () => {
                         return new Promise(async (resolve, reject) => {
                             try {
-                                if (!accessToken) {
-                                    router.refresh();
-                                    throw new Error('Terjadi kesalahan, silahkan coba lagi');
-                                }
-                                if (!userIdCookie) {
+                                if (!accessToken || !userIdCookie) {
                                     router.refresh();
                                     throw new Error('Terjadi kesalahan, silahkan coba lagi');
                                 }
@@ -4187,11 +4113,7 @@ export const Akun = () => {
                     const editPassword = () => {
                         return new Promise(async (resolve, reject) => {
                             try {
-                                if (!accessToken) {
-                                    router.refresh();
-                                    throw new Error('Terjadi kesalahan, silahkan coba lagi');
-                                }
-                                if (!userIdCookie) {
+                                if (!accessToken | !userIdCookie) {
                                     router.refresh();
                                     throw new Error('Terjadi kesalahan, silahkan coba lagi');
                                 }
@@ -4573,6 +4495,3 @@ export const Tentang = () => {
         </ModalContext.Consumer>
     )
 }
-/*
-============================== CODE END HERE ==============================
-*/
