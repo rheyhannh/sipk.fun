@@ -1,5 +1,9 @@
 // ========== TYPE DEPEDENCY ========== //
 import * as ContextTypes from '../types/context.js'
+import {
+    ClientAPIResponseErrorProps as ApiResponseError,
+    ClientAPIResponseSuccessProps as ApiResponseSuccess,
+} from '@/constant/api_response';
 
 // ========== NEXT DEPEDENCY ========== //
 import Link from "next/link";
