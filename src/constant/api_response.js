@@ -138,7 +138,7 @@ export const AuthErrorResponse = {
     missing_access_token: (message, errorHintUrl, errorDetails, customProps) => ({
         status: 'error',
         code: 401,
-        message: message ?? 'Session tidak ditemukan, silahkan login ulang',
+        message: message ?? 'Akses token tidak ditemukan',
         error: {
             code: 'AUTH_00',
             message: 'Unauthorized - Missing access token',
@@ -150,7 +150,7 @@ export const AuthErrorResponse = {
     invalid_access_token: (message, errorHintUrl, errorDetails, customProps) => ({
         status: 'error',
         code: 401,
-        message: message ?? 'Session tidak valid, silahkan login ulang',
+        message: message ?? 'Akses token tidak valid',
         error: {
             code: 'AUTH_01',
             message: 'Unauthorized - Invalid access token',
@@ -162,7 +162,7 @@ export const AuthErrorResponse = {
     expired_access_token: (message, errorHintUrl, errorDetails, customProps) => ({
         status: 'error',
         code: 401,
-        message: message ?? 'Session sudah expired, silahkan login ulang',
+        message: message ?? 'Akses token expired',
         error: {
             code: 'AUTH_02',
             message: 'Unauthorized - Expired access token',
