@@ -4,6 +4,17 @@
  * Response status
  * @property {number} code
  * Http response code
+ * - Note : Selalu destructure props ini sehingga tidak masuk ke response body
+ * 
+ * Lihat contoh berikut,
+ * ```js
+ * // Assume throwing this error
+ * const error = AuthErrorResponseType.missing_access_token();
+ * 
+ * // Assume some catch block to handle response
+ * const { code, headers: _, ...body } = error; // Destructure 'code' and 'headers'
+ * return NextResponse.json(body, { status: code })
+ * ```
  * @property {Object<string,any>} headers
  * Headers response. Initial value `undefined`, jika ingin digunakan dapat ditambahkan pada `customProps`
  * - Note : Selalu destructure props ini sehingga tidak masuk ke response body
@@ -23,18 +34,24 @@
  * );
  * 
  * // Assume some catch block to handle response
- * const { headers, ...body } = error; // Destructure 'headers'
- * return NextResponse.json(body, { status: body.code, headers })
+ * const { headers, code, ...body } = error; // Destructure 'headers' and 'code'
+ * return NextResponse.json(body, { status: code, headers })
  * ```
  * @property {any | null} data 
  * Data yang berhasil diresolve
  * @property {string} message
- * General message untuk ditampilkan kepada user menggunakan `toast`. Gunakan bahasa yang sederhana, pendek dan mudah dimengerti user
+ * General message untuk ditampilkan kepada user menggunakan `toast`
  * @property {Object} error 
  * Object yang merepresentasikan error yang terjadi
  * @property {AuthErrorCodes | RatelimitErrorCodes} error.code
- * Kode referensi error pada SIPK
- * - Contoh : `'AUTH_00'`
+ * Kode referensi error pada SIPK dengan keterangan berikut,
+ * - `AUTH_00` : User access token atau cookie `'s_access_token'` tidak tersedia
+ * - `AUTH_01` : User access token atau cookie `'s_access_token'` tidak valid
+ * - `AUTH_02` : User access token atau cookie `'s_access_token'` expired atau kadaluwarsa
+ * - `AUTH_03` : Session atau cookie `'_Secure-auth.session-token'` tidak tersedia
+ * - `AUTH_04` : Session atau cookie `'_Secure-auth.session-token'` tidak valid
+ * - `RL_00` : Penggunaan akses atau rate limit `token` mencapai maksimal
+ * - `RL_01` : Jumlah rate limit `token` mencapai maksimal
  * @property {string} error.message
  * Message yang mendeskripsikan error lebih detail menggunakan format `[statusText] - [deskripsi]`
  * - Contoh : `'Bad Request - Invalid JSON format'`
@@ -49,7 +66,7 @@
 /** 
  * @typedef {Object} AuthErrorResponseType
  * @property {(message?:string, errorHintUrl?:string, errorDetails?:Object<string,any>, customProps?:Object<string,any>) => Omit<APIResponseBodyProps, 'data'>} missing_access_token
- * Method untuk generate payload response body saat user `session` atau cookie `'s_access_token'` tidak tersedia dengan `optional` parameter berikut,
+ * Method untuk generate payload response body saat user access token atau cookie `'s_access_token'` tidak tersedia dengan `optional` parameter berikut,
  * - `message` : String untuk override default message yang ditampilkan ke user dengan `toast`
  * - `errorHintUrl` : Link atau pathname yang dapat digunakan sebagai call to action untuk user mengetahui lebih lanjut `error` yang terjadi 
  * - `errorDetails` : Error details dapat berupa object untuk mendeskripsikan field tertentu atau lainnya
@@ -59,7 +76,7 @@
  * const payload = {
  *      status: 'error',
  *      code: 401,
- *      message: message ?? 'Session tidak ditemukan, silahkan login ulang',
+ *      message: message ?? 'Akses token tidak ditemukan',
  *      error: {
  *          code: 'AUTH_00',
  *          message: 'Unauthorized - Missing access token',
@@ -70,7 +87,7 @@
  * }
  * ```
  * @property {(message?:string, errorHintUrl?:string, errorDetails?:Object<string,any>, customProps?:Object<string,any>) => Omit<APIResponseBodyProps, 'data'>} invalid_access_token
- * Method untuk generate payload response body saat user `session` atau cookie `'s_access_token'` tidak valid dengan `optional` parameter berikut,
+ * Method untuk generate payload response body saat user access token atau cookie `'s_access_token'` tidak valid dengan `optional` parameter berikut,
  * - `message` : String untuk override default message yang ditampilkan ke user dengan `toast`
  * - `errorHintUrl` : Link atau pathname yang dapat digunakan sebagai call to action untuk user mengetahui lebih lanjut `error` yang terjadi 
  * - `errorDetails` : Error details dapat berupa object untuk mendeskripsikan field tertentu atau lainnya
@@ -80,7 +97,7 @@
  * const payload = {
  *      status: 'error',
  *      code: 401,
- *      message: message ?? 'Session tidak valid, silahkan login ulang',
+ *      message: message ?? 'Akses token tidak valid',
  *      error: {
  *          code: 'AUTH_01',
  *          message: 'Unauthorized - Invalid access token',
@@ -91,7 +108,7 @@
  * }
  * ```
  * @property {(message?:string, errorHintUrl?:string, errorDetails?:Object<string,any>, customProps?:Object<string,any>) => Omit<APIResponseBodyProps, 'data'>} expired_access_token
- * Method untuk generate payload response body saat user `session` atau cookie `'s_access_token'` expired atau kadaluwarsa dengan `optional` parameter berikut,
+ * Method untuk generate payload response body saat user access token atau cookie `'s_access_token'` expired atau kadaluwarsa dengan `optional` parameter berikut,
  * - `message` : String untuk override default message yang ditampilkan ke user dengan `toast`
  * - `errorHintUrl` : Link atau pathname yang dapat digunakan sebagai call to action untuk user mengetahui lebih lanjut `error` yang terjadi 
  * - `errorDetails` : Error details dapat berupa object untuk mendeskripsikan field tertentu atau lainnya
@@ -101,7 +118,7 @@
  * const payload = {
  *      status: 'error',
  *      code: 401,
- *      message: message ?? 'Session sudah expired, silahkan login ulang',
+ *      message: message ?? 'Akses token expired',
  *      error: {
  *          code: 'AUTH_02',
  *          message: 'Unauthorized - Expired access token',
