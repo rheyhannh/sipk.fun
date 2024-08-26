@@ -49,7 +49,7 @@
 /** 
  * @typedef {Object} AuthErrorResponseType
  * @property {(message?:string, errorHintUrl?:string, errorDetails?:Object<string,any>, customProps?:Object<string,any>) => Omit<APIResponseBodyProps, 'data'>} missing_access_token
- * Method untuk generate payload response body saat user `session` atau cookie `'s_access_token'` tidak tersedia dengan parameter berikut,
+ * Method untuk generate payload response body saat user `session` atau cookie `'s_access_token'` tidak tersedia dengan `optional` parameter berikut,
  * - `message` : String untuk override default message yang ditampilkan ke user dengan `toast`
  * - `errorHintUrl` : Link atau pathname yang dapat digunakan sebagai call to action untuk user mengetahui lebih lanjut `error` yang terjadi 
  * - `errorDetails` : Error details dapat berupa object untuk mendeskripsikan field tertentu atau lainnya
@@ -62,13 +62,15 @@
  *      message: message ?? 'Session tidak ditemukan, silahkan login ulang',
  *      error: {
  *          code: 'AUTH_00',
- *          message: 'Unauthorized - Missing access token'
+ *          message: 'Unauthorized - Missing access token',
+ *          hintUrl: errorHintUrl,
+ *          details: errorDetails,
  *      },
  *      ...customProps
  * }
  * ```
  * @property {(message?:string, errorHintUrl?:string, errorDetails?:Object<string,any>, customProps?:Object<string,any>) => Omit<APIResponseBodyProps, 'data'>} invalid_access_token
- * Method untuk generate payload response body saat user `session` atau cookie `'s_access_token'` tidak valid dengan parameter berikut,
+ * Method untuk generate payload response body saat user `session` atau cookie `'s_access_token'` tidak valid dengan `optional` parameter berikut,
  * - `message` : String untuk override default message yang ditampilkan ke user dengan `toast`
  * - `errorHintUrl` : Link atau pathname yang dapat digunakan sebagai call to action untuk user mengetahui lebih lanjut `error` yang terjadi 
  * - `errorDetails` : Error details dapat berupa object untuk mendeskripsikan field tertentu atau lainnya
@@ -81,13 +83,15 @@
  *      message: message ?? 'Session tidak valid, silahkan login ulang',
  *      error: {
  *          code: 'AUTH_01',
- *          message: 'Unauthorized - Invalid access token'
+ *          message: 'Unauthorized - Invalid access token',
+ *          hintUrl: errorHintUrl,
+ *          details: errorDetails,
  *      },
  *      ...customProps
  * }
  * ```
  * @property {(message?:string, errorHintUrl?:string, errorDetails?:Object<string,any>, customProps?:Object<string,any>) => Omit<APIResponseBodyProps, 'data'>} expired_access_token
- * Method untuk generate payload response body saat user `session` atau cookie `'s_access_token'` expired atau kadaluwarsa dengan parameter berikut,
+ * Method untuk generate payload response body saat user `session` atau cookie `'s_access_token'` expired atau kadaluwarsa dengan `optional` parameter berikut,
  * - `message` : String untuk override default message yang ditampilkan ke user dengan `toast`
  * - `errorHintUrl` : Link atau pathname yang dapat digunakan sebagai call to action untuk user mengetahui lebih lanjut `error` yang terjadi 
  * - `errorDetails` : Error details dapat berupa object untuk mendeskripsikan field tertentu atau lainnya
@@ -100,7 +104,9 @@
  *      message: message ?? 'Session sudah expired, silahkan login ulang',
  *      error: {
  *          code: 'AUTH_02',
- *          message: 'Unauthorized - Expired access token'
+ *          message: 'Unauthorized - Expired access token',
+ *          hintUrl: errorHintUrl,
+ *          details: errorDetails,
  *      },
  *      ...customProps
  * }
@@ -155,7 +161,7 @@ export const AuthErrorResponse = {
 /** 
  * @typedef {Object} RatelimitErrorResponseType
  * @property {(message?:string, errorHintUrl?:string, errorDetails?:Object<string,any>, customProps?:Object<string,any>) => Omit<APIResponseBodyProps, 'data'>} maximum_usage
- * Method untuk generate payload response body saat penggunaan akses atau rate limit `token` mencapai maksimal dengan parameter berikut,
+ * Method untuk generate payload response body saat penggunaan akses atau rate limit `token` mencapai maksimal dengan `optional` parameter berikut,
  * - `message` : String untuk override default message yang ditampilkan ke user dengan `toast`
  * - `errorHintUrl` : Link atau pathname yang dapat digunakan sebagai call to action untuk user mengetahui lebih lanjut `error` yang terjadi 
  * - `errorDetails` : Error details dapat berupa object untuk mendeskripsikan field tertentu atau lainnya
@@ -168,13 +174,15 @@ export const AuthErrorResponse = {
  *      message: message ?? 'Terlalu banyak request, coba lagi nanti',
  *      error: {
  *          code: 'RL_00',
- *          message: 'Too Many Request - Rate limit exceeded'
+ *          message: 'Too Many Request - Rate limit exceeded',
+ *          hintUrl: errorHintUrl,
+ *          details: errorDetails,
  *      },
  *      ...customProps
  * }
  * ```
  * @property {(message?:string, errorHintUrl?:string, errorDetails?:Object<string,any>, customProps?:Object<string,any>) => Omit<APIResponseBodyProps, 'data'>} maximum_token
- * Method untuk generate payload response body saat jumlah rate limit `token` mencapai maksimal dengan parameter berikut,
+ * Method untuk generate payload response body saat jumlah rate limit `token` mencapai maksimal dengan `optional` parameter berikut,
  * - `message` : String untuk override default message yang ditampilkan ke user dengan `toast`
  * - `errorHintUrl` : Link atau pathname yang dapat digunakan sebagai call to action untuk user mengetahui lebih lanjut `error` yang terjadi 
  * - `errorDetails` : Error details dapat berupa object untuk mendeskripsikan field tertentu atau lainnya
@@ -187,7 +195,9 @@ export const AuthErrorResponse = {
  *      message: message ?? 'Server sibuk, coba lagi nanti',
  *      error: {
  *          code: 'RL_01',
- *          message: 'Service Unavailable - Server is currently busy'
+ *          message: 'Service Unavailable - Server is currently busy',
+ *          hintUrl: errorHintUrl,
+ *          details: errorDetails,
  *      },
  *      ...customProps
  * }
