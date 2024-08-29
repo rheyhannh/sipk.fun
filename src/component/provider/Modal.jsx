@@ -1,9 +1,10 @@
 'use client'
 
-// ========== REACT DEPEDENCY ========== //
-import { createContext, useEffect, useState } from "react"
+// #region REACT DEPEDENCY
+import * as React from 'react';
+// #endregion
 
-// ========== COMPONENT DEPEDENCY ========== //
+// #region COMPONENT DEPEDENCY
 import {
     Default,
     PanduanDaftar,
@@ -20,12 +21,9 @@ import {
     Akun,
     Tentang
 } from "../Modal"
+// #endregion
 
-/*
-============================== CODE START HERE ==============================
-*/
-
-export const ModalContext = createContext();
+export const ModalContext = React.createContext();
 /**
  * Modal context provider. Use this wrapper to use Modal component.
  * @param {{children:any}} props React props object
@@ -33,10 +31,10 @@ export const ModalContext = createContext();
  * @returns {ReactElement} Modal context provider wrapper.
  */
 export const ModalProvider = ({ children }) => {
-    const [active, setActive] = useState(false);
-    const [modal, setModal] = useState(null);
-    const [prevModal, setPrevModal] = useState(null);
-    const [data, setData] = useState(null);
+    const [active, setActive] = React.useState(false);
+    const [modal, setModal] = React.useState(null);
+    const [prevModal, setPrevModal] = React.useState(null);
+    const [data, setData] = React.useState(null);
 
     const handleModalClose = () => {
         setActive(false);
@@ -55,7 +53,7 @@ export const ModalProvider = ({ children }) => {
         }
     }
 
-    useEffect(() => {
+    React.useEffect(() => {
         if (active) { document.body.classList.add('disable_scroll'); }
         else { document.body.classList.remove('disable_scroll'); }
 
@@ -105,7 +103,3 @@ export const ModalProvider = ({ children }) => {
         </ModalContext.Provider>
     )
 }
-
-/*
-============================== CODE END HERE ==============================
-*/
