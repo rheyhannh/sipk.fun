@@ -443,6 +443,14 @@ import {
 // #endregion
 
 // #region [HELPER]
+/** Base atau props tambahan untuk matakuliah history `MatkulHistoryData`
+ * @typedef {Object} BaseMatkulHistoryData
+ * @property {'tambah'|'hapus'|'ubah'} type 
+ * Tipe history matakuliah
+ * @property {number} stamp 
+ * Unix timestamp history matakuliah
+ */
+
 /** Tipe `penilaian` pada entry universitas atau `UniversitasData`
  * @typedef {Object} PenilaianProps
  * @property {?string} cat 
