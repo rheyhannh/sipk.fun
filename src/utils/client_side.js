@@ -362,6 +362,65 @@ export const checkStrongPassword = (password) => {
     return { point, message, level };
 }
 
-/*
-============================== CODE END HERE ==============================
-*/
+// Fetcher or Data Retriever
+/**
+ * Method untuk fetch API yang tersedia pada SIPK dengan preset header `Authorization` dan `Content-Type`.
+ * Authorization header digunakan sebagai autentikasi dengan `accessToken`.
+ * 
+ * ```js
+ * const headers = {
+ *      'Content-Type': 'application/json',
+ *      'Authorization': `Bearer ${accessToken}`,
+ *      ...otherOptions?.headers,
+ * }
+ * ```
+ * 
+ * `Throw error` saat, 
+ * - Menggunakan `'custom'` endpoint tapi `customEndpoint` falsy atau bukan string
+ * - Terjadi pre-request error atau error saat memproses request
+ * 
+ * @param {'GET' | 'POST' | 'DELETE' | 'PUT' | 'PATCH'} [method] Request method, default `GET`
+ * @param {keyof typeof endpointByKey | 'custom'} endpoint API endpoint yang tersedia pada SIPK. Jika menggunakan custom endpoint atau URL, gunakan `'custom'` dan isi param `customEndpoint`
+ * @param {string} accessToken User access token atau cookie `'s_access_token'`
+ * @param {BodyInit} [body] Request body yang akan di `stringify`, default `null`
+ * @param {Object<string, string>} [urlParams] Object yang merepresentasikan url params, default `null`
+ * @param {string | URL} [customEndpoint] Custom API endpoint, default `null`
+ * @param {Omit<RequestInit, 'method' | 'body'>} [otherOptions] Object sebagai opsi lainnya yg tersedia pada `fetch` selain `body` dan `method`, default `{}`
+ * @returns {Promise<Response>} Promise dengan resolve API response
+ * @throws Lihat deskripsi
+ */
+export const fetchWithAuth = async (
+    method,
+    endpoint,
+    accessToken,
+    body = null,
+    urlParams = null,
+    customEndpoint = null,
+    otherOptions = {}
+) => {
+    if (endpoint === 'custom' && !customEndpoint && typeof customEndpoint !== 'string') {
+        throw new TypeError('Custom endpoint tidak valid');
+    }
+
+    const target = endpoint === 'custom' ? customEndpoint : endpointByKey[endpoint];
+    const targetWithParams = new URL(target, window.location.origin);
+    if (urlParams) { Object.keys(urlParams).forEach(key => targetWithParams.searchParams.append(key, urlParams[key])) }
+    const { headers: customHeaders = {}, ...restOptions } = otherOptions;
+    const headers = {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${accessToken}`,
+        ...customHeaders,
+    }
+
+    try {
+        const options = { ...restOptions, method, headers };
+        if (body) { options.body = JSON.stringify(body) }
+
+        const response = await fetch(targetWithParams, options);
+
+        return response;
+    } catch (error) {
+        console.error(error);
+        throw new Error('Gagal memproses permintaan');
+    }
+};
