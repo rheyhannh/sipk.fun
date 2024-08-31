@@ -125,7 +125,7 @@ export const Default = () => {
                                             ? context?.data?.message
                                             : context?.data?.isSuccess
                                                 ? 'Berhasil memproses permintaanmu'
-                                                : 'Sepertinya ada yang salah saat memproses permintaanmu.'
+                                                : 'Sepertinya ada yang salah saat memproses permintaanmu'
                                     }
 
                                 </p>
@@ -3487,7 +3487,6 @@ export const DetailMatkul = () => {
             {/** @param {ContextTypes.ModalContext<DetailMatkulModalData>} context */ context => {
                 const penilaian = context.data.penilaian;
                 const penilaianKey = Object.keys(penilaian);
-
                 const validateForm = () => {
                     return new Promise(async (resolve, reject) => {
                         try {
