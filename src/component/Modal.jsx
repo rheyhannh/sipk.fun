@@ -17,7 +17,7 @@ import { League_Spartan } from 'next/font/google';
 // #endregion
 
 // #region REACT DEPEDENCY
-import { useState, useContext, useRef } from "react";
+import { useState, useContext, useRef, ReactNode } from "react";
 // #endregion
 
 // #region COMPONENT DEPEDENCY
