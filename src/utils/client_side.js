@@ -1,9 +1,7 @@
-// ========== UTIL DEPEDENCY ========== //
+// #region UTIL DEPEDENCY
 import isStrongPassword from 'validator/lib/isStrongPassword';
-
-/*
-============================== CODE START HERE ==============================
-*/
+import { endpointByKey } from '@/constant/api_endpoint';
+// #endregion
 
 // Date or Time Utility
 /**
