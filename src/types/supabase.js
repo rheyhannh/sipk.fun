@@ -186,18 +186,10 @@ import {
  * Id matakuliah history dalam bentuk `uuid-v4`
  * 
  * Diresolve pada supabase menggunakan `gen_random_uuid()`
- * @property {Pick<MatkulData, 'nama' | 'semester' | 'sks' | 'nilai' | 'dapat_diulang' | 'target_nilai'>} current 
+ * @property {Pick<MatkulData, 'nama' | 'semester' | 'sks' | 'nilai' | 'dapat_diulang' | 'target_nilai'> & BaseMatkulHistoryData} current 
  * Current history matakuliah
- * @property {'tambah'|'hapus'|'ubah'} current.type 
- * Tipe history matakuliah
- * @property {number} current.stamp 
- * Unix timestamp history matakuliah
- * @property {Pick<MatkulData, 'nama' | 'semester' | 'sks' | 'nilai' | 'dapat_diulang' | 'target_nilai'>} prev 
+ * @property {Pick<MatkulData, 'nama' | 'semester' | 'sks' | 'nilai' | 'dapat_diulang' | 'target_nilai'> & BaseMatkulHistoryData} prev 
  * Previous history matakuliah
- * @property {'tambah'|'hapus'|'ubah'} prev.type 
- * Tipe history matakuliah
- * @property {number} prev.stamp 
- * Unix timestamp history matakuliah
  * @property {string} owned_by 
  * Id user pemilik history matakuliah
  * @property {number} last_change_at 
