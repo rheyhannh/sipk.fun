@@ -26,7 +26,7 @@ import { useCookies } from 'next-client-cookies';
 import toast from 'react-hot-toast';
 import { ModalContext } from "./provider/Modal";
 import { Accordion } from '@/component/Accordion';
-import { unixToDate, getLoadingMessage, checkStrongPassword } from "@/utils/client_side";
+import { unixToDate, getLoadingMessage, checkStrongPassword, fetchWithAuth } from "@/utils/client_side";
 import { Spinner } from './loader/Loading.jsx';
 import { Logo } from './Main.jsx';
 // #endregion
