@@ -60,6 +60,35 @@ import {
 import styles from './style/modal.module.css'
 // #endregion
 
+/**
+ * @typedef DefaultModalData
+ * Data yang digunakan pada modal `'Default'`
+ * @type {Object}
+ * @property {boolean} [isSuccess] 
+ * Kategori modal apakah berhasil atau tidak untuk menentukan default value `image`, `title`, `message` dan `actionText`
+ * - Default : `true`
+ * @property {ReactNode} [image] 
+ * Gambar atau icon modal dengan default sebagai berikut,
+ * 
+ * ```jsx
+ * // Menggunakan icon berikut saat isSuccess
+ * const x = <FaRegCircleCheck size={'70px'} color={'var(--logo-second-color)'} />;
+ * // Menggunakan icon berikut saat !isSuccess
+ * const y = <FaRegTimesCircle size={'70px'} color={'var(--logo-second-color)'} />;
+ * ```
+ * @property {string} [title] 
+ * Judul modal dengan default sebagai berikut,
+ * 
+ * Saat `isSuccess` default judul yang digunakan `'Yeaay!'`, sedangkan default judul yang digunakan saat `!isSuccess` adalah `'Ooops!'`
+ * @property {string} [message] 
+ * Pesan modal dengan default sebagai berikut,
+ * 
+ * Saat `isSuccess` default pesan yang digunakan `'Berhasil memproses permintaanmu'`, 
+ * sedangkan default pesan yang digunakan saat `!isSuccess` adalah `'Sepertinya ada yang salah saat memproses permintaanmu'`
+ * @property {string} [actionText] 
+ * Teks yang digunakan pada button untuk menutup modal
+ * - Default : `'Tutup'`
+ */
 export const Default = () => {
     return (
         <ModalContext.Consumer>
@@ -303,6 +332,18 @@ export const Logout = () => {
     )
 }
 
+/**
+ * @typedef PerubahanTerakhirDetailBaseModalData
+ * @type {Object}
+ * @property {boolean} fromTabel
+ * Apakah modal ditrigger dari tabel atau tidak
+ */
+
+/**
+ * @typedef PerubahanTerakhirDetailModalData
+ * Data yang digunakan pada modal `'PerubahanTerakhirDetail'`
+ * @type {SupabaseTypes.MatkulHistoryData & PerubahanTerakhirDetailBaseModalData}
+ */
 export const PerubahanTerakhirDetail = () => {
     const router = useRouter();
     const userIdCookie = useCookies().get('s_user_id');
@@ -794,6 +835,11 @@ export const PerubahanTerakhirDetail = () => {
     )
 }
 
+/**
+ * @typedef PerubahanTerakhirConfirmModalData
+ * Data yang digunakan pada modal `'PerubahanTerakhirConfirm'`
+ * @type {SupabaseTypes.MatkulHistoryData}
+ */
 export const PerubahanTerakhirConfirm = () => {
     const router = useRouter();
     const userIdCookie = useCookies().get('s_user_id');
@@ -1161,6 +1207,11 @@ export const PerubahanTerakhirConfirm = () => {
     )
 }
 
+/**
+ * @typedef TambahMatkulModalData
+ * Data yang digunakan pada modal `'TambahMatkul'`
+ * @type {Pick<SupabaseTypes.UniversitasData, 'penilaian'>}
+ */
 export const TambahMatkul = () => {
     const router = useRouter();
     const userIdCookie = useCookies().get('s_user_id');
@@ -1514,6 +1565,11 @@ export const TambahMatkul = () => {
     )
 }
 
+/**
+ * @typedef ProfilModalData
+ * Data yang digunakan pada modal `'Profil'`
+ * @type {Array<SupabaseTypes.UserData>}
+ */
 export const Profil = () => {
     const router = useRouter();
     const userIdCookie = useCookies().get('s_user_id');
@@ -2402,6 +2458,21 @@ export const Rating = () => {
     )
 }
 
+/**
+ * @typedef TabelSettingModalData
+ * Data yang digunakan pada modal `'TabelSetting'`
+ * @type {Object}
+ * @property {(pageSize:SupabaseTypes.UserData['preferences']['table']['size']) => void} setPageSize
+ * Method untuk mengatur table `size`
+ * @property {(columnOrder:SupabaseTypes.UserData['preferences']['table']['columnOrder']) => void} setColumnOrder
+ * Method untuk mengatur table `columnOrder`
+ * @property {(controlPosition:SupabaseTypes.UserData['preferences']['table']['controlPosition']) => void} setPageControlPosition
+ * Method untuk mengatur table `controlPosition`
+ * @property {(columnVisibility:SupabaseTypes.UserData['preferences']['table']['columnVisibility']) => void} setColumnVisibility
+ * Method untuk mengatur table `columnVisibility`
+ * @property {Pick<SupabaseTypes.UserData['preferences']['table'], 'size' | 'controlPosition'> & {state:Array<{title:ColumnTitle, id:ColumnId, visible:boolean}>}} table
+ * Current table state. Props `state` merepresentasikan `columnOrder` dan `columnVisibility`
+ */
 export const TabelSetting = () => {
     const router = useRouter();
     const userIdCookie = useCookies().get('s_user_id');
@@ -2858,6 +2929,70 @@ export const TabelSetting = () => {
     )
 }
 
+/**
+ * @typedef TabelFilterModalData
+ * Data yang digunakan pada modal `'TabelFilter'`
+ * @type {Object}
+ * @property {(reset?:boolean, index:number) => void} setPageIndex
+ * Method untuk mengatur table `pageIndex` atau halaman tabel dengan param berikut,
+ * - `reset` : Setel halaman tabel ke halaman pertama, dimana jika `true` param `index` akan dihiraukan. Default value `false`
+ * - `index` : Halaman table dimulai dari `1`
+ * @property {(columnFilters:Array<{id:ColumnId, value:string | [string, string]}>) => void} setColumnFilters
+ * Method untuk mengatur table `columnFilters`. Nilai filter atau props `value` dapat berupa string atau array yang merepresentasikan nilai `min` dan `max`
+ * ```js
+ * // Contoh
+ * const columnFilters = [
+ *      {id:'sks', value:['2', '4']},
+ *      {id:'semester', value:'1'},
+ *      {id:'matakuliah', value:'jaringan'}
+ * ]
+ * ```
+ * Contoh diatas akan memfilter matakuliah dengan sks 2 sampai 4 dimana matakuliah semester 1 dan matakuliah yang mengandung keyword 'jaringan'
+ * @property {Object} currentFilters
+ * Current table state untuk `columnFilters` yang digunakan
+ * @property {'ya' | 'tidak'} currentFilters.diulang 
+ * Filter column `diulang` dengan `'ya'` maka hanya menampilkan matakuliah yang dapat diulang jika `'tidak'` hanya menampilkan matakuliah yang tidak dapat diulang
+ * @property {string} currentFilters.matakuliah
+ * Filter column `matakuliah` dengan keyword tertentu
+ * ```js
+ * // Contoh
+ * const matakuliahFilter = 'jaringan'
+ * ```
+ * Contoh diatas akan memfilter matakuliah dengan keyword `'jaringan'`
+ * @property {Array<DefaultIndeksNilai>} currentFilters.nilai
+ * Filter column `nilai` dengan nilai tertentu
+ * ```js
+ * // Contoh
+ * const nilaiFilter = ['A', 'D']
+ * ```
+ * Contoh diatas akan memfilter matakuliah dengan nilai `'A'` dan `'D'`
+ * @property {'ya' | 'tidak'} currentFilters.ontarget
+ * Filter column `ontarget` dengan `'ya'` maka hanya menampilkan matakuliah yang ontarget jika `'tidak'` hanya menampilkan matakuliah yang tidak ontarget
+ * @property {[string, string]} currentFilters.semester
+ * Filter column `semester` dengan batas tertentu
+ * ```js
+ * // Contoh
+ * const semesterFilter = ['3', '6']
+ * ```
+ * Contoh diatas akan memfilter matakuliah semester 3 - 6
+ * @property {[string, string]} currentFilters.sks
+ * Filter column `sks` dengan batas tertentu
+ * ```js
+ * // Contoh
+ * const sksFilter = ['1', '3']
+ * ```
+ * Contoh diatas akan memfilter matakuliah dengan sks 1 - 3
+ * @property {Array<DefaultIndeksNilai>} currentFilters.target
+ * Filter column `target` dengan target nilai tertentu
+ * ```js
+ * // Contoh
+ * const targetFilter = ['B', 'C']
+ * ```
+ * Contoh diatas akan memfilter matakuliah dengan target nilai `'B'` dan `'C'`
+ * @property {SupabaseTypes.UniversitasData['penilaian']} penilaian
+ * Indeks nilai yang digunakan pada universitas tertentu. Perlu diingat setiap universitas mungkin menggunakan indeks nilai yang berbeda, sehingga beberapa key dari property ini dapat bernilai `null`
+ * - Note : Selalu gunakan optional chaining atau nullish coalescing saat mengakses key dari property ini untuk menghindari error
+ */
 export const TabelFilter = () => {
     const router = useRouter();
     const [editFilter, setEditFilter] = useState(false);
@@ -3291,6 +3426,40 @@ export const TabelFilter = () => {
     )
 }
 
+/**
+ * @typedef DetailMatkulModalData
+ * Data yang digunakan pada modal `'DetailMatkul'`
+ * @type {Object}
+ * @property {SupabaseTypes.MatkulData['id']} id
+ * Id matakuliah dalam bentuk `uuid-v4`
+ * @property {SupabaseTypes.MatkulData['nama']} nama
+ * Nama matakuliah dengan kriteria
+ * - min_length : `3`
+ * - max_length : `50`
+ * @property {SupabaseTypes.MatkulData['nilai']['indeks']} nilai
+ * Indeks nilai matakuliah
+ * @property {SupabaseTypes.MatkulData['semester']} semester
+ * Semester matakuliah dengan kriteria
+ * - min : `0`
+ * - max : `50`
+ * @property {SupabaseTypes.MatkulData['sks']} sks
+ * Sks matakuliah dengan kriteria
+ * - min: `0`
+ * - max : `50`
+ * @property {SupabaseTypes.MatkulData['target_nilai']['indeks']} target
+ * Indeks nilai target matakuliah
+ * @property {boolean} edit
+ * Boolean sebagai initial state modal. Saat `true` form dapat diubah, sedangkan saat `false` form tidak dapat diubah
+ * @property {'ya' | 'tidak'} diulang
+ * Matakuliah dapat diulang atau tidak
+ * @property {string} diedit
+ * Date dalam string kapan matakuliah diedit yang diresolve menggunakan utils method `unixToDate`
+ * @property {string} dibuat
+ * Date dalam string kapan matakuliah dibuat yang diresolve menggunakan utils method `unixToDate`
+ * @property {SupabaseTypes.UniversitasData['penilaian']} penilaian
+ * Indeks nilai yang digunakan pada universitas tertentu. Perlu diingat setiap universitas mungkin menggunakan indeks nilai yang berbeda, sehingga beberapa key dari property ini dapat bernilai `null`
+ * - Note : Selalu gunakan optional chaining atau nullish coalescing saat mengakses key dari property ini untuk menghindari error
+ */
 export const DetailMatkul = () => {
     const router = useRouter();
     const userIdCookie = useCookies().get('s_user_id');
@@ -3861,6 +4030,25 @@ export const DetailMatkul = () => {
     )
 }
 
+/**
+ * @typedef HapusPermanentConfirmModalData
+ * Data yang digunakan pada modal `'HapusPermanentConfirm'`
+ * @type {Object}
+ * @property {SupabaseTypes.MatkulData['id'] | SupabaseTypes.MatkulHistoryData['id']} id
+ * Saat `fromTabel` falsy props ini merepresentasikan `Id matakuliah` yang ingin dihapus.
+ * Sebaliknya saat `fromTabel` truthy props ini merepresentasikan `Id matakuliah history` yg relevan terhadap matakuliah yang ingin dihapus
+ * @property {SupabaseTypes.MatkulData['nama']} nama
+ * Nama matakuliah yang ingin dihapus
+ * @property {SupabaseTypes.MatkulHistoryData['id'] | undefined} refId
+ * Saat `fromTabel` falsy props ini merepresentasikan `Id matakuliah history` yg relevan terhadap matakuliah yang ingin dihapus.
+ * Sebaliknya saat `fromTabel` truthy props ini bernilai `undefined`
+ * @property {SupabaseTypes.MatkulData['id'] | undefined} matkul_id
+ * Saat `fromTabel` truthy props ini merepresentasikan `Id matakuliah` yang ingin dihapus.
+ * Sebaliknya saat `fromTabel` falsy props ini bernilai `undefined`
+ * @property {boolean} fromTabel
+ * Boolean apakah modal ditrigger dari tabel. Jika `true` maka modal ditrigger melalui klik pada matakuliah yang ada ditabel.
+ * Jika `false` maka modal ditrigger melalui `RowAction`.
+ */
 export const HapusPermanentConfirm = () => {
     const router = useRouter();
     const userIdCookie = useCookies().get('s_user_id');
