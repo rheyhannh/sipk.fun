@@ -1,5 +1,8 @@
 // #region TYPE DEPEDENCY
-import * as ContextTypes from '../types/context.js'
+import * as ContextTypes from '@/types/context';
+import * as SupabaseTypes from '@/types/supabase';
+import { ColumnId, ColumnTitle } from '@/types/table_matakuliah';
+import { DefaultIndeksNilai } from '@/types/sipk';
 import {
     ClientAPIResponseErrorProps as ApiResponseError,
     ClientAPIResponseSuccessProps as ApiResponseSuccess,
