@@ -2,6 +2,10 @@
  * @typedef {'nomor' | 'matakuliah' | 'semester' | 'sks' | 'nilai' | 'diulang' | 'target' | 'ontarget'} ColumnId
  */
 
+/** Title column yang tersedia pada tabel matakuliah
+ * @typedef {'Nomor' | 'Matakuliah' | 'Semester' | 'Sks' | 'Nilai' | 'Bisa Diulang' | 'Target Nilai' | 'On Target'} ColumnTitle
+ */
+
 /** Pengaturan atau preferensi tabel matakuliah yang dapat diatur
  * @typedef {Object} PreferencesProps
  * @property {number} size 
