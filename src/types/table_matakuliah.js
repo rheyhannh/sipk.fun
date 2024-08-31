@@ -9,7 +9,7 @@
 /** Pengaturan atau preferensi tabel matakuliah yang dapat diatur
  * @typedef {Object} PreferencesProps
  * @property {number} size 
- * Jumlah maksimal matakuliah yang tampil pada tabel untuk 1 halaman
+ * Jumlah maksimal matakuliah yang tampil pada tabel untuk 1 halaman. Dapat bernilai `-1` dimana menampilkan semua matakuliah yang ada.
  * @property {0|1|2} controlPosition 
  * Letak kontrol table untuk mengganti halaman tabel dengan keterangan berikut,
  * - `0` : Terletak pada bawah tabel
