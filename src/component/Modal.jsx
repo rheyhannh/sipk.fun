@@ -92,7 +92,7 @@ import styles from './style/modal.module.css'
 export const Default = () => {
     return (
         <ModalContext.Consumer>
-            {context => {
+            {/** @param {ContextTypes.ModalContext<DefaultModalData>} context */ context => {
                 return (
                     <div className={`${styles.backdrop} ${context.active ? styles.active : ''}`}>
                         <div className={styles.default} id='modal'>
@@ -216,7 +216,7 @@ export const PanduanDaftar = () => {
 
     return (
         <ModalContext.Consumer>
-            {context => {
+            {/** @param {ContextTypes.ModalContext} context */ context => {
                 return (
                     <div className={`${styles.backdrop} ${context.active ? styles.active : ''}`}>
                         <div className={styles.panduan__daftar} id='modal'>
@@ -299,7 +299,7 @@ export const Logout = () => {
     }
     return (
         <ModalContext.Consumer>
-            {context => {
+            {/** @param {ContextTypes.ModalContext} context */context => {
                 return (
                     <div className={`${styles.backdrop} ${context.active ? styles.active : ''}`}>
                         <div className={`${styles.logout} ${styles.confirm}`} id='modal'>
@@ -352,7 +352,7 @@ export const PerubahanTerakhirDetail = () => {
 
     return (
         <ModalContext.Consumer>
-            {context => {
+            {/** @param {ContextTypes.ModalContext<PerubahanTerakhirDetailModalData>} context */ context => {
                 const handleHapusMatakuliah = async (e) => {
                     e.preventDefault();
                     context.handleModalClose();
@@ -847,7 +847,7 @@ export const PerubahanTerakhirConfirm = () => {
 
     return (
         <ModalContext.Consumer>
-            {context => {
+            {/** @param {ContextTypes.ModalContext<PerubahanTerakhirConfirmModalData>} context */ context => {
                 const type = context?.data?.current?.type ? context?.data?.current?.type : context?.data?.prev?.type;
                 const nama = context?.data?.current?.nama ? context?.data?.current?.nama : context?.data?.prev?.nama
 
@@ -1237,7 +1237,7 @@ export const TambahMatkul = () => {
 
     return (
         <ModalContext.Consumer>
-            {context => {
+            {/** @param {ContextTypes.ModalContext<TambahMatkulModalData>} context */ context => {
                 const penilaian = context.data.penilaian;
                 const penilaianKey = Object.keys(penilaian);
 
@@ -1622,7 +1622,7 @@ export const Profil = () => {
 
     return (
         <ModalContext.Consumer>
-            {context => {
+            {/** @param {ContextTypes.ModalContext<ProfilModalData>} context */ context => {
                 const validateForm = () => {
                     // Validating 'Nama'
                     if (isEmpty(nama, { ignore_whitespace: true })) { setErrorMessage('Nama lengkap dibutuhkan'); return false; }
@@ -2600,7 +2600,7 @@ export const TabelSetting = () => {
 
     return (
         <ModalContext.Consumer>
-            {context => {
+            {/** @param {ContextTypes.ModalContext<TabelSettingModalData>} context */ context => {
                 const validateForm = () => {
                     return new Promise(async (resolve, reject) => {
                         try {
@@ -3016,7 +3016,7 @@ export const TabelFilter = () => {
 
     return (
         <ModalContext.Consumer>
-            {context => {
+            {/** @param {ContextTypes.ModalContext<TabelFilterModalData>} context */ context => {
                 const penilaian = context.data.penilaian;
                 const penilaianKey = Object.keys(penilaian);
 
@@ -3464,7 +3464,7 @@ export const DetailMatkul = () => {
     const router = useRouter();
     const userIdCookie = useCookies().get('s_user_id');
     const accessToken = useCookies().get('s_access_token');
-    /** @type {ContextTypes.ModalContext} */
+    /** @type {ContextTypes.ModalContext<DetailMatkulModalData>} */
     const { data } = useContext(ModalContext);
     const [nama, setNama] = useState(data.nama ?? '');
     const [sks, setSks] = useState(data.sks ?? '');
@@ -3484,7 +3484,7 @@ export const DetailMatkul = () => {
 
     return (
         <ModalContext.Consumer>
-            {context => {
+            {/** @param {ContextTypes.ModalContext<DetailMatkulModalData>} context */ context => {
                 const penilaian = context.data.penilaian;
                 const penilaianKey = Object.keys(penilaian);
 
@@ -4056,7 +4056,7 @@ export const HapusPermanentConfirm = () => {
 
     return (
         <ModalContext.Consumer>
-            {context => {
+            {/** @param {ContextTypes.ModalContext<HapusPermanentConfirmModalData>} context */ context => {
                 const matakuliah = context?.data?.nama ? context?.data?.nama : context?.data?.current?.nama ? context?.data?.current?.nama : null;
                 const handleHapusPermanent = async (e) => {
                     e.preventDefault();
@@ -4248,7 +4248,7 @@ export const Akun = () => {
 
     return (
         <ModalContext.Consumer>
-            {context => {
+            {/** @param {ContextTypes.ModalContext} context */ context => {
                 const toggleEditPassword = () => {
                     if (editPassword) { setEditPassword(false); setPassword(''); setPasswordConfirm(''); setErrorMessage(''); }
                     else { setEditPassword(true); }
