@@ -234,7 +234,9 @@ export function Table({ state, validating, user, sessionTable, matkul, matkulHis
                     cell: info => info.row.index + 1,
                     header: () => <span>#</span>,
                     footer: info => info.column.id,
-                    enableSorting: false,
+                    sortingFn: (x, y) => {
+                        return x.index > y.index ? -1 : x.index < y.index ? 1 : 0
+                    }
                 }),
                 columnHelper.accessor('nama', {
                     id: 'matakuliah',
