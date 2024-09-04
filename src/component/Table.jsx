@@ -260,6 +260,13 @@ export function Table({ state, validating, user, sessionTable, matkul, matkulHis
                     header: () => <span>Nilai</span>,
                     footer: info => info.column.id,
                     filterFn: 'arrIncludesSome',
+                    sortingFn: (x, y, columnId) => {
+                        const xVal = penilaian?.[x.getValue(columnId)]?.weight;
+                        const yVal = penilaian?.[y.getValue(columnId)]?.weight;
+
+                        if (!xVal || !yVal) { return 0 }
+                        return xVal > yVal ? -1 : yVal > xVal ? 1 : 0;
+                    },
                 }),
                 columnHelper.accessor(row => row.dapat_diulang, {
                     id: 'diulang',
@@ -273,6 +280,13 @@ export function Table({ state, validating, user, sessionTable, matkul, matkulHis
                     cell: info => info.getValue(),
                     header: () => <span>Target Nilai</span>,
                     filterFn: 'arrIncludesSome',
+                    sortingFn: (x, y, columnId) => {
+                        const xVal = penilaian?.[x.getValue(columnId)]?.weight;
+                        const yVal = penilaian?.[y.getValue(columnId)]?.weight;
+
+                        if (!xVal || !yVal) { return 0 }
+                        return xVal > yVal ? -1 : yVal > xVal ? 1 : 0;
+                    },
                 }),
                 columnHelper.accessor(row => row.nilai.bobot >= row.target_nilai.bobot, {
                     id: 'ontarget',
