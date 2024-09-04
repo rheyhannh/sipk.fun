@@ -241,18 +241,21 @@ export function Table({ state, validating, user, sessionTable, matkul, matkulHis
                     cell: info => info.getValue(),
                     header: () => <span>Matakuliah</span>,
                     footer: info => info.column.id,
+                    invertSorting: true,
                 }),
                 columnHelper.accessor(row => row.semester, {
                     id: 'semester',
                     cell: info => info.getValue(),
                     header: () => <span>Semester</span>,
                     footer: info => info.column.id,
+                    invertSorting: true,
                 }),
                 columnHelper.accessor('sks', {
                     id: 'sks',
                     cell: info => info.getValue(),
                     header: () => <span>Sks</span>,
                     footer: info => info.column.id,
+                    invertSorting: true,
                 }),
                 columnHelper.accessor(row => row.nilai.indeks, {
                     id: 'nilai',
