@@ -335,4 +335,19 @@ export async function getApiKey(request) {
     });
 }
 
+/**
+ * Method untuk reset cookies yang digunakan pada sipk
+ * @param {Array<CookiesTypes.AllCookiesName>} [cookies] Array yang berisikan nama cookie yang ingin direset, default `['secureSessionCookie', 'serviceUserIdCookie', 'serviceAccessTokenCookie']`
+ * @returns {Promise<void>} Promise dengan resolve void
+ */
+export async function resetSipkCookies(cookiesName = ['secureSessionCookie', 'serviceUserIdCookie', 'serviceAccessTokenCookie']) {
+    const cookieStore = cookies();
+    const cookieAuthDeleteOptions = await getCookieOptions('auth', 'remove');
+    const cookieServiceDeleteOptions = await getCookieOptions('service', 'remove');
+    if (cookiesName.includes('secureSessionCookie')) cookieStore.set({ name: process.env.USER_SESSION_COOKIES_NAME, value: '', ...cookieAuthDeleteOptions });
+    if (cookiesName.includes('serviceUserIdCookie')) cookieStore.set({ name: 's_user_id', value: '', ...cookieServiceDeleteOptions });
+    if (cookiesName.includes('serviceAccessTokenCookie')) cookieStore.set({ name: 's_access_token', value: '', ...cookieServiceDeleteOptions });
+    if (cookiesName.includes('serviceGuestCookie')) cookieStore.set({ name: 's_guest_id', value: '', ...cookieServiceDeleteOptions });
+}
+
 // #endregion
