@@ -59,6 +59,10 @@
  */
 
 /**
+ * @typedef {'serviceGuestCookie' | 'serviceUserIdCookie' | 'serviceAccessTokenCookie' | 'secureSessionCookie'} AllCookiesName
+ */
+
+/**
  * @typedef {Object} AllCookies
  * @property {string} serviceGuestCookie
  * Cookie berformat `uuid-v4` sebagai identifier user anonim atau tidak terautentikasi.
