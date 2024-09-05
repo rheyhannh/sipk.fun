@@ -7,7 +7,7 @@ import * as SupabaseTypes from '@/types/supabase';
 
 // #region NEXT DEPEDENCY
 import { NextRequest } from 'next/server';
-import { headers } from 'next/headers';
+import { headers, cookies } from 'next/headers';
 // #endregion
 
 // #region UTIL DEPEDENCY
