@@ -337,7 +337,7 @@ export async function getApiKey(request) {
 
 /**
  * Method untuk reset cookies yang digunakan pada sipk
- * @param {Array<CookiesTypes.AllCookiesName>} [cookies] Array yang berisikan nama cookie yang ingin direset, default `['secureSessionCookie', 'serviceUserIdCookie', 'serviceAccessTokenCookie']`
+ * @param {Array<CookiesTypes.AllCookiesName>} [cookiesName] Array yang berisikan nama cookie yang ingin direset, default `['secureSessionCookie', 'serviceUserIdCookie', 'serviceAccessTokenCookie']`
  * @returns {Promise<void>} Promise dengan resolve void
  */
 export async function resetSipkCookies(cookiesName = ['secureSessionCookie', 'serviceUserIdCookie', 'serviceAccessTokenCookie']) {
