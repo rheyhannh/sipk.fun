@@ -186,8 +186,14 @@ export async function rateLimit(options) {
 export async function validateJWT(token, userId, ignoreExpiration = true, otherOptions = {}) {
     return new Promise((resolve, reject) => {
         if (!userId || typeof userId !== 'string' || !isUUID(userId)) {
+            return reject(authError.invalid_access_token(null, null, {
+                reason: 'User id should exist and UUID typed'
+            }));
         }
         if (!token || typeof token !== 'string' || !isJWT(token)) {
+            return reject(authError.invalid_access_token(null, null, {
+                reason: 'Access token should exist and JWT typed'
+            }));
         }
 
         try {
@@ -206,9 +212,8 @@ export async function validateJWT(token, userId, ignoreExpiration = true, otherO
 
             resolve(decoded);
         } catch (error) {
-            const { name, message } = error;
-            console.error(name && message ? `${name} - ${message}` : 'Error when validating JWT');
-            reject(new Error(`Unauthorized - Invalid access token`));
+            console.error(error);
+            reject(authError.invalid_access_token());
         }
     });
 }
