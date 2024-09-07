@@ -183,7 +183,7 @@ export async function rateLimit(options) {
  * - Tipe `token` bukan `JWT`
  * - Tipe `userId` bukan `UUID`
  */
-export async function validateJWT(token, userId, ignoreExpiration = true, otherOptions) {
+export async function validateJWT(token, userId, ignoreExpiration = true, otherOptions = {}) {
     return new Promise((resolve, reject) => {
         if (!isUUID(userId) || !userId) {
             return reject(new Error(`Unauthorized - Invalid or empty user id`));
