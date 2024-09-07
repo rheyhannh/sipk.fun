@@ -17,6 +17,10 @@ import jwt, { VerifyOptions } from 'jsonwebtoken';
 import isJWT from 'validator/lib/isJWT';
 import isUUID from 'validator/lib/isUUID';
 import isNumeric from 'validator/lib/isNumeric';
+import {
+    AuthErrorResponse as authError,
+    RatelimitErrorResponse as rateLimitError
+} from '@/constant/api_response';
 // #endregion
 
 // #region Security, Encryptor, Decryptor
