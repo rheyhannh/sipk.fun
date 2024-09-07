@@ -327,15 +327,21 @@ export async function getCookieOptions(type, action, custom = {}) {
  * @param {NextRequest} request 
  * @returns {Promise<CookiesTypes.AllCookies>} Promise dengan resolve object yang berisikan cookies yang digunakan pada sipk. Jika cookie tidak tersedia, value bernilai `null`
  */
-export async function getSipkCookies(request) {
+export async function getSipkCookies(request = null) {
+    const cookiesStore = cookies();
+    if (request) {
+        var { cookies: cookiesRequest } = request;
+    }
+
     return new Promise((resolve) => {
         /** @type {CookiesTypes.AllCookies} */
         const cookies = {
-            serviceGuestCookie: request.cookies.get('s_guest_id')?.value,
-            serviceUserIdCookie: request.cookies.get('s_user_id')?.value,
-            serviceAccessTokenCookie: request.cookies.get('s_access_token')?.value,
-            secureSessionCookie: request.cookies.get(process.env.USER_SESSION_COOKIES_NAME)?.value,
+            serviceGuestCookie: request ? cookiesRequest.get('s_guest_id')?.value : cookiesStore.get('s_guest_id')?.value,
+            serviceUserIdCookie: request ? cookiesRequest.get('s_user_id')?.value : cookiesStore.get('s_user_id')?.value,
+            serviceAccessTokenCookie: request ? cookiesRequest.get('s_access_token')?.value : cookiesStore.get('s_access_token')?.value,
+            secureSessionCookie: request ? cookiesRequest.get(process.env.USER_SESSION_COOKIES_NAME)?.value : cookiesStore.get(process.env.USER_SESSION_COOKIES_NAME)?.value,
         };
+
         resolve(cookies);
     });
 }
