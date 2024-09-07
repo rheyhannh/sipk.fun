@@ -54,15 +54,13 @@ import {
  * ```
  */
 export async function encryptAES(message) {
-    return new Promise((resolve) => {
-        try {
-            const ciphertext = CryptoJS.AES.encrypt(message, process.env.SECRET_KEY).toString();
-            resolve(ciphertext);
-        } catch (error) {
-            console.error(error);
-            resolve(null);
-        }
-    })
+    try {
+        const ciphertext = CryptoJS.AES.encrypt(message, process.env.SECRET_KEY).toString();
+        return ciphertext;
+    } catch (error) {
+        console.error(error);
+        return null;
+    }
 }
 
 /**
@@ -93,20 +91,19 @@ export async function encryptAES(message) {
  * ```
  */
 export async function decryptAES(ciphertext, parse = false) {
-    return new Promise((resolve) => {
-        try {
-            const bytes = CryptoJS.AES.decrypt(ciphertext, process.env.SECRET_KEY);
-            const decryptedData = bytes.toString(CryptoJS.enc.Utf8);
-            if (parse) {
-                resolve(JSON.parse(decryptedData));
-            } else {
-                resolve(decryptedData);
-            }
-        } catch (error) {
-            console.error(error);
-            resolve(null);
+    try {
+        const bytes = CryptoJS.AES.decrypt(ciphertext, process.env.SECRET_KEY);
+        const decryptedData = bytes.toString(CryptoJS.enc.Utf8);
+        if (parse) {
+            const decryptedDataParsed = JSON.parse(decryptedData);
+            return decryptedDataParsed;
+        } else {
+            return decryptedData;
         }
-    });
+    } catch (error) {
+        console.error(error);
+        return null;
+    }
 }
 
 // #endregion
@@ -208,38 +205,35 @@ export async function rateLimit(options) {
  * - Tipe `userId` bukan `UUID`
  */
 export async function validateJWT(token, userId, ignoreExpiration = true, otherOptions = {}) {
-    return new Promise((resolve, reject) => {
-        if (!userId || typeof userId !== 'string' || !isUUID(userId)) {
-            return reject(authError.invalid_access_token(null, null, {
-                reason: 'User id should exist and UUID typed'
-            }));
-        }
-        if (!token || typeof token !== 'string' || !isJWT(token)) {
-            return reject(authError.invalid_access_token(null, null, {
-                reason: 'Access token should exist and JWT typed'
-            }));
-        }
+    if (!userId || typeof userId !== 'string' || !isUUID(userId)) {
+        return authError.invalid_access_token(null, null, {
+            reason: 'User id should exist and UUID typed'
+        })
+    }
+    if (!token || typeof token !== 'string' || !isJWT(token)) {
+        return authError.invalid_access_token(null, null, {
+            reason: 'Access token should exist and JWT typed'
+        })
+    }
 
-        try {
-            const decoded = jwt.verify(
-                token,
-                process.env.JWT_SECRET_KEY,
-                {
-                    algorithms: process.env.JWT_ALGORITHM.split(','),
-                    audience: 'authenticated',
-                    issuer: process.env.JWT_ISSUER.split(','),
-                    ignoreExpiration,
-                    subject: userId,
-                    ...otherOptions
-                }
-            );
+    try {
+        const algorithms = process.env.JWT_ALGORITHM ? process.env.JWT_ALGORITHM.split(',') : ['HS256'];
+        const issuer = process.env.JWT_ISSUER ? process.env.JWT_ISSUER.split(',') : ['defaultIssuer'];
 
-            resolve(decoded);
-        } catch (error) {
-            console.error(error);
-            reject(authError.invalid_access_token());
-        }
-    });
+        const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY, {
+            algorithms,
+            audience: 'authenticated',
+            issuer,
+            ignoreExpiration,
+            subject: userId,
+            ...otherOptions,
+        });
+
+        return decoded;
+    } catch (error) {
+        console.error(error);
+        return authError.invalid_access_token();
+    }
 }
 
 /**
@@ -343,17 +337,15 @@ export async function getSipkCookies(request = null) {
         var { cookies: cookiesRequest } = request;
     }
 
-    return new Promise((resolve) => {
-        /** @type {CookiesTypes.AllCookies} */
-        const cookies = {
-            serviceGuestCookie: request ? cookiesRequest.get('s_guest_id')?.value : cookiesStore.get('s_guest_id')?.value,
-            serviceUserIdCookie: request ? cookiesRequest.get('s_user_id')?.value : cookiesStore.get('s_user_id')?.value,
-            serviceAccessTokenCookie: request ? cookiesRequest.get('s_access_token')?.value : cookiesStore.get('s_access_token')?.value,
-            secureSessionCookie: request ? cookiesRequest.get(process.env.USER_SESSION_COOKIES_NAME)?.value : cookiesStore.get(process.env.USER_SESSION_COOKIES_NAME)?.value,
-        };
+    /** @type {CookiesTypes.AllCookies} */
+    const allCookies = {
+        serviceGuestCookie: request ? cookiesRequest.get('s_guest_id')?.value : cookiesStore.get('s_guest_id')?.value,
+        serviceUserIdCookie: request ? cookiesRequest.get('s_user_id')?.value : cookiesStore.get('s_user_id')?.value,
+        serviceAccessTokenCookie: request ? cookiesRequest.get('s_access_token')?.value : cookiesStore.get('s_access_token')?.value,
+        secureSessionCookie: request ? cookiesRequest.get(process.env.USER_SESSION_COOKIES_NAME)?.value : cookiesStore.get(process.env.USER_SESSION_COOKIES_NAME)?.value,
+    };
 
-        resolve(cookies);
-    });
+    return allCookies;
 }
 
 /**
@@ -364,10 +356,9 @@ export async function getSipkCookies(request = null) {
  * @returns {Promise<string>} Promise dengan resolve string ip jika tersedia, `null` jika tidak tersedia
  */
 export async function getIpFromHeaders() {
-    return new Promise((resolve) => {
-        const ip = headers().get('X-Client-IP') ?? headers().get('X-Forwarded-For') ?? headers().get('X-Real-IP');
-        resolve(ip);
-    });
+    const ip = headers().get('X-Client-IP') ?? headers().get('X-Forwarded-For') ?? headers().get('X-Real-IP');
+    
+    return ip;
 }
 
 /**
@@ -376,10 +367,9 @@ export async function getIpFromHeaders() {
  * @returns {Promise<string>} Promise dengan resolve string api key jika tersedia, `null` jika tidak tersedia
  */
 export async function getApiKey(request) {
-    return new Promise((resolve) => {
-        const apiKey = headers().get('X-Api-Key') ?? request.nextUrl.searchParams.get('apiKey');
-        resolve(apiKey);
-    });
+    const apiKey = headers().get('X-Api-Key') ?? request.nextUrl.searchParams.get('apiKey');
+    
+    return apiKey;
 }
 
 /**
