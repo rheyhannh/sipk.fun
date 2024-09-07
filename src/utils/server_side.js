@@ -139,8 +139,19 @@ export async function rateLimit(options) {
 
     const check = async (limit, token) => {
         const tokenCount = tokenCache.get(token) || [0];
+        const isTokenMax = tokenCache.size >= tokenCache.max;
 
         if (tokenCount[0] === 0) {
+            if (isTokenMax) {
+                return Promise.reject(rateLimitError.maximum_token(
+                    'Server sibuk, coba lagi dalam 1 menit',
+                    undefined, undefined, {
+                    headers: {
+                        'Retry-After': 60,
+                    }
+                }
+                ))
+            }
             tokenCache.set(token, tokenCount);
         }
 
