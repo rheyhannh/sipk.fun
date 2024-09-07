@@ -158,9 +158,22 @@ export async function rateLimit(options) {
         tokenCount[0] += 1;
 
         const currentUsage = tokenCount[0];
+        const currentTtl = Math.round(tokenCache.getRemainingTTL(token) / 1000);
+        const currentTtlMsg = currentTtl >= 60 ? '1 menit' : `${currentTtl} detik`;
         const isRateLimited = currentUsage >= limit;
 
-        return isRateLimited ? Promise.reject() : currentUsage;
+        return isRateLimited ? Promise.reject(rateLimitError.maximum_usage(
+            `Terlalu banyak request, coba lagi dalam ${currentTtlMsg}`,
+            undefined, undefined,
+            {
+                headers: {
+                    'Retry-After': currentTtl,
+                    'X-Ratelimit-Limit': limit,
+                    'X-Ratelimit-Remaining': 0,
+                    'X-Ratelimit-Retry-After': currentTtl,
+                }
+            }
+        )) : currentUsage;
     };
 
     return {
