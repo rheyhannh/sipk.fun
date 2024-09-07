@@ -120,7 +120,7 @@ export async function decryptAES(ciphertext, parse = false) {
  * - `limit` : Limit maksimum jumlah penggunaan
  * - `token` : Token untuk mengecek ratelimit
  * 
- * `Resolve` dengan jumlah penggunaan, `Reject` saat penggunaan sudah lebih dari limit
+ * `Resolve` dengan jumlah penggunaan, `Reject` saat penggunaan sudah lebih dari limit atau jumlah token pada server mencapai maksimal
  */
 
 /**
@@ -128,7 +128,7 @@ export async function decryptAES(ciphertext, parse = false) {
  * @param {object} options - Opsi untuk rate limit
  * @param {number} [options.uniqueTokenPerInterval=500] - Angka maksimal untuk setiap token unik yang dapat diterima dalam suatu interval, default : `500`
  * @param {number} [options.interval=60000] - Interval waktu dalam millisekon untuk rate limit, default : `60000`
- * @returns {rateLimitInstance} Instance ratelimit beserta object dengan method `check` untuk mengecek rate limit dari sebuah token
+ * @returns {Promise<rateLimitInstance>} Promise dengan resolve instance ratelimit
  */
 export async function rateLimit(options) {
     const tokenCache = new LRUCache({
@@ -306,11 +306,20 @@ export async function getEtag(data, algorithm = 'MD5', etagFormat = true) {
 // #region Options, Cookies, Headers
 
 /**
- * Method untuk mendapatkan cookies options.
- * @param {'auth'|'service'} type Jika `'auth'` maka secure dan httpOnly bernilai `true`, jika `'service'` maka secure dan httpOnly bernilai `false`.
- * @param {'set'|'remove'} action Jika `'set'` maka maxAge bernilai positif, jika `'remove'` maka maxAge bernilai negatif.
- * @param {{}} custom Object props cookies options yang ingin ditambah atau diubah.
- * @returns {{secure:boolean, httpOnly:boolean, maxAge:2592000|-2592000, sameSite:'lax', custom?:{}}} Object dengan props cookies options sesuai dengan parameter yang digunakan.
+ * Method untuk mendapatkan cookies options dengan preset berdasarkan param `type` dan `action`.
+ * 
+ * - Jika type `'auth'` maka secure dan httpOnly bernilai `true`, sedangkan jika `'service'` maka secure dan httpOnly bernlai `false`
+ * - Jika action `'set'` maka maxAge bernilai `positif`, sedangkan jika `'remove'` maka maxAge bernilai `negatif`
+ * 
+ * Tips penggunaan method : 
+ * - Gunakan type `'auth'` saat cookie hanya ingin diakses melalui http dan secure
+ * - Gunakan action `'set'` saat ingin set cookie, sedangkan `'remove'` saat ingin remove cookie
+ * 
+ * Jika ingin custom, gunakan param `custom` untuk mengubah value dari `secure`, `httpOnly`, `maxAge` dan `sameSite`
+ * @param {'auth'|'service'} type Type preset
+ * @param {'set'|'remove'} action Action preset
+ * @param {{secure?:boolean, httpOnly?:boolean, maxAge?:number, sameSite?:string}} [custom] Cookie options custom value
+ * @returns {Promise<{secure:boolean, httpOnly:boolean, maxAge:2592000|-2592000, sameSite:'lax'}>} Promise dengan resolve object sebagai cookie options
  */
 export async function getCookieOptions(type, action, custom = {}) {
     return {
@@ -323,9 +332,10 @@ export async function getCookieOptions(type, action, custom = {}) {
 }
 
 /**
- * Method untuk mendapatkan cookies yang digunakan pada sipk
- * @param {NextRequest} request 
- * @returns {Promise<CookiesTypes.AllCookies>} Promise dengan resolve object yang berisikan cookies yang digunakan pada sipk. Jika cookie tidak tersedia, value bernilai `null`
+ * Method untuk mendapatkan cookies yang digunakan pada sipk. Jika `request` dipass, cookie diresolve menggunakan `request.cookies`,
+ * jika tidak maka cookie diresolve menggunakan cookies store `cookies()` yang ada pada `next/headers`.
+ * @param {NextRequest} [request]
+ * @returns {Promise<CookiesTypes.AllCookies>} Promise dengan resolve object yang berisikan cookies yang digunakan pada sipk. Jika cookie tidak tersedia, value bernilai `undefined`
  */
 export async function getSipkCookies(request = null) {
     const cookiesStore = cookies();
