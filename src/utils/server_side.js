@@ -185,11 +185,9 @@ export async function rateLimit(options) {
  */
 export async function validateJWT(token, userId, ignoreExpiration = true, otherOptions = {}) {
     return new Promise((resolve, reject) => {
-        if (!isUUID(userId) || !userId) {
-            return reject(new Error(`Unauthorized - Invalid or empty user id`));
+        if (!userId || typeof userId !== 'string' || !isUUID(userId)) {
         }
-        if (!isJWT(token) || !token) {
-            return reject(new Error(`Unauthorized - Invalid or empty access token`));
+        if (!token || typeof token !== 'string' || !isJWT(token)) {
         }
 
         try {
