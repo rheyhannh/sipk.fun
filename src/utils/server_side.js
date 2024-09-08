@@ -206,12 +206,12 @@ export async function rateLimit(options) {
  */
 export async function validateJWT(token, userId, ignoreExpiration = true, otherOptions = {}) {
     if (!userId || typeof userId !== 'string' || !isUUID(userId)) {
-        return authError.invalid_access_token(null, null, {
+        throw authError.invalid_access_token(null, null, {
             reason: 'User id should exist and UUID typed'
         })
     }
     if (!token || typeof token !== 'string' || !isJWT(token)) {
-        return authError.invalid_access_token(null, null, {
+        throw authError.invalid_access_token(null, null, {
             reason: 'Access token should exist and JWT typed'
         })
     }
@@ -232,7 +232,7 @@ export async function validateJWT(token, userId, ignoreExpiration = true, otherO
         return decoded;
     } catch (error) {
         console.error(error);
-        return authError.invalid_access_token();
+        throw authError.invalid_access_token();
     }
 }
 
