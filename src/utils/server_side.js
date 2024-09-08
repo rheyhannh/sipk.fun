@@ -189,6 +189,8 @@ export async function rateLimit(options) {
  * ```
  * 
  * Secara default token dinyatakan valid dengan kriteria berikut, 
+ * - Tipe param `token` merupakan JWT 
+ * - Tipe param `userId` merupakan UUID
  * - Algorithms match dengan salah satu algoritma yang digunakan pada `process.env.JWT_ALGORITHM`
  * - Audience bernilai `'authenticated'`
  * - Issuer match dengan salah satu issuer yang tersedia pada `process.env.JWT_ISSUER`
@@ -199,10 +201,7 @@ export async function rateLimit(options) {
  * @param {boolean} [ignoreExpiration=true] Boolean untuk tetap kategorikan token sebagai `valid` walaupun sudah kadaluwarsa atau `expired`, default: `true`
  * @param {Omit<VerifyOptions, 'algorithms' | 'audience' | 'issuer' | 'ignoreExpiration' | 'subject'} otherOptions Opsi lainnya untuk mempertimbangkan token `valid` atau tidak
  * @returns {Promise<SupabaseTypes.AccessTokenPayload>} Promise dengan `resolve` decoded payload `JWT` atau access token atau cookie `'s_access_token'` dan `reject` dengan error
- * @throws
- * - Token invalid atau tidak memenuhi semua kriteria diatas
- * - Tipe `token` bukan `JWT`
- * - Tipe `userId` bukan `UUID`
+ * @throws Object `AuthError` saat kriteria pada deskripsi tidak terpenuhi
  */
 export async function validateJWT(token, userId, ignoreExpiration = true, otherOptions = {}) {
     if (!userId || typeof userId !== 'string' || !isUUID(userId)) {
