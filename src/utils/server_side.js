@@ -372,6 +372,20 @@ export async function getApiKey(request) {
 }
 
 /**
+ * Method untuk mendapatkan request detail berupa `ip`, semua `cookies` dan `headers` yang digunakan
+ */
+export async function getRequestDetails() {
+    const ip = await getIpFromHeaders();
+    const allCookies = cookies().getAll();
+    const allHeaders = {};
+    headers().forEach((value, key) => {
+        allHeaders[key] = value;
+    });
+
+    return { ip, cookies: allCookies, headers: allHeaders }
+}
+
+/**
  * Method untuk reset cookies yang digunakan pada sipk
  * @param {Array<CookiesTypes.AllCookiesName>} [cookiesName] Array yang berisikan nama cookie yang ingin direset, default `['secureSessionCookie', 'serviceUserIdCookie', 'serviceAccessTokenCookie']`
  * @returns {Promise<void>} Promise dengan resolve void
