@@ -43,6 +43,8 @@
  * General message untuk ditampilkan kepada user menggunakan `toast`
  * @property {Object} error 
  * Object yang merepresentasikan error yang terjadi
+ * @property {'AuthError' | 'RatelimitError' | 'ServerError'} error.type
+ * Tipe atau instance error yang terjadi
  * @property {AuthErrorCodes | RatelimitErrorCodes | ServerErrorCodes} error.code
  * Kode referensi error pada SIPK dengan keterangan berikut,
  * - `AUTH_00` : User access token atau cookie `'s_access_token'` tidak tersedia
@@ -120,6 +122,7 @@ export const authErrorCodesList = {
  *      code: 401,
  *      message: message ?? authErrorCodesList['AUTH_00'].message,
  *      error: {
+ *          type: 'AuthError',
  *          code: 'AUTH_00',
  *          message: authErrorCodesList['AUTH_00'].name,
  *          hintUrl: errorHintUrl,
@@ -144,6 +147,7 @@ export const authErrorCodesList = {
  *      code: 401,
  *      message: message ?? authErrorCodesList['AUTH_01'].message,
  *      error: {
+ *          type: 'AuthError',
  *          code: 'AUTH_01',
  *          message: authErrorCodesList['AUTH_01'].name,
  *          hintUrl: errorHintUrl,
@@ -168,6 +172,7 @@ export const authErrorCodesList = {
  *      code: 401,
  *      message: message ?? authErrorCodesList['AUTH_02'].message,
  *      error: {
+ *          type: 'AuthError',
  *          code: 'AUTH_02',
  *          message: authErrorCodesList['AUTH_02'].name,
  *          hintUrl: errorHintUrl,
@@ -192,6 +197,7 @@ export const authErrorCodesList = {
  *      code: 401,
  *      message: message ?? authErrorCodesList['AUTH_03'].message,
  *      error: {
+ *          type: 'AuthError',
  *          code: 'AUTH_03',
  *          message: authErrorCodesList['AUTH_03'].name,
  *          hintUrl: errorHintUrl,
@@ -216,6 +222,7 @@ export const authErrorCodesList = {
  *      code: 401,
  *      message: message ?? authErrorCodesList['AUTH_04'].message,
  *      error: {
+ *          type: 'AuthError',
  *          code: 'AUTH_04',
  *          message: authErrorCodesList['AUTH_04'].name,
  *          hintUrl: errorHintUrl,
@@ -338,6 +345,7 @@ export const rateLimitErrorCodesList = {
  *      code: 429,
  *      message: message ?? rateLimitErrorCodesList['RL_00'].message,
  *      error: {
+ *          type: 'RatelimitError',
  *          code: 'RL_00',
  *          message: rateLimitErrorCodesList['RL_00'].name,
  *          hintUrl: errorHintUrl,
@@ -362,6 +370,7 @@ export const rateLimitErrorCodesList = {
  *      code: 503,
  *      message: message ?? rateLimitErrorCodesList['RL_01'].message,
  *      error: {
+ *          type: 'RatelimitError',
  *          code: 'RL_01',
  *          message: rateLimitErrorCodesList['RL_01'].name,
  *          hintUrl: errorHintUrl,
@@ -436,6 +445,7 @@ export const serverErrorCodesList = {
  *      code: 500,
  *      message: message ?? serverErrorCodesList['SRV_00'].message,
  *      error: {
+ *          type: 'ServerError',
  *          code: 'SRV_00',
  *          message: serverErrorCodesList['SRV_00'].name,
  *          hintUrl: errorHintUrl,
@@ -460,6 +470,7 @@ export const serverErrorCodesList = {
  *      code: 503,
  *      message: message ?? serverErrorCodesList['SRV_01'].message,
  *      error: {
+ *          type: 'ServerError',
  *          code: 'SRV_01',
  *          message: serverErrorCodesList['SRV_01'].name,
  *          hintUrl: errorHintUrl,
