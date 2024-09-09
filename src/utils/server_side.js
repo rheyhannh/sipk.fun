@@ -142,11 +142,22 @@ export async function rateLimit(options) {
             if (isTokenMax) {
                 return Promise.reject(rateLimitError.maximum_token(
                     'Server sibuk, coba lagi dalam 1 menit',
-                    undefined, undefined, {
-                    headers: {
-                        'Retry-After': 60,
+                    undefined,
+                    {
+                        severity: 'error',
+                        reason: 'Ratelimit token on server already full',
+                        stack: null,
+                        functionDetails: 'Ratelimit.check at utils/server_side.js line 143',
+                        functionArgs: { limit, token },
+                        functionResolvedVariable: { tokenCacheSize: tokenCache.size, tokenCacheMax: tokenCache.max, isTokenMax },
+                        request: await getRequestDetails(),
+                        more: null,
+                    },
+                    {
+                        headers: {
+                            'Retry-After': 60,
+                        }
                     }
-                }
                 ))
             }
             tokenCache.set(token, tokenCount);
@@ -161,7 +172,17 @@ export async function rateLimit(options) {
 
         return isRateLimited ? Promise.reject(rateLimitError.maximum_usage(
             `Terlalu banyak request, coba lagi dalam ${currentTtlMsg}`,
-            undefined, undefined,
+            undefined,
+            {
+                severity: 'error',
+                reason: 'inherit',
+                stack: null,
+                functionDetails: 'Ratelimit.check at utils/server_side.js line 173',
+                functionArgs: { limit, token },
+                functionResolvedVariable: { currentUsage, maximumUsage: limit, isRateLimited },
+                request: await getRequestDetails(),
+                more: null,
+            },
             {
                 headers: {
                     'Retry-After': currentTtl,
@@ -205,13 +226,27 @@ export async function rateLimit(options) {
  */
 export async function validateJWT(token, userId, ignoreExpiration = true, otherOptions = {}) {
     if (!userId || typeof userId !== 'string' || !isUUID(userId)) {
-        throw authError.invalid_access_token(null, null, {
-            reason: 'User id should exist and UUID typed'
+        throw authError.invalid_access_token(undefined, undefined, {
+            severity: 'error',
+            reason: 'User id should exist and UUID typed',
+            stack: null,
+            functionDetails: 'validateJWT at utils/server_side.js line 208',
+            functionArgs: { token, userId, ignoreExpiration, otherOptions },
+            functionResolvedVariable: null,
+            request: await getRequestDetails(),
+            more: null,
         })
     }
     if (!token || typeof token !== 'string' || !isJWT(token)) {
-        throw authError.invalid_access_token(null, null, {
-            reason: 'Access token should exist and JWT typed'
+        throw authError.invalid_access_token(undefined, undefined, {
+            severity: 'error',
+            reason: 'Access token should exist and JWT typed',
+            stack: null,
+            functionDetails: 'validateJWT at utils/server_side.js line 217',
+            functionArgs: { token, userId, ignoreExpiration, otherOptions },
+            functionResolvedVariable: null,
+            request: await getRequestDetails(),
+            more: null,
         })
     }
 
@@ -230,8 +265,16 @@ export async function validateJWT(token, userId, ignoreExpiration = true, otherO
 
         return decoded;
     } catch (error) {
-        console.error(error);
-        throw authError.invalid_access_token();
+        throw authError.invalid_access_token(undefined, undefined, {
+            severity: 'error',
+            reason: 'inherit',
+            stack: error?.stack ?? null,
+            functionDetails: 'validateJWT at utils/server_side.js line 246',
+            functionArgs: { token, userId, ignoreExpiration, otherOptions },
+            functionResolvedVariable: null,
+            request: await getRequestDetails(),
+            more: error,
+        })
     }
 }
 
