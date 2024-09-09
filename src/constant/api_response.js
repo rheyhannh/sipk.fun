@@ -97,6 +97,106 @@
 /** @typedef {Omit<APIResponseBaseProps, 'data' | 'code' | 'headers' | '_details'>} ClientAPIResponseErrorProps */
 /** @typedef {Omit<APIResponseBaseProps, 'error' | 'code' | 'headers' | '_details'>} ClientAPIResponseSuccessProps */
 
+/** @typedef {keyof badRequestErrorCodesList} BadRequestErrorCodes */
+
+export const badRequestErrorCodesList = {
+    'BR_00': { name: 'Bad Request - Invalid JSON format', message: 'Terjadi kesalahan saat memproses permintaan' },
+    'BR_01': { name: 'Bad Request - Invalid form data format', message: 'Form data yang dilampirkan tidak valid' },
+}
+
+/** 
+ * @typedef {Object} BadRequestErrorResponseType
+ * @property {(message?:string, errorHintUrl?:string, errorDetails?:Omit<APIResponseBaseProps['_details'], 'stamp'>, customProps?:Object<string,any>) => APIResponseErrorProps} malformed_request_body
+ * Method untuk generate payload response body saat proses parsing request body `request.json()` gagal dengan `optional` parameter berikut,
+ * - `message` : String untuk override default message yang ditampilkan ke user dengan `toast`
+ * - `errorHintUrl` : Link atau pathname yang dapat digunakan sebagai call to action untuk user mengetahui lebih lanjut `error` yang terjadi 
+ * - `errorDetails` : Error details untuk mendeskripsikan error lebih detail untuk tujuan `logging`
+ * - `customProps` : Object untuk menambah props tertentu selain status, message, code dan error
+ * 
+ * ```js
+ * const payload = {
+ *      status: 'error',
+ *      code: 400,
+ *      message: message ?? badRequestErrorCodesList['BR_00'].message,
+ *      error: {
+ *          type: 'BadRequestError',
+ *          code: 'BR_00',
+ *          message: badRequestErrorCodesList['BR_00'].name,
+ *          hintUrl: errorHintUrl,
+ *      },
+ *      _details: {
+ *          stamp: Math.floor(Date.now() / 1000),
+ *          ...errorDetails
+ *      },
+ *      ...customProps
+ * }
+ * ```
+ * @property {(message?:string, errorHintUrl?:string, errorDetails?:Omit<APIResponseBaseProps['_details'], 'stamp'>, customProps?:Object<string,any>) => APIResponseErrorProps} invalid_form_data
+ * Method untuk generate payload response body saat proses validasi form data menggunakan `Joi` gagal dengan `optional` parameter berikut,
+ * - `message` : String untuk override default message yang ditampilkan ke user dengan `toast`
+ * - `errorHintUrl` : Link atau pathname yang dapat digunakan sebagai call to action untuk user mengetahui lebih lanjut `error` yang terjadi 
+ * - `errorDetails` : Error details untuk mendeskripsikan error lebih detail untuk tujuan `logging`
+ * - `customProps` : Object untuk menambah props tertentu selain status, message, code dan error
+ * 
+ * ```js
+ * const payload = {
+ *      status: 'error',
+ *      code: 400,
+ *      message: message ?? badRequestErrorCodesList['BR_01'].message,
+ *      error: {
+ *          type: 'BadRequestError',
+ *          code: 'BR_01',
+ *          message: badRequestErrorCodesList['BR_01'].name,
+ *          hintUrl: errorHintUrl,
+ *      },
+ *      _details: {
+ *          stamp: Math.floor(Date.now() / 1000),
+ *          ...errorDetails
+ *      },
+ *      ...customProps
+ * }
+ * ```
+*/
+
+/** 
+ * Generate payload response body saat `BadRequestError` dimana setiap key merepresentasikan tipe error
+ * @type {BadRequestErrorResponseType} 
+ */
+export const BadRequestErrorResponse = {
+    malformed_request_body: (message, errorHintUrl, errorDetails = {}, customProps) => ({
+        status: 'error',
+        code: 400,
+        message: message ?? badRequestErrorCodesList['BR_00'].message,
+        error: {
+            type: 'BadRequestError',
+            code: 'BR_00',
+            message: badRequestErrorCodesList['BR_00'].name,
+            hintUrl: errorHintUrl,
+        },
+        _details: {
+            stamp: Math.floor(Date.now() / 1000),
+            ...errorDetails
+        },
+        ...((({ status, code, message, error, ...rest }) => rest)(customProps || {}))
+    }),
+    invalid_form_data: (message, errorHintUrl, errorDetails = {}, customProps) => ({
+        status: 'error',
+        code: 400,
+        message: message ?? badRequestErrorCodesList['BR_01'].message,
+        error: {
+            type: 'BadRequestError',
+            code: 'BR_01',
+            message: badRequestErrorCodesList['BR_01'].name,
+            hintUrl: errorHintUrl,
+        },
+        _details: {
+            stamp: Math.floor(Date.now() / 1000),
+            ...errorDetails
+        },
+        ...((({ status, code, message, error, ...rest }) => rest)(customProps || {}))
+    }),
+}
+
 /** @typedef {keyof authErrorCodesList} AuthErrorCodes */
 
 export const authErrorCodesList = {
