@@ -99,6 +99,7 @@
 /** @typedef {Omit<APIResponseBaseProps, 'data' | 'code' | 'headers' | '_details'>} ClientAPIResponseErrorProps */
 /** @typedef {Omit<APIResponseBaseProps, 'error' | 'code' | 'headers' | '_details'>} ClientAPIResponseSuccessProps */
 
+// #region BadRequestError or any 400 error 
 /** @typedef {keyof badRequestErrorCodesList} BadRequestErrorCodes */
 
 export const badRequestErrorCodesList = {
@@ -198,7 +199,9 @@ export const BadRequestErrorResponse = {
         ...((({ status, code, message, error, ...rest }) => rest)(customProps || {}))
     }),
 }
+// #endregion
 
+// #region AuthError or any 401 error
 /** @typedef {keyof authErrorCodesList} AuthErrorCodes */
 
 export const authErrorCodesList = {
@@ -424,7 +427,9 @@ export const AuthErrorResponse = {
         ...((({ status, code, message, error, ...rest }) => rest)(customProps || {}))
     }),
 }
+// #endregion
 
+// #region RatelimitError or any 429 error
 /** @typedef {keyof rateLimitErrorCodesList} RatelimitErrorCodes */
 
 export const rateLimitErrorCodesList = {
@@ -524,7 +529,9 @@ export const RatelimitErrorResponse = {
         ...((({ status, code, message, error, ...rest }) => rest)(customProps || {}))
     }),
 }
+// #endregion
 
+// #region ServerError or any 500 error
 /** @typedef {keyof serverErrorCodesList} ServerErrorCodes */
 
 export const serverErrorCodesList = {
@@ -624,3 +631,4 @@ export const ServerErrorResponse = {
         ...((({ status, code, message, error, ...rest }) => rest)(customProps || {}))
     }),
 }
+// #endregion
