@@ -93,7 +93,13 @@
 /** @typedef {Omit<APIResponseBaseProps, 'data' | 'code' | 'headers' | '_details'>} ClientAPIResponseErrorProps */
 /** @typedef {Omit<APIResponseBaseProps, 'error' | 'code' | 'headers' | '_details'>} ClientAPIResponseSuccessProps */
 
-/** @typedef {'AUTH_00' | 'AUTH_01' | 'AUTH_02' | 'AUTH_03' | 'AUTH_04'} AuthErrorCodes */
+export const authErrorCodesList = {
+    'AUTH_00': { name: 'Unauthorized - Missing access token', message: 'Akses token tidak ditemukan' },
+    'AUTH_01': { name: 'Unauthorized - Invalid access token', message: 'Akses token tidak valid' },
+    'AUTH_02': { name: 'Unauthorized - Expired access token', message: 'Akses token expired' },
+    'AUTH_03': { name: 'Unauthorized - Missing session', message: 'Session tidak ditemukan' },
+    'AUTH_04': { name: 'Unauthorized - Invalid session', message: 'Session tidak valid' },
+}
 
 /** 
  * @typedef {Object} AuthErrorResponseType
@@ -301,7 +307,10 @@ export const AuthErrorResponse = {
     }),
 }
 
-/** @typedef {'RL_00' | 'RL_01'} RatelimitErrorCodes */
+export const rateLimitErrorCodesList = {
+    'RL_00': { name: 'Too Many Request - Rate limit exceeded', message: 'Terlalu banyak request, coba lagi nanti' },
+    'RL_01': { name: 'Service Unavailable - Server is currently busy', message: 'Server sibuk, coba lagi nanti' },
+}
 
 /** 
  * @typedef {Object} RatelimitErrorResponseType
