@@ -417,15 +417,26 @@ export async function getApiKey(request) {
 /**
  * Method untuk mendapatkan request detail berupa `ip`, semua `cookies` dan `headers` yang digunakan
  */
-export async function getRequestDetails() {
+export async function getRequestDetails(filterSensitiveCookies = true, filterSensitiveHeaders = true) {
     const ip = await getIpFromHeaders();
     const allCookies = cookies().getAll();
+    const filteredCookies =
+        filterSensitiveCookies
+            ? allCookies.filter(cookie => !['_secure-auth.session-token', 's_access_token'].includes(cookie.name.toLowerCase()))
+            : allCookies;
+
     const allHeaders = {};
     headers().forEach((value, key) => {
         allHeaders[key] = value;
     });
 
-    return { ip, cookies: allCookies, headers: allHeaders }
+    const filteredHeaders = filterSensitiveHeaders
+        ? Object.fromEntries(
+            Object.entries(allHeaders).filter(([key]) => !['authorization', 'x-api-key', 'cookie'].includes(key.toLowerCase()))
+        )
+        : allHeaders;
+
+    return { ip, cookies: filteredCookies, headers: filteredHeaders }
 }
 
 /**
