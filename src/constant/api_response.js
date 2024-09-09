@@ -235,10 +235,10 @@ export const AuthErrorResponse = {
     missing_access_token: (message, errorHintUrl, errorDetails = {}, customProps) => ({
         status: 'error',
         code: 401,
-        message: message ?? 'Akses token tidak ditemukan',
+        message: message ?? authErrorCodesList['AUTH_00'].message,
         error: {
             code: 'AUTH_00',
-            message: 'Unauthorized - Missing access token',
+            message: authErrorCodesList['AUTH_00'].name,
             hintUrl: errorHintUrl,
         },
         _details: {
@@ -250,10 +250,10 @@ export const AuthErrorResponse = {
     invalid_access_token: (message, errorHintUrl, errorDetails = {}, customProps) => ({
         status: 'error',
         code: 401,
-        message: message ?? 'Akses token tidak valid',
+        message: message ?? authErrorCodesList['AUTH_01'].message,
         error: {
             code: 'AUTH_01',
-            message: 'Unauthorized - Invalid access token',
+            message: authErrorCodesList['AUTH_01'].name,
             hintUrl: errorHintUrl,
         },
         _details: {
@@ -265,10 +265,10 @@ export const AuthErrorResponse = {
     expired_access_token: (message, errorHintUrl, errorDetails = {}, customProps) => ({
         status: 'error',
         code: 401,
-        message: message ?? 'Akses token expired',
+        message: message ?? authErrorCodesList['AUTH_02'].message,
         error: {
             code: 'AUTH_02',
-            message: 'Unauthorized - Expired access token',
+            message: authErrorCodesList['AUTH_02'].name,
             hintUrl: errorHintUrl,
         },
         _details: {
@@ -280,10 +280,10 @@ export const AuthErrorResponse = {
     missing_session: (message, errorHintUrl, errorDetails = {}, customProps) => ({
         status: 'error',
         code: 401,
-        message: message ?? 'Session tidak ditemukan',
+        message: message ?? authErrorCodesList['AUTH_03'].message,
         error: {
             code: 'AUTH_03',
-            message: 'Unauthorized - Missing session',
+            message: authErrorCodesList['AUTH_03'].name,
             hintUrl: errorHintUrl,
         },
         _details: {
@@ -295,10 +295,10 @@ export const AuthErrorResponse = {
     invalid_session: (message, errorHintUrl, errorDetails = {}, customProps) => ({
         status: 'error',
         code: 401,
-        message: message ?? 'Session tidak valid',
+        message: message ?? authErrorCodesList['AUTH_04'].message,
         error: {
             code: 'AUTH_04',
-            message: 'Unauthorized - Invalid session',
+            message: authErrorCodesList['AUTH_04'].name,
             hintUrl: errorHintUrl,
         },
         _details: {
@@ -376,10 +376,10 @@ export const RatelimitErrorResponse = {
     maximum_usage: (message, errorHintUrl, errorDetails = {}, customProps) => ({
         status: 'error',
         code: 429,
-        message: message ?? 'Terlalu banyak request, coba lagi nanti',
+        message: message ?? rateLimitErrorCodesList['RL_00'].message,
         error: {
             code: 'RL_00',
-            message: 'Too Many Request - Rate limit exceeded',
+            message: rateLimitErrorCodesList['RL_00'].name,
             hintUrl: errorHintUrl,
         },
         _details: {
@@ -391,10 +391,10 @@ export const RatelimitErrorResponse = {
     maximum_token: (message, errorHintUrl, errorDetails = {}, customProps) => ({
         status: 'error',
         code: 503,
-        message: message ?? 'Server sibuk, coba lagi nanti',
+        message: message ?? rateLimitErrorCodesList['RL_01'].message,
         error: {
             code: 'RL_01',
-            message: 'Service Unavailable - Server is currently busy',
+            message: rateLimitErrorCodesList['RL_01'].name,
             hintUrl: errorHintUrl,
         },
         _details: {
