@@ -183,7 +183,7 @@
  * @type {AuthErrorResponseType} 
  */
 export const AuthErrorResponse = {
-    missing_access_token: (message, errorHintUrl, errorDetails, customProps) => ({
+    missing_access_token: (message, errorHintUrl, errorDetails = {}, customProps) => ({
         status: 'error',
         code: 401,
         message: message ?? 'Akses token tidak ditemukan',
@@ -195,7 +195,7 @@ export const AuthErrorResponse = {
         },
         ...((({ status, code, message, error, ...rest }) => rest)(customProps || {}))
     }),
-    invalid_access_token: (message, errorHintUrl, errorDetails, customProps) => ({
+    invalid_access_token: (message, errorHintUrl, errorDetails = {}, customProps) => ({
         status: 'error',
         code: 401,
         message: message ?? 'Akses token tidak valid',
@@ -207,7 +207,7 @@ export const AuthErrorResponse = {
         },
         ...((({ status, code, message, error, ...rest }) => rest)(customProps || {}))
     }),
-    expired_access_token: (message, errorHintUrl, errorDetails, customProps) => ({
+    expired_access_token: (message, errorHintUrl, errorDetails = {}, customProps) => ({
         status: 'error',
         code: 401,
         message: message ?? 'Akses token expired',
@@ -219,7 +219,7 @@ export const AuthErrorResponse = {
         },
         ...((({ status, code, message, error, ...rest }) => rest)(customProps || {}))
     }),
-    missing_session: (message, errorHintUrl, errorDetails, customProps) => ({
+    missing_session: (message, errorHintUrl, errorDetails = {}, customProps) => ({
         status: 'error',
         code: 401,
         message: message ?? 'Session tidak ditemukan',
@@ -231,7 +231,7 @@ export const AuthErrorResponse = {
         },
         ...((({ status, code, message, error, ...rest }) => rest)(customProps || {}))
     }),
-    invalid_session: (message, errorHintUrl, errorDetails, customProps) => ({
+    invalid_session: (message, errorHintUrl, errorDetails = {}, customProps) => ({
         status: 'error',
         code: 401,
         message: message ?? 'Session tidak valid',
@@ -298,7 +298,7 @@ export const AuthErrorResponse = {
  * @type {RatelimitErrorResponseType} 
  */
 export const RatelimitErrorResponse = {
-    maximum_usage: (message, errorHintUrl, errorDetails, customProps) => ({
+    maximum_usage: (message, errorHintUrl, errorDetails = {}, customProps) => ({
         status: 'error',
         code: 429,
         message: message ?? 'Terlalu banyak request, coba lagi nanti',
@@ -310,7 +310,7 @@ export const RatelimitErrorResponse = {
         },
         ...((({ status, code, message, error, ...rest }) => rest)(customProps || {}))
     }),
-    maximum_token: (message, errorHintUrl, errorDetails, customProps) => ({
+    maximum_token: (message, errorHintUrl, errorDetails = {}, customProps) => ({
         status: 'error',
         code: 503,
         message: message ?? 'Server sibuk, coba lagi nanti',
