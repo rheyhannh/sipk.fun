@@ -43,10 +43,12 @@
  * General message untuk ditampilkan kepada user menggunakan `toast`
  * @property {Object} error 
  * Object yang merepresentasikan error yang terjadi
- * @property {'AuthError' | 'RatelimitError' | 'ServerError'} error.type
+ * @property {'BadRequestError' | 'AuthError' | 'RatelimitError' | 'ServerError'} error.type
  * Tipe atau instance error yang terjadi
- * @property {AuthErrorCodes | RatelimitErrorCodes | ServerErrorCodes} error.code
+ * @property {BadRequestErrorCodes | AuthErrorCodes | RatelimitErrorCodes | ServerErrorCodes} error.code
  * Kode referensi error pada SIPK dengan keterangan berikut,
+ * - `BR_00` : Proses parsing request body `request.json()` gagal
+ * - `BR_01` : Proses validasi form data menggunakan `Joi` gagal
  * - `AUTH_00` : User access token atau cookie `'s_access_token'` tidak tersedia
  * - `AUTH_01` : User access token atau cookie `'s_access_token'` tidak valid
  * - `AUTH_02` : User access token atau cookie `'s_access_token'` expired atau kadaluwarsa
