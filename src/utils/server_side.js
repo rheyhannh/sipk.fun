@@ -289,7 +289,7 @@ export async function getEtag(data, algorithm = 'MD5', etagFormat = true) {
         const etag = etagFormat ? `"${hexHash}"` : `${hexHash}`;
         return etag;
     } catch (error) {
-        console.error(`Error generating ETag: ${error.message}`);
+        console.error(error);
         return null;
     }
 }
