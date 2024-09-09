@@ -404,3 +404,99 @@ export const RatelimitErrorResponse = {
         ...((({ status, code, message, error, ...rest }) => rest)(customProps || {}))
     }),
 }
+
+/** @typedef {keyof serverErrorCodesList} ServerErrorCodes */
+
+export const serverErrorCodesList = {
+    'SRV_00': { name: 'Internal Server Error - Something went wrong', message: 'Terjadi kesalahan pada server' },
+    'SRV_01': { name: 'Service Unavailable - Server is currently busy', message: 'Server sibuk, coba lagi nanti' },
+}
+
+/** 
+ * @typedef {Object} ServerErrorResponseType
+ * @property {(message?:string, errorHintUrl?:string, errorDetails?:Omit<APIResponseBaseProps['_details'], 'stamp'>, customProps?:Object<string,any>) => APIResponseErrorProps} interval_server_error
+ * Method untuk generate payload response body saat terjadi internal server error dengan `optional` parameter berikut,
+ * - `message` : String untuk override default message yang ditampilkan ke user dengan `toast`
+ * - `errorHintUrl` : Link atau pathname yang dapat digunakan sebagai call to action untuk user mengetahui lebih lanjut `error` yang terjadi 
+ * - `errorDetails` : Error details untuk mendeskripsikan error lebih detail untuk tujuan `logging`
+ * - `customProps` : Object untuk menambah props tertentu selain status, message, code dan error
+ * 
+ * ```js
+ * const payload = {
+ *      status: 'error',
+ *      code: 500,
+ *      message: message ?? serverErrorCodesList['SRV_00'].message,
+ *      error: {
+ *          code: 'SRV_00',
+ *          message: serverErrorCodesList['SRV_00'].name,
+ *          hintUrl: errorHintUrl,
+ *      },
+ *      _details: {
+ *          stamp: Math.floor(Date.now() / 1000),
+ *          ...errorDetails
+ *      },
+ *      ...customProps
+ * }
+ * ```
+ * @property {(message?:string, errorHintUrl?:string, errorDetails?:Omit<APIResponseBaseProps['_details'], 'stamp'>, customProps?:Object<string,any>) => APIResponseErrorProps} service_unavailable
+ * Method untuk generate payload response body saat server tidak dapat handle request dimana server sedang sibuk, overload atau maintenance dengan `optional` parameter berikut,
+ * - `message` : String untuk override default message yang ditampilkan ke user dengan `toast`
+ * - `errorHintUrl` : Link atau pathname yang dapat digunakan sebagai call to action untuk user mengetahui lebih lanjut `error` yang terjadi 
+ * - `errorDetails` : Error details untuk mendeskripsikan error lebih detail untuk tujuan `logging`
+ * - `customProps` : Object untuk menambah props tertentu selain status, message, code dan error
+ * 
+ * ```js
+ * const payload = {
+ *      status: 'error',
+ *      code: 503,
+ *      message: message ?? serverErrorCodesList['SRV_01'].message,
+ *      error: {
+ *          code: 'SRV_01',
+ *          message: serverErrorCodesList['SRV_01'].name,
+ *          hintUrl: errorHintUrl,
+ *      },
+ *      _details: {
+ *          stamp: Math.floor(Date.now() / 1000),
+ *          ...errorDetails
+ *      },
+ *      ...customProps
+ * }
+ * ```
+*/
+
+/** 
+ * Generate payload response body saat `ServerError` dimana setiap key merepresentasikan tipe error
+ * @type {ServerErrorResponseType} 
+ */
+export const ServerErrorResponse = {
+    interval_server_error: (message, errorHintUrl, errorDetails = {}, customProps) => ({
+        status: 'error',
+        code: 500,
+        message: message ?? serverErrorCodesList['SRV_00'].message,
+        error: {
+            code: 'SRV_00',
+            message: serverErrorCodesList['SRV_00'].name,
+            hintUrl: errorHintUrl,
+        },
+        _details: {
+            stamp: Math.floor(Date.now() / 1000),
+            ...errorDetails
+        },
+        ...((({ status, code, message, error, ...rest }) => rest)(customProps || {}))
+    }),
+    service_unavailable: (message, errorHintUrl, errorDetails = {}, customProps) => ({
+        status: 'error',
+        code: 503,
+        message: message ?? serverErrorCodesList['SRV_01'].message,
+        error: {
+            code: 'SRV_01',
+            message: serverErrorCodesList['SRV_01'].name,
+            hintUrl: errorHintUrl,
+        },
+        _details: {
+            stamp: Math.floor(Date.now() / 1000),
+            ...errorDetails
+        },
+        ...((({ status, code, message, error, ...rest }) => rest)(customProps || {}))
+    }),
+}
