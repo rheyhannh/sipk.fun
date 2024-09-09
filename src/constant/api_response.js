@@ -93,6 +93,8 @@
 /** @typedef {Omit<APIResponseBaseProps, 'data' | 'code' | 'headers' | '_details'>} ClientAPIResponseErrorProps */
 /** @typedef {Omit<APIResponseBaseProps, 'error' | 'code' | 'headers' | '_details'>} ClientAPIResponseSuccessProps */
 
+/** @typedef {keyof authErrorCodesList} AuthErrorCodes */
+
 export const authErrorCodesList = {
     'AUTH_00': { name: 'Unauthorized - Missing access token', message: 'Akses token tidak ditemukan' },
     'AUTH_01': { name: 'Unauthorized - Invalid access token', message: 'Akses token tidak valid' },
@@ -306,6 +308,8 @@ export const AuthErrorResponse = {
         ...((({ status, code, message, error, ...rest }) => rest)(customProps || {}))
     }),
 }
+
+/** @typedef {keyof rateLimitErrorCodesList} RatelimitErrorCodes */
 
 export const rateLimitErrorCodesList = {
     'RL_00': { name: 'Too Many Request - Rate limit exceeded', message: 'Terlalu banyak request, coba lagi nanti' },
