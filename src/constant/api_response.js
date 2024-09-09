@@ -191,7 +191,10 @@ export const AuthErrorResponse = {
             code: 'AUTH_00',
             message: 'Unauthorized - Missing access token',
             hintUrl: errorHintUrl,
-            details: errorDetails,
+        },
+        _details: {
+            stamp: Math.floor(Date.now() / 1000),
+            ...errorDetails
         },
         ...((({ status, code, message, error, ...rest }) => rest)(customProps || {}))
     }),
@@ -203,7 +206,10 @@ export const AuthErrorResponse = {
             code: 'AUTH_01',
             message: 'Unauthorized - Invalid access token',
             hintUrl: errorHintUrl,
-            details: errorDetails,
+        },
+        _details: {
+            stamp: Math.floor(Date.now() / 1000),
+            ...errorDetails
         },
         ...((({ status, code, message, error, ...rest }) => rest)(customProps || {}))
     }),
@@ -215,7 +221,10 @@ export const AuthErrorResponse = {
             code: 'AUTH_02',
             message: 'Unauthorized - Expired access token',
             hintUrl: errorHintUrl,
-            details: errorDetails,
+        },
+        _details: {
+            stamp: Math.floor(Date.now() / 1000),
+            ...errorDetails
         },
         ...((({ status, code, message, error, ...rest }) => rest)(customProps || {}))
     }),
@@ -227,7 +236,10 @@ export const AuthErrorResponse = {
             code: 'AUTH_03',
             message: 'Unauthorized - Missing session',
             hintUrl: errorHintUrl,
-            details: errorDetails,
+        },
+        _details: {
+            stamp: Math.floor(Date.now() / 1000),
+            ...errorDetails
         },
         ...((({ status, code, message, error, ...rest }) => rest)(customProps || {}))
     }),
@@ -239,7 +251,10 @@ export const AuthErrorResponse = {
             code: 'AUTH_04',
             message: 'Unauthorized - Invalid session',
             hintUrl: errorHintUrl,
-            details: errorDetails,
+        },
+        _details: {
+            stamp: Math.floor(Date.now() / 1000),
+            ...errorDetails
         },
         ...((({ status, code, message, error, ...rest }) => rest)(customProps || {}))
     }),
@@ -306,7 +321,10 @@ export const RatelimitErrorResponse = {
             code: 'RL_00',
             message: 'Too Many Request - Rate limit exceeded',
             hintUrl: errorHintUrl,
-            details: errorDetails,
+        },
+        _details: {
+            stamp: Math.floor(Date.now() / 1000),
+            ...errorDetails
         },
         ...((({ status, code, message, error, ...rest }) => rest)(customProps || {}))
     }),
@@ -318,7 +336,10 @@ export const RatelimitErrorResponse = {
             code: 'RL_01',
             message: 'Service Unavailable - Server is currently busy',
             hintUrl: errorHintUrl,
-            details: errorDetails,
+        },
+        _details: {
+            stamp: Math.floor(Date.now() / 1000),
+            ...errorDetails
         },
         ...((({ status, code, message, error, ...rest }) => rest)(customProps || {}))
     }),
