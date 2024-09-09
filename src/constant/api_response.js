@@ -52,6 +52,8 @@
  * - `AUTH_04` : Session atau cookie `'_Secure-auth.session-token'` tidak valid
  * - `RL_00` : Penggunaan akses atau rate limit `token` mencapai maksimal
  * - `RL_01` : Jumlah rate limit `token` mencapai maksimal
+ * - `SRV_00` : Terjadi kesalahan pada server biasanya karna error pada `Supabase` saat query database
+ * - `SRV_01` : Server sibuk, overload atau sedang maintenance
  * @property {string} error.message
  * Message yang mendeskripsikan error lebih detail menggunakan format `[statusText] - [deskripsi]`
  * - Contoh : `'Bad Request - Invalid JSON format'`
