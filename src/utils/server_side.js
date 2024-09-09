@@ -415,7 +415,18 @@ export async function getApiKey(request) {
 }
 
 /**
- * Method untuk mendapatkan request detail berupa `ip`, semua `cookies` dan `headers` yang digunakan
+ * Method untuk mendapatkan request detail berupa `ip`, semua `cookies` dan `headers` yang digunakan.
+ * 
+ * Saat `filterSensitiveCookies` maka cookie berikut akan difilter :
+ * - `_Secure-auth.session-token` : User session
+ * - `s_access_token` : User access token
+ * 
+ * Saat `filterSensitiveHeaders` maka header berikut akan difilter :
+ * - `Authorization` : Request authorization
+ * - `X-Api-Key` : Request apiKey
+ * - `Cookie` : Request cookie
+ * @param {boolean} [filterSensitiveCookies] Filter cookies sensitive, default `true`
+ * @param {boolean} [filterSensitiveHeaders] Filter headers sensitive, default `true` 
  */
 export async function getRequestDetails(filterSensitiveCookies = true, filterSensitiveHeaders = true) {
     const ip = await getIpFromHeaders();
