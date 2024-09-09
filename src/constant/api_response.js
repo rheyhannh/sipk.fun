@@ -43,7 +43,7 @@
  * General message untuk ditampilkan kepada user menggunakan `toast`
  * @property {Object} error 
  * Object yang merepresentasikan error yang terjadi
- * @property {AuthErrorCodes | RatelimitErrorCodes} error.code
+ * @property {AuthErrorCodes | RatelimitErrorCodes | ServerErrorCodes} error.code
  * Kode referensi error pada SIPK dengan keterangan berikut,
  * - `AUTH_00` : User access token atau cookie `'s_access_token'` tidak tersedia
  * - `AUTH_01` : User access token atau cookie `'s_access_token'` tidak valid
