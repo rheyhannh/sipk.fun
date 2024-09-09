@@ -356,7 +356,7 @@ export async function getSipkCookies(request = null) {
  */
 export async function getIpFromHeaders() {
     const ip = headers().get('X-Client-IP') ?? headers().get('X-Forwarded-For') ?? headers().get('X-Real-IP');
-    
+
     return ip;
 }
 
@@ -367,7 +367,7 @@ export async function getIpFromHeaders() {
  */
 export async function getApiKey(request) {
     const apiKey = headers().get('X-Api-Key') ?? request.nextUrl.searchParams.get('apiKey');
-    
+
     return apiKey;
 }
 
