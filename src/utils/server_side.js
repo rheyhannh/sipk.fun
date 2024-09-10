@@ -146,6 +146,7 @@ export async function rateLimit(options) {
         ttlAutopurge: true,
     });
 
+    /** @type {rateLimitInstance['check']} */
     const check = async (limit, token) => {
         const tokenCount = tokenCache.get(token) || [0];
         const isTokenMax = tokenCache.size >= tokenCache.max;
