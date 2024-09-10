@@ -90,12 +90,14 @@ import {
  * Object yang berisikan variable yang diresolve function
  * @property {Object} _details.request
  * Object yang berisikan request data `cookies`, `ip`, `headers`
+ * @property {getLogAttributesReturnType} _details.request.info
  * @property {string} _details.request.ip
  * Request ip
  * @property {Array<{name:string, value:string, path:string}>} _details.request.cookies
  * Request cookies
  * @property {Object<string,any>} _details.request.headers
  * Request headers
+ * @property {Omit<checkRateLimitReturnType, 'rateLimitHeaders'>} _details.resolvedRatelimit
  * @property {any | null} _details.more
  * Instance error yang digenerate dari library lain jika tersedia
  */
