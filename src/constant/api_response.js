@@ -1,3 +1,10 @@
+// #region TYPE DEPEDENCY
+import {
+    checkRateLimitReturnType,
+    getLogAttributesReturnType,
+} from '@/utils/api_helper';
+// #endregion
+
 /**
  * @typedef {Object} APIResponseBaseProps
  * @property {'success' | 'error'} status
