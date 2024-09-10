@@ -191,7 +191,7 @@ export async function rateLimit(options) {
                     'X-Ratelimit-Retry-After': currentTtl,
                 }
             }
-        )) : currentUsage;
+        )) : { currentUsage, currentTtl, currentSize: tokenCache.size };
     };
 
     return {
