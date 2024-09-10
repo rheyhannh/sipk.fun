@@ -111,13 +111,25 @@ export async function decryptAES(ciphertext, parse = false) {
 // #region Ratelimit
 
 /**
+ * @typedef {Object} rateLimitInstanceCheckReturnType
+ * @property {number} currentUsage Jumlah penggunaan
+ * @property {number} currentTtl Durasi reset penggunaan dalam detik
+ * @property {currentSize} currentSize Jumlah size token
+ */
+
+/**
  * @typedef {Object} rateLimitInstance
- * @property {(limit:number, token:string) => Promise<number>} check
+ * @property {(limit:number, token:string) => Promise<rateLimitInstanceCheckReturnType>} check
  * Method untuk mengecek rate limit dari sebuah token dengan parameter berikut,
  * - `limit` : Limit maksimum jumlah penggunaan
  * - `token` : Token untuk mengecek ratelimit
  * 
- * `Resolve` dengan jumlah penggunaan, `Reject` saat penggunaan sudah lebih dari limit atau jumlah token pada server mencapai maksimal
+ * `Resolve` dengan object berisikan props berikut,
+ * - `currentUsage` : Jumlah penggunaan
+ * - `currentSize` : Jumlah size token
+ * - `currentTtl` : Durasi reset penggunaan dalam detik
+ * 
+ * `Reject` dengan object `RatelimitError` saat penggunaan sudah lebih dari limit atau jumlah token pada server mencapai maksimal
  */
 
 /**
