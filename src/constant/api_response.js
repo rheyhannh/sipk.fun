@@ -1,8 +1,51 @@
-// #region TYPE DEPEDENCY
-import {
-    checkRateLimitReturnType,
-    getLogAttributesReturnType,
-} from '@/utils/api_helper';
+// #region api_helper Types
+/**
+ * @typedef {Object} checkRateLimitReturnType
+ * @property {number} currentUsage 
+ * Jumlah penggunaan
+ * @property {number} currentTtl 
+ * Durasi reset penggunaan dalam detik
+ * @property {currentSize} currentSize 
+ * Jumlah size token
+ * @property {{"X-Ratelimit-limit":number, "X-Ratelimit-Remaining":number}} rateLimitHeaders
+ * Ratelimit headers dengan props :
+ * - `X-Ratelimit-limit` : Jumlah maksimum penggunaan
+ * - `X-Ratelimit-Remaining` : Sisa penggunaan
+ * 
+ * Append props ini pada headers `NextResponse`
+ * 
+ * ```js
+ * const { rateLimitHeaders } = await checkRateLimit(limiter, 10);
+ * return NextResponse.json(null, {
+ *      headers: { ...rateLimitHeaders }
+ * })
+ * ```
+ */
+
+/**
+ * @typedef {Object} getLogAttributesReturnType
+ * @property {string} method
+ * Request method, diresolve melalui `request.method`
+ * @property {string} url
+ * Request url, diresolve melalui `request.url`
+ * @property {Object} nextUrl 
+ * @property {string} nextUrl.host
+ * Request host, diresolve melalui `request.nextUrl?.host`
+ * @property {string} nextUrl.hostname
+ * Request hostname, diresolve melalui `request.nextUrl?.hostname`
+ * @property {string} nextUrl.href
+ * Request href, diresolve melalui `request.nextUrl?.href`
+ * @property {string} nextUrl.origin
+ * Request origin, diresolve melalui `request.nextUrl?.origin`
+ * @property {string} nextUrl.pathname
+ * Request pathname, diresolve melalui `request.nextUrl?.pathname`
+ * @property {string} nextUrl.port
+ * Request port, diresolve melalui `request.nextUrl?.port`
+ * @property {string} nextUrl.protocol
+ * Request protocol, diresolve melalui `request.nextUrl?.protocol`
+ * @property {string} nextUrl.search
+ * Request search, diresolve melalui `request.nextUrl?.search`
+ */
 // #endregion
 
 // #region Core
