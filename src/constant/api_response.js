@@ -172,6 +172,31 @@ export const badRequestErrorCodesList = {
  *      ...customProps
  * }
  * ```
+ * @property {(message?:string, errorHintUrl?:string, errorDetails?:Omit<APIResponseBaseProps['_details'], 'stamp'>, customProps?:Object<string,any>) => APIResponseErrorProps} malformed_request_params
+ * Method untuk generate payload response body saat request params tidak valid dengan `optional` parameter berikut,
+ * - `message` : String untuk override default message yang ditampilkan ke user dengan `toast`
+ * - `errorHintUrl` : Link atau pathname yang dapat digunakan sebagai call to action untuk user mengetahui lebih lanjut `error` yang terjadi 
+ * - `errorDetails` : Error details untuk mendeskripsikan error lebih detail untuk tujuan `logging`
+ * - `customProps` : Object untuk menambah props tertentu selain status, message, code dan error
+ * 
+ * ```js
+ * const payload = {
+ *      status: 'error',
+ *      code: 400,
+ *      message: message ?? badRequestErrorCodesList['BR_02'].message,
+ *      error: {
+ *          type: 'BadRequestError',
+ *          code: 'BR_02',
+ *          message: badRequestErrorCodesList['BR_02'].name,
+ *          hintUrl: errorHintUrl,
+ *      },
+ *      _details: {
+ *          stamp: Math.floor(Date.now() / 1000),
+ *          ...errorDetails
+ *      },
+ *      ...customProps
+ * }
+ * ```
 */
 
 /** 
@@ -203,6 +228,22 @@ export const BadRequestErrorResponse = {
             type: 'BadRequestError',
             code: 'BR_01',
             message: badRequestErrorCodesList['BR_01'].name,
+            hintUrl: errorHintUrl,
+        },
+        _details: {
+            stamp: Math.floor(Date.now() / 1000),
+            ...errorDetails
+        },
+        ...((({ status, code, message, error, ...rest }) => rest)(customProps || {}))
+    }),
+    malformed_request_params: (message, errorHintUrl, errorDetails = {}, customProps) => ({
+        status: 'error',
+        code: 400,
+        message: message ?? badRequestErrorCodesList['BR_02'].message,
+        error: {
+            type: 'BadRequestError',
+            code: 'BR_02',
+            message: badRequestErrorCodesList['BR_02'].name,
             hintUrl: errorHintUrl,
         },
         _details: {
