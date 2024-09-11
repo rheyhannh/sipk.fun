@@ -118,6 +118,7 @@ import {
 export const badRequestErrorCodesList = {
     'BR_00': { name: 'Bad Request - Invalid JSON format', message: 'Terjadi kesalahan saat memproses permintaan' },
     'BR_01': { name: 'Bad Request - Invalid form data format', message: 'Form data yang dilampirkan tidak valid' },
+    'BR_02': { name: 'Bad Request - Invalid request params', message: 'Terjadi kesalahan saat memproses permintaan' },
 }
 
 /** 
