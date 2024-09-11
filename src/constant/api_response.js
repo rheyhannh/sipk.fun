@@ -546,6 +546,7 @@ export const RatelimitErrorResponse = {
 export const serverErrorCodesList = {
     'SRV_00': { name: 'Internal Server Error - Something went wrong', message: 'Terjadi kesalahan pada server' },
     'SRV_01': { name: 'Service Unavailable - Server is currently busy', message: 'Server sibuk, coba lagi nanti' },
+    'SRV_02': { name: 'Not Implemented - Request not supported', message: 'Request tidak dapat diproses' },
 }
 
 /** 
@@ -600,6 +601,31 @@ export const serverErrorCodesList = {
  *      ...customProps
  * }
  * ```
+ * @property {(message?:string, errorHintUrl?:string, errorDetails?:Omit<APIResponseBaseProps['_details'], 'stamp'>, customProps?:Object<string,any>) => APIResponseErrorProps} request_not_supported
+ * Method untuk generate payload response body saat request tidak dapat dipenuhi karna tidak didukung dengan `optional` parameter berikut,
+ * - `message` : String untuk override default message yang ditampilkan ke user dengan `toast`
+ * - `errorHintUrl` : Link atau pathname yang dapat digunakan sebagai call to action untuk user mengetahui lebih lanjut `error` yang terjadi 
+ * - `errorDetails` : Error details untuk mendeskripsikan error lebih detail untuk tujuan `logging`
+ * - `customProps` : Object untuk menambah props tertentu selain status, message, code dan error
+ * 
+ * ```js
+ * const payload = {
+ *      status: 'error',
+ *      code: 501,
+ *      message: message ?? serverErrorCodesList['SRV_02'].message,
+ *      error: {
+ *          type: 'ServerError',
+ *          code: 'SRV_02',
+ *          message: serverErrorCodesList['SRV_02'].name,
+ *          hintUrl: errorHintUrl,
+ *      },
+ *      _details: {
+ *          stamp: Math.floor(Date.now() / 1000),
+ *          ...errorDetails
+ *      },
+ *      ...customProps
+ * }
+ * ```
 */
 
 /** 
@@ -631,6 +657,22 @@ export const ServerErrorResponse = {
             type: 'ServerError',
             code: 'SRV_01',
             message: serverErrorCodesList['SRV_01'].name,
+            hintUrl: errorHintUrl,
+        },
+        _details: {
+            stamp: Math.floor(Date.now() / 1000),
+            ...errorDetails
+        },
+        ...((({ status, code, message, error, ...rest }) => rest)(customProps || {}))
+    }),
+    request_not_supported: (message, errorHintUrl, errorDetails = {}, customProps) => ({
+        status: 'error',
+        code: 501,
+        message: message ?? serverErrorCodesList['SRV_02'].message,
+        error: {
+            type: 'ServerError',
+            code: 'SRV_02',
+            message: serverErrorCodesList['SRV_02'].name,
             hintUrl: errorHintUrl,
         },
         _details: {
