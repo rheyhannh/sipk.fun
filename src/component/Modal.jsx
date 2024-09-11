@@ -11,9 +11,7 @@ import {
 
 // #region NEXT DEPEDENCY
 import Link from "next/link";
-import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import { League_Spartan } from 'next/font/google';
 // #endregion
 
 // #region REACT DEPEDENCY
