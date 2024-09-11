@@ -439,6 +439,66 @@ export const AuthErrorResponse = {
 }
 // #endregion
 
+// #region NotFoundError or any 404 error
+/** @typedef {keyof notFoundErrorCodesList} NotFoundErrorCodes */
+
+export const notFoundErrorCodesList = {
+    'NF_00': { name: 'Not Found - Resource not found', message: 'Resource tidak ditemukan' },
+}
+
+/** 
+ * @typedef {Object} NotFoundErrorResponseType
+ * @property {(message?:string, errorHintUrl?:string, errorDetails?:Omit<APIResponseBaseProps['_details'], 'stamp'>, customProps?:Object<string,any>) => APIResponseErrorProps} resource_not_found
+ * Method untuk generate payload response body saat resource tidak ditemukan dengan `optional` parameter berikut,
+ * - `message` : String untuk override default message yang ditampilkan ke user dengan `toast`
+ * - `errorHintUrl` : Link atau pathname yang dapat digunakan sebagai call to action untuk user mengetahui lebih lanjut `error` yang terjadi 
+ * - `errorDetails` : Error details untuk mendeskripsikan error lebih detail untuk tujuan `logging`
+ * - `customProps` : Object untuk menambah props tertentu selain status, message, code dan error
+ * 
+ * ```js
+ * const payload = {
+ *      status: 'error',
+ *      code: 404,
+ *      message: message ?? notFoundErrorCodesList['NF_00'].message,
+ *      error: {
+ *          type: 'NotFoundError',
+ *          code: 'NF_00',
+ *          message: notFoundErrorCodesList['NF_00'].name,
+ *          hintUrl: errorHintUrl,
+ *      },
+ *      _details: {
+ *          stamp: Math.floor(Date.now() / 1000),
+ *          ...errorDetails
+ *      },
+ *      ...customProps
+ * }
+ * ```
+*/
+
+/** 
+ * Generate payload response body saat `BadRequestError` dimana setiap key merepresentasikan tipe error
+ * @type {NotFoundErrorResponseType} 
+ */
+export const NotFoundErrorResponse = {
+    resource_not_found: (message, errorHintUrl, errorDetails = {}, customProps) => ({
+        status: 'error',
+        code: 404,
+        message: message ?? notFoundErrorCodesList['NF_00'].message,
+        error: {
+            type: 'NotFoundError',
+            code: 'NF_00',
+            message: notFoundErrorCodesList['NF_00'].name,
+            hintUrl: errorHintUrl,
+        },
+        _details: {
+            stamp: Math.floor(Date.now() / 1000),
+            ...errorDetails
+        },
+        ...((({ status, code, message, error, ...rest }) => rest)(customProps || {}))
+    }),
+}
+// #endregion
+
 // #region RatelimitError or any 429 error
 /** @typedef {keyof rateLimitErrorCodesList} RatelimitErrorCodes */
 
