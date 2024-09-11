@@ -5,6 +5,7 @@ import {
 } from '@/utils/api_helper';
 // #endregion
 
+// #region Core
 /**
  * @typedef {Object} APIResponseBaseProps
  * @property {'success' | 'error'} status
@@ -109,6 +110,7 @@ import {
 
 /** @typedef {Omit<APIResponseBaseProps, 'data' | 'code' | 'headers' | '_details'>} ClientAPIResponseErrorProps */
 /** @typedef {Omit<APIResponseBaseProps, 'error' | 'code' | 'headers' | '_details'>} ClientAPIResponseSuccessProps */
+// #endregion
 
 // #region BadRequestError or any 400 error 
 /** @typedef {keyof badRequestErrorCodesList} BadRequestErrorCodes */
