@@ -566,7 +566,7 @@ export const notFoundErrorCodesList = {
 */
 
 /** 
- * Generate payload response body saat `BadRequestError` dimana setiap key merepresentasikan tipe error
+ * Generate payload response body saat `NotFoundError` dimana setiap key merepresentasikan tipe error
  * @type {NotFoundErrorResponseType} 
  */
 export const NotFoundErrorResponse = {
