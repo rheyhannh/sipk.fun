@@ -94,9 +94,9 @@
  * General message untuk ditampilkan kepada user menggunakan `toast`
  * @property {Object} error 
  * Object yang merepresentasikan error yang terjadi
- * @property {'BadRequestError' | 'AuthError' | 'RatelimitError' | 'ServerError' | 'NotFoundError'} error.type
+ * @property {'BadRequestError' | 'AuthError' | 'RatelimitError' | 'ServerError' | 'NotFoundError' | 'ConflictError'} error.type
  * Tipe atau instance error yang terjadi
- * @property {BadRequestErrorCodes | AuthErrorCodes | RatelimitErrorCodes | ServerErrorCodes | NotFoundErrorCodes} error.code
+ * @property {BadRequestErrorCodes | AuthErrorCodes | RatelimitErrorCodes | ServerErrorCodes | NotFoundErrorCodes | ConflictErrorCodes} error.code
  * Kode referensi error pada SIPK dengan keterangan berikut,
  * - `BR_00` : Proses parsing request body `request.json()` gagal
  * - `BR_01` : Proses validasi form data menggunakan `Joi` gagal
@@ -112,6 +112,7 @@
  * - `SRV_01` : Server sibuk, overload atau sedang maintenance
  * - `SRV_02` : Request tidak dapat dipenuhi karna tidak didukung
  * - `NF_00` : Resource tidak ditemukan
+ * - `CF_00` : Resource sudah tersedia
  * @property {string} error.message
  * Message yang mendeskripsikan error lebih detail menggunakan format `[statusText] - [deskripsi]`
  * - Contoh : `'Bad Request - Invalid JSON format'`
