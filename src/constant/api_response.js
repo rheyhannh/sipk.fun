@@ -588,6 +588,66 @@ export const NotFoundErrorResponse = {
 }
 // #endregion
 
+// #region ConflictError or any 409 error
+/** @typedef {keyof conflictErrorCodesList} ConflictErrorCodes */
+
+export const conflictErrorCodesList = {
+    'CF_00': { name: 'Conflict - Resource already exist', message: 'Resource sudah tersedia' },
+}
+
+/** 
+ * @typedef {Object} ConflictErrorResponseType
+ * @property {(message?:string, errorHintUrl?:string, errorDetails?:Omit<APIResponseBaseProps['_details'], 'stamp'>, customProps?:Object<string,any>) => APIResponseErrorProps} resource_already_exist
+ * Method untuk generate payload response body saat resource sudah tersedia dengan `optional` parameter berikut,
+ * - `message` : String untuk override default message yang ditampilkan ke user dengan `toast`
+ * - `errorHintUrl` : Link atau pathname yang dapat digunakan sebagai call to action untuk user mengetahui lebih lanjut `error` yang terjadi 
+ * - `errorDetails` : Error details untuk mendeskripsikan error lebih detail untuk tujuan `logging`
+ * - `customProps` : Object untuk menambah props tertentu selain status, message, code dan error
+ * 
+ * ```js
+ * const payload = {
+ *      status: 'error',
+ *      code: 409,
+ *      message: message ?? conflictErrorCodesList['CF_00'].message,
+ *      error: {
+ *          type: 'ConflictError',
+ *          code: 'CF_00',
+ *          message: conflictErrorCodesList['CF_00'].name,
+ *          hintUrl: errorHintUrl,
+ *      },
+ *      _details: {
+ *          stamp: Math.floor(Date.now() / 1000),
+ *          ...errorDetails
+ *      },
+ *      ...customProps
+ * }
+ * ```
+*/
+
+/** 
+ * Generate payload response body saat `ConflictError` dimana setiap key merepresentasikan tipe error
+ * @type {ConflictErrorResponseType} 
+ */
+export const ConflictErrorResponse = {
+    resource_already_exist: (message, errorHintUrl, errorDetails = {}, customProps) => ({
+        status: 'error',
+        code: 409,
+        message: message ?? conflictErrorCodesList['CF_00'].message,
+        error: {
+            type: 'ConflictError',
+            code: 'CF_00',
+            message: conflictErrorCodesList['CF_00'].name,
+            hintUrl: errorHintUrl,
+        },
+        _details: {
+            stamp: Math.floor(Date.now() / 1000),
+            ...errorDetails
+        },
+        ...((({ status, code, message, error, ...rest }) => rest)(customProps || {}))
+    }),
+}
+// #endregion
+
 // #region RatelimitError or any 429 error
 /** @typedef {keyof rateLimitErrorCodesList} RatelimitErrorCodes */
 
