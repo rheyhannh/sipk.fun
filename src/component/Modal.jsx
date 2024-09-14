@@ -280,7 +280,7 @@ export const Logout = () => {
                 });
             }
         } catch (error) {
-            toast.error(error.message ? error.message : 'Terjadi kesalahan', { duration: 4000, position: 'top-left' })
+            toast.error(error?.message ?? 'Terjadi kesalahan', { duration: 4000, position: 'top-left' })
         }
     }
     return (
@@ -412,7 +412,7 @@ export const PerubahanTerakhirDetail = () => {
                         {
                             loading: `${getLoadingMessage(false, 0)} matakuliah`,
                             success: `${context.data.current.nama ?? 'Matakuliah'} berhasil dihapus`,
-                            error: (error) => `${error.message || 'Terjadi kesalahan'}`
+                            error: (error) => `${error?.message ?? 'Terjadi kesalahan'}`
                         },
                         {
                             position: 'top-left',
@@ -903,7 +903,7 @@ export const PerubahanTerakhirConfirm = () => {
                             {
                                 loading: `${getLoadingMessage(false, 0)} matakuliah`,
                                 success: `${context?.data?.current?.nama} berhasil dihapus`,
-                                error: (error) => `${error.message || 'Terjadi kesalahan'}`
+                                error: (error) => `${error?.message ?? 'Terjadi kesalahan'}`
                             },
                             {
                                 position: 'top-left',
@@ -991,7 +991,7 @@ export const PerubahanTerakhirConfirm = () => {
                             {
                                 loading: `${getLoadingMessage(false, 0)} matakuliah`,
                                 success: `${context?.data?.current?.nama} berhasil ditambah`,
-                                error: (error) => `${error.message || 'Terjadi kesalahan'}`
+                                error: (error) => `${error?.message ?? 'Terjadi kesalahan'}`
                             },
                             {
                                 position: 'top-left',
@@ -1073,7 +1073,7 @@ export const PerubahanTerakhirConfirm = () => {
                             {
                                 loading: `${getLoadingMessage(false, 1)}`,
                                 success: `${context.data.current.nama ?? 'Matakuliah'} berhasil diperbarui`,
-                                error: (error) => `${error.message || 'Terjadi kesalahan'}`
+                                error: (error) => `${error?.message ?? 'Terjadi kesalahan'}`
                             },
                             {
                                 position: 'top-left',
@@ -1275,7 +1275,7 @@ export const TambahMatkul = () => {
                         {
                             loading: `${getLoadingMessage(false, 1)}`,
                             success: `${nama} berhasil ditambah`,
-                            error: (error) => `${error.message || 'Terjadi kesalahan'}`
+                            error: (error) => `${error?.message ?? 'Terjadi kesalahan'}`
                         },
                         {
                             position: 'top-left',
@@ -1620,7 +1620,7 @@ export const Profil = () => {
                         {
                             loading: `${getLoadingMessage(false, 1)}`,
                             success: `Profil berhasil diperbarui`,
-                            error: (error) => `${error.message || 'Terjadi kesalahan'}`
+                            error: (error) => `${error?.message ?? 'Terjadi kesalahan'}`
                         },
                         {
                             position: 'top-left',
@@ -2007,7 +2007,7 @@ export const Rating = () => {
                         {
                             loading: `${getLoadingMessage(false, 3)} rating`,
                             success: `Rating berhasil dibuat`,
-                            error: (error) => `${error.message || 'Terjadi kesalahan'}`
+                            error: (error) => `${error?.message ?? 'Terjadi kesalahan'}`
                         },
                         {
                             position: 'top-left',
@@ -2083,7 +2083,7 @@ export const Rating = () => {
                         {
                             loading: `${getLoadingMessage(false, 4)} rating`,
                             success: `Rating berhasil diperbarui`,
-                            error: (error) => `${error.message || 'Terjadi kesalahan'}`
+                            error: (error) => `${error?.message ?? 'Terjadi kesalahan'}`
                         },
                         {
                             position: 'top-left',
@@ -2539,7 +2539,7 @@ export const TabelSetting = () => {
                         {
                             loading: `${getLoadingMessage(false, 5)} pengaturan tabel`,
                             success: `Pengaturan tabel berhasil disimpan`,
-                            error: (error) => `${error.message || 'Terjadi kesalahan'}`
+                            error: (error) => `${error?.message ?? 'Terjadi kesalahan'}`
                         },
                         {
                             position: 'top-left',
@@ -3440,7 +3440,7 @@ export const DetailMatkul = () => {
                         {
                             loading: `${getLoadingMessage(false, 1)}`,
                             success: `${context.data.nama ?? 'Matakuliah'} berhasil diedit`,
-                            error: (error) => `${error.message || 'Terjadi kesalahan'}`
+                            error: (error) => `${error?.message ?? 'Terjadi kesalahan'}`
                         },
                         {
                             position: 'top-left',
@@ -3522,7 +3522,7 @@ export const DetailMatkul = () => {
                         {
                             loading: `${getLoadingMessage(false, 0)} matakuliah`,
                             success: `${context.data.nama ?? 'Matakuliah'} berhasil dihapus`,
-                            error: (error) => `${error.message || 'Terjadi kesalahan'}`
+                            error: (error) => `${error?.message ?? 'Terjadi kesalahan'}`
                         },
                         {
                             position: 'top-left',
@@ -3904,7 +3904,7 @@ export const HapusPermanentConfirm = () => {
                         {
                             loading: `${getLoadingMessage(false, 0)} matakuliah`,
                             success: `${matakuliah ?? 'Matakuliah'} berhasil dihapus permanen`,
-                            error: (error) => `${error.message || 'Terjadi kesalahan'}`
+                            error: (error) => `${error?.message ?? 'Terjadi kesalahan'}`
                         },
                         {
                             position: 'top-left',
@@ -4070,7 +4070,7 @@ export const Akun = () => {
                         {
                             loading: `${getLoadingMessage(false, 1)}`,
                             success: `Password berhasil diganti`,
-                            error: (error) => `${error.message || 'Terjadi kesalahan'}`
+                            error: (error) => `${error?.message ?? 'Terjadi kesalahan'}`
                         },
                         {
                             position: 'top-left',
