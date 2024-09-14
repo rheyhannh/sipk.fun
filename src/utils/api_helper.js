@@ -324,7 +324,7 @@ export async function handleErrorResponse(error, requestLog = null, ratelimitLog
     if (requestLog) error._details.request = { info: requestLog, ...error._details.request };
     if (ratelimitLog) error._details.resolvedRatelimit = ratelimitLog;
 
-    const { code, headers = null, ...rest } = error;
+    const { code, headers = null, _details, ...rest } = error;
     const body = process.env.NODE_ENV === 'production' ? { ...rest } : { ...rest, _details: error._details };
 
     if (logError) console.error(error);
