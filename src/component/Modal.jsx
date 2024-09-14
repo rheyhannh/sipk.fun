@@ -267,18 +267,11 @@ export const Logout = () => {
             const response = await fetchWithAuth('POST', 'logout', accessToken);
 
             if (!response.ok) {
-                if (response.status === 429) {
-                    toast.error('Terlalu banyak request', { duration: 4000, position: 'top-left' })
-                } else {
-                    try {
-                        const { message } = await response.json();
-                        if (message) { toast.error(message, { duration: 4000, position: 'top-left' }) }
-                        else { throw new Error(`Terjadi kesalahan`); }
-                    } catch (error) {
-                        console.error(error);
-                        throw new Error(`Terjadi kesalahan`);
-                    }
-                }
+                const { toastMessage, refresh, navigate } = await handleApiResponseError(response);
+                if (refresh) { router.refresh() }
+                if (navigate && navigate?.type === 'push' && navigate?.to) { router.push(navigate.to, { scroll: navigate?.scrollOptions ?? true }) }
+                if (navigate && navigate?.type === 'replace' && navigate?.to) { router.replace(navigate.to, { scroll: navigate?.scrollOptions ?? true }) }
+                toast.error(toastMessage, { duration: 4000, position: 'top-left' });
             } else {
                 const stamp = Math.floor(Date.now() / 1000);
                 sessionStorage.clear();
@@ -366,24 +359,11 @@ export const PerubahanTerakhirDetail = () => {
                                 const response = await fetchWithAuth('DELETE', 'matkul', accessToken, null, { id: context.data.matkul_id });
 
                                 if (!response.ok) {
-                                    if (response.status === 401) {
-                                        router.replace('/users?action=login&error=isession', {
-                                            scroll: false
-                                        });
-                                        throw new Error(`Unauthorized`);
-                                    } else {
-                                        try {
-                                            const { message } = await response.json();
-                                            if (message) {
-                                                throw new Error(message);
-                                            } else {
-                                                throw new Error(`Terjadi kesalahan`);
-                                            }
-                                        } catch (error) {
-                                            console.error(error);
-                                            reject(error);
-                                        }
-                                    }
+                                    const { toastMessage, refresh, navigate } = await handleApiResponseError(response);
+                                    if (refresh) { router.refresh() }
+                                    if (navigate && navigate?.type === 'push' && navigate?.to) { router.push(navigate.to, { scroll: navigate?.scrollOptions ?? true }) }
+                                    if (navigate && navigate?.type === 'replace' && navigate?.to) { router.replace(navigate.to, { scroll: navigate?.scrollOptions ?? true }) }
+                                    throw new Error(toastMessage);
                                 } else {
                                     try {
                                         const { ref } = await response.json();
@@ -868,24 +848,11 @@ export const PerubahanTerakhirConfirm = () => {
                                     const response = await fetchWithAuth('DELETE', 'matkul', accessToken, null, { id: context.data.matkul_id })
 
                                     if (!response.ok) {
-                                        if (response.status === 401) {
-                                            router.replace('/users?action=login&error=isession', {
-                                                scroll: false
-                                            });
-                                            throw new Error(`Unauthorized`);
-                                        } else {
-                                            try {
-                                                const { message } = await response.json();
-                                                if (message) {
-                                                    throw new Error(message);
-                                                } else {
-                                                    throw new Error(`Terjadi kesalahan`);
-                                                }
-                                            } catch (error) {
-                                                console.error(error);
-                                                reject(error);
-                                            }
-                                        }
+                                        const { toastMessage, refresh, navigate } = await handleApiResponseError(response);
+                                        if (refresh) { router.refresh() }
+                                        if (navigate && navigate?.type === 'push' && navigate?.to) { router.push(navigate.to, { scroll: navigate?.scrollOptions ?? true }) }
+                                        if (navigate && navigate?.type === 'replace' && navigate?.to) { router.replace(navigate.to, { scroll: navigate?.scrollOptions ?? true }) }
+                                        throw new Error(toastMessage);
                                     } else {
                                         try {
                                             const { ref } = await response.json();
@@ -970,24 +937,11 @@ export const PerubahanTerakhirConfirm = () => {
                                     )
 
                                     if (!response.ok) {
-                                        if (response.status === 401) {
-                                            router.replace('/users?action=login&error=isession', {
-                                                scroll: false
-                                            });
-                                            throw new Error(`Unauthorized`);
-                                        } else {
-                                            try {
-                                                const { message } = await response.json();
-                                                if (message) {
-                                                    throw new Error(message);
-                                                } else {
-                                                    throw new Error(`Terjadi kesalahan`);
-                                                }
-                                            } catch (error) {
-                                                console.error(error);
-                                                reject(error);
-                                            }
-                                        }
+                                        const { toastMessage, refresh, navigate } = await handleApiResponseError(response);
+                                        if (refresh) { router.refresh() }
+                                        if (navigate && navigate?.type === 'push' && navigate?.to) { router.push(navigate.to, { scroll: navigate?.scrollOptions ?? true }) }
+                                        if (navigate && navigate?.type === 'replace' && navigate?.to) { router.replace(navigate.to, { scroll: navigate?.scrollOptions ?? true }) }
+                                        throw new Error(toastMessage);
                                     } else {
                                         try {
                                             const { matkul, ref } = await response.json();
@@ -1065,24 +1019,11 @@ export const PerubahanTerakhirConfirm = () => {
                                     const response = await fetchWithAuth('PATCH', 'matkul', accessToken, prevDataFiltered, { id: context.data.matkul_id });
 
                                     if (!response.ok) {
-                                        if (response.status === 401) {
-                                            router.replace('/users?action=login&error=isession', {
-                                                scroll: false
-                                            });
-                                            throw new Error(`Unauthorized`);
-                                        } else {
-                                            try {
-                                                const { message } = await response.json();
-                                                if (message) {
-                                                    throw new Error(message);
-                                                } else {
-                                                    throw new Error(`Terjadi kesalahan`);
-                                                }
-                                            } catch (error) {
-                                                console.error(error);
-                                                reject(error);
-                                            }
-                                        }
+                                        const { toastMessage, refresh, navigate } = await handleApiResponseError(response);
+                                        if (refresh) { router.refresh() }
+                                        if (navigate && navigate?.type === 'push' && navigate?.to) { router.push(navigate.to, { scroll: navigate?.scrollOptions ?? true }) }
+                                        if (navigate && navigate?.type === 'replace' && navigate?.to) { router.replace(navigate.to, { scroll: navigate?.scrollOptions ?? true }) }
+                                        throw new Error(toastMessage);
                                     } else {
                                         try {
                                             const { matkul, ref } = await response.json();
@@ -1281,24 +1222,11 @@ export const TambahMatkul = () => {
                                 const response = await fetchWithAuth('POST', 'matkul', accessToken, validatedData);
 
                                 if (!response.ok) {
-                                    if (response.status === 401) {
-                                        router.replace('/users?action=login&error=isession', {
-                                            scroll: false
-                                        });
-                                        throw new Error(`Unauthorized`);
-                                    } else {
-                                        try {
-                                            const { message } = await response.json();
-                                            if (message) {
-                                                throw new Error(message);
-                                            } else {
-                                                throw new Error(`Terjadi kesalahan`);
-                                            }
-                                        } catch (error) {
-                                            console.error(error);
-                                            reject(error);
-                                        }
-                                    }
+                                    const { toastMessage, refresh, navigate } = await handleApiResponseError(response);
+                                    if (refresh) { router.refresh() }
+                                    if (navigate && navigate?.type === 'push' && navigate?.to) { router.push(navigate.to, { scroll: navigate?.scrollOptions ?? true }) }
+                                    if (navigate && navigate?.type === 'replace' && navigate?.to) { router.replace(navigate.to, { scroll: navigate?.scrollOptions ?? true }) }
+                                    throw new Error(toastMessage);
                                 } else {
                                     try {
                                         const { matkul, ref } = await response.json();
@@ -1658,28 +1586,11 @@ export const Profil = () => {
                                 const response = await fetchWithAuth('PATCH', 'me', accessToken, validatedData);
 
                                 if (!response.ok) {
-                                    if (response.status === 401) {
-                                        router.replace('/users?action=login&error=isession', {
-                                            scroll: false
-                                        });
-                                        throw new Error(`Unauthorized`);
-                                    } else {
-                                        try {
-                                            const { message } = await response.json();
-                                            if (message) {
-                                                const newMessage =
-                                                    message.includes('alpha only pattern') ? 'Nama lengkap hanya dapat menggunakan huruf'
-                                                        : message.includes('one space each word pattern') ? 'Nama lengkap hanya dapat menggunakan 1 spasi disetiap kata'
-                                                            : message
-                                                throw new Error(newMessage);
-                                            } else {
-                                                throw new Error(`Terjadi kesalahan`);
-                                            }
-                                        } catch (error) {
-                                            console.error(error);
-                                            reject(error);
-                                        }
-                                    }
+                                    const { toastMessage, refresh, navigate } = await handleApiResponseError(response);
+                                    if (refresh) { router.refresh() }
+                                    if (navigate && navigate?.type === 'push' && navigate?.to) { router.push(navigate.to, { scroll: navigate?.scrollOptions ?? true }) }
+                                    if (navigate && navigate?.type === 'replace' && navigate?.to) { router.replace(navigate.to, { scroll: navigate?.scrollOptions ?? true }) }
+                                    throw new Error(toastMessage);
                                 } else {
                                     try {
                                         const { profil } = await response.json();
@@ -2062,24 +1973,11 @@ export const Rating = () => {
                                 const response = await fetchWithAuth('POST', 'rating', accessToken, validatedData);
 
                                 if (!response.ok) {
-                                    if (response.status === 401) {
-                                        router.replace('/users?action=login&error=isession', {
-                                            scroll: false
-                                        });
-                                        throw new Error(`Unauthorized`);
-                                    } else {
-                                        try {
-                                            const { message } = await response.json();
-                                            if (message) {
-                                                throw new Error(message);
-                                            } else {
-                                                throw new Error(`Terjadi kesalahan`);
-                                            }
-                                        } catch (error) {
-                                            console.error(error);
-                                            reject(error);
-                                        }
-                                    }
+                                    const { toastMessage, refresh, navigate } = await handleApiResponseError(response);
+                                    if (refresh) { router.refresh() }
+                                    if (navigate && navigate?.type === 'push' && navigate?.to) { router.push(navigate.to, { scroll: navigate?.scrollOptions ?? true }) }
+                                    if (navigate && navigate?.type === 'replace' && navigate?.to) { router.replace(navigate.to, { scroll: navigate?.scrollOptions ?? true }) }
+                                    throw new Error(toastMessage);
                                 } else {
                                     try {
                                         const { rating } = await response.json();
@@ -2151,24 +2049,11 @@ export const Rating = () => {
                                 const response = await fetchWithAuth('PATCH', 'rating', accessToken, validatedData, { id: ratingId });
 
                                 if (!response.ok) {
-                                    if (response.status === 401) {
-                                        router.replace('/users?action=login&error=isession', {
-                                            scroll: false
-                                        });
-                                        throw new Error(`Unauthorized`);
-                                    } else {
-                                        try {
-                                            const { message } = await response.json();
-                                            if (message) {
-                                                throw new Error(message);
-                                            } else {
-                                                throw new Error(`Terjadi kesalahan`);
-                                            }
-                                        } catch (error) {
-                                            console.error(error);
-                                            reject(error);
-                                        }
-                                    }
+                                    const { toastMessage, refresh, navigate } = await handleApiResponseError(response);
+                                    if (refresh) { router.refresh() }
+                                    if (navigate && navigate?.type === 'push' && navigate?.to) { router.push(navigate.to, { scroll: navigate?.scrollOptions ?? true }) }
+                                    if (navigate && navigate?.type === 'replace' && navigate?.to) { router.replace(navigate.to, { scroll: navigate?.scrollOptions ?? true }) }
+                                    throw new Error(toastMessage);
                                 } else {
                                     try {
                                         const { rating } = await response.json();
@@ -2621,24 +2506,11 @@ export const TabelSetting = () => {
                                 const response = await fetchWithAuth('PATCH', 'me', accessToken, validatedData, { type: 'preferences' });
 
                                 if (!response.ok) {
-                                    if (response.status === 401) {
-                                        router.replace('/users?action=login&error=isession', {
-                                            scroll: false
-                                        });
-                                        throw new Error(`Unauthorized`);
-                                    } else {
-                                        try {
-                                            const { message } = await response.json();
-                                            if (message) {
-                                                throw new Error(message);
-                                            } else {
-                                                throw new Error(`Terjadi kesalahan`);
-                                            }
-                                        } catch (error) {
-                                            console.error(error);
-                                            reject(error);
-                                        }
-                                    }
+                                    const { toastMessage, refresh, navigate } = await handleApiResponseError(response);
+                                    if (refresh) { router.refresh() }
+                                    if (navigate && navigate?.type === 'push' && navigate?.to) { router.push(navigate.to, { scroll: navigate?.scrollOptions ?? true }) }
+                                    if (navigate && navigate?.type === 'replace' && navigate?.to) { router.replace(navigate.to, { scroll: navigate?.scrollOptions ?? true }) }
+                                    throw new Error(toastMessage);
                                 } else {
                                     mutate('sessionUserTable');
                                     try {
@@ -3514,24 +3386,11 @@ export const DetailMatkul = () => {
                                 const response = await fetchWithAuth('PATCH', 'matkul', accessToken, validatedData, { id: context.data.id })
 
                                 if (!response.ok) {
-                                    if (response.status === 401) {
-                                        router.replace('/users?action=login&error=isession', {
-                                            scroll: false
-                                        });
-                                        throw new Error(`Unauthorized`);
-                                    } else {
-                                        try {
-                                            const { message } = await response.json();
-                                            if (message) {
-                                                throw new Error(message);
-                                            } else {
-                                                throw new Error(`Terjadi kesalahan`);
-                                            }
-                                        } catch (error) {
-                                            console.error(error);
-                                            reject(error);
-                                        }
-                                    }
+                                    const { toastMessage, refresh, navigate } = await handleApiResponseError(response);
+                                    if (refresh) { router.refresh() }
+                                    if (navigate && navigate?.type === 'push' && navigate?.to) { router.push(navigate.to, { scroll: navigate?.scrollOptions ?? true }) }
+                                    if (navigate && navigate?.type === 'replace' && navigate?.to) { router.replace(navigate.to, { scroll: navigate?.scrollOptions ?? true }) }
+                                    throw new Error(toastMessage);
                                 } else {
                                     try {
                                         const { matkul, ref } = await response.json();
@@ -3610,24 +3469,11 @@ export const DetailMatkul = () => {
                                 const response = await fetchWithAuth('DELETE', 'matkul', accessToken, null, { id: context.data.id });
 
                                 if (!response.ok) {
-                                    if (response.status === 401) {
-                                        router.replace('/users?action=login&error=isession', {
-                                            scroll: false
-                                        });
-                                        throw new Error(`Unauthorized`);
-                                    } else {
-                                        try {
-                                            const { message } = await response.json();
-                                            if (message) {
-                                                throw new Error(message);
-                                            } else {
-                                                throw new Error(`Terjadi kesalahan`);
-                                            }
-                                        } catch (error) {
-                                            console.error(error);
-                                            reject(error);
-                                        }
-                                    }
+                                    const { toastMessage, refresh, navigate } = await handleApiResponseError(response);
+                                    if (refresh) { router.refresh() }
+                                    if (navigate && navigate?.type === 'push' && navigate?.to) { router.push(navigate.to, { scroll: navigate?.scrollOptions ?? true }) }
+                                    if (navigate && navigate?.type === 'replace' && navigate?.to) { router.replace(navigate.to, { scroll: navigate?.scrollOptions ?? true }) }
+                                    throw new Error(toastMessage);
                                 } else {
                                     try {
                                         const { ref } = await response.json();
@@ -4008,24 +3854,11 @@ export const HapusPermanentConfirm = () => {
                                 const response = await fetchWithAuth('DELETE', 'matkul-history', accessToken, null, { id: idParamsValue, mid: midParamsValue });
 
                                 if (!response.ok) {
-                                    if (response.status === 401) {
-                                        router.replace('/users?action=login&error=isession', {
-                                            scroll: false
-                                        });
-                                        throw new Error(`Unauthorized`);
-                                    } else {
-                                        try {
-                                            const { message } = await response.json();
-                                            if (message) {
-                                                throw new Error(message);
-                                            } else {
-                                                throw new Error(`Terjadi kesalahan`);
-                                            }
-                                        } catch (error) {
-                                            console.error(error);
-                                            reject(error);
-                                        }
-                                    }
+                                    const { toastMessage, refresh, navigate } = await handleApiResponseError(response);
+                                    if (refresh) { router.refresh() }
+                                    if (navigate && navigate?.type === 'push' && navigate?.to) { router.push(navigate.to, { scroll: navigate?.scrollOptions ?? true }) }
+                                    if (navigate && navigate?.type === 'replace' && navigate?.to) { router.replace(navigate.to, { scroll: navigate?.scrollOptions ?? true }) }
+                                    throw new Error(toastMessage);
                                 } else {
                                     try {
                                         mutate(['/api/matkul', userIdCookie], undefined, {
@@ -4222,30 +4055,13 @@ export const Akun = () => {
                                 const response = await fetchWithAuth('PATCH', 'password', accessToken, validatedData);
 
                                 if (!response.ok) {
-                                    if (response.status === 401) {
-                                        router.replace('/users?action=login&error=isession', {
-                                            scroll: false
-                                        });
-                                        throw new Error(`Unauthorized`);
-                                    } else {
-                                        try {
-                                            const { message } = await response.json();
-                                            if (message) {
-                                                throw new Error(message);
-                                            } else {
-                                                throw new Error(`Terjadi kesalahan`);
-                                            }
-                                        } catch (error) {
-                                            console.error(error);
-                                            reject(error);
-                                        }
-                                    }
-                                } else {
-                                    resolve();
-                                }
-                            } catch (error) {
-                                reject(error);
-                            }
+                                    const { toastMessage, refresh, navigate } = await handleApiResponseError(response);
+                                    if (refresh) { router.refresh() }
+                                    if (navigate && navigate?.type === 'push' && navigate?.to) { router.push(navigate.to, { scroll: navigate?.scrollOptions ?? true }) }
+                                    if (navigate && navigate?.type === 'replace' && navigate?.to) { router.replace(navigate.to, { scroll: navigate?.scrollOptions ?? true }) }
+                                    throw new Error(toastMessage);
+                                } else { resolve(); }
+                            } catch (error) { reject(error); }
                         });
                     }
 
