@@ -4677,3 +4677,34 @@ export const Tentang = () => {
         </ModalContext.Consumer>
     )
 }
+const handleApiResponseError = async (response, eventId = null) => {
+    try {
+        /** @type {ApiResponseError} */
+        const { message = 'Gagal memproses permintaan', error = null } = await response.json();
+
+        if (!error) return { toastMessage: message, refresh: false, navigate: null };
+
+        if (['AUTH_00', 'AUTH_01', 'AUTH_02'].includes(error.code)) {
+            return {
+                toastMessage: 'Terjadi kesalahan, silahkan coba lagi',
+                refresh: false,
+                navigate: null,
+            }
+        } else if (['AUTH_03', 'AUTH_04'].includes(error.code)) {
+            return {
+                toastMessage: 'Sesimu tidak valid, silahkan login ulang',
+                refresh: false,
+                navigate: {
+                    type: 'replace',
+                    to: '/users?action=login&error=isession',
+                    scrollOptions: false,
+                }
+            }
+        } else {
+            return { toastMessage: message, refresh: false, navigate: null };
+        }
+    } catch (error) {
+        console.error(error);
+        return { toastMessage: 'Gagal memproses permintaan', refresh: false, navigate: null };
+    }
+}
