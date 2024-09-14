@@ -263,13 +263,8 @@ export const Logout = () => {
                 router.refresh();
                 throw new Error('Terjadi kesalahan, silahkan coba lagi');
             }
-            const response = await fetch('/api/logout', {
-                method: 'POST',
-                headers: {
-                    'Authorization': `Bearer ${accessToken}`,
-                    'Content-Type': 'application/json',
-                }
-            })
+
+            const response = await fetchWithAuth('POST', 'logout', accessToken);
 
             if (!response.ok) {
                 if (response.status === 429) {
@@ -368,13 +363,7 @@ export const PerubahanTerakhirDetail = () => {
                                     throw new Error('Terjadi kesalahan, silahkan coba lagi');
                                 }
 
-                                const response = await fetch(`/api/matkul?id=${context.data.matkul_id}`, {
-                                    method: 'DELETE',
-                                    headers: {
-                                        'Authorization': `Bearer ${accessToken}`,
-                                        'Content-Type': 'application/json',
-                                    },
-                                });
+                                const response = await fetchWithAuth('DELETE', 'matkul', accessToken, null, { id: context.data.matkul_id });
 
                                 if (!response.ok) {
                                     if (response.status === 401) {
@@ -876,13 +865,7 @@ export const PerubahanTerakhirConfirm = () => {
                                         throw new Error('Terjadi kesalahan, silahkan coba lagi');
                                     }
 
-                                    const response = await fetch(`/api/matkul?id=${context?.data?.matkul_id}`, {
-                                        method: 'DELETE',
-                                        headers: {
-                                            'Authorization': `Bearer ${accessToken}`,
-                                            'Content-Type': 'application/json',
-                                        },
-                                    });
+                                    const response = await fetchWithAuth('DELETE', 'matkul', accessToken, null, { id: context.data.matkul_id })
 
                                     if (!response.ok) {
                                         if (response.status === 401) {
@@ -970,13 +953,8 @@ export const PerubahanTerakhirConfirm = () => {
                                         throw new Error('Terjadi kesalahan, silahkan coba lagi');
                                     }
 
-                                    const response = await fetch(`/api/matkul?ref=${context?.data?.matkul_id}`, {
-                                        method: 'POST',
-                                        headers: {
-                                            'Authorization': `Bearer ${accessToken}`,
-                                            'Content-Type': 'application/json',
-                                        },
-                                        body: JSON.stringify({
+                                    const response = await fetchWithAuth('POST', 'matkul', accessToken,
+                                        {
                                             nama: context?.data?.current?.nama,
                                             semester: context?.data?.current?.semester,
                                             sks: context?.data?.current?.sks,
@@ -987,8 +965,9 @@ export const PerubahanTerakhirConfirm = () => {
                                             target_nilai: {
                                                 indeks: context?.data?.current?.target_nilai?.indeks,
                                             },
-                                        }),
-                                    });
+                                        },
+                                        { ref: context.data.matkul_id }
+                                    )
 
                                     if (!response.ok) {
                                         if (response.status === 401) {
@@ -1081,15 +1060,9 @@ export const PerubahanTerakhirConfirm = () => {
                                         throw new Error('Terjadi kesalahan, silahkan coba lagi');
                                     }
 
-                                    const { stamp, type, ...prevData } = context.data.prev;
-                                    const response = await fetch(`/api/matkul?id=${context.data.matkul_id}`, {
-                                        method: 'PATCH',
-                                        headers: {
-                                            'Authorization': `Bearer ${accessToken}`,
-                                            'Content-Type': 'application/json',
-                                        },
-                                        body: JSON.stringify(prevData),
-                                    });
+                                    var { stamp: _, type: _, nilai: { indeks: indeksNilai }, target_nilai: { indeks: indeksTarget }, ...prevData } = context.data.prev;
+                                    const prevDataFiltered = { ...prevData, nilai: { indeks: indeksNilai }, target_nilai: { indeks: indeksTarget } };
+                                    const response = await fetchWithAuth('PATCH', 'matkul', accessToken, prevDataFiltered, { id: context.data.matkul_id });
 
                                     if (!response.ok) {
                                         if (response.status === 401) {
@@ -1305,14 +1278,7 @@ export const TambahMatkul = () => {
                                     throw new Error('Terjadi kesalahan, silahkan coba lagi');
                                 }
 
-                                const response = await fetch('/api/matkul', {
-                                    method: 'POST',
-                                    headers: {
-                                        'Authorization': `Bearer ${accessToken}`,
-                                        'Content-Type': 'application/json',
-                                    },
-                                    body: JSON.stringify(validatedData),
-                                });
+                                const response = await fetchWithAuth('POST', 'matkul', accessToken, validatedData);
 
                                 if (!response.ok) {
                                     if (response.status === 401) {
@@ -1689,14 +1655,7 @@ export const Profil = () => {
                                     throw new Error('Terjadi kesalahan, silahkan coba lagi');
                                 }
 
-                                const response = await fetch('/api/me', {
-                                    method: 'PATCH',
-                                    headers: {
-                                        'Authorization': `Bearer ${accessToken}`,
-                                        'Content-Type': 'application/json',
-                                    },
-                                    body: JSON.stringify(validatedData),
-                                });
+                                const response = await fetchWithAuth('PATCH', 'me', accessToken, validatedData);
 
                                 if (!response.ok) {
                                     if (response.status === 401) {
@@ -2100,14 +2059,7 @@ export const Rating = () => {
                                     throw new Error('Terjadi kesalahan, silahkan coba lagi');
                                 }
 
-                                const response = await fetch('/api/rating', {
-                                    method: 'POST',
-                                    headers: {
-                                        'Authorization': `Bearer ${accessToken}`,
-                                        'Content-Type': 'application/json',
-                                    },
-                                    body: JSON.stringify(validatedData),
-                                });
+                                const response = await fetchWithAuth('POST', 'rating', accessToken, validatedData);
 
                                 if (!response.ok) {
                                     if (response.status === 401) {
@@ -2196,14 +2148,7 @@ export const Rating = () => {
                                     throw new Error('Terjadi kesalahan, silahkan coba lagi');
                                 }
 
-                                const response = await fetch(`/api/rating?id=${ratingId}`, {
-                                    method: 'PATCH',
-                                    headers: {
-                                        'Authorization': `Bearer ${accessToken}`,
-                                        'Content-Type': 'application/json',
-                                    },
-                                    body: JSON.stringify(validatedData),
-                                });
+                                const response = await fetchWithAuth('PATCH', 'rating', accessToken, validatedData, { id: ratingId });
 
                                 if (!response.ok) {
                                     if (response.status === 401) {
@@ -2673,14 +2618,7 @@ export const TabelSetting = () => {
                                     throw new Error('Terjadi kesalahan, silahkan coba lagi');
                                 }
 
-                                const response = await fetch(`/api/me?type=preferences`, {
-                                    method: 'PATCH',
-                                    headers: {
-                                        'Authorization': `Bearer ${accessToken}`,
-                                        'Content-Type': 'application/json',
-                                    },
-                                    body: JSON.stringify(validatedData),
-                                });
+                                const response = await fetchWithAuth('PATCH', 'me', accessToken, validatedData, { type: 'preferences' });
 
                                 if (!response.ok) {
                                     if (response.status === 401) {
@@ -3573,14 +3511,7 @@ export const DetailMatkul = () => {
                                     throw new Error('Terjadi kesalahan, silahkan coba lagi');
                                 }
 
-                                const response = await fetch(`/api/matkul?id=${context.data.id}`, {
-                                    method: 'PATCH',
-                                    headers: {
-                                        'Authorization': `Bearer ${accessToken}`,
-                                        'Content-Type': 'application/json',
-                                    },
-                                    body: JSON.stringify(validatedData),
-                                });
+                                const response = await fetchWithAuth('PATCH', 'matkul', accessToken, validatedData, { id: context.data.id })
 
                                 if (!response.ok) {
                                     if (response.status === 401) {
@@ -3676,13 +3607,7 @@ export const DetailMatkul = () => {
                                     throw new Error('Terjadi kesalahan, silahkan coba lagi');
                                 }
 
-                                const response = await fetch(`/api/matkul?id=${context.data.id}`, {
-                                    method: 'DELETE',
-                                    headers: {
-                                        'Authorization': `Bearer ${accessToken}`,
-                                        'Content-Type': 'application/json',
-                                    },
-                                });
+                                const response = await fetchWithAuth('DELETE', 'matkul', accessToken, null, { id: context.data.id });
 
                                 if (!response.ok) {
                                     if (response.status === 401) {
@@ -4080,13 +4005,7 @@ export const HapusPermanentConfirm = () => {
 
                                 const idParamsValue = context?.data?.fromTabel ? context.data.id : context.data.refId;
                                 const midParamsValue = context?.data?.fromTabel ? context.data.matkul_id : context.data.id;
-                                const response = await fetch(`/api/matkul-history?id=${idParamsValue}&mid=${midParamsValue}`, {
-                                    method: 'DELETE',
-                                    headers: {
-                                        'Authorization': `Bearer ${accessToken}`,
-                                        'Content-Type': 'application/json',
-                                    },
-                                });
+                                const response = await fetchWithAuth('DELETE', 'matkul-history', accessToken, null, { id: idParamsValue, mid: midParamsValue });
 
                                 if (!response.ok) {
                                     if (response.status === 401) {
@@ -4300,14 +4219,7 @@ export const Akun = () => {
                                     throw new Error('Terjadi kesalahan, silahkan coba lagi');
                                 }
 
-                                const response = await fetch('/api/password', {
-                                    method: 'PATCH',
-                                    headers: {
-                                        'Authorization': `Bearer ${accessToken}`,
-                                        'Content-Type': 'application/json',
-                                    },
-                                    body: JSON.stringify(validatedData),
-                                });
+                                const response = await fetchWithAuth('PATCH', 'password', accessToken, validatedData);
 
                                 if (!response.ok) {
                                     if (response.status === 401) {
