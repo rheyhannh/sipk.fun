@@ -1,27 +1,34 @@
 // #region TYPE DEPEDENCY
 import * as SupabaseTypes from '@/types/supabase';
 import { PasswordFormData } from '@/types/form_data';
+import { APIResponseErrorProps } from '@/constant/api_response';
 // #endregion
 
 // #region NEXT DEPEDENCY
 import { NextResponse, NextRequest } from 'next/server';
-import { cookies, headers } from 'next/headers';
-// #endregion
-
-// #region SUPABASE DEPEDENCY
-import { createServerClient } from '@supabase/ssr';
 // #endregion
 
 // #region UTIL DEPEDENCY
 import {
-    encryptAES,
-    decryptAES,
     rateLimit,
-    validateJWT,
-    getCookieOptions,
-    getSipkCookies,
+    getRequestDetails,
 } from '@/utils/server_side';
-import Joi from 'joi';
+import {
+    ServerErrorResponse as serverError,
+} from '@/constant/api_response';
+// #endregion
+
+// #region API HELPER DEPEDENCY
+import {
+    getLogAttributes,
+    verifyService,
+    checkRateLimit,
+    verifyAuth,
+    parseFormData,
+    validateFormData,
+    handleErrorResponse,
+    supabaseServerClient as supabase,
+} from '@/utils/api_helper';
 // #endregion
 
 const limitRequest = parseInt(process.env.API_AUTH_REQUEST_LIMIT);
@@ -30,141 +37,70 @@ const limiter = await rateLimit({
     uniqueTokenPerInterval: parseInt(process.env.API_AUTH_MAX_TOKEN_PERINTERVAL),
 })
 
-const cookieAuthOptions = await getCookieOptions('auth', 'set');
-const cookieAuthDeleteOptions = await getCookieOptions('auth', 'remove');
-
 /**
  * Route Handler untuk `PATCH` `'/api/password'`
  * @param {NextRequest} request
  */
 export async function PATCH(request) {
-    const newHeaders = {};
-    const { secureSessionCookie } = await getSipkCookies(request);
-    const authorizationHeader = headers().get('Authorization');
-    const authorizationToken = authorizationHeader ? authorizationHeader.split(' ')[1] : null;
-    const cookieStore = cookies();
+    const responseHeaders = {};
+    const requestLog = await getLogAttributes(request);
+    const ratelimitLog = {};
 
-    // #region Handler Unauthenticated User
-    if (!secureSessionCookie || !authorizationHeader || !authorizationToken) {
-        return NextResponse.json({ message: 'Unauthorized - Missing access token' }, {
-            status: 401,
-        })
-    }
-    // #endregion
-
-    /** @type {SupabaseTypes.Session} */
-    const decryptedSession = await decryptAES(secureSessionCookie, true);
-    const userId = decryptedSession?.user?.id;
-
-    if (!decryptedSession || !userId) {
-        cookieStore.set({ name: process.env.USER_SESSION_COOKIES_NAME, value: '', ...cookieAuthDeleteOptions })
-        cookieStore.set({ name: 's_user_id', value: '', ...cookieAuthDeleteOptions })
-        cookieStore.set({ name: 's_access_token', value: '', ...cookieAuthDeleteOptions })
-        return NextResponse.json({ message: 'Unauthorized - Invalid access token' }, {
-            status: 401
-        })
-    }
-
-    // #region Validating and Decoding JWT or 's_access_token' cookie
-    try {
-        var decoded = await validateJWT(authorizationToken, userId);
-        // Log Here, ex: '{TIMESTAMP} decoded.id {METHOD} {ROUTE} {BODY} {PARAMS}'
-    } catch (error) {
-        return NextResponse.json({ message: error.message || 'Unauthorized - Invalid access token' }, {
-            status: 401
-        })
-    }
-    // #endregion
-
-    // #region Checking Ratelimit
-    try {
-        var currentUsage = await limiter.check(limitRequest, `password-${userId}`);
-        // Log Here, ex: '{TIMESTAMP} userId {ROUTE} limit {currentUsage}/{limitRequest}'
-        newHeaders['X-Ratelimit-limit'] = limitRequest;
-        newHeaders['X-Ratelimit-Remaining'] = limitRequest - currentUsage;
-    } catch {
-        // Log Here, ex: '{TIMESTAMP} userId {ROUTE} limited'
-        return NextResponse.json({ message: `Terlalu banyak request, coba lagi dalam 1 menit` }, {
-            status: 429,
-            headers: {
-                'X-Ratelimit-Limit': limitRequest,
-                'X-Ratelimit-Remaining': 0,
-            }
-        })
-    }
-    // #endregion
-
-    // #region Parsing and Handle formData
-    try {
-        /** @type {PasswordFormData} */
-        var formData = await request.json();
-    } catch (error) {
-        console.error(error);
-        return NextResponse.json({ message: 'Invalid JSON Format' }, {
-            status: 400,
-            headers: newHeaders
-        })
-    }
-    // #endregion
-
-    // #region Validating and Handle formData
-    const formDataSchema = Joi.object({
-        password: Joi.string().min(6).max(50).required()
-    }).required()
+    const defaultUserErrorMessage = 'Gagal memperbarui password';
 
     try {
-        await formDataSchema.validateAsync(formData);
-    } catch (error) {
-        console.error(error);
-        return NextResponse.json({ message: error.message }, { status: 400, headers: newHeaders })
-    }
-    // #endregion
-
-    // #region Initiate Supabase Instance
-    const supabase = createServerClient(
-        process.env.SUPABASE_URL,
-        process.env.SUPABASE_ANON_KEY,
-        {
-            cookies: {
-                async get(name) {
-                    const encryptedSession = cookieStore.get(process.env.USER_SESSION_COOKIES_NAME)?.value
-                    if (encryptedSession) {
-                        const decryptedSession = await decryptAES(encryptedSession) || 'removeMe';
-                        return decryptedSession;
-                    }
-                    return encryptedSession;
-                },
-                async set(name, value, options) {
-                    const encryptedSession = await encryptAES(value);
-                    if (encryptedSession) {
-                        cookieStore.set({ name: process.env.USER_SESSION_COOKIES_NAME, value: encryptedSession, ...cookieAuthOptions })
-                    } else {
-                        cookieStore.set({ name: process.env.USER_SESSION_COOKIES_NAME, value, ...cookieAuthOptions })
-                    }
-                },
-                remove(name, options) {
-                    cookieStore.set({ name: process.env.USER_SESSION_COOKIES_NAME, value: '', ...cookieAuthDeleteOptions })
-                    cookieStore.set({ name: 's_user_id', value: '', ...cookieAuthDeleteOptions })
-                    cookieStore.set({ name: 's_access_token', value: '', ...cookieAuthDeleteOptions })
-                },
-            },
+        const isService = await verifyService(request);
+        if (isService) {
+            throw serverError.request_not_supported(
+                undefined, undefined,
+                {
+                    severity: 'error',
+                    reason: 'No service handler for update user password',
+                    stack: null,
+                    functionDetails: 'PATCH /api/password line 56',
+                    functionArgs: null,
+                    functionResolvedVariable: null,
+                    request: await getRequestDetails(),
+                    more: null,
+                }
+            )
         }
-    )
-    // #endregion
 
-    // #region Update Password and Handle Response
-    /** @type {SupabaseTypes._auth_updateUser} */
-    const { data, error } = await supabase.auth.updateUser({
-        password: formData.password
-    })
+        await checkRateLimit(limiter, limitRequest).then(x => {
+            const { currentUsage, currentTtl, currentSize, rateLimitHeaders } = x;
+            Object.assign(responseHeaders, rateLimitHeaders);
+            Object.assign(ratelimitLog, { currentUsage, currentTtl, currentSize })
+        })
 
-    if (error) {
-        console.error(error);
-        return NextResponse.json({ message: `Gagal memperbarui password` }, { status: 500, headers: newHeaders })
+        const { decryptedSession, decodedAccessToken } = await verifyAuth();
+
+        /** @type {PasswordFormData} */
+        var formData = await parseFormData(request);
+
+        await validateFormData(formData, 'password');
+
+        /** @type {SupabaseTypes._auth_updateUser} */
+        const { data, error } = await supabase.auth.updateUser({ password: formData.password })
+        if (error) {
+            throw serverError.interval_server_error(
+                defaultUserErrorMessage, undefined,
+                {
+                    severity: 'error',
+                    reason: 'Failed to update password',
+                    stack: null,
+                    functionDetails: 'supabase.from at PATCH /api/password line 85',
+                    functionArgs: { updateUser: true, updateUserPassword: true },
+                    functionResolvedVariable: { data, error },
+                    request: await getRequestDetails(),
+                    more: error,
+                }
+            )
+        }
+
+        return new Response(null, { status: 204, headers: responseHeaders })
+    } catch (/** @type {APIResponseErrorProps} */ error) {
+        const { body, status, headers } = await handleErrorResponse(error, requestLog, ratelimitLog, true);
+        if (headers) { Object.assign(responseHeaders, headers) }
+        return NextResponse.json(body, { status, headers: responseHeaders })
     }
-
-    return new Response(null, {
-        status: 204
-    })
-    // #endregion
 }

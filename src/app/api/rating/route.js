@@ -1,31 +1,39 @@
 // #region TYPE DEPEDENCY
 import * as SupabaseTypes from '@/types/supabase';
 import { RatingFormData } from '@/types/form_data';
+import { APIResponseErrorProps } from '@/constant/api_response';
 // #endregion
 
 // #region NEXT DEPEDENCY
 import { NextResponse, NextRequest } from 'next/server';
-import { cookies, headers } from 'next/headers';
-
-// #endregion
-
-// #region SUPABASE DEPEDENCY
-import { createServerClient } from '@supabase/ssr';
-import { createClient } from '@supabase/supabase-js';
 // #endregion
 
 // #region UTIL DEPEDENCY
 import {
-    encryptAES,
-    decryptAES,
     rateLimit,
-    validateJWT,
-    getCookieOptions,
-    getSipkCookies,
-    getApiKey,
+    getRequestDetails,
 } from '@/utils/server_side';
+import {
+    BadRequestErrorResponse as badRequestError,
+    ConflictErrorResponse as conflictError,
+    ServerErrorResponse as serverError,
+} from '@/constant/api_response';
 import isUUID from 'validator/lib/isUUID';
-import Joi from 'joi';
+// #endregion
+
+// #region API HELPER DEPEDENCY
+import {
+    getLogAttributes,
+    verifyService,
+    checkRateLimit,
+    verifyAuth,
+    parseFormData,
+    validateFormData,
+    handleErrorResponse,
+    handleSupabaseError,
+    supabaseServerClient as supabase,
+    supabaseServiceClient as supabaseService,
+} from '@/utils/api_helper';
 // #endregion
 
 const limitRequest = parseInt(process.env.API_RATING_REQUEST_LIMIT);
@@ -34,141 +42,58 @@ const limiter = await rateLimit({
     uniqueTokenPerInterval: parseInt(process.env.API_RATING_MAX_TOKEN_PERINTERVAL),
 })
 
-const cookieAuthOptions = await getCookieOptions('auth', 'set');
-const cookieAuthDeleteOptions = await getCookieOptions('auth', 'remove');
-
 /**
  * Route Handler untuk `GET` `'/api/rating'`
  * @param {NextRequest} request
  */
 export async function GET(request) {
-    const { secureSessionCookie } = await getSipkCookies(request);
-    const cookieStore = cookies();
-    const authorizationHeader = headers().get('Authorization');
-    const authorizationToken = authorizationHeader ? authorizationHeader.split(' ')[1] : null;
-    const serviceApiKey = await getApiKey(request);
+    const responseHeaders = {};
+    const requestLog = await getLogAttributes(request);
+    const ratelimitLog = {};
 
-    // #region Handler when serviceApiKey exist
-    if (serviceApiKey) {
-        if (serviceApiKey !== process.env.SUPABASE_SERVICE_KEY) {
-            return NextResponse.json({ message: `Invalid API key` }, {
-                status: 401,
-            })
+    try {
+        const isService = await verifyService(request);
+        if (isService) {
+            /** @type {SupabaseTypes._from<SupabaseTypes.RatingData>} */
+            const { data, error } = await supabaseService.from('rating').select('*');
+            if (error) {
+                const { code, headers = {}, _details, ...rest } = await handleSupabaseError(error, false, {
+                    functionDetails: 'supabaseService.from at GET /api/rating line 58',
+                    functionArgs: { from: 'rating', select: '*' },
+                    functionResolvedVariable: { data, error },
+                });
+
+                const body = { ...rest, _details: { ..._details, request: { info: requestLog, ..._details.request } } }
+                return NextResponse.json(body, { status: code, headers });
+            }
+
+            return NextResponse.json(data, { status: 200 })
         }
-        const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_SERVICE_KEY);
+
+        await checkRateLimit(limiter, limitRequest).then(x => {
+            const { currentUsage, currentTtl, currentSize, rateLimitHeaders } = x;
+            Object.assign(responseHeaders, rateLimitHeaders);
+            Object.assign(ratelimitLog, { currentUsage, currentTtl, currentSize })
+        })
+
+        const { decryptedSession, decodedAccessToken } = await verifyAuth();
+
+        /** @type {SupabaseTypes._from<SupabaseTypes.RatingData>} */
         const { data, error } = await supabase.from('rating').select('*');
         if (error) {
-            console.error(error);
-            return NextResponse.json({ message: error.message }, { status: 500 })
+            await handleSupabaseError(error, true, {
+                functionDetails: 'supabase.from at GET /api/rating line 82',
+                functionArgs: { from: 'rating', select: '*' },
+                functionResolvedVariable: { data, error },
+            })
         }
 
-        return NextResponse.json(data, { status: 200 })
+        return NextResponse.json(data, { status: 200, headers: responseHeaders });
+    } catch (/** @type {APIResponseErrorProps} */ error) {
+        const { body, status, headers } = await handleErrorResponse(error, requestLog, ratelimitLog, true);
+        if (headers) { Object.assign(responseHeaders, headers) }
+        return NextResponse.json(body, { status, headers: responseHeaders })
     }
-    // #endregion
-
-    // #region Handler Unauthenticated User
-    if (!secureSessionCookie || !authorizationHeader || !authorizationToken) {
-        return NextResponse.json({ message: 'Unauthorized - Missing access token' }, {
-            status: 401,
-        })
-    }
-    // #endregion
-
-    /** @type {SupabaseTypes.Session} */
-    const decryptedSession = await decryptAES(secureSessionCookie, true);
-    const userId = decryptedSession?.user?.id;
-
-    if (!decryptedSession || !userId) {
-        cookieStore.set({ name: process.env.USER_SESSION_COOKIES_NAME, value: '', ...cookieAuthDeleteOptions })
-        cookieStore.set({ name: 's_user_id', value: '', ...cookieAuthDeleteOptions })
-        cookieStore.set({ name: 's_access_token', value: '', ...cookieAuthDeleteOptions })
-        return NextResponse.json({ message: 'Unauthorized - Invalid access token' }, {
-            status: 401
-        })
-    }
-
-    // #region Validating and Decoding JWT or 's_access_token' cookie
-    try {
-        var decoded = await validateJWT(authorizationToken, userId);
-        // Log Here, ex: '{TIMESTAMP} decoded.id {METHOD} {ROUTE} {BODY} {PARAMS}'
-    } catch (error) {
-        return NextResponse.json({ message: error.message || 'Unauthorized - Invalid access token' }, {
-            status: 401
-        })
-    }
-    // #endregion
-
-    // #region Checking Ratelimit
-    try {
-        var currentUsage = await limiter.check(limitRequest, `rating-${userId}`);
-        // Log Here, ex: '{TIMESTAMP} userId {ROUTE} limit {currentUsage}/{limitRequest}'
-    } catch {
-        // Log Here, ex: '{TIMESTAMP} userId {ROUTE} limited'
-        return NextResponse.json({ message: 'Too many request' }, {
-            status: 429,
-            headers: {
-                'X-Ratelimit-Limit': limitRequest,
-                'X-Ratelimit-Remaining': 0,
-            }
-        })
-    }
-    // #endregion
-
-    // #region Initiate Supabase Instance
-    const supabase = createServerClient(
-        process.env.SUPABASE_URL,
-        process.env.SUPABASE_ANON_KEY,
-        {
-            cookies: {
-                async get(name) {
-                    const encryptedSession = cookieStore.get(process.env.USER_SESSION_COOKIES_NAME)?.value
-                    if (encryptedSession) {
-                        const decryptedSession = await decryptAES(encryptedSession) || 'removeMe';
-                        return decryptedSession;
-                    }
-                    return encryptedSession;
-                },
-                async set(name, value, options) {
-                    const encryptedSession = await encryptAES(value);
-                    if (encryptedSession) {
-                        cookieStore.set({ name: process.env.USER_SESSION_COOKIES_NAME, value: encryptedSession, ...cookieAuthOptions })
-                    } else {
-                        cookieStore.set({ name: process.env.USER_SESSION_COOKIES_NAME, value, ...cookieAuthOptions })
-                    }
-                },
-                remove(name, options) {
-                    cookieStore.set({ name: process.env.USER_SESSION_COOKIES_NAME, value: '', ...cookieAuthDeleteOptions })
-                    cookieStore.set({ name: 's_user_id', value: '', ...cookieAuthDeleteOptions })
-                    cookieStore.set({ name: 's_access_token', value: '', ...cookieAuthDeleteOptions })
-                },
-            },
-        }
-    )
-    // #endregion
-
-    // #region Get Rating and Handle Response
-    /** @type {SupabaseTypes._from<SupabaseTypes.RatingData>} */
-    let { data, error } = await supabase.from('rating').select('*');
-
-    if (error) {
-        console.error(error);
-        return NextResponse.json({ message: 'Terjadi kesalahan pada server' }, {
-            status: 500,
-            headers: {
-                'X-Ratelimit-Limit': limitRequest,
-                'X-Ratelimit-Remaining': limitRequest - currentUsage,
-            }
-        })
-    }
-
-    return NextResponse.json(data, {
-        status: 200,
-        headers: {
-            'X-Ratelimit-Limit': limitRequest,
-            'X-Ratelimit-Remaining': limitRequest - currentUsage,
-        }
-    });
-    // #endregion
 }
 
 /**
@@ -176,163 +101,137 @@ export async function GET(request) {
  * @param {NextRequest} request
  */
 export async function POST(request) {
-    const newHeaders = {};
-    const { secureSessionCookie } = await getSipkCookies(request);
-    const authorizationHeader = headers().get('Authorization');
-    const authorizationToken = authorizationHeader ? authorizationHeader.split(' ')[1] : null;
-    const cookieStore = cookies();
+    const responseHeaders = {};
+    const requestLog = await getLogAttributes(request);
+    const ratelimitLog = {};
 
-    // #region Handler Unauthenticated User
-    if (!secureSessionCookie || !authorizationHeader || !authorizationToken) {
-        return NextResponse.json({ message: 'Unauthorized - Missing access token' }, {
-            status: 401,
-        })
-    }
-    // #endregion
-
-    /** @type {SupabaseTypes.Session} */
-    const decryptedSession = await decryptAES(secureSessionCookie, true);
-    const userId = decryptedSession?.user?.id;
-
-    if (!decryptedSession || !userId) {
-        cookieStore.set({ name: process.env.USER_SESSION_COOKIES_NAME, value: '', ...cookieAuthDeleteOptions })
-        cookieStore.set({ name: 's_user_id', value: '', ...cookieAuthDeleteOptions })
-        cookieStore.set({ name: 's_access_token', value: '', ...cookieAuthDeleteOptions })
-        return NextResponse.json({ message: 'Unauthorized - Invalid access token' }, {
-            status: 401
-        })
-    }
-
-    // #region Validating and Decoding JWT or 's_access_token' cookie
-    try {
-        var decoded = await validateJWT(authorizationToken, userId);
-        // Log Here, ex: '{TIMESTAMP} decoded.id {METHOD} {ROUTE} {BODY} {PARAMS}'
-    } catch (error) {
-        return NextResponse.json({ message: error.message || 'Unauthorized - Invalid access token' }, {
-            status: 401
-        })
-    }
-    // #endregion
-
-    // #region Checking Ratelimit
-    try {
-        var currentUsage = await limiter.check(limitRequest, `rating-${userId}`);
-        // Log Here, ex: '{TIMESTAMP} userId {ROUTE} limit {currentUsage}/{limitRequest}'
-        newHeaders['X-Ratelimit-limit'] = limitRequest;
-        newHeaders['X-Ratelimit-Remaining'] = limitRequest - currentUsage;
-    } catch {
-        // Log Here, ex: '{TIMESTAMP} userId {ROUTE} limited'
-        return NextResponse.json({ message: `Terlalu banyak request, coba lagi dalam 1 menit` }, {
-            status: 429,
-            headers: {
-                'X-Ratelimit-Limit': limitRequest,
-                'X-Ratelimit-Remaining': 0,
-            }
-        })
-    }
-    // #endregion
-
-    // #region Parsing and Handle formData
-    try {
-        /** @type {RatingFormData} */
-        var formData = await request.json();
-    } catch (error) {
-        console.error(error);
-        return NextResponse.json({ message: 'Invalid JSON Format' }, {
-            status: 400,
-            headers: newHeaders
-        })
-    }
-    // #endregion
-
-    // #region Validating and Handle formData
-    const formDataSchema = Joi.object({
-        rating: Joi.number().min(1).max(5).required(),
-        review: Joi.string().allow('').max(200).required(),
-        details: Joi.object({
-            author: Joi.string().required(),
-            authorType: Joi.number().min(0).max(2).required(),
-            universitas: Joi.string().required() // Belum validasi dengan Universitas yang valid atau tersedia
-        }).required()
-    })
-
-    try {
-        await formDataSchema.validateAsync(formData);
-    } catch (error) {
-        console.error(error);
-        return NextResponse.json({ message: error.message }, { status: 400, headers: newHeaders })
-    }
-
+    const defaultUserErrorMessage = 'Gagal menambah rating';
     const unallowedWords = ['http', 'https', 'www'];
     const unallowedSymbols = ['<', '>', '&', '/', `'`, `"`];
 
-    if (unallowedWords.some(word => formData.review.includes(word))) {
-        return NextResponse.json({ message: `Review tidak dapat mengandung URL` }, { status: 400, headers: newHeaders })
-    }
-    if (unallowedSymbols.some(symbol => formData.review.includes(symbol))) {
-        return NextResponse.json({ message: `Review tidak dapat mengandung simbol > , < , & , ' , " dan /` }, { status: 400, headers: newHeaders })
-    }
-    // #endregion
-
-    // #region Initiate Supabase Instance
-    const supabase = createServerClient(
-        process.env.SUPABASE_URL,
-        process.env.SUPABASE_ANON_KEY,
-        {
-            cookies: {
-                async get(name) {
-                    const encryptedSession = cookieStore.get(process.env.USER_SESSION_COOKIES_NAME)?.value
-                    if (encryptedSession) {
-                        const decryptedSession = await decryptAES(encryptedSession) || 'removeMe';
-                        return decryptedSession;
-                    }
-                    return encryptedSession;
-                },
-                async set(name, value, options) {
-                    const encryptedSession = await encryptAES(value);
-                    if (encryptedSession) {
-                        cookieStore.set({ name: process.env.USER_SESSION_COOKIES_NAME, value: encryptedSession, ...cookieAuthOptions })
-                    } else {
-                        cookieStore.set({ name: process.env.USER_SESSION_COOKIES_NAME, value, ...cookieAuthOptions })
-                    }
-                },
-                remove(name, options) {
-                    cookieStore.set({ name: process.env.USER_SESSION_COOKIES_NAME, value: '', ...cookieAuthDeleteOptions })
-                    cookieStore.set({ name: 's_user_id', value: '', ...cookieAuthDeleteOptions })
-                    cookieStore.set({ name: 's_access_token', value: '', ...cookieAuthDeleteOptions })
-                },
-            },
+    try {
+        const isService = await verifyService(request);
+        if (isService) {
+            throw serverError.request_not_supported(
+                undefined, undefined,
+                {
+                    severity: 'error',
+                    reason: 'No service handler for add rating',
+                    stack: null,
+                    functionDetails: 'POST /api/rating line 115',
+                    functionArgs: null,
+                    functionResolvedVariable: null,
+                    request: await getRequestDetails(),
+                    more: null,
+                }
+            )
         }
-    )
-    // #endregion
 
-    // #region Check are User Rating already exist
-    /** @type {SupabaseTypes._from<SupabaseTypes.RatingData} */
-    var { data, error } = await supabase.from('rating').select('*');
+        await checkRateLimit(limiter, limitRequest).then(x => {
+            const { currentUsage, currentTtl, currentSize, rateLimitHeaders } = x;
+            Object.assign(responseHeaders, rateLimitHeaders);
+            Object.assign(ratelimitLog, { currentUsage, currentTtl, currentSize })
+        })
 
-    if (error) {
-        console.error(error);
-        return NextResponse.json({ message: `Gagal menambahkan rating` }, { status: 500, headers: newHeaders })
+        const { decryptedSession, decodedAccessToken } = await verifyAuth();
+        const userId = decryptedSession?.user?.id ?? decodedAccessToken?.sub;
+
+        /** @type {RatingFormData} */
+        var formData = await parseFormData(request);
+
+        await validateFormData(formData, 'rating');
+
+        if (unallowedWords.some(word => formData.review.includes(word))) {
+            throw badRequestError.invalid_form_data(
+                defaultUserErrorMessage, undefined,
+                {
+                    severity: 'error',
+                    reason: "Rating message 'review' contain some of 'unallowedWords'",
+                    stack: null,
+                    functionDetails: 'POST /api/rating line 145',
+                    functionArgs: null,
+                    functionResolvedVariable: null,
+                    request: await getRequestDetails(),
+                    more: { unallowedWords },
+                }
+            )
+        }
+
+        if (unallowedSymbols.some(symbol => formData.review.includes(symbol))) {
+            throw badRequestError.invalid_form_data(
+                defaultUserErrorMessage, undefined,
+                {
+                    severity: 'error',
+                    reason: "Rating message 'review' contain some of 'unallowedSymbols'",
+                    stack: null,
+                    functionDetails: 'POST /api/rating line 161',
+                    functionArgs: null,
+                    functionResolvedVariable: null,
+                    request: await getRequestDetails(),
+                    more: { unallowedSymbols },
+                }
+            )
+        }
+
+        /** @type {SupabaseTypes._from<SupabaseTypes.RatingData} */
+        var { data, error } = await supabase.from('rating').select('*');
+        if (error) {
+            throw serverError.interval_server_error(
+                defaultUserErrorMessage, undefined,
+                {
+                    severity: 'error',
+                    reason: 'Failed to add user rating, cant resolve user rating',
+                    stack: null,
+                    functionDetails: 'supabase.from at POST /api/rating line 177',
+                    functionArgs: { from: 'rating', select: '*' },
+                    functionResolvedVariable: { data, error },
+                    request: await getRequestDetails(),
+                    more: error,
+                }
+            )
+        }
+        if (data.length) {
+            throw conflictError.resource_already_exist(
+                defaultUserErrorMessage, undefined,
+                {
+                    severity: 'error',
+                    reason: 'Failed to add user rating, user rating already exist',
+                    stack: null,
+                    functionDetails: 'supabase.from at POST /api/rating line 177',
+                    functionArgs: { from: 'rating', select: '*' },
+                    functionResolvedVariable: { data, error },
+                    request: await getRequestDetails(),
+                    more: null,
+                }
+            )
+        }
+
+        const unixNow = Math.floor(Date.now() / 1000);
+
+        /** @type {SupabaseTypes._from<SupabaseTypes.RatingData} */
+        var { data, error } = await supabase.from('rating').insert({ ...formData, owned_by: userId, unix_created_at: unixNow }).select();
+        if (error) {
+            throw serverError.interval_server_error(
+                defaultUserErrorMessage, undefined,
+                {
+                    severity: 'error',
+                    reason: 'Failed to add user rating',
+                    stack: null,
+                    functionDetails: 'supabase.from at POST /api/rating line 212',
+                    functionArgs: { from: 'rating', insert: { ...formData, owned_by: userId, unix_created_at: unixNow }, select: true },
+                    functionResolvedVariable: { data, error },
+                    request: await getRequestDetails(),
+                    more: error,
+                }
+            )
+        }
+
+        return NextResponse.json({ rating: data[0] }, { status: 200, headers: responseHeaders })
+    } catch (/** @type {APIResponseErrorProps} */ error) {
+        const { body, status, headers } = await handleErrorResponse(error, requestLog, ratelimitLog, true);
+        if (headers) { Object.assign(responseHeaders, headers) }
+        return NextResponse.json(body, { status, headers: responseHeaders })
     }
-
-    if (data.length) {
-        return NextResponse.json({ message: `Gagal menambahkan rating, rating sudah tersedia`, resolve: `Silahkan edit atau hapus rating yang sudah tersedia` }, { status: 400, headers: newHeaders })
-    }
-    // #endregion
-
-    const unixNow = Math.floor(Date.now() / 1000);
-
-    // #region Add Rating and Handle Response
-    /** @type {SupabaseTypes._from<SupabaseTypes.RatingData} */
-    var { data, error } = await supabase.from('rating').insert({ ...formData, owned_by: userId, unix_created_at: unixNow }).select();
-
-    if (error) {
-        console.error(error);
-        return NextResponse.json({ message: `Gagal menambahkan rating` }, { status: 500, headers: newHeaders })
-    }
-
-    return NextResponse.json({ rating: data[0] }, { status: 200, headers: newHeaders })
-    // #endregion
 }
 
 /**
@@ -340,176 +239,119 @@ export async function POST(request) {
  * @param {NextRequest} request
  */
 export async function PATCH(request) {
-    const newHeaders = {};
-    const { secureSessionCookie } = await getSipkCookies(request);
-    const authorizationHeader = headers().get('Authorization');
-    const authorizationToken = authorizationHeader ? authorizationHeader.split(' ')[1] : null;
-    const cookieStore = cookies();
+    const responseHeaders = {};
+    const requestLog = await getLogAttributes(request);
+    const ratelimitLog = {};
+
+    const defaultUserErrorMessage = 'Gagal memperbarui rating';
+    const unallowedWords = ['http', 'https', 'www'];
+    const unallowedSymbols = ['<', '>', '&', '/', `'`, `"`];
     const searchParams = request.nextUrl.searchParams;
     const ratingId = searchParams.get('id');
 
-    // #region Handler Unauthenticated User
-    if (!secureSessionCookie || !authorizationHeader || !authorizationToken) {
-        return NextResponse.json({ message: 'Unauthorized - Missing access token' }, {
-            status: 401,
-        })
-    }
-    // #endregion
-
-    /** @type {SupabaseTypes.Session} */
-    const decryptedSession = await decryptAES(secureSessionCookie, true);
-    const userId = decryptedSession?.user?.id;
-
-    if (!decryptedSession || !userId) {
-        cookieStore.set({ name: process.env.USER_SESSION_COOKIES_NAME, value: '', ...cookieAuthDeleteOptions })
-        cookieStore.set({ name: 's_user_id', value: '', ...cookieAuthDeleteOptions })
-        cookieStore.set({ name: 's_access_token', value: '', ...cookieAuthDeleteOptions })
-        return NextResponse.json({ message: 'Unauthorized - Invalid access token' }, {
-            status: 401
-        })
-    }
-
-    // #region Validating and Decoding JWT or 's_access_token' cookie
     try {
-        var decoded = await validateJWT(authorizationToken, userId);
-        // Log Here, ex: '{TIMESTAMP} decoded.id {METHOD} {ROUTE} {BODY} {PARAMS}'
-    } catch (error) {
-        return NextResponse.json({ message: error.message || 'Unauthorized - Invalid access token' }, {
-            status: 401
-        })
-    }
-    // #endregion
+        const isService = await verifyService(request);
+        if (isService) {
+            throw serverError.request_not_supported(
+                undefined, undefined,
+                {
+                    severity: 'error',
+                    reason: 'No service handler for update user rating',
+                    stack: null,
+                    functionDetails: 'PATCH /api/rating line 255',
+                    functionArgs: null,
+                    functionResolvedVariable: null,
+                    request: await getRequestDetails(),
+                    more: null,
+                }
+            )
+        }
 
-    // #region Checking Ratelimit
-    try {
-        var currentUsage = await limiter.check(limitRequest, `rating-${userId}`);
-        // Log Here, ex: '{TIMESTAMP} userId {ROUTE} limit {currentUsage}/{limitRequest}'
-        newHeaders['X-Ratelimit-limit'] = limitRequest;
-        newHeaders['X-Ratelimit-Remaining'] = limitRequest - currentUsage;
-    } catch {
-        // Log Here, ex: '{TIMESTAMP} userId {ROUTE} limited'
-        return NextResponse.json({ message: `Terlalu banyak request, coba lagi dalam 1 menit` }, {
-            status: 429,
-            headers: {
-                'X-Ratelimit-Limit': limitRequest,
-                'X-Ratelimit-Remaining': 0,
-            }
+        await checkRateLimit(limiter, limitRequest).then(x => {
+            const { currentUsage, currentTtl, currentSize, rateLimitHeaders } = x;
+            Object.assign(responseHeaders, rateLimitHeaders);
+            Object.assign(ratelimitLog, { currentUsage, currentTtl, currentSize })
         })
-    }
-    // #endregion
 
-    // #region Validating 'ratingId'
-    if (!ratingId) {
-        return NextResponse.json({ message: `Gagal memperbarui rating, 'id' dibutuhkan` }, {
-            status: 400,
-            headers: newHeaders
-        })
-    }
+        if (!ratingId || typeof ratingId !== 'string' || !isUUID(ratingId)) {
+            throw badRequestError.malformed_request_params(
+                defaultUserErrorMessage, undefined,
+                {
+                    severity: 'error',
+                    reason: "Request param 'id' expected exist and typed as string and UUID format",
+                    stack: null,
+                    functionDetails: 'PATCH /api/rating line 277',
+                    functionArgs: null,
+                    functionResolvedVariable: null,
+                    request: await getRequestDetails(),
+                    more: null,
+                }
+            )
+        }
 
-    if (!isUUID(ratingId)) {
-        return NextResponse.json({ message: `Gagal memperbarui rating, 'id' bukan uuid` }, {
-            status: 400,
-            headers: newHeaders
-        })
-    }
-    // #endregion
+        const { decryptedSession, decodedAccessToken } = await verifyAuth();
 
-    // #region Parsing and Handle formData
-    try {
         /** @type {RatingFormData} */
-        var formData = await request.json();
-    } catch (error) {
-        console.error(error);
-        return NextResponse.json({ message: 'Invalid JSON Format' }, {
-            status: 400,
-            headers: newHeaders
-        })
-    }
-    // #endregion
+        var formData = await parseFormData(request);
 
-    // #region Validating and Handle formData
-    const formDataSchema = Joi.object({
-        rating: Joi.number().min(1).max(5).required(),
-        review: Joi.string().allow('').max(200).required(),
-        details: Joi.object({
-            author: Joi.string().required(),
-            authorType: Joi.number().min(0).max(2).required(),
-            universitas: Joi.string().required() // Belum validasi dengan Universitas yang valid atau tersedia
-        }).required()
-    })
+        await validateFormData(formData, 'rating');
 
-    try {
-        await formDataSchema.validateAsync(formData);
-    } catch (error) {
-        console.error(error);
-        return NextResponse.json({ message: error.message }, { status: 400, headers: newHeaders })
-    }
-
-    const unallowedWords = ['http', 'https', 'www'];
-    const unallowedSymbols = ['<', '>', '&', '/', `'`, `"`];
-
-    if (unallowedWords.some(word => formData.review.includes(word))) {
-        return NextResponse.json({ message: `Review tidak dapat mengandung URL` }, { status: 400, headers: newHeaders })
-    }
-    if (unallowedSymbols.some(symbol => formData.review.includes(symbol))) {
-        return NextResponse.json({ message: `Review tidak dapat mengandung simbol > , < , & , ' , " dan /` }, { status: 400, headers: newHeaders })
-    }
-    // #endregion
-
-    // #region Initiate Supabase Instance
-    const supabase = createServerClient(
-        process.env.SUPABASE_URL,
-        process.env.SUPABASE_ANON_KEY,
-        {
-            cookies: {
-                async get(name) {
-                    const encryptedSession = cookieStore.get(process.env.USER_SESSION_COOKIES_NAME)?.value
-                    if (encryptedSession) {
-                        const decryptedSession = await decryptAES(encryptedSession) || 'removeMe';
-                        return decryptedSession;
-                    }
-                    return encryptedSession;
-                },
-                async set(name, value, options) {
-                    const encryptedSession = await encryptAES(value);
-                    if (encryptedSession) {
-                        cookieStore.set({ name: process.env.USER_SESSION_COOKIES_NAME, value: encryptedSession, ...cookieAuthOptions })
-                    } else {
-                        cookieStore.set({ name: process.env.USER_SESSION_COOKIES_NAME, value, ...cookieAuthOptions })
-                    }
-                },
-                remove(name, options) {
-                    cookieStore.set({ name: process.env.USER_SESSION_COOKIES_NAME, value: '', ...cookieAuthDeleteOptions })
-                    cookieStore.set({ name: 's_user_id', value: '', ...cookieAuthDeleteOptions })
-                    cookieStore.set({ name: 's_access_token', value: '', ...cookieAuthDeleteOptions })
-                },
-            },
+        if (unallowedWords.some(word => formData.review.includes(word))) {
+            throw badRequestError.invalid_form_data(
+                defaultUserErrorMessage, undefined,
+                {
+                    severity: 'error',
+                    reason: "Rating message 'review' contain some of 'unallowedWords'",
+                    stack: null,
+                    functionDetails: 'PATCH /api/rating line 300',
+                    functionArgs: null,
+                    functionResolvedVariable: null,
+                    request: await getRequestDetails(),
+                    more: { unallowedWords },
+                }
+            )
         }
-    )
-    // #endregion
 
-    const unixNow = Math.floor(Date.now() / 1000);
-
-    // #region Update Matkul and Handle Response
-    /** @type {SupabaseTypes._from<SupabaseTypes.RatingData>} */
-    const { data, error } = await supabase.from('rating').update(
-        {
-            rating: formData.rating,
-            review: formData.review,
-            unix_updated_at: unixNow,
-            details: formData.details
+        if (unallowedSymbols.some(symbol => formData.review.includes(symbol))) {
+            throw badRequestError.invalid_form_data(
+                defaultUserErrorMessage, undefined,
+                {
+                    severity: 'error',
+                    reason: "Rating message 'review' contain some of 'unallowedSymbols'",
+                    stack: null,
+                    functionDetails: 'PATCH /api/rating line 316',
+                    functionArgs: null,
+                    functionResolvedVariable: null,
+                    request: await getRequestDetails(),
+                    more: { unallowedSymbols },
+                }
+            )
         }
-    ).eq('id', ratingId).select();
 
-    if (!data.length) {
-        return NextResponse.json({ message: `Gagal memperbarui rating, rating tidak ditemukan`, resolve: `Gunakan id rating yang valid dan tersedia` }, { status: 404, headers: newHeaders })
+        const unixNow = Math.floor(Date.now() / 1000);
+
+        /** @type {SupabaseTypes._from<SupabaseTypes.RatingData>} */
+        const { data, error } = await supabase.from('rating').update({ rating: formData.rating, review: formData.review, unix_updated_at: unixNow, details: formData.details }).eq('id', ratingId).select();
+        if (error) {
+            throw serverError.interval_server_error(
+                defaultUserErrorMessage, undefined,
+                {
+                    severity: 'error',
+                    reason: 'Failed to update user rating',
+                    stack: null,
+                    functionDetails: 'supabase.from at PATCH /api/rating line 334',
+                    functionArgs: { from: 'rating', update: { rating: formData.rating, review: formData.review, unix_updated_at: unixNow, details: formData.details }, eq: { id: ratingId }, select: true },
+                    functionResolvedVariable: { data, error },
+                    request: await getRequestDetails(),
+                    more: error,
+                }
+            )
+        }
+
+        return NextResponse.json({ rating: data[0] }, { status: 200, headers: responseHeaders })
+    } catch (/** @type {APIResponseErrorProps} */ error) {
+        const { body, status, headers } = await handleErrorResponse(error, requestLog, ratelimitLog, true);
+        if (headers) { Object.assign(responseHeaders, headers) }
+        return NextResponse.json(body, { status, headers: responseHeaders })
     }
-
-    if (error) {
-        console.error(error);
-        return NextResponse.json({ message: `Gagal memperbarui rating` }, { status: 500, headers: newHeaders })
-    }
-
-    return NextResponse.json({ rating: data[0] }, { status: 200, headers: newHeaders })
-    // #endregion
 }

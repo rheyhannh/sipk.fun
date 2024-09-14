@@ -1,25 +1,30 @@
 // #region TYPE DEPEDENCY
-import * as SupabaseTypes from '@/types/supabase';
+import { APIResponseErrorProps } from '@/constant/api_response';
 // #endregion
 
 // #region NEXT DEPEDENCY
 import { NextResponse, NextRequest } from 'next/server';
-import { cookies, headers } from 'next/headers';
-// #endregion
-
-// #region SUPABASE DEPEDENCY
-import { createServerClient } from '@supabase/ssr';
 // #endregion
 
 // #region UTIL DEPEDENCY
 import {
-    encryptAES,
-    decryptAES,
     rateLimit,
-    validateJWT,
-    getCookieOptions,
-    getSipkCookies,
+    getRequestDetails,
 } from '@/utils/server_side';
+import {
+    ServerErrorResponse as serverError,
+} from '@/constant/api_response';
+// #endregion
+
+// #region API HELPER DEPEDENCY
+import {
+    getLogAttributes,
+    verifyService,
+    checkRateLimit,
+    verifyAuth,
+    handleErrorResponse,
+    supabaseServerClient as supabase,
+} from '@/utils/api_helper';
 // #endregion
 
 const limitRequest = parseInt(process.env.API_LOGOUT_REQUEST_LIMIT);
@@ -28,114 +33,64 @@ const limiter = await rateLimit({
     uniqueTokenPerInterval: parseInt(process.env.API_LOGOUT_MAX_TOKEN_PERINTERVAL),
 })
 
-const cookieAuthOptions = await getCookieOptions('auth', 'set');
-const cookieAuthDeleteOptions = await getCookieOptions('auth', 'remove');
-
 /**
  * Route Handler untuk `POST` `'/api/logout'`
  * @param {NextRequest} request
  */
 export async function POST(request) {
-    const { secureSessionCookie } = await getSipkCookies(request);
-    const authorizationHeader = headers().get('Authorization');
-    const authorizationToken = authorizationHeader ? authorizationHeader.split(' ')[1] : null;
-    const cookieStore = cookies();
+    const responseHeaders = {};
+    const requestLog = await getLogAttributes(request);
+    const ratelimitLog = {};
 
-    if (!secureSessionCookie || !authorizationHeader || !authorizationToken) {
-        return NextResponse.json({ message: 'Unauthorized - Missing access token' }, {
-            status: 401,
-        })
-    }
+    const defaultUserErrorMessage = 'Gagal memproses logout';
 
-    /** @type {SupabaseTypes.Session} */
-    const decryptedSession = await decryptAES(secureSessionCookie, true);
-    const userId = decryptedSession?.user?.id;
-
-    // #region Unauthenticated User Handler
-    if (!decryptedSession || !userId) {
-        cookieStore.set({ name: process.env.USER_SESSION_COOKIES_NAME, value: '', ...cookieAuthDeleteOptions })
-        cookieStore.set({ name: 's_user_id', value: '', ...cookieAuthDeleteOptions })
-        cookieStore.set({ name: 's_access_token', value: '', ...cookieAuthDeleteOptions })
-        return NextResponse.json({ message: 'Unauthorized - Invalid access token' }, {
-            status: 401
-        })
-    }
-    // #endregion
-
-    // #region Validating and Decoding JWT or 's_access_token' cookie
     try {
-        var decoded = await validateJWT(authorizationToken, userId);
-        // Log Here, ex: '{TIMESTAMP} decoded.id {METHOD} {ROUTE} {BODY} {PARAMS}'
-    } catch (error) {
-        return NextResponse.json({ message: error.message || 'Unauthorized - Invalid access token' }, {
-            status: 401
-        })
-    }
-    // #endregion
-
-    // #region Checking Ratelimit
-    try {
-        var currentUsage = await limiter.check(limitRequest, `logout-${userId}`);
-        // Log Here, ex: '{TIMESTAMP} userId {ROUTE} limit {currentUsage}/{limitRequest}'
-    } catch {
-        // Log Here, ex: '{TIMESTAMP} userId {ROUTE} limited'
-        return NextResponse.json({ message: 'Too many request' }, {
-            status: 429,
-            headers: {
-                'X-Ratelimit-Limit': limitRequest,
-                'X-Ratelimit-Remaining': 0,
-            }
-        })
-    }
-    // #endregion
-
-    // #region Initiate Supabase Instance
-    const supabase = createServerClient(
-        process.env.SUPABASE_URL,
-        process.env.SUPABASE_ANON_KEY,
-        {
-            cookies: {
-                async get(name) {
-                    const encryptedSession = cookieStore.get(process.env.USER_SESSION_COOKIES_NAME)?.value
-                    if (encryptedSession) {
-                        const decryptedSession = await decryptAES(encryptedSession) || 'removeMe';
-                        return decryptedSession;
-                    }
-                    return encryptedSession;
-                },
-                async set(name, value, options) {
-                    const encryptedSession = await encryptAES(value);
-                    if (encryptedSession) {
-                        cookieStore.set({ name: process.env.USER_SESSION_COOKIES_NAME, value: encryptedSession, ...cookieAuthOptions })
-                    } else {
-                        cookieStore.set({ name: process.env.USER_SESSION_COOKIES_NAME, value, ...cookieAuthOptions })
-                    }
-                },
-                remove(name, options) {
-                    cookieStore.set({ name: process.env.USER_SESSION_COOKIES_NAME, value: '', ...cookieAuthDeleteOptions })
-                    cookieStore.set({ name: 's_user_id', value: '', ...cookieAuthDeleteOptions })
-                    cookieStore.set({ name: 's_access_token', value: '', ...cookieAuthDeleteOptions })
-                },
-            },
+        const isService = await verifyService(request);
+        if (isService) {
+            throw serverError.request_not_supported(
+                undefined, undefined,
+                {
+                    severity: 'error',
+                    reason: 'No service handler for processing logout',
+                    stack: null,
+                    functionDetails: 'POST /api/logout line 50',
+                    functionArgs: null,
+                    functionResolvedVariable: null,
+                    request: await getRequestDetails(),
+                    more: null,
+                }
+            )
         }
-    )
-    // #endregion
-    
-    // #region Handle Response
-    let { error } = await supabase.auth.signOut();
-    if (error) {
-        console.error(error);
-        return NextResponse.json({ message: 'Terjadi kesalahan pada server' }, {
-            status: 500,
-            headers: {
-                'X-Ratelimit-Limit': limitRequest,
-                'X-Ratelimit-Remaining': limitRequest - currentUsage,
-            }
-        })
-    }
 
-    return new Response(null, {
-        status: 204
-    })
-    // #endregion
+        await checkRateLimit(limiter, limitRequest).then(x => {
+            const { currentUsage, currentTtl, currentSize, rateLimitHeaders } = x;
+            Object.assign(responseHeaders, rateLimitHeaders);
+            Object.assign(ratelimitLog, { currentUsage, currentTtl, currentSize })
+        })
+
+        const { decryptedSession, decodedAccessToken } = await verifyAuth();
+
+        const { error } = await supabase.auth.signOut();
+        if (error) {
+            throw serverError.interval_server_error(
+                defaultUserErrorMessage, undefined,
+                {
+                    severity: 'error',
+                    reason: 'Failed to processing logout',
+                    stack: null,
+                    functionDetails: 'supabase.from at POST /api/logout line 73',
+                    functionArgs: { auth: true, signOut: true },
+                    functionResolvedVariable: { error },
+                    request: await getRequestDetails(),
+                    more: error,
+                }
+            )
+        }
+
+        return new Response(null, { status: 204 });
+    } catch (/** @type {APIResponseErrorProps} */ error) {
+        const { body, status, headers } = await handleErrorResponse(error, requestLog, ratelimitLog, true);
+        if (headers) { Object.assign(responseHeaders, headers) }
+        return NextResponse.json(body, { status, headers: responseHeaders })
+    }
 }
