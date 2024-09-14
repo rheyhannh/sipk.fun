@@ -408,48 +408,6 @@ export async function validateFormData(formData, presetSchema = null, customSche
             email: Joi.string().min(6).max(100).email().required(),
             token: process.env.NODE_ENV !== 'production' ? Joi.string() : Joi.string().required(),
         }),
-        // matkul: Joi.object({
-        //     nama: Joi.string().min(3).max(50).required(),
-        //     semester: Joi.number().min(0).max(50).required(),
-        //     sks: Joi.number().min(0).max(50).required(),
-        //     nilai: Joi.object({ indeks: Joi.string().valid(...nilaiKeys).required() }).required(),
-        //     dapat_diulang: Joi.boolean().required(),
-        //     target_nilai: Joi.object({ indeks: Joi.string().valid(...nilaiKeys).required() }).required()
-        // }),
-        me: Joi.object({
-            fullname: Joi.string().pattern(/^[A-Za-z\s]*$/, 'alpha only').pattern(/^[a-zA-Z]+(\s[a-zA-Z]+)*$/, 'one space each word').min(6).max(50),
-            nickname: Joi.string().min(3).max(20),
-            jurusan: Joi.string().min(6).max(30),
-            sks_target: Joi.number().integer().min(5).max(1000),
-            matkul_target: Joi.number().integer().min(5).max(1000),
-            ipk_target: Joi.number().min(1).max(4)
-        }),
-        // me_preferences: Joi.object({
-        //     table: Joi.object({
-        //         size: Joi.number().valid(-1, 5, 10, 25, 50, 100).required().options({ convert: false }),
-        //         controlPosition: Joi.number().min(0).max(2).required().options({ convert: false }),
-        //         columnOrder: Joi.array()
-        //             .items(Joi.string().valid(...allowedColumn))
-        //             .unique()
-        //             .length(8)
-        //             .required(),
-        //         columnVisibility: Joi.object()
-        //             .keys({
-        //                 nomor: Joi.boolean().required(),
-        //                 matakuliah: Joi.boolean().required(),
-        //                 semester: Joi.boolean().required(),
-        //                 sks: Joi.boolean().required(),
-        //                 nilai: Joi.boolean().required(),
-        //                 diulang: Joi.boolean().required(),
-        //                 target: Joi.boolean().required(),
-        //                 ontarget: Joi.boolean().required()
-        //             })
-        //             .required()
-        //             .length(allowedColumn.length)
-        //             .unknown(false)
-        //             .options({ convert: false })
-        //     }).required()
-        // }).required(),
         password: Joi.object({
             password: Joi.string().min(6).max(50).required()
         }).required(),
