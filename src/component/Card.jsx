@@ -1,16 +1,19 @@
 'use client'
 
-// ========== TYPE DEPEDENCY ========== //
+// #region TYPE DEPEDENCY
 import * as ContextTypes from '../types/context.js'
+// #endregion
 
-// ========== NEXT DEPEDENCY ========== //
+// #region NEXT DEPEDENCY
 import Image from "next/image";
 import Link from "next/link";
+// #endregion
 
-// ========== REACT DEPEDENCY ========== //
+// #region REACT DEPEDENCY
 import { useContext, useEffect, useState, useRef } from 'react';
+// #endregion
 
-// ========== COMPONENT DEPEDENCY ========== //
+// #region COMPONENT DEPEDENCY
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Pagination, Autoplay, Navigation } from 'swiper/modules';
 import { mutate } from 'swr';
@@ -23,6 +26,7 @@ import ProgressBar from "@ramonak/react-progress-bar";
 import { LineChart, Line, BarChart, Bar, XAxis, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import { Icon } from '@/component/loader/ReactIcons'
 import { Spinner } from "./loader/Loading";
+// #endregion
 
 // ========== DATA DEPEDENCY ========== //
 import {
@@ -33,26 +37,25 @@ import {
     getOnAndOffTarget, getDistribusiNilai,
 } from "@/data/summary";
 
-// ========== UTIL DEPEDENCY ========== //
+// #region UTIL DEPEDENCY
 import { getSessionTable } from '@/utils/client_side';
+// #endregion
 
-// ========== STYLE DEPEDENCY ========== //
+// #region STYLE DEPEDENCY
 import styles from './style/card.module.css'
 import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
 import "react-loading-skeleton/dist/skeleton.css";
+// #endregion
 
-// ========== ICON DEPEDENCY ========== //
+// #region ICON DEPEDENCY
 import { CiTrash, CiEdit } from "react-icons/ci";
 import { FaInfo, FaUndo } from "react-icons/fa";
 import { IoAnalyticsOutline, IoAddOutline } from "react-icons/io5";
 import { TbTarget, TbTargetArrow, TbTargetOff, TbAtom, TbAntennaBars5 } from "react-icons/tb";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
-
-/*
-============================== CODE START HERE ==============================
-*/
+// #endregion
 
 export function Summary({ state, icon, color, title, data, penilaian }) {
     const userIdCookie = useCookies().get('s_user_id');
@@ -1751,7 +1754,3 @@ export function Progress({ state, user, matkul, penilaian }) {
     else if (state === 'empty') { return (<EmptyCard />) }
     else { return 'Unidentified Card State' }
 }
-
-/*
-============================== CODE END HERE ==============================
-*/
