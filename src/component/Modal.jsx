@@ -892,9 +892,7 @@ export const PerubahanTerakhirConfirm = () => {
                                             resolve();
                                         }
                                     }
-                                } catch (error) {
-                                    reject(error);
-                                }
+                                } catch (error) { reject(error); }
                             });
                         };
 
@@ -980,9 +978,7 @@ export const PerubahanTerakhirConfirm = () => {
                                             resolve();
                                         }
                                     }
-                                } catch (error) {
-                                    reject(error);
-                                }
+                                } catch (error) { reject(error); }
                             });
                         };
 
@@ -1264,9 +1260,7 @@ export const TambahMatkul = () => {
                                         resolve();
                                     }
                                 }
-                            } catch (error) {
-                                reject(error);
-                            }
+                            } catch (error) { reject(error); }
                         });
                     };
 
@@ -1609,9 +1603,7 @@ export const Profil = () => {
                                         resolve();
                                     }
                                 }
-                            } catch (error) {
-                                reject(error);
-                            }
+                            } catch (error) { reject(error); }
                         });
                     };
 
@@ -1996,9 +1988,7 @@ export const Rating = () => {
                                         resolve();
                                     }
                                 }
-                            } catch (error) {
-                                reject(error);
-                            }
+                            } catch (error) { reject(error); }
                         });
                     };
 
@@ -2072,9 +2062,7 @@ export const Rating = () => {
                                         resolve();
                                     }
                                 }
-                            } catch (error) {
-                                reject(error);
-                            }
+                            } catch (error) { reject(error); }
                         });
                     };
 
@@ -3894,7 +3882,6 @@ export const HapusPermanentConfirm = () => {
                                         resolve();
                                     }
                                 }
-
                             } catch (error) { reject(error) }
                         })
                     }
