@@ -10,7 +10,7 @@ import Link from "next/link";
 // #endregion
 
 // #region REACT DEPEDENCY
-import { useContext, useEffect, useState, useRef } from 'react';
+import * as React from 'react';
 // #endregion
 
 // #region COMPONENT DEPEDENCY
@@ -128,7 +128,7 @@ export function Summary({ state, icon, color, title, data, penilaian }) {
     )
 
     const LoadedCard = () => {
-        const [dashArray, setDashArray] = useState('0 999');
+        const [dashArray, setDashArray] = React.useState('0 999');
 
         const getCircleDraw = (radius, percentage) => {
             const roundCircum = 2 * radius * Math.PI;
@@ -136,7 +136,7 @@ export function Summary({ state, icon, color, title, data, penilaian }) {
             return `${roundDraw.toFixed(2)} 999`;
         }
 
-        useEffect(() => {
+        React.useEffect(() => {
             setDashArray(getCircleDraw(35, data.percentage))
         }, [data])
 
@@ -224,7 +224,7 @@ export function Summary({ state, icon, color, title, data, penilaian }) {
             setModal,
             setActive,
             setData
-        } = useContext(ModalContext);
+        } = React.useContext(ModalContext);
 
         const handleTambahModal = () => {
             if (!penilaian) { return; }
@@ -269,7 +269,7 @@ export function Notification({ state, data }) {
     /** @type {ContextTypes.DashboardContext} */
     const {
         isPhoneContent,
-    } = useContext(DashboardContext);
+    } = React.useContext(DashboardContext);
 
     const SkeletonCard = () => {
         if (isPhoneContent === false) {
@@ -558,14 +558,14 @@ export function History({ state, data, penilaian, count }) {
     /** @type {ContextTypes.DashboardContext} */
     const {
         isTouchDevice,
-    } = useContext(DashboardContext);
+    } = React.useContext(DashboardContext);
 
     /** @type {ContextTypes.ModalContext} */
     const {
         setModal,
         setActive,
         setData
-    } = useContext(ModalContext);
+    } = React.useContext(ModalContext);
 
     const handleTambahModal = () => {
         if (!penilaian) { return; }
@@ -846,9 +846,9 @@ export function Grafik({ state, matkul, penilaian, savedState }) {
     }
 
     const LoadedCard = () => {
-        const [ipGrafik, setIpGrafik] = useState(savedState?.hideIp ?? false);
-        const [matkulGrafik, setMatkulGrafik] = useState(savedState?.hideMatkul ?? false);
-        const [sksGrafik, setSksGrafik] = useState(savedState?.hideSks ?? false);
+        const [ipGrafik, setIpGrafik] = React.useState(savedState?.hideIp ?? false);
+        const [matkulGrafik, setMatkulGrafik] = React.useState(savedState?.hideMatkul ?? false);
+        const [sksGrafik, setSksGrafik] = React.useState(savedState?.hideSks ?? false);
 
         const getLineState = () => {
             if (!ipGrafik && !matkulGrafik && !sksGrafik) {
@@ -897,7 +897,7 @@ export function Grafik({ state, matkul, penilaian, savedState }) {
             sks: totalSks,
         }));
 
-        useEffect(() => {
+        React.useEffect(() => {
             const currentState = {
                 hideIp: ipGrafik,
                 hideMatkul: matkulGrafik,
@@ -997,7 +997,7 @@ export function Grafik({ state, matkul, penilaian, savedState }) {
             setModal,
             setActive,
             setData
-        } = useContext(ModalContext);
+        } = React.useContext(ModalContext);
 
         const handleTambahModal = () => {
             if (!penilaian) { return; }
@@ -1114,9 +1114,9 @@ export function Target({ state, matkul, penilaian, savedState }) {
     }
 
     const LoadedCard = () => {
-        const [type, setType] = useState(savedState?.tab ?? 0);
-        const [swiperIndex, setSwiperIndex] = useState(savedState?.swiperIndex ?? 0);
-        const swiperRef = useRef();
+        const [type, setType] = React.useState(savedState?.tab ?? 0);
+        const [swiperIndex, setSwiperIndex] = React.useState(savedState?.swiperIndex ?? 0);
+        const swiperRef = React.useRef();
         const target = getOnAndOffTarget(matkul);
 
         const setColumnFilters = (semester, onTarget) => {
@@ -1129,7 +1129,7 @@ export function Target({ state, matkul, penilaian, savedState }) {
             window.dispatchEvent(new Event('on-table-session-changes'));
         }
 
-        useEffect(() => {
+        React.useEffect(() => {
             const currentState = {
                 tab: type,
                 swiperIndex: swiperIndex
@@ -1259,7 +1259,7 @@ export function Target({ state, matkul, penilaian, savedState }) {
             setModal,
             setActive,
             setData
-        } = useContext(ModalContext);
+        } = React.useContext(ModalContext);
 
         const handleTambahModal = () => {
             if (!penilaian) { return; }
@@ -1352,9 +1352,9 @@ export function Distribusi({ state, matkul, penilaian, savedState }) {
     }
 
     const LoadedCard = () => {
-        const [semester, setSemester] = useState(savedState?.tab ? getAllSemester(matkul).includes(savedState.tab) ? savedState.tab : -1 : -1);
-        const [matkulBar, setMatkulBar] = useState(savedState?.hideMatkul ?? false);
-        const [sksBar, setSksBar] = useState(savedState?.hideSks ?? false);
+        const [semester, setSemester] = React.useState(savedState?.tab ? getAllSemester(matkul).includes(savedState.tab) ? savedState.tab : -1 : -1);
+        const [matkulBar, setMatkulBar] = React.useState(savedState?.hideMatkul ?? false);
+        const [sksBar, setSksBar] = React.useState(savedState?.hideSks ?? false);
 
         const emptyData = penilaian ? Object.keys(penilaian).map(nilai => ({
             nilai,
@@ -1401,7 +1401,7 @@ export function Distribusi({ state, matkul, penilaian, savedState }) {
             )
         }
 
-        useEffect(() => {
+        React.useEffect(() => {
             const currentState = {
                 tab: semester,
                 hideMatkul: matkulBar,
@@ -1500,7 +1500,7 @@ export function Distribusi({ state, matkul, penilaian, savedState }) {
             setModal,
             setActive,
             setData
-        } = useContext(ModalContext);
+        } = React.useContext(ModalContext);
 
         const handleTambahModal = () => {
             if (!penilaian) { return; }
@@ -1730,7 +1730,7 @@ export function Progress({ state, user, matkul, penilaian }) {
             setModal,
             setActive,
             setData
-        } = useContext(ModalContext);
+        } = React.useContext(ModalContext);
 
         const handleTambahModal = () => {
             if (!penilaian) { return; }
