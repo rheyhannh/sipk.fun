@@ -2508,7 +2508,6 @@ export const TabelSetting = () => {
                                     if (navigate && navigate?.type === 'replace' && navigate?.to) { router.replace(navigate.to, { scroll: navigate?.scrollOptions ?? true }) }
                                     throw new Error(toastMessage);
                                 } else {
-                                    mutate('sessionUserTable');
                                     try {
                                         /** @type {{profil:SupabaseTypes.UserData}} */
                                         const { profil } = await response.json();
