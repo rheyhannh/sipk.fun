@@ -887,6 +887,24 @@ export function History({ state, data, penilaian, count }) {
     else { return 'Unidentified Card State' }
 }
 
+/**
+ * Props yang digunakan component `Grafik`
+ * @typedef {Object} GrafikProps
+ * @property {CardState} state
+ * Card state
+ * @property {Array<SupabaseTypes.MatkulData>} matkul
+ * Array yang berisikan user matakuliah
+ * @property {SupabaseTypes.UniversitasData['penilaian']} penilaian
+ * User `penilaian` yang digunakan
+ * @property {CardGrafikState} savedState
+ * State card `Grafik` yang diperoleh dari `sessionStorage`
+ */
+
+/**
+ * Card yang menampilkan grafik user matakuliah, sks dan indeks prestasi
+ * @param {GrafikProps} props Grafik props
+ * @returns {React.ReactElement} Rendered component
+ */
 export function Grafik({ state, matkul, penilaian, savedState }) {
     const userIdCookie = useCookies().get('s_user_id');
     const handleRetry = () => {
@@ -1131,6 +1149,24 @@ export function Grafik({ state, matkul, penilaian, savedState }) {
     else { return 'Unidentified Card State' }
 }
 
+/**
+ * Props yang digunakan component `Target`
+ * @typedef {Object} TargetProps
+ * @property {CardState} state
+ * Card state
+ * @property {Array<SupabaseTypes.MatkulData>} matkul
+ * Array yang berisikan user matakuliah
+ * @property {SupabaseTypes.UniversitasData['penilaian']} penilaian
+ * User `penilaian` yang digunakan
+ * @property {CardTargetState} savedState
+ * State card `Target` yang diperoleh dari `sessionStorage`
+ */
+
+/**
+ * Card yang menampilkan jumlah matakuliah user yang `ontarget` dan tidak
+ * @param {TargetProps} props Target props
+ * @returns {React.ReactElement} Rendered component
+ */
 export function Target({ state, matkul, penilaian, savedState }) {
     const userIdCookie = useCookies().get('s_user_id');
     const handleRetry = () => {
@@ -1393,6 +1429,24 @@ export function Target({ state, matkul, penilaian, savedState }) {
     else { return 'Unidentified Card State' }
 }
 
+/**
+ * Props yang digunakan component `Distribusi`
+ * @typedef {Object} DistribusiProps
+ * @property {CardState} state
+ * Card state
+ * @property {Array<SupabaseTypes.MatkulData>} matkul
+ * Array yang berisikan user matakuliah
+ * @property {SupabaseTypes.UniversitasData['penilaian']} penilaian
+ * User `penilaian` yang digunakan
+ * @property {CardDistribusiState} savedState
+ * State card `Distribusi` yang diperoleh dari `sessionStorage`
+ */
+
+/**
+ * Card yang menampilkan distribusi matakuliah user
+ * @param {DistribusiProps} props Distribusi props
+ * @returns {React.ReactElement} Rendered component
+ */
 export function Distribusi({ state, matkul, penilaian, savedState }) {
     const userIdCookie = useCookies().get('s_user_id');
     const handleRetry = () => {
@@ -1634,6 +1688,24 @@ export function Distribusi({ state, matkul, penilaian, savedState }) {
     else { return 'Unidentified Card State' }
 }
 
+/**
+ * Props yang digunakan component `Progress`
+ * @typedef {Object} ProgressProps
+ * @property {CardState} state
+ * Card state
+ * @property {Array<SupabaseTypes.UserData>} user
+ * Array yang berisikan user data
+ * @property {Array<SupabaseTypes.MatkulData>} matkul
+ * Array yang berisikan user matakuliah
+ * @property {SupabaseTypes.UniversitasData['penilaian']} penilaian
+ * User `penilaian` yang digunakan
+ */
+
+/**
+ * Card yang menampilkan overall progress user matakuliah, sks dan indeks prestasi
+ * @param {ProgressProps} props Progress props
+ * @returns {React.ReactElement} Rendered component
+ */
 export function Progress({ state, user, matkul, penilaian }) {
     const userIdCookie = useCookies().get('s_user_id');
     const handleRetry = () => {
