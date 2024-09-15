@@ -1,3 +1,12 @@
+// #region TYPE DEPEDENCY
+import {
+    CardGrafikState,
+    CardTargetState,
+    CardDistribusiState
+} from '@/component/Card';
+import { TableState } from '@/types/table_matakuliah';
+// #endregion
+
 // #region UTIL DEPEDENCY
 import isStrongPassword from 'validator/lib/isStrongPassword';
 import { endpointByKey } from '@/constant/api_endpoint';
