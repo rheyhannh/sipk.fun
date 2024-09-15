@@ -28,7 +28,7 @@ import { Icon } from '@/component/loader/ReactIcons'
 import { Spinner } from "./loader/Loading";
 // #endregion
 
-// ========== DATA DEPEDENCY ========== //
+// #region UTIL DEPEDENCY
 import {
     getUserMatkul, getUserMatkulPercentage,
     getUserSks, getUserSksPercentage,
@@ -36,8 +36,6 @@ import {
     getAllSemester, getStatsSemester,
     getOnAndOffTarget, getDistribusiNilai,
 } from "@/data/summary";
-
-// #region UTIL DEPEDENCY
 import { getSessionTable } from '@/utils/client_side';
 // #endregion
 
