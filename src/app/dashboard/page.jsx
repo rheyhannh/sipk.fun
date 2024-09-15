@@ -1,18 +1,17 @@
 'use client'
 
-// ========== COMPONENT DEPEDENCY ========== //
-import { Summary, Notification, History } from '@/component/Card'
+// #region COMPONENT DEPEDENCY
+import { Summary, Notification, History } from '@/component/Card';
+// #endregion
 
-// ========== DATA DEPEDENCY ========== //
+// #region DATA DEPEDENCY
 import { useMatkul, useNotifikasi, useUser, useMatkulHistory, useUniversitas } from '@/data/core';
 import * as x from '@/data/summary';
+// #endregion
 
-// ========== STYLE DEPEDENCY ========== //
-import styles from './home.module.css'
-
-/*
-============================== CODE START HERE ==============================
-*/
+// #region STYLE DEPEDENCY
+import styles from './home.module.css';
+// #endregion
 
 function AcademicCard({ count }) {
     const { data: user, error: userError, isLoading: userLoading, isValidating: userValidating } = useUser();
@@ -176,7 +175,3 @@ export default function DashboardPage() {
         </div>
     )
 }
-
-/*
-============================== CODE END HERE ==============================
-*/

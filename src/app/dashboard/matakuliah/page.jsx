@@ -1,29 +1,30 @@
 'use client'
 
-// ========== REACT DEPEDENCY ========== //
+// #region REACT DEPEDENCY
 import { useState } from 'react';
+// #endregion
 
-// ========== COMPONENT DEPEDENCY ========== //
+// #region COMPONENT DEPEDENCY
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Pagination } from 'swiper/modules';
-import { Grafik, Target, Progress, Distribusi } from '@/component/Card'
+import { Grafik, Target, Progress, Distribusi } from '@/component/Card';
 import { Table } from '@/component/Table';
+// #endregion
 
-// ========== DATA DEPEDENCY ========== //
+// #region DATA DEPEDENCY
 import { useMatkul, useUser, useUniversitas, useMatkulHistory } from '@/data/core';
 import { getSessionTable, getSessionGrafik, getSessionTarget, getSessionDistribusi } from '@/utils/client_side';
+// #endregion
 
-// ========== STYLE DEPEDENCY ========== //
+// #region STYLE DEPEDENCY
 import styles from './matkul.module.css'
 import 'swiper/css';
 import 'swiper/css/pagination';
+// #endregion
 
-// ========== ICON DEPEDENCY ========== //
+// #region ICON DEPEDENCY
 import { AiOutlineAppstore } from "react-icons/ai";
-
-/*
-============================== CODE START HERE ==============================
-*/
+// #endregion
 
 function GrafikCard() {
     const { data: user, error: userError, isLoading: userLoading, isValidating: userValidating } = useUser();
@@ -231,7 +232,3 @@ export default function MatakuliahPage() {
         </>
     )
 }
-
-/*
-============================== CODE END HERE ==============================
-*/
