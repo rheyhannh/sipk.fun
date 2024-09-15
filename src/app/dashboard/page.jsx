@@ -24,7 +24,7 @@ function AcademicCard({ count }) {
 
     if (isError) {
         const errorCount = Array.from({ length: count }, (_, index) => (
-            <Summary state='error' key={crypto.randomUUID()} error={matkul} />
+            <Summary state='error' key={crypto.randomUUID()} />
         ));
         return <>{errorCount}</>;
     }
