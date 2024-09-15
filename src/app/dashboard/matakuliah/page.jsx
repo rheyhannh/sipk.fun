@@ -11,8 +11,11 @@ import { Grafik, Target, Progress, Distribusi } from '@/component/Card';
 import { Table } from '@/component/Table';
 // #endregion
 
-// #region DATA DEPEDENCY
+// #region HOOKS DEPEDENCY
 import { useMatkul, useUser, useUniversitas, useMatkulHistory } from '@/data/core';
+// #endregion
+
+// #region UTIL DEPEDENCY
 import { getSessionTable, getSessionGrafik, getSessionTarget, getSessionDistribusi } from '@/utils/client_side';
 // #endregion
 
