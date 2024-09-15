@@ -68,6 +68,41 @@ import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
  */
 // #endregion
 
+/**
+ * Props yang digunakan component `Summary`
+ * @typedef {Object} SummaryProps
+ * @property {CardState} state
+ * Card state
+ * @property {Object} icon
+ * Icon {@link https://react-icons.github.io/react-icons/ react-icons} yang digunakan
+ * @property {string} icon.name
+ * Nama icon pada {@link https://react-icons.github.io/react-icons/ react-icons}
+ * - Contoh : `'FaRocket'`, `'IoAdd'`
+ * @property {string} icon.lib
+ * Library icon pada {@link https://react-icons.github.io/react-icons/ react-icons}
+ * - Contoh : `'fa'`, `'io5'`
+ * @property {string} color
+ * Warna yang digunakan
+ * - Contoh : `'var(--danger-color)'`
+ * @property {React.ReactNode} title
+ * Judul yang digunakan
+ * @property {Object} data
+ * Card data
+ * @property {React.ReactNode} data.value
+ * Nilai data seperti total sks, total matakuliah, dan lainnya
+ * @property {React.ReactNode} data.percentage
+ * Persentasi data seperti persentasi total sks, matakuliah dan lainnya
+ * @property {React.ReactNode} data.keterangan
+ * Keterangan yang tampil pada bagian bawah card
+ * @property {SupabaseTypes.UniversitasData['penilaian']} penilaian
+ * User `penilaian` yang digunakan
+ */
+
+/**
+ * Card yang menampilkan overall user data seperti total sks, total matakuliah, ipk dan lainnya
+ * @param {SummaryProps} props Summary props
+ * @returns {React.ReactElement} Rendered component
+ */
 export function Summary({ state, icon, color, title, data, penilaian }) {
     const userIdCookie = useCookies().get('s_user_id');
     const handleRetry = () => {
@@ -260,6 +295,20 @@ export function Summary({ state, icon, color, title, data, penilaian }) {
     else { return 'Unidentified Card State' }
 }
 
+/**
+ * Props yang digunakan component `Notification`
+ * @typedef {Object} NotificationProps
+ * @property {CardState} state
+ * Card state
+ * @property {Array<SupabaseTypes.NotifikasiData>} data
+ * Array yang berisikan data notifikasi
+ */
+
+/**
+ * Card yang menampilkan notifikasi data
+ * @param {NotificationProps} props Notification props
+ * @returns {React.ReactElement} Rendered component
+ */
 export function Notification({ state, data }) {
     const handleRetry = () => {
         mutate('/api/notifikasi')
@@ -547,6 +596,24 @@ export function Notification({ state, data }) {
     else { return 'Unidentified Card State' }
 }
 
+/**
+ * Props yang digunakan component `History`
+ * @typedef {Object} HistoryProps
+ * @property {CardState} state
+ * Card state
+ * @property {Array<SupabaseTypes.MatkulHistoryData>} data
+ * Array yang berisikan user matakuliah history
+ * @property {SupabaseTypes.UniversitasData['penilaian']} penilaian
+ * User `penilaian` yang digunakan
+ * @property {number} count
+ * Jumlah matakuliah history yang ditampilkan
+ */
+
+/**
+ * Card yang menampilkan user matakuliah history
+ * @param {HistoryProps} props History props
+ * @returns {React.ReactElement} Rendered component
+ */
 export function History({ state, data, penilaian, count }) {
     const userIdCookie = useCookies().get('s_user_id');
 
