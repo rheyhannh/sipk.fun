@@ -366,6 +366,7 @@ export const PerubahanTerakhirDetail = () => {
                                     throw new Error(toastMessage);
                                 } else {
                                     try {
+                                        /** @type {{ref:SupabaseTypes.MatkulHistoryData}} */
                                         const { ref } = await response.json();
                                         if (!ref) {
                                             throw new Error('Failed to update cache');
@@ -855,6 +856,7 @@ export const PerubahanTerakhirConfirm = () => {
                                         throw new Error(toastMessage);
                                     } else {
                                         try {
+                                            /** @type {{ref:SupabaseTypes.MatkulHistoryData}} */
                                             const { ref } = await response.json();
                                             if (!ref) {
                                                 throw new Error('Failed to update cache');
@@ -942,6 +944,7 @@ export const PerubahanTerakhirConfirm = () => {
                                         throw new Error(toastMessage);
                                     } else {
                                         try {
+                                            /** @type {{matkul:SupabaseTypes.MatkulData, ref:SupabaseTypes.MatkulHistoryData}} */
                                             const { matkul, ref } = await response.json();
                                             if (!matkul || !ref) {
                                                 throw new Error('Failed to update cache');
@@ -1022,6 +1025,7 @@ export const PerubahanTerakhirConfirm = () => {
                                         throw new Error(toastMessage);
                                     } else {
                                         try {
+                                            /** @type {{matkul:SupabaseTypes.MatkulData, ref:SupabaseTypes.MatkulHistoryData}} */
                                             const { matkul, ref } = await response.json();
                                             if (!matkul || !ref) {
                                                 throw new Error('Failed to update cache');
@@ -1225,6 +1229,7 @@ export const TambahMatkul = () => {
                                     throw new Error(toastMessage);
                                 } else {
                                     try {
+                                        /** @type {{matkul:SupabaseTypes.MatkulData, ref:SupabaseTypes.MatkulHistoryData}} */
                                         const { matkul, ref } = await response.json();
                                         if (!matkul || !ref) {
                                             throw new Error('Failed to update cache');
@@ -1587,6 +1592,7 @@ export const Profil = () => {
                                     throw new Error(toastMessage);
                                 } else {
                                     try {
+                                        /** @type {{profil:SupabaseTypes.UserData}} */
                                         const { profil } = await response.json();
                                         if (!profil) {
                                             throw new Error('Failed to update cache');
@@ -1972,6 +1978,7 @@ export const Rating = () => {
                                     throw new Error(toastMessage);
                                 } else {
                                     try {
+                                        /** @type {{rating:SupabaseTypes.RatingData}} */
                                         const { rating } = await response.json();
                                         if (!rating) {
                                             throw new Error('Failed to update cache');
@@ -2046,6 +2053,7 @@ export const Rating = () => {
                                     throw new Error(toastMessage);
                                 } else {
                                     try {
+                                        /** @type {{rating:SupabaseTypes.RatingData}} */
                                         const { rating } = await response.json();
                                         if (!rating) {
                                             throw new Error('Failed to update cache');
@@ -2502,6 +2510,7 @@ export const TabelSetting = () => {
                                 } else {
                                     mutate('sessionUserTable');
                                     try {
+                                        /** @type {{profil:SupabaseTypes.UserData}} */
                                         const { profil } = await response.json();
                                         if (!profil) {
                                             throw new Error('Failed to update cache');
@@ -3381,6 +3390,7 @@ export const DetailMatkul = () => {
                                     throw new Error(toastMessage);
                                 } else {
                                     try {
+                                        /** @type {{matkul:SupabaseTypes.MatkulData, ref:SupabaseTypes.MatkulHistoryData}} */
                                         const { matkul, ref } = await response.json();
                                         if (!matkul || !ref) {
                                             throw new Error('Failed to update cache');
@@ -3464,6 +3474,7 @@ export const DetailMatkul = () => {
                                     throw new Error(toastMessage);
                                 } else {
                                     try {
+                                        /** @type {{ref:SupabaseTypes.MatkulHistoryData}} */
                                         const { ref } = await response.json();
                                         if (!ref) {
                                             throw new Error('Failed to update cache');
