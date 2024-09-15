@@ -66,6 +66,37 @@ import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
  * - `'validating'` : Data sedang divalidasi
  * - `'empty'` : Data berhasil diresolve dan entry data masih kosong
  */
+
+/**
+ * @typedef {Object} CardGrafikState
+ * State card `Grafik` yang diperoleh dari `sessionStorage`
+ * @property {boolean | null} hideIp
+ * Boolean untuk hide indeks prestasi `ip` pada card `Grafik`
+ * @property {boolean | null} hideMatkul
+ * Boolean untuk hide matakuliah pada card `Grafik`
+ * @property {boolean | null} hideSks
+ * Boolean untuk hide sks pada card `Grafik`
+ */
+
+/**
+ * @typedef {Object} CardTargetState
+ * State card `Target` yang diperoleh dari `sessionStorage`
+ * @property {number | null} tab
+ * Index tab pada card `Target`
+ * @property {number | null} swiperIndex
+ * Index swiper pada card `Target`
+ */
+
+/**
+ * @typedef {Object} CardDistribusiState
+ * State card `Target` yang diperoleh dari `sessionStorage`
+ * @property {number | null} tab
+ * Index tab pada card `Distribusi`
+ * @property {boolean | null} hideMatkul
+ * Boolean untuk hide matakuliah pada card `Distribusi`
+ * @property {boolean | null} hideSks
+ * Boolean untuk hide sks pada card `Distribusi`
+ */
 // #endregion
 
 /**
