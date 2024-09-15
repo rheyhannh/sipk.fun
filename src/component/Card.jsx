@@ -57,6 +57,18 @@ import { TbTarget, TbTargetArrow, TbTargetOff, TbAtom, TbAntennaBars5 } from "re
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 // #endregion
 
+// #region TYPES DEFINITION
+/**
+ * @typedef {'loading' | 'loaded' | 'error' | 'validating' | 'empty'} CardState
+ * Mendeskripsikan state dari sebuah card dengan keterangan berikut,
+ * - `'loading'` : Data sedang difetch
+ * - `'loaded'` : Data berhasil diresolve
+ * - `'error'` : Terjadi error saat fetch data
+ * - `'validating'` : Data sedang divalidasi
+ * - `'empty'` : Data berhasil diresolve dan entry data masih kosong
+ */
+// #endregion
+
 export function Summary({ state, icon, color, title, data, penilaian }) {
     const userIdCookie = useCookies().get('s_user_id');
     const handleRetry = () => {
