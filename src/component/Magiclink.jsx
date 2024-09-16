@@ -150,6 +150,8 @@ function Content({ states, setStates, fakta }) {
 
             setStates({ loading: true, error: false, success: false })
 
+            await new Promise(resolve => setTimeout(resolve, 4000));
+
             const response = await fetch(isLogin ?
                 `/api/auth/confirm/login?token_hash=${tokenHash}&type=email`
                 :
