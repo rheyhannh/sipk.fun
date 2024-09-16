@@ -10,7 +10,7 @@ import { useRouter, useSearchParams } from 'next/navigation';
 // #endregion
 
 // #region REACT DEPEDENCY
-import { useState, useContext, useRef, useEffect } from 'react';
+import * as React from 'react';
 // #endregion
 
 // #region COMPONENT DEPEDENCY
@@ -66,7 +66,7 @@ import { BiMoon } from 'react-icons/bi';
 
 export function UsersForm({ universitasData }) {
     /* ========== Next Hooks ========== */
-    const captcha = useRef();
+    const captcha = React.useRef();
     const router = useRouter();
     const searchParams = useSearchParams();
 
@@ -75,14 +75,14 @@ export function UsersForm({ universitasData }) {
     const {
         loginMode, setLoginMode,
         isBigContent,
-    } = useContext(UsersContext);
+    } = React.useContext(UsersContext);
 
     /** @type {ContextTypes.ModalContext} */
     const {
         setModal,
         setActive,
         setData
-    } = useContext(ModalContext);
+    } = React.useContext(ModalContext);
 
     /* ========== Cookies ========== */
     const cookies = useCookies();
@@ -103,19 +103,19 @@ export function UsersForm({ universitasData }) {
     );
 
     // Forms Inputs
-    const [namaLengkap, setNamaLengkap] = useState('');
-    const [universitas, setUniversitas] = useState(0);
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
+    const [namaLengkap, setNamaLengkap] = React.useState('');
+    const [universitas, setUniversitas] = React.useState(0);
+    const [email, setEmail] = React.useState('');
+    const [password, setPassword] = React.useState('');
 
     // Utils
-    const [loading, setLoading] = useState({ active: false, backdrop: 'default', hideBall: false });
-    const [errorMessageLogin, setErrorMessageLogin] = useState('');
-    const [errorMessageDaftar, setErrorMessageDaftar] = useState('');
-    const [hideLoginPassword, setHideLoginPassword] = useState(true);
-    const [hideDaftarPassword, setHideDaftarPassword] = useState(true);
-    const [inputValidator, setInputValidator] = useState(initialInputValidator);
-    const [emailLogin, setEmailLogin] = useState(false);
+    const [loading, setLoading] = React.useState({ active: false, backdrop: 'default', hideBall: false });
+    const [errorMessageLogin, setErrorMessageLogin] = React.useState('');
+    const [errorMessageDaftar, setErrorMessageDaftar] = React.useState('');
+    const [hideLoginPassword, setHideLoginPassword] = React.useState(true);
+    const [hideDaftarPassword, setHideDaftarPassword] = React.useState(true);
+    const [inputValidator, setInputValidator] = React.useState(initialInputValidator);
+    const [emailLogin, setEmailLogin] = React.useState(false);
 
     /* ========== Data ========== */
     const universitasError = !universitasData || !universitasData.length;
@@ -128,7 +128,7 @@ export function UsersForm({ universitasData }) {
 
     /* ========== useEffect ========== */
 
-    useEffect(() => {
+    React.useEffect(() => {
         window.addEventListener('focus', handleAuthCheck);
 
         return () => {
@@ -136,7 +136,7 @@ export function UsersForm({ universitasData }) {
         }
     }, [])
 
-    useEffect(() => {
+    React.useEffect(() => {
         // Login Mode or Daftar Mode ?
         const mode = searchParams.get('action');
         if (mode === 'daftar') { setLoginMode(false) }
