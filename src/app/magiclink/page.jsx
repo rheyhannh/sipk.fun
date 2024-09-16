@@ -1,5 +1,5 @@
 // #region COMPONENT DEPEDENCY
-import { Main } from "@/component/Magiclink";
+import Magiclink from "@/component/Magiclink";
 // #endregion
 
 // #region UTIL DEPEDENCY
@@ -14,6 +14,6 @@ export default async function Page() {
     const fakta = await getFaktaData(revalidateFaktaData);
 
     return (
-        <Main fakta={fakta} />
+        <Magiclink fakta={fakta} />
     )
 }

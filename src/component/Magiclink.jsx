@@ -382,7 +382,7 @@ function Error({ isLogin, state }) {
     )
 }
 
-export function Main({ fakta }) {
+export default function Magiclink({ fakta }) {
     const [states, setStates] = useState({
         loading: false, success: false, error: false
     })
