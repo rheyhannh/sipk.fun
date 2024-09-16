@@ -655,7 +655,7 @@ export function History({ state, data, penilaian, count }) {
     const handleRetry = () => {
         mutate(['/api/matkul-history', userIdCookie])
     }
-    
+
     /** @type {ContextTypes.DashboardContext} */
     const {
         isTouchDevice,
