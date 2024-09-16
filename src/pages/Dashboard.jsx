@@ -4,6 +4,10 @@
 import * as SupabaseTypes from '@/types/supabase';
 // #endregion
 
+// #region REACT DEPEDENCY
+import * as React from 'react';
+// #endregion
+
 // #region COMPONENT DEPEDENCY
 import { Summary, Notification, History } from '@/component/Card';
 // #endregion
