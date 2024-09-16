@@ -14,10 +14,12 @@ import { getLocalTheme } from '@/utils/client_side';
 
 // #region TYPE DEFINITION
 /**
- * @typedef SWRState 
+ * @template [T=any]
+ * @typedef {Object} SWRState 
  * @property {boolean} isLoading SWR loading state
  * @property {boolean} isValidating SWR validating state
- * @property {object} error SWR error object
+ * @property {any} error SWR error object
+ * @property {T} data SWR resolved data
  */
 // #endregion
 
