@@ -1,5 +1,6 @@
 // #region TYPE DEPEDENCY
 import * as SupabaseTypes from '@/types/supabase';
+import { SWRConfiguration } from 'swr';
 // #endregion
 
 // #region COMPONENT DEPEDENCY
