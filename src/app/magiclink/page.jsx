@@ -1,18 +1,11 @@
 'use client'
 
-// ========== COMPONENT DEPEDENCY ========== //
+// #region COMPONENT DEPEDENCY
 import { Main } from "@/component/Magiclink";
-
-/*
-============================== CODE START HERE ==============================
-*/
+// #endregion
 
 export default function Page() {
     return (
         <Main />
     )
 }
-
-/*
-============================== CODE END HERE ==============================
-*/
