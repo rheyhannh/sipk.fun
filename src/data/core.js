@@ -1,22 +1,24 @@
-// ========== TYPE DEPEDENCY ========== //
-import * as SupabaseTypes from '../types/supabase.js';
+// #region TYPE DEPEDENCY
+import * as SupabaseTypes from '@/types/supabase';
+// #endregion
 
-// ========== COMPONENT DEPEDENCY ========== //
+// #region COMPONENT DEPEDENCY
 import useSWR from 'swr'
 import { useCookies } from 'next-client-cookies';
-import { getLocalTheme } from '@/utils/client_side';
+// #endregion
 
-// ========== TYPE ========== //
+// #region UTIL DEPEDENCY
+import { getLocalTheme } from '@/utils/client_side';
+// #endregion
+
+// #region TYPE DEFINITION
 /**
  * @typedef SWRState 
  * @property {boolean} isLoading SWR loading state
  * @property {boolean} isValidating SWR validating state
  * @property {object} error SWR error object
  */
-
-/*
-============================== CODE START HERE ==============================
-*/
+// #endregion
 
 const fetchPublic = (url) => {
     return fetch(url, {
@@ -212,7 +214,3 @@ export function useFakta(custom) {
     const url = '/api/fakta';
     return useSWR(url, () => fetchPublic(url), { ...swrOptions, ...custom });
 }
-
-/*
-============================== CODE END HERE ==============================
-*/
