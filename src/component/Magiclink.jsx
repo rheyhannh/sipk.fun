@@ -1,5 +1,9 @@
 'use client'
 
+// #region TYPE DEPEDENCY
+import * as SupabaseTypes from '@/types/supabase';
+// #endregion
+
 // #region NEXT DEPEDENCY
 import Link from 'next/link'
 import { useRouter, useSearchParams } from 'next/navigation';
@@ -119,11 +123,10 @@ function ThemeChanger({ getClassnameByState }) {
  * @param props.setStates Method untuk set magiclink state
  * @returns {ReactElement} Element react untuk render magiclink content
  */
-function Content({ states, setStates }) {
+function Content({ states, setStates, fakta }) {
     const router = useRouter();
     const searchParams = useSearchParams();
     const guestIdCookie = useCookies().get('s_guest_id');
-    const { data: fakta } = useFakta();
     const isLogin = searchParams.get('action') === 'login' ? true : false;
 
     const handleFetch = async () => {
@@ -240,15 +243,16 @@ function Default({ isLogin, handleFetch }) {
 function Loading({ fakta }) {
     const [mounted, setMounted] = useState(false);
     const [usedFakta, setUsedFakta] = useState('');
+    const defaultFakta = 'Email Login adalah fitur untuk kamu yang mau login tanpa menggunakan password.';
 
     useEffect(() => {
         if (!mounted) {
             if (fakta && fakta.length > 0) {
                 const randomIndex = Math.floor(Math.random() * fakta.length);
-                const selectedFakta = fakta[randomIndex].text ?? '';
+                const selectedFakta = fakta[randomIndex]?.text ?? defaultFakta;
                 setUsedFakta(selectedFakta);
             }
-            else { setUsedFakta(getDefaultFakta()[0]) }
+            else { setUsedFakta(defaultFakta) }
         }
 
         setMounted(true);
@@ -378,7 +382,7 @@ function Error({ isLogin, state }) {
     )
 }
 
-export function Main() {
+export function Main({ fakta }) {
     const [states, setStates] = useState({
         loading: false, success: false, error: false
     })
@@ -388,7 +392,7 @@ export function Main() {
     return (
         <Container>
             <Wrapper states={states} getClassnameByState={getClassnameByState}>
-                <Content states={states} setStates={setStates} />
+                <Content states={states} setStates={setStates} fakta={fakta} />
                 <ThemeChanger getClassnameByState={getClassnameByState} />
             </Wrapper>
         </Container>
