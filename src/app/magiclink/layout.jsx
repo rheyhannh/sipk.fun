@@ -1,13 +1,10 @@
-// ========== TAG / METADATA ========== //
+// #region TAG OR METADATA
 export const metadata = {
     title: 'SIPK | Magiclink',
     description: 'Lebih mudah dengan Magiclink SIPK',
     keywords: 'sipk, sistem indeks prestasi kumulatif, kalkulator ipk, kalkulator nilai, kalkulator kuliah, ipk, indeks prestasi kumulatif, kuliah, sipk website, sipk magiclink, magiclink',
 }
-
-/*
-============================== CODE START HERE ==============================
-*/
+// #endregion
 
 export default function Layout({
     children,
@@ -18,7 +15,3 @@ export default function Layout({
         </>
     )
 }
-
-/*
-============================== CODE END HERE ==============================
-*/
