@@ -21,12 +21,11 @@ import Countdown from 'react-countdown';
 // #endregion
 
 // #region UTIL DEPEDENCY
-import { getDefaultFakta } from '@/utils/client_side';
 import isUUID from 'validator/lib/isUUID';
 // #endregion
 
 // #region HOOKS DEPEDENCY
-import { useLocalTheme, useFakta } from '@/data/core';
+import { useLocalTheme } from '@/data/core';
 // #endregion
 
 // #region STYLE DEPEDENCY
