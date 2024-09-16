@@ -1,4 +1,4 @@
-// #region COMPONENT DEPEDENCY
+// #region PAGES DEPEDENCY
 import Dashboard from '@/pages/Dashboard';
 // #endregion
 
