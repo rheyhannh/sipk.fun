@@ -1,16 +1,9 @@
-// ========== COMPONENT DEPEDENCY ========== //
+// #region COMPONENT DEPEDENCY
 import { UsersForm } from "@/component/Form"
-
-/*
-============================== CODE START HERE ==============================
-*/
+// #endregion
 
 export default async function UsersPage() {
     return (
         <UsersForm />
     )
 }
-
-/*
-============================== CODE END HERE ==============================
-*/
