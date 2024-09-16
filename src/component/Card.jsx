@@ -29,6 +29,10 @@ import { Icon } from '@/component/loader/ReactIcons'
 import { Spinner } from "./loader/Loading";
 // #endregion
 
+// #region HOOKS DEPEDENCY
+import { useMatkul, useUser, useMatkulHistory } from '@/data/core';
+// #endregion
+
 // #region UTIL DEPEDENCY
 import {
     getUserMatkul, getUserMatkulPercentage,
