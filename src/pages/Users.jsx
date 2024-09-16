@@ -2,6 +2,7 @@
 
 // #region TYPE DEPEDENCY
 import * as ContextTypes from '@/types/context';
+import * as SupabaseTypes from '@/types/supabase';
 // #endregion
 
 // #region NEXT DEPEDENCY
@@ -40,7 +41,7 @@ import { useLocalTheme } from '@/data/core';
 // #endregion
 
 // #region STYLE DEPEDENCY
-import styles from './style/form.module.css'
+import styles from './style/users.module.css'
 // #endregion
 
 // #region ICON DEPEDENCY
@@ -60,7 +61,19 @@ import { FiSun } from 'react-icons/fi';
 import { BiMoon } from 'react-icons/bi';
 // #endregion
 
-export function UsersForm({ universitasData }) {
+/**
+ * Props yang digunakan component `Users`
+ * @typedef {Object} UsersProps
+ * @property {Array<SupabaseTypes.UniversitasData>} universitasData
+ * Array yang berisikan semua universitas data
+ */
+
+/**
+ * Render users page `'/users'`
+ * @param {UsersProps} props Users props
+ * @returns {React.ReactElement} Rendered users page
+ */
+export default function Users({ universitasData }) {
     /* ========== Next Hooks ========== */
     const captcha = React.useRef();
     const router = useRouter();

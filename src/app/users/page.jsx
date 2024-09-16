@@ -1,5 +1,5 @@
-// #region COMPONENT DEPEDENCY
-import { UsersForm } from "@/component/Form"
+// #region PAGES DEPEDENCY
+import Users from '@/pages/Users';
 // #endregion
 
 // #region UTIL DEPEDENCY
@@ -14,6 +14,6 @@ export default async function UsersPage() {
     const universitas = await getUniversitasData(revalidateUniversitasData);
 
     return (
-        <UsersForm universitasData={universitas} />
+        <Users universitasData={universitas} />
     )
 }
