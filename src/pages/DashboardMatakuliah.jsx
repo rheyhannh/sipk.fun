@@ -33,6 +33,20 @@ import 'swiper/css/pagination';
 import { AiOutlineAppstore } from "react-icons/ai";
 // #endregion
 
+/**
+ * Props yang digunakan component `GrafikCard`
+ * @typedef {Object} GrafikCardProps
+ * @property {Array<SupabaseTypes.UniversitasData>} universitas
+ * Array yang berisikan semua universitas data
+ */
+
+/**
+ * Component yang menampilkan grafik user matakuliah, sks dan indeks prestasi dengan card `Grafik` dilengkapi dengan hook `swr` untuk memperoleh data yang dibutuhkan.
+ * 
+ * Hook tersebut juga mengontrol `CardState` dari card tersebut
+ * @param {GrafikCardProps} props GrafikCard props
+ * @returns {React.ReactElement} Rendered component
+ */
 function GrafikCard({ universitas }) {
     const { data: matkul, error: matkulError, isLoading: matkulLoading, isValidating: matkulValidating } = useMatkul();
     const { data: user, error: userError, isLoading: userLoading, isValidating: userValidating } = useUser();
@@ -63,6 +77,20 @@ function GrafikCard({ universitas }) {
     )
 }
 
+/**
+ * Props yang digunakan component `TargetCard`
+ * @typedef {Object} TargetCardProps
+ * @property {Array<SupabaseTypes.UniversitasData>} universitas
+ * Array yang berisikan semua universitas data
+ */
+
+/**
+ * Component yang menampilkan jumlah matakuliah user yang `ontarget` dan tidak dengan card `Target` dilengkapi dengan hook `swr` untuk memperoleh data yang dibutuhkan.
+ * 
+ * Hook tersebut juga mengontrol `CardState` dari card tersebut
+ * @param {TargetCardProps} props TargetCard props
+ * @returns {React.ReactElement} Rendered component
+ */
 function TargetCard({ universitas }) {
     const { data: matkul, error: matkulError, isLoading: matkulLoading, isValidating: matkulValidating } = useMatkul();
     const { data: user, error: userError, isLoading: userLoading, isValidating: userValidating } = useUser();
@@ -93,6 +121,22 @@ function TargetCard({ universitas }) {
     )
 }
 
+/**
+ * Props yang digunakan component `DistribusiCard`
+ * @typedef {Object} DistribusiCardProps
+ * @property {Array<SupabaseTypes.UniversitasData>} universitas
+ * Array yang berisikan semua universitas data
+ */
+
+/**
+ * Component yang menampilkan distribusi matakuliah user dengan card `Distribusi` dilengkapi dengan hook `swr` untuk memperoleh data yang dibutuhkan.
+ * 
+ * Hook tersebut juga mengontrol `CardState` dari card tersebut
+ * @param {TargetCardProps} props TargetCard props
+ * @returns {React.ReactElement} Rendered component
+ * @param {DistribusiCardProps} props DistribusiCard props
+ * @returns {React.ReactElement} Rendered component
+ */
 function DistribusiCard({ universitas }) {
     const { data: matkul, error: matkulError, isLoading: matkulLoading, isValidating: matkulValidating } = useMatkul();
     const { data: user, error: userError, isLoading: userLoading, isValidating: userValidating } = useUser();
@@ -123,6 +167,20 @@ function DistribusiCard({ universitas }) {
     )
 }
 
+/**
+ * Props yang digunakan component `ProgressCard`
+ * @typedef {Object} ProgressCardProps
+ * @property {Array<SupabaseTypes.UniversitasData>} universitas
+ * Array yang berisikan semua universitas data
+ */
+
+/**
+ * Component yang menampilkan overall progress user matakuliah, sks dan indeks prestasi dengan card `Progress` dilengkapi dengan hook `swr` untuk memperoleh data yang dibutuhkan.
+ * 
+ * Hook tersebut juga mengontrol `CardState` dari card tersebut
+ * @param {ProgressCardProps} props ProgressCard props
+ * @returns {React.ReactElement} Rendered component
+ */
 function ProgressCard({ universitas }) {
     const { data: matkul, error: matkulError, isLoading: matkulLoading, isValidating: matkulValidating } = useMatkul();
     const { data: user, error: userError, isLoading: userLoading, isValidating: userValidating } = useUser();
@@ -151,6 +209,20 @@ function ProgressCard({ universitas }) {
     )
 }
 
+/**
+ * Props yang digunakan component `TabelSection`
+ * @typedef {Object} TabelSectionProps
+ * @property {Array<SupabaseTypes.UniversitasData>} universitas
+ * Array yang berisikan semua universitas data
+ */
+
+/**
+ * Component yang menampilkan tabel matakuliah dengan component `Table` dilengkapi dengan hook `swr` untuk memperoleh data yang dibutuhkan.
+ * 
+ * Hook tersebut juga mengontrol state `TableState` pada table yang ditampilkan
+ * @param {TabelSectionProps} props TabelSection props
+ * @returns {React.ReactElement} Rendered component
+ */
 function TabelSection({ universitas }) {
     const { data: matkul, error: matkulError, isLoading: matkulLoading, isValidating: matkulValidating } = useMatkul();
     const { data: matkulHistory, error: matkulHistoryError, isLoading: matkulHistoryLoading, isValidating: matkulHistoryValidating } = useMatkulHistory();
@@ -182,6 +254,18 @@ function TabelSection({ universitas }) {
     )
 }
 
+/**
+ * Props yang digunakan component `DashboardMatakuliah`
+ * @typedef {Object} DashboardMatakuliahProps
+ * @property {Array<SupabaseTypes.UniversitasData>} universitas
+ * Array yang berisikan semua universitas data
+ */
+
+/**
+ * Render dashboard matakuliah page `'/dashboard/matakuliah'`
+ * @param {DashboardMatakuliahProps} props DashboardMatakuliah props
+ * @returns {React.ReactElement} Rendered dashboard matakuliah page
+ */
 export default function DashboardMatakuliah({ universitas }) {
     const [widget, setWidget] = React.useState(true);
 
