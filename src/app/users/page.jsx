@@ -2,8 +2,18 @@
 import { UsersForm } from "@/component/Form"
 // #endregion
 
+// #region UTIL DEPEDENCY
+import { getUniversitasData } from '@/utils/core_data';
+// #endregion
+
+// #region VARIABLES
+const revalidateUniversitasData = 86400; // Revalidate every 24 hours
+// #endregion
+
 export default async function UsersPage() {
+    const universitas = await getUniversitasData(revalidateUniversitasData);
+
     return (
-        <UsersForm />
+        <UsersForm universitasData={universitas} />
     )
 }

@@ -37,7 +37,6 @@ import isUUID from 'validator/lib/isUUID';
 
 // #region DATA DEPEDENCY
 import { useLocalTheme } from '@/data/core';
-import { useUniversitas } from '@/data/core';
 // #endregion
 
 // #region STYLE DEPEDENCY
@@ -65,7 +64,7 @@ import { BiMoon } from 'react-icons/bi';
 ============================== CODE START HERE ==============================
 */
 
-export function UsersForm() {
+export function UsersForm({ universitasData }) {
     /* ========== Next Hooks ========== */
     const captcha = useRef();
     const router = useRouter();
@@ -119,7 +118,7 @@ export function UsersForm() {
     const [emailLogin, setEmailLogin] = useState(false);
 
     /* ========== Data ========== */
-    const { data: universitasData, error: universitasError, isLoading: universitasLoading, isValidating: universitasValidating } = useUniversitas(null, 'public', 'all');
+    const universitasError = !universitasData || !universitasData.length;
     const { data: theme } = useLocalTheme();
 
     /* ========== Images ========== */
@@ -747,7 +746,6 @@ export function UsersForm() {
                                                 disabled={universitasData ? true : false}
                                                 hidden={universitasData ? true : false}
                                             >
-                                                {universitasLoading && 'Loading...'}
                                                 {universitasError && 'Gagal memuat universitas'}
                                                 {universitasData && 'Pilih Universitas'}
                                             </option>
