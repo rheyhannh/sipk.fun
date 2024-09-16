@@ -1,11 +1,19 @@
-'use client'
-
 // #region COMPONENT DEPEDENCY
 import { Main } from "@/component/Magiclink";
 // #endregion
 
-export default function Page() {
+// #region UTIL DEPEDENCY
+import { getFaktaData } from '@/utils/core_data';
+// #endregion
+
+// #region VARIABLES
+const revalidateFaktaData = 30;
+// #endregion
+
+export default async function Page() {
+    const fakta = await getFaktaData(revalidateFaktaData);
+
     return (
-        <Main />
+        <Main fakta={fakta} />
     )
 }
