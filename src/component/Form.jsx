@@ -1,7 +1,7 @@
 'use client'
 
 // #region TYPE DEPEDENCY
-import * as ContextTypes from '../types/context.js'
+import * as ContextTypes from '@/types/context';
 // #endregion
 
 // #region NEXT DEPEDENCY
@@ -19,8 +19,8 @@ import { useCookies } from 'next-client-cookies';
 import { SHA256, HmacSHA512 } from 'crypto-js';
 import Hex from 'crypto-js/enc-hex';
 import toast from 'react-hot-toast';
-import { UsersContext } from './provider/Users';
-import { ModalContext } from "./provider/Modal";
+import { UsersContext } from '@/component/provider/Users';
+import { ModalContext } from "@/component/provider/Modal";
 import { Ball } from '@/component/loader/Loading';
 // #endregion
 
@@ -59,10 +59,6 @@ import { FaCircleInfo, FaGear } from "react-icons/fa6";
 import { FiSun } from 'react-icons/fi';
 import { BiMoon } from 'react-icons/bi';
 // #endregion
-
-/*
-============================== CODE START HERE ==============================
-*/
 
 export function UsersForm({ universitasData }) {
     /* ========== Next Hooks ========== */
@@ -877,7 +873,3 @@ export function UsersForm({ universitasData }) {
         </>
     )
 }
-
-/*
-============================== CODE END HERE ==============================
-*/
