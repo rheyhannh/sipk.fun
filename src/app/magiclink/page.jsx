@@ -7,7 +7,7 @@ import { getFaktaData } from '@/utils/core_data';
 // #endregion
 
 // #region VARIABLES
-const revalidateFaktaData = 30;
+const revalidateFaktaData = 10800; // Revalidate every 3 hours
 // #endregion
 
 export default async function Page() {

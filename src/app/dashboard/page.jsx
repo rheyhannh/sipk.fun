@@ -11,8 +11,8 @@ import styles from './home.module.css';
 // #endregion
 
 // #region VARIABLES
-const revalidateUniversitasData = 30;
-const revalidateNotifikasiData = 60;
+const revalidateUniversitasData = 86400; // Revalidate every 24 hours
+const revalidateNotifikasiData = 3600; // Revalidate every 1 hours
 // #endregion
 
 export default async function DashboardPage() {
