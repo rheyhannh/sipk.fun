@@ -118,7 +118,7 @@ function ThemeChanger({ getClassnameByState }) {
 
 /**
  * Render magiclink content `login|confirm` sesuai dengan state nya `loading|error|success|default`.
- * @param {{states:{loading:boolean, success:boolean, error:boolean, code?:string|null}, setStates:(states:{loading:boolean, success:boolean, error:boolean}) => void}} props React props object
+ * @param {{states:{loading:boolean, success:boolean, error:boolean, code?:string|null}, setStates:(states:{loading:boolean, success:boolean, error:boolean}) => void, fakta:Array<SupabaseTypes.FaktaData>}} props React props object
  * @param props.states Magiclink state
  * @param props.setStates Method untuk set magiclink state
  * @returns {ReactElement} Element react untuk render magiclink content
@@ -236,7 +236,7 @@ function Default({ isLogin, handleFetch }) {
 
 /**
  * Render magiclink content `login|confirm` dengan state `loading`.
- * @param {{fakta:Array<string>}} props React props object
+ * @param {{fakta:Array<SupabaseTypes.FaktaData>}} props React props object
  * @param props.fakta Content fakta tentang SIPK
  * @returns {ReactElement} Element react untuk render magiclink content dengan state loading.
  */
