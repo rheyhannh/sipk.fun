@@ -1,13 +1,9 @@
 // #region COMPONENT DEPEDENCY
-import { AcademicCard, UpdateCard, HistoryCard } from '@/component/Card';
+import Dashboard from '@/pages/Dashboard';
 // #endregion
 
 // #region UTIL DEPEDENCY
 import { getUniversitasData, getNotifikasiData } from '@/utils/core_data';
-// #endregion
-
-// #region STYLE DEPEDENCY
-import styles from './home.module.css';
 // #endregion
 
 // #region VARIABLES
@@ -20,23 +16,6 @@ export default async function DashboardPage() {
     const notifikasi = await getNotifikasiData(revalidateNotifikasiData);
 
     return (
-        <div className={styles.wrapper}>
-            <div className={styles.primary}>
-                <h1 className={styles.wrapper__title}>Dasbor</h1>
-                <div className={styles.insight}>
-                    <AcademicCard count={3} universitas={universitas} />
-                </div>
-            </div>
-            <div className={styles.secondary}>
-                <div>
-                    <h2 className={styles.wrapper__title}>Update</h2>
-                    <UpdateCard notifikasi={notifikasi} />
-                </div>
-                <div className={styles.history}>
-                    <h2 className={styles.wrapper__title}>Perubahan Terakhir</h2>
-                    <HistoryCard count={3} universitas={universitas} />
-                </div>
-            </div>
-        </div>
+        <Dashboard universitas={universitas} notifikasi={notifikasi} />
     )
 }
