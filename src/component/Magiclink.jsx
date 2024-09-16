@@ -1,35 +1,38 @@
 'use client'
 
-// ========== NEXT DEPEDENCY ========== //
+// #region NEXT DEPEDENCY
 import Link from 'next/link'
 import { useRouter, useSearchParams } from 'next/navigation';
+// #endregion
 
-// ========== REACT DEPEDENCY ========== //
+// #region REACT DEPEDENCY
 import { useState, useEffect } from 'react';
+// #endregion
 
-// ========== COMPONENTS DEPEDENCY ========== //
+// #region COMPONENT DEPEDENCY
 import { mutate } from 'swr';
 import { useCookies } from 'next-client-cookies';
 import toast from 'react-hot-toast';
 import Countdown from 'react-countdown';
+// #endregion
 
-// ========== UTIL DEPEDENCY ========== //
+// #region UTIL DEPEDENCY
 import { getDefaultFakta } from '@/utils/client_side';
 import isUUID from 'validator/lib/isUUID';
+// #endregion
 
-// ========== DATA DEPEDENCY ========== //
+// #region HOOKS DEPEDENCY
 import { useLocalTheme, useFakta } from '@/data/core';
+// #endregion
 
-// ========== STYLE DEPEDENCY ========== //
-import styles from './style/magiclink.module.css'
+// #region STYLE DEPEDENCY
+import styles from './style/magiclink.module.css';
+// #endregion
 
-// ========== ICON DEPEDENCY ========== //
+// #region ICON DEPEDENCY
 import { FaLink, FaCheck, FaExclamation } from "react-icons/fa";
 import { FiSun, FiMoon } from 'react-icons/fi';
-
-/*
-============================== CODE START HERE ==============================
-*/
+// #endregion
 
 /**
  * Render magiclink container.
@@ -391,7 +394,3 @@ export function Main() {
         </Container>
     )
 }
-
-/*
-============================== CODE END HERE ==============================
-*/
