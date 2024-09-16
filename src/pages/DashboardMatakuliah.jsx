@@ -1,5 +1,9 @@
 'use client'
 
+// #region TYPE DEPEDENCY
+import * as SupabaseTypes from '@/types/supabase';
+// #endregion
+
 // #region REACT DEPEDENCY
 import * as React from 'react';
 // #endregion
