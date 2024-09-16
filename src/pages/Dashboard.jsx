@@ -47,7 +47,7 @@ import styles from './style/dashboard.module.css';
 export function AcademicCard({ count, universitas }) {
     const { data: user, error: userError, isLoading: userLoading, isValidating: userValidating } = useUser();
     const { data: matkul, error: matkulError, isLoading: matkulLoading, isValidating: matkulValidating } = useMatkul();
-    const isError = userError || matkulError;
+    const isError = userError || matkulError || !universitas || !universitas.length;
     const isLoading = userLoading || matkulLoading;
     const isValidating = userValidating || matkulValidating;
 
@@ -163,7 +163,7 @@ export function UpdateCard({ notifikasi }) {
 export function HistoryCard({ count, universitas }) {
     const { data: user, error: userError, isLoading: userLoading, isValidating: userValidating } = useUser();
     const { data: matkulHistory, error: matkulHistoryError, isLoading: matkulHistoryLoading, isValidating: matkulHistoryValidating } = useMatkulHistory();
-    const isError = userError || matkulHistoryError;
+    const isError = userError || matkulHistoryError || !universitas || !universitas.length;
     const isLoading = userLoading || matkulHistoryLoading;
     const isValidating = userValidating || matkulHistoryValidating;
 
