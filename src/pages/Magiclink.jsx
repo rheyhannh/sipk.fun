@@ -10,7 +10,7 @@ import { useRouter, useSearchParams } from 'next/navigation';
 // #endregion
 
 // #region REACT DEPEDENCY
-import { useState, useEffect } from 'react';
+import * as React from 'react';
 // #endregion
 
 // #region COMPONENT DEPEDENCY
@@ -242,11 +242,11 @@ function Default({ isLogin, handleFetch }) {
  * @returns {ReactElement} Element react untuk render magiclink content dengan state loading
  */
 function Loading({ fakta }) {
-    const [mounted, setMounted] = useState(false);
-    const [usedFakta, setUsedFakta] = useState('');
+    const [mounted, setMounted] = React.useState(false);
+    const [usedFakta, setUsedFakta] = React.useState('');
     const defaultFakta = 'Email Login adalah fitur untuk kamu yang mau login tanpa menggunakan password.';
 
-    useEffect(() => {
+    React.useEffect(() => {
         if (!mounted) {
             if (fakta && fakta.length > 0) {
                 const randomIndex = Math.floor(Math.random() * fakta.length);
@@ -390,7 +390,7 @@ function Error({ isLogin, state }) {
  * @returns {ReactElement} Element react untuk render magiclink page
  */
 export default function Magiclink({ fakta }) {
-    const [states, setStates] = useState({
+    const [states, setStates] = React.useState({
         loading: false, success: false, error: false
     })
 
