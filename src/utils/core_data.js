@@ -129,7 +129,7 @@ export async function getRatingData(revalidate = 3600, options = {}) {
  * @param {Omit<RequestInit, 'next'> & {next:Omit<RequestInit['next'], 'revalidate'>}} [options] Opsi fetch lainnya yang digunakan, default `{}`
   * @returns {Promise<Array<SupabaseTypes.FaktaData>>} Array of fakta data
  */
- export async function getFaktaData(revalidate = 3600, options = {}) {
+export async function getFaktaData(revalidate = 3600, options = {}) {
     const { headers = {}, next = {}, ...restOptions } = options;
 
     const updatedHeaders = { ...headers, 'x-api-key': process.env.SUPABASE_SERVICE_KEY };
