@@ -188,7 +188,7 @@ export async function rateLimit(options) {
             undefined,
             {
                 severity: 'error',
-                reason: 'inherit',
+                reason: null,
                 stack: null,
                 functionDetails: 'Ratelimit.check at utils/server_side.js line 173',
                 functionArgs: { limit, token },
@@ -280,7 +280,7 @@ export async function validateJWT(token, userId, ignoreExpiration = true, otherO
     } catch (error) {
         throw authError.invalid_access_token(undefined, undefined, {
             severity: 'error',
-            reason: 'inherit',
+            reason: null,
             stack: error?.stack ?? null,
             functionDetails: 'validateJWT at utils/server_side.js line 246',
             functionArgs: { userId, ignoreExpiration, otherOptions },
