@@ -106,6 +106,7 @@
  * - `AUTH_02` : User access token atau cookie `'s_access_token'` expired atau kadaluwarsa
  * - `AUTH_03` : Session atau cookie `'_Secure-auth.session-token'` tidak tersedia
  * - `AUTH_04` : Session atau cookie `'_Secure-auth.session-token'` tidak valid
+ * - `AUTH_05` : Api key tidak ditemukan atau tidak valid
  * - `RL_00` : Penggunaan akses atau rate limit `token` mencapai maksimal
  * - `RL_01` : Jumlah rate limit `token` mencapai maksimal
  * - `SRV_00` : Terjadi kesalahan pada server biasanya karna error pada `Supabase` saat query database
@@ -431,6 +432,31 @@ export const authErrorCodesList = {
  *          type: 'AuthError',
  *          code: 'AUTH_04',
  *          message: authErrorCodesList['AUTH_04'].name,
+ *          hintUrl: errorHintUrl,
+ *      },
+ *      _details: {
+ *          stamp: Math.floor(Date.now() / 1000),
+ *          ...errorDetails
+ *      },
+ *      ...customProps
+ * }
+ * ```
+ * @property {(message?:string, errorHintUrl?:string, errorDetails?:Omit<APIResponseBaseProps['_details'], 'stamp'>, customProps?:Object<string,any>) => APIResponseErrorProps} api_key_error
+ * Method untuk generate payload response body saat api key tidak ditemukan atau tidak valid dengan `optional` parameter berikut,
+ * - `message` : String untuk override default message yang ditampilkan ke user dengan `toast`
+ * - `errorHintUrl` : Link atau pathname yang dapat digunakan sebagai call to action untuk user mengetahui lebih lanjut `error` yang terjadi 
+ * - `errorDetails` : Error details untuk mendeskripsikan error lebih detail untuk tujuan `logging`
+ * - `customProps` : Object untuk menambah props tertentu selain status, message, code dan error
+ * 
+ * ```js
+ * const payload = {
+ *      status: 'error',
+ *      code: 401,
+ *      message: message ?? authErrorCodesList['AUTH_05'].message,
+ *      error: {
+ *          type: 'AuthError',
+ *          code: 'AUTH_05',
+ *          message: authErrorCodesList['AUTH_05'].name,
  *          hintUrl: errorHintUrl,
  *      },
  *      _details: {
