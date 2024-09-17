@@ -257,9 +257,13 @@ import {
  * 
  * Diresolve pada supabase dengan `gen_random_uuid()`
  * @property {string} title 
- * Judul atau headline notifikasi
+ * Judul atau headline notifikasi dengan kriteria
+ * - min_length : `3`
+ * - max_length : `25`
  * @property {string} description 
- * Deskripsi notifikasi
+ * Deskripsi notifikasi dengan kriteria
+ * - min_length : `50`
+ * - max_length : `125`
  * @property {string} href 
  * Path atau link notifikasi
  * - Contoh : `'/update/22112023/maintenance-untuk-pemeliharan-jaringan'`
