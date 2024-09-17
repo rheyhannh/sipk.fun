@@ -45,11 +45,11 @@ export async function GET(request) {
         const isService = await verifyService(request);
         if (isService) {
             /** @type {SupabaseTypes._from<SupabaseTypes.NotifikasiData>} */
-            const { data, error } = await supabaseService.from('notifikasi').select('*');
+            const { data, error } = await supabaseService.from('notifikasi').select('*').order('unix_created_at', { ascending: false });
             if (error) {
                 const { code, headers = {}, _details, ...rest } = await handleSupabaseError(error, false, {
                     functionDetails: 'supabaseService.from at GET /api/notifikasi line 48',
-                    functionArgs: { from: 'notifikasi', select: '*' },
+                    functionArgs: { from: 'notifikasi', select: '*', orderColumn: 'unix_created_at', orderOptions: { ascending: false } },
                     functionResolvedVariable: { data, error },
                 });
 
