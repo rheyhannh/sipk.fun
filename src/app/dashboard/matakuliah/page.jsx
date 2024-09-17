@@ -6,12 +6,8 @@ import DashboardMatakuliah from '@/page/DashboardMatakuliah';
 import { getUniversitasData } from '@/utils/core_data';
 // #endregion
 
-// #region VARIABLES
-const revalidateUniversitasData = 86400; // Revalidate every 24 hours
-// #endregion
-
 export default async function MatakuliahPage() {
-    const universitas = await getUniversitasData(revalidateUniversitasData);
+    const universitas = await getUniversitasData();
 
     return (
         <DashboardMatakuliah universitas={universitas} />

@@ -6,12 +6,8 @@ import Users from '@/page/Users';
 import { getUniversitasData } from '@/utils/core_data';
 // #endregion
 
-// #region VARIABLES
-const revalidateUniversitasData = 86400; // Revalidate every 24 hours
-// #endregion
-
 export default async function UsersPage() {
-    const universitas = await getUniversitasData(revalidateUniversitasData);
+    const universitas = await getUniversitasData();
 
     return (
         <Users universitasData={universitas} />

@@ -4,141 +4,142 @@
 import * as SupabaseTypes from '@/types/supabase';
 // #endregion
 
+// #region VARIABLES
+const nextOptions = {
+    universitas: {
+        revalidate: 86400, // Revalidate every 24 hours
+        tags: ['universitas']
+    },
+    notifikasi: {
+        revalidate: 3600, // Revalidate every 1 hours
+        tags: ['notifikasi']
+    },
+    rating: {
+        revalidate: 10800, // Revalidate every 3 hours
+        tags: ['rating']
+    },
+    fakta: {
+        revalidate: 10800, // Revalidate every 3 hours
+        tags: ['fakta']
+    }
+}
+// #endregion
+
 /**
- * Method untuk fetch core data `universitas` menggunakan opsi berikut
+ * Method untuk fetch core data `universitas` menggunakan header dan {@link nextOptions} sebagai berikut
  * 
  * ```js
  * const options = {
  *      headers: { 'x-api-key': process.env.SUPABASE_SERVICE_KEY },
- *      next: { revalidate } // from param
+ *      next: nextOptions['universitas']
  * }
  * ```
  * 
- * Tambahkan custom opsi fetch lainnya pada param `options`, atur interval untuk revalidate data pada param `revalidate`.
- * Perlu diingat bahwa, 
- * 
- * - Header `'x-api-key'` tidak dapat dioverride
+ * Tambahkan custom opsi fetch lainnya pada param `options`, Perlu diingat bahwa, 
+ * - Header `'x-api-key'` dan opsi `next` tidak dapat dioverride
  * - Hanya gunakan method ini pada Server Component
  * 
- * @param {number} [revalidate] Interval dalam detik untuk revalidate data, default `3600`
- * @param {Omit<RequestInit, 'next'> & {next:Omit<RequestInit['next'], 'revalidate'>}} [options] Opsi fetch lainnya yang digunakan, default `{}`
-  * @returns {Promise<Array<SupabaseTypes.UniversitasData>>} Array of universitas data
+ * @param {Omit<RequestInit, 'next'>} [options] Opsi fetch lainnya yang digunakan, default `{}`
+ * @returns {Promise<Array<SupabaseTypes.UniversitasData>>} Array of universitas data
  */
-export async function getUniversitasData(revalidate = 3600, options = {}) {
-    const { headers = {}, next = {}, ...restOptions } = options;
-
+export async function getUniversitasData(options = {}) {
+    const { headers = {}, ...restOptions } = options;
     const updatedHeaders = { ...headers, 'x-api-key': process.env.SUPABASE_SERVICE_KEY };
-    const updatedNext = { ...next, revalidate };
 
     const response = await fetch('http://localhost:3000/api/universitas', {
         ...restOptions,
         headers: updatedHeaders,
-        next: updatedNext,
+        next: nextOptions['universitas'],
     });
 
     return await response.json();
 }
 
 /**
- * Method untuk fetch core data `notifikasi` menggunakan opsi berikut
+ * Method untuk fetch core data `notifikasi` menggunakan header dan {@link nextOptions} sebagai berikut
  * 
  * ```js
  * const options = {
  *      headers: { 'x-api-key': process.env.SUPABASE_SERVICE_KEY },
- *      next: { revalidate } // from param
+ *      next: nextOptions['notifikasi']
  * }
  * ```
  * 
- * Tambahkan custom opsi fetch lainnya pada param `options`, atur interval untuk revalidate data pada param `revalidate`.
- * Perlu diingat bahwa, 
- * 
- * - Header `'x-api-key'` tidak dapat dioverride
+ * Tambahkan custom opsi fetch lainnya pada param `options`, Perlu diingat bahwa, 
+ * - Header `'x-api-key'` dan opsi `next` tidak dapat dioverride
  * - Hanya gunakan method ini pada Server Component
  * 
- * @param {number} [revalidate] Interval dalam detik untuk revalidate data, default `3600`
- * @param {Omit<RequestInit, 'next'> & {next:Omit<RequestInit['next'], 'revalidate'>}} [options] Opsi fetch lainnya yang digunakan, default `{}`
-  * @returns {Promise<Array<SupabaseTypes.NotifikasiData>>} Array of notifikasi data
+ * @param {Omit<RequestInit, 'next'>} [options] Opsi fetch lainnya yang digunakan, default `{}`
+ * @returns {Promise<Array<SupabaseTypes.NotifikasiData>>} Array of notifikasi data
  */
-export async function getNotifikasiData(revalidate = 3600, options = {}) {
-    const { headers = {}, next = {}, ...restOptions } = options;
-
+export async function getNotifikasiData(options = {}) {
+    const { headers = {}, ...restOptions } = options;
     const updatedHeaders = { ...headers, 'x-api-key': process.env.SUPABASE_SERVICE_KEY };
-    const updatedNext = { ...next, revalidate };
 
     const response = await fetch('http://localhost:3000/api/notifikasi', {
         ...restOptions,
         headers: updatedHeaders,
-        next: updatedNext,
+        next: nextOptions['notifikasi'],
     });
 
     return await response.json();
 }
 
 /**
- * Method untuk fetch core data `rating` menggunakan opsi berikut
+ * Method untuk fetch core data `rating` menggunakan header dan {@link nextOptions} sebagai berikut
  * 
  * ```js
  * const options = {
  *      headers: { 'x-api-key': process.env.SUPABASE_SERVICE_KEY },
- *      next: { revalidate } // from param
+ *      next: nextOptions['rating']
  * }
  * ```
  * 
- * Tambahkan custom opsi fetch lainnya pada param `options`, atur interval untuk revalidate data pada param `revalidate`.
- * Perlu diingat bahwa, 
- * 
- * - Header `'x-api-key'` tidak dapat dioverride
+ * Tambahkan custom opsi fetch lainnya pada param `options`, Perlu diingat bahwa, 
+ * - Header `'x-api-key'` dan opsi `next` tidak dapat dioverride
  * - Hanya gunakan method ini pada Server Component
  * 
- * @param {number} [revalidate] Interval dalam detik untuk revalidate data, default `3600`
- * @param {Omit<RequestInit, 'next'> & {next:Omit<RequestInit['next'], 'revalidate'>}} [options] Opsi fetch lainnya yang digunakan, default `{}`
-  * @returns {Promise<Array<SupabaseTypes.RatingData>>} Array of rating data
+ * @param {Omit<RequestInit, 'next'>} [options] Opsi fetch lainnya yang digunakan, default `{}`
+ * @returns {Promise<Array<SupabaseTypes.RatingData>>} Array of rating data
  */
-export async function getRatingData(revalidate = 3600, options = {}) {
-    const { headers = {}, next = {}, ...restOptions } = options;
-
+export async function getRatingData(options = {}) {
+    const { headers = {}, ...restOptions } = options;
     const updatedHeaders = { ...headers, 'x-api-key': process.env.SUPABASE_SERVICE_KEY };
-    const updatedNext = { ...next, revalidate };
 
     const response = await fetch('http://localhost:3000/api/rating', {
         ...restOptions,
         headers: updatedHeaders,
-        next: updatedNext,
+        next:nextOptions['rating'],
     });
 
     return await response.json();
 }
 
 /**
- * Method untuk fetch core data `fakta` menggunakan opsi berikut
+ * Method untuk fetch core data `fakta` menggunakan header dan {@link nextOptions} sebagai berikut
  * 
  * ```js
  * const options = {
  *      headers: { 'x-api-key': process.env.SUPABASE_SERVICE_KEY },
- *      next: { revalidate } // from param
+ *      next: nextOptions['fakta']
  * }
  * ```
  * 
- * Tambahkan custom opsi fetch lainnya pada param `options`, atur interval untuk revalidate data pada param `revalidate`.
- * Perlu diingat bahwa, 
- * 
- * - Header `'x-api-key'` tidak dapat dioverride
+ * Tambahkan custom opsi fetch lainnya pada param `options`, Perlu diingat bahwa, 
+ * - Header `'x-api-key'` dan opsi `next` tidak dapat dioverride
  * - Hanya gunakan method ini pada Server Component
  * 
- * @param {number} [revalidate] Interval dalam detik untuk revalidate data, default `3600`
- * @param {Omit<RequestInit, 'next'> & {next:Omit<RequestInit['next'], 'revalidate'>}} [options] Opsi fetch lainnya yang digunakan, default `{}`
-  * @returns {Promise<Array<SupabaseTypes.FaktaData>>} Array of fakta data
+ * @param {Omit<RequestInit, 'next'>} [options] Opsi fetch lainnya yang digunakan, default `{}`
+ * @returns {Promise<Array<SupabaseTypes.FaktaData>>} Array of fakta data
  */
-export async function getFaktaData(revalidate = 3600, options = {}) {
-    const { headers = {}, next = {}, ...restOptions } = options;
-
+export async function getFaktaData(options = {}) {
+    const { headers = {}, ...restOptions } = options;
     const updatedHeaders = { ...headers, 'x-api-key': process.env.SUPABASE_SERVICE_KEY };
-    const updatedNext = { ...next, revalidate };
 
     const response = await fetch('http://localhost:3000/api/fakta', {
         ...restOptions,
         headers: updatedHeaders,
-        next: updatedNext,
+        next: nextOptions['fakta'],
     });
 
     return await response.json();

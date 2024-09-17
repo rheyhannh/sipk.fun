@@ -6,12 +6,8 @@ import Magiclink from '@/page/Magiclink';
 import { getFaktaData } from '@/utils/core_data';
 // #endregion
 
-// #region VARIABLES
-const revalidateFaktaData = 10800; // Revalidate every 3 hours
-// #endregion
-
 export default async function Page() {
-    const fakta = await getFaktaData(revalidateFaktaData);
+    const fakta = await getFaktaData();
 
     return (
         <Magiclink fakta={fakta} />
