@@ -1,5 +1,5 @@
-// #region PAGES DEPEDENCY
-import Dashboard from '@/pages/Dashboard';
+// #region PAGE DEPEDENCY
+import Dashboard from '@/page/Dashboard';
 // #endregion
 
 // #region UTIL DEPEDENCY

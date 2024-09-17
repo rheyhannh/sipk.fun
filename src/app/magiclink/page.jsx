@@ -1,5 +1,5 @@
-// #region PAGES DEPEDENCY
-import Magiclink from '@/pages/Magiclink';
+// #region PAGE DEPEDENCY
+import Magiclink from '@/page/Magiclink';
 // #endregion
 
 // #region UTIL DEPEDENCY

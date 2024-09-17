@@ -1,5 +1,5 @@
-// #region PAGES DEPEDENCY
-import Users from '@/pages/Users';
+// #region PAGE DEPEDENCY
+import Users from '@/page/Users';
 // #endregion
 
 // #region UTIL DEPEDENCY
