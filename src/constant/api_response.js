@@ -310,6 +310,7 @@ export const authErrorCodesList = {
     'AUTH_02': { name: 'Unauthorized - Expired access token', message: 'Akses token expired' },
     'AUTH_03': { name: 'Unauthorized - Missing session', message: 'Session tidak ditemukan' },
     'AUTH_04': { name: 'Unauthorized - Invalid session', message: 'Session tidak valid' },
+    'AUTH_05': { name: 'Unauthorized - Missing or invalid api key', message: 'Api key tidak ditemukan atau tidak valid' },
 }
 
 /** 
@@ -518,6 +519,22 @@ export const AuthErrorResponse = {
             type: 'AuthError',
             code: 'AUTH_04',
             message: authErrorCodesList['AUTH_04'].name,
+            hintUrl: errorHintUrl,
+        },
+        _details: {
+            stamp: Math.floor(Date.now() / 1000),
+            ...errorDetails
+        },
+        ...((({ status, code, message, error, ...rest }) => rest)(customProps || {}))
+    }),
+    api_key_error: (message, errorHintUrl, errorDetails = {}, customProps) => ({
+        status: 'error',
+        code: 401,
+        message: message ?? authErrorCodesList['AUTH_05'].message,
+        error: {
+            type: 'AuthError',
+            code: 'AUTH_05',
+            message: authErrorCodesList['AUTH_05'].name,
             hintUrl: errorHintUrl,
         },
         _details: {
