@@ -1,17 +1,20 @@
 'use client'
 
-// ========== NEXT DEPEDENCY ========== //
+// #region TYPE DEPEDENCY
+import * as ContextTypes from '@/types/context';
+// #endregion
+
+// #region NEXT DEPEDENCY
 import { useRouter, usePathname } from "next/navigation";
+// #endregion
 
-// ========== REACT DEPEDENCY ========== //
-import { createContext, useEffect, useState } from "react"
+// #region REACT DEPEDENCY
+import { createContext, useEffect, useState } from "react";
+// #endregion
 
-// ========== COMPONENT DEPEDENCY ========== //
+// #region COMPONENT DEPEDENCY
 import { useCookies } from 'next-client-cookies';
-
-/*
-============================== CODE START HERE ==============================
-*/
+// #endregion
 
 export const DashboardContext = createContext();
 /**
@@ -123,7 +126,3 @@ export const DashboardProvider = ({ children }) => {
         </DashboardContext.Provider>
     )
 }
-
-/*
-============================== CODE END HERE ==============================
-*/
