@@ -1,11 +1,8 @@
 'use client'
 
-// ========== REACT DEPEDENCY ========== //
+// #region REACT DEPEDENCY
 import { createContext, useEffect, useState } from "react"
-
-/*
-============================== CODE START HERE ==============================
-*/
+// #endregion
 
 export const UsersContext = createContext();
 /**
@@ -56,7 +53,3 @@ export const UsersProvider = ({ children }) => {
         </UsersContext.Provider>
     )
 }
-
-/*
-============================== CODE END HERE ==============================
-*/
