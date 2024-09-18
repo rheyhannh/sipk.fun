@@ -19,11 +19,12 @@ import { useCookies } from 'next-client-cookies';
 export const DashboardContext = createContext();
 /**
  * Dashboard page context provider. Use this wrapper to use any `DashboardContext` config.
- * @param {{children:any}} props React props object
- * @param props.children Component or element children.
+ * @param {Object} props React props object
+ * @param {ContextTypes.DashboardContext['data']} props.data
+ * @param {any} props.children Component or element children.
  * @returns {ReactElement} Dashboard page context provider wrapper.
  */
-export const DashboardProvider = ({ children }) => {
+export const DashboardProvider = ({ data, children }) => {
     /* ========== Next Hooks ========== */
     const router = useRouter();
     const pathname = usePathname();
@@ -120,6 +121,7 @@ export const DashboardProvider = ({ children }) => {
                 isRichContent, setRichContent,
                 isPhoneContent, setPhoneContent,
                 isTouchDevice, setTouchDevice,
+                data,
             }}
         >
             {children}

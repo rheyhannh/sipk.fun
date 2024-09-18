@@ -1,7 +1,7 @@
 'use client'
 
 // #region TYPE DEPEDENCY
-import * as SupabaseTypes from '@/types/supabase';
+import * as ContextTypes from '@/types/context';
 // #endregion
 
 // #region REACT DEPEDENCY
@@ -9,6 +9,7 @@ import * as React from 'react';
 // #endregion
 
 // #region COMPONENT DEPEDENCY
+import { DashboardContext } from '@/component/provider/Dashboard';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Pagination } from 'swiper/modules';
 import { Grafik, Target, Progress, Distribusi } from '@/component/Card';
@@ -36,8 +37,7 @@ import { AiOutlineAppstore } from "react-icons/ai";
 /**
  * Props yang digunakan component `GrafikCard`
  * @typedef {Object} GrafikCardProps
- * @property {Array<SupabaseTypes.UniversitasData>} universitas
- * Array yang berisikan semua universitas data
+ * @property {ContextTypes.DashboardContext['data']['universitas']} universitas
  */
 
 /**
@@ -53,7 +53,7 @@ function GrafikCard({ universitas }) {
     const isError = matkulError || userError || !universitas || !universitas.length;
     const isLoading = matkulLoading || userLoading;
     const isValidating = matkulValidating || userValidating;
-    
+
     const savedState = getSessionGrafik();
 
     if (isError) {
@@ -80,8 +80,7 @@ function GrafikCard({ universitas }) {
 /**
  * Props yang digunakan component `TargetCard`
  * @typedef {Object} TargetCardProps
- * @property {Array<SupabaseTypes.UniversitasData>} universitas
- * Array yang berisikan semua universitas data
+ * @property {ContextTypes.DashboardContext['data']['universitas']} universitas
  */
 
 /**
@@ -124,16 +123,13 @@ function TargetCard({ universitas }) {
 /**
  * Props yang digunakan component `DistribusiCard`
  * @typedef {Object} DistribusiCardProps
- * @property {Array<SupabaseTypes.UniversitasData>} universitas
- * Array yang berisikan semua universitas data
+ * @property {ContextTypes.DashboardContext['data']['universitas']} universitas
  */
 
 /**
  * Component yang menampilkan distribusi matakuliah user dengan card `Distribusi` dilengkapi dengan hook `swr` untuk memperoleh data yang dibutuhkan.
  * 
  * Hook tersebut juga mengontrol `CardState` dari card tersebut
- * @param {TargetCardProps} props TargetCard props
- * @returns {React.ReactElement} Rendered component
  * @param {DistribusiCardProps} props DistribusiCard props
  * @returns {React.ReactElement} Rendered component
  */
@@ -170,8 +166,7 @@ function DistribusiCard({ universitas }) {
 /**
  * Props yang digunakan component `ProgressCard`
  * @typedef {Object} ProgressCardProps
- * @property {Array<SupabaseTypes.UniversitasData>} universitas
- * Array yang berisikan semua universitas data
+ * @property {ContextTypes.DashboardContext['data']['universitas']} universitas
  */
 
 /**
@@ -212,8 +207,7 @@ function ProgressCard({ universitas }) {
 /**
  * Props yang digunakan component `TabelSection`
  * @typedef {Object} TabelSectionProps
- * @property {Array<SupabaseTypes.UniversitasData>} universitas
- * Array yang berisikan semua universitas data
+ * @property {ContextTypes.DashboardContext['data']['universitas']} universitas
  */
 
 /**
@@ -245,7 +239,7 @@ function TabelSection({ universitas }) {
         <Table
             state={'loaded'}
             validating={isValidating}
-            user={user[0]} 
+            user={user[0]}
             matkul={matkul}
             sessionTable={sessionTable}
             matkulHistory={matkulHistory}
@@ -255,18 +249,12 @@ function TabelSection({ universitas }) {
 }
 
 /**
- * Props yang digunakan component `DashboardMatakuliah`
- * @typedef {Object} DashboardMatakuliahProps
- * @property {Array<SupabaseTypes.UniversitasData>} universitas
- * Array yang berisikan semua universitas data
- */
-
-/**
  * Render dashboard matakuliah page `'/dashboard/matakuliah'`
- * @param {DashboardMatakuliahProps} props DashboardMatakuliah props
  * @returns {React.ReactElement} Rendered dashboard matakuliah page
  */
-export default function DashboardMatakuliah({ universitas }) {
+export default function DashboardMatakuliah() {
+    /** @type {ContextTypes.DashboardContext} */
+    const { data: { universitas } } = React.useContext(DashboardContext);
     const [widget, setWidget] = React.useState(true);
 
     return (

@@ -10,6 +10,10 @@ import Header from '@/component/Header';
 import Navbar from '@/component/Nav';
 // #endregion
 
+// #region UTIL DEPEDENCY
+import { getUniversitasData, getNotifikasiData } from '@/utils/core_data';
+// #endregion
+
 // #region TAG OR METADATA
 export const metadata = {
   title: 'SIPK | Dashboard',
@@ -18,11 +22,14 @@ export const metadata = {
 }
 // #endregion
 
-export default function DashboardLayout({
+export default async function DashboardLayout({
   children,
 }) {
+  const universitas = await getUniversitasData();
+  const notifikasi = await getNotifikasiData();
+
   return (
-    <DashboardProvider>
+    <DashboardProvider data={{ universitas, notifikasi }}>
       <ModalProvider>
         <Header />
         <main className={`dashboard`}>

@@ -1,7 +1,7 @@
 'use client'
 
 // #region TYPE DEPEDENCY
-import * as SupabaseTypes from '@/types/supabase';
+import * as ContextTypes from '@/types/context';
 // #endregion
 
 // #region REACT DEPEDENCY
@@ -9,6 +9,7 @@ import * as React from 'react';
 // #endregion
 
 // #region COMPONENT DEPEDENCY
+import { DashboardContext } from '@/component/provider/Dashboard';
 import { Summary, Notification, History } from '@/component/Card';
 // #endregion
 
@@ -33,8 +34,7 @@ import styles from './style/dashboard.module.css';
  * @typedef {Object} AcademicCardProps
  * @property {number} count
  * Jumlah card yang tampil
- * @property {Array<SupabaseTypes.UniversitasData>} universitas
- * Array yang berisikan data universitas
+ * @property {ContextTypes.DashboardContext['data']['universitas']} universitas
  */
 
 /**
@@ -117,8 +117,7 @@ export function AcademicCard({ count, universitas }) {
 /**
  * Props yang digunakan component `UpdateCard`
  * @typedef {Object} UpdateCardProps
- * @property {Array<SupabaseTypes.NotifikasiData>} notifikasi
- * Array yang berisikan notifikasi data
+ * @property {ContextTypes.DashboardContext['data']['notifikasi']} notifikasi
  */
 
 /**
@@ -149,15 +148,14 @@ export function UpdateCard({ notifikasi }) {
  * @typedef {Object} HistoryCardProps
  * @property {number} count
  * Jumlah card yang tampil
- * @property {Array<SupabaseTypes.UniversitasData>} universitas
- * Array yang berisikan data universitas
+ * @property {ContextTypes.DashboardContext['data']['universitas']} universitas
  */
 
 /**
  * Component yang menampilkan user matakuliah history dengan card `History` dilengkapi dengan hook `swr` untuk memperoleh data yang dibutuhkan.
  * 
  * Hook tersebut juga mengontrol `CardState` dari card tersebut
- * @param {React.HTMLAttributes & HistoryCardProps} props HistoryCard props
+ * @param {HistoryCardProps} props HistoryCard props
  * @returns {React.ReactElement} Rendered component
  */
 export function HistoryCard({ count, universitas }) {
@@ -197,18 +195,13 @@ export function HistoryCard({ count, universitas }) {
 }
 
 /**
- * Props yang digunakan component `Dashboard`
- * @typedef {Object} DashboardProps
- * @property {Array<SupabaseTypes.UniversitasData>} universitas
- * @property {Array<SupabaseTypes.NotifikasiData>} notifikasi
- */
-
-/**
  * Render dashboard page `'/dashboard'`
- * @param {DashboardProps} props Dashboard props
  * @returns {React.ReactElement} Rendered dashboard page
  */
-export default function Dashboard({ universitas, notifikasi }) {
+export default function Dashboard() {
+    /** @type {ContextTypes.DashboardContext} */
+    const { data: { universitas, notifikasi } } = React.useContext(DashboardContext);
+
     return (
         <div className={styles.wrapper}>
             <div className={styles.primary}>
