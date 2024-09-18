@@ -248,6 +248,8 @@ import {
  * @property {UniversitasNames} details.universitas 
  * Nama universitas user pemilik rating dengan format pascal case
  * - Contoh : `'Universitas Brawijaya'`
+ * 
+ * Diresolve pada `'api/rating'`
  */
 
 /** Entry notifikasi yang diperoleh dari API `'/api/notifikasi'` atau supabase database table `notifikasi`
