@@ -28,8 +28,6 @@ import * as SupabaseTypes from './supabase';
  * @property {(isBigContent:boolean) => void} setBigContent Method untuk mengaktifkan atau nonaktifkan big content.
  * @property {boolean} loginMode State apakah mode login atau bukan.
  * @property {boolean} isBigContent State apakah big content `window.matchMedia('(min-width: 870px)')` atau bukan.
- * @property {Object} data Core data yang diresolve dari layout `'/users'`
- * @property {Array<SupabaseTypes.UniversitasData>} data.universitas Array yang berisikan core data `universitas`
  */
 
 /**
@@ -46,9 +44,6 @@ import * as SupabaseTypes from './supabase';
  * @property {boolean} isRichContent State apakah rich content `window.matchMedia('(min-width: 1280px)')` atau bukan.
  * @property {boolean} isPhoneContent State apakah phone content `window.matchMedia('(max-width: 768px)')` atau bukan.
  * @property {boolean} isTouchDevice State apakah touch device `'ontouchstart' in window || navigator.msMaxTouchPoints` atau bukan. 
- * @property {Object} data Core data yang diresolve dari layout `'/dashboard'`
- * @property {Array<SupabaseTypes.UniversitasData>} data.universitas Array yang berisikan core data `universitas`
- * @property {Array<SupabaseTypes.NotifikasiData>} data.notifikasi Array yang berisikan core data `notifikasi`
  */
 
 /**
