@@ -2,7 +2,6 @@
 
 // #region TYPE DEPEDENCY
 import * as ContextTypes from '@/types/context';
-import * as SupabaseTypes from '@/types/supabase';
 // #endregion
 
 // #region NEXT DEPEDENCY
@@ -62,18 +61,10 @@ import { BiMoon } from 'react-icons/bi';
 // #endregion
 
 /**
- * Props yang digunakan component `Users`
- * @typedef {Object} UsersProps
- * @property {Array<SupabaseTypes.UniversitasData>} universitasData
- * Array yang berisikan semua universitas data
- */
-
-/**
  * Render users page `'/users'`
- * @param {UsersProps} props Users props
  * @returns {React.ReactElement} Rendered users page
  */
-export default function Users({ universitasData }) {
+export default function Users() {
     /* ========== Next Hooks ========== */
     const captcha = React.useRef();
     const router = useRouter();
@@ -83,7 +74,7 @@ export default function Users({ universitasData }) {
     /** @type {ContextTypes.UsersContext} */
     const {
         loginMode, setLoginMode,
-        isBigContent,
+        isBigContent, data: { universitas: universitasData },
     } = React.useContext(UsersContext);
 
     /** @type {ContextTypes.ModalContext} */

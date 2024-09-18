@@ -3,6 +3,10 @@ import { ModalProvider } from '@/component/provider/Modal';
 import { UsersProvider } from "@/component/provider/Users";
 // #endregion
 
+// #region UTIL DEPEDENCY
+import { getUniversitasData } from '@/utils/core_data';
+// #endregion
+
 // #region TAG OR METADATA
 export const metadata = {
   title: 'SIPK | Users',
@@ -11,16 +15,14 @@ export const metadata = {
 }
 // #endregion
 
-export default function UsersLayout({
-  children,
-}) {
+export default async function UsersLayout({ children }) {
+  const universitas = await getUniversitasData();
+
   return (
-    <>
-      <UsersProvider>
-        <ModalProvider>
-          {children}
-        </ModalProvider>
-      </UsersProvider>
-    </>
+    <UsersProvider data={{ universitas }}>
+      <ModalProvider>
+        {children}
+      </ModalProvider>
+    </UsersProvider>
   )
 }
