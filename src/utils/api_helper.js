@@ -417,7 +417,6 @@ export async function validateFormData(formData, presetSchema = null, customSche
             details: Joi.object({
                 author: Joi.string().required(),
                 authorType: Joi.number().min(0).max(2).required(),
-                universitas: Joi.string().required() // Belum validasi dengan Universitas yang valid atau tersedia
             }).required()
         }),
         register: Joi.object(

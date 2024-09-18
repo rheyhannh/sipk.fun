@@ -15,6 +15,7 @@ import {
 } from '@/utils/server_side';
 import {
     BadRequestErrorResponse as badRequestError,
+    NotFoundErrorResponse as notFoundError,
     ConflictErrorResponse as conflictError,
     ServerErrorResponse as serverError,
 } from '@/constant/api_response';
@@ -173,6 +174,25 @@ export async function POST(request) {
             )
         }
 
+        const userUniversitas = decryptedSession?.user?.user_metadata?.university ?? decodedAccessToken?.user_metadata?.university;
+        if (!userUniversitas) {
+            throw notFoundError.resource_not_found(
+                defaultUserErrorMessage, undefined,
+                {
+                    severity: 'error',
+                    reason: 'Failed to add user rating, cant resolve user universitas',
+                    stack: null,
+                    functionDetails: 'POST /api/rating line 147',
+                    functionArgs: null,
+                    functionResolvedVariable: null,
+                    request: await getRequestDetails(),
+                    more: { userUniversitas },
+                }
+            )
+        }
+
+        formData.details.universitas = userUniversitas;
+
         /** @type {SupabaseTypes._from<SupabaseTypes.RatingData} */
         var { data, error } = await supabase.from('rating').select('*');
         if (error) {
@@ -327,6 +347,25 @@ export async function PATCH(request) {
                 }
             )
         }
+
+        const userUniversitas = decryptedSession?.user?.user_metadata?.university ?? decodedAccessToken?.user_metadata?.university;
+        if (!userUniversitas) {
+            throw notFoundError.resource_not_found(
+                defaultUserErrorMessage, undefined,
+                {
+                    severity: 'error',
+                    reason: 'Failed to edit user rating, cant resolve user universitas',
+                    stack: null,
+                    functionDetails: 'PATCH /api/rating line 353',
+                    functionArgs: null,
+                    functionResolvedVariable: null,
+                    request: await getRequestDetails(),
+                    more: { userUniversitas },
+                }
+            )
+        }
+
+        formData.details.universitas = userUniversitas;
 
         const unixNow = Math.floor(Date.now() / 1000);
 

@@ -38,7 +38,7 @@ import isAlpha from 'validator/lib/isAlpha';
 // #endregion
 
 // #region HOOKS DEPEDENCY
-import { useUser, useUniversitas, useRating } from "@/data/core";
+import { useUser, useRating } from "@/data/core";
 // #endregion
 
 // #region ICON DEPEDENCY
@@ -1861,7 +1861,6 @@ export const Rating = () => {
     const userIdCookie = useCookies().get('s_user_id');
     const accessToken = useCookies().get('s_access_token');
     const { data: user } = useUser({ revalidateOnMount: false });
-    const { data: universitas } = useUniversitas({ revalidateOnMount: false }, 'user', user ? user[0].university_id : undefined);
     const { data: ratingData, error: ratingError, isLoading: ratingLoading, isValidating: ratingValidating } = useRating();
     const [stars, setStars] = useState(0);
     const [review, setReview] = useState('');
@@ -1938,7 +1937,6 @@ export const Rating = () => {
                                 details: {
                                     author: author === 0 ? user[0].fullname : author === 1 ? user[0].nickname : 'Anonim',
                                     authorType: author,
-                                    universitas: universitas[0].nama
                                 }
                             })
                         } catch (error) { reject(error); }
