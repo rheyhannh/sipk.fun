@@ -6,9 +6,7 @@ export const metadata = {
 }
 // #endregion
 
-export default function DashboardLayout({
-    children,
-}) {
+export default function DashboardLayout({ children }) {
     return (
         <>
             {children}

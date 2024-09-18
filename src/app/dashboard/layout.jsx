@@ -22,9 +22,7 @@ export const metadata = {
 }
 // #endregion
 
-export default async function DashboardLayout({
-  children,
-}) {
+export default async function DashboardLayout({ children }) {
   const universitas = await getUniversitasData();
   const notifikasi = await getNotifikasiData();
 
