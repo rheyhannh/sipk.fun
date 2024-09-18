@@ -13,7 +13,7 @@ import { headers, cookies } from 'next/headers';
 // #region UTIL DEPEDENCY
 import CryptoJS from 'crypto-js';
 import { LRUCache } from 'lru-cache';
-import jwt, { VerifyOptions } from 'jsonwebtoken';
+import { jwtVerify, JWTVerifyOptions, errors as joseError } from 'jose';
 import isJWT from 'validator/lib/isJWT';
 import isUUID from 'validator/lib/isUUID';
 import isNumeric from 'validator/lib/isNumeric';
@@ -219,7 +219,7 @@ export async function rateLimit(options) {
 /**
  * Method untuk validasi supabase `JWT` atau access token atau cookie `'s_access_token'` dengan menggunakan 
  * ```js
- * jwt.verify(); // import jwt from 'jsonwebtoken'
+ * jwtVerify(); // import { jwtVerify } from 'jose';
  * ```
  * 
  * Secara default token dinyatakan valid dengan kriteria berikut, 
@@ -229,22 +229,22 @@ export async function rateLimit(options) {
  * - Audience bernilai `'authenticated'`
  * - Issuer match dengan salah satu issuer yang tersedia pada `process.env.JWT_ISSUER`
  * - Subject match dengan param `userId`
+ * - Token tidak `expired`
  * 
  * @param {string} token Encoded string `JWT` atau access token atau cookie `'s_access_token'`
  * @param {string} userId User id `uuid-v4`
- * @param {boolean} [ignoreExpiration=true] Boolean untuk tetap kategorikan token sebagai `valid` walaupun sudah kadaluwarsa atau `expired`, default: `true`
- * @param {Omit<VerifyOptions, 'algorithms' | 'audience' | 'issuer' | 'ignoreExpiration' | 'subject'} otherOptions Opsi lainnya untuk mempertimbangkan token `valid` atau tidak
+ * @param {Omit<JWTVerifyOptions, 'algorithms' | 'audience' | 'issuer' | 'subject'>} otherOptions Opsi lainnya untuk mempertimbangkan token `valid` atau tidak
  * @returns {Promise<SupabaseTypes.AccessTokenPayload>} Promise dengan `resolve` decoded payload `JWT` atau access token atau cookie `'s_access_token'` dan `reject` dengan error
  * @throws Object `AuthError` saat kriteria pada deskripsi tidak terpenuhi
  */
-export async function validateJWT(token, userId, ignoreExpiration = true, otherOptions = {}) {
+export async function validateJWT(token, userId, otherOptions = {}) {
     if (!userId || typeof userId !== 'string' || !isUUID(userId)) {
         throw authError.invalid_access_token(undefined, undefined, {
             severity: 'error',
             reason: 'User id should exist and UUID typed',
             stack: null,
             functionDetails: 'validateJWT at utils/server_side.js line 208',
-            functionArgs: { userId, ignoreExpiration, otherOptions },
+            functionArgs: { userId, otherOptions },
             functionResolvedVariable: null,
             request: await getRequestDetails(),
             more: null,
@@ -256,7 +256,7 @@ export async function validateJWT(token, userId, ignoreExpiration = true, otherO
             reason: 'Access token should exist and JWT typed',
             stack: null,
             functionDetails: 'validateJWT at utils/server_side.js line 217',
-            functionArgs: { userId, ignoreExpiration, otherOptions },
+            functionArgs: { userId, otherOptions },
             functionResolvedVariable: null,
             request: await getRequestDetails(),
             more: null,
@@ -265,25 +265,37 @@ export async function validateJWT(token, userId, ignoreExpiration = true, otherO
 
     try {
         const algorithms = process.env.JWT_ALGORITHM ? process.env.JWT_ALGORITHM.split(',') : ['HS256'];
-        const issuer = process.env.JWT_ISSUER ? process.env.JWT_ISSUER.split(',') : ['defaultIssuer'];
+        const issuer = process.env.JWT_ISSUER ? process.env.JWT_ISSUER.split(',') : ['https://mbdyljoaqssmjfrumdad.supabase.co/auth/v1'];
 
-        const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY, {
+        const { payload: decoded } = await jwtVerify(token, new TextEncoder().encode(process.env.JWT_SECRET_KEY), {
             algorithms,
             audience: 'authenticated',
             issuer,
-            ignoreExpiration,
             subject: userId,
             ...otherOptions,
         });
 
         return decoded;
     } catch (error) {
+        if (error instanceof joseError.JWTExpired) {
+            throw authError.expired_access_token(undefined, undefined, {
+                severity: 'error',
+                reason: null,
+                stack: error?.stack ?? null,
+                functionDetails: 'validateJWT at utils/server_side.js line 246',
+                functionArgs: { userId, otherOptions },
+                functionResolvedVariable: null,
+                request: await getRequestDetails(),
+                more: error,
+            })
+        }
+
         throw authError.invalid_access_token(undefined, undefined, {
             severity: 'error',
             reason: null,
             stack: error?.stack ?? null,
             functionDetails: 'validateJWT at utils/server_side.js line 246',
-            functionArgs: { userId, ignoreExpiration, otherOptions },
+            functionArgs: { userId, otherOptions },
             functionResolvedVariable: null,
             request: await getRequestDetails(),
             more: error,
