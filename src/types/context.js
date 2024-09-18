@@ -44,6 +44,9 @@ import * as SupabaseTypes from './supabase';
  * @property {boolean} isRichContent State apakah rich content `window.matchMedia('(min-width: 1280px)')` atau bukan.
  * @property {boolean} isPhoneContent State apakah phone content `window.matchMedia('(max-width: 768px)')` atau bukan.
  * @property {boolean} isTouchDevice State apakah touch device `'ontouchstart' in window || navigator.msMaxTouchPoints` atau bukan. 
+ * @property {Object} data Core data yang diresolve dari server component
+ * @property {Array<SupabaseTypes.UniversitasData>} data.universitas Array yang berisikan core data `universitas`
+ * @property {Array<SupabaseTypes.NotifikasiData>} data.notifikasi Array yang berisikan core data `notifikasi`
  */
 
 /**
