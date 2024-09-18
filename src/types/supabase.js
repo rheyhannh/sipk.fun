@@ -238,6 +238,8 @@ import {
  * Rating details
  * @property {string} details.author 
  * Dapat bernilai nama lengkap atau nickname user atau `'Anonim'` tergantung dengan `authorType` yang digunakan
+ * 
+ * Diresolve pada `'api/rating'`
  * @property {0|1|2} details.authorType 
  * Tipe author rating dengan keterangan berikut,
  * - `0` : Nama lengkap user akan digunakan pada `author`

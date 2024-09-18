@@ -415,7 +415,6 @@ export async function validateFormData(formData, presetSchema = null, customSche
             rating: Joi.number().min(1).max(5).required(),
             review: Joi.string().allow('').max(200).required(),
             details: Joi.object({
-                author: Joi.string().required(),
                 authorType: Joi.number().min(0).max(2).required(),
             }).required()
         }),

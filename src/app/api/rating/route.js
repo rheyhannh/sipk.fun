@@ -59,7 +59,7 @@ export async function GET(request) {
             const { data, error } = await supabaseService.from('rating').select('*');
             if (error) {
                 const { code, headers = {}, _details, ...rest } = await handleSupabaseError(error, false, {
-                    functionDetails: 'supabaseService.from at GET /api/rating line 58',
+                    functionDetails: 'supabaseService.from at GET /api/rating line 59',
                     functionArgs: { from: 'rating', select: '*' },
                     functionResolvedVariable: { data, error },
                 });
@@ -83,7 +83,7 @@ export async function GET(request) {
         const { data, error } = await supabase.from('rating').select('*');
         if (error) {
             await handleSupabaseError(error, true, {
-                functionDetails: 'supabase.from at GET /api/rating line 82',
+                functionDetails: 'supabase.from at GET /api/rating line 83',
                 functionArgs: { from: 'rating', select: '*' },
                 functionResolvedVariable: { data, error },
             })
@@ -119,7 +119,7 @@ export async function POST(request) {
                     severity: 'error',
                     reason: 'No service handler for add rating',
                     stack: null,
-                    functionDetails: 'POST /api/rating line 115',
+                    functionDetails: 'POST /api/rating line 116',
                     functionArgs: null,
                     functionResolvedVariable: null,
                     request: await getRequestDetails(),
@@ -149,7 +149,7 @@ export async function POST(request) {
                     severity: 'error',
                     reason: "Rating message 'review' contain some of 'unallowedWords'",
                     stack: null,
-                    functionDetails: 'POST /api/rating line 145',
+                    functionDetails: 'POST /api/rating line 146',
                     functionArgs: null,
                     functionResolvedVariable: null,
                     request: await getRequestDetails(),
@@ -165,7 +165,7 @@ export async function POST(request) {
                     severity: 'error',
                     reason: "Rating message 'review' contain some of 'unallowedSymbols'",
                     stack: null,
-                    functionDetails: 'POST /api/rating line 161',
+                    functionDetails: 'POST /api/rating line 162',
                     functionArgs: null,
                     functionResolvedVariable: null,
                     request: await getRequestDetails(),
@@ -182,7 +182,7 @@ export async function POST(request) {
                     severity: 'error',
                     reason: 'Failed to add user rating, cant resolve user universitas',
                     stack: null,
-                    functionDetails: 'POST /api/rating line 147',
+                    functionDetails: 'POST /api/rating line 179',
                     functionArgs: null,
                     functionResolvedVariable: null,
                     request: await getRequestDetails(),
@@ -193,6 +193,64 @@ export async function POST(request) {
 
         formData.details.universitas = userUniversitas;
 
+        if (formData.details.authorType === 0) {
+            const userFullname = decryptedSession?.user?.user_metadata?.fullname ?? decodedAccessToken?.user_metadata?.fullname;
+            if (!userFullname) {
+                throw notFoundError.resource_not_found(
+                    defaultUserErrorMessage, undefined,
+                    {
+                        severity: 'error',
+                        reason: 'Failed to add user rating, cant resolve user fullname',
+                        stack: null,
+                        functionDetails: 'POST /api/rating line 199',
+                        functionArgs: null,
+                        functionResolvedVariable: null,
+                        request: await getRequestDetails(),
+                        more: { userFullname },
+                    }
+                )
+            }
+
+            formData.details.author = userFullname;
+        } else if (formData.details.authorType === 1) {
+            /** @type {SupabaseTypes._from<SupabaseTypes.UserData} */
+            const { data, error } = await supabase.from('user').select('*');
+            if (!data.length || !data[0]?.nickname) {
+                throw notFoundError.resource_not_found(
+                    defaultUserErrorMessage, undefined,
+                    {
+                        severity: 'error',
+                        reason: 'Failed to add user rating, cant resolve user nickname',
+                        stack: null,
+                        functionDetails: 'supabase.from at POST /api/rating line 217',
+                        functionArgs: { from: 'user', select: '*' },
+                        functionResolvedVariable: { data, error },
+                        request: await getRequestDetails(),
+                        more: null,
+                    }
+                )
+            }
+            if (error) {
+                throw serverError.interval_server_error(
+                    defaultUserErrorMessage, undefined,
+                    {
+                        severity: 'error',
+                        reason: 'Failed to add user rating, error when trying to resolve user nickname',
+                        stack: null,
+                        functionDetails: 'supabase.from at POST /api/rating line 217',
+                        functionArgs: { from: 'user', select: '*' },
+                        functionResolvedVariable: { data, error },
+                        request: await getRequestDetails(),
+                        more: error,
+                    }
+                )
+            }
+
+            formData.details.author = data[0].nickname;
+        } else {
+            formData.details.author = 'Anonim';
+        }
+
         /** @type {SupabaseTypes._from<SupabaseTypes.RatingData} */
         var { data, error } = await supabase.from('rating').select('*');
         if (error) {
@@ -202,7 +260,7 @@ export async function POST(request) {
                     severity: 'error',
                     reason: 'Failed to add user rating, cant resolve user rating',
                     stack: null,
-                    functionDetails: 'supabase.from at POST /api/rating line 177',
+                    functionDetails: 'supabase.from at POST /api/rating line 255',
                     functionArgs: { from: 'rating', select: '*' },
                     functionResolvedVariable: { data, error },
                     request: await getRequestDetails(),
@@ -217,7 +275,7 @@ export async function POST(request) {
                     severity: 'error',
                     reason: 'Failed to add user rating, user rating already exist',
                     stack: null,
-                    functionDetails: 'supabase.from at POST /api/rating line 177',
+                    functionDetails: 'supabase.from at POST /api/rating line 255',
                     functionArgs: { from: 'rating', select: '*' },
                     functionResolvedVariable: { data, error },
                     request: await getRequestDetails(),
@@ -237,7 +295,7 @@ export async function POST(request) {
                     severity: 'error',
                     reason: 'Failed to add user rating',
                     stack: null,
-                    functionDetails: 'supabase.from at POST /api/rating line 212',
+                    functionDetails: 'supabase.from at POST /api/rating line 290',
                     functionArgs: { from: 'rating', insert: { ...formData, owned_by: userId, unix_created_at: unixNow }, select: true },
                     functionResolvedVariable: { data, error },
                     request: await getRequestDetails(),
@@ -278,7 +336,7 @@ export async function PATCH(request) {
                     severity: 'error',
                     reason: 'No service handler for update user rating',
                     stack: null,
-                    functionDetails: 'PATCH /api/rating line 255',
+                    functionDetails: 'PATCH /api/rating line 333',
                     functionArgs: null,
                     functionResolvedVariable: null,
                     request: await getRequestDetails(),
@@ -300,7 +358,7 @@ export async function PATCH(request) {
                     severity: 'error',
                     reason: "Request param 'id' expected exist and typed as string and UUID format",
                     stack: null,
-                    functionDetails: 'PATCH /api/rating line 277',
+                    functionDetails: 'PATCH /api/rating line 355',
                     functionArgs: null,
                     functionResolvedVariable: null,
                     request: await getRequestDetails(),
@@ -323,7 +381,7 @@ export async function PATCH(request) {
                     severity: 'error',
                     reason: "Rating message 'review' contain some of 'unallowedWords'",
                     stack: null,
-                    functionDetails: 'PATCH /api/rating line 300',
+                    functionDetails: 'PATCH /api/rating line 378',
                     functionArgs: null,
                     functionResolvedVariable: null,
                     request: await getRequestDetails(),
@@ -339,7 +397,7 @@ export async function PATCH(request) {
                     severity: 'error',
                     reason: "Rating message 'review' contain some of 'unallowedSymbols'",
                     stack: null,
-                    functionDetails: 'PATCH /api/rating line 316',
+                    functionDetails: 'PATCH /api/rating line 394',
                     functionArgs: null,
                     functionResolvedVariable: null,
                     request: await getRequestDetails(),
@@ -356,7 +414,7 @@ export async function PATCH(request) {
                     severity: 'error',
                     reason: 'Failed to edit user rating, cant resolve user universitas',
                     stack: null,
-                    functionDetails: 'PATCH /api/rating line 353',
+                    functionDetails: 'PATCH /api/rating line 411',
                     functionArgs: null,
                     functionResolvedVariable: null,
                     request: await getRequestDetails(),
@@ -366,6 +424,64 @@ export async function PATCH(request) {
         }
 
         formData.details.universitas = userUniversitas;
+
+        if (formData.details.authorType === 0) {
+            const userFullname = decryptedSession?.user?.user_metadata?.fullname ?? decodedAccessToken?.user_metadata?.fullname;
+            if (!userFullname) {
+                throw notFoundError.resource_not_found(
+                    defaultUserErrorMessage, undefined,
+                    {
+                        severity: 'error',
+                        reason: 'Failed to edit user rating, cant resolve user fullname',
+                        stack: null,
+                        functionDetails: 'PATCH /api/rating line 431',
+                        functionArgs: null,
+                        functionResolvedVariable: null,
+                        request: await getRequestDetails(),
+                        more: { userFullname },
+                    }
+                )
+            }
+
+            formData.details.author = userFullname;
+        } else if (formData.details.authorType === 1) {
+            /** @type {SupabaseTypes._from<SupabaseTypes.UserData} */
+            const { data, error } = await supabase.from('user').select('*');
+            if (!data.length || !data[0]?.nickname) {
+                throw notFoundError.resource_not_found(
+                    defaultUserErrorMessage, undefined,
+                    {
+                        severity: 'error',
+                        reason: 'Failed to edit user rating, cant resolve user nickname',
+                        stack: null,
+                        functionDetails: 'supabase.from at PATCH /api/rating line 449',
+                        functionArgs: { from: 'user', select: '*' },
+                        functionResolvedVariable: { data, error },
+                        request: await getRequestDetails(),
+                        more: null,
+                    }
+                )
+            }
+            if (error) {
+                throw serverError.interval_server_error(
+                    defaultUserErrorMessage, undefined,
+                    {
+                        severity: 'error',
+                        reason: 'Failed to edit user rating, error when trying to resolve user nickname',
+                        stack: null,
+                        functionDetails: 'supabase.from at PATCH /api/rating line 449',
+                        functionArgs: { from: 'user', select: '*' },
+                        functionResolvedVariable: { data, error },
+                        request: await getRequestDetails(),
+                        more: error,
+                    }
+                )
+            }
+
+            formData.details.author = data[0].nickname;
+        } else {
+            formData.details.author = 'Anonim';
+        }
 
         const unixNow = Math.floor(Date.now() / 1000);
 
@@ -378,7 +494,7 @@ export async function PATCH(request) {
                     severity: 'error',
                     reason: 'Failed to update user rating',
                     stack: null,
-                    functionDetails: 'supabase.from at PATCH /api/rating line 334',
+                    functionDetails: 'supabase.from at PATCH /api/rating line 489',
                     functionArgs: { from: 'rating', update: { rating: formData.rating, review: formData.review, unix_updated_at: unixNow, details: formData.details }, eq: { id: ratingId }, select: true },
                     functionResolvedVariable: { data, error },
                     request: await getRequestDetails(),

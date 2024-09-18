@@ -1860,7 +1860,6 @@ export const Rating = () => {
     const router = useRouter();
     const userIdCookie = useCookies().get('s_user_id');
     const accessToken = useCookies().get('s_access_token');
-    const { data: user } = useUser({ revalidateOnMount: false });
     const { data: ratingData, error: ratingError, isLoading: ratingLoading, isValidating: ratingValidating } = useRating();
     const [stars, setStars] = useState(0);
     const [review, setReview] = useState('');
@@ -1935,7 +1934,6 @@ export const Rating = () => {
                                 rating: stars,
                                 review: review,
                                 details: {
-                                    author: author === 0 ? user[0].fullname : author === 1 ? user[0].nickname : 'Anonim',
                                     authorType: author,
                                 }
                             })
