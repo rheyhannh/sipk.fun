@@ -6,10 +6,6 @@ export const metadata = {
 }
 // #endregion
 
-export default function Layout({ children }) {
-    return (
-        <>
-            {children}
-        </>
-    )
+export default function MagiclinkLayout({ children }) {
+    return children;
 }

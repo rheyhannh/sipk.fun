@@ -6,10 +6,6 @@ export const metadata = {
 }
 // #endregion
 
-export default function DashboardLayout({ children }) {
-    return (
-        <>
-            {children}
-        </>
-    )
+export default function DashboardMatakuliahLayout({ children }) {
+    return children;
 }

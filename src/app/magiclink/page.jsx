@@ -6,7 +6,7 @@ import Magiclink from '@/page/Magiclink';
 import { getFaktaData } from '@/utils/core_data';
 // #endregion
 
-export default async function Page() {
+export default async function MagiclinkPage() {
     const fakta = await getFaktaData();
 
     return (

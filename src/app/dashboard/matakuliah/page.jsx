@@ -2,7 +2,7 @@
 import DashboardMatakuliah from '@/page/DashboardMatakuliah';
 // #endregion
 
-export default async function MatakuliahPage() {
+export default async function DashboardMatakuliahPage() {
     return (
         <DashboardMatakuliah />
     )

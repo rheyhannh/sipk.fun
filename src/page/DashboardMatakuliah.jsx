@@ -258,52 +258,50 @@ export default function DashboardMatakuliah() {
     const [widget, setWidget] = React.useState(true);
 
     return (
-        <>
-            <div className={styles.wrapper}>
-                <div className={styles.top}>
-                    <h1>Matakuliah</h1>
-                    <div className={styles.top__right} onClick={() => { setWidget(!widget) }}>
-                        <div className={styles.top__right_icon}>
-                            <AiOutlineAppstore size={'24px'} color={widget ? 'var(--logo-second-color)' : 'var(--infoDark-color)'} />
-                        </div>
-                        <h3 className={styles.top__right_text}>
-                            Widget
-                        </h3>
+        <div className={styles.wrapper}>
+            <div className={styles.top}>
+                <h1>Matakuliah</h1>
+                <div className={styles.top__right} onClick={() => { setWidget(!widget) }}>
+                    <div className={styles.top__right_icon}>
+                        <AiOutlineAppstore size={'24px'} color={widget ? 'var(--logo-second-color)' : 'var(--infoDark-color)'} />
                     </div>
+                    <h3 className={styles.top__right_text}>
+                        Widget
+                    </h3>
                 </div>
-                <Swiper
-                    slidesPerView={1}
-                    spaceBetween={30}
-                    breakpoints={{
-                        768: {
-                            slidesPerView: 2,
-                        },
-                        1280: {
-                            slidesPerView: 3,
-                        },
-                        1920: {
-                            slidesPerView: 4,
-                        }
-                    }}
-                    pagination={{
-                        clickable: true,
-                    }}
-                    style={{
-                        "--swiper-pagination-color": "var(--logo-second-color)",
-                        "--swiper-pagination-bullet-inactive-color": "var(--infoDark-color)",
-                    }}
-                    noSwipingSelector={['#grafik_data-scroll', '#distribusi_data-scroll']}
-                    modules={[Pagination]}
-                    className={`${styles.insight} ${widget ? styles.active : ''}`}
-                >
-                    <SwiperSlide> <GrafikCard universitas={universitas} /> </SwiperSlide>
-                    <SwiperSlide> <TargetCard universitas={universitas} /> </SwiperSlide>
-                    <SwiperSlide> <DistribusiCard universitas={universitas} /> </SwiperSlide>
-                    <SwiperSlide> <ProgressCard universitas={universitas} /> </SwiperSlide>
-                </Swiper>
-
-                <TabelSection universitas={universitas} />
             </div>
-        </>
+            <Swiper
+                slidesPerView={1}
+                spaceBetween={30}
+                breakpoints={{
+                    768: {
+                        slidesPerView: 2,
+                    },
+                    1280: {
+                        slidesPerView: 3,
+                    },
+                    1920: {
+                        slidesPerView: 4,
+                    }
+                }}
+                pagination={{
+                    clickable: true,
+                }}
+                style={{
+                    "--swiper-pagination-color": "var(--logo-second-color)",
+                    "--swiper-pagination-bullet-inactive-color": "var(--infoDark-color)",
+                }}
+                noSwipingSelector={['#grafik_data-scroll', '#distribusi_data-scroll']}
+                modules={[Pagination]}
+                className={`${styles.insight} ${widget ? styles.active : ''}`}
+            >
+                <SwiperSlide> <GrafikCard universitas={universitas} /> </SwiperSlide>
+                <SwiperSlide> <TargetCard universitas={universitas} /> </SwiperSlide>
+                <SwiperSlide> <DistribusiCard universitas={universitas} /> </SwiperSlide>
+                <SwiperSlide> <ProgressCard universitas={universitas} /> </SwiperSlide>
+            </Swiper>
+
+            <TabelSection universitas={universitas} />
+        </div>
     )
 }
