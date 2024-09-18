@@ -22,20 +22,18 @@ export default function DashboardLayout({
   children,
 }) {
   return (
-    <>
-      <DashboardProvider>
-        <ModalProvider>
-          <Header />
-          <main className={`dashboard`}>
-            <Navbar>
-              {children}
-            </Navbar>
-            <Suspense fallback={null}>
-              <NavigationEvents />
-            </Suspense>
-          </main>
-        </ModalProvider>
-      </DashboardProvider>
-    </>
+    <DashboardProvider>
+      <ModalProvider>
+        <Header />
+        <main className={`dashboard`}>
+          <Navbar>
+            {children}
+          </Navbar>
+          <Suspense fallback={null}>
+            <NavigationEvents />
+          </Suspense>
+        </main>
+      </ModalProvider>
+    </DashboardProvider>
   )
 }
