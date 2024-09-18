@@ -1,9 +1,5 @@
 'use client'
 
-// #region TYPE DEPEDENCY
-import * as ContextTypes from '@/types/context';
-// #endregion
-
 // #region NEXT DEPEDENCY
 import { useRouter, usePathname } from "next/navigation";
 // #endregion
@@ -19,12 +15,11 @@ import { useCookies } from 'next-client-cookies';
 export const DashboardContext = createContext();
 /**
  * Dashboard page context provider. Use this wrapper to use any `DashboardContext` config.
- * @param {Object} props React props object
- * @param {ContextTypes.DashboardContext['data']} props.data
+ * @param {Object} props DashboardProvider props
  * @param {any} props.children Component or element children.
  * @returns {ReactElement} Dashboard page context provider wrapper.
  */
-export const DashboardProvider = ({ data, children }) => {
+export const DashboardProvider = ({ children }) => {
     /* ========== Next Hooks ========== */
     const router = useRouter();
     const pathname = usePathname();
@@ -121,7 +116,6 @@ export const DashboardProvider = ({ data, children }) => {
                 isRichContent, setRichContent,
                 isPhoneContent, setPhoneContent,
                 isTouchDevice, setTouchDevice,
-                data,
             }}
         >
             {children}

@@ -1,9 +1,5 @@
 'use client'
 
-// #region TYPE DEPEDENCY
-import * as ContextTypes from '@/types/context';
-// #endregion
-
 // #region REACT DEPEDENCY
 import { createContext, useEffect, useState } from "react"
 // #endregion
@@ -11,12 +7,11 @@ import { createContext, useEffect, useState } from "react"
 export const UsersContext = createContext();
 /**
  * Users page context provider. Use this wrapper to use any `UsersContext` config.
- * @param {Object} props React props object
- * @param {ContextTypes.UsersContext['data']} props.data
+ * @param {Object} props UsersProvider props
  * @param {any} props.children Component or element children.
  * @returns {ReactElement} Users page context provider wrapper.
  */
-export const UsersProvider = ({ data, children }) => {
+export const UsersProvider = ({ children }) => {
     /*
     ========== States ==========
     */
@@ -52,7 +47,6 @@ export const UsersProvider = ({ data, children }) => {
             value={{
                 loginMode, setLoginMode,
                 isBigContent, setBigContent,
-                data,
             }}
         >
             {children}

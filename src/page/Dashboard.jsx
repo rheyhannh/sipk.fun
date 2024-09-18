@@ -1,7 +1,7 @@
 'use client'
 
 // #region TYPE DEPEDENCY
-import * as ContextTypes from '@/types/context';
+import * as SupabaseTypes from '@/types/supabase';
 // #endregion
 
 // #region REACT DEPEDENCY
@@ -9,7 +9,6 @@ import * as React from 'react';
 // #endregion
 
 // #region COMPONENT DEPEDENCY
-import { DashboardContext } from '@/component/provider/Dashboard';
 import { Summary, Notification, History } from '@/component/Card';
 // #endregion
 
@@ -34,7 +33,7 @@ import styles from './style/dashboard.module.css';
  * @typedef {Object} AcademicCardProps
  * @property {number} count
  * Jumlah card yang tampil
- * @property {ContextTypes.DashboardContext['data']['universitas']} universitas
+ * @property {Array<SupabaseTypes.UniversitasData>} universitas
  */
 
 /**
@@ -117,7 +116,7 @@ export function AcademicCard({ count, universitas }) {
 /**
  * Props yang digunakan component `UpdateCard`
  * @typedef {Object} UpdateCardProps
- * @property {ContextTypes.DashboardContext['data']['notifikasi']} notifikasi
+ * @property {Array<SupabaseTypes.NotifikasiData>} notifikasi
  */
 
 /**
@@ -148,7 +147,7 @@ export function UpdateCard({ notifikasi }) {
  * @typedef {Object} HistoryCardProps
  * @property {number} count
  * Jumlah card yang tampil
- * @property {ContextTypes.DashboardContext['data']['universitas']} universitas
+ * @property {Array<SupabaseTypes.UniversitasData>} universitas
  */
 
 /**
@@ -196,12 +195,10 @@ export function HistoryCard({ count, universitas }) {
 
 /**
  * Render dashboard page `'/dashboard'`
+ * @param {{universitas:Array<SupabaseTypes.UniversitasData>, notifikasi:Array<SupabaseTypes.NotifikasiData>}} props Dashboard props
  * @returns {React.ReactElement} Rendered dashboard page
  */
-export default function Dashboard() {
-    /** @type {ContextTypes.DashboardContext} */
-    const { data: { universitas, notifikasi } } = React.useContext(DashboardContext);
-
+export default function Dashboard({ universitas, notifikasi }) {
     return (
         <div className={styles.wrapper}>
             <div className={styles.primary}>

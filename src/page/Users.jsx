@@ -2,6 +2,7 @@
 
 // #region TYPE DEPEDENCY
 import * as ContextTypes from '@/types/context';
+import * as SupabaseTypes from '@/types/supabase';
 // #endregion
 
 // #region NEXT DEPEDENCY
@@ -62,9 +63,10 @@ import { BiMoon } from 'react-icons/bi';
 
 /**
  * Render users page `'/users'`
+ * @param {{universitasData:Array<SupabaseTypes.UniversitasData>}} props Users props
  * @returns {React.ReactElement} Rendered users page
  */
-export default function Users() {
+export default function Users({ universitasData }) {
     /* ========== Next Hooks ========== */
     const captcha = React.useRef();
     const router = useRouter();
@@ -74,7 +76,7 @@ export default function Users() {
     /** @type {ContextTypes.UsersContext} */
     const {
         loginMode, setLoginMode,
-        isBigContent, data: { universitas: universitasData },
+        isBigContent
     } = React.useContext(UsersContext);
 
     /** @type {ContextTypes.ModalContext} */

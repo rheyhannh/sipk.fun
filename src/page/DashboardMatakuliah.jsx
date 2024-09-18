@@ -1,7 +1,7 @@
 'use client'
 
 // #region TYPE DEPEDENCY
-import * as ContextTypes from '@/types/context';
+import * as SupabaseTypes from '@/types/supabase';
 // #endregion
 
 // #region REACT DEPEDENCY
@@ -9,7 +9,6 @@ import * as React from 'react';
 // #endregion
 
 // #region COMPONENT DEPEDENCY
-import { DashboardContext } from '@/component/provider/Dashboard';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Pagination } from 'swiper/modules';
 import { Grafik, Target, Progress, Distribusi } from '@/component/Card';
@@ -37,7 +36,7 @@ import { AiOutlineAppstore } from "react-icons/ai";
 /**
  * Props yang digunakan component `GrafikCard`
  * @typedef {Object} GrafikCardProps
- * @property {ContextTypes.DashboardContext['data']['universitas']} universitas
+ * @property {Array<SupabaseTypes.UniversitasData>} universitas
  */
 
 /**
@@ -80,7 +79,7 @@ function GrafikCard({ universitas }) {
 /**
  * Props yang digunakan component `TargetCard`
  * @typedef {Object} TargetCardProps
- * @property {ContextTypes.DashboardContext['data']['universitas']} universitas
+ * @property {Array<SupabaseTypes.UniversitasData>} universitas
  */
 
 /**
@@ -123,7 +122,7 @@ function TargetCard({ universitas }) {
 /**
  * Props yang digunakan component `DistribusiCard`
  * @typedef {Object} DistribusiCardProps
- * @property {ContextTypes.DashboardContext['data']['universitas']} universitas
+ * @property {Array<SupabaseTypes.UniversitasData>} universitas
  */
 
 /**
@@ -166,7 +165,7 @@ function DistribusiCard({ universitas }) {
 /**
  * Props yang digunakan component `ProgressCard`
  * @typedef {Object} ProgressCardProps
- * @property {ContextTypes.DashboardContext['data']['universitas']} universitas
+ * @property {Array<SupabaseTypes.UniversitasData>} universitas
  */
 
 /**
@@ -207,7 +206,7 @@ function ProgressCard({ universitas }) {
 /**
  * Props yang digunakan component `TabelSection`
  * @typedef {Object} TabelSectionProps
- * @property {ContextTypes.DashboardContext['data']['universitas']} universitas
+ * @property {Array<SupabaseTypes.UniversitasData>} universitas
  */
 
 /**
@@ -250,11 +249,10 @@ function TabelSection({ universitas }) {
 
 /**
  * Render dashboard matakuliah page `'/dashboard/matakuliah'`
+ * @param {{universitas:Array<SupabaseTypes.UniversitasData>}}
  * @returns {React.ReactElement} Rendered dashboard matakuliah page
  */
-export default function DashboardMatakuliah() {
-    /** @type {ContextTypes.DashboardContext} */
-    const { data: { universitas } } = React.useContext(DashboardContext);
+export default function DashboardMatakuliah({ universitas }) {
     const [widget, setWidget] = React.useState(true);
 
     return (
