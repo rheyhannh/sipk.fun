@@ -25,7 +25,7 @@ import {
 } from '@/utils/server_side';
 import isUUID from 'validator/lib/isUUID';
 import isNumeric from 'validator/lib/isNumeric';
-import isInt from 'validator/lib/isint';
+import isInt from 'validator/lib/isInt';
 // #endregion
 
 const limitRequest = parseInt(process.env.API_UNIVERSITAS_REQUEST_LIMIT);
