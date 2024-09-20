@@ -23,6 +23,9 @@ const nextOptions = {
         tags: ['fakta']
     }
 }
+const baseApiUrl = process.env.NODE_ENV === 'production'
+    ? process.env.NEXT_PUBLIC_SIPK_API_URL || process.env.NEXT_PUBLIC_SIPK_URL
+    : process.env.NEXT_PUBLIC_SIPK_API_URL || process.env.NEXT_PUBLIC_SIPK_URL;
 // #endregion
 
 /**
@@ -46,7 +49,7 @@ export async function getUniversitasData(options = {}) {
     const { headers = {}, ...restOptions } = options;
     const updatedHeaders = { ...headers, 'x-api-key': process.env.SUPABASE_SERVICE_KEY };
 
-    const response = await fetch('http://localhost:3000/api/universitas', {
+    const response = await fetch(baseApiUrl + '/api/universitas', {
         ...restOptions,
         headers: updatedHeaders,
         next: nextOptions['universitas'],
@@ -76,7 +79,7 @@ export async function getNotifikasiData(options = {}) {
     const { headers = {}, ...restOptions } = options;
     const updatedHeaders = { ...headers, 'x-api-key': process.env.SUPABASE_SERVICE_KEY };
 
-    const response = await fetch('http://localhost:3000/api/notifikasi', {
+    const response = await fetch(baseApiUrl + '/api/notifikasi', {
         ...restOptions,
         headers: updatedHeaders,
         next: nextOptions['notifikasi'],
@@ -106,10 +109,10 @@ export async function getRatingData(options = {}) {
     const { headers = {}, ...restOptions } = options;
     const updatedHeaders = { ...headers, 'x-api-key': process.env.SUPABASE_SERVICE_KEY };
 
-    const response = await fetch('http://localhost:3000/api/rating', {
+    const response = await fetch(baseApiUrl + '/api/rating', {
         ...restOptions,
         headers: updatedHeaders,
-        next:nextOptions['rating'],
+        next: nextOptions['rating'],
     });
 
     return await response.json();
@@ -136,7 +139,7 @@ export async function getFaktaData(options = {}) {
     const { headers = {}, ...restOptions } = options;
     const updatedHeaders = { ...headers, 'x-api-key': process.env.SUPABASE_SERVICE_KEY };
 
-    const response = await fetch('http://localhost:3000/api/fakta', {
+    const response = await fetch(baseApiUrl + '/api/fakta', {
         ...restOptions,
         headers: updatedHeaders,
         next: nextOptions['fakta'],

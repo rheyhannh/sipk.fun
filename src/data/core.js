@@ -23,6 +23,10 @@ import { getLocalTheme } from '@/utils/client_side';
  */
 // #endregion
 
+// #region VARIABLES
+const baseApiUrl = process.env.NEXT_PUBLIC_SIPK_API_URL;
+// #endregion
+
 const fetchPublic = (url) => {
     return fetch(url, {
         headers: {
@@ -124,7 +128,7 @@ const swrOptions = {
  * @returns {SWRState<Array<SupabaseTypes.UserData>>} Users data dan SWR state
  */
 export function useUser(custom) {
-    const url = '/api/me';
+    const url = baseApiUrl + '/api/me';
     const userIdCookie = useCookies().get('s_user_id');
     const accessToken = useCookies().get('s_access_token');
     return useSWR([url, userIdCookie], () => fetchWithUserId(url, userIdCookie, accessToken), { ...swrOptions, ...custom })
@@ -136,7 +140,7 @@ export function useUser(custom) {
  * @returns {SWRState<Array<SupabaseTypes.MatkulData>} Users matakuliah data dan SWR state
  */
 export function useMatkul(custom) {
-    const url = '/api/matkul';
+    const url = baseApiUrl + '/api/matkul';
     const userIdCookie = useCookies().get('s_user_id');
     const accessToken = useCookies().get('s_access_token');
     return useSWR([url, userIdCookie], () => fetchWithUserId(url, userIdCookie, accessToken), { ...swrOptions, ...custom })
@@ -148,7 +152,7 @@ export function useMatkul(custom) {
  * @returns {SWRState<Array<SupabaseTypes.MatkulHistoryData>>} Users matakuliah history data dan SWR state
  */
 export function useMatkulHistory(custom) {
-    const url = '/api/matkul-history';
+    const url = baseApiUrl + '/api/matkul-history';
     const userIdCookie = useCookies().get('s_user_id');
     const accessToken = useCookies().get('s_access_token');
     return useSWR([url, userIdCookie], () => fetchWithUserId(url, userIdCookie, accessToken), { ...swrOptions, ...custom })
@@ -160,7 +164,7 @@ export function useMatkulHistory(custom) {
  * @returns {SWRState<Array<SupabaseTypes.RatingData>>} Users rating data dan SWR state
  */
 export function useRating(custom) {
-    const url = '/api/rating';
+    const url = baseApiUrl + '/api/rating';
     const userIdCookie = useCookies().get('s_user_id');
     const accessToken = useCookies().get('s_access_token');
     return useSWR([url, userIdCookie], () => fetchWithUserId(url, userIdCookie, accessToken), { ...swrOptions, ...custom })
