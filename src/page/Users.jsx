@@ -282,18 +282,7 @@ export default function Users({ universitasData }) {
             async: true
         })
             .then(async ({ response: token }) => {
-                const unixStamp = Math.round(Date.now() / 1000).toString();
-                const result = Array.from(unixStamp)
-                    .map(Number)
-                    .filter(digit => digit !== 0)
-                    .reduce((acc, digit) => acc * digit, 1);
-
-                const nonce = result.toString();
-                const nonceReverse = nonce.split('').reverse().join('');
-                const hashDigest = SHA256(nonce + guestIdCookie + nonceReverse);
-                const hmacDigest = HmacSHA512(hashDigest, unixStamp);
-                const identifier = Hex.stringify(hmacDigest);
-                const response = await fetch(`/api/register?stamp=${unixStamp}&identifier=${identifier}`, {
+                const response = await fetch('/api/register', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
