@@ -107,6 +107,7 @@
  * - `AUTH_03` : Session atau cookie `'_Secure-auth.session-token'` tidak tersedia
  * - `AUTH_04` : Session atau cookie `'_Secure-auth.session-token'` tidak valid
  * - `AUTH_05` : Api key tidak ditemukan atau tidak valid
+ * - `AUTH_06` : Email atau password salah dalam proses login
  * - `RL_00` : Penggunaan akses atau rate limit `token` mencapai maksimal
  * - `RL_01` : Jumlah rate limit `token` mencapai maksimal
  * - `SRV_00` : Terjadi kesalahan pada server biasanya karna error pada `Supabase` saat query database
@@ -312,6 +313,7 @@ export const authErrorCodesList = {
     'AUTH_03': { name: 'Unauthorized - Missing session', message: 'Session tidak ditemukan' },
     'AUTH_04': { name: 'Unauthorized - Invalid session', message: 'Session tidak valid' },
     'AUTH_05': { name: 'Unauthorized - Missing or invalid api key', message: 'Api key tidak ditemukan atau tidak valid' },
+    'AUTH_06': { name: 'Unauthorized - Invalid login credentials', message: 'Email atau password salah' },
 }
 
 /** 
@@ -466,6 +468,31 @@ export const authErrorCodesList = {
  *      ...customProps
  * }
  * ```
+ * @property {(message?:string, errorHintUrl?:string, errorDetails?:Omit<APIResponseBaseProps['_details'], 'stamp'>, customProps?:Object<string,any>) => APIResponseErrorProps} invalid_login_credentials
+ * Method untuk generate payload response body saat email atau password salah dalam proses login dengan `optional` parameter berikut,
+ * - `message` : String untuk override default message yang ditampilkan ke user dengan `toast`
+ * - `errorHintUrl` : Link atau pathname yang dapat digunakan sebagai call to action untuk user mengetahui lebih lanjut `error` yang terjadi 
+ * - `errorDetails` : Error details untuk mendeskripsikan error lebih detail untuk tujuan `logging`
+ * - `customProps` : Object untuk menambah props tertentu selain status, message, code dan error
+ * 
+ * ```js
+ * const payload = {
+ *      status: 'error',
+ *      code: 401,
+ *      message: message ?? authErrorCodesList['AUTH_06'].message,
+ *      error: {
+ *          type: 'AuthError',
+ *          code: 'AUTH_06',
+ *          message: authErrorCodesList['AUTH_06'].name,
+ *          hintUrl: errorHintUrl,
+ *      },
+ *      _details: {
+ *          stamp: Math.floor(Date.now() / 1000),
+ *          ...errorDetails
+ *      },
+ *      ...customProps
+ * }
+ * ```
 */
 
 /** 
@@ -561,6 +588,22 @@ export const AuthErrorResponse = {
             type: 'AuthError',
             code: 'AUTH_05',
             message: authErrorCodesList['AUTH_05'].name,
+            hintUrl: errorHintUrl,
+        },
+        _details: {
+            stamp: Math.floor(Date.now() / 1000),
+            ...errorDetails
+        },
+        ...((({ status, code, message, error, ...rest }) => rest)(customProps || {}))
+    }),
+    invalid_login_credentials: (message, errorHintUrl, errorDetails = {}, customProps) => ({
+        status: 'error',
+        code: 401,
+        message: message ?? authErrorCodesList['AUTH_06'].message,
+        error: {
+            type: 'AuthError',
+            code: 'AUTH_06',
+            message: authErrorCodesList['AUTH_06'].name,
             hintUrl: errorHintUrl,
         },
         _details: {
