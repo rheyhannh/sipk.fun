@@ -116,7 +116,7 @@ const swrOptions = {
     refreshInterval: 0,
     revalidateIfStale: true,
     revalidateOnMount: true,
-    revalidateOnFocus: false,
+    revalidateOnFocus: process.env.NODE_ENV === 'production' ? true : false,
     revalidateOnReconnect: true,
     dedupingInterval: 5000,
     shouldRetryOnError: false,
