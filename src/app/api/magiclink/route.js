@@ -16,7 +16,6 @@ import {
     encryptAES,
     decryptAES,
     rateLimit,
-    validateIdentifier,
     getCookieOptions,
     getSipkCookies,
     getIpFromHeaders,
@@ -73,28 +72,6 @@ export async function POST(request) {
             headers: newHeaders
         })
     }
-
-    // #region Get and Handle Required Query Params
-    const searchParams = request.nextUrl.searchParams;
-    const stamp = searchParams.get('stamp');
-    const identifier = searchParams.get('identifier');
-    if (!stamp || !identifier) {
-        return NextResponse.json({ message: 'Unauthorized - Missing stamp or identifier query' }, {
-            status: 401,
-            headers: newHeaders
-        })
-    }
-
-    // Verifying query 'identifier'
-    try {
-        await validateIdentifier(serviceGuestCookie, stamp, identifier);
-    } catch (error) {
-        return NextResponse.json({ message: 'Unauthorized - Invalid identifier' }, {
-            status: 401,
-            headers: newHeaders
-        })
-    }
-    // #endregion
 
     // #region Parsing and Handle formData
     try {
