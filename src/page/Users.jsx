@@ -171,7 +171,7 @@ export default function Users({ universitasData }) {
         if (!cookies.get('s_access_token')) { return }
         setLoading({ active: true, backdrop: 'transparent', hideBall: true });
         try {
-            const response = await fetch(`/api/auth/check`, {
+            const response = await fetch('/api/auth/check', {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json'
