@@ -17,8 +17,6 @@ import * as React from 'react';
 // #region COMPONENT DEPEDENCY
 import { mutate } from 'swr';
 import { useCookies } from 'next-client-cookies';
-import { SHA256, HmacSHA512 } from 'crypto-js';
-import Hex from 'crypto-js/enc-hex';
 import toast from 'react-hot-toast';
 import { UsersContext } from '@/component/provider/Users';
 import { ModalContext } from "@/component/provider/Modal";
