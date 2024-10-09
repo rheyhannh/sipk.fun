@@ -224,20 +224,13 @@ export default function Users({ universitasData }) {
                 })
 
                 if (!response.ok) {
-                    if (response.status === 429) {
-                        setErrorMessageLogin(`Terlalu banyak request, coba lagi dalam 1 menit`);
-                    } else if (response.status === 401) {
-                        setErrorMessageLogin(`Terjadi kesalahan, silahkan coba lagi`);
-                        router.refresh();
-                    } else if (response.status === 403) {
-                        setErrorMessageLogin(`Email atau password salah`);
-                    } else {
-                        try {
-                            const { message } = await response.json();
-                            if (message) { setErrorMessageLogin(message); }
-                        } catch {
-                            throw new Error(`Terjadi kesalahan saat login`);
-                        }
+                    try {
+                        /** @type {ApiResponseError} */
+                        const { message } = await response.json();
+                        if (message) { setErrorMessageLogin(message); }
+                        else { setErrorMessageLogin('Terjadi kesalahan saat login'); }
+                    } catch {
+                        throw new Error(`Terjadi kesalahan saat login`);
                     }
                 } else {
                     const redirectTo = searchParams.get('from');
@@ -247,7 +240,6 @@ export default function Users({ universitasData }) {
                     } else {
                         router.replace('/dashboard', { scroll: false });
                     }
-
                 }
             })
             .catch((error) => {
@@ -357,13 +349,18 @@ export default function Users({ universitasData }) {
                 })
 
                 if (!response.ok) {
-                    if (response.status === 429) {
-                        handleErrorModal('Terlalu banyak request, coba lagi dalam 1 menit');
-                    } else if (response.status === 400) {
-                        handleErrorModal('Pastikan emailmu sudah terdaftar dan dikonfirmasi');
-                    } else {
+                    try {
+                        /** @type {ApiResponseError} */
+                        const { message } = await response.json();
+                        if (response.status === 429) {
+                            handleErrorModal(message ?? 'Terlalu banyak request, coba lagi dalam beberapa saat');
+                        } else if (response.status === 400) {
+                            handleErrorModal('Pastikan emailmu sudah terdaftar dan dikonfirmasi');
+                        } else {
+                            handleErrorModal('Sepertinya ada yang salah, silahkan coba lagi');
+                        }
+                    } catch {
                         handleErrorModal('Sepertinya ada yang salah, silahkan coba lagi');
-                        router.refresh();
                     }
                 } else {
                     handleSuksesResetModal();
