@@ -3,6 +3,10 @@
 // #region TYPE DEPEDENCY
 import * as ContextTypes from '@/types/context';
 import * as SupabaseTypes from '@/types/supabase';
+import {
+    ClientAPIResponseErrorProps as ApiResponseError,
+    ClientAPIResponseSuccessProps as ApiResponseSuccess,
+} from '@/constant/api_response';
 // #endregion
 
 // #region NEXT DEPEDENCY
