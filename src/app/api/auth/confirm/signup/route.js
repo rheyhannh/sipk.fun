@@ -1,5 +1,6 @@
 // #region TYPE DEPEDENCY
 import * as SupabaseTypes from '@/types/supabase';
+import { APIResponseErrorProps } from '@/constant/api_response';
 // #endregion
 
 // #region NEXT DEPEDENCY
@@ -7,29 +8,36 @@ import { NextResponse, NextRequest } from 'next/server';
 import { cookies } from 'next/headers';
 // #endregion
 
-// #region SUPABASE DEPEDENCY
-import { createServerClient } from '@supabase/ssr';
-// #endregion
-
 // #region UTIL DEPEDENCY
 import {
-    encryptAES,
-    decryptAES,
     rateLimit,
+    getRequestDetails,
     getCookieOptions,
-    getSipkCookies,
-    getIpFromHeaders,
 } from '@/utils/server_side';
+import {
+    BadRequestErrorResponse as badRequestError,
+    AuthErrorResponse as authError,
+    NotFoundErrorResponse as notFoundError,
+    ServerErrorResponse as serverError,
+} from '@/constant/api_response';
 // #endregion
 
+// #region API HELPER DEPEDENCY
+import {
+    getLogAttributes,
+    checkRateLimit,
+    handleErrorResponse,
+    supabaseServerClient as supabase,
+} from '@/utils/api_helper';
+// #endregion
+
+const routeMethods = ['GET'];
 const limitRequest = parseInt(process.env.API_AUTH_REQUEST_LIMIT);
 const limiter = await rateLimit({
     interval: parseInt(process.env.API_AUTH_TOKEN_INTERVAL_SECONDS) * 1000,
     uniqueTokenPerInterval: parseInt(process.env.API_AUTH_MAX_TOKEN_PERINTERVAL),
 })
 
-const cookieAuthOptions = await getCookieOptions('auth', 'set');
-const cookieAuthDeleteOptions = await getCookieOptions('auth', 'remove');
 const cookieServiceOptions = await getCookieOptions('service', 'set');
 
 /**
@@ -37,116 +45,123 @@ const cookieServiceOptions = await getCookieOptions('service', 'set');
  * @param {NextRequest} request
  */
 export async function GET(request) {
-    const newHeaders = {};
-    const { serviceGuestCookie } = await getSipkCookies(request);
+    const responseHeaders = {};
+    const requestLog = await getLogAttributes(request);
+    const ratelimitLog = {};
 
-    // Identifier for Ratelimiting
-    const guestKey = await getIpFromHeaders() ?? serviceGuestCookie ?? 'public';
-
-    // #region Checking Ratelimit
-    try {
-        var currentUsage = await limiter.check(limitRequest, guestKey);
-        // Log Here, ex: '{TIMESTAMP} userId {ROUTE} limit {currentUsage}/{limitRequest}'
-        newHeaders['X-Ratelimit-limit'] = limitRequest;
-        newHeaders['X-Ratelimit-Remaining'] = limitRequest - currentUsage;
-    } catch {
-        // Log Here, ex: '{TIMESTAMP} userId {ROUTE} limited'
-        return NextResponse.json({ message: `Terlalu banyak request` }, {
-            status: 429,
-            headers: {
-                'X-Ratelimit-Limit': limitRequest,
-                'X-Ratelimit-Remaining': 0,
-            }
-        })
-    }
-    // #endregion
-
-    // #region Get Query Params and Handling It
     const searchParams = request.nextUrl.searchParams;
     const token_hash = searchParams.get('token_hash');
     const type = searchParams.get('type');
 
-    if (!token_hash || !type || type !== 'email') {
-        return NextResponse.json({ message: 'Forbidden' }, {
-            status: 403,
-            headers: newHeaders
+    try {
+        await checkRateLimit(limiter, limitRequest).then(x => {
+            const { currentUsage, currentTtl, currentSize, rateLimitHeaders } = x;
+            Object.assign(responseHeaders, rateLimitHeaders);
+            Object.assign(ratelimitLog, { currentUsage, currentTtl, currentSize })
         })
-    }
 
-    const cookieStore = cookies();
-    const dashboardUrl = new URL("/dashboard", request.url);
-
-    if (cookieStore.has(process.env.USER_SESSION_COOKIES_NAME)) {
-        return NextResponse.redirect(dashboardUrl);
-    }
-    // #endregion
-
-    // #region Initiate Supabase Instance
-    const supabase = createServerClient(
-        process.env.SUPABASE_URL,
-        process.env.SUPABASE_ANON_KEY,
-        {
-            cookies: {
-                async get(name) {
-                    const encryptedSession = cookieStore.get(process.env.USER_SESSION_COOKIES_NAME)?.value
-                    if (encryptedSession) {
-                        const decryptedSession = await decryptAES(encryptedSession) || 'removeMe';
-                        return decryptedSession;
-                    }
-                    return encryptedSession;
-                },
-                async set(name, value, options) {
-                    const encryptedSession = await encryptAES(value);
-                    if (encryptedSession) {
-                        cookieStore.set({ name: process.env.USER_SESSION_COOKIES_NAME, value: encryptedSession, ...cookieAuthOptions })
-                    } else {
-                        cookieStore.set({ name: process.env.USER_SESSION_COOKIES_NAME, value, ...cookieAuthOptions })
-                    }
-                },
-                remove(name, options) {
-                    cookieStore.set({ name: process.env.USER_SESSION_COOKIES_NAME, value: '', ...cookieAuthDeleteOptions })
-                    cookieStore.set({ name: 's_user_id', value: '', ...cookieAuthDeleteOptions })
-                    cookieStore.set({ name: 's_access_token', value: '', ...cookieAuthDeleteOptions })
-                },
-            },
+        if (!token_hash || !type) {
+            throw badRequestError.malformed_request_params(
+                undefined, undefined,
+                {
+                    severity: 'error',
+                    reason: "Param 'token_hash' and 'type' expected exist",
+                    stack: null,
+                    functionDetails: 'GET /api/auth/confirm/signup line 64',
+                    functionArgs: null,
+                    functionResolvedVariable: null,
+                    request: await getRequestDetails(),
+                    more: null,
+                }
+            )
         }
-    )
-    // #endregion
 
-    // #region Handle Response
-    /** @type {SupabaseTypes._auth_verifyOtp} */
-    var { data, error } = await supabase.auth.verifyOtp({
-        type,
-        token_hash,
-    })
+        if (type !== 'email') {
+            throw badRequestError.malformed_request_params(
+                undefined, undefined,
+                {
+                    severity: 'error',
+                    reason: "Param 'type' only accept 'email'",
+                    stack: null,
+                    functionDetails: 'GET /api/auth/confirm/signup line 80',
+                    functionArgs: null,
+                    functionResolvedVariable: null,
+                    request: await getRequestDetails(),
+                    more: null,
+                }
+            )
+        }
 
-    if (error) {
-        console.error(error);
-        return NextResponse.json({ message: 'Forbidden' }, {
-            status: 403,
-            headers: newHeaders
-        })
-    }
+        const cookieStore = cookies();
+        const dashboardUrl = new URL("/dashboard", request.url);
 
-    if (data?.session) {
-        cookieStore.set({ name: 's_user_id', value: data.session.user.id, ...cookieServiceOptions });
-        cookieStore.set({ name: 's_access_token', value: data.session.access_token, ...cookieServiceOptions });
+        if (cookieStore.has(process.env.USER_SESSION_COOKIES_NAME)) {
+            return NextResponse.redirect(dashboardUrl);
+        }
 
-        var { error } = await supabase.from('user').update(
-            {
-                is_email_confirmed: true,
-                email_confirmed_at: new Date(),
-            }
-        ).eq('id', data.session.user.id);
+        /** @type {SupabaseTypes._auth_verifyOtp} */
+        var { data, error } = await supabase.auth.verifyOtp({ type, token_hash })
 
         if (error) {
-            console.error(`Gagal update column setelah konfirmasi email. [uid: ${data.session.user.id || 'Unknown'}]`)
+            throw authError.invalid_hash_token(
+                undefined, undefined,
+                {
+                    severity: 'error',
+                    reason: "Supabase error occurred, see details in 'more'",
+                    stack: null,
+                    functionDetails: 'supabase.auth at GET /api/auth/confirm/signup line 103',
+                    functionArgs: { verifyOtp: { token_hash, type } },
+                    functionResolvedVariable: null,
+                    request: await getRequestDetails(),
+                    more: error,
+                }
+            )
         }
-    }
 
-    return new Response(null, {
-        status: 204,
-        headers: newHeaders
-    })
-    // #endregion
+        if (data?.session) {
+            cookieStore.set({ name: 's_user_id', value: data.session.user.id, ...cookieServiceOptions });
+            cookieStore.set({ name: 's_access_token', value: data.session.access_token, ...cookieServiceOptions });
+        }
+
+        if (!data?.session?.user?.id) {
+            throw notFoundError.resource_not_found(
+                undefined, undefined,
+                {
+                    severity: 'error',
+                    reason: 'Failed to update user data when confirming signup, user id not exist',
+                    stack: null,
+                    functionDetails: 'GET /api/auth/confirm/signup line 127',
+                    functionArgs: null,
+                    functionResolvedVariable: null,
+                    request: await getRequestDetails(),
+                    more: null,
+                }
+            )
+        }
+
+        const dateNow = new Date();
+        var { error } = await supabase.from('user').update({ is_email_confirmed: true, email_confirmed_at: dateNow }).eq('id', data.session.user.id);
+
+        if (error) {
+            throw serverError.interval_server_error(
+                undefined, undefined,
+                {
+                    severity: 'error',
+                    reason: "Supabase error occurred, see details in 'more'",
+                    stack: null,
+                    functionDetails: 'supabase.from at GET /api/auth/confirm/signup line 143',
+                    functionArgs: { from: 'user', update: { is_email_confirmed: true, email_confirmed_at: dateNow }, eq: { id: data.session.user.id } },
+                    functionResolvedVariable: null,
+                    request: await getRequestDetails(),
+                    more: error,
+                }
+            )
+        }
+
+        return new Response(null, { status: 204, headers: responseHeaders })
+    } catch (/** @type {APIResponseErrorProps} */ error) {
+        const { body, status, headers } = await handleErrorResponse(error, requestLog, ratelimitLog, true);
+        if (headers) { Object.assign(responseHeaders, headers) }
+        return NextResponse.json(body, { status, headers: responseHeaders })
+    }
 }

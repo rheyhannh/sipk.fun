@@ -1,159 +1,89 @@
 // #region TYPE DEPEDENCY
 import { LoginMagiclinkFormData } from '@/types/form_data';
+import { APIResponseErrorProps } from '@/constant/api_response';
 // #endregion
 
 // #region NEXT DEPEDENCY
 import { NextResponse, NextRequest } from 'next/server';
-import { cookies } from 'next/headers';
-// #endregion
-
-// #region SUPABASE DEPEDENCY
-import { createServerClient } from '@supabase/ssr';
 // #endregion
 
 // #region UTIL DEPEDENCY
 import {
-    encryptAES,
-    decryptAES,
     rateLimit,
-    getCookieOptions,
-    getSipkCookies,
-    getIpFromHeaders,
+    getRequestDetails,
 } from '@/utils/server_side';
-import Joi from 'joi';
-import isUUID from 'validator/lib/isUUID';
+import {
+    ServerErrorResponse as serverError,
+} from '@/constant/api_response';
 // #endregion
 
+// #region API HELPER DEPEDENCY
+import {
+    getLogAttributes,
+    checkRateLimit,
+    parseFormData,
+    validateFormData,
+    handleErrorResponse,
+    supabaseServerClient as supabase,
+} from '@/utils/api_helper';
+// #endregion
+
+const routeMethods = ['POST'];
 const limitRequest = parseInt(process.env.API_MAGICLINK_REQUEST_LIMIT);
 const limiter = await rateLimit({
     interval: parseInt(process.env.API_MAGICLINK_TOKEN_INTERVAL_SECONDS) * 1000,
     uniqueTokenPerInterval: parseInt(process.env.API_MAGICLINK_MAX_TOKEN_PERINTERVAL),
 })
 
-const cookieAuthOptions = await getCookieOptions('auth', 'set');
-const cookieAuthDeleteOptions = await getCookieOptions('auth', 'remove');
-const cookieServiceOptions = await getCookieOptions('service', 'set');
-
 /**
  * Route Handler untuk `POST` `'/api/magiclink'`
  * @param {NextRequest} request
  */
 export async function POST(request) {
-    const newHeaders = {};
-    const { serviceGuestCookie } = await getSipkCookies(request);
+    const responseHeaders = {};
+    const requestLog = await getLogAttributes(request);
+    const ratelimitLog = {};
 
-    // Identifier for Ratelimiting
-    const guestKey = await getIpFromHeaders() ?? serviceGuestCookie ?? 'public';
-
-    // #region Checking Ratelimit
     try {
-        var currentUsage = await limiter.check(limitRequest, guestKey);
-        // Log Here, ex: '{TIMESTAMP} userId {ROUTE} limit {currentUsage}/{limitRequest}'
-        newHeaders['X-Ratelimit-limit'] = limitRequest;
-        newHeaders['X-Ratelimit-Remaining'] = limitRequest - currentUsage;
-    } catch {
-        // Log Here, ex: '{TIMESTAMP} userId {ROUTE} limited'
-        return NextResponse.json({ message: `Terlalu banyak request` }, {
-            status: 429,
-            headers: {
-                'X-Ratelimit-Limit': limitRequest,
-                'X-Ratelimit-Remaining': 0,
+        await checkRateLimit(limiter, limitRequest).then(x => {
+            const { currentUsage, currentTtl, currentSize, rateLimitHeaders } = x;
+            Object.assign(responseHeaders, rateLimitHeaders);
+            Object.assign(ratelimitLog, { currentUsage, currentTtl, currentSize })
+        })
+
+        /** @type {LoginMagiclinkFormData} */
+        var formData = await parseFormData(request);
+
+        await validateFormData(formData, 'magiclink');
+
+        const { data, error } = await supabase.auth.signInWithOtp({
+            email: formData.email,
+            options: {
+                captchaToken: formData?.token,
+                shouldCreateUser: false
             }
         })
-    }
-    // #endregion
 
-    const cookieStore = cookies();
-    if (!serviceGuestCookie || !isUUID(serviceGuestCookie)) {
-        const newId = crypto.randomUUID();
-        cookieStore.set({ name: 's_guest_id', value: newId, ...cookieServiceOptions });
-        return NextResponse.json({ message: 'Unauthorized - Missing guest cookie' }, {
-            status: 401,
-            headers: newHeaders
-        })
-    }
-
-    // #region Parsing and Handle formData
-    try {
-        /** @type {LoginMagiclinkFormData} */
-        var formData = await request.json();
-    } catch (error) {
-        console.error(error);
-        return NextResponse.json({ message: 'Bad Request - Invalid JSON Format' }, {
-            status: 400,
-            headers: newHeaders
-        })
-    }
-    // #endregion
-
-    // #region Validating and Handle formData
-    try {
-        const formDataSchema =
-            Joi.object(
+        if (error) {
+            throw serverError.interval_server_error(
+                undefined, undefined,
                 {
-                    email: Joi.string().min(6).max(100).email().required(),
-                    token: process.env.NODE_ENV !== 'production' ? Joi.string() : Joi.string().required(),
+                    severity: 'error',
+                    reason: "Supabase error occurred, see details in 'more'",
+                    stack: null,
+                    functionDetails: 'supabase.auth at POST /api/magiclink line 59',
+                    functionArgs: { signInWithOtp: { options: { captchaToken: formData?.token, shouldCreateUser: false } } },
+                    functionResolvedVariable: null,
+                    request: await getRequestDetails(),
+                    more: error,
                 }
             )
-
-        await formDataSchema.validateAsync(formData);
-    } catch (error) {
-        console.error(error);
-        return NextResponse.json({ message: error.message || 'Bad Request' }, {
-            status: 400,
-            headers: newHeaders
-        })
-    }
-    // #endregion
-
-    // #region Initiate Supabase Instance
-    const supabase = createServerClient(
-        process.env.SUPABASE_URL,
-        process.env.SUPABASE_ANON_KEY,
-        {
-            cookies: {
-                async get(name) {
-                    const encryptedSession = cookieStore.get(process.env.USER_SESSION_COOKIES_NAME)?.value
-                    if (encryptedSession) {
-                        const decryptedSession = await decryptAES(encryptedSession) || 'removeMe';
-                        return decryptedSession;
-                    }
-                    return encryptedSession;
-                },
-                async set(name, value, options) {
-                    const encryptedSession = await encryptAES(value);
-                    if (encryptedSession) {
-                        cookieStore.set({ name: process.env.USER_SESSION_COOKIES_NAME, value: encryptedSession, ...cookieAuthOptions })
-                    } else {
-                        cookieStore.set({ name: process.env.USER_SESSION_COOKIES_NAME, value, ...cookieAuthOptions })
-                    }
-                },
-                remove(name, options) {
-                    cookieStore.set({ name: process.env.USER_SESSION_COOKIES_NAME, value: '', ...cookieAuthDeleteOptions })
-                    cookieStore.set({ name: 's_user_id', value: '', ...cookieAuthDeleteOptions })
-                    cookieStore.set({ name: 's_access_token', value: '', ...cookieAuthDeleteOptions })
-                },
-            },
         }
-    )
-    // #endregion
 
-    // #region Handle Respons
-    const { data, error } = await supabase.auth.signInWithOtp({
-        email: formData.email,
-        options: {
-            captchaToken: formData.token,
-            shouldCreateUser: false
-        }
-    })
-
-    if (error) {
-        return NextResponse.json({ message: error.message ?? 'Terjadi kesalahan saat memproses request' }, {
-            status: error.status ?? 500,
-            headers: newHeaders
-        })
+        return NextResponse.json({ success: true }, { status: 200, headers: responseHeaders })
+    } catch (/** @type {APIResponseErrorProps} */ error) {
+        const { body, status, headers } = await handleErrorResponse(error, requestLog, ratelimitLog, true);
+        if (headers) { Object.assign(responseHeaders, headers) }
+        return NextResponse.json(body, { status, headers: responseHeaders })
     }
-
-    return NextResponse.json({ success: true }, { status: 200, headers: newHeaders })
-    // #endregion
 }
