@@ -108,6 +108,7 @@
  * - `AUTH_04` : Session atau cookie `'_Secure-auth.session-token'` tidak valid
  * - `AUTH_05` : Api key tidak ditemukan atau tidak valid
  * - `AUTH_06` : Email atau password salah dalam proses login
+ * - `AUTH_07` : Token hash tidak ditemukan atau tidak valid
  * - `RL_00` : Penggunaan akses atau rate limit `token` mencapai maksimal
  * - `RL_01` : Jumlah rate limit `token` mencapai maksimal
  * - `SRV_00` : Terjadi kesalahan pada server biasanya karna error pada `Supabase` saat query database
@@ -314,6 +315,7 @@ export const authErrorCodesList = {
     'AUTH_04': { name: 'Unauthorized - Invalid session', message: 'Session tidak valid' },
     'AUTH_05': { name: 'Unauthorized - Missing or invalid api key', message: 'Api key tidak ditemukan atau tidak valid' },
     'AUTH_06': { name: 'Unauthorized - Invalid login credentials', message: 'Email atau password salah' },
+    'AUTH_07': { name: 'Unauthorized - Missing or invalid token hash', message: 'Token hash tidak ditemukan atau tidak valid' },
 }
 
 /** 
@@ -493,6 +495,31 @@ export const authErrorCodesList = {
  *      ...customProps
  * }
  * ```
+ * @property {(message?:string, errorHintUrl?:string, errorDetails?:Omit<APIResponseBaseProps['_details'], 'stamp'>, customProps?:Object<string,any>) => APIResponseErrorProps} invalid_hash_token
+ * Method untuk generate payload response body saat token hash tidak ditemukan atau tidak valid dengan `optional` parameter berikut,
+ * - `message` : String untuk override default message yang ditampilkan ke user dengan `toast`
+ * - `errorHintUrl` : Link atau pathname yang dapat digunakan sebagai call to action untuk user mengetahui lebih lanjut `error` yang terjadi 
+ * - `errorDetails` : Error details untuk mendeskripsikan error lebih detail untuk tujuan `logging`
+ * - `customProps` : Object untuk menambah props tertentu selain status, message, code dan error
+ * 
+ * ```js
+ * const payload = {
+ *      status: 'error',
+ *      code: 401,
+ *      message: message ?? authErrorCodesList['AUTH_07'].message,
+ *      error: {
+ *          type: 'AuthError',
+ *          code: 'AUTH_07',
+ *          message: authErrorCodesList['AUTH_07'].name,
+ *          hintUrl: errorHintUrl,
+ *      },
+ *      _details: {
+ *          stamp: Math.floor(Date.now() / 1000),
+ *          ...errorDetails
+ *      },
+ *      ...customProps
+ * }
+ * ```
 */
 
 /** 
@@ -604,6 +631,22 @@ export const AuthErrorResponse = {
             type: 'AuthError',
             code: 'AUTH_06',
             message: authErrorCodesList['AUTH_06'].name,
+            hintUrl: errorHintUrl,
+        },
+        _details: {
+            stamp: Math.floor(Date.now() / 1000),
+            ...errorDetails
+        },
+        ...((({ status, code, message, error, ...rest }) => rest)(customProps || {}))
+    }),
+    invalid_hash_token: (message, errorHintUrl, errorDetails = {}, customProps) => ({
+        status: 'error',
+        code: 401,
+        message: message ?? authErrorCodesList['AUTH_07'].message,
+        error: {
+            type: 'AuthError',
+            code: 'AUTH_07',
+            message: authErrorCodesList['AUTH_07'].name,
             hintUrl: errorHintUrl,
         },
         _details: {
