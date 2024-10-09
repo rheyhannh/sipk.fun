@@ -171,11 +171,11 @@ function Content({ states, setStates, fakta }) {
                         toast: false,
                         newState: { loading: false, error: true, success: false, code: '429' }
                     })
-                } else if (response.status === 403) {
+                } else if (response.status === 401) {
                     throw ({
                         shouldRefresh: false,
                         toast: false,
-                        newState: { loading: false, error: true, success: false, code: '403' }
+                        newState: { loading: false, error: true, success: false, code: '401' }
                     })
                 } else {
                     throw ({
@@ -335,7 +335,7 @@ function Error({ isLogin, state }) {
                 text: 'Terlalu banyak request. Silahkan refresh dan coba lagi dalam 1 menit.',
                 action: null
             }
-        } else if (state?.code === '403') {
+        } else if (state?.code === '401') {
             return {
                 title: 'Magiclink Invalid',
                 text: `Magiclink tidak sesuai atau sudah expired. Silahkan ${isLogin ? 'login ulang' : 'daftar ulang'} agar dapat magiclink baru.`,
