@@ -180,7 +180,7 @@ export async function rateLimit(options) {
 
         const currentUsage = tokenCount[0];
         const currentTtl = Math.round(tokenCache.getRemainingTTL(token) / 1000);
-        const currentTtlMsg = currentTtl >= 60 ? '1 menit' : `${currentTtl} detik`;
+        const currentTtlMsg = currentTtl >= 60 ? `${Math.floor(currentTtl / 60)} menit` : `${currentTtl} detik`;
         const isRateLimited = currentUsage >= limit;
 
         return isRateLimited ? Promise.reject(rateLimitError.maximum_usage(
