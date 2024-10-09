@@ -384,7 +384,7 @@ export async function getEtag(data, algorithm = 'MD5', etagFormat = true) {
  */
 export async function getCookieOptions(type, action, custom = {}) {
     return {
-        secure: type === 'service' ? false : true,
+        secure: true,
         httpOnly: type === 'service' ? false : true,
         maxAge: action === 'remove' ? -2592000 : 2592000,
         sameSite: 'lax',
