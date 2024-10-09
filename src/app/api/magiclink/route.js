@@ -80,7 +80,7 @@ export async function POST(request) {
             )
         }
 
-        return NextResponse.json({ success: true }, { status: 200, headers: responseHeaders })
+        return new Response(null, { status: 204, headers: responseHeaders })
     } catch (/** @type {APIResponseErrorProps} */ error) {
         const { body, status, headers } = await handleErrorResponse(error, requestLog, ratelimitLog, true);
         if (headers) { Object.assign(responseHeaders, headers) }
