@@ -227,10 +227,16 @@ export default function Users({ universitasData }) {
                     try {
                         /** @type {ApiResponseError} */
                         const { message } = await response.json();
-                        if (message) { setErrorMessageLogin(message); }
-                        else { setErrorMessageLogin('Terjadi kesalahan saat login'); }
+                        if (response.status === 401) {
+                            setErrorMessageLogin('Email atau password salah');
+                        } else if (response.status === 429) {
+                            setErrorMessageLogin(message ?? 'Terlalu banyak request, coba lagi dalam beberapa saat')
+                        } else {
+                            handleErrorModal('Sepertinya ada yang salah, silahkan coba lagi. Jika masih berulang, silahkan hubungi admin');
+                            setErrorMessageLogin('Terjadi kesalahan saat login');
+                        }
                     } catch {
-                        throw new Error(`Terjadi kesalahan saat login`);
+                        throw new Error('Terjadi kesalahan saat login');
                     }
                 } else {
                     const redirectTo = searchParams.get('from');
@@ -244,7 +250,7 @@ export default function Users({ universitasData }) {
             })
             .catch((error) => {
                 if (error === 'challenge-closed') { setErrorMessageLogin('Captcha dibutuhkan untuk login') }
-                else { setErrorMessageLogin(error.message ? error.message : 'Terjadi kesalahan saat login') }
+                else { setErrorMessageLogin(error?.message ? error.message : 'Terjadi kesalahan saat login') }
             })
             .finally(() => {
                 setLoading({ active: false });
@@ -286,7 +292,6 @@ export default function Users({ universitasData }) {
                             email: email,
                             password: password,
                             fullname: namaLengkap,
-                            university: universitasData[universitas - 1].nama,
                             university_id: universitas,
                             token: token,
                         }
@@ -294,18 +299,17 @@ export default function Users({ universitasData }) {
                 })
 
                 if (!response.ok) {
-                    if (response.status === 429) {
-                        setErrorMessageDaftar(`Terlalu banyak request, coba lagi dalam 15 menit`);
-                    } else if (response.status === 401) {
-                        setErrorMessageDaftar(`Terjadi kesalahan, silahkan coba lagi`);
-                        router.refresh();
-                    } else {
-                        try {
-                            const { message } = await response.json();
-                            if (message) { setErrorMessageDaftar(message); }
-                        } catch {
-                            throw new Error(`Terjadi kesalahan saat daftar`);
+                    try {
+                        /** @type {ApiResponseError} */
+                        const { message } = await response.json();
+                        if (response.status === 429) {
+                            setErrorMessageDaftar(message ?? 'Terlalu banyak request, coba lagi dalam beberapa saat')
+                        } else {
+                            handleErrorModal('Sepertinya ada yang salah, silahkan coba lagi. Jika masih berulang, silahkan hubungi admin');
+                            setErrorMessageDaftar('Terjadi kesalahan saat daftar');
                         }
+                    } catch (error) {
+                        throw new Error('Terjadi kesalahan saat daftar');
                     }
                 } else {
                     handleSuksesDaftarModal();
@@ -313,7 +317,7 @@ export default function Users({ universitasData }) {
             })
             .catch((error) => {
                 if (error === 'challenge-closed') { setErrorMessageDaftar('Captcha dibutuhkan untuk daftar') }
-                else { setErrorMessageDaftar(error.message ? error.message : 'Terjadi kesalahan saat daftar') }
+                else { setErrorMessageDaftar(error?.message ? error.message : 'Terjadi kesalahan saat daftar') }
             })
             .finally(() => {
                 setLoading({ active: false });
@@ -354,13 +358,11 @@ export default function Users({ universitasData }) {
                         const { message } = await response.json();
                         if (response.status === 429) {
                             handleErrorModal(message ?? 'Terlalu banyak request, coba lagi dalam beberapa saat');
-                        } else if (response.status === 400) {
-                            handleErrorModal('Pastikan emailmu sudah terdaftar dan dikonfirmasi');
                         } else {
-                            handleErrorModal('Sepertinya ada yang salah, silahkan coba lagi');
+                            handleErrorModal('Sepertinya ada yang salah, silahkan coba lagi dan pastikan emailmu sudah terdaftar dan dikonfirmasi. Jika masih berulang, silahkan hubungi admin');
                         }
                     } catch {
-                        handleErrorModal('Sepertinya ada yang salah, silahkan coba lagi');
+                        handleErrorModal('Sepertinya ada yang salah, silahkan coba lagi. Jika masih berulang, silahkan hubungi admin');
                     }
                 } else {
                     handleSuksesResetModal();
