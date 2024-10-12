@@ -56,7 +56,7 @@ export async function POST(request) {
 
         await validateFormData(formData, 'magiclink');
 
-        const { data, error } = await supabase.auth.signInWithOtp({
+        const { error } = await supabase.auth.signInWithOtp({
             email: formData.email,
             options: {
                 captchaToken: formData?.token,
