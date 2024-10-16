@@ -48,6 +48,7 @@ export async function POST(request) {
     const requestLog = await getLogAttributes(request);
     const ratelimitLog = {};
 
+    const maximumRegisteredUser = parseInt(process.env.MAXIMUM_REGISTERED_USER);
     const defaultUserErrorMessage = 'Gagal memproses pendaftaran';
 
     try {
@@ -56,6 +57,39 @@ export async function POST(request) {
             Object.assign(responseHeaders, rateLimitHeaders);
             Object.assign(ratelimitLog, { currentUsage, currentTtl, currentSize })
         })
+
+        /** @type {SupabaseTypes._from<SupabaseTypes.UserData>} */
+        var { data: users, error } = await supabaseService.from('me').select('*');
+        if (error) {
+            throw serverError.interval_server_error(
+                defaultUserErrorMessage, undefined,
+                {
+                    severity: 'error',
+                    reason: 'Failed to register user, cant resolve users length',
+                    stack: null,
+                    functionDetails: 'supabase.from at POST /api/register line 62',
+                    functionArgs: { from: 'me', select: '*' },
+                    functionResolvedVariable: null,
+                    request: await getRequestDetails(),
+                    more: error,
+                }
+            )
+        }
+        if (users.length >= maximumRegisteredUser) {
+            throw serverError.interval_server_error(
+                'Pendaftaran sudah ditutup', undefined,
+                {
+                    severity: 'warning',
+                    reason: 'Failed to register user, number of users is full',
+                    stack: null,
+                    functionDetails: 'supabase.from at POST /api/register line 79',
+                    functionArgs: { from: 'me', select: '*' },
+                    functionResolvedVariable: null,
+                    request: await getRequestDetails(),
+                    more: error,
+                }
+            )
+        }
 
         /** @type {RegisterFormData} */
         var formData = await parseFormData(request);
