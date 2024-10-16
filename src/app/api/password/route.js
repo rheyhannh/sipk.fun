@@ -82,8 +82,9 @@ export async function PATCH(request) {
         /** @type {SupabaseTypes._auth_updateUser} */
         const { data, error } = await supabase.auth.updateUser({ password: formData.password })
         if (error) {
+            const isSamePasswordError = error?.code === 'same_password';
             throw serverError.interval_server_error(
-                defaultUserErrorMessage, undefined,
+                isSamePasswordError ? 'Password harus berbeda dari sebelumnya' : defaultUserErrorMessage, undefined,
                 {
                     severity: 'error',
                     reason: 'Failed to update password',
