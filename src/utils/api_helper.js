@@ -327,7 +327,10 @@ export async function handleErrorResponse(error, requestLog = null, ratelimitLog
     const { code, headers = null, _details, ...rest } = error;
     const body = process.env.NODE_ENV === 'production' ? { ...rest } : { ...rest, _details: error._details };
 
-    if (logError) console.error(error);
+    if (logError) {
+        if (error._details.severity === 'warning') console.warn(error);
+        else console.error(error);
+    }
 
     return { body, status: code, headers };
 }
