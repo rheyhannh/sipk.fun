@@ -59,7 +59,7 @@ export async function POST(request) {
         })
 
         /** @type {SupabaseTypes._from<SupabaseTypes.UserData>} */
-        var { data: users, error } = await supabaseService.from('me').select('*');
+        var { data: users, error } = await supabaseService.from('user').select('*');
         if (error) {
             throw serverError.interval_server_error(
                 defaultUserErrorMessage, undefined,
@@ -76,17 +76,17 @@ export async function POST(request) {
             )
         }
         if (users.length >= maximumRegisteredUser) {
-            throw serverError.interval_server_error(
+            throw serverError.service_unavailable(
                 'Pendaftaran sudah ditutup', undefined,
                 {
                     severity: 'warning',
                     reason: 'Failed to register user, number of users is full',
                     stack: null,
-                    functionDetails: 'supabase.from at POST /api/register line 79',
-                    functionArgs: { from: 'me', select: '*' },
+                    functionDetails: 'POST /api/register line 79',
+                    functionArgs: null,
                     functionResolvedVariable: null,
                     request: await getRequestDetails(),
-                    more: error,
+                    more: null,
                 }
             )
         }
