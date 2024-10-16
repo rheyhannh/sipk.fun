@@ -304,6 +304,9 @@ export default function Users({ universitasData }) {
                         const { message } = await response.json();
                         if (response.status === 429) {
                             setErrorMessageDaftar(message ?? 'Terlalu banyak request, coba lagi dalam beberapa saat')
+                        } else if (response.status === 503) {
+                            handleErrorModal('Untuk saat ini SIPK tidak menerima pendaftaran akun baru, nantikan informasi selanjutnya');
+                            setErrorMessageDaftar('Pendaftaran sudah ditutup');
                         } else {
                             handleErrorModal('Sepertinya ada yang salah, silahkan coba lagi. Jika masih berulang, silahkan hubungi admin');
                             setErrorMessageDaftar('Terjadi kesalahan saat daftar');
