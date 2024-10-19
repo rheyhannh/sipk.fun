@@ -7,6 +7,7 @@ import {
     ClientAPIResponseErrorProps as ApiResponseError,
     ClientAPIResponseSuccessProps as ApiResponseSuccess,
 } from '@/constant/api_response';
+import { LinkProps } from './Link';
 // #endregion
 
 // #region NEXT DEPEDENCY
@@ -15,7 +16,7 @@ import { useRouter } from 'next/navigation';
 // #endregion
 
 // #region REACT DEPEDENCY
-import { useState, useContext, useRef, ReactNode } from "react";
+import { useState, useContext, useRef, ReactNode, ReactElement, HTMLProps } from "react";
 // #endregion
 
 // #region COMPONENT DEPEDENCY
@@ -38,7 +39,7 @@ import isAlpha from 'validator/lib/isAlpha';
 // #endregion
 
 // #region HOOKS DEPEDENCY
-import { useUser, useRating } from "@/data/core";
+import { useRating } from "@/data/core";
 // #endregion
 
 // #region ICON DEPEDENCY
