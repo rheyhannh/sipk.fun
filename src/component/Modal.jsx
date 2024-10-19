@@ -43,7 +43,7 @@ import { useRating } from "@/data/core";
 // #endregion
 
 // #region ICON DEPEDENCY
-import { FaTimes, FaRegTimesCircle, FaEye, FaEyeSlash, FaCheckCircle, FaExclamationCircle, FaExclamation, FaInfo, FaBook, FaTelegramPlane, FaTiktok } from 'react-icons/fa'
+import { FaTimes, FaRegTimesCircle, FaEye, FaEyeSlash, FaCheckCircle, FaExclamationCircle, FaExclamation, FaBook, FaTelegramPlane, FaCoffee, FaCodeBranch, FaRegUser, FaRegCalendarCheck } from 'react-icons/fa'
 import { FaRegCircleCheck, FaPlus, FaCircleInfo, FaGear, FaArrowUpRightFromSquare } from "react-icons/fa6";
 import { AiOutlineStar, AiFillStar, AiOutlineDrag } from "react-icons/ai";
 import {
@@ -4413,18 +4413,20 @@ export const Tentang = () => {
 
                                     <div className={styles.content__section}>
                                         <Section title={'Info'}>
-                                            <Card icon={{ primary: <FaInfo /> }} title={'Version'} description={process.env.NEXT_PUBLIC_APP_VERSION ?? '-'} />
+                                            <Card icon={{ primary: <FaCodeBranch /> }} title={'Version'} description={process.env.NEXT_PUBLIC_APP_VERSION ?? '-'} />
+                                            <Card icon={{ primary: <FaRegCalendarCheck /> }} title={'Release'} description={'19 Oktober 2024'} />
+                                            <Card useNextLink={true} href={'https://whoishayyan.cyclic.cloud/'} target={'_blank'} prefetch={false} clickable={true} useActionIcon={true} icon={{ primary: <FaRegUser /> }} title={'Developer'} description={'Reyhan Naufal Hayyan'} />
                                         </Section>
                                         <Section title={'Support Us'}>
-                                            <Card onClick={handleRatingModal} clickable={true} useActionIcon={true} icon={{ primary: <AiFillStar />, secondary: <FaPlus /> }} title={'Rating'} description={'Berikan penilaianmu'} />
+                                            <Card onClick={handleRatingModal} clickable={true} useActionIcon={true} icon={{ primary: <AiFillStar />, secondary: <FaPlus /> }} title={'Rating'} description={'Penilaianmu sangat berarti untuk aplikasi ini'} />
                                             {/* Target link (href) belum sesuai. */}
-                                            <Card useNextLink={true} href={'https://docs.google.com/forms'} target={'_blank'} prefetch={false} clickable={true} useActionIcon={true} icon={{ primary: <FaExclamation /> }} title={'Feedback'} description={'Laporkan masalah'} />
+                                            <Card useNextLink={true} href={'https://trakteer.id/'} target={'_blank'} prefetch={false} clickable={true} useActionIcon={true} icon={{ primary: <FaCoffee /> }} title={'Traktir Developer'} description={'Segelas americano akan mengubah kehidupan pengembang aplikasi'} />
+                                            <Card useNextLink={true} href={'https://docs.google.com/forms'} target={'_blank'} prefetch={false} clickable={true} useActionIcon={true} icon={{ primary: <FaExclamation /> }} title={'Feedback'} description={'Laporin disini kalau kamu mengalami masalah tertentu terkait aplikasi ini'} />
                                         </Section>
                                         <Section title={'Help & Social'}>
                                             {/* Target link (href) belum sesuai. */}
-                                            <Card useNextLink={true} href={'http://localhost:3000/panduan'} target={'_blank'} prefetch={false} clickable={true} useActionIcon={true} icon={{ primary: <FaBook /> }} title={'Panduan'} />
-                                            <Card useNextLink={true} href={'https://web.telegram.org/k/'} target={'_blank'} prefetch={false} clickable={true} useActionIcon={true} icon={{ primary: <FaTelegramPlane /> }} title={'Telegram'} />
-                                            <Card useNextLink={true} href={'https://www.tiktok.com/'} target={'_blank'} prefetch={false} clickable={true} useActionIcon={true} icon={{ primary: <FaTiktok /> }} title={'Tiktok'} />
+                                            <Card useNextLink={true} href={'/panduan'} clickable={true} icon={{ primary: <FaBook /> }} title={'Panduan'} description={'Panduan lengkap yang mungkin menjawab pertanyaan atau kebingungan kamu'} />
+                                            <Card useNextLink={true} href={'https://web.telegram.org/k/'} target={'_blank'} prefetch={false} clickable={true} useActionIcon={true} icon={{ primary: <FaTelegramPlane /> }} title={'Telegram'} description={'Gabung grup telegram untuk memperoleh informasi terbaru'} />
                                         </Section>
                                     </div>
                                 </div>
