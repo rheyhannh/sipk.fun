@@ -4274,6 +4274,38 @@ export const Akun = () => {
     )
 }
 
+/**
+ * @typedef TentangModalCardProps
+ * Props yang digunakan component `Card` pada modal `Tentang`
+ * @type {Object}
+ * @property {string} [title] 
+ * Judul yang digunakan
+ * - Default : `'Lorem, ipsum.'`
+ * @property {string} description 
+ * Deskripsi yang digunakan
+ * @property {Object} [icon] 
+ * Icon yang digunakan
+ * @property {ReactNode} [icon.primary]
+ * Icon utama yang mendeskripsikan keseluruhan konten card
+ * - Default : `<FaCircleInfo />`
+ * @property {ReactNode} [icon.secondary]
+ * Icon sekunder sebagai `ActionIcon` dimana ini mendeskripsikan aksi apa yang user akan lakukan setelah mengklik element
+ * - Default : `<FaArrowUpRightFromSquare />`
+ * @property {boolean} [useActionIcon] 
+ * Boolean untuk menampilkan icon sekunder pada props `icon` atau tidak, ini akan mengatur grid layout yang digunakan
+ * - Default : `false`
+ * @property {boolean} [useNextLink] 
+ * Container element yang digunakan. Jika `true` maka akan menggunakan component `Link` pada NextJS,
+ * jika tidak maka akan menggunakan plain `div`.
+ * 
+ * Umumnya jika element membuka laman atau URL baru, props ini dapat diset `true`, jika element ini 
+ * mengeksekusi skrip tertentu atau bersifat statis sehingga tidak bisa diklik, props ini dapat diset
+ * `false`
+ * - Default : `false`
+ * @property {boolean} [clickable] 
+ * Apakah element dapat diklik atau tidak. Jika `true` maka menggunakan beberapa atribut css tambahan
+ * - Default : `false`
+ */
 export const Tentang = () => {
     const Section = ({ children, title }) => {
         return (
@@ -4284,6 +4316,11 @@ export const Tentang = () => {
         )
     }
 
+    /**
+     * Card atau konten yang tampil pada `Section`
+     * @param {HTMLProps<HTMLDivElement> & LinkProps['routingOptions'] & TentangModalCardProps} props Card props
+     * @returns {ReactElement} Rendered component
+     */
     const Card = (
         {
             title = 'Lorem, ipsum.',
