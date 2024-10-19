@@ -11,7 +11,7 @@ import { Header } from '@/component/landing/Header';
 // #endregion
 
 // #region UTIL DEPEDENCY
-import {getUniversitasData, getRatingData, getNotifikasiData} from '@/utils/core_data';
+import { getUniversitasData, getRatingData, getNotifikasiData } from '@/utils/core_data';
 // #endregion
 
 export default async function LandingPage() {
