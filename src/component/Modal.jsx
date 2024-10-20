@@ -376,8 +376,6 @@ export const PerubahanTerakhirDetail = () => {
                                             populateCache: (_, currentMatkul) => {
                                                 if (!currentMatkul) {
                                                     return [];
-                                                } else if (currentMatkul.length - 1 === 0) {
-                                                    return [];
                                                 } else {
                                                     const filteredMatkul = currentMatkul.filter(matkul => matkul.id !== `${context.data.matkul_id}`);
                                                     return [...filteredMatkul];
@@ -865,8 +863,6 @@ export const PerubahanTerakhirConfirm = () => {
                                             mutate(['/api/matkul', userIdCookie], undefined, {
                                                 populateCache: (_, currentMatkul) => {
                                                     if (!currentMatkul) {
-                                                        return [];
-                                                    } else if (currentMatkul.length - 1 === 0) {
                                                         return [];
                                                     } else {
                                                         const filteredMatkul = currentMatkul.filter(matkul => matkul.id !== `${context?.data?.matkul_id}`);
@@ -3479,8 +3475,6 @@ export const DetailMatkul = () => {
                                             populateCache: (_, currentMatkul) => {
                                                 if (!currentMatkul) {
                                                     return [];
-                                                } else if (currentMatkul.length - 1 === 0) {
-                                                    return [];
                                                 } else {
                                                     const filteredMatkul = currentMatkul.filter(matkul => matkul.id !== `${context.data.id}`);
                                                     return [...filteredMatkul];
@@ -3860,8 +3854,6 @@ export const HapusPermanentConfirm = () => {
                                             populateCache: (_, currentMatkul) => {
                                                 if (!currentMatkul) {
                                                     return [];
-                                                } else if (currentMatkul.length - 1 === 0) {
-                                                    return [];
                                                 } else {
                                                     const filteredMatkul = currentMatkul.filter(matkul => matkul.id !== `${midParamsValue}`);
                                                     return [...filteredMatkul];
@@ -3873,8 +3865,6 @@ export const HapusPermanentConfirm = () => {
                                             populateCache: (_, currentRef) => {
                                                 if (!currentRef) {
                                                     return []
-                                                } else if (currentRef.length - 1 === 0) {
-                                                    return [];
                                                 } else {
                                                     const filteredRef = currentRef.filter(refs => refs.id !== `${idParamsValue}`);
                                                     return [...filteredRef];
