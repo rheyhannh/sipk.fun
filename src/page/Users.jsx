@@ -301,12 +301,12 @@ export default function Users({ universitasData }) {
                 if (!response.ok) {
                     try {
                         /** @type {ApiResponseError} */
-                        const { message } = await response.json();
+                        const { message, error: { code } } = await response.json();
                         if (response.status === 429) {
                             setErrorMessageDaftar(message ?? 'Terlalu banyak request, coba lagi dalam beberapa saat')
-                        } else if (response.status === 503) {
+                        } else if ((response.status === 503) && (code === 'SRV_03')) {
                             handleErrorModal('Untuk saat ini SIPK tidak menerima pendaftaran akun baru, nantikan informasi selanjutnya');
-                            setErrorMessageDaftar('Pendaftaran sudah ditutup');
+                            setErrorMessageDaftar(message);
                         } else {
                             handleErrorModal('Sepertinya ada yang salah, silahkan coba lagi. Jika masih berulang, silahkan hubungi admin');
                             setErrorMessageDaftar('Terjadi kesalahan saat daftar');
