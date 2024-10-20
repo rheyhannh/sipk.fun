@@ -76,8 +76,8 @@ export async function POST(request) {
             )
         }
         if (users.length >= maximumRegisteredUser) {
-            throw serverError.service_unavailable(
-                'Pendaftaran sudah ditutup', undefined,
+            throw serverError.user_registration_closed(
+                undefined, undefined, 
                 {
                     severity: 'warning',
                     reason: 'Failed to register user, number of users is full',
