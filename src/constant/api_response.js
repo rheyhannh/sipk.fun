@@ -114,6 +114,7 @@
  * - `SRV_00` : Terjadi kesalahan pada server biasanya karna error pada `Supabase` saat query database
  * - `SRV_01` : Server sibuk, overload atau sedang maintenance
  * - `SRV_02` : Request tidak dapat dipenuhi karna tidak didukung
+ * - `SRV_03` : Server tidak dapat handle pendaftaran akun baru dikarenakan alasan tertentu seperti pembatasan jumlah akun
  * - `NF_00` : Resource tidak ditemukan
  * - `CF_00` : Resource sudah tersedia
  * @property {string} error.message
@@ -887,6 +888,7 @@ export const serverErrorCodesList = {
     'SRV_00': { name: 'Internal Server Error - Something went wrong', message: 'Terjadi kesalahan pada server' },
     'SRV_01': { name: 'Service Unavailable - Server is currently busy', message: 'Server sibuk, coba lagi nanti' },
     'SRV_02': { name: 'Not Implemented - Request not supported', message: 'Request tidak dapat diproses' },
+    'SRV_03': { name: 'Service Unavailable - User registration has closed', message: 'Pendaftaran akun baru sudah ditutup' },
 }
 
 /** 
@@ -966,6 +968,31 @@ export const serverErrorCodesList = {
  *      ...customProps
  * }
  * ```
+ * @property {(message?:string, errorHintUrl?:string, errorDetails?:Omit<APIResponseBaseProps['_details'], 'stamp'>, customProps?:Object<string,any>) => APIResponseErrorProps} user_registration_closed
+ * Method untuk generate payload response body saat server tidak dapat handle pendaftaran akun baru dikarenakan alasan tertentu seperti pembatasan jumlah akun dengan `optional` parameter berikut,
+ * - `message` : String untuk override default message yang ditampilkan ke user dengan `toast`
+ * - `errorHintUrl` : Link atau pathname yang dapat digunakan sebagai call to action untuk user mengetahui lebih lanjut `error` yang terjadi 
+ * - `errorDetails` : Error details untuk mendeskripsikan error lebih detail untuk tujuan `logging`
+ * - `customProps` : Object untuk menambah props tertentu selain status, message, code dan error
+ * 
+ * ```js
+ * const payload = {
+ *      status: 'error',
+ *      code: 503,
+ *      message: message ?? serverErrorCodesList['SRV_03'].message,
+ *      error: {
+ *          type: 'ServerError',
+ *          code: 'SRV_03',
+ *          message: serverErrorCodesList['SRV_03'].name,
+ *          hintUrl: errorHintUrl,
+ *      },
+ *      _details: {
+ *          stamp: Math.floor(Date.now() / 1000),
+ *          ...errorDetails
+ *      },
+ *      ...customProps
+ * }
+ * ```
 */
 
 /** 
@@ -1013,6 +1040,22 @@ export const ServerErrorResponse = {
             type: 'ServerError',
             code: 'SRV_02',
             message: serverErrorCodesList['SRV_02'].name,
+            hintUrl: errorHintUrl,
+        },
+        _details: {
+            stamp: Math.floor(Date.now() / 1000),
+            ...errorDetails
+        },
+        ...((({ status, code, message, error, ...rest }) => rest)(customProps || {}))
+    }),
+    user_registration_closed: (message, errorHintUrl, errorDetails = {}, customProps) => ({
+        status: 'error',
+        code: 503,
+        message: message ?? serverErrorCodesList['SRV_03'].message,
+        error: {
+            type: 'ServerError',
+            code: 'SRV_03',
+            message: serverErrorCodesList['SRV_03'].name,
             hintUrl: errorHintUrl,
         },
         _details: {
