@@ -4,3 +4,7 @@
 .char {
     display: inline-block;
 }
+
+.word_wrapper {
+    display: inline-table;
+}

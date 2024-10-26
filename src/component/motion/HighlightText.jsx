@@ -117,6 +117,8 @@ import styles from './style/highlight_text.module.css'
  * Style yang digunakan component `Wrapper`, dapat bernilai `undefined`
  * @property {wordStyle} wordStyle
  * Style yang digunakan component `Word`, dapat bernilai `undefined`
+ * @property {React.CSSProperties} wordWrapperStyle
+ * Style yang digunakan element wrapper untuk component `Word`, dapat bernilai `undefined`
  * @property {wordAnimate & {options:presetOptions}} wordAnimate
  * Variant animasi yang digunakan component `Word`, dapat bernilai `undefined`
  * @property {charAnimate & {options:presetOptions}} charAnimate
@@ -369,7 +371,7 @@ const HighlightText = (
             <Wrapper style={usedPreset?.wrapperStyle}>
                 {textChars.map((item, index) => (
                     item !== '_spaces_' ? (
-                        <Word inViewHook={inViewHook} style={usedPreset?.wordStyle} wordAnimate={usedPreset?.wordAnimate} flatIndex={index} key={index}>
+                        <Word inViewHook={inViewHook} style={usedPreset?.wordStyle} wordAnimate={usedPreset?.wordAnimate} wordWrapperStyle={usedPreset?.wordWrapperStyle ?? null} flatIndex={index} key={index}>
                             {item.map((char, charIndex) => {
                                 const currentFlatCharIndex = flatCharIndex++;
                                 return (
@@ -406,6 +408,13 @@ const Wrapper = ({ style, children }) => (
  * @property {inViewHook} inViewHook
  * @property {MotionStyle} style
  * @property {wordAnimate} wordAnimate
+ * @property {React.CSSProperties} wordWrapperStyle
+ * Style yang digunakan pada element wrapper untuk setiap `Word` atau kata yang digunakan. 
+ * 
+ * Saat props ini `truthy` atau ada style yang digunakan, maka setiap element kata akan dibungkus dengan
+ * element wrapper.
+ * 
+ * - Default : `null`
  * @property {flatIndex} flatIndex
  * @property {React.ReactNode} children
  */
@@ -415,7 +424,8 @@ const Wrapper = ({ style, children }) => (
  * @param {WordProps} props Word props
  * @returns {React.ReactElement} Rendered component
  */
-const Word = ({ inViewHook, style, wordAnimate, flatIndex, children }) => {
+const Word = ({ inViewHook, style, wordAnimate, wordWrapperStyle = null, flatIndex, children }) => {
+    const useWrapper = !!wordWrapperStyle;
     const updatedPresetDelay = !wordAnimate ? {} : {
         ...wordAnimate,
         transition: {
@@ -425,7 +435,7 @@ const Word = ({ inViewHook, style, wordAnimate, flatIndex, children }) => {
     };
     const { options, ...wordAnimateWithoutOptions } = updatedPresetDelay;
 
-    return (
+    const motionWord = (
         <motion.span
             className={styles.word}
             style={style}
@@ -435,6 +445,12 @@ const Word = ({ inViewHook, style, wordAnimate, flatIndex, children }) => {
             {children}
         </motion.span>
     )
+
+    return useWrapper ? (
+        <span className={styles.word_wrapper} style={wordWrapperStyle}>
+            {motionWord}
+        </span>
+    ) : (motionWord);
 }
 
 /**
