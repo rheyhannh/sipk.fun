@@ -246,6 +246,38 @@ import styles from './style/highlight_text.module.css'
  * - Default : `0.1`
  */
 
+/** Opsi atau atribut yang dapat dicustom saat menggunakan preset `wavingRotation`
+ * @typedef {Object} adjustWavingRotation
+ * @property {string} transformOrigin
+ * Transform origin yang digunakan
+ * - Default : `'50% 100%'`
+ * @property {[number, number]} opacity
+ * Animasikan `opacity` dalam keyframe tertentu. Keyframe pertama dapat bernilai `null` untuk menggunakan current opacity value
+ * - Default : `[0, 1]`
+ * @property {[number, number]} rotateX 
+ * Animasikan `rotateX` dalam keyframe tertentu. Keyframe pertama dapat bernilai `null` untuk menggunakan current rotateX value
+ * - Default : `[90, 0]`
+ * @property {number} duration 
+ * Durasi animasi untuk setiap kata dalam satuan `detik`
+ * - Default : `1.2`
+ * @property {number} baseDelay
+ * Delay animasi untuk setiap kata dalam satuan `detik`
+ * - Default : `0`
+ * @property {number} stagger 
+ * Stagger animasi untuk setiap kata dalam satuan `detik`
+ * - Default : `0.03`
+ * @property {number} repeat 
+ * Jumlah pengulangan animasi
+ * - Default : `0`
+ * @property {number} bounce
+ * Efek `bounce` yang digunakan dalam skala `0` hingga `1`.
+ * Semakin besar maka efek bounce akan semakin besar
+ * - Default : `0.25`
+ * @property {number} repeatDelay 
+ * Delay pengulangan animasi dalam satuan `detik` 
+ * - Default : `0.1`
+ */
+
 /**
  * @typedef {Object} hookOptions
  * @property {boolean} [once]
@@ -269,7 +301,7 @@ import styles from './style/highlight_text.module.css'
  * `makeVariant` terlebih dahulu pada pengaturan preset yang digunakan
  * @property {hookOptions} hookOptions
  * Opsi yang dapat digunakan untuk hook `'useInView'` yang digunakan
- * @property {'wavingColor'|'wavingTranslate'|'springRotate'|'wavingFlyIn'} [preset]
+ * @property {'wavingColor'|'wavingTranslate'|'springRotate'|'wavingFlyIn'|'wavingRotation'} [preset]
  * Preset animasi yang digunakan
  * - Default : `'wavingColor'`
  * @property {presetOptions} presetOptions
@@ -282,6 +314,8 @@ import styles from './style/highlight_text.module.css'
  * Opsi atribut animasi yang digunakan dan pengaturan lainnya yang dapat diadjust pada preset `'springRotate'`
  * @property {adjustWavingFlyIn} adjustWavingFlyIn
  * Opsi atribut animasi yang digunakan dan pengaturan lainnya yang dapat diadjust pada preset `'wavingFlyIn'`
+ * @property {adjustWavingRotation} adjustWavingRotation
+ * Opsi atribut animasi yang digunakan dan pengaturan lainnya yang dapat diadjust pada preset `'wavingRotation'`
  */
 
 /**
@@ -300,6 +334,7 @@ const HighlightText = (
         adjustWavingTranslate,
         adjustSpringRotate,
         adjustWavingFlyIn,
+        adjustWavingRotation,
     }
 ) => {
     /** @type {ReturnType<typeof React.useState<resolvedPreset>>} */
@@ -388,6 +423,35 @@ const HighlightText = (
                         type: 'spring',
                         bounce: adjustWavingFlyIn?.bounce ?? 0.25,
                         repeatDelay: adjustWavingFlyIn?.repeatDelay ?? 0.1,
+                    },
+                    options: {
+                        makeVariant: presetOptions?.makeVariant ?? false,
+                        variantName: presetOptions?.variantName ?? 'highlight_text'
+                    }
+                },
+                charAnimate: undefined
+            }
+        } else if (preset === 'wavingRotation') {
+            return {
+                containerStyle: undefined,
+                wrapperStyle: {
+                    perspective: 800
+                },
+                wordStyle: {
+                    transformOrigin: adjustWavingRotation?.transformOrigin ?? '50% 100%',
+                    willChange: 'transform, opacity',
+                },
+                wordAnimate: {
+                    opacity: adjustWavingRotation?.opacity ?? [0, 1],
+                    rotateX: adjustWavingRotation?.rotateX ?? [90, 0],
+                    transition: {
+                        duration: adjustWavingRotation?.duration ?? 1.2,
+                        baseDelay: adjustWavingRotation?.baseDelay ?? 0,
+                        delay: adjustWavingRotation?.stagger ?? 0.03,
+                        repeat: adjustWavingRotation?.repeat ?? 0,
+                        type: 'spring',
+                        bounce: adjustWavingRotation?.bounce ?? 0.25,
+                        repeatDelay: adjustWavingRotation?.repeatDelay ?? 0.1,
                     },
                     options: {
                         makeVariant: presetOptions?.makeVariant ?? false,
