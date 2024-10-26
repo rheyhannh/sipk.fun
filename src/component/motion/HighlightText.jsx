@@ -117,7 +117,7 @@ import styles from './style/highlight_text.module.css'
  * Style yang digunakan component `Wrapper`, dapat bernilai `undefined`
  * @property {wordStyle} wordStyle
  * Style yang digunakan component `Word`, dapat bernilai `undefined`
- * @property {wordAnimate} wordAnimate
+ * @property {wordAnimate & {options:presetOptions}} wordAnimate
  * Variant animasi yang digunakan component `Word`, dapat bernilai `undefined`
  * @property {charAnimate & {options:presetOptions}} charAnimate
  * Variant animasi yang digunakan component `Char` dan opsi preset yang digunakan, dapat bernilai `undefined`
