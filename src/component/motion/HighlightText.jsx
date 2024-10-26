@@ -723,6 +723,10 @@ const Word = ({ inViewHook, style, wordAnimate, wordWrapperStyle = null, wordRan
         })
     }
 
+    /**
+     * Method untuk menghitung delay agar menciptakan animasi efek stagger per-kata berdasarkan tipe stagger yang digunakan
+     * @returns {number} Delay yang sudah dihitung
+     */
     const countDelay = () => {
         const staggerType = wordAnimate ? wordAnimate?.options?.wordStagger ?? 'first' : 'first';
         const { delay = 0.1, baseDelay = 0 } = wordAnimate?.transition;
@@ -803,10 +807,31 @@ const Spaces = () => (
     <span> </span>
 )
 
+/**
+ * Method untuk generate angka acak diantara `0` sampai `1` dengan pembulatan 2 decimal 
+ * @returns {number} Angka acak
+ * @example 
+ * ```js
+ * console.log(generateRandomScale()) // 0.37
+ * console.log(generateRandomScale()) // 0.78
+ * console.log(generateRandomScale()) // 0.52
+ * ```
+ */
 const generateRandomScale = () => {
     return parseFloat((Math.random()).toFixed(2));
 }
 
+/**
+ * Method untuk generate array dengan length `max` yang berisikan angka `0` sampai `max - 1` dengan urutan acak
+ * @param {number} [max=5] Length array, default `5`
+ * @returns {Array<number>} Array yang berisikan angka
+ * @example 
+ * ```js
+ * console.log(generateRandomFlatIndex(7)); // [3, 5, 2, 1, 4, 6, 0]
+ * console.log(generateRandomFlatIndex(3)); // [2, 0, 1]
+ * console.log(generateRandomFlatIndex(5)); // [4, 1, 0, 3, 2]
+ * ```
+ */
 const generateRandomFlatIndex = (max = 5) => {
     const arr = Array.from({ length: max }, (_, i) => i);
     for (let i = arr.length - 1; i > 0; i--) {
