@@ -622,4 +622,8 @@ const Spaces = () => (
     <span> </span>
 )
 
+const generateRandomScale = () => {
+    return parseFloat((Math.random()).toFixed(2));
+}
+
 export default HighlightText;
