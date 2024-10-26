@@ -339,7 +339,7 @@ import styles from './style/highlight_text.module.css'
  * 
  * - Misc : Variabel pada array dapat berupa `number` atau angka dengan persentase `'25%'`
  * - Default : `['-10%', '10%', '0%']`
- * @property {[number|string, number|string, number|string]} z 
+ * @property {[number, number, number]} z 
  * Animasikan `z` dengan nilai awal acak beserta dengan nilai target seperti array berikut,
  * ```js
  * [a, b, c]
