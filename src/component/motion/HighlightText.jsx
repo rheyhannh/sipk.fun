@@ -112,6 +112,15 @@ import styles from './style/highlight_text.module.css'
  * 
  * Fitur `randomStart` memungkinkan untuk memulai animasi tertentu dengan nilai awal acak
  * berdasarkan suatu batasan nilai terkecil dan terendah menggunakan component `mix` pada framer-motion.
+ * @property {'first' | 'last' | 'random'} wordStagger
+ * Jenis stagger effect yang digunakan. 
+ * 
+ * Saat menggunakan `'first'` maka animasi dimulai berurutan dari kata pertama,
+ * jika `'last'` maka animasi dimulai berurutan dari kata terakhir sedangkan jika `'random'`
+ * animasi dimulai dari kata yang dipilih secara acak dengan urutan yang acak.
+ * 
+ * - Note : Props ini hanya memberikan efek pada preset yang menggunakan animasi per-kata
+ * - Default : `'first'`
  */
 
 /** 
@@ -496,7 +505,8 @@ const HighlightText = (
                     },
                     options: {
                         makeVariant: presetOptions?.makeVariant ?? false,
-                        variantName: presetOptions?.variantName ?? 'highlight_text'
+                        variantName: presetOptions?.variantName ?? 'highlight_text',
+                        wordStagger: presetOptions?.wordStagger ?? 'first',
                     }
                 },
                 charAnimate: undefined
@@ -526,7 +536,8 @@ const HighlightText = (
                     },
                     options: {
                         makeVariant: presetOptions?.makeVariant ?? false,
-                        variantName: presetOptions?.variantName ?? 'highlight_text'
+                        variantName: presetOptions?.variantName ?? 'highlight_text',
+                        wordStagger: presetOptions?.wordStagger ?? 'first',
                     }
                 },
                 charAnimate: undefined
@@ -553,7 +564,8 @@ const HighlightText = (
                     },
                     options: {
                         makeVariant: presetOptions?.makeVariant ?? false,
-                        variantName: presetOptions?.variantName ?? 'highlight_text'
+                        variantName: presetOptions?.variantName ?? 'highlight_text',
+                        wordStagger: presetOptions?.wordStagger ?? 'first',
                     }
                 },
                 charAnimate: undefined
@@ -583,7 +595,8 @@ const HighlightText = (
                     options: {
                         makeVariant: presetOptions?.makeVariant ?? false,
                         variantName: presetOptions?.variantName ?? 'highlight_text',
-                        randomStart: ['rotateX', 'x', 'y', 'z']
+                        randomStart: ['rotateX', 'x', 'y', 'z'],
+                        wordStagger: presetOptions?.wordStagger ?? 'first',
                     }
                 },
                 charAnimate: undefined
@@ -614,6 +627,7 @@ const HighlightText = (
     }
 
     let flatCharIndex = 0;
+    const flatWordRandomIndex = generateRandomFlatIndex(textWords.length);
 
     React.useEffect(() => {
         setUsedPreset(resolvePreset());
@@ -628,7 +642,16 @@ const HighlightText = (
             <Wrapper style={usedPreset?.wrapperStyle}>
                 {textChars.map((item, index) => (
                     item !== '_spaces_' ? (
-                        <Word inViewHook={inViewHook} style={usedPreset?.wordStyle} wordAnimate={usedPreset?.wordAnimate} wordWrapperStyle={usedPreset?.wordWrapperStyle ?? null} flatIndex={index} key={index}>
+                        <Word
+                            inViewHook={inViewHook}
+                            style={usedPreset?.wordStyle}
+                            wordAnimate={usedPreset?.wordAnimate}
+                            wordWrapperStyle={usedPreset?.wordWrapperStyle ?? null}
+                            wordRandomStagger={flatWordRandomIndex[index]}
+                            wordAndSpaceLength={textWords.length}
+                            flatIndex={index}
+                            key={index}
+                        >
                             {item.map((char, charIndex) => {
                                 const currentFlatCharIndex = flatCharIndex++;
                                 return (
@@ -672,6 +695,10 @@ const Wrapper = ({ style, children }) => (
  * element wrapper.
  * 
  * - Default : `null`
+ * @property {number} wordRandomStagger
+ * Stagger random yang diperoleh menggunakan `generateRandomFlatIndex`
+ * @property {number} wordAndSpaceLength
+ * Total jumlah kata dan spasi pada teks yang digunakan
  * @property {flatIndex} flatIndex
  * @property {React.ReactNode} children
  */
@@ -681,7 +708,7 @@ const Wrapper = ({ style, children }) => (
  * @param {WordProps} props Word props
  * @returns {React.ReactElement} Rendered component
  */
-const Word = ({ inViewHook, style, wordAnimate, wordWrapperStyle = null, flatIndex, children }) => {
+const Word = ({ inViewHook, style, wordAnimate, wordWrapperStyle = null, wordRandomStagger, wordAndSpaceLength, flatIndex, children }) => {
     const useWrapper = !!wordWrapperStyle;
     const useRandomStart = wordAnimate && Array.isArray(wordAnimate?.options?.randomStart);
 
@@ -696,12 +723,25 @@ const Word = ({ inViewHook, style, wordAnimate, wordWrapperStyle = null, flatInd
         })
     }
 
+    const countDelay = () => {
+        const staggerType = wordAnimate ? wordAnimate?.options?.wordStagger ?? 'first' : 'first';
+        const { delay = 0.1, baseDelay = 0 } = wordAnimate?.transition;
+
+        if (staggerType === 'random') {
+            return (wordRandomStagger * delay) + baseDelay
+        } else if (staggerType === 'last') {
+            return (Math.abs(flatIndex - wordAndSpaceLength) * delay) + baseDelay
+        } else {
+            return (flatIndex * delay) + baseDelay
+        }
+    }
+
     const updatedPresetDelay = !wordAnimate ? {} : {
         ...wordAnimate,
         ...wordAnimateUpdated,
         transition: {
             ...wordAnimate.transition,
-            delay: (flatIndex * wordAnimate.transition.delay) + wordAnimate.transition.baseDelay
+            delay: countDelay()
         }
     };
     const { options, ...wordAnimateWithoutOptions } = updatedPresetDelay;
