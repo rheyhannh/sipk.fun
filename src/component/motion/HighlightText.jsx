@@ -7,7 +7,7 @@ import * as React from 'react';
 // #endregion
 
 // #region COMPONENT DEPEDENCY
-import { motion, useInView } from 'framer-motion';
+import { motion, mix, useInView } from 'framer-motion';
 // #endregion
 
 // #region STYLE DEPEDENCY
