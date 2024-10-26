@@ -286,6 +286,95 @@ import styles from './style/highlight_text.module.css'
  * - Default : `0.1`
  */
 
+/** Opsi atau atribut yang dapat dicustom saat menggunakan preset `mixFancyTranslate`
+ * @typedef {Object} adjustMixFancyTranslate
+ * @property {number} perspective
+ * Perspective yang digunakan untuk memberikan efek 3d
+ * - Default : `1000`
+ * @property {[number, number]} opacity
+ * Animasikan `opacity` dalam keyframe tertentu. Keyframe pertama dapat bernilai `null` untuk menggunakan current opacity value
+ * - Default : `[0, 1]`
+ * @property {[number, number, number]} rotateX 
+ * Animasikan `rotateX` dengan nilai awal acak beserta dengan nilai target seperti array berikut,
+ * ```js
+ * [x, y, z]
+ * ```
+ * Pada array tersebut `x` adalah batas bawah dan `y` adalah batas atas untuk menentukan nilai awal secara acak.
+ * ```js
+ * [25, 90, 0]
+ * ```
+ * Dengan pengaturan diatas maka nilai awal akan berada pada kisaran `25` dan `90`.
+ * Lalu untuk variabel `z` adalah target akhir dari animasi, sehingga pengaturan diatas akan memainkan
+ * animasi `rotateX` dari nilai acak yang dibuat dari kisaran `25` dan `90` menjadi `0`.
+ * 
+ * - Misc : Variabel pada array hanya dapat berupa `number`
+ * - Default : `[-90, 90, 0]`
+ * @property {[number|string, number|string, number|string]} x 
+ * Animasikan `x` dengan nilai awal acak beserta dengan nilai target seperti array berikut,
+ * ```js
+ * [a, b, c]
+ * ```
+ * Pada array tersebut `a` adalah batas bawah dan `b` adalah batas atas untuk menentukan nilai awal secara acak.
+ * ```js
+ * [25, 90, 0]
+ * ```
+ * Dengan pengaturan diatas maka nilai awal akan berada pada kisaran `25` dan `90`.
+ * Lalu untuk variabel `c` adalah target akhir dari animasi, sehingga pengaturan diatas akan memainkan
+ * animasi `x` dari nilai acak yang dibuat dari kisaran `25` dan `90` menjadi `0`.
+ * 
+ * - Misc : Variabel pada array dapat berupa `number` atau angka dengan persentase `'25%'`
+ * - Default : `['-50%', '50%', '0%']`
+ * @property {[number|string, number|string, number|string]} y 
+ * Animasikan `y` dengan nilai awal acak beserta dengan nilai target seperti array berikut,
+ * ```js
+ * [a, b, c]
+ * ```
+ * Pada array tersebut `a` adalah batas bawah dan `b` adalah batas atas untuk menentukan nilai awal secara acak.
+ * ```js
+ * [25, 90, 0]
+ * ```
+ * Dengan pengaturan diatas maka nilai awal akan berada pada kisaran `25` dan `90`.
+ * Lalu untuk variabel `c` adalah target akhir dari animasi, sehingga pengaturan diatas akan memainkan
+ * animasi `y` dari nilai acak yang dibuat dari kisaran `25` dan `90` menjadi `0`.
+ * 
+ * - Misc : Variabel pada array dapat berupa `number` atau angka dengan persentase `'25%'`
+ * - Default : `['-10%', '10%', '0%']`
+ * @property {[number|string, number|string, number|string]} z 
+ * Animasikan `z` dengan nilai awal acak beserta dengan nilai target seperti array berikut,
+ * ```js
+ * [a, b, c]
+ * ```
+ * Pada array tersebut `a` adalah batas bawah dan `b` adalah batas atas untuk menentukan nilai awal secara acak.
+ * ```js
+ * [25, 90, 0]
+ * ```
+ * Dengan pengaturan diatas maka nilai awal akan berada pada kisaran `25` dan `90`.
+ * Lalu untuk variabel `c` adalah target akhir dari animasi, sehingga pengaturan diatas akan memainkan
+ * animasi `z` dari nilai acak yang dibuat dari kisaran `25` dan `90` menjadi `0`.
+ * 
+ * - Misc : Variabel pada array hanya dapat berupa `number`
+ * - Default : `[400, 700, 0]`
+ * @property {number} duration 
+ * Durasi animasi untuk setiap kata dalam satuan `detik`
+ * - Default : `1.5`
+ * @property {number} baseDelay
+ * Delay animasi untuk setiap kata dalam satuan `detik`
+ * - Default : `0`
+ * @property {number} stagger 
+ * Stagger animasi untuk setiap kata dalam satuan `detik`
+ * - Default : `0.004`
+ * @property {number} repeat 
+ * Jumlah pengulangan animasi
+ * - Default : `0`
+ * @property {number} bounce
+ * Efek `bounce` yang digunakan dalam skala `0` hingga `1`.
+ * Semakin besar maka efek bounce akan semakin besar
+ * - Default : `0`
+ * @property {number} repeatDelay 
+ * Delay pengulangan animasi dalam satuan `detik` 
+ * - Default : `0.1`
+ */
+
 /**
  * @typedef {Object} hookOptions
  * @property {boolean} [once]
@@ -309,7 +398,7 @@ import styles from './style/highlight_text.module.css'
  * `makeVariant` terlebih dahulu pada pengaturan preset yang digunakan
  * @property {hookOptions} hookOptions
  * Opsi yang dapat digunakan untuk hook `'useInView'` yang digunakan
- * @property {'wavingColor'|'wavingTranslate'|'springRotate'|'wavingFlyIn'|'wavingRotation'} [preset]
+ * @property {'wavingColor'|'wavingTranslate'|'springRotate'|'wavingFlyIn'|'wavingRotation'|'mixFancyTranslate'} [preset]
  * Preset animasi yang digunakan
  * - Default : `'wavingColor'`
  * @property {Omit<presetOptions, 'randomStart'>} presetOptions
@@ -324,6 +413,8 @@ import styles from './style/highlight_text.module.css'
  * Opsi atribut animasi yang digunakan dan pengaturan lainnya yang dapat diadjust pada preset `'wavingFlyIn'`
  * @property {adjustWavingRotation} adjustWavingRotation
  * Opsi atribut animasi yang digunakan dan pengaturan lainnya yang dapat diadjust pada preset `'wavingRotation'`
+ * @property {adjustMixFancyTranslate} adjustMixFancyTranslate
+ * Opsi atribut animasi yang digunakan dan pengaturan lainnya yang dapat diadjust pada preset `'mixFancyTranslate'`
  */
 
 /**
@@ -343,6 +434,7 @@ const HighlightText = (
         adjustSpringRotate,
         adjustWavingFlyIn,
         adjustWavingRotation,
+        adjustMixFancyTranslate,
     }
 ) => {
     /** @type {ReturnType<typeof React.useState<resolvedPreset>>} */
@@ -466,6 +558,36 @@ const HighlightText = (
                 },
                 charAnimate: undefined
             }
+        } else if (preset === 'mixFancyTranslate') {
+            return {
+                containerStyle: { perspective: adjustMixFancyTranslate?.perspective ?? 1000 },
+                wrapperStyle: { transformStyle: 'preserve-3d' },
+                wordStyle: {
+                    willChange: 'transform, opacity',
+                },
+                wordAnimate: {
+                    opacity: adjustMixFancyTranslate?.opacity ?? [0, 1],
+                    rotateX: adjustMixFancyTranslate?.rotateX ?? [-90, 90, 0],
+                    x: ['-50%', '50%', '0%'],
+                    y: ['-10%', '10%', '0%'],
+                    z: [400, 700, 0],
+                    transition: {
+                        duration: adjustMixFancyTranslate?.duration ?? 1.5,
+                        baseDelay: adjustMixFancyTranslate?.baseDelay ?? 0,
+                        delay: adjustMixFancyTranslate?.stagger ?? 0.004,
+                        repeat: adjustMixFancyTranslate?.repeat ?? 0,
+                        type: 'spring',
+                        bounce: adjustMixFancyTranslate?.bounce ?? 0,
+                        repeatDelay: adjustMixFancyTranslate?.repeatDelay ?? 0.1,
+                    },
+                    options: {
+                        makeVariant: presetOptions?.makeVariant ?? false,
+                        variantName: presetOptions?.variantName ?? 'highlight_text',
+                        randomStart: ['rotateX', 'x', 'y', 'z']
+                    }
+                },
+                charAnimate: undefined
+            }
         } else {
             return {
                 containerStyle: undefined,
@@ -495,7 +617,7 @@ const HighlightText = (
 
     React.useEffect(() => {
         setUsedPreset(resolvePreset());
-    }, [preset, adjustWavingColor, adjustSpringRotate, adjustWavingTranslate, adjustWavingFlyIn, adjustWavingRotation])
+    }, [preset, adjustWavingColor, adjustSpringRotate, adjustWavingTranslate, adjustWavingFlyIn, adjustWavingRotation, adjustMixFancyTranslate])
 
     return (
         <motion.mark
