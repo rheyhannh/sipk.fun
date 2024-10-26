@@ -537,7 +537,7 @@ const Wrapper = ({ style, children }) => (
  * @typedef {Object} WordProps
  * @property {inViewHook} inViewHook
  * @property {MotionStyle} style
- * @property {wordAnimate} wordAnimate
+ * @property {wordAnimate & {options:presetOptions}} wordAnimate
  * @property {React.CSSProperties} wordWrapperStyle
  * Style yang digunakan pada element wrapper untuk setiap `Word` atau kata yang digunakan. 
  * 
