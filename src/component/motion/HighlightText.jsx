@@ -248,6 +248,9 @@ import styles from './style/highlight_text.module.css'
 
 /** Opsi atau atribut yang dapat dicustom saat menggunakan preset `wavingRotation`
  * @typedef {Object} adjustWavingRotation
+ * @property {number} perspective
+ * Perspective yang digunakan untuk memberikan efek 3d
+ * - Default : `800`
  * @property {string} transformOrigin
  * Transform origin yang digunakan
  * - Default : `'50% 100%'`
@@ -433,10 +436,8 @@ const HighlightText = (
             }
         } else if (preset === 'wavingRotation') {
             return {
-                containerStyle: undefined,
-                wrapperStyle: {
-                    perspective: 800
-                },
+                containerStyle: { perspective: adjustWavingRotation?.perspective ?? 800 },
+                wrapperStyle: { transformStyle: 'preserve-3d' },
                 wordStyle: {
                     transformOrigin: adjustWavingRotation?.transformOrigin ?? '50% 100%',
                     willChange: 'transform, opacity',
