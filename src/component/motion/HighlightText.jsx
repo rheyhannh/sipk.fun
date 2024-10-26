@@ -568,9 +568,9 @@ const HighlightText = (
                 wordAnimate: {
                     opacity: adjustMixFancyTranslate?.opacity ?? [0, 1],
                     rotateX: adjustMixFancyTranslate?.rotateX ?? [-90, 90, 0],
-                    x: ['-50%', '50%', '0%'],
-                    y: ['-10%', '10%', '0%'],
-                    z: [400, 700, 0],
+                    x: adjustMixFancyTranslate?.x ?? ['-50%', '50%', '0%'],
+                    y: adjustMixFancyTranslate?.y ?? ['-10%', '10%', '0%'],
+                    z: adjustMixFancyTranslate?.z ?? [400, 700, 0],
                     transition: {
                         duration: adjustMixFancyTranslate?.duration ?? 1.5,
                         baseDelay: adjustMixFancyTranslate?.baseDelay ?? 0,
