@@ -327,6 +327,81 @@ export function Summary({ state, icon, color, title, data, penilaian }) {
 }
 
 /**
+ * Card `Summary` versi dummy, dimana hanya menggunakan data statis
+ * @param {Omit<SummaryProps, 'state' | 'penilaian'> & React.HTMLProps<HTMLDivElement>} props Summary props
+ * @returns {React.ReactElement} Rendered component
+ */
+export function SummaryDummy({ icon, color, title, data, ...props }) {
+    const [dashArray, setDashArray] = React.useState('0 999');
+
+    const getCircleDraw = (radius, percentage) => {
+        const roundCircum = 2 * radius * Math.PI;
+        const roundDraw = percentage * roundCircum / 100;
+        return `${roundDraw.toFixed(2)} 999`;
+    }
+
+    React.useEffect(() => {
+        setDashArray(getCircleDraw(35, data.percentage))
+    }, [data])
+
+    return (
+        <div {...props} className={`${styles.summary}`}>
+            <div style={{ background: color ? color : 'var(--first-color)' }} className={styles.summary__icon}>
+                {icon.name && icon.lib ?
+                    <Icon name={icon.name} lib={icon.lib} props={{ size: '24px' }} />
+                    : null
+                }
+            </div>
+
+            <div className={styles.summary__data}>
+                <div>
+                    <h3 className={styles.summary__title}>{title}</h3>
+                    <CountUp
+                        start={0}
+                        duration={2.5}
+                        decimals={Number.isInteger(data.value) ? 0 : 2}
+                        end={data.value}
+                        delay={0}
+                    >
+                        {({ countUpRef }) => (
+                            <h1
+                                ref={countUpRef} />
+                        )}
+                    </CountUp>
+                </div>
+                <div className={styles.summary__progress}>
+                    <svg>
+                        <svg
+                            className={styles.summary__progress_circle}
+                            style={{
+                                stroke: color ? color : 'var(--first-color)',
+                                strokeDasharray: dashArray
+                            }}
+                        >
+                            <circle cx='50%' cy='50%' r='35'></circle>
+                        </svg>
+                    </svg>
+                    <CountUp
+                        start={0}
+                        end={data.percentage}
+                        duration={2.5}
+                        delay={0}
+                        suffix={'%'}
+                    >
+                        {({ countUpRef }) => (
+                            <span
+                                style={{ color: color ? color : 'var(--first-color)' }}
+                                ref={countUpRef} />
+                        )}
+                    </CountUp>
+                </div>
+            </div>
+            <small>{data.keterangan}</small>
+        </div>
+    )
+}
+
+/**
  * Props yang digunakan component `Notification`
  * @typedef {Object} NotificationProps
  * @property {CardState} state
