@@ -107,6 +107,11 @@ import styles from './style/highlight_text.module.css'
  * @property {string} variantName
  * Nama variant yang digunakan
  * - Default : `'highlight_text'` 
+ * @property {Array<keyof MotionStyle>} randomStart
+ * Array yang berisikan atribut css yang dianimasikan dengan menggunakan `randomStart`.
+ * 
+ * Fitur `randomStart` memungkinkan untuk memulai animasi tertentu dengan nilai awal acak
+ * berdasarkan suatu batasan nilai terkecil dan terendah menggunakan component `mix` pada framer-motion.
  */
 
 /** 
@@ -307,7 +312,7 @@ import styles from './style/highlight_text.module.css'
  * @property {'wavingColor'|'wavingTranslate'|'springRotate'|'wavingFlyIn'|'wavingRotation'} [preset]
  * Preset animasi yang digunakan
  * - Default : `'wavingColor'`
- * @property {presetOptions} presetOptions
+ * @property {Omit<presetOptions, 'randomStart'>} presetOptions
  * Opsi preset yang dapat digunakan
  * @property {adjustWavingColor} adjustWavingColor
  * Opsi atribut animasi yang digunakan dan pengaturan lainnya yang dapat diadjust pada preset `'wavingColor'`
@@ -556,8 +561,22 @@ const Wrapper = ({ style, children }) => (
  */
 const Word = ({ inViewHook, style, wordAnimate, wordWrapperStyle = null, flatIndex, children }) => {
     const useWrapper = !!wordWrapperStyle;
+    const useRandomStart = wordAnimate && Array.isArray(wordAnimate?.options?.randomStart);
+
+    const wordAnimateUpdated = {};
+
+    if (useRandomStart) {
+        const { options: { randomStart } } = wordAnimate;
+        randomStart.forEach((attr, _) => {
+            const [min, max, target] = [wordAnimate[attr][0], wordAnimate[attr][1], wordAnimate[attr][2]]
+            const mixer = mix(min, max);
+            wordAnimateUpdated[attr] = [mixer(generateRandomScale()), target]
+        })
+    }
+
     const updatedPresetDelay = !wordAnimate ? {} : {
         ...wordAnimate,
+        ...wordAnimateUpdated,
         transition: {
             ...wordAnimate.transition,
             delay: (flatIndex * wordAnimate.transition.delay) + wordAnimate.transition.baseDelay
