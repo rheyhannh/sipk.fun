@@ -45,6 +45,21 @@
     --logo-drop-shadow: hsla(222, 35%, 30%, .3);
     /* #endregion */
 
+    /* #region SHADE */
+    --first-shade-1: #ffd0c6;
+    --first-shade-2: #ffb1a0;
+    --first-shade-3: #ff927a;
+    --second-shade-1: #d2d6e0;
+    --second-shade-2: #8e99b1;
+    --second-shade-3: #4a5b82;
+    --firstInverse-shade-1: var(--first-shade-1);
+    --firstInverse-shade-2: var(--first-shade-2);
+    --firstInverse-shade-3: var(--first-shade-3);
+    --secondInverse-shade-1: var(--second-shade-1);
+    --secondInverse-shade-2: var(--second-shade-2);
+    --secondInverse-shade-3: var(--second-shade-3);
+    /* #endregion */
+
     /* #region INNER */
     --inner-color-bg1: #F8FAFC;
     /* #endregion */
@@ -183,6 +198,21 @@
     --logo-second-color-lighter: hsla(11, 100%, 62.5%, .95);
     --logo-drop-shadow: rgba(0, 0, 0, 0.3);
     --inner-custom: #18181B;
+    /* #endregion */
+
+    /* #region SHADE */
+    --first-shade-1: #ff6341;
+    --first-shade-2: #e6593b;
+    --first-shade-3: #cc4f34;
+    --second-shade-1: #1d3263;
+    --second-shade-2: #1a2d59;
+    --second-shade-3: #17284f;
+    --firstInverse-shade-1: var(--second-shade-1);
+    --firstInverse-shade-2: var(--second-shade-2);
+    --firstInverse-shade-3: var(--second-shade-3);
+    --secondInverse-shade-1: var(--first-shade-1);
+    --secondInverse-shade-2: var(--first-shade-2);
+    --secondInverse-shade-3: var(--first-shade-3);
     /* #endregion */
 
     /* #region INNER */
