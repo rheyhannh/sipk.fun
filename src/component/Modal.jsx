@@ -4410,7 +4410,7 @@ export const Tentang = () => {
                                         <Section title={'Support Us'}>
                                             <Card onClick={handleRatingModal} clickable={true} useActionIcon={true} icon={{ primary: <AiFillStar />, secondary: <FaPlus /> }} title={'Rating'} description={'Penilaianmu sangat berarti untuk aplikasi ini'} />
                                             {/* Target link (href) belum sesuai. */}
-                                            <Card useNextLink={true} href={'https://trakteer.id/'} target={'_blank'} prefetch={false} clickable={true} useActionIcon={true} icon={{ primary: <FaCoffee /> }} title={'Traktir Developer'} description={'Segelas americano akan mengubah kehidupan pengembang aplikasi'} />
+                                            <Card useNextLink={true} href={'https://sociabuzz.com/rheyhannh'} target={'_blank'} prefetch={false} clickable={true} useActionIcon={true} icon={{ primary: <FaCoffee /> }} title={'Traktir Developer'} description={'Segelas americano akan mengubah kehidupan pengembang aplikasi'} />
                                             <Card useNextLink={true} href={'https://docs.google.com/forms'} target={'_blank'} prefetch={false} clickable={true} useActionIcon={true} icon={{ primary: <FaExclamation /> }} title={'Feedback'} description={'Laporin disini kalau kamu mengalami masalah tertentu terkait aplikasi ini'} />
                                         </Section>
                                         <Section title={'Help & Social'}>
