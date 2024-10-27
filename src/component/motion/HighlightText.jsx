@@ -404,7 +404,7 @@ import styles from './style/highlight_text.module.css'
  * Boolean untuk menggunakan hook `'useInView'` atau tidak. 
  * - Default : `true`
  * - Tips : Jika tidak menggunakan hook, dapat trigger animasi melalui variant dengan mengaktifkan
- * `makeVariant` terlebih dahulu pada pengaturan preset yang digunakan
+ * `makeVariant` terlebih dahulu pada `presetOptions`
  * @property {hookOptions} hookOptions
  * Opsi yang dapat digunakan untuk hook `'useInView'` yang digunakan
  * @property {'wavingColor'|'wavingTranslate'|'springRotate'|'wavingFlyIn'|'wavingRotation'|'mixFancyTranslate'} [preset]
