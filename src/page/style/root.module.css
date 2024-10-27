@@ -1,0 +1,378 @@
+.container {
+    --base-padding: 16px;
+    --section-margin-bottom: 10rem;
+    --section-height: calc(100vh - (2 * var(--base-padding)));
+    --default-fontsize: 1rem;
+    --title-fontsize: 2rem;
+    --description-fontsize: .85rem;
+    --action-fontsize: 1.1rem;
+    position: relative;
+    width: 100vw;
+    height: 100%;
+    overflow: hidden;
+    padding: var(--base-padding);
+    font-size: var(--default-fontsize);
+}
+
+.section {
+    margin-bottom: var(--section-margin-bottom);
+}
+
+.title {
+    font-size: var(--title-fontsize);
+    font-weight: 600;
+}
+
+.description {
+    font-size: var(--description-fontsize);
+    color: var(--infoDark-color);
+}
+
+.action {
+    font-size: var(--action-fontsize);
+    color: var(--logo-second-color);
+}
+
+/* #region Section 'Features' */
+
+.features {
+    display: grid;
+    grid-template-rows: 50px 10% 100px 1fr;
+    height: var(--section-height);
+}
+
+.features .title {
+    margin-bottom: 10px;
+}
+
+.features .description {
+    margin-bottom: 20px;
+}
+
+.features .nav {
+    margin-bottom: 20px;
+}
+
+.features .content {
+    border: 1px solid blue;
+}
+
+.features .cards {
+    display: grid;
+    justify-content: center;
+    align-items: center;
+    grid-template-columns: 250px 250px 250px;
+    gap: 2.5rem;
+    height: 100%;
+}
+
+/* #endregion Section 'Features' */
+
+/* #region Section 'Universitas' */
+
+.universitas {
+    --section-height: 400px;
+    --inner-padding: 2rem;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    height: var(--section-height);
+    overflow: hidden;
+}
+
+.universitas .text {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    padding: var(--inner-padding);
+}
+
+.universitas .title {
+    margin-bottom: 0.5rem;
+}
+
+.universitas .description {
+    margin-bottom: 1rem;
+}
+
+.universitas .content {
+    --icon-size: 65px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    padding: var(--inner-padding);
+}
+
+.universitas .content .icons:nth-child(1) {
+    margin-top: 90px;
+}
+
+.universitas .content .icons:nth-child(3) {
+    margin-top: 45px;
+}
+
+.universitas .content .icons:nth-child(5) {
+    margin-bottom: 90px;
+}
+
+.universitas .content .icons .icon {
+    width: var(--icon-size);
+    height: var(--icon-size);
+    padding: .5rem;
+    margin-bottom: 1rem;
+    background: var(--white-color);
+    box-shadow: 0 0.5rem 0.75rem var(--light-color);
+    border-radius: 1rem;
+    transition: box-shadow var(--transition-default) ease-in-out;
+}
+
+.universitas .content .icons .icon:hover {
+    box-shadow: none;
+}
+
+/* #endregion Section 'Universitas' */
+
+/* #region Section 'Cara Pakai' */
+
+.cara_pakai {
+    --inner-padding: 3rem;
+    --subtitle-fontsize: 1.7rem;
+    --action-fontsize: 1.1rem;
+    height: var(--section-height);
+    padding: var(--inner-padding);
+    overflow: hidden;
+    display: grid;
+    grid-template-rows: max-content 1fr;
+}
+
+.cara_pakai>.title {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.cara_pakai .content {
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+}
+
+.cara_pakai .content .overlay {
+    position: absolute;
+    top: 0%;
+    left: 0%;
+    width: 100%;
+    height: 100%;
+    z-index: var(--z-tooltip);
+}
+
+.cara_pakai .content.active_1 {
+    grid-template-columns: 50% 1fr 1fr;
+}
+
+.cara_pakai .content.active_2 {
+    grid-template-columns: 1fr 50% 1fr;
+}
+
+.cara_pakai .content.active_3 {
+    grid-template-columns: 1fr 1fr 50%;
+}
+
+.cara_pakai .content .wrapper {
+    display: grid;
+    grid-template-rows: 75% 1fr;
+    gap: 1rem;
+}
+
+.cara_pakai .content .box {
+    background-color: var(--logo-second-color);
+    border-radius: 2rem;
+}
+
+.cara_pakai .content .box.x {
+    background-color: var(--secondInverse-shade-1);
+}
+
+.cara_pakai .content .box.y {
+    background-color: var(--secondInverse-shade-2);
+}
+
+.cara_pakai .content .box.z {
+    background-color: var(--secondInverse-shade-3);
+}
+
+.cara_pakai .content .details {
+    display: grid;
+    grid-template-columns: max-content auto;
+    gap: .75rem;
+    padding: .5rem;
+    overflow: hidden;
+}
+
+.cara_pakai .content .progress {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 35px;
+    height: 35px;
+    font-size: var(--action-fontsize);
+    font-weight: 500;
+    color: var(--dark-color);
+    background-color: var(--white-color);
+    border: 1px solid var(--lighter-color);
+    border-radius: .5rem;
+}
+
+.cara_pakai .content .progress.active {
+    border: 2px solid var(--dark-color);
+}
+
+.cara_pakai .content .box.x~.details .progress.active {
+    border: 2px solid var(--secondInverse-shade-1);
+}
+
+.cara_pakai .content .box.y~.details .progress.active {
+    border: 2px solid var(--secondInverse-shade-2);
+}
+
+.cara_pakai .content .box.z~.details .progress.active {
+    border: 2px solid var(--secondInverse-shade-3);
+}
+
+
+
+.cara_pakai .content .text {
+    width: 450px;
+}
+
+.cara_pakai .content .title {
+    font-size: var(--subtitle-fontsize);
+    white-space: nowrap;
+    margin-bottom: 0;
+}
+
+.cara_pakai .content .description {
+    text-align: justify;
+}
+
+
+
+/* #endregion */
+
+/* #region Section 'Mulai Sekarang' */
+
+.mulai_sekarang {
+    --section-height: 500px;
+    --inner-padding: 2rem;
+    --logo-size: 128px;
+    height: var(--section-height);
+    padding: var(--inner-padding);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+.mulai_sekarang .logo,
+.mulai_sekarang .title {
+    margin-bottom: .5rem;
+}
+
+.mulai_sekarang .logo {
+    position: relative;
+    width: var(--logo-size);
+    height: var(--logo-size);
+}
+
+.mulai_sekarang .logo img {
+    filter: drop-shadow(5px 10px 5px var(--logo-drop-shadow));
+}
+
+.mulai_sekarang .description {
+    overflow: hidden;
+}
+
+.mulai_sekarang .title {
+    font-size: calc(2 * var(--title-fontsize));
+}
+
+.mulai_sekarang .title .word {
+    display: inline-flex;
+}
+
+.mulai_sekarang .title .word {
+    margin-right: .5rem;
+}
+
+.mulai_sekarang .title .word:last-child {
+    margin-right: 0;
+}
+
+.mulai_sekarang .description {
+    width: 400px;
+    font-size: var(--action-fontsize);
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.mulai_sekarang .description span {
+    display: inline-block;
+}
+
+.mulai_sekarang .description span .word {
+    margin: 0 .15rem .15rem 0;
+}
+
+.mulai_sekarang .description mark>span>span {
+    margin: 0 .15rem .15rem 0;
+}
+
+.mulai_sekarang .buttons {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.25rem;
+    width: 275px;
+    height: 40px;
+}
+
+.mulai_sekarang .buttons .btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: .5rem;
+    background-color: var(--white-color);
+    font-size: var(--description-fontsize);
+    border-radius: 1.1rem;
+    cursor: pointer;
+}
+
+.mulai_sekarang .buttons .btn.main {
+    background-color: var(--logo-second-color);
+    color: var(--white-color);
+}
+
+.mulai_sekarang .buttons .btn.main:hover {
+    background-color: var(--logo-second-color-lighter);
+}
+
+.mulai_sekarang .buttons .btn.secondary {
+    background-color: var(--accordion-bg-color);
+}
+
+.mulai_sekarang .buttons .btn.secondary:hover {
+    border: 2px solid var(--lighter-color);
+}
+
+/* #endregion Section 'Mulai Sekarang' */
+
+@media (hover: hover) and (pointer: fine) {}
+
+@media screen and (min-width: 1280px) {
+    .container {
+        max-width: 1280px;
+        margin: 0 auto;
+    }
+}
