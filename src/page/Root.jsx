@@ -525,9 +525,6 @@ const CaraPakai = ({ contents = ['x', 'y', 'z'], useAutoplay = true, autoplayOpt
     const [contentShowed, setContentShowed] = React.useState(false);
     const [activeContent, setActiveContent] = React.useState('active_1');
 
-    const motionValue = useMotionValue(0);
-    const width = useTransform(motionValue, [1, countdown], [0, 100]);
-
     const layoutTransition = {
         layout: { type: 'spring', duration: 1, bounce: 0.3 }
     }
@@ -604,7 +601,6 @@ const CaraPakai = ({ contents = ['x', 'y', 'z'], useAutoplay = true, autoplayOpt
         if (autoplayCountdown <= 1) {
             handleSlideNextContent()
         }
-        motionValue.set(autoplayCountdown);
     }, [autoplayCountdown])
 
     return (
@@ -615,18 +611,6 @@ const CaraPakai = ({ contents = ['x', 'y', 'z'], useAutoplay = true, autoplayOpt
                 position: 'relative',
             }}
         >
-            <motion.div
-                style={{
-                    position: 'absolute',
-                    top: '10%',
-                    left: '50%',
-                    transform: 'translate(-50%, -10%)',
-                    width: width,
-                    height: '25px',
-                    background: 'blue'
-                }}
-            />
-
             <div className={styles.title}>
                 Lorem, ipsum dolor.
             </div>
