@@ -819,7 +819,9 @@ const MulaiSekarang = () => {
                         adjustWavingColor={{
                             color: [null, 'var(--infoDark-color)', 'var(--logo-second-color)'],
                             scale: [null, 1.3, 1],
-                            baseDelay: delayAnims[4]
+                            baseDelay: delayAnims[4],
+                            repeat: Infinity,
+                            repeatDelay: 10
                         }}
                     />
                 </motion.span>
