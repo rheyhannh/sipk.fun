@@ -485,6 +485,41 @@ const Universitas = ({ universitas }) => {
     )
 }
 
+const layoutTransition = {
+    layout: { type: 'spring', duration: 1, bounce: 0.3 }
+}
+
+const Content = ({ activeContent, children, ...props }) => (
+    <motion.div
+        className={`${styles.content} ${styles[activeContent]}`}
+        layout
+        initial={{ x: '100%', gap: '10rem', opacity: 0, }}
+        whileInView={{ x: '0%', gap: '1rem', opacity: 1, }}
+        transition={{ type: 'spring', ease: 'linear', duration: 2.5, bounce: 0, opacity: { duration: 1 }, ...layoutTransition }}
+        {...props}
+    >
+        {children}
+    </motion.div>
+)
+
+const Wrapper = ({ children, ...props }) => (
+    <motion.div className={styles.wrapper} layout transition={{ ...layoutTransition }} {...props}>
+        {children}
+    </motion.div>
+)
+
+const Box = ({ type = 'x', children }) => (
+    <motion.div className={`${styles.box} ${styles[type]}`} layout transition={{ ...layoutTransition }}>
+        {children}
+    </motion.div>
+)
+
+const Details = ({ type = 'x', children }) => (
+    <motion.div className={`${styles.details} ${styles[type]}`} layout transition={{ ...layoutTransition }}>
+        {children}
+    </motion.div>
+)
+
 const Text = ({ title = 'Lorem, ipsum dolor.', description = 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellendus nesciunt exercitationem vitae laborum quisquam laudantium ex blanditiis est cupiditate, iusto, rem omnis explicabo eius hic!', active = false }) => (
     <motion.div
         className={styles.text}
@@ -528,10 +563,6 @@ const CaraPakai = ({ contents = ['x', 'y', 'z'], useAutoplay = true, autoplayOpt
 
     const [contentShowed, setContentShowed] = React.useState(false);
     const [activeContent, setActiveContent] = React.useState('active_1');
-
-    const layoutTransition = {
-        layout: { type: 'spring', duration: 1, bounce: 0.3 }
-    }
 
     const startAutoplay = () => {
         autoplayRef.current = setInterval(() => {
@@ -628,26 +659,8 @@ const CaraPakai = ({ contents = ['x', 'y', 'z'], useAutoplay = true, autoplayOpt
                 />
             </div>
 
-            <motion.div
-                layout
-                initial={{
-                    x: '100%',
-                    gap: '10rem',
-                    opacity: 0,
-                }}
-                whileInView={{
-                    x: '0%',
-                    gap: '1rem',
-                    opacity: 1,
-                }}
-                transition={{
-                    type: 'spring',
-                    ease: 'linear',
-                    duration: 2.5,
-                    bounce: 0,
-                    opacity: { duration: 1 },
-                    ...layoutTransition
-                }}
+            <Content
+                activeContent={activeContent}
                 onAnimationStart={() => { setContentShowed(false) }}
                 onAnimationComplete={(x) => {
                     if (x?.opacity === 0) {
@@ -658,96 +671,54 @@ const CaraPakai = ({ contents = ['x', 'y', 'z'], useAutoplay = true, autoplayOpt
                         console.log('Unknown State');
                     }
                 }}
-                className={`${styles.content} ${styles[activeContent]}`}
             >
-                {!contentShowed && (
-                    <motion.div className={styles.overlay} />
-                )}
+                {!contentShowed && (<motion.div className={styles.overlay} />)}
 
-                <motion.div
-                    className={styles.wrapper}
-                    layout
-                    onTap={() => { handleTap(1) }}
-                    onHoverStart={() => { handleHoverStart(1) }}
-                    onHoverEnd={handleHoverEnd}
-                    transition={{
-                        ...layoutTransition
-                    }}
-                >
-                    <motion.div className={`${styles.box} ${styles.x}`} layout transition={{ ...layoutTransition }}>
+                <Wrapper onTap={() => { handleTap(1) }} onHoverStart={() => { handleHoverStart(1) }} onHoverEnd={handleHoverEnd}>
+                    <Box type={'x'}>
 
-                    </motion.div>
+                    </Box>
 
-                    <motion.div
-                        className={`${styles.details} ${styles.x}`}
-                        layout
-                        transition={{
-                            ...layoutTransition
-                        }}
-                    >
+                    <Details type={'x'}>
                         <Progress text={'1'} active={activeContent.split('_')[1] === '1'} />
                         <Text
                             title={'Susun Rencana Akademikmu'}
                             description={'Mulailah merencanakan perjalanan akademikmu dengan baik! SIPK membantumu memproyeksikan IPK masa depan, sehingga kamu bisa mengambil keputusan yang lebih terarah sejak dini.'}
                             active={activeContent.split('_')[1] === '1'}
                         />
-                    </motion.div>
-                </motion.div>
+                    </Details>
+                </Wrapper>
 
-                <motion.div
-                    className={styles.wrapper}
-                    layout
-                    onTap={() => { handleTap(2) }}
-                    onHoverStart={() => { handleHoverStart(2) }}
-                    onHoverEnd={handleHoverEnd}
-                    transition={{
-                        ...layoutTransition
-                    }}
-                >
-                    <motion.div className={`${styles.box} ${styles.y}`} layout transition={{ ...layoutTransition }}>
+                <Wrapper onTap={() => { handleTap(2) }} onHoverStart={() => { handleHoverStart(2) }} onHoverEnd={handleHoverEnd}>
+                    <Box type={'y'}>
 
-                    </motion.div>
+                    </Box>
 
-                    <motion.div className={`${styles.details} ${styles.y}`} layout transition={{ ...layoutTransition }}>
+                    <Details type={'y'}>
                         <Progress text={'2'} active={activeContent.split('_')[1] === '2'} />
                         <Text
                             title={'Dapatkan Gambaran IPK yang Jelas'}
                             description={'Tidak perlu lagi bingung dengan hasil IPK saat ingin memperbaiki atau mengulang mata kuliah! SIPK memberikan gambaran yang jelas, memudahkanmu dalam menavigasi setiap langkah akademikmu.'}
                             active={activeContent.split('_')[1] === '2'}
                         />
-                    </motion.div>
-                </motion.div>
+                    </Details>
+                </Wrapper>
 
-                <motion.div
-                    className={styles.wrapper}
-                    layout
-                    onTap={() => { handleTap(3) }}
-                    onHoverStart={() => { handleHoverStart(3) }}
-                    onHoverEnd={handleHoverEnd}
-                    transition={{
-                        ...layoutTransition
-                    }}
-                >
-                    <motion.div className={`${styles.box} ${styles.z}`} layout transition={{ ...layoutTransition }}>
+                <Wrapper onTap={() => { handleTap(3) }} onHoverStart={() => { handleHoverStart(3) }} onHoverEnd={handleHoverEnd}>
+                    <Box type={'z'}>
 
-                    </motion.div>
+                    </Box>
 
-                    <motion.div
-                        className={`${styles.details} ${styles.z}`}
-                        layout
-                        transition={{
-                            ...layoutTransition
-                        }}
-                    >
+                    <Details type={'z'}>
                         <Progress text={'3'} active={activeContent.split('_')[1] === '3'} />
                         <Text
                             title={'Lacak Perkembangan Akademikmu'}
                             description={'Pantau progres studimu dalam meraih target SKS, menyelesaikan mata kuliah, dan mencapai IPK kelulusan yang diimpikan, semua dalam satu platform yang terorganisir dan mudah diakses.'}
                             active={activeContent.split('_')[1] === '3'}
                         />
-                    </motion.div>
-                </motion.div>
-            </motion.div>
+                    </Details>
+                </Wrapper>
+            </Content>
         </div>
     )
 }
