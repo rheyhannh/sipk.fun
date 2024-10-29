@@ -673,7 +673,11 @@ const CaraPakai = ({ contents = ['x', 'y', 'z'], useAutoplay = true, autoplayOpt
                         }}
                     >
                         <Progress text={'1'} active={activeContent.split('_')[1] === '1'} />
-                        <Text active={activeContent.split('_')[1] === '1'} />
+                        <Text
+                            title={'Susun Rencana Akademikmu'}
+                            description={'Mulailah merencanakan perjalanan akademikmu dengan baik! SIPK membantumu memproyeksikan IPK masa depan, sehingga kamu bisa mengambil keputusan yang lebih terarah sejak dini.'}
+                            active={activeContent.split('_')[1] === '1'}
+                        />
                     </motion.div>
                 </motion.div>
 
@@ -693,7 +697,11 @@ const CaraPakai = ({ contents = ['x', 'y', 'z'], useAutoplay = true, autoplayOpt
 
                     <motion.div className={`${styles.details} ${styles.y}`} layout transition={{ ...layoutTransition }}>
                         <Progress text={'2'} active={activeContent.split('_')[1] === '2'} />
-                        <Text active={activeContent.split('_')[1] === '2'} />
+                        <Text
+                            title={'Dapatkan Gambaran IPK yang Jelas'}
+                            description={'Tidak perlu lagi bingung dengan hasil IPK saat ingin memperbaiki atau mengulang mata kuliah! SIPK memberikan gambaran yang jelas, memudahkanmu dalam menavigasi setiap langkah akademikmu.'}
+                            active={activeContent.split('_')[1] === '2'}
+                        />
                     </motion.div>
                 </motion.div>
 
@@ -719,7 +727,11 @@ const CaraPakai = ({ contents = ['x', 'y', 'z'], useAutoplay = true, autoplayOpt
                         }}
                     >
                         <Progress text={'3'} active={activeContent.split('_')[1] === '3'} />
-                        <Text active={activeContent.split('_')[1] === '3'} />
+                        <Text
+                            title={'Lacak Perkembangan Akademikmu'}
+                            description={'Pantau progres studimu dalam meraih target SKS, menyelesaikan mata kuliah, dan mencapai IPK kelulusan yang diimpikan, semua dalam satu platform yang terorganisir dan mudah diakses.'}
+                            active={activeContent.split('_')[1] === '3'}
+                        />
                     </motion.div>
                 </motion.div>
             </motion.div>
