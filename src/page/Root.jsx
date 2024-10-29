@@ -616,7 +616,16 @@ const CaraPakai = ({ contents = ['x', 'y', 'z'], useAutoplay = true, autoplayOpt
             }}
         >
             <div className={styles.title}>
-                Lorem, ipsum dolor.
+                <HighlightText
+                    text={'Lorem, ipsum dolor.'}
+                    preset={'wavingFlyIn'}
+                    presetOptions={{
+                        wordStagger: 'random'
+                    }}
+                    adjustWavingFlyIn={{
+                        y: [-225, 0],
+                    }}
+                />
             </div>
 
             <motion.div
