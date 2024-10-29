@@ -13,6 +13,10 @@ import Image from 'next/image';
 import * as React from 'react';
 // #endregion
 
+// #region HOOKS DEPEDENCY
+import { useLocalTheme } from '@/data/core';
+// #endregion
+
 // #region STYLE DEPEDENCY
 import styles from './style/root.module.css';
 // #endregion
