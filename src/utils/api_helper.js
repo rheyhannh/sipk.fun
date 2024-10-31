@@ -166,7 +166,7 @@ export async function verifyAuth(resetCookies = true, revalidateCookies = true) 
             cookieStore.set('s_guest_id', '', cookieServiceDeleteOptions)
         }
 
-        const decodedAccessToken = await verifyAccessToken(userId).catch(error => {
+        const decodedAccessToken = await verifyAccessToken(userId).catch(/** @param {APIResponseErrorProps} error */ error => {
             if (revalidateCookies && access_token && serviceAccessTokenCookie !== access_token) {
                 cookieStore.set('s_access_token', access_token, cookieServiceOptions);
             }
