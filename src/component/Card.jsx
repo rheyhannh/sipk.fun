@@ -231,16 +231,14 @@ export function Summary({ state, icon, color, title, data, penilaian }) {
                         </CountUp>
                     </div>
                     <div className={styles.summary__progress}>
-                        <svg>
-                            <svg
-                                className={styles.summary__progress_circle}
-                                style={{
-                                    stroke: color ? color : 'var(--first-color)',
-                                    strokeDasharray: dashArray
-                                }}
-                            >
-                                <circle cx='50%' cy='50%' r='35'></circle>
-                            </svg>
+                        <svg
+                            className={styles.summary__progress_circle}
+                            style={{
+                                stroke: color ? color : 'var(--first-color)',
+                                strokeDasharray: dashArray
+                            }}
+                        >
+                            <circle cx='50%' cy='50%' r='35'></circle>
                         </svg>
                         <CountUp
                             start={0}
@@ -370,16 +368,14 @@ export function SummaryDummy({ icon, color, title, data, ...props }) {
                     </CountUp>
                 </div>
                 <div className={styles.summary__progress}>
-                    <svg>
-                        <svg
-                            className={styles.summary__progress_circle}
-                            style={{
-                                stroke: color ? color : 'var(--first-color)',
-                                strokeDasharray: dashArray
-                            }}
-                        >
-                            <circle cx='50%' cy='50%' r='35'></circle>
-                        </svg>
+                    <svg
+                        className={styles.summary__progress_circle}
+                        style={{
+                            stroke: color ? color : 'var(--first-color)',
+                            strokeDasharray: dashArray
+                        }}
+                    >
+                        <circle cx='50%' cy='50%' r='35'></circle>
                     </svg>
                     <CountUp
                         start={0}
