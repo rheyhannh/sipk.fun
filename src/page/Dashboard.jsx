@@ -84,7 +84,7 @@ export function AcademicCard({ count, universitas }) {
                 state='loaded'
                 color='var(--danger-color)'
                 icon={{ name: 'MdOutlineConfirmationNumber', lib: 'md' }}
-                data={{ value: getUserSks(matkul), percentage: getUserSksPercentage(user, matkul), keterangan: `${user.length !== 0 ? `Targetmu ${user[0].sks_target}` : `Terakhir diupdate`}` }}
+                data={{ value: getUserSks(matkul), percentage: getUserSksPercentage(user, matkul), keterangan: `Targetmu ${user[0]?.sks_target ?? '-'}` }}
                 title={'SKS'}
                 penilaian={universitas[user[0].university_id - 1].penilaian}
             >
@@ -94,7 +94,7 @@ export function AcademicCard({ count, universitas }) {
                 state='loaded'
                 color='var(--warning-color)'
                 icon={{ name: 'IoBookOutline', lib: 'io5' }}
-                data={{ value: getUserMatkul(matkul), percentage: getUserMatkulPercentage(user, matkul), keterangan: `${user.length !== 0 ? `Targetmu ${user[0].matkul_target}` : `Terakhir diupdate`}` }}
+                data={{ value: getUserMatkul(matkul), percentage: getUserMatkulPercentage(user, matkul), keterangan: `Targetmu ${user[0]?.matkul_target ?? '-'}` }}
                 title={'Matakuliah'}
                 penilaian={universitas[user[0].university_id - 1].penilaian}
             >
@@ -104,7 +104,7 @@ export function AcademicCard({ count, universitas }) {
                 state='loaded'
                 color='var(--success-color)'
                 icon={{ name: 'FaRegStar', lib: 'fa' }}
-                data={{ value: getUserIpk(matkul), percentage: getUserIpkPercentage(user, matkul), keterangan: `${user.length !== 0 ? `Targetmu ${parseFloat(user[0].ipk_target).toFixed(2)}` : `Terakhir diupdate`}` }}
+                data={{ value: getUserIpk(matkul), percentage: getUserIpkPercentage(user, matkul), keterangan: `Targetmu ${user[0]?.ipk_target ?? '-'}` }}
                 title={'IPK'}
                 penilaian={universitas[user[0].university_id - 1].penilaian}
             >
