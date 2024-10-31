@@ -713,7 +713,7 @@ const CaraPakai = ({ contents = ['x', 'y', 'z'], useAutoplay = true, autoplayOpt
                         <Progress text={'3'} active={activeContent.split('_')[1] === '3'} />
                         <Text
                             title={'Lacak Perkembangan Akademikmu'}
-                            description={'Pantau progres studimu dalam meraih target SKS, menyelesaikan mata kuliah, dan mencapai IPK kelulusan yang diimpikan, semua dalam satu platform yang terorganisir dan mudah diakses.'}
+                            description={'Pantau progres studimu dalam meraih target SKS, jumlah mata kuliah, dan mencapai IPK kelulusan yang diimpikan, semua dalam satu platform yang terorganisir dan mudah diakses.'}
                             active={activeContent.split('_')[1] === '3'}
                         />
                     </Details>
