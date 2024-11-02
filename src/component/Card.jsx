@@ -961,6 +961,37 @@ export function History({ state, data, penilaian, count }) {
     else { return 'Unidentified Card State' }
 }
 
+export function HistoryDummy({ item, color = 'success', semester = 1, ...props }) {
+    return (
+        <motion.div
+            className={styles.history}
+            {...props}
+        >
+            <div className={styles.history__content}>
+                <div className={`${styles.history__icon} ${styles.tambah}`}>
+                    <IoAddOutline size={'24px'} />
+                </div>
+                <div className={styles.history__details}>
+                    <h4>
+                        {item?.nama ?? 'Nama Matakuliah'}
+                    </h4>
+                    <small style={{ fontSize: '0.7rem' }}>
+                        Semester {item?.semester ?? semester}
+                    </small>
+                </div>
+                <div className={styles.history__value}>
+                    <h6 style={{ color: `var(--${color}-color)` }}>
+                        {item?.nilai ?? 'A'}
+                    </h6>
+                    <h6>
+                        {item?.sks ?? '3'} SKS
+                    </h6>
+                </div>
+            </div>
+        </motion.div>
+    )
+}
+
 /**
  * Props yang digunakan component `Grafik`
  * @typedef {Object} GrafikProps
@@ -2008,4 +2039,120 @@ export function Progress({ state, user, matkul, penilaian }) {
     else if (state === 'validating') { return (<ValidatingCard />) }
     else if (state === 'empty') { return (<EmptyCard />) }
     else { return 'Unidentified Card State' }
+}
+export function ProgressDummy({ value = {}, target = { sks: 144, matkul: 50, ipk: 3.75 }, ...props }) {
+    return (
+        <motion.div className={styles.progress} {...props}>
+            <div className={styles.progress__main}>
+                <div className={styles.progress__left}>
+                    <div className={styles.progress__left_subtitle}>
+                        <div style={{ boxShadow: 'var(--box-shadow2)' }} className={styles.target__left_icon}>
+                            <TbAtom size={'17px'} color={'var(--logo-second-color)'} />
+                        </div>
+                        <h3 style={{ color: 'var(--infoDark-color)', fontWeight: '500' }}>
+                            Progress
+                        </h3>
+                    </div>
+                </div>
+            </div>
+            <div className={styles.progress__data}>
+                <div className={`${styles.wrapper} ${styles.sks}`}>
+                    <div className={styles.top}>
+                        <h3>SKS</h3>
+                        <div className={styles.details}>
+                            <CountUp
+                                start={0}
+                                duration={2.5}
+                                decimals={Number.isInteger(value.sks) ? 0 : 2}
+                                end={value.sks}
+                                delay={0}
+                                preserveValue={true}
+                            >
+                                {({ countUpRef }) => (
+                                    <h3 ref={countUpRef} />
+                                )}
+                            </CountUp>
+                            <h3 style={{ color: 'var(--infoDark-color)', fontWeight: '400' }}>|</h3>
+                            <small style={{ color: 'var(--infoDark-color)' }}>{target.sks}</small>
+                        </div>
+                    </div>
+                    <ProgressBar
+                        completed={Math.round((value.sks / target.sks) * 100)}
+                        maxCompleted={100}
+                        height={'100%'}
+                        isLabelVisible={false}
+                        baseBgColor={'var(--inner-color-bg1)'}
+                        borderRadius={'.25rem'}
+                        bgColor={'var(--danger-color)'}
+                        animateOnRender={true}
+                        transitionDuration={'2.5s'}
+                    />
+                </div>
+                <div className={`${styles.wrapper} ${styles.matkul}`}>
+                    <div className={styles.top}>
+                        <h3>Matakuliah</h3>
+                        <div className={styles.details}>
+                            <CountUp
+                                start={0}
+                                duration={2.5}
+                                decimals={Number.isInteger(value.matkul) ? 0 : 2}
+                                end={value.matkul}
+                                delay={0}
+                                preserveValue={true}
+                            >
+                                {({ countUpRef }) => (
+                                    <h3 ref={countUpRef} />
+                                )}
+                            </CountUp>
+                            <h3 style={{ color: 'var(--infoDark-color)', fontWeight: '400' }}>|</h3>
+                            <small style={{ color: 'var(--infoDark-color)' }}>{target.matkul}</small>
+                        </div>
+                    </div>
+                    <ProgressBar
+                        completed={Math.round((value.matkul / target.matkul) * 100)}
+                        maxCompleted={100}
+                        height={'100%'}
+                        isLabelVisible={false}
+                        baseBgColor={'var(--inner-color-bg1)'}
+                        borderRadius={'.25rem'}
+                        bgColor={'var(--warning-color)'}
+                        animateOnRender={true}
+                        transitionDuration={'2.5s'}
+                    />
+                </div>
+                <div className={`${styles.wrapper} ${styles.ipk}`}>
+                    <div className={styles.top}>
+                        <h3>IPK</h3>
+                        <div className={styles.details}>
+                            <CountUp
+                                start={0}
+                                duration={2.5}
+                                decimals={Number.isInteger(value.ipk) ? 0 : 2}
+                                end={value.ipk}
+                                delay={0}
+                                preserveValue={true}
+                            >
+                                {({ countUpRef }) => (
+                                    <h3 ref={countUpRef} />
+                                )}
+                            </CountUp>
+                            <h3 style={{ color: 'var(--infoDark-color)', fontWeight: '400' }}>|</h3>
+                            <small style={{ color: 'var(--infoDark-color)' }}>{target.ipk}</small>
+                        </div>
+                    </div>
+                    <ProgressBar
+                        completed={Math.round((value.ipk / target.ipk) * 100)}
+                        maxCompleted={100}
+                        height={'100%'}
+                        isLabelVisible={false}
+                        baseBgColor={'var(--inner-color-bg1)'}
+                        borderRadius={'.25rem'}
+                        bgColor={'var(--success-color)'}
+                        animateOnRender={true}
+                        transitionDuration={'2.5s'}
+                    />
+                </div>
+            </div>
+        </motion.div>
+    )
 }
