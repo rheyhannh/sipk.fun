@@ -3,6 +3,7 @@
 // #region TYPE DEPEDENCY
 import * as SupabaseTypes from '@/types/supabase';
 import { HTMLMotionProps, MotionStyle, MotionValue } from 'framer-motion';
+import { MatkulDummiesProps } from '@/component/landing/variables/MatkulDummies';
 // #endregion
 
 // #region NEXT DEPEDENCY
@@ -22,12 +23,17 @@ import styles from './style/root.module.css';
 // #endregion
 
 // #region COMPONENT DEPEDENCY
-import { motion, useScroll, useTransform, useSpring, useMotionValue } from 'framer-motion';
-import { SummaryDummy } from '@/component/Card';
+import { motion, useScroll, useTransform, useSpring, AnimatePresence } from 'framer-motion';
+import { SummaryDummy, HistoryDummy, ProgressDummy } from '@/component/Card';
 import { LogoImage } from '@/component/Main';
 import Link from '@/component/Link';
 import HighlightText from '@/component/motion/HighlightText';
 import ThemeChanger from '@/component/_test/ThemeChanger';
+import {
+    MatkulDummies,
+    MatkulDummiesNilaiBobot,
+    MatkulDummiesNilaiColorPreset
+} from '@/component/landing/variables/MatkulDummies';
 // #endregion
 
 /**
