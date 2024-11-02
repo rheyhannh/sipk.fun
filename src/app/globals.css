@@ -201,18 +201,22 @@
     /* #endregion */
 
     /* #region SHADE */
-    --first-shade-1: #ff6341;
-    --first-shade-2: #e6593b;
-    --first-shade-3: #cc4f34;
-    --second-shade-1: #1d3263;
-    --second-shade-2: #1a2d59;
-    --second-shade-3: #17284f;
+    --first-shade-1: #ffd4c8a1;
+    --first-shade-2: #ffaa92;
+    --first-shade-3: #ff856b;
+    --second-shade-1: #9bb3e699;
+    --second-shade-2: #6385d4;
+    --second-shade-3: #4168c2;
     --firstInverse-shade-1: var(--second-shade-1);
     --firstInverse-shade-2: var(--second-shade-2);
     --firstInverse-shade-3: var(--second-shade-3);
     --secondInverse-shade-1: var(--first-shade-1);
     --secondInverse-shade-2: var(--first-shade-2);
     --secondInverse-shade-3: var(--first-shade-3);
+
+    --custom-shade-1: #848bc859;
+    --custom-shade-2: #B2B3FF;
+    --custom-shade-3: #6E40FF;
     /* #endregion */
 
     /* #region INNER */
