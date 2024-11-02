@@ -648,7 +648,7 @@ const CaraPakai = ({ contents = ['x', 'y', 'z'], useAutoplay = true, autoplayOpt
         >
             <div className={styles.title}>
                 <HighlightText
-                    text={'Lorem, ipsum dolor.'}
+                    text={'Kenapa harus pakai SIPK'}
                     preset={'wavingFlyIn'}
                     presetOptions={{
                         wordStagger: 'random'
@@ -683,7 +683,7 @@ const CaraPakai = ({ contents = ['x', 'y', 'z'], useAutoplay = true, autoplayOpt
                         <Progress text={'1'} active={activeContent.split('_')[1] === '1'} />
                         <Text
                             title={'Susun Rencana Akademikmu'}
-                            description={'Mulailah merencanakan perjalanan akademikmu dengan baik! SIPK membantumu memproyeksikan IPK masa depan, sehingga kamu bisa mengambil keputusan yang lebih terarah sejak dini.'}
+                            description={'Mulailah merencanakan perjalanan akademikmu dengan baik! SIPK membantumu memproyeksikan IPK berdasarkan mata kuliah yang dimasukkan, sehingga kamu bisa mengambil keputusan yang lebih terarah sejak dini.'}
                             active={activeContent.split('_')[1] === '1'}
                         />
                     </Details>
@@ -698,7 +698,7 @@ const CaraPakai = ({ contents = ['x', 'y', 'z'], useAutoplay = true, autoplayOpt
                         <Progress text={'2'} active={activeContent.split('_')[1] === '2'} />
                         <Text
                             title={'Dapatkan Gambaran IPK yang Jelas'}
-                            description={'Tidak perlu lagi bingung dengan hasil IPK saat ingin memperbaiki atau mengulang mata kuliah! SIPK memberikan gambaran yang jelas, memudahkanmu dalam menavigasi setiap langkah akademikmu.'}
+                            description={'Engga perlu lagi bingung dengan hasil IPK saat ingin memperbaiki atau mengulang mata kuliah! SIPK memberikan gambaran yang jelas, memudahkanmu dalam menavigasi setiap langkah akademikmu.'}
                             active={activeContent.split('_')[1] === '2'}
                         />
                     </Details>
