@@ -520,6 +520,233 @@ const Box = ({ type = 'x', children }) => (
     </motion.div>
 )
 
+const BoxContentX = React.forwardRef((
+    {
+        data = MatkulDummies,
+        penilaian = { style: MatkulDummiesNilaiColorPreset, bobot: MatkulDummiesNilaiBobot },
+        maxSemester = 8,
+        ...props
+    },
+    ref
+) => {
+    /** @type {ReturnType<typeof React.useState<Array<Array<MatkulDummiesProps>>>>} */
+    const [matkul, setMatkul] = React.useState(Array.from({ length: maxSemester }, () => []));
+    /** @type {ReturnType<typeof React.useState<Array<MatkulDummiesProps>>>} */
+    const [addedMatkul, setAddedMatkul] = React.useState([]);
+    const [activeMatkulIndex, setActiveMatkulIndex] = React.useState(0);
+    const [total, setTotal] = React.useState({ ipk: 0, sks: 0, matkul: 0 });
+
+    const generateMatkulSections = (sourceArr = [...data], maxSections = maxSemester, random = { min: 2, max: 4 }) => {
+        const { min, max } = random;
+
+        for (let i = sourceArr.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [sourceArr[i], sourceArr[j]] = [sourceArr[j], sourceArr[i]];
+        }
+
+        const result = [];
+        let index = 0;
+
+        while (index < sourceArr.length && result.length < maxSections) {
+            const randomLength = Math.floor(Math.random() * (max - min + 1)) + min;
+            result.push(sourceArr.slice(index, index + randomLength));
+            index += randomLength;
+        }
+
+        while (result.length < maxSections) {
+            result.push([]);
+        }
+
+        return result;
+    }
+
+    const calculateTotal = () => {
+        const totalMatkul = addedMatkul.length;
+        const { totalSks } = addedMatkul.reduce((sum, current) => {
+            return {
+                totalSks: sum.totalSks + current.sks,
+            };
+        }, { totalSks: 0 }
+        );
+        const { totalNilaiAkhir } = addedMatkul.reduce((sum, current) => {
+            const { nama, sks, nilai: indeksNilai } = current;
+            const bobot = penilaian.bobot[indeksNilai];
+            return {
+                totalNilaiAkhir: sum.totalNilaiAkhir + (sks * bobot),
+            };
+        }, { totalNilaiAkhir: 0 }
+        );
+
+        const totalIpk = Math.round((totalNilaiAkhir / totalSks) * 100) / 100;
+
+        setTotal({ sks: totalSks, matkul: totalMatkul, ipk: totalIpk });
+    }
+
+    React.useEffect(() => {
+        calculateTotal();
+    }, [addedMatkul]);
+
+    React.useEffect(() => {
+        const initialTimeout = setTimeout(() => {
+            setActiveMatkulIndex(x => x + 1);
+
+            const interval = setInterval(() => {
+                setActiveMatkulIndex((prevIndex) => {
+                    if (prevIndex >= maxSemester) {
+                        clearInterval(interval);
+                    }
+                    return prevIndex + 1;
+                })
+            }, 5000);
+
+            return () => clearInterval(interval);
+        }, 3000);
+
+        return () => clearTimeout(initialTimeout);
+
+    }, [maxSemester]);
+
+    React.useEffect(() => {
+        setMatkul(generateMatkulSections());
+    }, []);
+
+    return (
+        <motion.div
+            ref={ref}
+            className={styles.inner}
+            layout
+            exit={{ opacity: 0, x: -250 }}
+            transition={{ ...layoutTransition }}
+            {...props}
+        >
+            <motion.div className={styles.matkul}>
+                <AnimatePresence mode={'wait'}>
+                    {matkul.map((section, sectionIndex) => {
+                        return sectionIndex === activeMatkulIndex ? (
+                            <motion.div
+                                key={sectionIndex}
+                                className={styles.matkul_anim}
+                                variants={{
+                                    initial: {
+                                        x: -325,
+                                        opacity: 0,
+                                        scale: 0.5
+                                    },
+                                    view: {
+                                        x: 0,
+                                        opacity: 1,
+                                        scale: 1
+                                    },
+                                    exit: {
+                                        x: 325,
+                                        opacity: 0,
+                                        scale: 0.4
+                                    }
+                                }}
+                                initial={'initial'}
+                                animate={'view'}
+                                exit={'exit'}
+                                transition={{
+                                    type: 'spring',
+                                    duration: 1,
+                                    delay: 0.25
+                                }}
+                                onAnimationComplete={x => {
+                                    if (x === 'exit') {
+                                        setAddedMatkul(x => [...x, ...matkul[sectionIndex]])
+                                    }
+                                }}
+                            >
+                                {section.map((item, itemIndex) => (
+                                    <HistoryDummy
+                                        key={item.id}
+                                        item={item}
+                                        color={penilaian.style[item.nilai]}
+                                        semester={activeMatkulIndex + 1}
+                                        style={{ boxShadow: 'none', borderRadius: '1rem', marginBottom: '0' }}
+                                    />
+                                ))}
+                            </motion.div>
+                        ) : null
+                    })}
+                </AnimatePresence>
+            </motion.div>
+
+            <motion.div
+                className={styles.progress_anim}
+                initial={{ opacity: 0, rotateY: -30, rotateX: 30, y: 100, x: 75 }}
+                animate={{ opacity: 1, rotateY: 0, rotateX: 0, y: 0, x: 0 }}
+                transition={{
+                    type: 'spring',
+                    duration: 1,
+                    delay: 0.15,
+                }}
+            >
+                <ProgressDummy
+                    value={{ sks: total.sks, matkul: total.matkul, ipk: total.ipk }}
+                    style={{ boxShadow: 'none', borderRadius: '1rem', transformOrigin: 'top right' }}
+                />
+            </motion.div>
+
+        </motion.div>
+    )
+});
+
+const BoxContentZ = React.forwardRef((props, ref) => (
+    <motion.div
+        ref={ref}
+        className={styles.inner}
+        layout
+        transition={{ ...layoutTransition }}
+        {...props}
+    >
+        <motion.div
+            initial={{ opacity: 0, x: 500 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: 250 }}
+            transition={{ duration: 1, type: 'spring', bounce: 0.2 }}
+        >
+            <SummaryDummy
+                title={'SKS'}
+                color='var(--danger-color)'
+                icon={{ name: 'MdOutlineConfirmationNumber', lib: 'md' }}
+                data={{ value: 76, percentage: 52, keterangan: 'Targetmu 144' }}
+                style={{ marginTop: '0', boxShadow: 'none', transition: 'none', borderRadius: '1rem' }}
+            />
+        </motion.div>
+
+        <motion.div
+            initial={{ opacity: 0, x: 500 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: 250 }}
+            transition={{ duration: 1, type: 'spring', bounce: 0.2 }}
+        >
+            <SummaryDummy
+                title={'IPK'}
+                color='var(--success-color)'
+                icon={{ name: 'FaRegStar', lib: 'fa' }}
+                data={{ value: 3.27, percentage: 87, keterangan: 'Targetmu 3.75' }}
+                style={{ marginTop: '0', boxShadow: 'none', borderRadius: '1rem' }}
+            />
+        </motion.div>
+
+        <motion.div
+            initial={{ opacity: 0, x: 500 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: 250 }}
+            transition={{ duration: 1, type: 'spring', bounce: 0.2 }}
+        >
+            <SummaryDummy
+                title={'Matakuliah'}
+                color='var(--warning-color)'
+                icon={{ name: 'IoBookOutline', lib: 'io5' }}
+                data={{ value: 31, percentage: 62, keterangan: 'Targetmu 50' }}
+                style={{ marginTop: '0', boxShadow: 'none', borderRadius: '1rem' }}
+            />
+        </motion.div>
+    </motion.div>
+));
+
 const Details = ({ type = 'x', children }) => (
     <motion.div className={`${styles.details} ${styles[type]}`} layout transition={{ ...layoutTransition }}>
         {children}
@@ -682,7 +909,11 @@ const CaraPakai = ({ contents = ['x', 'y', 'z'], useAutoplay = true, autoplayOpt
 
                 <Wrapper onTap={() => { handleTap(1) }} onHoverStart={() => { handleHoverStart(1) }} onHoverEnd={handleHoverEnd}>
                     <Box type={'x'}>
-
+                        <AnimatePresence mode={'popLayout'}>
+                            {activeContent.split('_')[1] === '1' && contentShowed && (
+                                <BoxContentX />
+                            )}
+                        </AnimatePresence>
                     </Box>
 
                     <Details type={'x'}>
@@ -712,7 +943,11 @@ const CaraPakai = ({ contents = ['x', 'y', 'z'], useAutoplay = true, autoplayOpt
 
                 <Wrapper onTap={() => { handleTap(3) }} onHoverStart={() => { handleHoverStart(3) }} onHoverEnd={handleHoverEnd}>
                     <Box type={'z'}>
-
+                        <AnimatePresence mode={'popLayout'}>
+                            {activeContent.split('_')[1] === '3' && contentShowed && (
+                                <BoxContentZ />
+                            )}
+                        </AnimatePresence>
                     </Box>
 
                     <Details type={'z'}>
