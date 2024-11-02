@@ -168,15 +168,15 @@
 }
 
 .cara_pakai .content.active_1 {
-    grid-template-columns: 50% 1fr 1fr;
+    grid-template-columns: 70% 1fr 1fr;
 }
 
 .cara_pakai .content.active_2 {
-    grid-template-columns: 1fr 50% 1fr;
+    grid-template-columns: 1fr 70% 1fr;
 }
 
 .cara_pakai .content.active_3 {
-    grid-template-columns: 1fr 1fr 50%;
+    grid-template-columns: 1fr 1fr 70%;
 }
 
 .cara_pakai .content .wrapper {
@@ -186,6 +186,8 @@
 }
 
 .cara_pakai .content .box {
+    position: relative;
+    overflow: hidden;
     background-color: var(--logo-second-color);
     border-radius: 2rem;
 }

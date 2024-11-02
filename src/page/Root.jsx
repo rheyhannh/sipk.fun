@@ -499,8 +499,8 @@ const Content = ({ activeContent, children, ...props }) => (
     <motion.div
         className={`${styles.content} ${styles[activeContent]}`}
         layout
-        initial={{ x: '100%', gap: '10rem', opacity: 0, }}
-        whileInView={{ x: '0%', gap: '1rem', opacity: 1, }}
+        initial={{ x: '100%', opacity: 0 }}
+        whileInView={{ x: '0%', opacity: 1 }}
         transition={{ type: 'spring', ease: 'linear', duration: 2.5, bounce: 0, opacity: { duration: 1 }, ...layoutTransition }}
         {...props}
     >
