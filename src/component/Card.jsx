@@ -3,6 +3,8 @@
 // #region TYPE DEPEDENCY
 import * as ContextTypes from '@/types/context';
 import * as SupabaseTypes from '@/types/supabase';
+import { MatkulDummiesProps } from '@/component/landing/variables/MatkulDummies';
+import { HTMLMotionProps } from 'framer-motion';
 // #endregion
 
 // #region NEXT DEPEDENCY
@@ -27,6 +29,7 @@ import ProgressBar from "@ramonak/react-progress-bar";
 import { LineChart, Line, BarChart, Bar, XAxis, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import { Icon } from '@/component/loader/ReactIcons'
 import { Spinner } from "./loader/Loading";
+import { motion } from 'framer-motion';
 // #endregion
 
 // #region UTIL DEPEDENCY
