@@ -532,15 +532,12 @@ const Box = ({ type = 'x', children }) => (
     </motion.div>
 )
 
-const BoxContentX = React.forwardRef((
-    {
-        data = MatkulDummies,
-        penilaian = { style: MatkulDummiesNilaiColorPreset, bobot: MatkulDummiesNilaiBobot },
-        maxSemester = 8,
-        ...props
-    },
-    ref
-) => {
+const BoxContentX = React.forwardRef(({
+    data = MatkulDummies,
+    penilaian = { style: MatkulDummiesNilaiColorPreset, bobot: MatkulDummiesNilaiBobot },
+    maxSemester = 8,
+    ...props
+}, ref) => {
     /** @type {ReturnType<typeof React.useState<Array<Array<MatkulDummiesProps>>>>} */
     const [matkul, setMatkul] = React.useState(Array.from({ length: maxSemester }, () => []));
     /** @type {ReturnType<typeof React.useState<Array<MatkulDummiesProps>>>} */
