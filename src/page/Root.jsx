@@ -532,6 +532,22 @@ const Box = ({ type = 'x', children }) => (
     </motion.div>
 )
 
+/**
+ * Props yang digunakan component `BoxContentX`
+ * @typedef {Object} BoxContentXProps
+ * @property {Array<MatkulDummiesProps>} [data]
+ * @property {Object} penilaian
+ * @property {typeof MatkulDummiesNilaiColorPreset} penilaian.style
+ * @property {typeof MatkulDummiesNilaiBobot} penilaian.bobot
+ * @property {number} [maxSemester]
+ * Jumlah maksimum semester untuk perulangan animasi
+ * - Default : `8`
+ */
+
+/**
+ * Component yang dibungkus dengan `forwardRef` untuk menampilkan content yang tampil pada `Box` dengan type `x`
+ * @type {React.FC<HTMLMotionProps<'div'> & BoxContentXProps>}
+ */
 const BoxContentX = React.forwardRef(({
     data = MatkulDummies,
     penilaian = { style: MatkulDummiesNilaiColorPreset, bobot: MatkulDummiesNilaiBobot },
@@ -701,6 +717,61 @@ const BoxContentX = React.forwardRef(({
     )
 });
 
+/**
+ * Props yang digunakan component `BoxContentZ`
+ * @typedef {Object} BoxContentZProps
+ * @property {Object} value
+ * Initial value untuk atribut yang tersedia
+ * @property {number} value.sks
+ * Initial value `sks` dengan format angka bulat
+ * - Default : `76`
+ * @property {number} value.matkul
+ * Initial value `matkul` dengan format angka bulat
+ * - Default : `31`
+ * @property {number} value.ipk
+ * Initial value `ipk` dengan format angka decimal disertai dua angka dibelakang koma
+ * - Default : `3.27`
+ * @property {Object} target
+ * Nilai target untuk atribut yang tersedia
+ * @property {number} target.sks
+ * Nilai target `sks` dengan format angka bulat
+ * - Default : `144`
+ * @property {number} target.matkul
+ * Nilai target `matkul` dengan format angka bulat
+ * - Default : `50`
+ * @property {number} target.ipk
+ * Nilai target `ipk` dengan format angka decimal disertai dua angka dibelakang koma
+ * - Default : `3.75`
+ * @property {boolean} generateNewNumber
+ * Saat `true` maka akan generate angka acak baru untuk setiap atribut dengan interval yang diatur pada `newNumberInterval`
+ * - Default : `false`
+ * @property {Object} newNumberRange
+ * @property {[number, number|'target']} newNumberRange.sks
+ * Jarak angka acak yang dibuat untuk atribut `sks`, dimana index pertama sebagai nilai minimum dan index kedua sebagai nilai maksimum.
+ * 
+ * Kedua index berformat angka bulat.
+ * Index kedua dapat bernilai `'target'` dimana ini match dengan target sks yang digunakan pada props `target`.
+ * - Default : `[50, 144]`
+ * @property {[number, number|'target']} newNumberRange.matkul
+ * Jarak angka acak yang dibuat untuk atribut `matkul`, dimana index pertama sebagai nilai minimum dan index kedua sebagai nilai maksimum.
+ * 
+ * Kedua index berformat angka bulat.
+ * Index kedua dapat bernilai `'target'` dimana ini match dengan target matkul yang digunakan pada props `target`.
+ * - Default : `[32, 'target']`
+ * @property {[number, number|'target']} newNumberRange.ipk
+ * Jarak angka acak yang dibuat untuk atribut `ipk`, dimana index pertama sebagai nilai minimum dan index kedua sebagai nilai maksimum.
+ * 
+ * Kedua index berformat angka decimal disertai dua angka dibelakang koma.
+ * Index kedua dapat bernilai `'target'` dimana ini match dengan target ipk yang digunakan pada props `target`.
+ * - Default : `[1.25, 4.00]`
+ * @property {number} newNumberInterval
+ * Interval untuk generate angka acak baru dalam `ms`
+ */
+
+/**
+ * Component yang dibungkus dengan `forwardRef` untuk menampilkan content yang tampil pada `Box` dengan type `z`
+ * @type {React.FC<HTMLMotionProps<'div'> & BoxContentZProps>}
+ */
 const BoxContentZ = React.forwardRef(({
     value = { sks: 76, matkul: 31, ipk: 3.27 },
     target = { sks: 144, matkul: 50, ipk: 3.75 },
