@@ -4,6 +4,11 @@ import { IconBaseProps } from 'react-icons';
 
 // #region COMPONENT DEPEDENCY
 import loadable from '@loadable/component';
+import { ErrorBoundary } from 'react-error-boundary';
+// #endregion
+
+// #region ICON DEPEDENCY
+import { FaBacteria } from 'react-icons/fa';
 // #endregion
 
 /**
@@ -25,5 +30,9 @@ export const Icon = ({ name, lib, props }) => {
         resolveComponent: (el) => el[name]
     });
 
-    return <ElementIcon {...props} />;
+    return (
+        <ErrorBoundary fallback={<FaBacteria size={'24px'} />}>
+            <ElementIcon {...props} />
+        </ErrorBoundary>
+    );
 }
