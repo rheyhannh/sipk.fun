@@ -495,6 +495,18 @@ const layoutTransition = {
     layout: { type: 'spring', duration: 1, bounce: 0.3 }
 }
 
+const generateRandomNumber = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
+
+const generateRandomFloat = (min, max) => {
+    const randomFloat = Math.random() * (max - min) + min;
+    return Math.round(randomFloat * 100) / 100;
+};
+
+const calculatePercentage = (value, target) => {
+    const percentage = Math.round((value / target) * 100);
+    return Math.min(percentage, 100);
+};
+
 const Content = ({ activeContent, children, ...props }) => (
     <motion.div
         className={`${styles.content} ${styles[activeContent]}`}
