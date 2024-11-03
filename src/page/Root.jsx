@@ -704,7 +704,7 @@ const BoxContentX = React.forwardRef(({
 const BoxContentZ = React.forwardRef(({
     value = { sks: 76, matkul: 31, ipk: 3.27 },
     target = { sks: 144, matkul: 50, ipk: 3.75 },
-    generateNewNumber = true,
+    generateNewNumber = false,
     newNumberRange = { sks: [50, 144], matkul: [32, 'target'], ipk: [1.25, 4.00] },
     newNumberInterval = 5000,
     ...props
@@ -998,7 +998,7 @@ const CaraPakai = ({ contents = ['x', 'y', 'z'], useAutoplay = true, autoplayOpt
                     <Box type={'z'}>
                         <AnimatePresence mode={'popLayout'}>
                             {activeContent.split('_')[1] === '3' && contentShowed && (
-                                <BoxContentZ />
+                                <BoxContentZ generateNewNumber={true} />
                             )}
                         </AnimatePresence>
                     </Box>
