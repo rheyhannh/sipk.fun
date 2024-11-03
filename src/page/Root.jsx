@@ -704,60 +704,104 @@ const BoxContentX = React.forwardRef((
     )
 });
 
-const BoxContentZ = React.forwardRef((props, ref) => (
-    <motion.div
-        ref={ref}
-        className={styles.inner}
-        layout
-        transition={{ ...layoutTransition }}
-        {...props}
-    >
-        <motion.div
-            initial={{ opacity: 0, x: 500 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: 250 }}
-            transition={{ duration: 1, type: 'spring', bounce: 0.2 }}
-        >
-            <SummaryDummy
-                title={'SKS'}
-                color='var(--danger-color)'
-                icon={{ name: 'MdOutlineConfirmationNumber', lib: 'md' }}
-                data={{ value: 76, percentage: 52, keterangan: 'Targetmu 144' }}
-                style={{ marginTop: '0', boxShadow: 'none', transition: 'none', borderRadius: '1rem' }}
-            />
-        </motion.div>
+const BoxContentZ = React.forwardRef(({
+    value = { sks: 76, matkul: 31, ipk: 3.27 },
+    target = { sks: 144, matkul: 50, ipk: 3.75 },
+    generateNewNumber = true,
+    newNumberRange = { sks: [50, 144], matkul: [32, 'target'], ipk: [1.25, 4.00] },
+    newNumberInterval = 5000,
+    ...props
+}, ref) => {
+    const [values, setValues] = React.useState(() => ({
+        sks: { current: value.sks, target: target.sks, percentage: calculatePercentage(value.sks, target.sks) },
+        matkul: { current: value.matkul, target: target.matkul, percentage: calculatePercentage(value.matkul, target.matkul) },
+        ipk: { current: value.ipk, target: target.ipk, percentage: calculatePercentage(value.ipk, target.ipk) },
+    }));
 
-        <motion.div
-            initial={{ opacity: 0, x: 500 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: 250 }}
-            transition={{ duration: 1, type: 'spring', bounce: 0.2 }}
-        >
-            <SummaryDummy
-                title={'IPK'}
-                color='var(--success-color)'
-                icon={{ name: 'FaRegStar', lib: 'fa' }}
-                data={{ value: 3.27, percentage: 87, keterangan: 'Targetmu 3.75' }}
-                style={{ marginTop: '0', boxShadow: 'none', borderRadius: '1rem' }}
-            />
-        </motion.div>
+    const handleGenerateNewNumber = () => {
+        const { sks: sksTarget, matkul: matkulTarget, ipk: ipkTarget } = target;
+        const { sks: sksRange, matkul: matkulRange, ipk: ipkRange } = {
+            sks: [newNumberRange.sks[0] ?? 50, newNumberRange.sks[1] === 'target' ? sksTarget : newNumberRange.sks[1] ?? 144],
+            matkul: [newNumberRange.matkul[0] ?? 10, newNumberRange.matkul[1] === 'target' ? matkulTarget : newNumberRange.matkul[1] ?? 50],
+            ipk: [newNumberRange.ipk[0] ?? 1.00, newNumberRange.ipk[1] === 'target' ? ipkTarget : newNumberRange.ipk[1] ?? 4.00]
+        };
 
+        const newValues = {
+            sks: { current: generateRandomNumber(...sksRange), target: sksTarget },
+            matkul: { current: generateRandomNumber(...matkulRange), target: matkulTarget },
+            ipk: { current: generateRandomFloat(...ipkRange), target: ipkTarget }
+        };
+
+        setValues({
+            sks: { ...newValues.sks, percentage: calculatePercentage(newValues.sks.current, sksTarget) },
+            matkul: { ...newValues.matkul, percentage: calculatePercentage(newValues.matkul.current, matkulTarget) },
+            ipk: { ...newValues.ipk, percentage: calculatePercentage(newValues.ipk.current, ipkTarget) }
+        });
+    };
+
+    React.useEffect(() => {
+        if (generateNewNumber) {
+            const interval = setInterval(handleGenerateNewNumber, newNumberInterval);
+            return () => clearInterval(interval);
+        }
+    }, [generateNewNumber, newNumberInterval]);
+
+    return (
         <motion.div
-            initial={{ opacity: 0, x: 500 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: 250 }}
-            transition={{ duration: 1, type: 'spring', bounce: 0.2 }}
+            ref={ref}
+            className={styles.inner}
+            layout
+            transition={{ ...layoutTransition }}
+            onClick={handleGenerateNewNumber}
+            {...props}
         >
-            <SummaryDummy
-                title={'Matakuliah'}
-                color='var(--warning-color)'
-                icon={{ name: 'IoBookOutline', lib: 'io5' }}
-                data={{ value: 31, percentage: 62, keterangan: 'Targetmu 50' }}
-                style={{ marginTop: '0', boxShadow: 'none', borderRadius: '1rem' }}
-            />
+            <motion.div
+                initial={{ opacity: 0, x: 500 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: 250 }}
+                transition={{ duration: 1, type: 'spring', bounce: 0.2 }}
+            >
+                <SummaryDummy
+                    title={'SKS'}
+                    color='var(--danger-color)'
+                    icon={{ name: 'MdOutlineConfirmationNumber', lib: 'md' }}
+                    data={{ value: values.sks.current, percentage: values.sks.percentage, keterangan: `Targetmu ${values.sks.target}` }}
+                    style={{ marginTop: '0', boxShadow: 'none', transition: 'none', borderRadius: '1rem' }}
+                />
+            </motion.div>
+
+            <motion.div
+                initial={{ opacity: 0, x: 500 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: 250 }}
+                transition={{ duration: 1, type: 'spring', bounce: 0.2 }}
+            >
+                <SummaryDummy
+                    title={'IPK'}
+                    color='var(--success-color)'
+                    icon={{ name: 'FaRegStar', lib: 'fa' }}
+                    data={{ value: values.ipk.current, percentage: values.ipk.percentage, keterangan: `Targetmu ${values.ipk.target}` }}
+                    style={{ marginTop: '0', boxShadow: 'none', borderRadius: '1rem' }}
+                />
+            </motion.div>
+
+            <motion.div
+                initial={{ opacity: 0, x: 500 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: 250 }}
+                transition={{ duration: 1, type: 'spring', bounce: 0.2 }}
+            >
+                <SummaryDummy
+                    title={'Matakuliah'}
+                    color='var(--warning-color)'
+                    icon={{ name: 'IoBookOutline', lib: 'io5' }}
+                    data={{ value: values.matkul.current, percentage: values.matkul.percentage, keterangan: `Targetmu ${values.matkul.target}` }}
+                    style={{ marginTop: '0', boxShadow: 'none', borderRadius: '1rem' }}
+                />
+            </motion.div>
         </motion.div>
-    </motion.div>
-));
+    )
+});
 
 const Details = ({ type = 'x', children }) => (
     <motion.div className={`${styles.details} ${styles[type]}`} layout transition={{ ...layoutTransition }}>
