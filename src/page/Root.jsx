@@ -820,7 +820,6 @@ const BoxContentZ = React.forwardRef(({
             className={styles.inner}
             layout
             transition={{ ...layoutTransition }}
-            onClick={handleGenerateNewNumber}
             {...props}
         >
             <motion.div
