@@ -402,6 +402,7 @@ export function SummaryDummy({ icon, color, title, data, ...props }) {
                         decimals={Number.isInteger(data.value) ? 0 : 2}
                         end={data.value}
                         delay={0}
+                        preserveValue={true}
                     >
                         {({ countUpRef }) => (
                             <h1
@@ -425,6 +426,7 @@ export function SummaryDummy({ icon, color, title, data, ...props }) {
                         duration={2.5}
                         delay={0}
                         suffix={'%'}
+                        preserveValue={true}
                     >
                         {({ countUpRef }) => (
                             <span
