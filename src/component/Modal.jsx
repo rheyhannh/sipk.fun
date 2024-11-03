@@ -4494,10 +4494,16 @@ const handleApiResponseError = async (response, eventId = null) => {
 
         if (!error) return { toastMessage: message, refresh: false, navigate: null };
 
-        if (['AUTH_00', 'AUTH_01', 'AUTH_02'].includes(error.code)) {
+        if (['AUTH_00', 'AUTH_01'].includes(error.code)) {
             return {
                 toastMessage: 'Terjadi kesalahan, silahkan coba lagi',
                 refresh: false,
+                navigate: null,
+            }
+        } else if (['AUTH_02'].includes(error.code)) {
+            return {
+                toastMessage: 'Terjadi kesalahan, silahkan coba lagi',
+                refresh: true,
                 navigate: null,
             }
         } else if (['AUTH_03', 'AUTH_04'].includes(error.code)) {
