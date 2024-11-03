@@ -53,10 +53,11 @@ import "react-loading-skeleton/dist/skeleton.css";
 
 // #region ICON DEPEDENCY
 import { CiTrash, CiEdit } from "react-icons/ci";
-import { FaInfo, FaUndo } from "react-icons/fa";
-import { IoAnalyticsOutline, IoAddOutline } from "react-icons/io5";
+import { FaInfo, FaUndo, FaRegStar } from "react-icons/fa";
+import { IoAnalyticsOutline, IoAddOutline, IoBookOutline } from "react-icons/io5";
 import { TbTarget, TbTargetArrow, TbTargetOff, TbAtom, TbAntennaBars5 } from "react-icons/tb";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
+import { MdOutlineConfirmationNumber } from "react-icons/md";
 // #endregion
 
 // #region TYPES DEFINITION
@@ -380,6 +381,12 @@ export function SummaryDummy({ icon, color, title, data, ...props }) {
         return `${roundDraw.toFixed(2)} 999`;
     }
 
+    const staticIcons = {
+        MdOutlineConfirmationNumber: <MdOutlineConfirmationNumber size={'24px'} />,
+        FaRegStar: <FaRegStar size={'24px'} />,
+        IoBookOutline: <IoBookOutline size={'24px'} />,
+    }
+
     React.useEffect(() => {
         setDashArray(getCircleDraw(35, data.percentage))
     }, [data])
@@ -387,10 +394,9 @@ export function SummaryDummy({ icon, color, title, data, ...props }) {
     return (
         <div {...props} className={`${styles.summary}`}>
             <div style={{ background: color ? color : 'var(--first-color)' }} className={styles.summary__icon}>
-                {icon.name && icon.lib ?
-                    <Icon name={icon.name} lib={icon.lib} props={{ size: '24px' }} />
-                    : null
-                }
+                {staticIcons[icon?.name] ?? (
+                    <Icon name={icon?.name ?? 'FaRocket'} lib={icon?.lib ?? 'fa'} props={{ size: '24px' }} />
+                )}
             </div>
 
             <div className={styles.summary__data}>
