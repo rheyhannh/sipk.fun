@@ -12,8 +12,13 @@ import { FaBacteria } from 'react-icons/fa';
 // #endregion
 
 /**
- * Component untuk load icon yang tersedia pada {@link https://react-icons.github.io/react-icons/ react-icons}
- * - Tips : Gunakan saat nama atau library icon yang ingin digunakan bergantung pada resource tertentu seperti API response
+ * `CLIENT COMPONENT USAGE ONLY`
+ * 
+ * Component untuk load icon yang tersedia pada {@link https://react-icons.github.io/react-icons/ react-icons}.
+ * Jika library atau nama icon tidak ditemukan, maka error boundary akan memberikan fallback berupa icon berikut,
+ * ```jsx
+ * <FaBacteria size={'24px'} />
+ * ```
  * @param {Object} props Icon props
  * @param {string} props.name 
  * Nama icon yang ingin digunakan 
