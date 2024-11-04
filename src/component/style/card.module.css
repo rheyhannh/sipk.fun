@@ -652,6 +652,10 @@
     overflow: hidden;
 }
 
+.grafik__data svg {
+    cursor: pointer;
+}
+
 .grafik__tooltip {
     background: var(--box-color-bg1);
     box-shadow: var(--box-shadow2);

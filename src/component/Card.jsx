@@ -1156,6 +1156,16 @@ export function Grafik({ state, matkul, penilaian, savedState }) {
             return null;
         }
 
+        const setColumnFilters = (semester) => {
+            const currentState = getSessionTable();
+            const newState = {
+                ...currentState,
+                columnFilters: [{ id: "semester", value: [`${semester}`, `${semester}`] }]
+            }
+            sessionStorage.setItem('_table', JSON.stringify(newState));
+            window.dispatchEvent(new Event('on-table-session-changes'));
+        }
+
         const statsSemester = getStatsSemester(matkul);
         const data = statsSemester.map(({ totalNilai, totalSks, count, semester }) => ({
             semester,
@@ -1211,6 +1221,9 @@ export function Grafik({ state, matkul, penilaian, savedState }) {
                         <LineChart
                             id="grafik_data-scroll"
                             data={data}
+                            onClick={(x) => {
+                                if (x.activeLabel) setColumnFilters(x.activeLabel);
+                            }}
                         >
                             <XAxis dataKey="semester" stroke="var(--infoDark-color)" interval={'equidistantPreserveStart'} />
                             <Tooltip content={<CustomTooltip />} />
