@@ -264,7 +264,10 @@ export function Table({ state, validating, user, sessionTable, matkul, matkulHis
                     cell: info => info.getValue(),
                     header: () => <span>Nilai</span>,
                     footer: info => info.column.id,
-                    filterFn: 'arrIncludesSome',
+                    filterFn: (x, columnId, filterValue) => {
+                        const val = x.getValue(columnId);
+                        return filterValue.includes(val);
+                    },
                     sortingFn: (x, y, columnId) => {
                         const xVal = penilaian?.[x.getValue(columnId)]?.weight;
                         const yVal = penilaian?.[y.getValue(columnId)]?.weight;
@@ -284,7 +287,10 @@ export function Table({ state, validating, user, sessionTable, matkul, matkulHis
                     id: 'target',
                     cell: info => info.getValue(),
                     header: () => <span>Target Nilai</span>,
-                    filterFn: 'arrIncludesSome',
+                    filterFn: (x, columnId, filterValue) => {
+                        const val = x.getValue(columnId);
+                        return filterValue.includes(val);
+                    },
                     sortingFn: (x, y, columnId) => {
                         const xVal = penilaian?.[x.getValue(columnId)]?.weight;
                         const yVal = penilaian?.[y.getValue(columnId)]?.weight;
