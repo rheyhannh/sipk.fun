@@ -729,6 +729,10 @@
     overflow: hidden;
 }
 
+.distribusi__data svg {
+    cursor: pointer;
+}
+
 .distribusi__tooltip {
     background: var(--box-color-bg1);
     box-shadow: var(--box-shadow2);

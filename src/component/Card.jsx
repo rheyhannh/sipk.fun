@@ -1717,6 +1717,16 @@ export function Distribusi({ state, matkul, penilaian, savedState }) {
             )
         }
 
+        const setColumnFilters = (indeksNilai) => {
+            const currentState = getSessionTable();
+            const newState = {
+                ...currentState,
+                columnFilters: [{ id: "nilai", value: [`${indeksNilai}`] }]
+            }
+            sessionStorage.setItem('_table', JSON.stringify(newState));
+            window.dispatchEvent(new Event('on-table-session-changes'));
+        }
+
         React.useEffect(() => {
             const currentState = {
                 tab: semester,
@@ -1765,6 +1775,9 @@ export function Distribusi({ state, matkul, penilaian, savedState }) {
                         <BarChart
                             id="distribusi_data-scroll"
                             data={semester === -1 ? data['semua'] : data[`semester${semester}`] ? data[`semester${semester}`] : emptyData}
+                            onClick={(x) => {
+                                if (x.activeLabel) setColumnFilters(x.activeLabel);
+                            }}
                         >
                             <XAxis dataKey="nilai" stroke="var(--infoDark-color)" tick={<CustomAxisX />} />
                             <Tooltip content={<CustomTooltip />} cursor={{ fill: 'var(--accordion-bg-color)', strokeWidth: 1 }} />
