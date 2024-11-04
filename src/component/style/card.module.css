@@ -448,7 +448,7 @@
 .target__left,
 .progress__left,
 .distribusi__left {
-    max-width: 100px;
+    max-width: 125px;
     width: 100%;
 }
 
@@ -748,6 +748,14 @@
     font-weight: 600;
     margin-bottom: .25rem;
     border-bottom: 1px solid var(--darkVariant-color);
+}
+
+.distribusi__left_subtitle h3 {
+    color: var(--infoDark-color);
+    font-weight: 500;
+    white-space: nowrap;
+    text-overflow: clip;
+    overflow: hidden;
 }
 
 @media (hover: hover) and (pointer: fine) {

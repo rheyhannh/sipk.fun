@@ -1744,8 +1744,8 @@ export function Distribusi({ state, matkul, penilaian, savedState }) {
                             <div style={{ boxShadow: 'var(--box-shadow2)' }} className={styles.distribusi__left_icon}>
                                 <TbAntennaBars5 size={'17px'} color={'var(--logo-second-color)'} />
                             </div>
-                            <h3 style={{ color: 'var(--infoDark-color)', fontWeight: '500' }}>
-                                Distribusi
+                            <h3>
+                                Sebaran Nilai
                             </h3>
                         </div>
                     </div>
