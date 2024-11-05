@@ -1951,10 +1951,16 @@ const CaraPakai = ({ contents = ['x', 'y', 'z'], useAutoplay = true, autoplayOpt
                     text={'Kenapa harus pakai SIPK'}
                     preset={'wavingFlyIn'}
                     presetOptions={{
-                        wordStagger: 'random'
+                        wordStagger: 'first'
+                    }}
+                    hookOptions={{
+                        once: true,
+                        ref: sectionRef,
                     }}
                     adjustWavingFlyIn={{
                         y: [-225, 0],
+                        bounce: 0.15,
+                        delay: 0.25
                     }}
                 />
             </div>
@@ -1971,6 +1977,7 @@ const CaraPakai = ({ contents = ['x', 'y', 'z'], useAutoplay = true, autoplayOpt
                         console.log('Unknown State');
                     }
                 }}
+                viewport={{ once: true }}
             >
                 {!contentShowed && (<motion.div className={styles.overlay} />)}
 
@@ -2062,7 +2069,7 @@ const MulaiSekarang = () => {
                 initial={{ scale: 1.5, opacity: 0 }}
                 variants={{ show: { scale: 1, opacity: 1 }, hide: { scale: 1.5, opacity: 0 } }}
                 whileInView={'show'}
-                // whileHover={'hide'}
+                viewport={{ once: true }}
                 transition={{ type: 'spring', duration: 0.75, delay: delayAnims[0] }}
                 className={styles.logo}
             >
@@ -2076,12 +2083,15 @@ const MulaiSekarang = () => {
             <motion.div
                 className={styles.title}
                 whileInView={'show'}
-                // whileHover={'hide'}
+                viewport={{ once: true }}
                 transition={{ type: 'spring', delayChildren: delayAnims[1] }}
             >
                 <HighlightText
                     text={title}
                     preset={'wavingTranslate'}
+                    hookOptions={{
+                        once: true
+                    }}
                     adjustWavingTranslate={{
                         perspective: 500,
                         duration: 0.75,
@@ -2093,6 +2103,7 @@ const MulaiSekarang = () => {
             <motion.div
                 className={styles.description}
                 whileInView={'show'}
+                viewport={{ once: true }}
                 transition={{ type: 'spring', delayChildren: delayAnims[2] }}
             >
                 <motion.span
@@ -2108,6 +2119,9 @@ const MulaiSekarang = () => {
 
                     <HighlightText
                         text={'kuota pendaftaran terbatas!'}
+                        hookOptions={{
+                            once: true
+                        }}
                         adjustWavingColor={{
                             color: [null, 'var(--infoDark-color)', 'var(--logo-second-color)'],
                             scale: [null, 1.3, 1],
@@ -2131,6 +2145,7 @@ const MulaiSekarang = () => {
                         hide: { scale: 0 },
                     }}
                     whileInView={'show'}
+                    viewport={{ once: true }}
                 >
                     Masuk
                 </motion.a>
@@ -2144,6 +2159,7 @@ const MulaiSekarang = () => {
                         hide: { scale: 0 },
                     }}
                     whileInView={'show'}
+                    viewport={{ once: true }}
                 >
                     Daftar
                 </motion.a>
@@ -2208,7 +2224,11 @@ const FooterWrapper = ({ children }) => (
 
 const Footer = () => (
     <footer className={styles.footer}>
-        <motion.div className={styles.primary} whileInView={'show'}>
+        <motion.div
+            className={styles.primary}
+            whileInView={'show'}
+            viewport={{ once: true }}
+        >
             <motion.div className={styles.brand} {...getFooterTransition(false, 0)}
             >
                 <LogoImage src={'/logo_fill_contrast.png'} width={60} height={60} />
@@ -2241,9 +2261,18 @@ const Footer = () => (
             </div>
         </motion.div>
 
-        <motion.div className={styles.line} whileInView={'show'} {...getFooterTransition(false, 1, true)} />
+        <motion.div
+            className={styles.line}
+            whileInView={'show'}
+            viewport={{ once: true }}
+            {...getFooterTransition(false, 1, true)}
+        />
 
-        <motion.div className={styles.secondary} whileInView={'show'} >
+        <motion.div
+            className={styles.secondary}
+            whileInView={'show'}
+            viewport={{ once: true }}
+        >
             <motion.span initial={{ y: 75, opacity: 0 }} {...getFooterTransition(true, 2)}>
                 2024 All Rights Reserved.
             </motion.span>
