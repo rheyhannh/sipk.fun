@@ -36,6 +36,10 @@ import {
 } from '@/component/landing/variables/MatkulDummies';
 // #endregion
 
+// #region ICON DEPEDENCY
+import { FaTelegram, FaLinkedin, FaTiktok } from 'react-icons/fa';
+// #endregion
+
 /**
  * Render root page `'/'`
  * @param {{universitas:Array<SupabaseTypes.UniversitasData>, rating:Array<SupabaseTypes.RatingData>, notifikasi:Array<SupabaseTypes.NotifikasiData>}} props Root props
