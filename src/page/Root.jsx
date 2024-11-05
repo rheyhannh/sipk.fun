@@ -48,17 +48,23 @@ import { FaTelegram, FaLinkedin, FaTiktok } from 'react-icons/fa';
 export default function Root({ universitas, rating, notifikasi }) {
     return (
         <>
-            <div className={styles.container}>
+            <Container>
                 <Feature />
                 {/* <Tentang /> */}
                 <Universitas universitas={universitas} />
                 <CaraPakai />
                 <MulaiSekarang />
-            </div>
+            </Container>
             <MainFooter />
         </>
     )
 }
+
+const Container = ({ children }) => (
+    <div className={styles.container}>
+        {children}
+    </div>
+)
 
 const Feature = () => {
     const scrollRef = React.useRef(null);
