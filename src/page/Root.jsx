@@ -1857,6 +1857,7 @@ const CaraPakai = ({ contents = ['x', 'y', 'z'], useAutoplay = true, autoplayOpt
     const [isSleeping, setIsSleeping] = React.useState(false);
 
     const autoplayRef = React.useRef(null);
+    const sectionRef = React.useRef(null);
 
     const [contentShowed, setContentShowed] = React.useState(false);
     const [activeContent, setActiveContent] = React.useState('active_1');
@@ -1937,6 +1938,7 @@ const CaraPakai = ({ contents = ['x', 'y', 'z'], useAutoplay = true, autoplayOpt
 
     return (
         <div
+            ref={sectionRef}
             id={'kenapa_sipk'}
             className={`${styles.section} ${styles.cara_pakai}`}
             style={{
