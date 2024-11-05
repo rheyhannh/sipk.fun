@@ -47,12 +47,16 @@ import { FaTelegram, FaLinkedin, FaTiktok } from 'react-icons/fa';
  */
 export default function Root({ universitas, rating, notifikasi }) {
     return (
-        <div className={styles.container}>
-            <Feature />
-            <Universitas universitas={universitas} />
-            <CaraPakai />
-            <MulaiSekarang />
-        </div>
+        <>
+            <div className={styles.container}>
+                <Feature />
+                {/* <Tentang /> */}
+                <Universitas universitas={universitas} />
+                <CaraPakai />
+                <MulaiSekarang />
+            </div>
+            <MainFooter />
+        </>
     )
 }
 
