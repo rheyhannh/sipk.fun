@@ -161,6 +161,33 @@
     --landing-cloudCenter-bg: linear-gradient(135deg, #314B82, #4B66A1, #162A54);
     --landing-cloudMain-bg: linear-gradient(135deg, #314B82, #4B66A1, #162A54);
     /* #endregion */
+
+    /* #region ROOT '/' */
+    --root-footer-bgColor: #282C34;
+    --root-footer-textColor: #C5C8CE;
+    --root-footer-linkColor: #ECEEF2;
+    --root-footer-hoverColor: #7BAAF7;
+    --root-footer-lineColor: #4A4A4A;
+    /* #endregion */
+
+    /* #region FOOTER */
+    --footer1-bgColor: #EDEEF2;
+    --footer1-textColor: #4A4A4A;
+    --footer1-linkColor: #333333;
+    --footer1-linkColor2: #3A6EA5;
+    --footer2-bgColor: #E3E5E8;
+    --footer2-textColor: #4A4A4A;
+    --footer2-linkColor: #3A6EA5;
+    --footer3-bgColor: #FFFFFF;
+    --footer3-textColor: #333333;
+    --footer3-linkColor: #4D90FE;
+    --footer4-bgColor: #F2F3F5;
+    --footer4-textColor: #3C3C3C;
+    --footer4-linkColor: #5A5A5A;
+    --footer5-bgColor: #DCE1E5;
+    --footer5-textColor: #333333;
+    --footer5-linkColor: #0063B1;
+    /* #endregion */
 }
 
 .dark-theme {
@@ -276,6 +303,33 @@
     --landing-cloudOutter-bg: linear-gradient(135deg, #314B82, #4B66A1, #162A54);
     --landing-cloudCenter-bg: linear-gradient(135deg, #314B82, #4B66A1, #162A54);
     --landing-cloudMain-bg: linear-gradient(135deg, #314B82, #4B66A1, #162A54);
+    /* #endregion */
+
+    /* #region ROOT '/' */
+    --root-footer-bgColor: #23252A;
+    --root-footer-textColor: #ECEEF2;
+    --root-footer-linkColor: #9BA3B3;
+    --root-footer-hoverColor: var(--first-color-lighter);
+    --root-footer-lineColor: #5A5A5A;
+    /* #endregion */
+
+    /* #region FOOTER */
+    --footer1-bgColor: #1E2126;
+    --footer1-textColor: #D1D5DB;
+    --footer1-linkColor: #9BA3B3;
+    --footer1-linkColor2: #4D82F5;
+    --footer2-bgColor: #1B1D22;
+    --footer2-textColor: #C9CCD3;
+    --footer2-linkColor: #4D82F5;
+    --footer3-bgColor: #202328;
+    --footer3-textColor: #D1D5DB;
+    --footer3-linkColor: #4A90E2;
+    --footer4-bgColor: #23252A;
+    --footer4-textColor: #ECEEF2;
+    --footer4-linkColor: #9BA3B3;
+    --footer5-bgColor: #282C34;
+    --footer5-textColor: #C5C8CE;
+    --footer5-linkColor: #7BAAF7;
     /* #endregion */
 }
 
