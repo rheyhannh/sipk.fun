@@ -2214,9 +2214,19 @@ const Footer = () => (
 
             <div className={styles.shorcut}>
                 {footerShorcuts.map((item, index) => (
-                    <motion.a key={index} href={'https://chatgpt.com/'} target={'_blank'} {...getFooterTransition(true, 0)}>
-                        {item.text}
-                    </motion.a>
+                    <Link
+                        key={index}
+                        item={{
+                            elementId: item.target
+                        }}
+                        scrollOptions={{
+                            smooth: true
+                        }}
+                    >
+                        <motion.span {...getFooterTransition(true, 0)}>
+                            {item.text}
+                        </motion.span>
+                    </Link>
                 ))}
             </div>
 
