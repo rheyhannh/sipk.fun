@@ -2151,11 +2151,11 @@ const MulaiSekarang = () => {
 }
 
 const footerShorcuts = [
-    { text: 'About', target: '#price' },
-    { text: 'Why Us', target: '#about' },
-    { text: 'University', target: '#support' },
-    { text: 'Features', target: '#features' },
-    { text: 'Testimonies', target: '#contacts' }
+    { text: 'About', target: 'tentang' },
+    { text: 'Why Us', target: 'kenapa_sipk' },
+    { text: 'University', target: 'universitas' },
+    { text: 'Features', target: 'features' },
+    { text: 'Testimonies', target: 'contacts' }
 ]
 
 const footerSocials = [
