@@ -50,9 +50,9 @@ export default function Root({ universitas, rating, notifikasi }) {
         <>
             <Container>
                 <Feature />
-                {/* <Tentang /> */}
-                <Universitas universitas={universitas} />
+                <Tentang />
                 <CaraPakai />
+                <Universitas universitas={universitas} />
                 <MulaiSekarang />
             </Container>
             <MainFooter />
