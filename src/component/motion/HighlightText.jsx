@@ -393,6 +393,8 @@ import styles from './style/highlight_text.module.css'
  * Persentase untuk trigger animasi dalam skala `0` hingga `1`.
  * Semakin besar maka semakin besar element harus masuk viewport untuk trigger animasi
  * - Default : `0`
+ * @property {React.RefObject<Element>} [ref]
+ * Ref dari container atau element lain untuk mentrigger animasi. Default menggunakan ref dari element `HighlightText` sendiri
  */
 
 /** Props yang digunakan component `HighlightText`
@@ -405,7 +407,7 @@ import styles from './style/highlight_text.module.css'
  * - Default : `true`
  * - Tips : Jika tidak menggunakan hook, dapat trigger animasi melalui variant dengan mengaktifkan
  * `makeVariant` terlebih dahulu pada `presetOptions`
- * @property {hookOptions} hookOptions
+ * @property {hookOptions & Omit<UseInViewOptions, 'once' | 'amount'>} hookOptions
  * Opsi yang dapat digunakan untuk hook `'useInView'` yang digunakan
  * @property {'wavingColor'|'wavingTranslate'|'springRotate'|'wavingFlyIn'|'wavingRotation'|'mixFancyTranslate'} [preset]
  * Preset animasi yang digunakan
@@ -451,7 +453,7 @@ const HighlightText = (
     /** @type {markRef} */
     const markRef = React.useRef(null);
     /** @type {inViewHook} */
-    const inViewHook = useHook ? useInView(markRef, hookOptions) : false;
+    const inViewHook = useHook ? useInView(hookOptions?.ref ?? markRef, hookOptions) : false;
 
     /** @type {textWords} */
     const textWords = text.split(' ').flatMap((word, index, arr) => index < arr.length - 1 ? [word, '_spaces_'] : [word]);
