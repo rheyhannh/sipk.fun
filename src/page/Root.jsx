@@ -338,6 +338,7 @@ const Universitas = ({ universitas }) => {
     return (
         <div
             ref={sectionRef}
+            id={'universitas'}
             className={`${styles.section} ${styles.universitas}`}
             style={{
                 border: '2.5px solid pink'
@@ -1936,6 +1937,7 @@ const CaraPakai = ({ contents = ['x', 'y', 'z'], useAutoplay = true, autoplayOpt
 
     return (
         <div
+            id={'kenapa_sipk'}
             className={`${styles.section} ${styles.cara_pakai}`}
             style={{
                 border: '2.5px solid pink',
