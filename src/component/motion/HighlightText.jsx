@@ -1,5 +1,5 @@
 // #region TYPE DEPEDENCY
-import { MotionStyle } from 'framer-motion';
+import { MotionStyle, UseInViewOptions } from 'framer-motion';
 // #endregion
 
 // #region REACT DEPEDENCY
