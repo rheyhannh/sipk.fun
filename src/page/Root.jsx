@@ -1448,6 +1448,19 @@ const calculatePercentage = (value, target) => {
     return Math.min(percentage, 100);
 };
 
+/**
+ * Props yang digunakan component `Content`
+ * @typedef {Object} ContentProps
+ * @property {string} activeContent
+ * Nomor content yang sedang aktif dalam string dengan format seperti contoh berikut,
+ * - Contoh : `'active_1'`, `'active_4'`
+ */
+
+/**
+ * Component sebagai layout untuk menampilkan content
+ * @param {HTMLMotionProps<'div'> & ContentProps} props Content props
+ * @returns {React.ReactElement} Rendered component
+ */
 const Content = ({ activeContent, children, ...props }) => {
     const transition = {
         type: 'spring',
