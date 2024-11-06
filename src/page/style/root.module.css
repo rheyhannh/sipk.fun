@@ -512,6 +512,9 @@
     left: 50%;
     transform: translate(-50%, -50%);
     display: flex;
+    justify-content: center;
+    width: 100%;
+    max-width: calc(100% - 200px - (2 * 4rem));
     gap: 3.5rem;
 }
 
