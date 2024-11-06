@@ -1448,18 +1448,29 @@ const calculatePercentage = (value, target) => {
     return Math.min(percentage, 100);
 };
 
-const Content = ({ activeContent, children, ...props }) => (
-    <motion.div
-        className={`${styles.content} ${styles[activeContent]}`}
-        layout
-        initial={{ x: '100%', opacity: 0 }}
-        whileInView={{ x: '0%', opacity: 1 }}
-        transition={{ type: 'spring', ease: 'linear', duration: 2.5, bounce: 0, opacity: { duration: 1 }, ...layoutTransition }}
-        {...props}
-    >
-        {children}
-    </motion.div>
-)
+const Content = ({ activeContent, children, ...props }) => {
+    const transition = {
+        type: 'spring',
+        ease: 'linear',
+        duration: 2.5,
+        bounce: 0,
+        opacity: { duration: 1 },
+        ...layoutTransition
+    }
+
+    return (
+        <motion.div
+            className={`${styles.content} ${styles[activeContent]}`}
+            layout
+            initial={{ x: '100%', opacity: 0 }}
+            whileInView={{ x: '0%', opacity: 1, transition: { ...transition, delay: 0.25 } }}
+            transition={transition}
+            {...props}
+        >
+            {children}
+        </motion.div>
+    )
+}
 
 const Wrapper = ({ children, ...props }) => (
     <motion.div className={styles.wrapper} layout transition={{ ...layoutTransition }} {...props}>
@@ -1969,13 +1980,13 @@ const CaraPakai = ({ contents = ['x', 'y', 'z'], useAutoplay = true, autoplayOpt
                 activeContent={activeContent}
                 onAnimationStart={() => { setContentShowed(false) }}
                 onAnimationComplete={(x) => {
-                    if (x?.opacity === 0) {
-                        setContentShowed(false);
-                    } else if (x?.opacity === 1) {
-                        setContentShowed(true);
-                    } else {
-                        console.log('Unknown State');
-                    }
+                    if (x?.opacity === 0) setContentShowed(false);
+                    // [Important] When !viewport.once, below code should be writted
+                    // if (x?.opacity === 1) setContentShowed(true);
+                }}
+                // [Important] When !viewport.once, 'onUpdate' handler should not writted
+                onUpdate={(x) => {
+                    if (x?.opacity > 0.75) setContentShowed(true);
                 }}
                 viewport={{ once: true }}
             >
