@@ -67,6 +67,10 @@
     /* #region BOX */
     --box-color-bg1: #FFFFFF;
     --box-color-bg2: var(--inner-color-bg1);
+    --box-color-bg3: #EDEDF2;
+    --box-gridColor: rgba(231, 231, 236, 1);
+    --box-boxContent-bg: #FFFFFF;
+    --box-boxContent-boxShadow: 0px 1px 3px rgba(0, 0, 0, 0.12), 0px 2px 6px rgba(0, 0, 0, 0.08);
     --box-color-success: hsl(160, 100%, 95%);
     --box-color-warning: hsl(36, 100%, 95%);
     --box-color-danger: hsl(340, 100%, 95%);
@@ -253,6 +257,10 @@
     /* #region BOX */
     --box-color-bg1: #3F3F46;
     --box-color-bg2: #3F3F46;
+    --box-color-bg3: #202328;
+    --box-gridColor: rgba(42, 45, 52, 0.75);
+    --box-boxContent-bg: #292C31;
+    --box-boxContent-boxShadow: 0px 2px 4px rgba(0, 0, 0, 0.4), 0px 4px 8px rgba(0, 0, 0, 0.3);
     --box-color-success: hsl(160, 25%, 21%);
     --box-color-warning: hsl(36, 25%, 21%);
     --box-color-danger: hsl(340, 25%, 21%);
