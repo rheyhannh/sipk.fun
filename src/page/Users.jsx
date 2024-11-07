@@ -232,7 +232,7 @@ export default function Users({ universitasData }) {
                         } else if (response.status === 429) {
                             setErrorMessageLogin(message ?? 'Terlalu banyak request, coba lagi dalam beberapa saat')
                         } else {
-                            handleErrorModal('Sepertinya ada yang salah, silahkan coba lagi. Jika masih berulang, silahkan hubungi admin');
+                            handleErrorModal('Sepertinya ada yang salah, silahkan coba lagi');
                             setErrorMessageLogin('Terjadi kesalahan saat login');
                         }
                     } catch {
@@ -308,7 +308,7 @@ export default function Users({ universitasData }) {
                             handleErrorModal('Untuk saat ini SIPK tidak menerima pendaftaran akun baru, nantikan informasi selanjutnya');
                             setErrorMessageDaftar(message);
                         } else {
-                            handleErrorModal('Sepertinya ada yang salah, silahkan coba lagi. Jika masih berulang, silahkan hubungi admin');
+                            handleErrorModal('Sepertinya ada yang salah, silahkan coba lagi');
                             setErrorMessageDaftar('Terjadi kesalahan saat daftar');
                         }
                     } catch (error) {
@@ -362,10 +362,10 @@ export default function Users({ universitasData }) {
                         if (response.status === 429) {
                             handleErrorModal(message ?? 'Terlalu banyak request, coba lagi dalam beberapa saat');
                         } else {
-                            handleErrorModal('Sepertinya ada yang salah, silahkan coba lagi dan pastikan emailmu sudah terdaftar dan dikonfirmasi. Jika masih berulang, silahkan hubungi admin');
+                            handleErrorModal('Sepertinya ada yang salah, silahkan coba lagi dan pastikan emailmu sudah terdaftar dan dikonfirmasi');
                         }
                     } catch {
-                        handleErrorModal('Sepertinya ada yang salah, silahkan coba lagi. Jika masih berulang, silahkan hubungi admin');
+                        handleErrorModal('Sepertinya ada yang salah, silahkan coba lagi');
                     }
                 } else {
                     handleSuksesResetModal();
