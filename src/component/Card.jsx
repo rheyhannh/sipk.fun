@@ -2124,7 +2124,15 @@ export function Progress({ state, user, matkul, penilaian }) {
     else if (state === 'empty') { return (<EmptyCard />) }
     else { return 'Unidentified Card State' }
 }
-export function ProgressDummy({ value = {}, target = { sks: 144, matkul: 50, ipk: 3.75 }, ...props }) {
+export function ProgressDummy({
+    value = { sks: 132, matkul: 45, ipk: 3.62 },
+    target = { sks: 144, matkul: 50, ipk: 3.75 },
+    animOptions = { duration: 1500, delay: 0 },
+    ...props
+}) {
+    const animationDuration = animOptions?.duration ? (animOptions.duration / 1000) : 1.5;
+    const animationDelay = animOptions?.delay ? (animOptions.delay / 1000) : 0;
+
     return (
         <motion.div className={styles.progress} {...props}>
             <div className={styles.progress__main}>
@@ -2146,10 +2154,10 @@ export function ProgressDummy({ value = {}, target = { sks: 144, matkul: 50, ipk
                         <div className={styles.details}>
                             <CountUp
                                 start={0}
-                                duration={2.5}
+                                duration={animationDuration}
                                 decimals={Number.isInteger(value.sks) ? 0 : 2}
                                 end={value.sks}
-                                delay={0}
+                                delay={animationDelay}
                                 preserveValue={true}
                             >
                                 {({ countUpRef }) => (
@@ -2169,7 +2177,7 @@ export function ProgressDummy({ value = {}, target = { sks: 144, matkul: 50, ipk
                         borderRadius={'.25rem'}
                         bgColor={'var(--danger-color)'}
                         animateOnRender={true}
-                        transitionDuration={'2.5s'}
+                        transitionDuration={`${animationDuration}s`}
                     />
                 </div>
                 <div className={`${styles.wrapper} ${styles.matkul}`}>
@@ -2178,10 +2186,10 @@ export function ProgressDummy({ value = {}, target = { sks: 144, matkul: 50, ipk
                         <div className={styles.details}>
                             <CountUp
                                 start={0}
-                                duration={2.5}
+                                duration={animationDuration}
                                 decimals={Number.isInteger(value.matkul) ? 0 : 2}
                                 end={value.matkul}
-                                delay={0}
+                                delay={animationDelay}
                                 preserveValue={true}
                             >
                                 {({ countUpRef }) => (
@@ -2201,7 +2209,7 @@ export function ProgressDummy({ value = {}, target = { sks: 144, matkul: 50, ipk
                         borderRadius={'.25rem'}
                         bgColor={'var(--warning-color)'}
                         animateOnRender={true}
-                        transitionDuration={'2.5s'}
+                        transitionDuration={`${animationDuration}s`}
                     />
                 </div>
                 <div className={`${styles.wrapper} ${styles.ipk}`}>
@@ -2210,10 +2218,10 @@ export function ProgressDummy({ value = {}, target = { sks: 144, matkul: 50, ipk
                         <div className={styles.details}>
                             <CountUp
                                 start={0}
-                                duration={2.5}
+                                duration={animationDuration}
                                 decimals={Number.isInteger(value.ipk) ? 0 : 2}
                                 end={value.ipk}
-                                delay={0}
+                                delay={animationDelay}
                                 preserveValue={true}
                             >
                                 {({ countUpRef }) => (
@@ -2233,7 +2241,7 @@ export function ProgressDummy({ value = {}, target = { sks: 144, matkul: 50, ipk
                         borderRadius={'.25rem'}
                         bgColor={'var(--success-color)'}
                         animateOnRender={true}
-                        transitionDuration={'2.5s'}
+                        transitionDuration={`${animationDuration}s`}
                     />
                 </div>
             </div>
