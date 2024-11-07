@@ -109,7 +109,7 @@ import { MdOutlineConfirmationNumber } from "react-icons/md";
  * Durasi animasi dalam `ms`
  * - Default : `1500`
  * @property {number} [delay]
- * Delay animasi setelah mount dalam `ms`
+ * Delay animasi dalam `ms`
  * - Default : `0`
  */
 // #endregion
