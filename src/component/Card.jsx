@@ -101,6 +101,17 @@ import { MdOutlineConfirmationNumber } from "react-icons/md";
  * @property {boolean | null} hideSks
  * Boolean untuk hide sks pada card `Distribusi`
  */
+
+/**
+ * Opsi animasi yang digunakan pada card `Dummy`
+ * @typedef {Object} animOptions
+ * @property {number} [duration]
+ * Durasi animasi dalam `ms`
+ * - Default : `1500`
+ * @property {number} [delay]
+ * Delay animasi setelah mount dalam `ms`
+ * - Default : `0`
+ */
 // #endregion
 
 /**
