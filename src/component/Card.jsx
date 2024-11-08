@@ -1325,6 +1325,64 @@ export function Grafik({ state, matkul, penilaian, savedState }) {
     else { return 'Unidentified Card State' }
 }
 
+export function GrafikDummy({
+    matkul,
+    animOptions = { duration: 1500, delay: 0 },
+    ...props
+}) {
+    const statsSemester = getStatsSemester(matkul);
+    const data = statsSemester.map(({ totalNilai, totalSks, count, semester }) => ({
+        semester,
+        ip: (totalNilai / totalSks).toFixed(2),
+        matkul: count,
+        sks: totalSks,
+    }));
+
+    const CustomTooltip = ({ active, payload, label }) => {
+        if (active && payload && payload.length) {
+            return (
+                <div className={`${styles.grafik__tooltip} ${styles.static}`}>
+                    <p className={styles.grafik__tooltip_title}>{`Semester ${label}`}</p>
+                    {payload.map((item, index) => (
+                        <p key={`grafik-tooltip-legend-${index}`}>{item?.name && item?.value ? `${item.name} : ${item.value}` : ''}</p>
+                    ))}
+                </div>
+            )
+        }
+
+        return null;
+    }
+
+    return (
+        <motion.div className={styles.grafik} {...props}>
+            <div className={styles.grafik__main}>
+                <div className={styles.grafik__left}>
+                    <div className={styles.grafik__left_subtitle}>
+                        <div style={{ boxShadow: 'var(--box-shadow2)' }} className={styles.grafik__left_icon}>
+                            <IoAnalyticsOutline size={'17px'} color={'var(--logo-second-color)'} />
+                        </div>
+                        <h3 style={{ color: 'var(--infoDark-color)', fontWeight: '500' }}>
+                            Grafik Progress
+                        </h3>
+                    </div>
+                </div>
+            </div>
+            <div className={`${styles.grafik__data} ${styles.static}`}>
+                <ResponsiveContainer width={'100%'} height={'100%'}>
+                    <LineChart id="grafik_data-scroll" data={data}>
+                        <XAxis dataKey="semester" stroke="var(--infoDark-color)" interval={'equidistantPreserveStart'} />
+                        <Legend />
+                        <Tooltip content={<CustomTooltip />} />
+                        <Line name="Ip" type="monotone" dataKey="ip" stroke="var(--success-color)" dot={false} animationBegin={animOptions?.delay ?? 0} animationDuration={animOptions?.duration ?? 1500} />
+                        <Line name="Matakuliah" type="monotone" dataKey="matkul" stroke="var(--warning-color)" dot={false} animationBegin={animOptions?.delay ?? 0} animationDuration={animOptions?.duration ?? 1500} />
+                        <Line name="Sks" type="monotone" dataKey="sks" stroke="var(--danger-color)" dot={false} animationBegin={animOptions?.delay ?? 0} animationDuration={animOptions?.duration ?? 1500} />
+                    </LineChart>
+                </ResponsiveContainer>
+            </div>
+        </motion.div>
+    )
+}
+
 /**
  * Props yang digunakan component `Target`
  * @typedef {Object} TargetProps
@@ -1875,6 +1933,114 @@ export function Distribusi({ state, matkul, penilaian, savedState }) {
     else if (state === 'validating') { return (<ValidatingCard />) }
     else if (state === 'empty') { return (<EmptyCard />) }
     else { return 'Unidentified Card State' }
+}
+
+export function DistribusiDummy({
+    matkul,
+    penilaian,
+    useAutoplay = false,
+    autoplayInterval = 5,
+    animOptions = { duration: 1500, delay: 0 },
+    ...props
+}) {
+    const [semester, setSemester] = React.useState(1);
+
+    const emptyData = penilaian ? Object.keys(penilaian).map(nilai => ({
+        nilai,
+        matkul: 0,
+        sks: 0,
+        weight: penilaian[nilai].weight
+    })) : [
+        { "nilai": "A", "matkul": 0, "sks": 0 },
+        { "nilai": "B", "matkul": 0, "sks": 0 },
+        { "nilai": "C", "matkul": 0, "sks": 0 },
+        { "nilai": "D", "matkul": 0, "sks": 0 },
+    ];
+
+    const data = getDistribusiNilai(matkul, penilaian, false);
+    const maxSemester = Object.entries(data).length - 1;
+
+    const CustomAxisX = ({ x, y, stroke, payload }) => {
+        const nilai = payload.value;
+        const color = penilaian[nilai]?.style ? `var(--${penilaian[nilai].style}-color)` : 'var(--dark-color)';
+        return (
+            <g transform={`translate(${x},${y})`}>
+                <text x={0} y={0} dy={10} textAnchor="middle" fill={color}>
+                    {nilai}
+                </text>
+            </g>
+        )
+    }
+
+    const CustomTooltip = ({ active, payload, label }) => {
+        if (active && payload && payload.length) {
+            return (
+                <div className={`${styles.distribusi__tooltip} ${styles.static}`}>
+                    <p className={styles.distribusi__tooltip_title}>{`${label}`}</p>
+                    {payload.map((item, index) => (
+                        <p key={`distribusi-tooltip-legend-${index}`}>{`${item.name} : ${item.value}`}</p>
+                    ))}
+                </div>
+            )
+        }
+
+        return null;
+    }
+
+    React.useEffect(() => {
+        if (useAutoplay) {
+            const initAnim = setTimeout(() => {
+                setSemester(x => x + 1);
+
+                const loopAnim = setInterval(() => {
+                    setSemester((prevIndex) => {
+                        if (prevIndex >= maxSemester) {
+                            return 0;
+                        }
+                        return prevIndex + 1;
+                    });
+                }, autoplayInterval * 1000);
+
+                return () => clearInterval(loopAnim);
+            }, 3000);
+
+            return () => clearTimeout(initAnim);
+        }
+    }, [useAutoplay, autoplayInterval]);
+
+    return (
+        <motion.div className={styles.distribusi} {...props}>
+            <div className={styles.distribusi__main}>
+                <div className={styles.distribusi__left}>
+                    <div className={styles.distribusi__left_subtitle}>
+                        <div style={{ boxShadow: 'var(--box-shadow2)' }} className={styles.distribusi__left_icon}>
+                            <TbAntennaBars5 size={'17px'} color={'var(--logo-second-color)'} />
+                        </div>
+                        <h3>
+                            Sebaran Nilai
+                        </h3>
+                    </div>
+                </div>
+                <div className={`${styles.distribusi__right} ${styles.static}`}>
+                    {semester > 0 ? `Semester ${semester}` : 'Semua'}
+                </div>
+            </div>
+            <div className={`${styles.distribusi__data} ${styles.static}`}>
+                <ResponsiveContainer width={'100%'} height={'100%'}>
+                    <BarChart
+                        id="distribusi_data-scroll"
+                        data={semester === 0 ? data['semua'] : data[`semester${semester}`] ? data[`semester${semester}`] : emptyData}
+                    >
+                        <XAxis dataKey="nilai" stroke="var(--infoDark-color)" tick={<CustomAxisX />} />
+                        <Legend />
+                        <Tooltip content={<CustomTooltip />} cursor={{ fill: 'var(--accordion-bg-color)', strokeWidth: 1 }} />
+                        <Bar name="Matakuliah" dataKey="matkul" fill="var(--first-color-lighter)" animationBegin={animOptions?.delay ?? 0} animationDuration={animOptions?.duration ?? 1500} />
+                        <Bar name="Sks" dataKey="sks" fill="var(--second-color-lighter)" animationBegin={animOptions?.delay ?? 0} animationDuration={animOptions?.duration ?? 1500} />
+                    </BarChart>
+                </ResponsiveContainer>
+            </div>
+        </motion.div>
+    )
 }
 
 /**
