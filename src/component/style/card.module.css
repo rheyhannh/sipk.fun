@@ -500,7 +500,8 @@
 
 .grafik__right select,
 .target__right select,
-.distribusi__right select {
+.distribusi__right select,
+.distribusi__right.static {
     padding: 0 .5rem;
     height: 25px;
     text-align: center;
@@ -512,6 +513,10 @@
     cursor: pointer;
     border-radius: 1rem;
     font-size: .8rem;
+}
+
+.distribusi__right.static {
+    cursor: auto;
 }
 
 .grafik__right select::-webkit-scrollbar,
@@ -656,6 +661,10 @@
     cursor: pointer;
 }
 
+.grafik__data.static svg {
+    cursor: auto;
+}
+
 .grafik__tooltip {
     background: var(--box-color-bg1);
     box-shadow: var(--box-shadow2);
@@ -671,6 +680,10 @@
     font-weight: 600;
     margin-bottom: .25rem;
     border-bottom: 1px solid var(--darkVariant-color);
+}
+
+.grafik__tooltip.static {
+    font-size: 0.85rem;
 }
 
 /* 
@@ -733,6 +746,10 @@
     cursor: pointer;
 }
 
+.distribusi__data.static svg {
+    cursor: auto;
+}
+
 .distribusi__tooltip {
     background: var(--box-color-bg1);
     box-shadow: var(--box-shadow2);
@@ -748,6 +765,10 @@
     font-weight: 600;
     margin-bottom: .25rem;
     border-bottom: 1px solid var(--darkVariant-color);
+}
+
+.distribusi__tooltip.static {
+    font-size: 0.85rem;
 }
 
 .distribusi__left_subtitle h3 {
