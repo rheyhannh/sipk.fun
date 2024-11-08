@@ -2200,7 +2200,7 @@ const footerShorcuts = [
     { text: 'About', target: 'tentang' },
     { text: 'Why Us', target: 'kenapa_sipk' },
     { text: 'University', target: 'universitas' },
-    { text: 'Features', target: 'features' },
+    { text: 'Features', target: 'fitur' },
     { text: 'Testimonies', target: 'contacts' }
 ]
 
