@@ -2177,7 +2177,7 @@ export function ProgressDummy({
                         borderRadius={'.25rem'}
                         bgColor={'var(--danger-color)'}
                         animateOnRender={true}
-                        transitionDuration={`${animationDuration}s`}
+                        transitionDuration={`${animationDuration}s ${animationDelay}s`}
                     />
                 </div>
                 <div className={`${styles.wrapper} ${styles.matkul}`}>
@@ -2209,7 +2209,7 @@ export function ProgressDummy({
                         borderRadius={'.25rem'}
                         bgColor={'var(--warning-color)'}
                         animateOnRender={true}
-                        transitionDuration={`${animationDuration}s`}
+                        transitionDuration={`${animationDuration}s ${animationDelay}s`}
                     />
                 </div>
                 <div className={`${styles.wrapper} ${styles.ipk}`}>
@@ -2241,7 +2241,7 @@ export function ProgressDummy({
                         borderRadius={'.25rem'}
                         bgColor={'var(--success-color)'}
                         animateOnRender={true}
-                        transitionDuration={`${animationDuration}s`}
+                        transitionDuration={`${animationDuration}s ${animationDelay}s`}
                     />
                 </div>
             </div>
