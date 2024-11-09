@@ -62,6 +62,8 @@ export default function Root({ universitas, rating, notifikasi }) {
     )
 }
 
+const GLOBAL_VIEWPORT_ONCE = true;
+
 const Container = ({ children }) => (
     <div className={styles.container}>
         {children}
@@ -2006,7 +2008,7 @@ const CaraPakai = ({ contents = ['x', 'y', 'z'], useAutoplay = true, autoplayOpt
                 onUpdate={(x) => {
                     if (x?.opacity > 0.75) setContentShowed(true);
                 }}
-                viewport={{ once: true }}
+                viewport={{ once: GLOBAL_VIEWPORT_ONCE }}
             >
                 {!contentShowed && (<motion.div className={styles.overlay} />)}
 
@@ -2236,10 +2238,7 @@ const FiturCard = ({ title, description, wrapperClassname, content, contentIndex
             transition={{ layout: FITUR_SECTION_LAYOUT_TRANSITION }}
             style={{ zIndex: (FITUR_SECTION_CONTENTS.length + 1) - contentIndex }}
             whileInView={'inView'}
-            viewport={{
-                once: true,
-                amount: 0.25
-            }}
+            viewport={{ once: GLOBAL_VIEWPORT_ONCE, amount: 0.25 }}
         >
             <motion.div
                 className={styles.card}
@@ -2345,7 +2344,7 @@ const MulaiSekarang = () => {
                 initial={{ scale: 1.5, opacity: 0 }}
                 variants={{ show: { scale: 1, opacity: 1 }, hide: { scale: 1.5, opacity: 0 } }}
                 whileInView={'show'}
-                viewport={{ once: true }}
+                viewport={{ once: GLOBAL_VIEWPORT_ONCE }}
                 transition={{ type: 'spring', duration: 0.75, delay: delayAnims[0] }}
                 className={styles.logo}
             >
@@ -2359,14 +2358,14 @@ const MulaiSekarang = () => {
             <motion.div
                 className={styles.title}
                 whileInView={'show'}
-                viewport={{ once: true }}
+                viewport={{ once: GLOBAL_VIEWPORT_ONCE }}
                 transition={{ type: 'spring', delayChildren: delayAnims[1] }}
             >
                 <HighlightText
                     text={title}
                     preset={'wavingTranslate'}
                     hookOptions={{
-                        once: true
+                        once: GLOBAL_VIEWPORT_ONCE
                     }}
                     adjustWavingTranslate={{
                         perspective: 500,
@@ -2379,7 +2378,7 @@ const MulaiSekarang = () => {
             <motion.div
                 className={styles.description}
                 whileInView={'show'}
-                viewport={{ once: true }}
+                viewport={{ once: GLOBAL_VIEWPORT_ONCE }}
                 transition={{ type: 'spring', delayChildren: delayAnims[2] }}
             >
                 <motion.span
@@ -2395,7 +2394,7 @@ const MulaiSekarang = () => {
                     <HighlightText
                         text={'kuota pendaftaran terbatas!'}
                         hookOptions={{
-                            once: true
+                            once: GLOBAL_VIEWPORT_ONCE
                         }}
                         adjustWavingColor={{
                             color: ['var(--logo-second-color)', 'var(--infoDark-color)', 'var(--logo-second-color)'],
@@ -2420,7 +2419,7 @@ const MulaiSekarang = () => {
                         hide: { scale: 0 },
                     }}
                     whileInView={'show'}
-                    viewport={{ once: true }}
+                    viewport={{ once: GLOBAL_VIEWPORT_ONCE }}
                 >
                     Masuk
                 </motion.a>
@@ -2434,7 +2433,7 @@ const MulaiSekarang = () => {
                         hide: { scale: 0 },
                     }}
                     whileInView={'show'}
-                    viewport={{ once: true }}
+                    viewport={{ once: GLOBAL_VIEWPORT_ONCE }}
                 >
                     Daftar
                 </motion.a>
@@ -2502,7 +2501,7 @@ const Footer = () => (
         <motion.div
             className={styles.primary}
             whileInView={'show'}
-            viewport={{ once: true }}
+            viewport={{ once: GLOBAL_VIEWPORT_ONCE }}
         >
             <motion.div className={styles.brand} {...getFooterTransition(false, 0)}
             >
@@ -2539,14 +2538,14 @@ const Footer = () => (
         <motion.div
             className={styles.line}
             whileInView={'show'}
-            viewport={{ once: true }}
+            viewport={{ once: GLOBAL_VIEWPORT_ONCE }}
             {...getFooterTransition(false, 1, true)}
         />
 
         <motion.div
             className={styles.secondary}
             whileInView={'show'}
-            viewport={{ once: true }}
+            viewport={{ once: GLOBAL_VIEWPORT_ONCE }}
         >
             <motion.span initial={{ y: 75, opacity: 0 }} {...getFooterTransition(true, 2)}>
                 2024 All Rights Reserved.
