@@ -2398,8 +2398,8 @@ const MulaiSekarang = () => {
                             once: true
                         }}
                         adjustWavingColor={{
-                            color: [null, 'var(--infoDark-color)', 'var(--logo-second-color)'],
-                            scale: [null, 1.3, 1],
+                            color: ['var(--logo-second-color)', 'var(--infoDark-color)', 'var(--logo-second-color)'],
+                            scale: [1, 1.3, 1],
                             baseDelay: delayAnims[4],
                             repeat: Infinity,
                             repeatDelay: 10
