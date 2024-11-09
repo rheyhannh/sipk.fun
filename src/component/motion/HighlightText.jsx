@@ -393,7 +393,7 @@ import styles from './style/highlight_text.module.css'
  * Persentase untuk trigger animasi dalam skala `0` hingga `1`.
  * Semakin besar maka semakin besar element harus masuk viewport untuk trigger animasi
  * - Default : `0`
- * @property {React.RefObject<Element>} [ref]
+ * @property {React.RefObject<HTMLElement>} [ref]
  * Ref dari container atau element lain untuk mentrigger animasi. Default menggunakan ref dari element `HighlightText` sendiri
  */
 
