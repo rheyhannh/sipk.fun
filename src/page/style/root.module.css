@@ -489,6 +489,11 @@
     margin-bottom: 2rem;
 }
 
+.mulai_sekarang .description>span {
+    will-change: transform;
+    transform-origin: 0% 50%;
+}
+
 .mulai_sekarang .description span {
     display: inline-block;
 }

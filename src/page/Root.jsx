@@ -2384,7 +2384,6 @@ const MulaiSekarang = () => {
                 transition={{ type: 'spring', delayChildren: delayAnims[2] }}
             >
                 <motion.span
-                    style={{ transformOrigin: '0% 50%', willChange: 'transform' }}
                     initial={{ y: 25, opacity: 0 }}
                     variants={{ show: { y: 0, opacity: 1 }, hide: { y: 25, opacity: 0 } }}
                 >
