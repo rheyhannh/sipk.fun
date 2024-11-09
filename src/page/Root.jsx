@@ -54,6 +54,7 @@ export default function Root({ universitas, rating, notifikasi }) {
                 <Tentang />
                 <CaraPakai />
                 <Universitas universitas={universitas} />
+                <Fitur />
                 <MulaiSekarang />
             </Container>
             <MainFooter />
@@ -2159,6 +2160,161 @@ const TextFitContainer = ({ containerRef, as = 'span', children, ...props }) => 
         </TextElement>
     )
 }
+
+const FITUR_FITURCARD_CONTENT_PROPS = {
+    initial: { opacity: 0 },
+    animate: { opacity: 1 },
+    exit: { opacity: 0 },
+    transition: { duration: 0.75 }
+}
+
+const FITUR_SECTION_CONTENTS = [
+    {
+        fiturCardProps: {
+            title: undefined,
+            description: undefined,
+            wrapperClassname: 'sebaran_nilai',
+            content: (
+                <DistribusiDummy
+                    useAutoplay={false}
+                    matkul={defaultMatakuliah}
+                    penilaian={defaultPenilaian}
+                    animOptions={{
+                        duration: 1500,
+                        delay: (FITUR_FITURCARD_CONTENT_PROPS.transition.duration * 1000) / 2,
+                    }}
+                    {...FITUR_FITURCARD_CONTENT_PROPS}
+                />
+            )
+        }
+    },
+    {
+        fiturCardProps: {
+            title: undefined,
+            description: undefined,
+            wrapperClassname: 'grafik_progress',
+            content: (
+                <GrafikDummy
+                    matkul={defaultMatakuliah}
+                    animOptions={{
+                        duration: 1500,
+                        delay: (FITUR_FITURCARD_CONTENT_PROPS.transition.duration * 1000) / 2,
+                    }}
+                    {...FITUR_FITURCARD_CONTENT_PROPS}
+                />
+            )
+        }
+    },
+    {
+        fiturCardProps: {
+            title: undefined,
+            description: undefined,
+            wrapperClassname: 'bar_progress',
+            content: (
+                <ProgressDummy
+                    animOptions={{
+                        duration: 1500,
+                        delay: (FITUR_FITURCARD_CONTENT_PROPS.transition.duration * 1000) / 2,
+                    }}
+                    {...FITUR_FITURCARD_CONTENT_PROPS}
+                />
+            )
+        }
+    },
+]
+
+const FITUR_SECTION_LAYOUT_TRANSITION = { duration: 0.75, bounce: 0.1, type: 'spring' }
+
+const FITURCARD_STAGGER_OFFSET = 0.75;
+
+const FiturCard = ({ title, description, wrapperClassname, content, contentIndex = 0, ...props }) => {
+    const [contentShowed, setContentShowed] = React.useState(false);
+
+    return (
+        <motion.div
+            className={styles.card_wrapper}
+            layout
+            transition={{ layout: FITUR_SECTION_LAYOUT_TRANSITION }}
+            style={{ zIndex: (FITUR_SECTION_CONTENTS.length + 1) - contentIndex }}
+            whileInView={'inView'}
+            viewport={{
+                once: true,
+                amount: 0.25
+            }}
+        >
+            <motion.div
+                className={styles.card}
+                initial={{ opacity: 0, y: 225, rotateY: -180, scale: 0 }}
+                transition={{ duration: 1.25, ease: 'linear', delay: contentIndex * FITURCARD_STAGGER_OFFSET }}
+                variants={{ inView: { opacity: 1, y: 0, rotateY: 0, scale: 1 } }}
+                onAnimationStart={() => { setContentShowed(false) }}
+                onAnimationComplete={(x) => {
+                    if (x === 'inView') setContentShowed(true);
+                }}
+                {...props}
+            >
+                <div className={wrapperClassname ? `${styles.card_main} ${styles[wrapperClassname]}` : styles.card_main}>
+                    <AnimatePresence>
+                        {contentShowed && (
+                            content
+                        )}
+                    </AnimatePresence>
+                </div>
+
+                <div className={styles.card_secondary}>
+                    <h3 className={styles.title}>
+                        {title ?? 'Lorem, ipsum dolor.'}
+                    </h3>
+                    <p className={styles.description}>
+                        {description ?? 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quia voluptates excepturi sit quis, assumenda ut natus quisquam nam iure magnam.'}
+                    </p>
+                </div>
+            </motion.div>
+        </motion.div>
+    )
+}
+
+const Fitur = () => {
+    const titleContainerRef = React.useRef(null);
+
+    return (
+        <div
+            id={'fitur'}
+            className={`${styles.section} ${styles.fitur}`}
+            style={{
+                border: '2.5px solid pink',
+            }}
+        >
+            <div ref={titleContainerRef} className={styles.title}>
+                <TextFitContainer containerRef={titleContainerRef} as={'div'}>
+                    <HighlightText
+                        hookOptions={{
+                            ref: titleContainerRef,
+                            amount: 1,
+                            once: true,
+                        }}
+                        text={'Lorem ipsum dolor, sit amet consectetur adipisicing elit.'}
+                        preset={'wavingRotation'}
+                        presetOptions={{
+                            wordStagger: 'random'
+                        }}
+                    />
+                </TextFitContainer>
+            </div>
+
+            <motion.div
+                layout
+                className={styles.content}
+                transition={{ layout: FITUR_SECTION_LAYOUT_TRANSITION }}
+            >
+                {FITUR_SECTION_CONTENTS.map((item, index) => (
+                    <FiturCard key={index} contentIndex={index} {...item.fiturCardProps} />
+                ))}
+            </motion.div>
+        </div>
+    )
+}
+
 const MulaiSekarang = () => {
     const title = 'Mulai Sekarang';
     const description = 'Akses semua fitur secara gratis! Daftar sekarang atau login jika sudah punya akun. Jangan lewatkan,'
