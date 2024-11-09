@@ -24,7 +24,7 @@ import styles from './style/root.module.css';
 
 // #region COMPONENT DEPEDENCY
 import { motion, useScroll, useTransform, useSpring, AnimatePresence } from 'framer-motion';
-import { SummaryDummy, HistoryDummy, ProgressDummy } from '@/component/Card';
+import { SummaryDummy, HistoryDummy, ProgressDummy, DistribusiDummy, GrafikDummy } from '@/component/Card';
 import { LogoImage } from '@/component/Main';
 import Link from '@/component/Link';
 import HighlightText from '@/component/motion/HighlightText';
