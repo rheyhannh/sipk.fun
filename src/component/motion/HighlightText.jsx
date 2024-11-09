@@ -485,6 +485,11 @@ const HighlightText = (
                     options: {
                         makeVariant: presetOptions?.makeVariant ?? false,
                         variantName: presetOptions?.variantName ?? 'highlight_text'
+                    },
+                    _initial: {
+                        z: adjustWavingTranslate?.z ? adjustWavingTranslate.z.slice().reverse() : [null, 300],
+                        rotateX: adjustWavingTranslate?.rotateX ? adjustWavingTranslate.rotateX.slice().reverse() : [null, -45],
+                        opacity: adjustWavingTranslate?.opacity ? adjustWavingTranslate.opacity.slice().reverse() : [null, 0],
                     }
                 }
             }
@@ -509,6 +514,10 @@ const HighlightText = (
                         makeVariant: presetOptions?.makeVariant ?? false,
                         variantName: presetOptions?.variantName ?? 'highlight_text',
                         wordStagger: presetOptions?.wordStagger ?? 'first',
+                    },
+                    _initial: {
+                        rotateZ: adjustSpringRotate?.rotateZ ? adjustSpringRotate.rotateZ.slice().reverse() : [null, -30],
+                        opacity: adjustSpringRotate?.opacity ? adjustSpringRotate.opacity.slice().reverse() : [null, 0],
                     }
                 },
                 charAnimate: undefined
@@ -540,6 +549,10 @@ const HighlightText = (
                         makeVariant: presetOptions?.makeVariant ?? false,
                         variantName: presetOptions?.variantName ?? 'highlight_text',
                         wordStagger: presetOptions?.wordStagger ?? 'first',
+                    },
+                    _initial: {
+                        y: adjustWavingFlyIn?.y ? adjustWavingFlyIn.y.slice().reverse() : [null, 125],
+                        rotate: adjustWavingFlyIn?.rotate ? adjustWavingFlyIn.rotate.slice().reverse() : [null, -3],
                     }
                 },
                 charAnimate: undefined
@@ -568,6 +581,10 @@ const HighlightText = (
                         makeVariant: presetOptions?.makeVariant ?? false,
                         variantName: presetOptions?.variantName ?? 'highlight_text',
                         wordStagger: presetOptions?.wordStagger ?? 'first',
+                    },
+                    _initial: {
+                        opacity: adjustWavingRotation?.opacity ? adjustWavingRotation.opacity.slice().reverse() : [null, 0],
+                        rotateX: adjustWavingRotation?.rotateX ? adjustWavingRotation.rotateX.slice().reverse() : [null, 90],
                     }
                 },
                 charAnimate: undefined
@@ -599,6 +616,9 @@ const HighlightText = (
                         variantName: presetOptions?.variantName ?? 'highlight_text',
                         randomStart: ['rotateX', 'x', 'y', 'z'],
                         wordStagger: presetOptions?.wordStagger ?? 'first',
+                    },
+                    _initial: {
+                        opacity: adjustMixFancyTranslate?.opacity ? adjustMixFancyTranslate.opacity.slice().reverse() : [null, 0],
                     }
                 },
                 charAnimate: undefined
@@ -622,6 +642,10 @@ const HighlightText = (
                     options: {
                         makeVariant: presetOptions?.makeVariant ?? false,
                         variantName: presetOptions?.variantName ?? 'highlight_text'
+                    },
+                    _initial: {
+                        scale: adjustWavingColor?.scale ? adjustWavingColor.scale.slice().reverse() : [1, 1.45, 1],
+                        color: adjustWavingColor?.color ? adjustWavingColor.color.slice().reverse() : ['#FF6341', '#556b9d', null],
                     }
                 }
             }
@@ -750,14 +774,21 @@ const Word = ({ inViewHook, style, wordAnimate, wordWrapperStyle = null, wordRan
             delay: countDelay()
         }
     };
-    const { options, ...wordAnimateWithoutOptions } = updatedPresetDelay;
+    const { options, _initial, transition, ...wordAnimateFiltered } = updatedPresetDelay;
+
+    const initialUpdated = Object.keys(wordAnimateUpdated).reduce((acc, key) => {
+        acc[key] = wordAnimateUpdated[key].slice().reverse();
+        return acc;
+    }, {});
+
+    const initialAnimate = { ..._initial, ...initialUpdated };
 
     const motionWord = (
         <motion.span
             className={styles.word}
             style={style}
-            animate={inViewHook ? wordAnimateWithoutOptions : {}}
-            variants={options?.makeVariant ? { [options.variantName]: wordAnimateWithoutOptions } : {}}
+            animate={inViewHook ? { ...wordAnimateFiltered, transition } : { ...initialAnimate, transition }}
+            variants={options?.makeVariant ? { [options.variantName]: { ...wordAnimateFiltered, transition } } : {}}
         >
             {children}
         </motion.span>
@@ -792,13 +823,13 @@ const Char = ({ inViewHook, charAnimate, flatIndex, children }) => {
             delay: (flatIndex * charAnimate.transition.delay) + charAnimate.transition.baseDelay
         }
     };
-    const { options, ...charAnimateWithoutOptions } = updatedPresetDelay;
+    const { options, _initial, transition, ...charAnimateFiltered } = updatedPresetDelay;
 
     return (
         <motion.span
             className={styles.char}
-            animate={inViewHook ? charAnimateWithoutOptions : {}}
-            variants={options?.makeVariant ? { [options.variantName]: charAnimateWithoutOptions } : {}}
+            animate={inViewHook ? { ...charAnimateFiltered, transition } : { ..._initial, transition }}
+            variants={options?.makeVariant ? { [options.variantName]: { ...charAnimateFiltered, transition } } : {}}
         >
             {children}
         </motion.span>
