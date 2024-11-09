@@ -1985,7 +1985,7 @@ const CaraPakai = ({ contents = ['x', 'y', 'z'], useAutoplay = true, autoplayOpt
                         wordStagger: 'first'
                     }}
                     hookOptions={{
-                        once: true,
+                        once: GLOBAL_VIEWPORT_ONCE,
                         ref: sectionRef,
                     }}
                     adjustWavingFlyIn={{
@@ -2289,7 +2289,7 @@ const Fitur = () => {
                         hookOptions={{
                             ref: titleContainerRef,
                             amount: 1,
-                            once: true,
+                            once: GLOBAL_VIEWPORT_ONCE,
                         }}
                         text={'Lorem ipsum dolor, sit amet consectetur adipisicing elit.'}
                         preset={'wavingRotation'}
