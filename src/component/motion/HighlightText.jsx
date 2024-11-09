@@ -633,7 +633,7 @@ const HighlightText = (
 
     React.useEffect(() => {
         setUsedPreset(resolvePreset());
-    }, [preset, adjustWavingColor, adjustSpringRotate, adjustWavingTranslate, adjustWavingFlyIn, adjustWavingRotation, adjustMixFancyTranslate])
+    }, [preset, presetOptions, adjustWavingColor, adjustSpringRotate, adjustWavingTranslate, adjustWavingFlyIn, adjustWavingRotation, adjustMixFancyTranslate])
 
     return (
         <motion.mark
