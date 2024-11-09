@@ -1019,6 +1019,19 @@ export function History({ state, data, penilaian, count }) {
     else { return 'Unidentified Card State' }
 }
 
+/**
+ * Props yang digunakan component `HistoryDummy`
+ * @typedef {Object} HistoryDummyProps
+ * @property {MatkulDummiesProps} item
+ * @property {'success'|'warning'|'danger'|'crimson'} color
+ * @property {number} semester
+ */
+
+/**
+ * Card `History` versi dummy, dimana hanya menggunakan data statis
+ * @param {HTMLMotionProps<'div'> & HistoryDummyProps} props History dummy props
+ * @returns {React.ReactElement} Rendered component
+ */
 export function HistoryDummy({ item, color = 'success', semester = 1, ...props }) {
     return (
         <motion.div
@@ -1325,6 +1338,18 @@ export function Grafik({ state, matkul, penilaian, savedState }) {
     else { return 'Unidentified Card State' }
 }
 
+/**
+ * Props yang digunakan component `GrafikDummy`
+ * @typedef {Object} GrafikDummyProps
+ * @property {animOptions} animOptions
+ * Opsi animasi yang digunakan
+ */
+
+/**
+ * Card `Grafik` versi dummy, dimana hanya menggunakan data statis
+ * @param {Omit<HTMLMotionProps<'div'>, 'className'> & Pick<GrafikProps, 'matkul'> & GrafikDummyProps} props Grafik dummy props
+ * @returns {React.ReactElement} Rendered component
+ */
 export function GrafikDummy({
     matkul,
     animOptions = { duration: 1500, delay: 0 },
@@ -1935,6 +1960,24 @@ export function Distribusi({ state, matkul, penilaian, savedState }) {
     else { return 'Unidentified Card State' }
 }
 
+/**
+ * Props yang digunakan component `DistribusiDummy`
+ * @typedef {Object} DistribusiDummyProps
+ * @property {boolean} [useAutoplay]
+ * Menjalankan sebuah interval untuk menambah setiap semester saat `true`. Durasi interval dapat diatur pada props `autoplayInterval`
+ * - Default : `false`
+ * @property {number} [autoplayInterval]
+ * Durasi interval untuk menambah setiap semester dalam detik
+ * - Default : `5`
+ * @property {animOptions} animOptions
+ * Opsi animasi yang digunakan
+ */
+
+/**
+ * Card `Distribusi` versi dummy, dimana hanya menggunakan data statis
+ * @param {Omit<HTMLMotionProps<'div'>, 'className'> & Pick<DistribusiProps, 'matkul'|'penilaian'> & DistribusiDummyProps} props Distribusi dummy props
+ * @returns {React.ReactElement} Rendered component
+ */
 export function DistribusiDummy({
     matkul,
     penilaian,
@@ -2290,6 +2333,27 @@ export function Progress({ state, user, matkul, penilaian }) {
     else if (state === 'empty') { return (<EmptyCard />) }
     else { return 'Unidentified Card State' }
 }
+
+/**
+ * Props yang digunakan component `ProgressDummy`
+ * @typedef {Object} ProgressDummyProps
+ * @property {Object} value
+ * @property {number} value.sks
+ * @property {number} value.matkul
+ * @property {number} value.ipk
+ * @property {Object} target
+ * @property {number} target.sks
+ * @property {number} target.matkul
+ * @property {number} target.ipk
+ * @property {animOptions} animOptions
+ * Opsi animasi yang digunakan
+ */
+
+/**
+ * Card `Progress` versi dummy, dimana hanya menggunakan data statis
+ * @param {Omit<HTMLMotionProps<'div'>, 'className'> & ProgressDummyProps} props Progress dummy props
+ * @returns {React.ReactElement} Rendered component
+ */
 export function ProgressDummy({
     value = { sks: 132, matkul: 45, ipk: 3.62 },
     target = { sks: 144, matkul: 50, ipk: 3.75 },
