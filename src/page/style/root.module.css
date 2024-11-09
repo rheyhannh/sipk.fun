@@ -327,7 +327,105 @@
     text-align: justify;
 }
 
+/* #endregion */
 
+/* #region Section 'Fitur' */
+
+.fitur {
+    --section-height: 600px;
+    --inner-padding: 2rem 2rem 4rem 2rem;
+    --logo-size: 128px;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: var(--inner-padding);
+}
+
+.fitur>.title {
+    overflow: hidden;
+    width: 100%;
+    display: flex;
+    padding: 1rem 0;
+}
+
+.fitur .content {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, 370px);
+    justify-content: center;
+    align-items: center;
+    gap: 2.5rem;
+}
+
+.fitur .content .card_wrapper {
+    perspective: 1000px;
+}
+
+.fitur .content .card {
+    position: relative;
+    display: grid;
+    grid-template-rows: 65% 1fr;
+    border-radius: 1rem;
+    height: 450px;
+    border: 1px solid var(--box-borderColor);
+    background-color: var(--box-color-bg3);
+    overflow: hidden;
+}
+
+.fitur .content .card .card_main {
+    position: relative;
+    background-image: linear-gradient(var(--box-gridColor) .1em, transparent .1em), linear-gradient(90deg, var(--box-gridColor) .1em, transparent .1em);
+    background-size: 3em 3em;
+}
+
+.fitur .content .card .card_main.sebaran_nilai,
+.fitur .content .card .card_main.grafik_progress,
+.fitur .content .card .card_main.bar_progress {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.fitur .content .card .card_main.sebaran_nilai>div,
+.fitur .content .card .card_main.grafik_progress>div,
+.fitur .content .card .card_main.bar_progress>div {
+    border-radius: 1rem;
+    box-shadow: var(--box-boxContent-boxShadow);
+    background: var(--box-boxContent-bg);
+    transition: none;
+}
+
+.fitur .content .card .card_main.sebaran_nilai>div,
+.fitur .content .card .card_main.grafik_progress>div,
+.fitur .content .card .card_main.bar_progress>div {
+    width: 300px;
+    height: 225px;
+}
+
+.fitur .content .card .card_main.sebaran_nilai>div span,
+.fitur .content .card .card_main.sebaran_nilai>div text,
+.fitur .content .card .card_main.grafik_progress>div span,
+.fitur .content .card .card_main.grafik_progress>div tspan,
+.fitur .content .card .card_main.bar_progress>div>div:nth-child(2) h3 {
+    font-size: 0.85rem;
+}
+
+.fitur .content .card .card_main.bar_progress>div>div:nth-child(2) small {
+    font-size: 0.69rem;
+}
+
+.fitur .content .card .card_secondary {
+    --title-fontsize: 1.2rem;
+    --description-fontsize: var(--default-fontsize);
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    gap: 0.5rem;
+    padding: 1rem 2rem;
+}
+
+.fitur .content .card .card_secondary .description {
+    color: var(--footer4-linkColor);
+}
 
 /* #endregion */
 
