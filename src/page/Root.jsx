@@ -16,6 +16,7 @@ import * as React from 'react';
 
 // #region HOOKS DEPEDENCY
 import { useLocalTheme } from '@/data/core';
+import useWindowSize from '@/hooks/useWindowSize';
 // #endregion
 
 // #region STYLE DEPEDENCY
