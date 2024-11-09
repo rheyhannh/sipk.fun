@@ -1973,7 +1973,6 @@ const CaraPakai = ({ contents = ['x', 'y', 'z'], useAutoplay = true, autoplayOpt
             className={`${styles.section} ${styles.cara_pakai}`}
             style={{
                 border: '2.5px solid pink',
-                position: 'relative',
             }}
         >
             <div className={styles.title}>
