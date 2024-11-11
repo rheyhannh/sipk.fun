@@ -2315,6 +2315,11 @@ const Fitur = () => {
 
     const titleStaggered = shuffleArray(titleParaghraph.flat().map((_, index) => index * titleDelayOffset));
 
+    /**
+     * Resolve props yang digunakan pada component `HighlightText`
+     * @param {string} text String teks untuk mengatur delay animasi
+     * @returns {HighlightTextProps} Props yang sudah diatur
+     */
     const resolveTitleProps = (text) => ({
         useHook: false,
         preset: 'wavingFlyIn',
