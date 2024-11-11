@@ -1557,7 +1557,9 @@ const Footer = () => (
                             elementId: item.target
                         }}
                         scrollOptions={{
-                            smooth: true
+                            smooth: true,
+                            // TODOS offset only work when header height staticly 75px
+                            offset: -75,
                         }}
                     >
                         <motion.span {...getFooterTransition(true, 0)}>
