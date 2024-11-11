@@ -1,5 +1,6 @@
 .container {
     --base-padding: 16px;
+    --header-height: 75px;
     --section-margin-bottom: 10rem;
     --section-height: calc(100vh - (2 * var(--base-padding)));
     --default-fontsize: 1rem;
@@ -12,6 +13,17 @@
     overflow: hidden;
     padding: var(--base-padding);
     font-size: var(--default-fontsize);
+}
+
+.header {
+    --header-height: 75px;
+    height: var(--header-height);
+    position: sticky;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: var(--logo-second-color);
+    z-index: var(--z-fixed);
 }
 
 .section {

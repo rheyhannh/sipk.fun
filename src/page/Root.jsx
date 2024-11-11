@@ -53,6 +53,7 @@ import { LuShapes } from "react-icons/lu";
 export default function Root({ universitas, rating, notifikasi }) {
     return (
         <>
+            <Header />
             <Container>
                 <Feature />
                 <Tentang />
@@ -67,6 +68,12 @@ export default function Root({ universitas, rating, notifikasi }) {
 }
 
 const GLOBAL_VIEWPORT_ONCE = true;
+
+const Header = ({ children, ...props }) => (
+    <header className={styles.header} {...props}>
+        {children}
+    </header>
+)
 
 const Container = ({ children }) => (
     <div className={styles.container}>
