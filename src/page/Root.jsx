@@ -59,7 +59,6 @@ export default function Root({ universitas, rating, notifikasi }) {
         <>
             <Header />
             <Container>
-                {/* <Tentang /> */}
                 <CaraPakai />
                 <Universitas universitas={universitas} />
                 <Fitur />
@@ -1611,4 +1610,3 @@ const MainFooter = () => (
         </FooterWrapper>
     </FooterOutter>
 )
-
