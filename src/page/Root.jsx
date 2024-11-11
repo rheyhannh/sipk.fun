@@ -193,9 +193,7 @@ const Universitas = ({ universitas }) => {
             ref={sectionRef}
             id={'universitas'}
             className={`${styles.section} ${styles.universitas}`}
-            style={{
-                border: '2.5px solid pink'
-            }}
+
         >
             <div className={styles.text}>
                 <h1 className={styles.title}>
@@ -905,9 +903,6 @@ const CaraPakai = ({ contents = ['x', 'y', 'z'], useAutoplay = true, autoplayOpt
             ref={sectionRef}
             id={'kenapa_sipk'}
             className={`${styles.section} ${styles.cara_pakai}`}
-            style={{
-                border: '2.5px solid pink',
-            }}
         >
             <div className={styles.title}>
                 <HighlightText
@@ -1374,9 +1369,6 @@ const MulaiSekarang = () => {
     return (
         <div
             className={`${styles.section} ${styles.mulai_sekarang}`}
-            style={{
-                border: '2.5px solid pink'
-            }}
         >
             <ThemeChanger
                 options={{
