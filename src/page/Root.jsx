@@ -2245,17 +2245,16 @@ const FiturCard = ({ title, description, wrapperClassname, content, contentIndex
     return (
         <motion.div
             className={styles.card_wrapper}
-            layout
-            transition={{ layout: FITUR_SECTION_LAYOUT_TRANSITION }}
             style={{ zIndex: (FITUR_SECTION_CONTENTS.length + 1) - contentIndex }}
             whileInView={'inView'}
-            viewport={{ once: GLOBAL_VIEWPORT_ONCE, amount: 0.25 }}
+            viewport={{ once: GLOBAL_VIEWPORT_ONCE, amount: 1 }}
         >
             <motion.div
                 className={styles.card}
-                initial={{ opacity: 0, y: 225, rotateY: -180, scale: 0 }}
-                transition={{ duration: 1.25, ease: 'linear', delay: contentIndex * FITURCARD_STAGGER_OFFSET }}
-                variants={{ inView: { opacity: 1, y: 0, rotateY: 0, scale: 1 } }}
+                // TODOS add initial animation
+                initial={{}}
+                transition={{ duration: 0.5, bounce: 0.1, type: 'spring' }}
+                variants={{ inView: {} }}
                 onAnimationStart={() => { setContentShowed(false) }}
                 onAnimationComplete={(x) => {
                     if (x === 'inView') setContentShowed(true);
@@ -2279,47 +2278,169 @@ const FiturCard = ({ title, description, wrapperClassname, content, contentIndex
                     </p>
                 </div>
             </motion.div>
-        </motion.div>
+        </motion.div >
     )
 }
 
 const Fitur = () => {
-    const titleContainerRef = React.useRef(null);
+    const sectionRef = React.useRef(null);
+    // TODOS setIconSize based viewport / responsive
+    const [iconSize, setIconSize] = React.useState(60);
+    const { scrollYProgress: sectionScrollProgress } = useScroll({ target: sectionRef, smooth: 1 });
+    const scrollContent = useTransform(sectionScrollProgress, [0, 1], ['12.5%', '-95%']);
+    const iconX = useTransform(sectionScrollProgress, [0.44, 0.66], [0, 100])
+    const iconLeft = useTransform(sectionScrollProgress, [0.44, 0.66], [(iconSize * -1), 0])
+
+    const titleDelayOffset = 0.15;
+    // TODOS update title text content
+    const titleParaghraph = [
+        ['Analytics'],
+        ['that', 'helps', 'you'],
+        ['shape', 'the', 'future']
+    ]
+
+    const findWordIndex = (str) => {
+        const index = titleParaghraph.flat().indexOf(str);
+        return index === -1 ? 0 : index;
+    };
+
+    const shuffleArray = (array) => {
+        const shuffled = array.slice();
+        for (let i = shuffled.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+        }
+        return shuffled;
+    };
+
+    const titleStaggered = shuffleArray(titleParaghraph.flat().map((_, index) => index * titleDelayOffset));
+
+    const resolveTitleProps = (text) => ({
+        useHook: false,
+        preset: 'wavingFlyIn',
+        presetOptions: {
+            makeVariant: true,
+            variantName: 'loremipsum',
+        },
+        adjustWavingFlyIn: {
+            baseDelay: titleStaggered[findWordIndex(text)],
+        }
+    })
 
     return (
-        <div
-            id={'fitur'}
-            className={`${styles.section} ${styles.fitur}`}
-            style={{
-                border: '2.5px solid pink',
-            }}
-        >
-            <div ref={titleContainerRef} className={styles.title}>
-                <TextFitContainer containerRef={titleContainerRef} as={'div'}>
-                    <HighlightText
-                        hookOptions={{
-                            ref: titleContainerRef,
-                            amount: 1,
-                            once: GLOBAL_VIEWPORT_ONCE,
-                        }}
-                        text={'Lorem ipsum dolor, sit amet consectetur adipisicing elit.'}
-                        preset={'wavingRotation'}
-                        presetOptions={{
-                            wordStagger: 'random'
-                        }}
-                    />
-                </TextFitContainer>
-            </div>
+        <div ref={sectionRef} id={'fitur'} className={`${styles.section} ${styles.fitur}`}>
+            <div className={styles.fitur_wrapper}>
+                <motion.div
+                    className={styles.title}
+                    style={{ '--icon-size': `${iconSize}px` }}
+                    whileInView={'loremipsum'}
+                    viewport={{
+                        once: GLOBAL_VIEWPORT_ONCE,
+                        amount: 1
+                    }}
+                >
+                    <div className={styles.wrap}>
+                        <motion.div
+                            className={styles.icons}
+                            initial={{ scale: 0 }}
+                            variants={{ loremipsum: { scale: 1, transition: { type: 'spring', duration: 1.5, bounce: 0, delay: titleStaggered[findWordIndex('Analytics')] } } }}
+                        >
+                            <div className={`${styles.icon} ${styles.alt}`} >
+                                <motion.span
+                                    initial={{ rotate: 180 }}
+                                    style={{ x: iconX }}
+                                    variants={{ change: { x: 100 }, loremipsum: { rotate: 0, transition: { type: 'spring', duration: 2, bounce: 0, delay: titleStaggered[findWordIndex('Analytics')] } } }}
+                                    transition={{ type: 'spring', duration: 0.5, bounce: 0.1 }}
+                                >
+                                    <IoAnalyticsOutline fontSize={'0.5em'} />
+                                </motion.span>
+                                <motion.div
+                                    className={styles.icon_bg_wrap}
+                                    style={{ left: iconLeft }}
+                                    variants={{ change: { left: 0 } }}
+                                    transition={{ type: 'spring', duration: 0.5, bounce: 0.1 }}
+                                >
+                                    <div className={`${styles.icon_bg} ${styles.warning}`}>
+                                        <motion.span
+                                            initial={{ rotate: 180 }}
+                                            variants={{ loremipsum: { rotate: 0, transition: { type: 'spring', duration: 2, bounce: 0, delay: titleStaggered[findWordIndex('Analytics')] } } }}
+                                            transition={{ type: 'spring', duration: 0.5, bounce: 0.1 }}
+                                        >
+                                            <TbAtom fontSize={'0.5em'} />
+                                        </motion.span>
+                                    </div>
+                                    <div className={`${styles.icon_bg} ${styles.alt}`} />
+                                </motion.div>
+                            </div>
 
-            <motion.div
-                layout
-                className={styles.content}
-                transition={{ layout: FITUR_SECTION_LAYOUT_TRANSITION }}
-            >
-                {FITUR_SECTION_CONTENTS.map((item, index) => (
-                    <FiturCard key={index} contentIndex={index} {...item.fiturCardProps} />
-                ))}
-            </motion.div>
+                            <div className={`${styles.icon}`} >
+                                <motion.span
+                                    initial={{ rotate: 225 }}
+                                    style={{ x: iconX }}
+                                    variants={{ change: { x: 100 }, loremipsum: { rotate: 0, transition: { type: 'spring', duration: 3, bounce: 0, delay: titleStaggered[findWordIndex('Analytics')] } } }}
+                                    transition={{ type: 'spring', duration: 0.5, bounce: 0.1 }}
+                                >
+                                    <TbAntennaBars5 fontSize={'0.5em'} />
+                                </motion.span>
+                                <motion.div
+                                    className={styles.icon_bg_wrap}
+                                    style={{ left: iconLeft }}
+                                    variants={{ change: { left: 0 } }}
+                                    transition={{ type: 'spring', duration: 0.5, bounce: 0.1 }}
+                                >
+                                    <div className={`${styles.icon_bg} ${styles.alt}`}>
+                                        <motion.span
+                                            initial={{ rotate: 180 }}
+                                            variants={{ loremipsum: { rotate: 0, transition: { type: 'spring', duration: 2, bounce: 0, delay: titleStaggered[findWordIndex('Analytics')] } } }}
+                                            transition={{ type: 'spring', duration: 0.5, bounce: 0.1 }}
+                                        >
+                                            <IoAnalyticsOutline fontSize={'0.5em'} />
+                                        </motion.span>
+                                    </div>
+                                    <div className={`${styles.icon_bg}`} />
+                                </motion.div>
+                            </div>
+                        </motion.div>
+                        <HighlightText text={'Analytics'} {...resolveTitleProps('Analytics')} />
+                    </div>
+
+                    <h1>
+                        <HighlightText text={'that'} {...resolveTitleProps('that')} />
+
+                        <span>
+                            <HighlightText text={'helps'} {...resolveTitleProps('helps')} />
+                        </span>
+                        <HighlightText text={'you'} {...resolveTitleProps('you')} />
+                    </h1>
+
+                    <div className={styles.wrap}>
+                        <HighlightText text={'shape'} {...resolveTitleProps('shape')} />
+                        <motion.div
+                            className={`${styles.icon}`}
+                            initial={{ scale: 0 }}
+                            variants={{ loremipsum: { scale: 1, transition: { type: 'spring', duration: 2, bounce: 0, delay: titleStaggered[findWordIndex('shape')] } } }}
+                        >
+                            <motion.div
+                                className={`${styles.icon_bg} ${styles.success}`}
+                                initial={{ rotate: 270 }}
+                                variants={{ loremipsum: { rotate: 0, transition: { type: 'spring', duration: 2.5, bounce: 0, delay: titleStaggered[findWordIndex('shape')] } } }}
+                            >
+                                <LuShapes fontSize={'0.5em'} />
+                            </motion.div>
+                        </motion.div>
+                        <HighlightText text={'the'} {...resolveTitleProps('the')} />
+                        <HighlightText text={'future'} {...resolveTitleProps('future')} />
+                    </div>
+                </motion.div>
+
+                <motion.div className={styles.content} >
+                    <motion.div className={styles.content_inner} style={{ y: scrollContent }}>
+                        {FITUR_SECTION_CONTENTS.map((item, index) => (
+                            <FiturCard key={index} contentIndex={index} {...item.fiturCardProps} />
+                        ))}
+                    </motion.div>
+                </motion.div>
+            </div>
         </div>
     )
 }

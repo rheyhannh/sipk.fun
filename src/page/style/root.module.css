@@ -344,35 +344,184 @@
 /* #region Section 'Fitur' */
 
 .fitur {
-    --section-height: 600px;
+    --section-height: calc(100vh * 3);
+    position: relative;
+    width: 100%;
+    height: var(--section-height);
+}
+
+.fitur_wrapper {
     --inner-padding: 2rem 2rem 4rem 2rem;
-    --logo-size: 128px;
-    display: flex;
-    flex-direction: column;
+    position: sticky;
+    left: 0;
+    top: var(--header-height);
+    overflow: hidden;
+    width: 100%;
+    height: calc(100vh - var(--header-height));
+    z-index: var(--z-sticky);
+    display: grid;
+    grid-template-columns: 1fr max-content;
     gap: 1rem;
     padding: var(--inner-padding);
 }
 
-.fitur>.title {
+.fitur_wrapper>.title {
+    --title-size: calc(2rem * 1.75);
+    --icon-size: 60px;
+    --item-gap: 0.75rem;
+    --word-gap: 0.25rem;
     overflow: hidden;
     width: 100%;
     display: flex;
-    padding: 1rem 0;
-}
-
-.fitur .content {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, 370px);
+    flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: 2.5rem;
+    gap: 0.5rem;
+    font-size: var(--title-size);
+    font-weight: 600;
 }
 
-.fitur .content .card_wrapper {
+.fitur_wrapper>.title .wrap {
+    display: flex;
+    align-items: center;
+    gap: var(--item-gap);
+}
+
+.fitur_wrapper>.title .wrap,
+.fitur_wrapper>.title h1 {
+    word-spacing: var(--word-gap);
+}
+
+.fitur_wrapper>.title mark {
+    z-index: 3;
+}
+
+.fitur_wrapper>.title h1 {
+    font-size: inherit;
+    font-weight: inherit;
+}
+
+.fitur_wrapper>.title>h1 {
+    margin-right: calc(var(--icon-size) * 2.25);
+}
+
+.fitur_wrapper>.title>.wrap:nth-child(3) {
+    margin-left: calc(var(--icon-size) * 2.25);
+}
+
+.fitur_wrapper>.title h1:nth-child(2)>span {
+    color: var(--footer2-textColor);
+    margin: 0 var(--item-gap);
+}
+
+.fitur_wrapper>.title .icons {
+    display: flex;
+    position: relative;
+    gap: 0.5rem;
+}
+
+.fitur_wrapper>.title .icon {
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: var(--icon-size);
+    height: var(--icon-size);
+    color: var(--alwaysWhite-color);
+    border-radius: 50%;
+    background: transparent;
+}
+
+.fitur_wrapper>.title .icon.alt {
+    color: var(--logo-second-color-lighter);
+}
+
+.fitur_wrapper>.title .icon.primary {
+    color: var(--alwaysWhite-color);
+}
+
+.fitur_wrapper>.title .icon.warning {
+    color: #181a1e;
+}
+
+.fitur_wrapper>.title .icon>span {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.fitur_wrapper>.title .icon>span {
+    z-index: 2;
+}
+
+.fitur_wrapper>.title .icon_bg_wrap {
+    position: absolute;
+    top: 0;
+    left: calc(var(--icon-size) * -1);
+    display: flex;
+}
+
+.fitur_wrapper>.title .icon_bg {
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: var(--icon-size);
+    height: var(--icon-size);
+    border-radius: inherit;
+    background: var(--logo-second-color-lighter);
+    color: var(--alwaysWhite-color);
+    z-index: 1;
+}
+
+.fitur_wrapper>.title .icon_bg>span {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.fitur_wrapper>.title .icon_bg.alt {
+    color: var(--logo-second-color-lighter);
+    background: var(--box-color-bg4);
+}
+
+.fitur_wrapper>.title .icon_bg.primary {
+    color: var(--alwaysWhite-color);
+    background: var(--primary-sec-color);
+}
+
+.fitur_wrapper>.title .icon_bg.success {
+    color: #181a1e;
+    background: var(--box-color-success2);
+}
+
+.fitur_wrapper>.title .icon_bg.warning {
+    color: #181a1e;
+    background: var(--box-color-warning2);
+}
+
+.fitur_wrapper .content {
+    overflow: hidden;
+}
+
+.fitur_wrapper .content_inner {
+    --card-width: 370px;
+    --card-height: max-content;
+    --inner-paddingX: 2rem;
+    display: grid;
+    grid-template-columns: repeat(1, var(--card-width));
+    grid-template-rows: repeat(auto-fit, var(--card-height));
+    gap: 10rem;
+    padding: 0 2rem;
+}
+
+.fitur_wrapper .content .card_wrapper {
     perspective: 1000px;
 }
 
-.fitur .content .card {
+.fitur_wrapper .content .card {
     position: relative;
     display: grid;
     grid-template-rows: 65% 1fr;
@@ -385,49 +534,49 @@
     transform-style: preserve-3d;
 }
 
-.fitur .content .card .card_main {
+.fitur_wrapper .content .card .card_main {
     position: relative;
     background-image: linear-gradient(var(--box-gridColor) .1em, transparent .1em), linear-gradient(90deg, var(--box-gridColor) .1em, transparent .1em);
     background-size: 3em 3em;
 }
 
-.fitur .content .card .card_main.sebaran_nilai,
-.fitur .content .card .card_main.grafik_progress,
-.fitur .content .card .card_main.bar_progress {
+.fitur_wrapper .content .card .card_main.sebaran_nilai,
+.fitur_wrapper .content .card .card_main.grafik_progress,
+.fitur_wrapper .content .card .card_main.bar_progress {
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-.fitur .content .card .card_main.sebaran_nilai>div,
-.fitur .content .card .card_main.grafik_progress>div,
-.fitur .content .card .card_main.bar_progress>div {
+.fitur_wrapper .content .card .card_main.sebaran_nilai>div,
+.fitur_wrapper .content .card .card_main.grafik_progress>div,
+.fitur_wrapper .content .card .card_main.bar_progress>div {
     border-radius: 1rem;
     box-shadow: var(--box-boxContent-boxShadow);
     background: var(--box-boxContent-bg);
     transition: none;
 }
 
-.fitur .content .card .card_main.sebaran_nilai>div,
-.fitur .content .card .card_main.grafik_progress>div,
-.fitur .content .card .card_main.bar_progress>div {
+.fitur_wrapper .content .card .card_main.sebaran_nilai>div,
+.fitur_wrapper .content .card .card_main.grafik_progress>div,
+.fitur_wrapper .content .card .card_main.bar_progress>div {
     width: 300px;
     height: 225px;
 }
 
-.fitur .content .card .card_main.sebaran_nilai>div span,
-.fitur .content .card .card_main.sebaran_nilai>div text,
-.fitur .content .card .card_main.grafik_progress>div span,
-.fitur .content .card .card_main.grafik_progress>div tspan,
-.fitur .content .card .card_main.bar_progress>div>div:nth-child(2) h3 {
+.fitur_wrapper .content .card .card_main.sebaran_nilai>div span,
+.fitur_wrapper .content .card .card_main.sebaran_nilai>div text,
+.fitur_wrapper .content .card .card_main.grafik_progress>div span,
+.fitur_wrapper .content .card .card_main.grafik_progress>div tspan,
+.fitur_wrapper .content .card .card_main.bar_progress>div>div:nth-child(2) h3 {
     font-size: 0.85rem;
 }
 
-.fitur .content .card .card_main.bar_progress>div>div:nth-child(2) small {
+.fitur_wrapper .content .card .card_main.bar_progress>div>div:nth-child(2) small {
     font-size: 0.69rem;
 }
 
-.fitur .content .card .card_secondary {
+.fitur_wrapper .content .card .card_secondary {
     --title-fontsize: 1.2rem;
     --description-fontsize: var(--default-fontsize);
     display: flex;
@@ -437,7 +586,7 @@
     padding: 1rem 2rem;
 }
 
-.fitur .content .card .card_secondary .description {
+.fitur_wrapper .content .card .card_secondary .description {
     color: var(--footer4-linkColor);
 }
 
