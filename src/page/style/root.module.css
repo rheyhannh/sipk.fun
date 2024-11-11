@@ -49,41 +49,6 @@
     color: var(--logo-second-color);
 }
 
-/* #region Section 'Features' */
-
-.features {
-    display: grid;
-    grid-template-rows: 50px 10% 100px 1fr;
-    height: var(--section-height);
-}
-
-.features .title {
-    margin-bottom: 10px;
-}
-
-.features .description {
-    margin-bottom: 20px;
-}
-
-.features .nav {
-    margin-bottom: 20px;
-}
-
-.features .content {
-    border: 1px solid blue;
-}
-
-.features .cards {
-    display: grid;
-    justify-content: center;
-    align-items: center;
-    grid-template-columns: 250px 250px 250px;
-    gap: 2.5rem;
-    height: 100%;
-}
-
-/* #endregion Section 'Features' */
-
 /* #region Section 'Universitas' */
 
 .universitas {
