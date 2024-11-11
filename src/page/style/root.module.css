@@ -10,7 +10,11 @@
     position: relative;
     width: 100vw;
     height: 100%;
-    overflow: hidden;
+    /* 
+        This container overflow should not hidden, 
+        or sticky scroll animation not working 
+    */
+    /* overflow: hidden; */
     padding: var(--base-padding);
     font-size: var(--default-fontsize);
 }
