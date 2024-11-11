@@ -375,6 +375,15 @@ const calculatePercentage = (value, target) => {
     return Math.min(percentage, 100);
 };
 
+const shuffleArray = (array) => {
+    const shuffled = array.slice();
+    for (let i = shuffled.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+    }
+    return shuffled;
+};
+
 /**
  * Props yang digunakan component `Content`
  * @typedef {Object} ContentProps
@@ -1214,15 +1223,6 @@ const Fitur = () => {
     const findWordIndex = (str) => {
         const index = titleParaghraph.flat().indexOf(str);
         return index === -1 ? 0 : index;
-    };
-
-    const shuffleArray = (array) => {
-        const shuffled = array.slice();
-        for (let i = shuffled.length - 1; i > 0; i--) {
-            const j = Math.floor(Math.random() * (i + 1));
-            [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
-        }
-        return shuffled;
     };
 
     const titleStaggered = shuffleArray(titleParaghraph.flat().map((_, index) => index * titleDelayOffset));
