@@ -107,10 +107,6 @@
     transition: box-shadow var(--transition-default) ease-in-out;
 }
 
-.universitas .content .icons .icon:hover {
-    box-shadow: none;
-}
-
 /* #endregion Section 'Universitas' */
 
 /* #region Section 'Cara Pakai' */
@@ -505,10 +501,6 @@
     transition: box-shadow var(--transition-default) ease-in-out;
 }
 
-.fitur_wrapper .content .card:hover {
-    box-shadow: none
-}
-
 .fitur_wrapper .content .card .card_main {
     position: relative;
     background-image: linear-gradient(var(--box-gridColor) .1em, transparent .1em), linear-gradient(90deg, var(--box-gridColor) .1em, transparent .1em);
@@ -665,16 +657,8 @@
     color: var(--white-color);
 }
 
-.mulai_sekarang .buttons .btn.main:hover {
-    background-color: var(--logo-second-color-lighter);
-}
-
 .mulai_sekarang .buttons .btn.secondary {
     background-color: var(--accordion-bg-color);
-}
-
-.mulai_sekarang .buttons .btn.secondary:hover {
-    border: 2px solid var(--lighter-color);
 }
 
 /* #endregion Section 'Mulai Sekarang' */
@@ -712,9 +696,7 @@
     color: var(--root-footer-textColor);
 }
 
-.footer .primary a:hover {
-    color: var(--root-footer-hoverColor);
-}
+
 
 .footer .primary,
 .footer .secondary {
@@ -776,9 +758,7 @@
     padding: 0.5rem;
 }
 
-.footer .socials .box:hover {
-    color: var(--root-footer-hoverColor);
-}
+
 
 .footer .secondary {
     --default-color: #9BA3B3;
@@ -797,13 +777,37 @@
     color: var(--default-color);
 }
 
-.footer .secondary a:hover {
-    color: var(--root-footer-textColor);
-}
-
 /* #endregion */
 
-@media (hover: hover) and (pointer: fine) {}
+@media (hover: hover) and (pointer: fine) {
+    .universitas .content .icons .icon:hover {
+        box-shadow: none;
+    }
+
+    .fitur_wrapper .content .card:hover {
+        box-shadow: none
+    }
+
+    .mulai_sekarang .buttons .btn.main:hover {
+        background-color: var(--logo-second-color-lighter);
+    }
+
+    .mulai_sekarang .buttons .btn.secondary:hover {
+        border: 2px solid var(--lighter-color);
+    }
+
+    .footer .primary a:hover {
+        color: var(--root-footer-hoverColor);
+    }
+
+    .footer .socials .box:hover {
+        color: var(--root-footer-hoverColor);
+    }
+
+    .footer .secondary a:hover {
+        color: var(--root-footer-textColor);
+    }
+}
 
 @media screen and (min-width: 1280px) {
     .container {
