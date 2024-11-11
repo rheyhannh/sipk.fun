@@ -4,6 +4,7 @@
 import * as SupabaseTypes from '@/types/supabase';
 import { HTMLMotionProps, MotionStyle, MotionValue } from 'framer-motion';
 import { MatkulDummiesProps } from '@/component/landing/variables/MatkulDummies';
+import { HighlightTextProps } from '@/component/motion/HighlightText';
 // #endregion
 
 // #region NEXT DEPEDENCY
@@ -39,6 +40,9 @@ import {
 
 // #region ICON DEPEDENCY
 import { FaTelegram, FaLinkedin, FaTiktok } from 'react-icons/fa';
+import { TbAtom, TbAntennaBars5 } from "react-icons/tb";
+import { IoAnalyticsOutline } from "react-icons/io5";
+import { LuShapes } from "react-icons/lu";
 // #endregion
 
 /**
