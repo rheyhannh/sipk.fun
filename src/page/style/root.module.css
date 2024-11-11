@@ -2,7 +2,7 @@
     --base-padding: 16px;
     --header-height: 75px;
     --section-margin-bottom: 10rem;
-    --section-height: calc(100vh - (2 * var(--base-padding)));
+    --section-height: calc(100vh - (2 * var(--base-padding)) - var(--header-height));
     --default-fontsize: 1rem;
     --title-fontsize: 2rem;
     --description-fontsize: .85rem;
@@ -52,7 +52,6 @@
 /* #region Section 'Universitas' */
 
 .universitas {
-    --section-height: 400px;
     --inner-padding: 2rem;
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -120,6 +119,7 @@
     --inner-padding: 3rem;
     --subtitle-fontsize: 1.7rem;
     --action-fontsize: 1.1rem;
+    --section-height: calc(100vh - (2 * var(--base-padding)));
     height: var(--section-height);
     padding: var(--inner-padding);
     overflow: hidden;
@@ -129,7 +129,7 @@
 
 .cara_pakai>.title {
     text-align: center;
-    margin-bottom: 2rem;
+    margin-bottom: 1rem;
 }
 
 .cara_pakai .content {
@@ -564,7 +564,6 @@
 /* #region Section 'Mulai Sekarang' */
 
 .mulai_sekarang {
-    --section-height: 500px;
     --inner-padding: 2rem;
     --logo-size: 128px;
     height: var(--section-height);
