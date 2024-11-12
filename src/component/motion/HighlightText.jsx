@@ -587,7 +587,8 @@ const HighlightText = (
                         rotateX: adjustWavingRotation?.rotateX ? adjustWavingRotation.rotateX.slice().reverse() : [null, 90],
                     }
                 },
-                charAnimate: undefined
+                charAnimate: undefined,
+                customCharVariants: presetOptions?.customCharVariants,
             }
         } else if (preset === 'mixFancyTranslate') {
             return {
@@ -621,7 +622,8 @@ const HighlightText = (
                         opacity: adjustMixFancyTranslate?.opacity ? adjustMixFancyTranslate.opacity.slice().reverse() : [null, 0],
                     }
                 },
-                charAnimate: undefined
+                charAnimate: undefined,
+                customCharVariants: presetOptions?.customCharVariants,
             }
         } else {
             return {
@@ -647,13 +649,15 @@ const HighlightText = (
                         scale: adjustWavingColor?.scale ? adjustWavingColor.scale.slice().reverse() : [1, 1.45, 1],
                         color: adjustWavingColor?.color ? adjustWavingColor.color.slice().reverse() : ['#FF6341', '#556b9d', null],
                     }
-                }
+                },
+                customCharVariants: presetOptions?.customCharVariants,
             }
         }
     }
 
     let flatCharIndex = 0;
     const flatWordRandomIndex = generateRandomFlatIndex(textWords.length);
+    const flatCharRandomIndex = generateRandomFlatIndex(textChars.filter((item) => item !== '_spaces_').flat().length)
 
     React.useEffect(() => {
         setUsedPreset(resolvePreset());
@@ -681,7 +685,15 @@ const HighlightText = (
                             {item.map((char, charIndex) => {
                                 const currentFlatCharIndex = flatCharIndex++;
                                 return (
-                                    <Char inViewHook={inViewHook} charAnimate={usedPreset?.charAnimate} flatIndex={currentFlatCharIndex} key={`${index}-${charIndex}`}>
+                                    <Char
+                                        inViewHook={inViewHook}
+                                        charAnimate={usedPreset?.charAnimate}
+                                        charRandomStagger={flatCharRandomIndex[currentFlatCharIndex]}
+                                        charLength={textChars.filter((item) => item !== '_spaces_').flat().length}
+                                        flatIndex={currentFlatCharIndex}
+                                        key={`${index}-${charIndex}`}
+                                        customVariants={usedPreset?.customCharVariants}
+                                    >
                                         {char}
                                     </Char>
                                 );
@@ -815,7 +827,7 @@ const Word = ({ inViewHook, style, wordAnimate, wordWrapperStyle = null, wordRan
  * @param {CharProps} props Char props
  * @returns {React.ReactElement} Rendered component
  */
-const Char = ({ inViewHook, charAnimate, flatIndex, children }) => {
+const Char = ({ inViewHook, charAnimate, charRandomStagger, charLength, flatIndex, customVariants, children }) => {
     const updatedPresetDelay = !charAnimate ? {} : {
         ...charAnimate,
         transition: {
@@ -825,11 +837,61 @@ const Char = ({ inViewHook, charAnimate, flatIndex, children }) => {
     };
     const { options, _initial, transition, ...charAnimateFiltered } = updatedPresetDelay;
 
+    const fixedCustomVariants = !customVariants ? {} : Object.keys(customVariants).reduce((variants, key) => {
+        const { options = {}, transition: framerTransition = {}, ...animation } = customVariants[key];
+        const {
+            staggerType = 'first',
+            baseDelay = 0,
+            stagger = 0.05,
+            randomStart = [],
+        } = options;
+
+        const animationRandomStart = {};
+
+        if (randomStart.length) {
+            randomStart.forEach((attr) => {
+                if (animation[attr] && Array.isArray(animation[attr]) && animation[attr].length >= 3) {
+                    const animArray = animation[attr];
+
+                    if (animArray.length === 3) {
+                        const [min, max, target] = [animArray[0], animArray[1], animArray[2]]
+                        const mixer = mix(min, max);
+                        animationRandomStart[attr] = [mixer(generateRandomScale()), target]
+                    } else {
+                        if (animArray.length % 2 === 0 && animArray.slice(1).some(val => val !== null)) {
+                            const result = [animArray[0]];
+
+                            for (let i = 1; i < animArray.length - 1; i += 2) {
+                                const min = animArray[i];
+                                const max = animArray[i + 1];
+                                const mixer = mix(min, max);
+                                result.push(mixer(generateRandomScale()));
+                            }
+
+                            result.push(animArray[animArray.length - 1]);
+                            animationRandomStart[attr] = result;
+                        }
+                    }
+                }
+            })
+        }
+
+        const delay =
+            staggerType === 'random' ? (charRandomStagger * stagger) + baseDelay :
+                staggerType === 'last' ? (Math.abs(flatIndex - (charLength - 1)) * stagger) + baseDelay :
+                    (flatIndex * stagger) + baseDelay
+            ;
+
+        variants[key] = { ...animation, ...animationRandomStart, transition: { ...framerTransition, delay } };
+
+        return variants;
+    }, {})
+
     return (
         <motion.span
             className={styles.char}
             animate={inViewHook ? { ...charAnimateFiltered, transition } : { ..._initial, transition }}
-            variants={options?.makeVariant ? { [options.variantName]: { ...charAnimateFiltered, transition } } : {}}
+            variants={options?.makeVariant ? { [options.variantName]: { ...charAnimateFiltered, transition }, ...fixedCustomVariants } : fixedCustomVariants}
         >
             {children}
         </motion.span>
