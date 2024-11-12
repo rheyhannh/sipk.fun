@@ -769,7 +769,7 @@ const HighlightText = (
                             wordAnimate={usedPreset?.wordAnimate}
                             wordWrapperStyle={usedPreset?.wordWrapperStyle ?? null}
                             wordRandomStagger={flatWordRandomIndex[currentFlatWordIndex]}
-                            wordAndSpaceLength={textWords.length}
+                            wordLength={textWords.length}
                             flatIndex={currentFlatWordIndex}
                             customVariants={usedPreset?.customWordVariants}
                             key={index}
@@ -838,7 +838,7 @@ const Wrapper = ({ style, children }) => (
  * @param {WordProps} props Word props
  * @returns {React.ReactElement} Rendered component
  */
-const Word = ({ inViewHook, style, wordAnimate, wordWrapperStyle = null, wordRandomStagger, wordAndSpaceLength, flatIndex, children }) => {
+const Word = ({ inViewHook, style, wordAnimate, wordWrapperStyle = null, wordRandomStagger, wordLength, flatIndex, customVariants, children }) => {
     const useWrapper = !!wordWrapperStyle;
     const useRandomStart = wordAnimate && Array.isArray(wordAnimate?.options?.randomStart);
 
@@ -864,7 +864,7 @@ const Word = ({ inViewHook, style, wordAnimate, wordWrapperStyle = null, wordRan
         if (staggerType === 'random') {
             return (wordRandomStagger * delay) + baseDelay
         } else if (staggerType === 'last') {
-            return (Math.abs(flatIndex - wordAndSpaceLength) * delay) + baseDelay
+            return (Math.abs(flatIndex - (wordLength - 1)) * delay) + baseDelay
         } else {
             return (flatIndex * delay) + baseDelay
         }
