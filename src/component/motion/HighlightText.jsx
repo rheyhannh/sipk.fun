@@ -827,8 +827,8 @@ const Wrapper = ({ style, children }) => (
  * - Default : `null`
  * @property {number} wordRandomStagger
  * Stagger random yang diperoleh menggunakan `generateRandomFlatIndex`
- * @property {number} wordAndSpaceLength
- * Total jumlah kata dan spasi pada teks yang digunakan
+ * @property {number} wordLength
+ * Total jumlah kata yang digunakan
  * @property {flatIndex} flatIndex
  * @property {React.ReactNode} children
  */
