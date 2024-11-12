@@ -100,6 +100,76 @@ import styles from './style/highlight_text.module.css'
  */
 
 /** 
+ * Opsi yang digunakan pada custom variant yang dibuat untuk mengatur efek stagger setiap kata atau huruf
+ * @typedef {Object} customVariantOptions
+ * @property {'first' | 'last' | 'random'} staggerType
+ * Jenis stagger effect yang digunakan.
+ * - Default : `'first'`
+ * 
+ * Penjelasan lengkap untuk tipe stagger efek per-kata dapat dilihat {@link presetOptions.wordStagger},
+ * sedangkan untuk efek per-huruf dapat dilihat {@link presetOptions.charStagger}
+ * @property {number} baseDelay
+ * Base delay yang digunakan
+ * - Default : `0`
+ * @property {number} stagger
+ * Offset stagger yang digunakan
+ * - Default : `0.05`
+ * @property {presetOptions['randomStart']} randomStart
+ * Array yang berisikan atribut css yang dianimasikan dengan menggunakan `randomStart`.
+ * 
+ * Fitur `randomStart` memungkinkan untuk memulai animasi tertentu dengan nilai awal atau nilai target secara acak
+ * berdasarkan suatu batasan nilai terkecil dan terendah menggunakan component `mix` pada framer-motion.
+ * 
+ * Syarat menggunakan fitur ini adalah sebagai berikut,
+ * - Atribut yg ingin menggunakan fitur ini harus bernilai array pada variant
+ * - Nilai pada array pertama dapat bernilai `null` dimana ini menandakan animasi akan mulai dari current state
+ * - Array harus memiliki panjang `>= 3`
+ * - Saat format array lebih dari 3, maka panjang array harus `genap`
+ * - Format array dengan panjang 3 `[min, max, target]`
+ * - Format array dengan panjang 4 `[initial, min, max, target]`
+ * - Format array dengan panjang 6 `[initial, min_1, max_1, min_2, max_2, target]`
+ * - Dan seterusnya dimana dapat menampung lebih banyak lagi
+ * 
+ * Untuk contoh case penggunaan fitur ini dapat dilihat sebagai berikut,
+ * ```js
+ * // Case saat arr.length === 3
+ * const randomStart = ['x'];
+ * const variants = {
+ *      my_variant: {
+ *          x: [-45, 90, 0] // contoh output: [25, 0]
+ *      }
+ * }
+ * // Output 25 diatas merupakan contoh hasil generasi angka acak dengan jarak -45 sampai 90
+ * // Konfigurasi diatas akan menganimasikan 'x' dari 25 -> 0
+ * 
+ * // Case saat arr.length 4
+ * const randomStart = ['x'];
+ * const variants = {
+ *      my_variant: {
+ *          x: [null, -25, 45, 0] // contoh output: [null, 35, 0]
+ *      }
+ * }
+ * // Output 35 diatas merupakan contoh hasil generasi angka acak dengan jarak -25 sampai 45
+ * // Konfigurasi diatas akan menganimasikan 'x' dari (awal posisi) -> 35 -> 0
+ * 
+ * // Case saat arr.length 6
+ * const randomStart = ['x'];
+ * const variants = {
+ *      my_variant: {
+ *          x: [10, -25, 45, 90, 180, 0] // contoh output: [10, 15, 125, 0]
+ *      }
+ * }
+ * // Output 15 diatas merupakan contoh hasil generasi angka acak dengan jarak -25 sampai 45
+ * // Output 125 diatas merupakan contoh hasil generasi angka acak dengan jarak 90 sampai 180
+ * // Konfigurasi diatas akan menganimasikan 'x' dari 10 -> 15 -> 125 -> 0
+ * ```
+ * 
+ * Array dapat berjumlah lebih dari 6 dan sebanyak-banyaknya asalkan genap dan memenuhi syarat lainnya.
+ * Jika tidak memenuhi syarat, maka perhitungan tidak akan dilakukan dan array tidak akan dimodifikasi,
+ * sehingga animasi berjalan sesuai dengan apa yang ditulis
+ */
+
+/** 
  * @typedef {Object} presetOptions
  * @property {boolean} makeVariant
  * Buat animasi dalam variant sehingga dapat dimainkan melalui `motion` parent element
@@ -121,6 +191,8 @@ import styles from './style/highlight_text.module.css'
  * 
  * - Note : Props ini hanya memberikan efek pada preset yang menggunakan animasi per-kata
  * - Default : `'first'`
+ * @property {Object<string, Variant & {options:customVariantOptions}>} customCharVariants
+ * Tambah motion custom `variants` untuk setiap character dengan stagger efek yang sudah diatur secara internal
  */
 
 /** 
@@ -137,6 +209,8 @@ import styles from './style/highlight_text.module.css'
  * Variant animasi yang digunakan component `Word`, dapat bernilai `undefined`
  * @property {charAnimate & {options:presetOptions}} charAnimate
  * Variant animasi yang digunakan component `Char` dan opsi preset yang digunakan, dapat bernilai `undefined`
+ * @property {Object<string, Variant & {options:customVariantOptions}>} customCharVariants
+ * Custom `variants` untuk setiap character dengan stagger efek yang sudah diatur secara internal.
  */
 
 /** Opsi atau atribut yang dapat dicustom saat menggunakan preset `wavingColor`
@@ -491,7 +565,8 @@ const HighlightText = (
                         rotateX: adjustWavingTranslate?.rotateX ? adjustWavingTranslate.rotateX.slice().reverse() : [null, -45],
                         opacity: adjustWavingTranslate?.opacity ? adjustWavingTranslate.opacity.slice().reverse() : [null, 0],
                     }
-                }
+                },
+                customCharVariants: presetOptions?.customCharVariants,
             }
         } else if (preset === 'springRotate') {
             return {
@@ -520,7 +595,8 @@ const HighlightText = (
                         opacity: adjustSpringRotate?.opacity ? adjustSpringRotate.opacity.slice().reverse() : [null, 0],
                     }
                 },
-                charAnimate: undefined
+                charAnimate: undefined,
+                customCharVariants: presetOptions?.customCharVariants,
             }
         } else if (preset === 'wavingFlyIn') {
             return {
@@ -555,7 +631,8 @@ const HighlightText = (
                         rotate: adjustWavingFlyIn?.rotate ? adjustWavingFlyIn.rotate.slice().reverse() : [null, -3],
                     }
                 },
-                charAnimate: undefined
+                charAnimate: undefined,
+                customCharVariants: presetOptions?.customCharVariants,
             }
         } else if (preset === 'wavingRotation') {
             return {
@@ -818,7 +895,11 @@ const Word = ({ inViewHook, style, wordAnimate, wordWrapperStyle = null, wordRan
  * @typedef {Object} CharProps
  * @property {inViewHook} inViewHook
  * @property {charAnimate} charAnimate
+ * @property {number} charRandomStagger
+ * @property {number} charLength
  * @property {flatIndex} flatIndex
+ * @property {Object<string, Variant & {options:customVariantOptions}>} customVariants
+ * Custom character `variants`
  * @property {React.ReactNode} children
  */
 
