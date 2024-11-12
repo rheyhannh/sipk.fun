@@ -743,8 +743,9 @@ const HighlightText = (
         }
     }
 
+    let flatWordIndex = 0;
     let flatCharIndex = 0;
-    const flatWordRandomIndex = generateRandomFlatIndex(textWords.length);
+    const flatWordRandomIndex = generateRandomFlatIndex(textWords.filter((item) => item !== '_spaces_').length);
     const flatCharRandomIndex = generateRandomFlatIndex(textChars.filter((item) => item !== '_spaces_').flat().length)
 
     React.useEffect(() => {
@@ -758,16 +759,19 @@ const HighlightText = (
             style={usedPreset?.containerStyle}
         >
             <Wrapper style={usedPreset?.wrapperStyle}>
-                {textChars.map((item, index) => (
-                    item !== '_spaces_' ? (
+                {textChars.map((item, index) => {
+                    const currentFlatWordIndex = item !== '_spaces_' ? flatWordIndex++ : flatWordIndex;
+
+                    return item !== '_spaces_' ? (
                         <Word
                             inViewHook={inViewHook}
                             style={usedPreset?.wordStyle}
                             wordAnimate={usedPreset?.wordAnimate}
                             wordWrapperStyle={usedPreset?.wordWrapperStyle ?? null}
-                            wordRandomStagger={flatWordRandomIndex[index]}
+                            wordRandomStagger={flatWordRandomIndex[currentFlatWordIndex]}
                             wordAndSpaceLength={textWords.length}
-                            flatIndex={index}
+                            flatIndex={currentFlatWordIndex}
+                            customVariants={usedPreset?.customWordVariants}
                             key={index}
                         >
                             {item.map((char, charIndex) => {
@@ -788,7 +792,7 @@ const HighlightText = (
                             })}
                         </Word>
                     ) : (<Spaces key={index} />)
-                ))}
+                })}
             </Wrapper>
         </motion.mark>
     )
