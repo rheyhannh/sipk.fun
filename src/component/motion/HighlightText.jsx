@@ -180,8 +180,8 @@ import styles from './style/highlight_text.module.css'
  * @property {Array<keyof MotionStyle>} randomStart
  * Array yang berisikan atribut css yang dianimasikan dengan menggunakan `randomStart`.
  * 
- * Fitur `randomStart` memungkinkan untuk memulai animasi tertentu dengan nilai awal acak
- * berdasarkan suatu batasan nilai terkecil dan terendah menggunakan component `mix` pada framer-motion.
+ * Props ini hanya digunakan untuk kebutuhan `internal` untuk disesuaikan dengan preset yang sudah tersedia
+ * 
  * @property {'first' | 'last' | 'random'} wordStagger
  * Jenis stagger effect yang digunakan. 
  * 
@@ -190,6 +190,15 @@ import styles from './style/highlight_text.module.css'
  * animasi dimulai dari kata yang dipilih secara acak dengan urutan yang acak.
  * 
  * - Note : Props ini hanya memberikan efek pada preset yang menggunakan animasi per-kata
+ * - Default : `'first'`
+ * @property {'first' | 'last' | 'random'} charStagger
+ * Jenis stagger effect yang digunakan. 
+ * 
+ * Saat menggunakan `'first'` maka animasi dimulai berurutan dari huruf pertama,
+ * jika `'last'` maka animasi dimulai berurutan dari huruf terakhir sedangkan jika `'random'`
+ * animasi dimulai dari huruf yang dipilih secara acak dengan urutan yang acak.
+ * 
+ * - Note : Props ini hanya memberikan efek pada preset yang menggunakan animasi per-huruf
  * - Default : `'first'`
  * @property {Object<string, Variant & {options:customVariantOptions}>} customCharVariants
  * Tambah motion custom `variants` untuk setiap character dengan stagger efek yang sudah diatur secara internal
@@ -896,7 +905,7 @@ const Word = ({ inViewHook, style, wordAnimate, wordWrapperStyle = null, wordRan
  * Props yang digunakan component `Char`
  * @typedef {Object} CharProps
  * @property {inViewHook} inViewHook
- * @property {charAnimate} charAnimate
+ * @property {charAnimate & {options:presetOptions}} charAnimate
  * @property {number} charRandomStagger
  * @property {number} charLength
  * @property {flatIndex} flatIndex
@@ -911,6 +920,10 @@ const Word = ({ inViewHook, style, wordAnimate, wordWrapperStyle = null, wordRan
  * @returns {React.ReactElement} Rendered component
  */
 const Char = ({ inViewHook, charAnimate, charRandomStagger, charLength, flatIndex, customVariants, children }) => {
+    /**
+     * Method untuk menghitung delay agar menciptakan animasi efek stagger per-huruf berdasarkan tipe stagger yang digunakan
+     * @returns {number} Delay yang sudah dihitung
+     */
     const countDelay = () => {
         const staggerType = charAnimate ? charAnimate?.options?.charStagger ?? 'first' : 'first';
         const { delay = 0.1, baseDelay = 0 } = charAnimate?.transition;
