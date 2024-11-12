@@ -558,7 +558,8 @@ const HighlightText = (
                     },
                     options: {
                         makeVariant: presetOptions?.makeVariant ?? false,
-                        variantName: presetOptions?.variantName ?? 'highlight_text'
+                        variantName: presetOptions?.variantName ?? 'highlight_text',
+                        charStagger: presetOptions?.charStagger ?? 'first',
                     },
                     _initial: {
                         z: adjustWavingTranslate?.z ? adjustWavingTranslate.z.slice().reverse() : [null, 300],
@@ -720,7 +721,8 @@ const HighlightText = (
                     },
                     options: {
                         makeVariant: presetOptions?.makeVariant ?? false,
-                        variantName: presetOptions?.variantName ?? 'highlight_text'
+                        variantName: presetOptions?.variantName ?? 'highlight_text',
+                        charStagger: presetOptions?.charStagger ?? 'first'
                     },
                     _initial: {
                         scale: adjustWavingColor?.scale ? adjustWavingColor.scale.slice().reverse() : [1, 1.45, 1],
@@ -909,11 +911,24 @@ const Word = ({ inViewHook, style, wordAnimate, wordWrapperStyle = null, wordRan
  * @returns {React.ReactElement} Rendered component
  */
 const Char = ({ inViewHook, charAnimate, charRandomStagger, charLength, flatIndex, customVariants, children }) => {
+    const countDelay = () => {
+        const staggerType = charAnimate ? charAnimate?.options?.charStagger ?? 'first' : 'first';
+        const { delay = 0.1, baseDelay = 0 } = charAnimate?.transition;
+
+        if (staggerType === 'random') {
+            return (charRandomStagger * delay) + baseDelay
+        } else if (staggerType === 'last') {
+            return (Math.abs(flatIndex - (charLength - 1)) * delay) + baseDelay
+        } else {
+            return (flatIndex * delay) + baseDelay
+        }
+    }
+
     const updatedPresetDelay = !charAnimate ? {} : {
         ...charAnimate,
         transition: {
             ...charAnimate.transition,
-            delay: (flatIndex * charAnimate.transition.delay) + charAnimate.transition.baseDelay
+            delay: countDelay()
         }
     };
     const { options, _initial, transition, ...charAnimateFiltered } = updatedPresetDelay;
