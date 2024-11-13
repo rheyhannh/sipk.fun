@@ -1,4 +1,4 @@
-const defaultMatakuliah = [
+export const defaultMatakuliah = [
     {
         "id": "f3333a6c-e739-4039-9be0-3ed06c28aed5",
         "nama": "Etika Profesi",
@@ -881,7 +881,7 @@ const defaultMatakuliah = [
     }
 ]
 
-const defaultPenilaian = {
+export const defaultPenilaian = {
     "A": {
         "cat": "Sangat baik",
         "style": "success",
@@ -922,9 +922,4 @@ const defaultPenilaian = {
         "style": "crimson",
         "weight": 0
     }
-}
-
-export {
-    defaultMatakuliah,
-    defaultPenilaian
 }
