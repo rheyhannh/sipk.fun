@@ -1214,6 +1214,20 @@ const Fitur = () => {
         ['shape', 'the', 'future']
     ]
 
+    /** 
+     * Method untuk mencari index pada array dengan string tertentu
+     * @param {string} str String yang ingin dicari didalam array
+     * @param {Array<string>} arr Array yang digunakan
+     * @returns {number} Index dengan string yang dicari, jika tidak ditemukan atau param `arr` tidak tersedia atau bukan array, maka return `0`
+     * @example 
+     * ```js
+     * const arr = ['Lorem', 'ipsum', 'dolor', 'sit', 'amet']
+     * console.log (findArrayIndexByString('dolor', arr)) // 2
+     * console.log (findArrayIndexByString('xyz', arr)) // 0
+     * console.log (findArrayIndexByString('sit', {})) // 0
+     * console.log (findArrayIndexByString('amet')) // 0
+     * ```
+    */
     const findArrayIndexByString = (str, arr) => {
         if (!arr | !Array.isArray(arr)) return 0;
         const index = arr.indexOf(str);
