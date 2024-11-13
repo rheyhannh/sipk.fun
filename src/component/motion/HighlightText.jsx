@@ -202,6 +202,8 @@ import styles from './style/highlight_text.module.css'
  * - Default : `'first'`
  * @property {Object<string, Variant & {options:customVariantOptions}>} customCharVariants
  * Tambah motion custom `variants` untuk setiap character dengan stagger efek yang sudah diatur secara internal
+ * @property {Object<string, Variant & {options:customVariantOptions}>} customWordVariants
+ * Tambah motion custom `variants` untuk setiap kata dengan stagger efek yang sudah diatur secara internal
  */
 
 /** 
@@ -220,6 +222,8 @@ import styles from './style/highlight_text.module.css'
  * Variant animasi yang digunakan component `Char` dan opsi preset yang digunakan, dapat bernilai `undefined`
  * @property {Object<string, Variant & {options:customVariantOptions}>} customCharVariants
  * Custom `variants` untuk setiap character dengan stagger efek yang sudah diatur secara internal.
+ * @property {Object<string, Variant & {options:customVariantOptions}>} customWordVariants
+ * Custom `variants` untuk setiap kata dengan stagger efek yang sudah diatur secara internal
  */
 
 /** Opsi atau atribut yang dapat dicustom saat menggunakan preset `wavingColor`
@@ -836,6 +840,8 @@ const Wrapper = ({ style, children }) => (
  * @property {number} wordLength
  * Total jumlah kata yang digunakan
  * @property {flatIndex} flatIndex
+ * @property {Object<string, Variant & {options:customVariantOptions}>} customVariants
+ * Custom word `variants`
  * @property {React.ReactNode} children
  */
 
