@@ -170,6 +170,70 @@ import styles from './style/highlight_text.module.css'
  */
 
 /** 
+ * @typedef {Object} animateByIndexFnProps
+ * @property {number} index
+ * Saat digunakan pada `customCharVariants` ini mengacu pada index huruf (tanpa spasi) yang dihitung secara ascending atau beruturan dari awal
+ * ```js
+ * const text = 'sit amex'
+ * // 's' = 0, 't' = 2, 'x' = 6
+ * ```
+ * 
+ * Saat digunakan pada `customWordVariants` ini mengacu pada index kata (tanpa spasi) yang dihitung secara ascending atau beruturan dari awal
+ * ```js
+ * const text = 'sit amex'
+ * // 'sit' = 0, 'amex' = 1
+ * ```
+ * @property {number} lastIndex
+ * Saat digunakan pada `customCharVariants` ini mengacu pada index huruf (tanpa spasi) yang dihitung secara descending atau beruturan dari akhir
+ * ```js
+ * const text = 'sit amex'
+ * // 's' = 6, 't' = 4, 'x' = 0
+ * ```
+ * 
+ * Saat digunakan pada `customWordVariants` ini mengacu pada index kata (tanpa spasi) yang dihitung secara descending atau beruturan dari akhir
+ * ```js
+ * const text = 'sit amex'
+ * // 'sit' = 1, 'amex' = 0
+ * ```
+ * @property {number} randomIndex
+ * Saat digunakan pada `customCharVariants` ini mengacu pada index huruf (tanpa spasi) secara acak
+ * ```js
+ * const text = 'sit amex'
+ * // 's' = 2 (acak), 't' = 1 (acak), 'x' = 3 (acak)
+ * ```
+ * 
+ * Saat digunakan pada `customWordVariants` ini mengacu pada index kata (tanpa spasi) secara acak
+ * ```js
+ * const text = 'sit amex'
+ * // 'sit' = 0 (acak), 'amex' = 1 (acak)
+ * ```
+ */
+
+/** 
+ * @typedef {(x:animateByIndexFnProps) => string | number | Array<string | number>} animateByIndexFn
+ */
+
+/**
+ * Penulisan type ulang untuk `transition` dan `transitionEnd` yang digunakan framer-motion
+ * @typedef {{transition?:TargetAndTransition['transition'], transitionEnd?:Target}} DefaultTransition
+ */
+
+/**
+ * Penulisan type ulang untuk `TargetResolver` yang digunakan framer-motion
+ * @typedef {(custom: any, current: Target, velocity: Target) => TargetAndTransition | string} DefaultTargetResolver
+ */
+
+/**
+ * Penulisan type ulang untuk `TargetAndTransition` yang digunakan framer-motion
+ * @typedef {Record<keyof Target, string | number | CustomValueType | Array<string | number | CustomValueType> | [null, ...Array<string | number | CustomValueType>] | animateByIndexFn> & DefaultTransition} CustomTargetAndTransition
+ */
+
+/**
+ * Custom variants yang dapat menganimasikan teks berdasarkan suatu index dengan `animateByIndexFn`
+ * @typedef {CustomTargetAndTransition | DefaultTargetResolver} CustomVariants
+ */
+
+/** 
  * @typedef {Object} presetOptions
  * @property {boolean} makeVariant
  * Buat animasi dalam variant sehingga dapat dimainkan melalui `motion` parent element
@@ -200,9 +264,9 @@ import styles from './style/highlight_text.module.css'
  * 
  * - Note : Props ini hanya memberikan efek pada preset yang menggunakan animasi per-huruf
  * - Default : `'first'`
- * @property {Object<string, Variant & {options:customVariantOptions}>} customCharVariants
+ * @property {Object<string, CustomVariants & {options:customVariantOptions}>} customCharVariants
  * Tambah motion custom `variants` untuk setiap character dengan stagger efek yang sudah diatur secara internal
- * @property {Object<string, Variant & {options:customVariantOptions}>} customWordVariants
+ * @property {Object<string, CustomVariants & {options:customVariantOptions}>} customWordVariants
  * Tambah motion custom `variants` untuk setiap kata dengan stagger efek yang sudah diatur secara internal
  */
 
@@ -220,9 +284,9 @@ import styles from './style/highlight_text.module.css'
  * Variant animasi yang digunakan component `Word`, dapat bernilai `undefined`
  * @property {charAnimate & {options:presetOptions}} charAnimate
  * Variant animasi yang digunakan component `Char` dan opsi preset yang digunakan, dapat bernilai `undefined`
- * @property {Object<string, Variant & {options:customVariantOptions}>} customCharVariants
+ * @property {Object<string, CustomVariants & {options:customVariantOptions}>} customCharVariants
  * Custom `variants` untuk setiap character dengan stagger efek yang sudah diatur secara internal.
- * @property {Object<string, Variant & {options:customVariantOptions}>} customWordVariants
+ * @property {Object<string, CustomVariants & {options:customVariantOptions}>} customWordVariants
  * Custom `variants` untuk setiap kata dengan stagger efek yang sudah diatur secara internal
  */
 
@@ -840,7 +904,7 @@ const Wrapper = ({ style, children }) => (
  * @property {number} wordLength
  * Total jumlah kata yang digunakan
  * @property {flatIndex} flatIndex
- * @property {Object<string, Variant & {options:customVariantOptions}>} customVariants
+ * @property {Object<string, CustomVariants & {options:customVariantOptions}>} customVariants
  * Custom word `variants`
  * @property {React.ReactNode} children
  */
@@ -986,7 +1050,7 @@ const Word = ({ inViewHook, style, wordAnimate, wordWrapperStyle = null, wordRan
  * @property {number} charRandomStagger
  * @property {number} charLength
  * @property {flatIndex} flatIndex
- * @property {Object<string, Variant & {options:customVariantOptions}>} customVariants
+ * @property {Object<string, CustomVariants & {options:customVariantOptions}>} customVariants
  * Custom character `variants`
  * @property {React.ReactNode} children
  */
