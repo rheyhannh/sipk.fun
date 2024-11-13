@@ -843,7 +843,7 @@ const HighlightText = (
                             wordAnimate={usedPreset?.wordAnimate}
                             wordWrapperStyle={usedPreset?.wordWrapperStyle ?? null}
                             wordRandomStagger={flatWordRandomIndex[currentFlatWordIndex]}
-                            wordLength={textWords.length}
+                            wordLength={textWords.filter((item) => item !== '_spaces_').length}
                             flatIndex={currentFlatWordIndex}
                             customVariants={usedPreset?.customWordVariants}
                             key={index}
