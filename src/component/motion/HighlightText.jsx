@@ -910,6 +910,17 @@ const Word = ({ inViewHook, style, wordAnimate, wordWrapperStyle = null, wordRan
 
         const animationRandomStart = {};
 
+        Object.entries(animation).forEach(([key, val]) => {
+            if (typeof val === 'function') {
+                const [index, lastIndex, randomIndex] = [
+                    flatIndex,
+                    Math.abs(flatIndex - (wordLength - 1)),
+                    wordRandomStagger
+                ]
+                animation[key] = val({ index, lastIndex, randomIndex });
+            }
+        })
+
         if (randomStart.length) {
             randomStart.forEach((attr) => {
                 if (animation[attr] && Array.isArray(animation[attr]) && animation[attr].length >= 3) {
@@ -1022,6 +1033,17 @@ const Char = ({ inViewHook, charAnimate, charRandomStagger, charLength, flatInde
         } = options;
 
         const animationRandomStart = {};
+
+        Object.entries(animation).forEach(([key, val]) => {
+            if (typeof val === 'function') {
+                const [index, lastIndex, randomIndex] = [
+                    flatIndex,
+                    Math.abs(flatIndex - (charLength - 1)),
+                    charRandomStagger
+                ]
+                animation[key] = val({ index, lastIndex, randomIndex });
+            }
+        })
 
         if (randomStart.length) {
             randomStart.forEach((attr) => {
