@@ -577,6 +577,7 @@ const HighlightText = (
                     }
                 },
                 customCharVariants: presetOptions?.customCharVariants,
+                customWordVariants: presetOptions?.customWordVariants,
             }
         } else if (preset === 'springRotate') {
             return {
@@ -607,6 +608,7 @@ const HighlightText = (
                 },
                 charAnimate: undefined,
                 customCharVariants: presetOptions?.customCharVariants,
+                customWordVariants: presetOptions?.customWordVariants,
             }
         } else if (preset === 'wavingFlyIn') {
             return {
@@ -643,6 +645,7 @@ const HighlightText = (
                 },
                 charAnimate: undefined,
                 customCharVariants: presetOptions?.customCharVariants,
+                customWordVariants: presetOptions?.customWordVariants,
             }
         } else if (preset === 'wavingRotation') {
             return {
@@ -676,6 +679,7 @@ const HighlightText = (
                 },
                 charAnimate: undefined,
                 customCharVariants: presetOptions?.customCharVariants,
+                customWordVariants: presetOptions?.customWordVariants,
             }
         } else if (preset === 'mixFancyTranslate') {
             return {
@@ -711,6 +715,7 @@ const HighlightText = (
                 },
                 charAnimate: undefined,
                 customCharVariants: presetOptions?.customCharVariants,
+                customWordVariants: presetOptions?.customWordVariants,
             }
         } else {
             return {
@@ -739,6 +744,7 @@ const HighlightText = (
                     }
                 },
                 customCharVariants: presetOptions?.customCharVariants,
+                customWordVariants: presetOptions?.customWordVariants,
             }
         }
     }
@@ -887,12 +893,62 @@ const Word = ({ inViewHook, style, wordAnimate, wordWrapperStyle = null, wordRan
 
     const initialAnimate = { ..._initial, ...initialUpdated };
 
+    const fixedCustomVariants = !customVariants ? {} : Object.keys(customVariants).reduce((variants, key) => {
+        const { options = {}, transition: framerTransition = {}, ...animation } = customVariants[key];
+        const {
+            staggerType = 'first',
+            baseDelay = 0,
+            stagger = 0.05,
+            randomStart = [],
+        } = options;
+
+        const animationRandomStart = {};
+
+        if (randomStart.length) {
+            randomStart.forEach((attr) => {
+                if (animation[attr] && Array.isArray(animation[attr]) && animation[attr].length >= 3) {
+                    const animArray = animation[attr];
+
+                    if (animArray.length === 3) {
+                        const [min, max, target] = [animArray[0], animArray[1], animArray[2]]
+                        const mixer = mix(min, max);
+                        animationRandomStart[attr] = [mixer(generateRandomScale()), target]
+                    } else {
+                        if (animArray.length % 2 === 0 && animArray.slice(1).some(val => val !== null)) {
+                            const result = [animArray[0]];
+
+                            for (let i = 1; i < animArray.length - 1; i += 2) {
+                                const min = animArray[i];
+                                const max = animArray[i + 1];
+                                const mixer = mix(min, max);
+                                result.push(mixer(generateRandomScale()));
+                            }
+
+                            result.push(animArray[animArray.length - 1]);
+                            animationRandomStart[attr] = result;
+                        }
+                    }
+                }
+            })
+        }
+
+        const delay =
+            staggerType === 'random' ? (wordRandomStagger * stagger) + baseDelay :
+                staggerType === 'last' ? (Math.abs(flatIndex - (wordLength - 1)) * stagger) + baseDelay :
+                    (flatIndex * stagger) + baseDelay
+            ;
+
+        variants[key] = { ...animation, ...animationRandomStart, transition: { ...framerTransition, delay } };
+
+        return variants;
+    }, {})
+
     const motionWord = (
         <motion.span
             className={styles.word}
             style={style}
             animate={inViewHook ? { ...wordAnimateFiltered, transition } : { ...initialAnimate, transition }}
-            variants={options?.makeVariant ? { [options.variantName]: { ...wordAnimateFiltered, transition } } : {}}
+            variants={options?.makeVariant ? { [options.variantName]: { ...wordAnimateFiltered, transition }, ...fixedCustomVariants } : fixedCustomVariants}
         >
             {children}
         </motion.span>
