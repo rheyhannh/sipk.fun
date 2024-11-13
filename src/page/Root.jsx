@@ -1214,8 +1214,9 @@ const Fitur = () => {
         ['shape', 'the', 'future']
     ]
 
-    const findWordIndex = (str) => {
-        const index = titleParaghraph.flat().indexOf(str);
+    const findArrayIndexByString = (str, arr) => {
+        if (!arr | !Array.isArray(arr)) return 0;
+        const index = arr.indexOf(str);
         return index === -1 ? 0 : index;
     };
 
@@ -1234,7 +1235,7 @@ const Fitur = () => {
             variantName: 'loremipsum',
         },
         adjustWavingFlyIn: {
-            baseDelay: titleStaggered[findWordIndex(text)],
+            baseDelay: titleStaggered[findArrayIndexByString(text, titleParaghraph.flat())],
         }
     })
 
@@ -1254,13 +1255,13 @@ const Fitur = () => {
                         <motion.div
                             className={styles.icons}
                             initial={{ scale: 0 }}
-                            variants={{ loremipsum: { scale: 1, transition: { type: 'spring', duration: 1.5, bounce: 0, delay: titleStaggered[findWordIndex('Analytics')] } } }}
+                            variants={{ loremipsum: { scale: 1, transition: { type: 'spring', duration: 1.5, bounce: 0, delay: titleStaggered[findArrayIndexByString('Analytics', titleParaghraph.flat())] } } }}
                         >
                             <div className={`${styles.icon} ${styles.alt}`} >
                                 <motion.span
                                     initial={{ rotate: 180 }}
                                     style={{ x: iconX }}
-                                    variants={{ change: { x: 100 }, loremipsum: { rotate: 0, transition: { type: 'spring', duration: 2, bounce: 0, delay: titleStaggered[findWordIndex('Analytics')] } } }}
+                                    variants={{ change: { x: 100 }, loremipsum: { rotate: 0, transition: { type: 'spring', duration: 2, bounce: 0, delay: titleStaggered[findArrayIndexByString('Analytics', titleParaghraph.flat())] } } }}
                                     transition={{ type: 'spring', duration: 0.5, bounce: 0.1 }}
                                 >
                                     <IoAnalyticsOutline fontSize={'0.5em'} />
@@ -1274,7 +1275,7 @@ const Fitur = () => {
                                     <div className={`${styles.icon_bg} ${styles.warning}`}>
                                         <motion.span
                                             initial={{ rotate: 180 }}
-                                            variants={{ loremipsum: { rotate: 0, transition: { type: 'spring', duration: 2, bounce: 0, delay: titleStaggered[findWordIndex('Analytics')] } } }}
+                                            variants={{ loremipsum: { rotate: 0, transition: { type: 'spring', duration: 2, bounce: 0, delay: titleStaggered[findArrayIndexByString('Analytics', titleParaghraph.flat())] } } }}
                                             transition={{ type: 'spring', duration: 0.5, bounce: 0.1 }}
                                         >
                                             <TbAtom fontSize={'0.5em'} />
@@ -1288,7 +1289,7 @@ const Fitur = () => {
                                 <motion.span
                                     initial={{ rotate: 225 }}
                                     style={{ x: iconX }}
-                                    variants={{ change: { x: 100 }, loremipsum: { rotate: 0, transition: { type: 'spring', duration: 3, bounce: 0, delay: titleStaggered[findWordIndex('Analytics')] } } }}
+                                    variants={{ change: { x: 100 }, loremipsum: { rotate: 0, transition: { type: 'spring', duration: 3, bounce: 0, delay: titleStaggered[findArrayIndexByString('Analytics', titleParaghraph.flat())] } } }}
                                     transition={{ type: 'spring', duration: 0.5, bounce: 0.1 }}
                                 >
                                     <TbAntennaBars5 fontSize={'0.5em'} />
@@ -1302,7 +1303,7 @@ const Fitur = () => {
                                     <div className={`${styles.icon_bg} ${styles.alt}`}>
                                         <motion.span
                                             initial={{ rotate: 180 }}
-                                            variants={{ loremipsum: { rotate: 0, transition: { type: 'spring', duration: 2, bounce: 0, delay: titleStaggered[findWordIndex('Analytics')] } } }}
+                                            variants={{ loremipsum: { rotate: 0, transition: { type: 'spring', duration: 2, bounce: 0, delay: titleStaggered[findArrayIndexByString('Analytics', titleParaghraph.flat())] } } }}
                                             transition={{ type: 'spring', duration: 0.5, bounce: 0.1 }}
                                         >
                                             <IoAnalyticsOutline fontSize={'0.5em'} />
@@ -1329,12 +1330,12 @@ const Fitur = () => {
                         <motion.div
                             className={`${styles.icon}`}
                             initial={{ scale: 0 }}
-                            variants={{ loremipsum: { scale: 1, transition: { type: 'spring', duration: 2, bounce: 0, delay: titleStaggered[findWordIndex('shape')] } } }}
+                            variants={{ loremipsum: { scale: 1, transition: { type: 'spring', duration: 2, bounce: 0, delay: titleStaggered[findArrayIndexByString('shape', titleParaghraph.flat())] } } }}
                         >
                             <motion.div
                                 className={`${styles.icon_bg} ${styles.success}`}
                                 initial={{ rotate: 270 }}
-                                variants={{ loremipsum: { rotate: 0, transition: { type: 'spring', duration: 2.5, bounce: 0, delay: titleStaggered[findWordIndex('shape')] } } }}
+                                variants={{ loremipsum: { rotate: 0, transition: { type: 'spring', duration: 2.5, bounce: 0, delay: titleStaggered[findArrayIndexByString('shape', titleParaghraph.flat())] } } }}
                             >
                                 <LuShapes fontSize={'0.5em'} />
                             </motion.div>
