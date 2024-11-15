@@ -372,10 +372,12 @@ const Fitur = () => {
             <div className={styles.fitur_wrapper}>
                 <motion.div
                     className={styles.title}
+                    initial={{ visibility: 'hidden' }}
                     style={{
                         '--icon-size': `${iconSize}px`,
                         position: 'relative'
                     }}
+                    variants={{ loremipsum: { visibility: 'visible' } }}
                     whileInView={'loremipsum'}
                     animate={titleAnimation ?? {}}
                     onAnimationComplete={(x) => {
