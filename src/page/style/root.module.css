@@ -684,8 +684,6 @@
     color: var(--root-footer-textColor);
 }
 
-
-
 .footer .primary,
 .footer .secondary {
     display: flex;
@@ -745,8 +743,6 @@
     height: var(--box-size);
     padding: 0.5rem;
 }
-
-
 
 .footer .secondary {
     --default-color: #9BA3B3;
