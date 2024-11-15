@@ -129,7 +129,7 @@ export const AnimatedElement = ({
  * @param {Omit<HTMLMotionProps<any>, 'className'> & TextFitContainerProps} props TextFitContainer props
  * @returns {React.ReactElement} Rendered component
  */
-export const TextFitContainer = ({ containerRef, as = 'span', children, ...props }) => {
+export const TextFitContainer = ({ containerRef, as = 'span', minSize = 1, maxSize = 75, children, ...props }) => {
     const { width, height } = useWindowSize();
     const textRef = React.useRef(null);
     const TextElement = motion[as] ?? motion['span'];
@@ -143,8 +143,8 @@ export const TextFitContainer = ({ containerRef, as = 'span', children, ...props
         if (!container || !text) return;
 
         const containerWidth = container.offsetWidth;
-        let min = 1;
-        let max = 2500;
+        let min = minSize;
+        let max = maxSize;
 
         while (min <= max) {
             const mid = Math.floor((min + max) / 2);
