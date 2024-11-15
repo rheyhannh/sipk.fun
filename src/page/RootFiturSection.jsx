@@ -338,6 +338,10 @@ const Fitur = () => {
 
     }
 
+    /** 
+     * Array yang berisikan string sebagai nama dari custom animasi variant yang dimainkan setelah animasi pertama atau animasi `inView` 
+     * @type {Array<string>}
+     */
     const customVariantCollections = ['shape_text']
 
     /**
