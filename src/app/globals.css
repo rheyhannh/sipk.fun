@@ -39,6 +39,7 @@
     --alwaysWhite-color: #ffffff;
     --dark-color: #363949;
     --darkVariant-color: #677483;
+    --darkVariant2-color: #677483;
     --light-color: rgba(132, 139, 200, 0.2);
     --lighter-color: rgba(132, 139, 200, 0.1);
     --scroll-bar-color: hsl(222, 12%, 90%);
@@ -79,6 +80,7 @@
     --box-color-bg4: hsl(222, 42%, 95%);
     --box-gridColor: rgba(231, 231, 236, 1);
     --box-borderColor: #D6D6DB;
+    --box-borderColor2: transparent;
     --box-boxContent-bg: #FFFFFF;
     --box-boxContent-boxShadow: 0px 1px 3px rgba(0, 0, 0, 0.12), 0px 2px 6px rgba(0, 0, 0, 0.08);
     --box-color-success: hsl(160, 100%, 95%);
@@ -237,6 +239,7 @@
     --white-color: #202528;
     --dark-color: #edeffd;
     --darkVariant-color: #a3bdcc;
+    --darkVariant2-color: #9BA3B3;
     --light-color: rgba(0, 0, 0, 0.4);
     --lighter-color: rgba(0, 0, 0, 0.2);
     --scroll-bar-color: #677483;
@@ -282,6 +285,7 @@
     --box-color-bg4: rgba(42, 45, 52, 0.95);
     --box-gridColor: rgba(42, 45, 52, 0.75);
     --box-borderColor: #32363D;
+    --box-borderColor2: #32363D;
     --box-boxContent-bg: #292C31;
     --box-boxContent-boxShadow: 0px 2px 4px rgba(0, 0, 0, 0.4), 0px 4px 8px rgba(0, 0, 0, 0.3);
     --box-color-success: hsl(160, 25%, 21%);
