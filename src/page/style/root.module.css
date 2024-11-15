@@ -1,12 +1,4 @@
 .container {
-    --base-padding: 16px;
-    --header-height: 75px;
-    --section-margin-bottom: 10rem;
-    --section-height: calc(100vh - (2 * var(--base-padding)) - var(--header-height));
-    --default-fontsize: 1rem;
-    --title-fontsize: 2rem;
-    --description-fontsize: .85rem;
-    --action-fontsize: 1.1rem;
     position: relative;
     width: 100vw;
     height: 100%;
@@ -15,13 +7,12 @@
         or sticky scroll animation not working 
     */
     /* overflow: hidden; */
-    padding: var(--base-padding);
-    font-size: var(--default-fontsize);
+    padding: var(--root-base-padding);
+    font-size: var(--root-default-fontsize);
 }
 
 .header {
-    --header-height: 75px;
-    height: var(--header-height);
+    height: var(--root-header-height);
     position: sticky;
     top: 0;
     left: 0;
@@ -31,21 +22,21 @@
 }
 
 .section {
-    margin-bottom: var(--section-margin-bottom);
+    margin-bottom: var(--root-section-margin-bottom);
 }
 
 .title {
-    font-size: var(--title-fontsize);
+    font-size: var(--root-title-fontsize);
     font-weight: 600;
 }
 
 .description {
-    font-size: var(--description-fontsize);
+    font-size: var(--root-description-fontsize);
     color: var(--infoDark-color);
 }
 
 .action {
-    font-size: var(--action-fontsize);
+    font-size: var(--root-action-fontsize);
     color: var(--logo-second-color);
 }
 
@@ -56,7 +47,7 @@
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 1rem;
-    height: var(--section-height);
+    height: var(--root-section-height);
     overflow: hidden;
 }
 
@@ -114,9 +105,9 @@
 .cara_pakai {
     --inner-padding: 3rem;
     --subtitle-fontsize: 1.7rem;
-    --action-fontsize: 1.1rem;
-    --section-height: calc(100vh - (2 * var(--base-padding)));
-    height: var(--section-height);
+    --root-action-fontsize: 1.1rem;
+    --root-section-height: calc(100vh - (2 * var(--root-base-padding)));
+    height: var(--root-section-height);
     padding: var(--inner-padding);
     overflow: hidden;
     display: grid;
@@ -266,7 +257,7 @@
     align-items: center;
     width: 35px;
     height: 35px;
-    font-size: var(--action-fontsize);
+    font-size: var(--root-action-fontsize);
     font-weight: 500;
     color: var(--dark-color);
     background-color: var(--white-color);
@@ -309,20 +300,20 @@
 /* #region Section 'Fitur' */
 
 .fitur {
-    --section-height: calc(100vh * 3);
+    --root-section-height: calc(100vh * 3);
     position: relative;
     width: 100%;
-    height: var(--section-height);
+    height: var(--root-section-height);
 }
 
 .fitur_wrapper {
     --inner-padding: 2rem 2rem 4rem 2rem;
     position: sticky;
     left: 0;
-    top: var(--header-height);
+    top: var(--root-header-height);
     overflow: hidden;
     width: 100%;
-    height: calc(100vh - var(--header-height));
+    height: calc(100vh - var(--root-header-height));
     z-index: var(--z-sticky);
     display: grid;
     grid-template-columns: 1fr max-content;
@@ -544,8 +535,8 @@
 }
 
 .fitur_wrapper .content .card .card_secondary {
-    --title-fontsize: 1.2rem;
-    --description-fontsize: var(--default-fontsize);
+    --root-title-fontsize: 1.2rem;
+    --root-description-fontsize: var(--root-default-fontsize);
     display: flex;
     flex-direction: column;
     text-align: center;
@@ -564,7 +555,7 @@
 .mulai_sekarang {
     --inner-padding: 2rem;
     --logo-size: 128px;
-    height: var(--section-height);
+    height: var(--root-section-height);
     padding: var(--inner-padding);
     overflow: hidden;
     display: flex;
@@ -594,7 +585,7 @@
 }
 
 .mulai_sekarang .title {
-    font-size: calc(2 * var(--title-fontsize));
+    font-size: calc(2 * var(--root-title-fontsize));
 }
 
 .mulai_sekarang .title .word {
@@ -611,7 +602,7 @@
 
 .mulai_sekarang .description {
     width: 400px;
-    font-size: var(--action-fontsize);
+    font-size: var(--root-action-fontsize);
     text-align: center;
     margin-bottom: 2rem;
 }
@@ -647,7 +638,7 @@
     align-items: center;
     padding: .5rem;
     background-color: var(--white-color);
-    font-size: var(--description-fontsize);
+    font-size: var(--root-description-fontsize);
     border-radius: 1.1rem;
     cursor: pointer;
 }
@@ -666,15 +657,12 @@
 /* #region Footer */
 
 .footer_outter {
-    --default-fontsize: 1rem;
-    --title-fontsize: 2rem;
     --small-fontsize: .85rem;
-    --action-fontsize: 1.1rem;
     width: 100%;
     margin: 0 auto;
     padding: 0 0;
     overflow: hidden;
-    font-size: var(--default-fontsize);
+    font-size: var(--root-default-fontsize);
     background-color: var(--root-footer-bgColor);
     color: var(--root-footer-textColor);
 }
@@ -723,7 +711,7 @@
     --brand-size: 60px;
     width: var(--brand-size);
     height: var(--brand-size);
-    font-size: var(--title-fontsize);
+    font-size: var(--root-title-fontsize);
 }
 
 .footer .shorcut {
