@@ -18,6 +18,10 @@ import { defaultMatakuliah, defaultPenilaian } from './RootData';
 import * as React from 'react';
 // #endregion
 
+// #region HOOKS DEPEDENCY
+import { useInterval } from 'ahooks';
+// #endregion
+
 // #region STYLE DEPEDENCY
 import styles from './style/root.module.css';
 // #endregion
