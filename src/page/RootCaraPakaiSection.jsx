@@ -560,16 +560,24 @@ const CaraPakai = ({ contents = ['x', 'y', 'z'], useAutoplay = false, autoplayOp
             id={'kenapa_sipk'}
             className={`${styles.section} ${styles.cara_pakai}`}
         >
-            <div className={styles.title}>
+            <motion.div
+                className={styles.title}
+                initial={{ visibility: 'hidden' }}
+                variants={{ inView: { visibility: 'visible' } }}
+                whileInView={'inView'}
+                viewport={{
+                    once: GLOBAL_VIEWPORT_ONCE,
+                    amount: 1
+                }}
+            >
                 <HighlightText
+                    useHook={false}
                     text={'Kenapa harus pakai SIPK'}
                     preset={'wavingFlyIn'}
                     presetOptions={{
-                        wordStagger: 'first'
-                    }}
-                    hookOptions={{
-                        once: GLOBAL_VIEWPORT_ONCE,
-                        ref: sectionRef,
+                        wordStagger: 'first',
+                        makeVariant: true,
+                        variantName: 'inView'
                     }}
                     adjustWavingFlyIn={{
                         y: [-225, 0],
@@ -577,7 +585,7 @@ const CaraPakai = ({ contents = ['x', 'y', 'z'], useAutoplay = false, autoplayOp
                         delay: 0.25
                     }}
                 />
-            </div>
+            </motion.div>
 
             <Content
                 activeContent={activeContent}
