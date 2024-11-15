@@ -155,6 +155,7 @@ const Fitur = () => {
     const sectionRef = React.useRef(null);
     // TODOS setIconSize based viewport / responsive
     const [iconSize, setIconSize] = React.useState(60);
+    const [alreadyInView, setAlreadyInView] = React.useState(false);
     const [titleAnimation, setTitleAnimation] = React.useState(null);
     const { scrollYProgress: sectionScrollProgress } = useScroll({ target: sectionRef, smooth: 1 });
     const scrollContent = useTransform(sectionScrollProgress, [0, 1], ['12.5%', '-95%']);
@@ -337,6 +338,8 @@ const Fitur = () => {
 
     }
 
+    const customVariantCollections = ['shape_text']
+
     /**
      * Resolve props yang digunakan pada component `HighlightText`
      * @param {string} text String teks untuk mengatur delay animasi
@@ -356,9 +359,9 @@ const Fitur = () => {
         }
     })
 
-    React.useEffect(() => {
-        console.log(titleAnimation);
-    }, [titleAnimation])
+    useInterval(() => {
+        if (alreadyInView) setTitleAnimation('shape_text');
+    }, 7500);
 
     return (
         <div ref={sectionRef} id={'fitur'} className={`${styles.section} ${styles.fitur}`}>
@@ -371,6 +374,12 @@ const Fitur = () => {
                     }}
                     whileInView={'loremipsum'}
                     animate={titleAnimation ?? {}}
+                    onAnimationComplete={(x) => {
+                        if (typeof x === 'string') {
+                            if (customVariantCollections.includes(x)) setTitleAnimation({});
+                            if (x === 'loremipsum') setAlreadyInView(true);
+                        }
+                    }}
                     viewport={{
                         once: GLOBAL_VIEWPORT_ONCE,
                         amount: 1
