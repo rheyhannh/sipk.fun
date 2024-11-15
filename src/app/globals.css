@@ -182,6 +182,14 @@
     /* #endregion */
 
     /* #region ROOT '/' */
+    --root-base-padding: 16px;
+    --root-section-margin-bottom: 10rem;
+    --root-section-height: calc(100vh - (2 * var(--root-base-padding)) - var(--root-header-height));
+    --root-default-fontsize: 1rem;
+    --root-title-fontsize: 2rem;
+    --root-description-fontsize: .85rem;
+    --root-action-fontsize: 1.1rem;
+    --root-header-height: 75px;
     --root-footer-bgColor: #282C34;
     --root-footer-textColor: #C5C8CE;
     --root-footer-linkColor: #ECEEF2;
