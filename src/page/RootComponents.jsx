@@ -111,6 +111,12 @@ export const AnimatedElement = ({
  * @property {keyof motion} as
  * Tipe element yang digunakan dan tersedia pada component `motion`
  * - Default : `'span'`
+ * @property {number} [minSize]
+ * Ukuran minimal font-size dalam `px`, saat sudah menyentuh level ini, teks tidak akan dikecilkan lagi
+ * - Default : `1`
+ * @property {number} [maxSize]
+ * Ukuran maksimal font-size dalam `px`, saat sudah menyentuh level ini, teks tidak akan diperbesar lagi
+ * - Default : `75`
  */
 
 /**
