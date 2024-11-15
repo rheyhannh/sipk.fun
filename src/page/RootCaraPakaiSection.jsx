@@ -572,7 +572,7 @@ const CaraPakai = ({ contents = ['x', 'y', 'z'], useAutoplay = false, autoplayOp
             >
                 <HighlightText
                     useHook={false}
-                    text={'Kenapa harus pakai SIPK'}
+                    text={'Kenapa Harus Pakai SIPK?'}
                     preset={'wavingFlyIn'}
                     presetOptions={{
                         wordStagger: 'first',
