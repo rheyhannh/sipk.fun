@@ -1,5 +1,9 @@
 'use client'
 
+// #region TYPE DEPEDENCY
+import { NavItem } from '@/constant/client';
+// #endregion
+
 // #region CONFIG DEPEDENCY
 import {
     GLOBAL_VIEWPORT_ONCE,
@@ -23,6 +27,7 @@ import { animateScroll as scroll } from 'react-scroll';
 
 // #region ICON DEPEDENCY
 import { FaTelegram, FaLinkedin, FaTiktok } from 'react-icons/fa';
+import { FiArrowUpRight } from 'react-icons/fi';
 // #endregion
 
 const footerShorcuts = [
