@@ -10,6 +10,7 @@ import * as React from 'react';
 
 // #region HOOKS DEPEDENCY
 import useWindowSize from '@/hooks/useWindowSize';
+import { useTimeout } from 'ahooks';
 // #endregion
 
 // #region STYLE DEPEDENCY
@@ -166,7 +167,7 @@ export const TextFitContainer = ({ containerRef, as = 'span', minSize = 1, maxSi
         text.style.fontSize = max + "px";
     }
 
-    React.useEffect(() => {
+    useTimeout(() => {
         if (containerRef?.current) {
             const resizeObserver = new ResizeObserver((entries) => {
                 for (let entry of entries) {
@@ -174,15 +175,15 @@ export const TextFitContainer = ({ containerRef, as = 'span', minSize = 1, maxSi
                         resizeText();
                     }
                 }
-            })
+            });
 
             resizeObserver.observe(containerRef.current);
 
             return () => {
                 resizeObserver.unobserve(containerRef.current);
-            }
+            };
         }
-    }, [containerRef, resizeText]);
+    }, 100);
 
     React.useEffect(() => {
         resizeText();
