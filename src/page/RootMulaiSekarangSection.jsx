@@ -6,6 +6,10 @@ import {
 } from './RootConfig';
 // #endregion
 
+// #region NEXT DEPEDENCY
+import Link from 'next/link';
+// #endregion
+
 // #region REACT DEPEDENCY
 import * as React from 'react';
 // #endregion
@@ -135,8 +139,13 @@ const MulaiSekarang = () => (
         </motion.div>
 
         <motion.div className={styles.buttons}>
-            <Button text={'Masuk'} type={'secondary'} href={'/users?action=login'} />
-            <Button text={'Daftar'} type={'main'} href={'/users?action=daftar'} />
+            <Link href={'/users?action=login'} scroll={false} passHref legacyBehavior>
+                <Button text={'Masuk'} type={'secondary'} />
+            </Link>
+
+            <Link href={'/users?action=daftar'} scroll={false} passHref legacyBehavior>
+                <Button text={'Daftar'} type={'main'} />
+            </Link>
         </motion.div>
     </div>
 )
