@@ -1028,6 +1028,7 @@ const Word = ({ inViewHook, style, wordAnimate, wordWrapperStyle = null, wordRan
         <motion.span
             className={styles.word}
             style={style}
+            initial={false}
             animate={inViewHook ? { ...wordAnimateFiltered, transition } : { ...initialAnimate, transition }}
             variants={options?.makeVariant ? { [options.variantName]: { ...wordAnimateFiltered, transition }, ...fixedCustomVariants } : fixedCustomVariants}
         >
@@ -1151,6 +1152,7 @@ const Char = ({ inViewHook, charAnimate, charRandomStagger, charLength, flatInde
     return (
         <motion.span
             className={styles.char}
+            initial={false}
             animate={inViewHook ? { ...charAnimateFiltered, transition } : { ..._initial, transition }}
             variants={options?.makeVariant ? { [options.variantName]: { ...charAnimateFiltered, transition }, ...fixedCustomVariants } : fixedCustomVariants}
         >
