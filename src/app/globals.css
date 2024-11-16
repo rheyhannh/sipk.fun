@@ -190,6 +190,10 @@
     --root-description-fontsize: .85rem;
     --root-action-fontsize: 1.1rem;
     --root-header-height: 75px;
+    --root-header-bgColor: rgba(246, 246, 249, 0.8);
+    --root-header-borderColor: rgba(209, 213, 219, 0.6);
+    --root-header-textColor: #181A1E;
+    --root-navbar-bgColor: rgba(246, 246, 249, 0.95);
     --root-footer-bgColor: #282C34;
     --root-footer-textColor: #C5C8CE;
     --root-footer-linkColor: #ECEEF2;
@@ -351,6 +355,10 @@
     /* #endregion */
 
     /* #region ROOT '/' */
+    --root-header-bgColor: rgba(24, 26, 30, 0.8);
+    --root-header-borderColor: rgba(42, 45, 52, 0.6);
+    --root-header-textColor: #FFFFFF;
+    --root-navbar-bgColor: rgba(24, 26, 30, 0.95);
     --root-footer-bgColor: #23252A;
     --root-footer-textColor: #ECEEF2;
     --root-footer-linkColor: #9BA3B3;
