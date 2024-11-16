@@ -18,6 +18,7 @@ import styles from './style/root.module.css';
 import { motion } from 'framer-motion';
 import { LogoImage } from '@/component/Main';
 import Link from '@/component/Link';
+import { animateScroll as scroll } from 'react-scroll';
 // #endregion
 
 // #region ICON DEPEDENCY
@@ -85,8 +86,7 @@ const Footers = () => (
             whileInView={'show'}
             viewport={{ once: GLOBAL_VIEWPORT_ONCE }}
         >
-            <motion.div className={styles.brand} {...getFooterTransition(false, 0)}
-            >
+            <motion.div className={styles.brand} onClick={() => { scroll.scrollToTop({ smooth: false, duration: 1 }) }} {...getFooterTransition(false, 0)}>
                 <LogoImage src={'/logo_fill_contrast.png'} width={60} height={60} />
             </motion.div>
 
