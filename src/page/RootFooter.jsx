@@ -45,8 +45,7 @@ const footerSocials = [
 ]
 
 const footerSublinks = [
-    { text: 'Guides', target: 'https://www.linkedin.com/' },
-    { text: 'Changelog', target: 'https://www.linkedin.com/' }
+    { text: 'Powered by Next.js', target: 'https://nextjs.org/' },
 ]
 
 const footerDelayAnims = [0.125, 0.25, 0.375];
