@@ -311,7 +311,6 @@
 }
 
 .fitur_wrapper {
-    --inner-padding: 2rem 2rem 4rem 2rem;
     position: sticky;
     left: 0;
     top: var(--root-header-height);
@@ -322,7 +321,6 @@
     display: grid;
     grid-template-columns: 1fr max-content;
     gap: 1rem;
-    padding: var(--inner-padding);
 }
 
 .fitur_wrapper>.title {
