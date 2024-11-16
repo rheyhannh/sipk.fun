@@ -29,10 +29,33 @@ const descriptionWords = description.split(' ');
 // with an array [logo, title, description, button, description highlight]
 const delayAnims = [0.125, 0.25, 0.85, 0.975, 1.175];
 
+const Button = React.forwardRef(({ type = 'default', text = 'Lorem', onClick, href }, ref) => {
+    if (typeof type !== 'string') type = 'default';
+    if (!['default', 'main', 'secondary'].includes(type)) type = 'default';
+
+    const useClass = type !== 'default';
+
+    return (
+        <motion.a
+            ref={ref}
+            className={`${styles.btn} ${useClass ? styles[type] : ''}`}
+            href={href}
+            onClick={onClick}
+            initial={{ scale: 0 }}
+            variants={{
+                show: { scale: 1, transition: { delay: delayAnims[3], type: 'spring', bounce: 0.2 } },
+                hide: { scale: 0 },
+            }}
+            whileInView={'show'}
+            viewport={{ once: GLOBAL_VIEWPORT_ONCE }}
+        >
+            {text}
+        </motion.a>
+    )
+})
+
 const MulaiSekarang = () => (
-    <div
-        className={`${styles.section} ${styles.mulai_sekarang}`}
-    >
+    <div className={`${styles.section} ${styles.mulai_sekarang}`}>
         <ThemeChanger
             options={{
                 position: {
@@ -111,36 +134,9 @@ const MulaiSekarang = () => (
             </motion.span>
         </motion.div>
 
-        <motion.div
-            className={styles.buttons}
-        >
-            <motion.a
-                className={`${styles.btn} ${styles.secondary}`}
-                href={'/users?action=login'}
-                initial={{ scale: 0 }}
-                variants={{
-                    show: { scale: 1, transition: { delay: delayAnims[3], type: 'spring', bounce: 0.2 } },
-                    hide: { scale: 0 },
-                }}
-                whileInView={'show'}
-                viewport={{ once: GLOBAL_VIEWPORT_ONCE }}
-            >
-                Masuk
-            </motion.a>
-
-            <motion.a
-                className={`${styles.btn} ${styles.main}`}
-                href={'/users?action=daftar'}
-                initial={{ scale: 0 }}
-                variants={{
-                    show: { scale: 1, transition: { delay: delayAnims[3], type: 'spring', bounce: 0.2 } },
-                    hide: { scale: 0 },
-                }}
-                whileInView={'show'}
-                viewport={{ once: GLOBAL_VIEWPORT_ONCE }}
-            >
-                Daftar
-            </motion.a>
+        <motion.div className={styles.buttons}>
+            <Button text={'Masuk'} type={'secondary'} href={'/users?action=login'} />
+            <Button text={'Daftar'} type={'main'} href={'/users?action=daftar'} />
         </motion.div>
     </div>
 )
