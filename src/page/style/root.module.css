@@ -714,6 +714,7 @@
     width: var(--brand-size);
     height: var(--brand-size);
     font-size: var(--root-title-fontsize);
+    cursor: pointer;
 }
 
 .footer .shorcut {
@@ -728,9 +729,13 @@
     gap: 3.5rem;
 }
 
-.footer .shorcut span {
+.footer .shorcut a {
     display: block;
     cursor: pointer;
+}
+
+.footer .shorcut a svg.external {
+    font-size: calc(0.9 * 1em);
 }
 
 .footer .socials {

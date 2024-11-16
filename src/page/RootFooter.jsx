@@ -31,11 +31,38 @@ import { FiArrowUpRight } from 'react-icons/fi';
 // #endregion
 
 const footerShorcuts = [
-    { text: 'About', target: 'tentang' },
-    { text: 'Why Us', target: 'kenapa_sipk' },
-    { text: 'University', target: 'universitas' },
-    { text: 'Features', target: 'fitur' },
-    { text: 'Testimonies', target: 'contacts' }
+    {
+        text: 'Tentang',
+        elementId: 'tentang',
+        href: null
+    },
+    {
+        text: 'Fitur',
+        elementId: 'fitur',
+        href: null
+    },
+    {
+        text: 'Testimoni',
+        elementId: 'testimoni',
+        href: null
+    },
+    {
+        text: 'Panduan',
+        elementId: null,
+        href: '/panduan',
+    },
+    {
+        text: 'Status',
+        elementId: null,
+        href: 'https://status.atlassian.com/',
+        isOpenNewTab: true,
+    },
+    {
+        text: 'Detail Rilis',
+        elementId: null,
+        href: 'https://l.loggify.app/sipk/changes',
+        isOpenNewTab: true,
+    }
 ]
 
 const footerSocials = [
@@ -96,16 +123,22 @@ const Footers = () => (
 
             <div className={styles.shorcut}>
                 {footerShorcuts.map((item, index) => (
-                    <Link
-                        key={index}
-                        item={{
-                            elementId: item.target
-                        }}
-                    >
-                        <motion.span {...getFooterTransition(true, 0)}>
+                    <motion.div {...getFooterTransition(true, 0)}>
+                        <Link
+                            key={index}
+                            item={{ href: item.href, elementId: item.elementId }}
+                            // TODOS offset still static '-75', when comes to mobile or any viewport less than 1280
+                            // offset should be corrected
+                            scrollOptions={{ offset: -75, ...item?.scrollOptions }}
+                            routingOptions={{ ...item?.routingOptions }}
+                            {...(item?.isOpenNewTab || false ? { target: '_blank' } : {})}
+                        >
                             {item.text}
-                        </motion.span>
-                    </Link>
+                            {item?.isOpenNewTab && (
+                                <FiArrowUpRight className={styles.external} />
+                            )}
+                        </Link>
+                    </motion.div>
                 ))}
             </div>
 
