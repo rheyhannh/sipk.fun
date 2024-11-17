@@ -88,6 +88,8 @@ const MulaiSekarang = () => (
 
         <motion.div
             className={styles.title}
+            initial={{ visibility: 'hidden' }}
+            variants={{ inView: { visibility: 'visible' } }}
             whileInView={'inView'}
             viewport={{ once: GLOBAL_VIEWPORT_ONCE }}
             transition={{ type: 'spring', delayChildren: delayAnims[1] }}
