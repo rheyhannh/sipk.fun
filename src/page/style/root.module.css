@@ -11,16 +11,6 @@
     font-size: var(--root-default-fontsize);
 }
 
-.header {
-    height: var(--root-header-height);
-    position: sticky;
-    top: 0;
-    left: 0;
-    width: 100%;
-    background-color: var(--logo-second-color);
-    z-index: var(--z-fixed);
-}
-
 .section {
     margin-bottom: var(--root-section-margin-bottom);
 }
@@ -39,6 +29,132 @@
     font-size: var(--root-action-fontsize);
     color: var(--logo-second-color);
 }
+
+/* #region Header */
+
+.header_outter {
+    width: 100%;
+    height: var(--root-header-height);
+    position: sticky;
+    top: 0;
+    left: 0;
+    margin: 0 auto;
+    padding: 0 0;
+    overflow: hidden;
+    z-index: var(--z-fixed);
+}
+
+.header {
+    --root-default-fontsize: 0.9rem;
+    margin-left: auto;
+    margin-right: auto;
+    width: 1280px;
+    height: 100%;
+    padding-left: 2rem;
+    padding-right: 2rem;
+    font-size: var(--root-default-fontsize);
+    color: var(--root-header-textColor);
+}
+
+.navbar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+.navbar .nav {
+    --logo-size: 30px;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.5rem 1.25rem;
+    border-radius: 0.5rem;
+    border: 1px solid var(--root-header-borderColor);
+    background-color: var(--root-navbar-bgColor);
+    backdrop-filter: blur(5px) saturate(50%);
+    overflow: hidden;
+}
+
+.navbar .nav>a {
+    display: block;
+    padding: 0.5rem;
+    border-radius: inherit;
+    cursor: pointer;
+}
+
+.navbar .nav a.link {
+    color: var(--root-navbar-lightTextColor);
+}
+
+.navbar .nav a.link svg.external {
+    font-size: calc(0.9 * 1em);
+}
+
+.navbar .nav a.link:hover {
+    color: var(--root-header-textColor);
+}
+
+.navbar .nav>.logo {
+    cursor: pointer;
+    width: var(--logo-size);
+    height: var(--logo-size);
+}
+
+.navbar .nav>a.cta {
+    position: relative;
+    appearance: none;
+    z-index: 0;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    overflow: hidden;
+    white-space: nowrap;
+    padding: 0.375rem 0.75rem;
+    border-radius: inherit;
+    border: 1px solid var(--root-header-borderColor);
+    background-color: transparent;
+    color: var(--root-header-textColor);
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.navbar .nav>a.cta::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -10;
+    transform: translateY(200%) scale(2.5);
+    border-radius: 50%;
+    background-color: var(--logo-second-color);
+    transition: transform 750ms ease-in-out;
+}
+
+.navbar .nav>a.cta:hover::before {
+    transform: translateY(0%) scale(2.5);
+}
+
+.navbar .nav>.theme svg {
+    width: calc(var(--logo-size) / 2);
+    height: calc(var(--logo-size) / 2);
+}
+
+.navbar .nav>.theme {
+    overflow: hidden;
+    width: calc(var(--logo-size) / 2);
+    height: var(--logo-size);
+    color: var(--logo-second-color);
+    cursor: pointer;
+}
+
+.navbar .nav>.theme .inner {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    gap: var(--logo-size);
+}
+
+/* #endregion */
 
 /* #region Section 'Universitas' */
 
