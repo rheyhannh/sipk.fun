@@ -22,7 +22,6 @@ import styles from './style/root.module.css';
 import { motion } from 'framer-motion';
 import { LogoImage } from '@/component/Main';
 import HighlightText from '@/component/motion/HighlightText';
-import ThemeChanger from '@/component/_test/ThemeChanger';
 // #endregion
 
 const title = 'Mulai Sekarang';
@@ -60,17 +59,6 @@ const Button = React.forwardRef(({ type = 'default', text = 'Lorem', onClick, hr
 
 const MulaiSekarang = () => (
     <div className={`${styles.section} ${styles.mulai_sekarang}`}>
-        <ThemeChanger
-            options={{
-                position: {
-                    type: 'absolute',
-                    preset: 'top-left',
-                    offsetX: 25,
-                    offsetY: 25
-                }
-            }}
-        />
-
         <motion.div
             initial={{ scale: 1.5, opacity: 0 }}
             variants={{ inView: { scale: 1, opacity: 1 }, hide: { scale: 1.5, opacity: 0 } }}
