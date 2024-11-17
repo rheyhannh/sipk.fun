@@ -112,17 +112,9 @@ const FiturCard = ({ title, description, wrapperClassname, content, contentIndex
     const [contentShowed, setContentShowed] = React.useState(false);
 
     return (
-        <motion.div
-            className={styles.card_wrapper}
-            style={{ zIndex: (FITUR_SECTION_CONTENTS.length + 1) - contentIndex }}
-            whileInView={'inView'}
-            viewport={{ once: GLOBAL_VIEWPORT_ONCE, amount: 1 }}
-        >
+        <motion.div className={styles.card_wrapper} whileInView={'inView'} viewport={{ once: GLOBAL_VIEWPORT_ONCE, amount: 1 }}>
             <motion.div
                 className={styles.card}
-                // TODOS add initial animation
-                initial={{}}
-                transition={{ duration: 0.5, bounce: 0.1, type: 'spring' }}
                 variants={{ inView: {} }}
                 onAnimationStart={() => { setContentShowed(false) }}
                 onAnimationComplete={(x) => {
