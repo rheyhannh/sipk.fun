@@ -668,6 +668,147 @@
 
 /* #endregion */
 
+/* #region Section 'Testimoni' */
+
+.testimoni {
+    --inner-padding: 2rem 0;
+    --heading-width: calc(100vw - 10rem);
+    --root-title-fontsize: calc(2rem * 1.5);
+    --root-description-fontsize: 0.9rem;
+    display: grid;
+    grid-template-rows: max-content max-content;
+    gap: 1rem;
+    height: 100%;
+    padding: var(--inner-padding);
+    overflow: hidden;
+}
+
+.testimoni>.heading {
+    width: var(--heading-width);
+    margin: 0 auto;
+    text-align: center;
+}
+
+.testimoni>.heading mark {
+    font-weight: 600;
+}
+
+.testimoni>.cards {
+    display: grid;
+    grid-template-columns: repeat(3, 360px);
+    gap: 2rem;
+    padding: 1.25rem;
+    margin: 0 auto;
+    overflow: hidden;
+}
+
+.testimoni>.content {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    padding: 0 1.25rem 1.25rem 1.25rem;
+    overflow: hidden;
+}
+
+.testimoni .content>.cards {
+    display: flex;
+    gap: 2rem;
+}
+
+.testimoni .content>.cards:nth-child(1) {
+    flex-direction: row;
+}
+
+.testimoni .content>.cards:nth-child(2) {
+    flex-direction: row-reverse;
+}
+
+.testimoni .content>.cards>.card {
+    min-width: 360px;
+}
+
+.testimoni .card {
+    display: grid;
+    grid-template-rows: 40px 1fr 55px;
+    height: 260px;
+    width: 360px;
+    overflow: hidden;
+    padding: 1.5rem;
+    background-color: var(--box-boxContent-bg);
+    border: 1px solid var(--box-borderColor2);
+    border-radius: 1rem;
+    box-shadow: var(--box-boxContent-boxShadow);
+    transition: box-shadow var(--transition-default) ease-in-out;
+}
+
+.testimoni .card:hover {
+    box-shadow: none;
+}
+
+.testimoni .card .stars,
+.testimoni .card .user {
+    padding: 0 1rem;
+}
+
+.testimoni .card .review {
+    padding: 0.5rem 1rem;
+}
+
+.testimoni .card .stars {
+    --star-fontsize: 1.5rem;
+    display: flex;
+    align-items: center;
+    color: var(--warning-color);
+}
+
+.testimoni .card .review {
+    overflow: hidden;
+    text-align: justify;
+    font-size: var(--root-default-fontsize);
+    color: var(--dark-color);
+}
+
+.testimoni .card .user {
+    display: grid;
+    grid-template-columns: max-content 1fr;
+    align-items: center;
+    gap: 0.75rem;
+    overflow: hidden;
+}
+
+.testimoni .card .user .avatar {
+    --avatar-size: 37.5px;
+    width: var(--avatar-size);
+    height: var(--avatar-size);
+    border-radius: 50%;
+    background-color: var(--logo-second-color);
+}
+
+.testimoni .card .user .info {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.testimoni .card .user .info span,
+.testimoni .card .user .info small {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+.testimoni .card .user .info span {
+    font-weight: 500;
+    font-size: var(--root-default-fontsize);
+}
+
+.testimoni .card .user .info small {
+    color: var(--darkVariant2-color);
+    font-size: var(--root-description-fontsize);
+}
+
+/* #endregion */
+
 /* #region Section 'Mulai Sekarang' */
 
 .mulai_sekarang {
