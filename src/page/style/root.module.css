@@ -91,10 +91,6 @@
     font-size: calc(0.9 * 1em);
 }
 
-.navbar .nav a.link:hover {
-    color: var(--root-header-textColor);
-}
-
 .navbar .nav>.logo {
     cursor: pointer;
     width: var(--logo-size);
@@ -128,10 +124,6 @@
     border-radius: 50%;
     background-color: var(--logo-second-color);
     transition: transform 750ms ease-in-out;
-}
-
-.navbar .nav>a.cta:hover::before {
-    transform: translateY(0%) scale(2.5);
 }
 
 .navbar .nav>.theme svg {
@@ -741,10 +733,6 @@
     transition: box-shadow var(--transition-default) ease-in-out;
 }
 
-.testimoni .card:hover {
-    box-shadow: none;
-}
-
 .testimoni .card .stars,
 .testimoni .card .user {
     padding: 0 1rem;
@@ -1028,12 +1016,24 @@
 /* #endregion */
 
 @media (hover: hover) and (pointer: fine) {
+    .navbar .nav a.link:hover {
+        color: var(--root-header-textColor);
+    }
+
+    .navbar .nav>a.cta:hover::before {
+        transform: translateY(0%) scale(2.5);
+    }
+
     .universitas .content .icons .icon:hover {
         box-shadow: none;
     }
 
     .fitur_wrapper .content .card:hover {
         box-shadow: none
+    }
+
+    .testimoni .card:hover {
+        box-shadow: none;
     }
 
     .mulai_sekarang .buttons .btn.main:hover {
