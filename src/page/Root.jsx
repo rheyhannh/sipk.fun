@@ -14,6 +14,7 @@ import Header from './RootHeader';
 import CaraPakai from './RootCaraPakaiSection';
 import Universitas from './RootUniversitasSection';
 import Fitur from './RootFiturSection';
+import Testimoni from './RootTestimoniSection';
 import MulaiSekarang from './RootMulaiSekarangSection';
 import Footer from './RootFooter';
 // #endregion
@@ -31,8 +32,9 @@ export default function Root({ universitas, rating, notifikasi }) {
                 <CaraPakai />
                 <Universitas universitas={universitas} />
                 <Fitur />
-                <MulaiSekarang />
             </Container>
+            <Testimoni rating={rating} />
+            <MulaiSekarang />
             <Footer />
         </>
     )
