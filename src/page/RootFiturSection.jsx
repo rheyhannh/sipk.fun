@@ -354,7 +354,7 @@ const Fitur = () => {
         preset: 'wavingFlyIn',
         presetOptions: {
             makeVariant: true,
-            variantName: 'loremipsum',
+            variantName: 'inView',
             customCharVariants: customCharVariantsByText[text] ?? {},
             customWordVariants: customWordVariantsByText[text] ?? {},
         },
@@ -377,13 +377,13 @@ const Fitur = () => {
                         '--icon-size': `${iconSize}px`,
                         position: 'relative'
                     }}
-                    variants={{ loremipsum: { visibility: 'visible' } }}
-                    whileInView={'loremipsum'}
+                    variants={{ inView: { visibility: 'visible' } }}
+                    whileInView={'inView'}
                     animate={titleAnimation ?? {}}
                     onAnimationComplete={(x) => {
                         if (typeof x === 'string') {
                             if (customVariantCollections.includes(x)) setTitleAnimation({});
-                            if (x === 'loremipsum') setAlreadyInView(true);
+                            if (x === 'inView') setAlreadyInView(true);
                         }
                     }}
                     viewport={{
@@ -395,13 +395,13 @@ const Fitur = () => {
                         <motion.div
                             className={styles.icons}
                             initial={{ scale: 0 }}
-                            variants={{ loremipsum: { scale: 1, transition: { type: 'spring', duration: 1.5, bounce: 0, delay: titleStaggered[findArrayIndexByString('Analytics', titleParaghraph.flat())] } } }}
+                            variants={{ inView: { scale: 1, transition: { type: 'spring', duration: 1.5, bounce: 0, delay: titleStaggered[findArrayIndexByString('Analytics', titleParaghraph.flat())] } } }}
                         >
                             <div className={`${styles.icon} ${styles.alt}`} >
                                 <motion.span
                                     initial={{ rotate: 180 }}
                                     style={{ x: iconX }}
-                                    variants={{ change: { x: 100 }, loremipsum: { rotate: 0, transition: { type: 'spring', duration: 2, bounce: 0, delay: titleStaggered[findArrayIndexByString('Analytics', titleParaghraph.flat())] } } }}
+                                    variants={{ change: { x: 100 }, inView: { rotate: 0, transition: { type: 'spring', duration: 2, bounce: 0, delay: titleStaggered[findArrayIndexByString('Analytics', titleParaghraph.flat())] } } }}
                                     transition={{ type: 'spring', duration: 0.5, bounce: 0.1 }}
                                 >
                                     <IoAnalyticsOutline fontSize={'0.5em'} />
@@ -415,7 +415,7 @@ const Fitur = () => {
                                     <div className={`${styles.icon_bg} ${styles.warning}`}>
                                         <motion.span
                                             initial={{ rotate: 180 }}
-                                            variants={{ loremipsum: { rotate: 0, transition: { type: 'spring', duration: 2, bounce: 0, delay: titleStaggered[findArrayIndexByString('Analytics', titleParaghraph.flat())] } } }}
+                                            variants={{ inView: { rotate: 0, transition: { type: 'spring', duration: 2, bounce: 0, delay: titleStaggered[findArrayIndexByString('Analytics', titleParaghraph.flat())] } } }}
                                             transition={{ type: 'spring', duration: 0.5, bounce: 0.1 }}
                                         >
                                             <TbAtom fontSize={'0.5em'} />
@@ -429,7 +429,7 @@ const Fitur = () => {
                                 <motion.span
                                     initial={{ rotate: 225 }}
                                     style={{ x: iconX }}
-                                    variants={{ change: { x: 100 }, loremipsum: { rotate: 0, transition: { type: 'spring', duration: 3, bounce: 0, delay: titleStaggered[findArrayIndexByString('Analytics', titleParaghraph.flat())] } } }}
+                                    variants={{ change: { x: 100 }, inView: { rotate: 0, transition: { type: 'spring', duration: 3, bounce: 0, delay: titleStaggered[findArrayIndexByString('Analytics', titleParaghraph.flat())] } } }}
                                     transition={{ type: 'spring', duration: 0.5, bounce: 0.1 }}
                                 >
                                     <TbAntennaBars5 fontSize={'0.5em'} />
@@ -443,7 +443,7 @@ const Fitur = () => {
                                     <div className={`${styles.icon_bg} ${styles.alt}`}>
                                         <motion.span
                                             initial={{ rotate: 180 }}
-                                            variants={{ loremipsum: { rotate: 0, transition: { type: 'spring', duration: 2, bounce: 0, delay: titleStaggered[findArrayIndexByString('Analytics', titleParaghraph.flat())] } } }}
+                                            variants={{ inView: { rotate: 0, transition: { type: 'spring', duration: 2, bounce: 0, delay: titleStaggered[findArrayIndexByString('Analytics', titleParaghraph.flat())] } } }}
                                             transition={{ type: 'spring', duration: 0.5, bounce: 0.1 }}
                                         >
                                             <IoAnalyticsOutline fontSize={'0.5em'} />
@@ -470,12 +470,12 @@ const Fitur = () => {
                         <motion.div
                             className={`${styles.icon}`}
                             initial={{ scale: 0 }}
-                            variants={{ loremipsum: { scale: 1, transition: { type: 'spring', duration: 2, bounce: 0, delay: titleStaggered[findArrayIndexByString('shape', titleParaghraph.flat())] } } }}
+                            variants={{ inView: { scale: 1, transition: { type: 'spring', duration: 2, bounce: 0, delay: titleStaggered[findArrayIndexByString('shape', titleParaghraph.flat())] } } }}
                         >
                             <motion.div
                                 className={`${styles.icon_bg} ${styles.success}`}
                                 initial={{ rotate: 270 }}
-                                variants={{ loremipsum: { rotate: 0, transition: { type: 'spring', duration: 2.5, bounce: 0, delay: titleStaggered[findArrayIndexByString('shape', titleParaghraph.flat())] } } }}
+                                variants={{ inView: { rotate: 0, transition: { type: 'spring', duration: 2.5, bounce: 0, delay: titleStaggered[findArrayIndexByString('shape', titleParaghraph.flat())] } } }}
                             >
                                 <LuShapes fontSize={'0.5em'} />
                             </motion.div>

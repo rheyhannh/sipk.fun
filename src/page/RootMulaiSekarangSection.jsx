@@ -47,10 +47,10 @@ const Button = React.forwardRef(({ type = 'default', text = 'Lorem', onClick, hr
             onClick={onClick}
             initial={{ scale: 0 }}
             variants={{
-                show: { scale: 1, transition: { delay: delayAnims[3], type: 'spring', bounce: 0.2 } },
+                inView: { scale: 1, transition: { delay: delayAnims[3], type: 'spring', bounce: 0.2 } },
                 hide: { scale: 0 },
             }}
-            whileInView={'show'}
+            whileInView={'inView'}
             viewport={{ once: GLOBAL_VIEWPORT_ONCE }}
         >
             {text}
@@ -73,8 +73,8 @@ const MulaiSekarang = () => (
 
         <motion.div
             initial={{ scale: 1.5, opacity: 0 }}
-            variants={{ show: { scale: 1, opacity: 1 }, hide: { scale: 1.5, opacity: 0 } }}
-            whileInView={'show'}
+            variants={{ inView: { scale: 1, opacity: 1 }, hide: { scale: 1.5, opacity: 0 } }}
+            whileInView={'inView'}
             viewport={{ once: GLOBAL_VIEWPORT_ONCE }}
             transition={{ type: 'spring', duration: 0.75, delay: delayAnims[0] }}
             className={styles.logo}
@@ -88,15 +88,17 @@ const MulaiSekarang = () => (
 
         <motion.div
             className={styles.title}
-            whileInView={'show'}
+            whileInView={'inView'}
             viewport={{ once: GLOBAL_VIEWPORT_ONCE }}
             transition={{ type: 'spring', delayChildren: delayAnims[1] }}
         >
             <HighlightText
                 text={title}
+                useHook={false}
                 preset={'wavingTranslate'}
-                hookOptions={{
-                    once: GLOBAL_VIEWPORT_ONCE
+                presetOptions={{
+                    makeVariant: true,
+                    variantName: 'inView'
                 }}
                 adjustWavingTranslate={{
                     perspective: 500,
@@ -108,13 +110,13 @@ const MulaiSekarang = () => (
 
         <motion.div
             className={styles.description}
-            whileInView={'show'}
+            whileInView={'inView'}
             viewport={{ once: GLOBAL_VIEWPORT_ONCE }}
             transition={{ type: 'spring', delayChildren: delayAnims[2] }}
         >
             <motion.span
                 initial={{ y: 25, opacity: 0 }}
-                variants={{ show: { y: 0, opacity: 1 }, hide: { y: 25, opacity: 0 } }}
+                variants={{ inView: { y: 0, opacity: 1 }, hide: { y: 25, opacity: 0 } }}
             >
                 {descriptionWords.map((word, wordIndex) => (
                     <span key={`word-${wordIndex}`} className={styles.word}>
