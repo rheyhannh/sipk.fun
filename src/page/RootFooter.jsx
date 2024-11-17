@@ -133,7 +133,7 @@ const Footers = () => (
 
             <div className={styles.shorcut}>
                 {footerShorcuts.map((item, index) => (
-                    <motion.div {...getFooterTransition(true, 0)}>
+                    <motion.div key={index} {...getFooterTransition(true, 0)}>
                         <Link
                             key={index}
                             item={{ href: item.href, elementId: item.elementId }}
