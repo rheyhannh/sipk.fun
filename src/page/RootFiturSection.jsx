@@ -499,7 +499,15 @@ const Fitur = () => {
                 </motion.div>
 
                 <motion.div className={styles.content} >
-                    <motion.div className={styles.content_inner} style={{ y: scrollContent }}>
+                    <motion.div
+                        className={styles.content_inner}
+                        initial={{ visibility: 'hidden', opacity: 0 }}
+                        whileInView={{ visibility: 'visible', opacity: 1 }}
+                        viewport={{
+                            once: GLOBAL_VIEWPORT_ONCE
+                        }}
+                        style={{ y: scrollContent }}
+                    >
                         {FITUR_SECTION_CONTENTS.map((item, index) => (
                             <FiturCard key={index} contentIndex={index} {...item.fiturCardProps} />
                         ))}
