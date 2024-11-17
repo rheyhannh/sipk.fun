@@ -130,7 +130,7 @@ const MulaiSekarang = () => (
                         once: GLOBAL_VIEWPORT_ONCE
                     }}
                     adjustWavingColor={{
-                        color: ['var(--logo-second-color)', 'var(--infoDark-color)', 'var(--logo-second-color)'],
+                        color: ['var(--danger-sec-color)', 'var(--infoDark-color)', 'var(--danger-sec-color)'],
                         scale: [1, 1.3, 1],
                         baseDelay: delayAnims[4],
                         repeat: Infinity,
