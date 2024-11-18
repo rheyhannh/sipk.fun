@@ -87,7 +87,7 @@ const footerSublinks = [
         isOpenNewTab: true,
     },
     {
-        text: 'Detail Rilis',
+        text: 'Riwayat Pembaruan',
         elementId: null,
         href: 'https://l.loggify.app/sipk/changes',
         isOpenNewTab: true,
