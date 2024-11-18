@@ -6,6 +6,7 @@ import * as SupabaseTypes from '@/types/supabase';
 
 // #region NEXT DEPEDENCY
 import Image from 'next/image';
+import Link, { LinkProps } from 'next/link';
 // #endregion
 
 // #region REACT DEPEDENCY
@@ -19,6 +20,10 @@ import styles from './style/root.module.css';
 // #region COMPONENT DEPEDENCY
 import { useScroll, useSpring } from 'framer-motion';
 import { AnimatedElement } from './RootComponents';
+// #endregion
+
+// #region ICON DEPEDENCY
+import { FiExternalLink } from 'react-icons/fi';
 // #endregion
 
 /**
