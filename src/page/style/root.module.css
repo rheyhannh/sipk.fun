@@ -88,7 +88,7 @@
 }
 
 .navbar .nav a.link svg.external {
-    font-size: calc(0.9 * 1em);
+    font-size: calc(0.85 * 1em);
 }
 
 .navbar .nav>.logo {
@@ -978,7 +978,7 @@
 }
 
 .footer .shorcut a svg.external {
-    font-size: calc(0.9 * 1em);
+    font-size: calc(0.85 * 1em);
 }
 
 .footer .socials {
@@ -1007,6 +1007,10 @@
 .footer .sublinks {
     display: flex;
     gap: 2rem;
+}
+
+.footer .sublinks a svg.external {
+    font-size: calc(0.85 * 1em);
 }
 
 .footer .secondary a {
