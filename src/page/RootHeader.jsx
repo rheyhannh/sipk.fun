@@ -69,12 +69,6 @@ const headerShorcuts = [
         elementId: null,
         href: '/panduan',
     },
-    {
-        text: 'Detail Rilis',
-        elementId: null,
-        href: 'https://l.loggify.app/sipk/changes',
-        isOpenNewTab: true,
-    }
 ]
 
 const ButtonCTA = React.forwardRef(({ text = 'Lorem', onClick, href }, ref) => (
