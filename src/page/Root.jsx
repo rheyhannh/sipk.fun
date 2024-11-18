@@ -11,6 +11,7 @@ import * as React from 'react';
 // #region COMPONENTS DEPEDENCY
 import { Container } from './RootComponents';
 import Header from './RootHeader';
+import Hero from './RootHero';
 import CaraPakai from './RootCaraPakaiSection';
 import Universitas from './RootUniversitasSection';
 import Fitur from './RootFiturSection';

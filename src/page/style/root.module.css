@@ -154,6 +154,17 @@
 
 /* #endregion */
 
+/* #region Hero */
+
+.hero {
+    --inner-padding: 2rem;
+    padding: var(--inner-padding);
+    height: 100vh;
+    overflow: hidden;
+}
+
+/* #endregion */
+
 /* #region Section 'Universitas' */
 
 .universitas {
