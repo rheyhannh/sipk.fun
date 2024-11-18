@@ -93,7 +93,7 @@ const Universitas = ({ universitas }) => {
                     className={styles.description}
                     timeframe={[0, 0.87]}
                     animations={{
-                        y: [100, 0],
+                        y: [50, 0],
                         opacity: [0, 1]
                     }}
                     scrollProgress={sectionScrollProgress}
@@ -102,11 +102,11 @@ const Universitas = ({ universitas }) => {
                 </AnimatedElement>
 
                 <AnimatedElement
-                    as={'a'}
+                    as={'div'}
                     className={styles.action}
                     timeframe={[0, 0.9]}
                     animations={{
-                        y: [100, 0],
+                        y: [50, 0],
                         opacity: [0, 1]
                     }}
                     scrollProgress={sectionScrollProgress}
@@ -125,7 +125,8 @@ const Universitas = ({ universitas }) => {
                         animations={{
                             scale: [1.15, 1],
                             x: [-25, 0],
-                            y: [100, 0]
+                            y: [100, 0],
+                            opacity: [0, 1]
                         }}
                         scrollProgress={sectionScrollProgress}
                     >
@@ -139,7 +140,8 @@ const Universitas = ({ universitas }) => {
                         animations={{
                             scale: [1.25, 1],
                             x: [-35, 0],
-                            y: [-30, 0]
+                            y: [-30, 0],
+                            opacity: [0, 1]
                         }}
                         scrollProgress={sectionScrollProgress}
                     >
@@ -150,7 +152,8 @@ const Universitas = ({ universitas }) => {
                         timeframe={[0, 0.78]}
                         animations={{
                             y: [150, 0],
-                            scale: [0.45, 1]
+                            scale: [0.45, 1],
+                            opacity: [0, 1]
                         }}
                         scrollProgress={sectionScrollProgress}
                     >
@@ -162,7 +165,8 @@ const Universitas = ({ universitas }) => {
                         animations={{
                             scale: [0.15, 1],
                             x: [15, 0],
-                            y: [155, 0]
+                            y: [155, 0],
+                            opacity: [0, 1]
                         }}
                         scrollProgress={sectionScrollProgress}
                     >
@@ -175,7 +179,8 @@ const Universitas = ({ universitas }) => {
                         timeframe={[0, 0.87]}
                         animations={{
                             scale: [1.15, 1],
-                            y: [-45, 0]
+                            y: [-45, 0],
+                            opacity: [0, 1]
                         }}
                         scrollProgress={sectionScrollProgress}
                     >
@@ -186,7 +191,8 @@ const Universitas = ({ universitas }) => {
                         timeframe={[0, 0.85]}
                         animations={{
                             y: [150, 0],
-                            scale: [0.25, 1]
+                            scale: [0.25, 1],
+                            opacity: [0, 1]
                         }}
                         scrollProgress={sectionScrollProgress}
                     >
@@ -199,7 +205,8 @@ const Universitas = ({ universitas }) => {
                         timeframe={[0, 0.82]}
                         animations={{
                             scale: [1.1, 1],
-                            y: [-55, 0]
+                            y: [-55, 0],
+                            opacity: [0, 1]
                         }}
                         scrollProgress={sectionScrollProgress}
                     >
@@ -210,7 +217,8 @@ const Universitas = ({ universitas }) => {
                         timeframe={[0, 0.68]}
                         animations={{
                             y: [150, 0],
-                            scale: [0.5, 1]
+                            scale: [0.5, 1],
+                            opacity: [0, 1]
                         }}
                         scrollProgress={sectionScrollProgress}
                     >
@@ -221,7 +229,8 @@ const Universitas = ({ universitas }) => {
                         timeframe={[0, 0.75]}
                         animations={{
                             y: [150, 0],
-                            scale: [0.1, 1]
+                            scale: [0.1, 1],
+                            opacity: [0, 1]
                         }}
                         scrollProgress={sectionScrollProgress}
                     >
@@ -235,7 +244,8 @@ const Universitas = ({ universitas }) => {
                         animations={{
                             scale: [0.45, 1],
                             y: [150, 0],
-                            x: [25, 0]
+                            x: [25, 0],
+                            opacity: [0, 1]
                         }}
                         scrollProgress={sectionScrollProgress}
                     >
