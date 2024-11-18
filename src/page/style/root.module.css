@@ -1,6 +1,7 @@
 .container {
+    --container-width: 100vw;
     position: relative;
-    width: 100vw;
+    width: var(--container-width);
     height: 100%;
     /* 
         This container overflow should not hidden, 
@@ -664,9 +665,9 @@
 
 .testimoni {
     --inner-padding: 2rem 0;
-    --heading-width: calc(100vw - 10rem);
-    --root-title-fontsize: calc(2rem * 1.5);
     --root-description-fontsize: 0.9rem;
+    margin-left: calc(-50vw + 50%);
+    margin-right: calc(-50vw + 50%);
     display: grid;
     grid-template-rows: max-content max-content;
     gap: 1rem;
@@ -675,14 +676,19 @@
     overflow: hidden;
 }
 
-.testimoni>.heading {
-    width: var(--heading-width);
+.testimoni>.inner {
+    width: var(--container-width);
     margin: 0 auto;
-    text-align: center;
+    overflow: hidden;
 }
 
-.testimoni>.heading mark {
-    font-weight: 600;
+.testimoni>.inner .title {
+    width: 95%;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: calc(var(--root-title-fontsize) * 1.75);
 }
 
 .testimoni>.cards {
@@ -1063,7 +1069,8 @@
 
 @media screen and (min-width: 1280px) {
     .container {
-        max-width: 1280px;
+        --container-width: 1280px;
+        max-width: var(--container-width);
         margin: 0 auto;
     }
 }

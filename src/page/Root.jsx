@@ -32,9 +32,9 @@ export default function Root({ universitas, rating, notifikasi }) {
                 <CaraPakai />
                 <Universitas universitas={universitas} />
                 <Fitur />
+                <Testimoni rating={rating} />
+                <MulaiSekarang />
             </Container>
-            <Testimoni rating={rating} />
-            <MulaiSekarang />
             <Footer />
         </>
     )

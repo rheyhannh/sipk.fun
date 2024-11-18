@@ -148,19 +148,19 @@ const Testimoni = ({ rating }) => {
     const headingRef = React.useRef(null);
 
     return (
-        <div id={'testimoni'} className={`${styles.section} ${styles.testimoni}`} onClick={() => { console.log(rating) }}>
-            <motion.div
-                ref={headingRef}
-                className={styles.heading}
-                initial={{ visibility: 'hidden', minHeight: 85 }}
-                variants={{ inView: { visibility: 'visible' } }}
-                whileInView={'inView'}
-                viewport={{
-                    once: GLOBAL_VIEWPORT_ONCE,
-                    amount: 1
-                }}
-            >
-                <TextFitContainer containerRef={headingRef} maxSize={52}>
+        <div id={'testimoni'} className={`${styles.section} ${styles.testimoni}`}>
+            <div className={styles.inner}>
+                <motion.h1
+                    ref={headingRef}
+                    className={styles.title}
+                    initial={{ visibility: 'hidden', minHeight: 85 }}
+                    variants={{ inView: { visibility: 'visible' } }}
+                    whileInView={'inView'}
+                    viewport={{
+                        once: GLOBAL_VIEWPORT_ONCE,
+                        amount: 1,
+                    }}
+                >
                     <HighlightText
                         useHook={false}
                         preset={'mixFancyTranslate'}
@@ -178,8 +178,8 @@ const Testimoni = ({ rating }) => {
                         }}
                         text={'Kata Mereka Tentang SIPK'}
                     />
-                </TextFitContainer>
-            </motion.div>
+                </motion.h1>
+            </div>
 
             <div className={styles.content}>
                 <ScrollingCarousel
