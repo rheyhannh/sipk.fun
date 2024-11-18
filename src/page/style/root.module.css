@@ -699,6 +699,10 @@
     padding: 1rem 2rem;
 }
 
+.fitur_wrapper .content .card .card_secondary .title {
+    font-weight: 500;
+}
+
 .fitur_wrapper .content .card .card_secondary .description {
     color: var(--footer4-linkColor);
 }
@@ -937,6 +941,7 @@
     padding: .5rem;
     background-color: var(--white-color);
     font-size: var(--root-description-fontsize);
+    font-weight: 500;
     border-radius: 1.1rem;
     cursor: pointer;
 }
