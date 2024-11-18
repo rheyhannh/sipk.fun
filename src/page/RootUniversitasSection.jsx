@@ -26,6 +26,25 @@ import { AnimatedElement } from './RootComponents';
 import { FiExternalLink } from 'react-icons/fi';
 // #endregion
 
+const UNIVERSITAS_SECTION_TITLE = 'Untuk Siapa?';
+const UNIVERSITAS_SECTION_DESCRIPTION = 'Saat ini, SIPK tersedia untuk mahasiswa dari 10 universitas yang didukung. Apapun jurusan atau program pendidikanmu, selama universitasmu ada dalam daftar, kamu bisa menggunakan SIPK.';
+const UNIVERSITAS_SECTION_BUTTON = [
+    { text: 'Pelajari Lebih Lanjut', type: 'secondary', href: 'https://medium.com', isOpenNewTab: true },
+    { text: 'Mulai Sekarang', href: '/users?action=daftar', scroll: false }
+]
+const ButtonLink = ({ text = 'Lorem', type = 'default', isOpenNewTab, ...props }) => (
+    <Link
+        className={`${styles.btn} ${type === 'secondary' ? styles.secondary : ''}`}
+        {...(isOpenNewTab || false ? { target: '_blank' } : {})}
+        {...props}
+    >
+        {text}
+        {isOpenNewTab && (
+            <FiExternalLink className={styles.external} />
+        )}
+    </Link>
+)
+
 /**
  * Components
  * @param {{universitas:Array<SupabaseTypes.UniversitasData>}} props Root props
@@ -54,16 +73,20 @@ const Universitas = ({ universitas }) => {
     )
 
     return (
-        <div
-            ref={sectionRef}
-            id={'universitas'}
-            className={`${styles.section} ${styles.universitas}`}
-
-        >
+        <div ref={sectionRef} id={'universitas'} className={`${styles.section} ${styles.universitas}`}>
             <div className={styles.text}>
-                <h1 className={styles.title}>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                </h1>
+                <AnimatedElement
+                    as={'h1'}
+                    className={styles.title}
+                    timeframe={[0, 0.84]}
+                    animations={{
+                        y: [-50, 0],
+                        opacity: [0, 1]
+                    }}
+                    scrollProgress={sectionScrollProgress}
+                >
+                    {UNIVERSITAS_SECTION_TITLE}
+                </AnimatedElement>
 
                 <AnimatedElement
                     as={'span'}
@@ -75,7 +98,7 @@ const Universitas = ({ universitas }) => {
                     }}
                     scrollProgress={sectionScrollProgress}
                 >
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad earum suscipit cumque consequuntur consequatur incidunt sit ducimus dicta quo voluptatum.
+                    {UNIVERSITAS_SECTION_DESCRIPTION}
                 </AnimatedElement>
 
                 <AnimatedElement
@@ -88,7 +111,9 @@ const Universitas = ({ universitas }) => {
                     }}
                     scrollProgress={sectionScrollProgress}
                 >
-                    Lorem, ipsum dolor.
+                    {UNIVERSITAS_SECTION_BUTTON.map((props, index) => (
+                        <ButtonLink key={index} {...props} />
+                    ))}
                 </AnimatedElement>
             </div>
 

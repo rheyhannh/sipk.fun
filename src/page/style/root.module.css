@@ -174,12 +174,51 @@
 }
 
 .universitas .title {
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.25rem;
     font-size: calc(var(--root-title-fontsize) * 1.75);
 }
 
 .universitas .description {
-    margin-bottom: 1rem;
+    margin-bottom: 2rem;
+    text-align: justify;
+    font-size: calc(var(--root-description-fontsize) * 1.2);
+}
+
+.universitas .action {
+    display: flex;
+    gap: 1rem;
+    color: var(--dark-color);
+    font-size: calc(var(--root-action-fontsize) * 0.95);
+}
+
+.universitas .btn {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    cursor: pointer;
+    padding: 0.5rem 0.75rem;
+    border-radius: 0.5rem;
+    font-weight: 500;
+    background-color: var(--users-btn-alt);
+    color: var(--white-color);
+}
+
+.universitas .btn.secondary {
+    border: 1px solid var(--accordion-bg2-color);
+    background-color: var(--white-color);
+    color: var(--dark-color);
+}
+
+.universitas .btn svg.external {
+    font-size: calc(0.9 * 1em);
+}
+
+.universitas .btn:hover {
+    background-color: var(--users-btn-hov);
+}
+
+.universitas .btn.secondary:hover {
+    background-color: var(--accordion-bg-color);
 }
 
 .universitas .content {
