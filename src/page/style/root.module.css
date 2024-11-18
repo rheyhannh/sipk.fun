@@ -152,6 +152,7 @@
 
 .universitas {
     --inner-padding: 2rem;
+    --icon-size: 75px;
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 1rem;
@@ -176,7 +177,6 @@
 }
 
 .universitas .content {
-    --icon-size: 65px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -199,7 +199,7 @@
 .universitas .content .icons .icon {
     width: var(--icon-size);
     height: var(--icon-size);
-    padding: .5rem;
+    padding: 1rem;
     margin-bottom: 1rem;
     background: var(--white-color);
     box-shadow: 0 0.5rem 0.75rem var(--light-color);
@@ -216,7 +216,6 @@
     --subtitle-fontsize: 1.7rem;
     --root-action-fontsize: 1.1rem;
     --root-section-height: calc(100vh - (2 * var(--root-base-padding)));
-    --root-title-fontsize: calc(2rem * 1.5);
     height: var(--root-section-height);
     padding: var(--inner-padding);
     overflow: hidden;
