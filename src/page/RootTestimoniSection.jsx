@@ -252,53 +252,6 @@ const Testimoni = ({ rating }) => {
                     ))}
                 </ScrollingCarousel>
             </div>
-
-            {/* <motion.div
-                className={styles.cards}
-                transition={{ staggerChildren: 0.4 }}
-                whileInView={'inView'}
-                viewport={{
-                    once: GLOBAL_VIEWPORT_ONCE,
-                    amount: 1
-                }}
-            >
-                {Array.from({ length: 6 }).map((item, index) => (
-                    <motion.div
-                        key={index}
-                        className={styles.card}
-                        initial={{ opacity: 0, scale: 0.25 }}
-                        variants={{
-                            inView: {
-                                opacity: 1,
-                                scale: 1,
-                                transition: {
-                                    duration: 1.25, ease: 'easeInOut'
-                                }
-                            }
-                        }}
-                    >
-                        <div className={styles.stars}>
-                            {Array.from({ length: stars[index] }).map((item, index) => (
-                                <AiFillStar key={index} fontSize={'var(--star-fontsize)'} />
-                            ))}
-                        </div>
-
-                        <p className={styles.review}>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque viverra posuere turpis non rutrum. Donec quis molestie quis.
-                        </p>
-
-                        <div className={styles.user}>
-                            <div className={styles.avatar}>
-
-                            </div>
-                            <div className={styles.info}>
-                                <span>Lorem ipsum dolor sit.</span>
-                                <small>Lorem, ipsum dolor.</small>
-                            </div>
-                        </div>
-                    </motion.div>
-                ))}
-            </motion.div> */}
         </div>
     )
 }
