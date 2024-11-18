@@ -185,6 +185,7 @@
     --root-base-padding: 16px;
     --root-section-margin-bottom: 10rem;
     --root-section-height: calc(100vh - (2 * var(--root-base-padding)) - var(--root-header-height));
+    --root-section-lineColor: #D4D5D8;
     --root-default-fontsize: 1rem;
     --root-title-fontsize: 2rem;
     --root-description-fontsize: .85rem;
@@ -356,6 +357,7 @@
     /* #endregion */
 
     /* #region ROOT '/' */
+    --root-section-lineColor: #292C31;
     --root-header-bgColor: rgba(24, 26, 30, 0.8);
     --root-header-borderColor: rgba(42, 45, 52, 0.6);
     --root-header-textColor: #FFFFFF;
