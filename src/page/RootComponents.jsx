@@ -262,10 +262,14 @@ export const ScrollingCarousel = ({
     wrapperProps = {},
     children
 }) => {
-    const { style: _x, ...containerPropsFiltered } = containerProps;
-    const { style: _y, ...wrapperPropsFiltered } = wrapperProps;
+    const { width: viewportWidth, height: viewportHeight } = useWindowSize();
+    let [containerRef, { width: containerWidth }] = useMeasure();
+    let [wrapperRef, { width: wrapperWidth }] = useMeasure();
 
-    const COUNT_CHILDREN = contentRenderOffset;
+    const { style: containerStyleProp, ...containerPropsFiltered } = containerProps;
+    const { style: wrapperStyleProps, ...wrapperPropsFiltered } = wrapperProps;
+
+    const [countChildren, setCountChildren] = React.useState(1);
 
     const speedAbs = Math.abs(speed);
     const baseSpeed = initialDirection === 'right' ? speedAbs : (speedAbs * -1);
@@ -279,10 +283,6 @@ export const ScrollingCarousel = ({
 
     const x = useTransform(baseX, (v) => v);
     const directionFactor = React.useRef(1);
-
-    let [containerRef, { width: containerWidth }] = useMeasure();
-    let [wrapperRef, { width: wrapperWidth }] = useMeasure();
-    const { width: viewportWidth, height: viewportHeight } = useWindowSize();
 
     useAnimationFrame((t, delta) => {
         let moveBy = directionFactor.current * baseSpeed * (delta / 1000);
@@ -306,28 +306,66 @@ export const ScrollingCarousel = ({
             moveBy = moveBy / decelerationFactor.get();
         }
 
-        if (baseX.get() > viewportWidth) {
+        if (baseX.get() > (((wrapperWidth - (countChildren - 1) * contentGap) / countChildren) + contentGap)) {
             baseX.set(0);
-        } else if (baseX.get() < viewportWidth * -1) {
+        } else if (baseX.get() < (-((wrapperWidth - (countChildren - 1) * contentGap) / countChildren) - contentGap)) {
             baseX.set(0);
         } else {
             baseX.set(baseX.get() + moveBy);
         }
     })
 
-    return (
-        <div
-            ref={containerRef}
-            style={{
+    const resolveCountChildren = () => {
+        if (!wrapperWidth || !viewportWidth) return 1;
+        const contentWidth = wrapperWidth / countChildren;
+        const minimum = viewportWidth + 2 * contentWidth;
+        const result = (Math.ceil(minimum / contentWidth)) + 1;
+
+        return result;
+    }
+
+    const resolveContainerStyle = () => {
+        if (scrollEffectType === 'reverse') {
+            return {
+                display: 'flex',
+                position: 'absolute',
+                top: '0%',
+                left: '50%',
+                transform: 'translate(-50%, -0%)',
+                ...containerStyleProp
+            }
+        } else {
+            return {
                 display: 'flex',
                 flexDirection: initialDirection === 'right' ? 'row-reverse' : 'row',
-                ...containerProps?.style
-            }}
-            {...containerPropsFiltered}
-        >
+                ...containerStyleProp
+            }
+        }
+    }
+
+    const resolveWrapperStyle = () => ({
+        display: 'flex',
+        width: 'max-content',
+        ...wrapperStyleProps
+    })
+
+    React.useEffect(() => {
+        const timeout = setTimeout(() => {
+            if (contentRenderOffset >= 0) {
+                setCountChildren(contentRenderOffset)
+            } else {
+                setCountChildren(resolveCountChildren())
+            }
+        }, 100)
+
+        return () => clearTimeout(timeout);
+    }, [contentRenderOffset, viewportWidth, wrapperWidth])
+
+    return (
+        <motion.div ref={containerRef} style={resolveContainerStyle()} {...containerPropsFiltered}>
             <motion.div
                 ref={wrapperRef}
-                style={{ display: 'flex', gap: contentGap, width: 'max-content', x, ...wrapperProps?.style }}
+                style={{ ...resolveWrapperStyle(), gap: contentGap, x }}
                 onHoverStart={() => {
                     if (useHoverEffect) {
                         decelerationFactor.set(Math.abs(hoverOffset))
@@ -336,10 +374,10 @@ export const ScrollingCarousel = ({
                 onHoverEnd={() => { decelerationFactor.set(1) }}
                 {...wrapperPropsFiltered}
             >
-                {Array.from({ length: COUNT_CHILDREN }, (_, index) => (
+                {Array.from({ length: countChildren }, (_, index) => (
                     <React.Fragment key={index}>{children}</React.Fragment>
                 ))}
             </motion.div>
-        </div>
+        </motion.div>
     )
 }
