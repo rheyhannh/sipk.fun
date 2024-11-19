@@ -216,7 +216,7 @@
 
 .universitas {
     --inner-padding: 2rem;
-    --icon-size: 75px;
+    --icon-size: 70px;
     --scrolling-icon-size: 30px;
     margin-left: calc(-50vw + 50%);
     margin-right: calc(-50vw + 50%);
