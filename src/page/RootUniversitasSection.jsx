@@ -7,6 +7,9 @@ import * as SupabaseTypes from '@/types/supabase';
 // #region CONFIG DEPEDENCY
 import {
     GLOBAL_VIEWPORT_ONCE,
+    UNIVERSITAS_SECTION_TITLE,
+    UNIVERSITAS_SECTION_DESCRIPTION,
+    UNIVERSITAS_SECTION_BUTTON,
 } from './RootConfig';
 // #endregion
 
@@ -35,28 +38,6 @@ import { FiExternalLink } from 'react-icons/fi';
 // #region UTIL DEPEDENCY
 import { replacePlaceholders } from './RootUtils';
 // #endregion
-
-/**
- * Judul atau headline yang digunakan pada section `Universitas`
- * @type {string}
- */
-const UNIVERSITAS_SECTION_TITLE = 'Untuk Siapa?';
-
-/**
- * Deskripsi yang digunakan pada section `Universitas`. Dapat menggunakan placeholder berikut,
- * - `{jumlah_universitas}` : Jumlah universitas yang tersedia
- * @type {string}
- */
-const UNIVERSITAS_SECTION_DESCRIPTION = 'Saat ini, SIPK tersedia untuk mahasiswa dari {jumlah_universitas} universitas yang didukung. Apapun jurusan atau program pendidikanmu, selama universitasmu ada dalam daftar, kamu bisa menggunakan SIPK.';
-
-/**
- * Button yang ditampilkan pada section `Universitas`
- * @type {Array<Omit<React.AnchorHTMLAttributes<HTMLAnchorElement>, keyof LinkProps> & LinkProps & ButtonLinkProps>}
- */
-const UNIVERSITAS_SECTION_BUTTON = [
-    { text: 'Pelajari Lebih Lanjut', type: 'secondary', href: 'https://medium.com', isOpenNewTab: true },
-    { text: 'Mulai Sekarang', href: '/users?action=daftar', scroll: false }
-]
 
 /**
  * Props yang digunakan component `ButtonLink`
