@@ -79,3 +79,8 @@ export const findArrayIndexByString = (str, arr) => {
     const index = arr.indexOf(str);
     return index === -1 ? 0 : index;
 };
+export const replacePlaceholders = (template, variables = {}, defaultValue = 'null') => {
+    return template.replace(/\{(\w+)\}/g, (_, key) => {
+        return variables[key] ?? defaultValue;
+    });
+};
