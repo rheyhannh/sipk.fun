@@ -227,26 +227,37 @@ export const TextFitContainer = ({ containerRef, as = 'span', minSize = 1, maxSi
  * - `none` : Tidak ada efek yang terjadi
  * - `bounce` : Tidak merubah arah, menambah kecepatan scroll container dengan efek bounce saat mouse scroll berlawanan dengan arah scroll container
  * - `speed` : Tidak merubah arah, menambah kecepatan scroll container tanpa bounce
- * - `reverse` : Merubah arah scroll container dengan saat mouse scroll berlawanan dengan arah scroll container
+ * - `reverse` : Merubah arah scroll container saat mouse scroll berlawanan dengan arah scroll container
  * 
  * Default menggunakan `none`
  * @property {number} [contentGap]
  * Gap content yang digunakan dalam `px`, props ini diperlukan untuk melakukan perhitungan width dari scroll container
  * - Default : `28`
  * @property {number} [contentRenderOffset]
- * Props ini menyatakan bilangan bulat `> 0` berapa kali content harus dirender. Semakin besar, maka semakin panjang width dari scroll container.
+ * Saat bernilai `> 0` menyatakan berapa kali content harus dirender. Semakin besar, maka semakin panjang width dari scroll container.
  * 
  * Umumnya kita ingin width scroll container selalu lebih besar dari viewport agar scroll container selalu berisikan content dan tidak kosong saat animasi berjalan
+ * 
+ * Saat bernilai `< 0` maka props ini akan dihitung secara otomatis. Jika menggunakan tipe scroll efek `reverse`
+ * sangat dianjurkan untuk menyetel props ini bilangan negatif agar dihitung secara otomatis
+ * 
  * - Default : `3`
- * @property {Omit<React.HTMLProps<HTMLDivElement>,'ref'>} containerProps
- * Agar component dapat berjalan sesuai, jangan merubah atribut `display` dan `flex-direction` pada props style
+ * @property {HTMLMotionProps<'div'>} containerProps
+ * Props yang digunakan pada container component, harap melihat `description` terlebih dahulu sebelum melakukan perubahan
  * @property {Omit<HTMLMotionProps<'div'>, 'onHoverStart' | 'onHoverEnd'>} wrapperProps
- * Agar component dapat berjalan sesuai, jangan merubah atribut `display`, `gap`, `width` dan `x` pada props style
- * dan props `onHoverStart` dan `onHoverEnd`
+ * Props yang digunakan pada wrapper component, harap melihat `description` terlebih dahulu sebelum melakukan perubahan
  */
 
 /**
- * Component Description
+ * Component wrapper untuk membuat carousel horizontal dengan efek `infinite scrolling`. 
+ * Saat menggunakan tipe efek scroll `reverse`, component harus dibungkus parent element dengan atribut css position `relative`.
+ * 
+ * Secara default menggunakan `containerProps` dan `wrapperProps` sebagai berikut,
+ * ```js
+ * { style: { display, flexDirection, position, top, left, transform } } = containerProps;
+ * { style: { display, gap, width, transform }, onHoverStart, onHoverEnd } = wrapperProps;
+ * ```
+ * Perubahan props atau atribut style yang digunakan diatas akan membuat efek infinite scrolling terganggu
  * @param {ScrollingCarouselProps} props ScrollingCarousel props
  * @returns {React.ReactElement} Rendered component
  */
