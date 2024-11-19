@@ -79,6 +79,37 @@ export const findArrayIndexByString = (str, arr) => {
     const index = arr.indexOf(str);
     return index === -1 ? 0 : index;
 };
+
+/** 
+ * Method untuk mengganti placeholder dalam string dengan nilai yang sesuai dari objek variables.
+ * Placeholder ditandai dengan kurung kurawal `{}` dan harus sesuai dengan key di objek `variables`.
+ * Jika key placeholder tidak ada di objek `variables`, placeholder akan diubah menjadi teks yang digunakan pada `defaultValue`
+ * 
+ * Untuk lebih jelasnya dapat lihat contoh pada `example`
+ * @param {string} template String yang mengandung placeholder dalam format `{key}`
+ * @param {Object<string,any>} variables Objek yang memiliki pasangan key dan value, di mana key sesuai dengan placeholder
+ * @param {string} [defaultValue] Default value saat data dengan key tertentu tidak tersedia, default : `'null'`
+ * @returns {string} String hasil dengan placeholder yang sudah diganti nilai sesuai
+ * @example 
+ * ```js
+ * const data = [
+ *      { id: 'xyz', value: 3 },
+ *      { id: 'abc', value: 2 },
+ *      { id: 'jkl', value: 9 }
+ * ]
+ * const variables = {
+ *      jumlah_data: data.length,
+ *      nilai_dataTerakhir: data[length - 1].value,
+ *      nilai_data_pertama: data[0].value,
+ *      id_datake2: data[1].id
+ * }
+ * const template = 'Saat {ini} tersedia {jumlah_data} data dengan nilai data terakhir {nilai_dataTerakhir}, nilai data pertama {nilai_data_pertama} dan id data ke-2 {id_datake2}'
+ * 
+ * const replaced = replacePlaceholders(template, variables, 'ini');
+ * 
+ * console.log(replaced) // Saat ini tersedia 3 data dengan nilai data terakhir 9, nilai data pertama 3 dan id data ke-2 abc
+ * ```
+*/
 export const replacePlaceholders = (template, variables = {}, defaultValue = 'null') => {
     return template.replace(/\{(\w+)\}/g, (_, key) => {
         return variables[key] ?? defaultValue;
