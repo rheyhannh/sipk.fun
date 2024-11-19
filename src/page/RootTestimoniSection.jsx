@@ -31,7 +31,7 @@ const Testimoni = ({ rating }) => {
     return (
         <div id={'testimoni'} className={`${styles.section} ${styles.testimoni}`}>
             <div className={styles.inner}>
-                <motion.h1
+                <motion.h2
                     ref={headingRef}
                     className={styles.title}
                     initial={{ visibility: 'hidden', minHeight: 85 }}
@@ -59,7 +59,7 @@ const Testimoni = ({ rating }) => {
                         }}
                         text={'Kata Mereka Tentang SIPK'}
                     />
-                </motion.h1>
+                </motion.h2>
             </div>
 
             <motion.div whileInView={'inView'} viewport={{ once: GLOBAL_VIEWPORT_ONCE }} className={styles.content}>

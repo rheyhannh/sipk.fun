@@ -74,8 +74,8 @@ const MulaiSekarang = () => (
             />
         </motion.div>
 
-        <motion.div
-            className={styles.title}
+        <motion.h1
+            className={styles.title_big}
             initial={{ visibility: 'hidden' }}
             variants={{ inView: { visibility: 'visible' } }}
             whileInView={'inView'}
@@ -96,10 +96,10 @@ const MulaiSekarang = () => (
                     baseDelay: delayAnims[1]
                 }}
             />
-        </motion.div>
+        </motion.h1>
 
         <motion.div
-            className={styles.description}
+            className={styles.title_big_description}
             whileInView={'inView'}
             viewport={{ once: GLOBAL_VIEWPORT_ONCE }}
             transition={{ type: 'spring', delayChildren: delayAnims[2] }}
@@ -130,7 +130,7 @@ const MulaiSekarang = () => (
             </motion.span>
         </motion.div>
 
-        <motion.div className={styles.buttons}>
+        <motion.div className={styles.title_big_cta}>
             <Link href={'/users?action=login'} scroll={false} passHref legacyBehavior>
                 <Button text={'Masuk'} type={'secondary'} />
             </Link>

@@ -452,14 +452,14 @@ const Text = ({ title = 'Lorem, ipsum dolor.', description = 'Lorem ipsum dolor 
         }}
         animate={active ? 'show' : 'hide'}
     >
-        <motion.h1 className={styles.title}
+        <motion.h3 className={styles.title_small}
         >
             {title}
-        </motion.h1>
+        </motion.h3>
 
-        <motion.span className={styles.description}>
+        <motion.p className={styles.title_small_description}>
             {description}
-        </motion.span>
+        </motion.p>
     </motion.div>
 )
 
@@ -560,7 +560,7 @@ const CaraPakai = ({ contents = ['x', 'y', 'z'], useAutoplay = false, autoplayOp
             id={'kenapa_sipk'}
             className={`${styles.section} ${styles.cara_pakai}`}
         >
-            <motion.div
+            <motion.h2
                 className={styles.title}
                 initial={{ visibility: 'hidden' }}
                 variants={{ inView: { visibility: 'visible' } }}
@@ -585,7 +585,7 @@ const CaraPakai = ({ contents = ['x', 'y', 'z'], useAutoplay = false, autoplayOp
                         delay: 0.25
                     }}
                 />
-            </motion.div>
+            </motion.h2>
 
             <Content
                 activeContent={activeContent}

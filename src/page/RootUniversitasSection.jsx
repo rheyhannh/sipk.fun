@@ -109,9 +109,9 @@ const Universitas = ({ universitas }) => {
                     height={30}
                 />
             </div>
-            <h2 className={styles.subtitle}>
+            <h3 className={styles.title_small}>
                 {universitas[index]?.nama ?? universitas[0]?.nama}
-            </h2>
+            </h3>
         </div>
     )
 
@@ -125,7 +125,7 @@ const Universitas = ({ universitas }) => {
                 <div className={styles.layout}>
                     <div className={styles.text}>
                         <AnimatedElement
-                            as={'h1'}
+                            as={'h2'}
                             className={styles.title}
                             timeframe={[0.1, 0.74]}
                             animations={{
@@ -138,8 +138,8 @@ const Universitas = ({ universitas }) => {
                         </AnimatedElement>
 
                         <AnimatedElement
-                            as={'span'}
-                            className={styles.description}
+                            as={'p'}
+                            className={styles.title_description}
                             timeframe={[0.1, 0.77]}
                             animations={{
                                 y: [50, 0],
@@ -152,7 +152,7 @@ const Universitas = ({ universitas }) => {
 
                         <AnimatedElement
                             as={'div'}
-                            className={styles.action}
+                            className={styles.title_cta}
                             timeframe={[0.1, 0.8]}
                             animations={{
                                 y: [50, 0],

@@ -131,10 +131,10 @@ const FiturCard = ({ title, description, wrapperClassname, content, contentIndex
                 </div>
 
                 <div className={styles.card_secondary}>
-                    <h3 className={styles.title}>
+                    <h3 className={styles.title_small}>
                         {title ?? 'Lorem, ipsum dolor.'}
                     </h3>
-                    <p className={styles.description}>
+                    <p className={styles.title_small_description}>
                         {description ?? 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quia voluptates excepturi sit quis, assumenda ut natus quisquam nam iure magnam.'}
                     </p>
                 </div>
@@ -383,7 +383,7 @@ const Fitur = () => {
                         amount: 1
                     }}
                 >
-                    <div className={styles.wrap}>
+                    <h2 className={styles.wrap}>
                         <motion.div
                             className={styles.icons}
                             initial={{ scale: 0 }}
@@ -446,18 +446,18 @@ const Fitur = () => {
                             </div>
                         </motion.div>
                         <HighlightText text={'Analytics'} {...resolveTitleProps('Analytics')} />
-                    </div>
+                    </h2>
 
-                    <h1>
+                    <h2>
                         <HighlightText text={'that'} {...resolveTitleProps('that')} />
 
                         <span>
                             <HighlightText text={'helps'} {...resolveTitleProps('helps')} />
                         </span>
                         <HighlightText text={'you'} {...resolveTitleProps('you')} />
-                    </h1>
+                    </h2>
 
-                    <div className={styles.wrap}>
+                    <h2 className={styles.wrap}>
                         <HighlightText text={'shape'} {...resolveTitleProps('shape')} />
                         <motion.div
                             className={`${styles.icon}`}
@@ -474,7 +474,7 @@ const Fitur = () => {
                         </motion.div>
                         <HighlightText text={'the'} {...resolveTitleProps('the')} />
                         <HighlightText text={'future'} {...resolveTitleProps('future')} />
-                    </div>
+                    </h2>
 
                     <div
                         style={{
