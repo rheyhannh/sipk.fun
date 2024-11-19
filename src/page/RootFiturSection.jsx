@@ -357,7 +357,7 @@ const Fitur = () => {
 
     useInterval(() => {
         if (alreadyInView) setTitleAnimation('shape_text');
-    }, 7500);
+    }, 5000);
 
     return (
         <div ref={sectionRef} id={'fitur'} className={`${styles.section} ${styles.fitur}`}>
