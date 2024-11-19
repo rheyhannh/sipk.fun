@@ -60,7 +60,7 @@ const Universitas = ({ universitas }) => {
     const sectionRef = React.useRef(null);
     const { scrollYProgress } = useScroll({
         target: sectionRef,
-        offset: ['end end', '0.7 0.7']
+        offset: ["start end", "end end"]
     });
 
     const sectionScrollProgress = useSpring(scrollYProgress, {
