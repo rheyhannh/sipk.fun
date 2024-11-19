@@ -47,6 +47,7 @@ const UNIVERSITAS_SECTION_TITLE = 'Untuk Siapa?';
  * - `{jumlah_universitas}` : Jumlah universitas yang tersedia
  * @type {string}
  */
+const UNIVERSITAS_SECTION_DESCRIPTION = 'Saat ini, SIPK tersedia untuk mahasiswa dari {jumlah_universitas} universitas yang didukung. Apapun jurusan atau program pendidikanmu, selama universitasmu ada dalam daftar, kamu bisa menggunakan SIPK.';
 
 /**
  * Button yang ditampilkan pada section `Universitas`
@@ -133,6 +134,10 @@ const Universitas = ({ universitas }) => {
         </div>
     )
 
+    const replacedDescription = replacePlaceholders(UNIVERSITAS_SECTION_DESCRIPTION, {
+        jumlah_universitas: universitas.length
+    })
+
     return (
         <div ref={sectionRef} id={'universitas'} className={`${styles.section} ${styles.universitas}`}>
             <div className={styles.inner}>
@@ -161,7 +166,7 @@ const Universitas = ({ universitas }) => {
                             }}
                             scrollProgress={sectionScrollProgress}
                         >
-                            {UNIVERSITAS_SECTION_DESCRIPTION}
+                            {replacedDescription}
                         </AnimatedElement>
 
                         <AnimatedElement
