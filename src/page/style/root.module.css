@@ -26,6 +26,10 @@
     font-weight: 600;
 }
 
+.subtitle {
+    font-weight: 500;
+}
+
 .description {
     font-size: var(--root-description-fontsize);
     color: var(--infoDark-color);
