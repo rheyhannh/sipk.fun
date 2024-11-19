@@ -170,15 +170,30 @@
 .universitas {
     --inner-padding: 2rem;
     --icon-size: 75px;
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1rem;
+    --scrolling-icon-size: 30px;
+    margin-left: calc(-50vw + 50%);
+    margin-right: calc(-50vw + 50%);
+    display: flex;
+    flex-direction: column;
     height: var(--root-section-height);
-    overflow: hidden;
+    border: none;
+}
+
+.universitas>.inner {
+    width: var(--container-width);
+    margin: 0 auto;
+    flex: 1;
+}
+
+.universitas .layout {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
 }
 
 .universitas .text {
     display: flex;
+    flex: 1;
     justify-content: center;
     flex-direction: column;
     padding: var(--inner-padding);
@@ -207,7 +222,7 @@
     align-items: center;
     gap: 0.4rem;
     cursor: pointer;
-    padding: 0.5rem 0.75rem;
+    padding: 0.6rem 0.85rem;
     border-radius: 0.5rem;
     font-weight: 500;
     background-color: var(--users-btn-alt);
@@ -234,6 +249,7 @@
 
 .universitas .content {
     display: flex;
+    flex: 1;
     justify-content: center;
     align-items: center;
     gap: 1rem;
@@ -261,6 +277,42 @@
     box-shadow: 0 0.5rem 0.75rem var(--light-color);
     border-radius: 1rem;
     transition: box-shadow var(--transition-default) ease-in-out;
+}
+
+.universitas .scrolling {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    justify-content: center;
+    padding: 1rem 0;
+}
+
+.universitas .scrolling .items {
+    position: relative;
+    height: 60px;
+    border-top: 2.75px solid var(--root-section-lineColor);
+    border-bottom: 2.75px solid var(--root-section-lineColor);
+}
+
+.universitas .scrolling .items:first-child {
+    border-bottom: none;
+}
+
+.universitas .scrolling .item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.universitas .scrolling .item .logo {
+    width: var(--scrolling-icon-size);
+    height: var(--scrolling-icon-size);
+}
+
+.universitas .scrolling .item .subtitle {
+    text-transform: uppercase;
+    white-space: nowrap;
+    font-size: calc(var(--root-default-fontsize) * 1.25);
 }
 
 /* #endregion Section 'Universitas' */
