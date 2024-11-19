@@ -4,6 +4,12 @@
 import * as SupabaseTypes from '@/types/supabase';
 // #endregion
 
+// #region CONFIG DEPEDENCY
+import {
+    GLOBAL_VIEWPORT_ONCE,
+} from './RootConfig';
+// #endregion
+
 // #region NEXT DEPEDENCY
 import Image from 'next/image';
 import Link, { LinkProps } from 'next/link';
@@ -18,8 +24,8 @@ import styles from './style/root.module.css';
 // #endregion
 
 // #region COMPONENT DEPEDENCY
-import { useScroll, useSpring } from 'framer-motion';
-import { AnimatedElement } from './RootComponents';
+import { motion, useScroll, useSpring } from 'framer-motion';
+import { AnimatedElement, ScrollingCarousel } from './RootComponents';
 // #endregion
 
 // #region ICON DEPEDENCY
