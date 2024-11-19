@@ -32,6 +32,10 @@ import { AnimatedElement, ScrollingCarousel } from './RootComponents';
 import { FiExternalLink } from 'react-icons/fi';
 // #endregion
 
+// #region UTIL DEPEDENCY
+import { replacePlaceholders } from './RootUtils';
+// #endregion
+
 const UNIVERSITAS_SECTION_TITLE = 'Untuk Siapa?';
 const UNIVERSITAS_SECTION_DESCRIPTION = 'Saat ini, SIPK tersedia untuk mahasiswa dari 10 universitas yang didukung. Apapun jurusan atau program pendidikanmu, selama universitasmu ada dalam daftar, kamu bisa menggunakan SIPK.';
 const UNIVERSITAS_SECTION_BUTTON = [
