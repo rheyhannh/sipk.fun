@@ -62,13 +62,18 @@ const Testimoni = ({ rating }) => {
                 </motion.h1>
             </div>
 
-            <div className={styles.content}>
+            <motion.div whileInView={'inView'} viewport={{ once: GLOBAL_VIEWPORT_ONCE }} className={styles.content}>
                 <ScrollingCarousel
                     speed={75}
                     initialDirection={'left'}
                     useHoverEffect={true}
                     hoverOffset={2}
                     scrollEffectType={'none'}
+                    containerProps={{
+                        initial: { opacity: 0 },
+                        variants: { inView: { opacity: 1 } },
+                        transition: { duration: 0.75, delay: 1.25, ease: 'linear' }
+                    }}
                 >
                     {Array.from({ length: 6 }).map((item, index) => (
                         <div
@@ -104,6 +109,11 @@ const Testimoni = ({ rating }) => {
                     useHoverEffect={true}
                     hoverOffset={2}
                     scrollEffectType={'none'}
+                    containerProps={{
+                        initial: { opacity: 0 },
+                        variants: { inView: { opacity: 1 } },
+                        transition: { duration: 0.75, delay: 1.5, ease: 'linear' }
+                    }}
                 >
                     {Array.from({ length: 6 }).map((item, index) => (
                         <div
@@ -132,7 +142,7 @@ const Testimoni = ({ rating }) => {
                         </div>
                     ))}
                 </ScrollingCarousel>
-            </div>
+            </motion.div>
         </div>
     )
 }
