@@ -57,6 +57,26 @@ const UNIVERSITAS_SECTION_BUTTON = [
     { text: 'Mulai Sekarang', href: '/users?action=daftar', scroll: false }
 ]
 
+/**
+ * Props yang digunakan component `ButtonLink`
+ * @typedef {Object} ButtonLinkProps
+ * @property {React.ReactNode} [text]
+ * Teks button
+ * - Default `'Lorem'`
+ * @property {'default' | 'secondary'} [type]
+ * Tipe button yang digunakan
+ * - Default : `'default'`
+ * @property {boolean} [isOpenNewTab]
+ * Boolean yang menyatakan apakah link dibuka di tab baru atau tidak.
+ * Saat `true` akan menggunakan atribut target dengan nilai `_blank` dan menambahkan icon disamping teks
+ * - Default : `false`
+ */
+
+/**
+ * Button yang menggunakan component Link pada `next/link`
+ * @param {Omit<React.AnchorHTMLAttributes<HTMLAnchorElement>, keyof LinkProps> & LinkProps & ButtonLinkProps} props ButtonLink props
+ * @returns {React.ReactElement} Rendered component
+ */
 const ButtonLink = ({ text = 'Lorem', type = 'default', isOpenNewTab, ...props }) => (
     <Link
         className={`${styles.btn} ${type === 'secondary' ? styles.secondary : ''}`}
