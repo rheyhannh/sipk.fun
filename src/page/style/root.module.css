@@ -282,14 +282,6 @@
     font-size: calc(0.9 * 1em);
 }
 
-.universitas .btn:hover {
-    background-color: var(--users-btn-hov);
-}
-
-.universitas .btn.secondary:hover {
-    background-color: var(--accordion-bg-color);
-}
-
 .universitas .content {
     display: flex;
     flex: 1;
@@ -1171,6 +1163,14 @@
 
     .universitas .content .icons .icon:hover {
         box-shadow: none;
+    }
+
+    .universitas .btn:hover {
+        background-color: var(--users-btn-hov);
+    }
+
+    .universitas .btn.secondary:hover {
+        background-color: var(--accordion-bg-color);
     }
 
     .fitur_wrapper .content .card:hover {
