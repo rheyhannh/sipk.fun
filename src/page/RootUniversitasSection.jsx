@@ -36,12 +36,27 @@ import { FiExternalLink } from 'react-icons/fi';
 import { replacePlaceholders } from './RootUtils';
 // #endregion
 
+/**
+ * Judul atau headline yang digunakan pada section `Universitas`
+ * @type {string}
+ */
 const UNIVERSITAS_SECTION_TITLE = 'Untuk Siapa?';
-const UNIVERSITAS_SECTION_DESCRIPTION = 'Saat ini, SIPK tersedia untuk mahasiswa dari 10 universitas yang didukung. Apapun jurusan atau program pendidikanmu, selama universitasmu ada dalam daftar, kamu bisa menggunakan SIPK.';
+
+/**
+ * Deskripsi yang digunakan pada section `Universitas`. Dapat menggunakan placeholder berikut,
+ * - `{jumlah_universitas}` : Jumlah universitas yang tersedia
+ * @type {string}
+ */
+
+/**
+ * Button yang ditampilkan pada section `Universitas`
+ * @type {Array<Omit<React.AnchorHTMLAttributes<HTMLAnchorElement>, keyof LinkProps> & LinkProps & ButtonLinkProps>}
+ */
 const UNIVERSITAS_SECTION_BUTTON = [
     { text: 'Pelajari Lebih Lanjut', type: 'secondary', href: 'https://medium.com', isOpenNewTab: true },
     { text: 'Mulai Sekarang', href: '/users?action=daftar', scroll: false }
 ]
+
 const ButtonLink = ({ text = 'Lorem', type = 'default', isOpenNewTab, ...props }) => (
     <Link
         className={`${styles.btn} ${type === 'secondary' ? styles.secondary : ''}`}
