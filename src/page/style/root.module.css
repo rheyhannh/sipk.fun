@@ -69,20 +69,6 @@
     font-weight: 500;
 }
 
-.subtitle {
-    font-weight: 500;
-}
-
-.description {
-    font-size: var(--root-description-fontsize);
-    color: var(--infoDark-color);
-}
-
-.action {
-    font-size: var(--root-action-fontsize);
-    color: var(--logo-second-color);
-}
-
 /* #region Header */
 
 .header_outter {
@@ -546,10 +532,6 @@
     margin-bottom: 0;
 }
 
-.cara_pakai .content .description {
-    text-align: justify;
-}
-
 /* #endregion */
 
 /* #region Section 'Fitur' */
@@ -968,10 +950,6 @@
 
 .mulai_sekarang .logo img {
     filter: drop-shadow(5px 10px 5px var(--logo-drop-shadow));
-}
-
-.mulai_sekarang .description {
-    overflow: hidden;
 }
 
 .mulai_sekarang .title_big {
