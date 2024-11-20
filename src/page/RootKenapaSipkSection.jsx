@@ -38,6 +38,8 @@ const layoutTransition = {
     layout: { type: 'spring', duration: 1, bounce: 0.3 }
 }
 
+const KENAPASIPK_ACTIVING_CONTENT_EVENT_TYPE = 'tap';
+
 /**
  * Props yang digunakan component `Content`
  * @typedef {Object} ContentProps
@@ -538,6 +540,14 @@ const KenapaSipk = ({ contents = ['x', 'y', 'z'], useAutoplay = false, autoplayO
         }
     };
 
+
+    const resolveActionProps = (contentNumber) => {
+        const x = KENAPASIPK_ACTIVING_CONTENT_EVENT_TYPE;
+        if (x === 'hover') return ({ onHoverStart: () => { handleHoverStart(contentNumber) }, onHoverEnd: handleHoverEnd })
+        else if (x === 'tap') return ({ onTap: () => { handleTap(contentNumber) } })
+        else return ({ onTap: () => { handleTap(contentNumber) }, onHoverStart: () => { handleHoverStart(contentNumber) }, onHoverEnd: handleHoverEnd })
+    }
+
     React.useEffect(() => {
         if (useAutoplay && !isSleeping && contentShowed) {
             startAutoplay();
@@ -599,7 +609,7 @@ const KenapaSipk = ({ contents = ['x', 'y', 'z'], useAutoplay = false, autoplayO
             >
                 {!contentShowed && (<motion.div className={styles.overlay} />)}
 
-                <Wrapper onTap={() => { handleTap(1) }} onHoverStart={() => { handleHoverStart(1) }} onHoverEnd={handleHoverEnd}>
+                <Wrapper {...resolveActionProps(1)}>
                     <Box type={'x'}>
                         <AnimatePresence mode={'popLayout'}>
                             {activeContent.split('_')[1] === '1' && contentShowed && (
@@ -618,7 +628,7 @@ const KenapaSipk = ({ contents = ['x', 'y', 'z'], useAutoplay = false, autoplayO
                     </Details>
                 </Wrapper>
 
-                <Wrapper onTap={() => { handleTap(2) }} onHoverStart={() => { handleHoverStart(2) }} onHoverEnd={handleHoverEnd}>
+                <Wrapper {...resolveActionProps(2)}>
                     <Box type={'y'}>
 
                     </Box>
@@ -633,7 +643,7 @@ const KenapaSipk = ({ contents = ['x', 'y', 'z'], useAutoplay = false, autoplayO
                     </Details>
                 </Wrapper>
 
-                <Wrapper onTap={() => { handleTap(3) }} onHoverStart={() => { handleHoverStart(3) }} onHoverEnd={handleHoverEnd}>
+                <Wrapper {...resolveActionProps(3)}>
                     <Box type={'z'}>
                         <AnimatePresence mode={'popLayout'}>
                             {activeContent.split('_')[1] === '3' && contentShowed && (

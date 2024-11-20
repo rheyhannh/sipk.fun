@@ -395,6 +395,19 @@
     display: grid;
     grid-template-rows: 75% 1fr;
     gap: 1rem;
+    cursor: pointer;
+}
+
+.kenapa_sipk .content.active_1 .wrapper:nth-child(1) {
+    cursor: auto;
+}
+
+.kenapa_sipk .content.active_2 .wrapper:nth-child(2) {
+    cursor: auto;
+}
+
+.kenapa_sipk .content.active_3 .wrapper:nth-child(3) {
+    cursor: auto;
 }
 
 .kenapa_sipk .content .box {
