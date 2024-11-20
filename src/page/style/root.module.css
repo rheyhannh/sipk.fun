@@ -69,6 +69,12 @@
     font-weight: 500;
 }
 
+.title_big_description,
+.title_description,
+.title_small_description {
+    color: var(--footer4-linkColor);
+}
+
 /* #region Header */
 
 .header_outter {
