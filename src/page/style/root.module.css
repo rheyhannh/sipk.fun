@@ -346,7 +346,7 @@
 
 /* #region Section 'Cara Pakai' */
 
-.cara_pakai {
+.kenapa_sipk {
     --inner-padding: 3rem;
     --subtitle-fontsize: 1.7rem;
     --root-action-fontsize: 1.1rem;
@@ -358,19 +358,19 @@
     grid-template-rows: max-content 1fr;
 }
 
-.cara_pakai .title {
+.kenapa_sipk .title {
     text-align: center;
     margin-bottom: 3rem;
 }
 
-.cara_pakai .content {
+.kenapa_sipk .content {
     position: relative;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 1rem;
 }
 
-.cara_pakai .content .overlay {
+.kenapa_sipk .content .overlay {
     position: absolute;
     top: 0%;
     left: 0%;
@@ -379,36 +379,36 @@
     z-index: var(--z-tooltip);
 }
 
-.cara_pakai .content.active_1 {
+.kenapa_sipk .content.active_1 {
     grid-template-columns: 70% 1fr 1fr;
 }
 
-.cara_pakai .content.active_2 {
+.kenapa_sipk .content.active_2 {
     grid-template-columns: 1fr 70% 1fr;
 }
 
-.cara_pakai .content.active_3 {
+.kenapa_sipk .content.active_3 {
     grid-template-columns: 1fr 1fr 70%;
 }
 
-.cara_pakai .content .wrapper {
+.kenapa_sipk .content .wrapper {
     display: grid;
     grid-template-rows: 75% 1fr;
     gap: 1rem;
 }
 
-.cara_pakai .content .box {
+.kenapa_sipk .content .box {
     position: relative;
     overflow: hidden;
     background-color: var(--logo-second-color);
     border-radius: 2rem;
 }
 
-.cara_pakai .content .box.x {
+.kenapa_sipk .content .box.x {
     background-color: var(--secondInverse-shade-1);
 }
 
-.cara_pakai .content .box.x .inner {
+.kenapa_sipk .content .box.x .inner {
     position: absolute;
     top: 0%;
     left: 0%;
@@ -423,13 +423,13 @@
     perspective: 1000px;
 }
 
-.cara_pakai .content .box.x .inner .matkul,
-.cara_pakai .content .box.x .inner .matkul_anim,
-.cara_pakai .content .box.x .inner .progress_anim {
+.kenapa_sipk .content .box.x .inner .matkul,
+.kenapa_sipk .content .box.x .inner .matkul_anim,
+.kenapa_sipk .content .box.x .inner .progress_anim {
     border-radius: inherit;
 }
 
-.cara_pakai .content .box.x .inner .matkul_anim {
+.kenapa_sipk .content .box.x .inner .matkul_anim {
     display: flex;
     flex-direction: column;
     gap: 0.75rem;
@@ -440,28 +440,28 @@
     z-index: 1;
 }
 
-.cara_pakai .content .box.x .inner .progress_anim {
+.kenapa_sipk .content .box.x .inner .progress_anim {
     display: flex;
     justify-content: center;
     align-items: center;
     transform-origin: bottom right;
 }
 
-.cara_pakai .content .box.x .inner .progress_anim>div {
+.kenapa_sipk .content .box.x .inner .progress_anim>div {
     z-index: 2;
     width: 100%;
     max-width: 325px;
 }
 
-.cara_pakai .content .box.y {
+.kenapa_sipk .content .box.y {
     background-color: var(--secondInverse-shade-2);
 }
 
-.cara_pakai .content .box.z {
+.kenapa_sipk .content .box.z {
     background-color: var(--secondInverse-shade-3);
 }
 
-.cara_pakai .content .box.z .inner {
+.kenapa_sipk .content .box.z .inner {
     position: absolute;
     top: 0%;
     left: 0%;
@@ -474,20 +474,20 @@
     border-radius: inherit;
 }
 
-.cara_pakai .content .box.z .inner>div {
+.kenapa_sipk .content .box.z .inner>div {
     width: 100%;
 }
 
-.cara_pakai .content .box.z .inner>div:nth-child(1),
-.cara_pakai .content .box.z .inner>div:nth-child(3) {
+.kenapa_sipk .content .box.z .inner>div:nth-child(1),
+.kenapa_sipk .content .box.z .inner>div:nth-child(3) {
     max-width: 225px;
 }
 
-.cara_pakai .content .box.z .inner>div:nth-child(2) {
+.kenapa_sipk .content .box.z .inner>div:nth-child(2) {
     max-width: 250px;
 }
 
-.cara_pakai .content .details {
+.kenapa_sipk .content .details {
     display: grid;
     grid-template-columns: max-content auto;
     gap: .75rem;
@@ -495,7 +495,7 @@
     overflow: hidden;
 }
 
-.cara_pakai .content .progress {
+.kenapa_sipk .content .progress {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -509,27 +509,27 @@
     border-radius: .5rem;
 }
 
-.cara_pakai .content .progress.active {
+.kenapa_sipk .content .progress.active {
     border: 2px solid var(--dark-color);
 }
 
-.cara_pakai .content .box.x~.details .progress.active {
+.kenapa_sipk .content .box.x~.details .progress.active {
     border: 2px solid var(--secondInverse-shade-1);
 }
 
-.cara_pakai .content .box.y~.details .progress.active {
+.kenapa_sipk .content .box.y~.details .progress.active {
     border: 2px solid var(--secondInverse-shade-2);
 }
 
-.cara_pakai .content .box.z~.details .progress.active {
+.kenapa_sipk .content .box.z~.details .progress.active {
     border: 2px solid var(--secondInverse-shade-3);
 }
 
-.cara_pakai .content .text {
+.kenapa_sipk .content .text {
     width: 650px;
 }
 
-.cara_pakai .content .title_small {
+.kenapa_sipk .content .title_small {
     font-size: var(--subtitle-fontsize);
     font-weight: 500;
     white-space: nowrap;

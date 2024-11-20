@@ -555,11 +555,7 @@ const CaraPakai = ({ contents = ['x', 'y', 'z'], useAutoplay = false, autoplayOp
     }, [autoplayCountdown])
 
     return (
-        <div
-            ref={sectionRef}
-            id={'kenapa_sipk'}
-            className={`${styles.section} ${styles.cara_pakai}`}
-        >
+        <div ref={sectionRef} id={'kenapa_sipk'} className={`${styles.section} ${styles.kenapa_sipk}`}>
             <motion.h2
                 className={styles.title}
                 initial={{ visibility: 'hidden' }}
