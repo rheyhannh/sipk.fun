@@ -469,7 +469,7 @@ const Progress = ({ text = '1', active = false }) => (
     </motion.div>
 )
 
-const CaraPakai = ({ contents = ['x', 'y', 'z'], useAutoplay = false, autoplayOptions = { countdown: 5, pollingRate: 0.1 } }) => {
+const KenapaSipk = ({ contents = ['x', 'y', 'z'], useAutoplay = false, autoplayOptions = { countdown: 5, pollingRate: 0.1 } }) => {
     const { countdown = 10, pollingRate = 0.1 } = autoplayOptions;
     const [autoplayCountdown, setAutoplayCountdown] = React.useState(countdown);
     const [isSleeping, setIsSleeping] = React.useState(false);
@@ -656,4 +656,4 @@ const CaraPakai = ({ contents = ['x', 'y', 'z'], useAutoplay = false, autoplayOp
     )
 }
 
-export default CaraPakai;
+export default KenapaSipk;

@@ -12,7 +12,7 @@ import * as React from 'react';
 import { Container } from './RootComponents';
 import Header from './RootHeader';
 import Hero from './RootHero';
-import CaraPakai from './RootCaraPakaiSection';
+import KenapaSipk from './RootKenapaSipkSection';
 import Universitas from './RootUniversitasSection';
 import Fitur from './RootFiturSection';
 import Testimoni from './RootTestimoniSection';
@@ -32,7 +32,7 @@ export default function Root({ universitas, rating, notifikasi }) {
             <Container>
                 <Hero/>
                 <Universitas universitas={universitas} />
-                <CaraPakai />
+                <KenapaSipk />
                 <Fitur />
                 <Testimoni rating={rating} />
                 <MulaiSekarang />
