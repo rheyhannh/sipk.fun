@@ -54,7 +54,7 @@ const Testimoni = ({ rating }) => {
         <section
             ref={sectionRef}
             id={'testimoni'}
-            tabIndex={1}
+            tabIndex={0}
             className={`${styles.section} ${styles.testimoni}`}
             onKeyDown={handleKeyDown}
         >

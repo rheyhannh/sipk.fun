@@ -125,14 +125,9 @@ const Universitas = ({ universitas }) => {
     /** @param {React.KeyboardEvent} event */
     const handleKeyDown = (event) => {
         if (event.key === 'Tab') {
-            if (event.shiftKey) {
-                if (sectionRef.current && sectionRef.current === document.activeElement) {
-                    event.preventDefault();
-                    document.getElementById('navbar-cta').focus();
-                }
-            } else {
+            if (!event.shiftKey) {
                 if (sectionRef.current && sectionRef.current.nextElementSibling) {
-                    const focusableElements = Array.from(sectionRef.current.querySelectorAll('[tabIndex="1"]'));
+                    const focusableElements = Array.from(sectionRef.current.querySelectorAll('[tabIndex="0"]'));
                     const isLastFocusableElement = focusableElements[focusableElements.length - 1] === document.activeElement;
                     if (isLastFocusableElement) {
                         event.preventDefault();
@@ -148,7 +143,7 @@ const Universitas = ({ universitas }) => {
         <section
             ref={sectionRef}
             id={'universitas'}
-            tabIndex={1}
+            tabIndex={0}
             className={`${styles.section} ${styles.universitas}`}
             onKeyDown={handleKeyDown}
         >

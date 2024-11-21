@@ -26,8 +26,8 @@ export const UNIVERSITAS_SECTION_DESCRIPTION = 'Saat ini, SIPK tersedia untuk ma
  * @type {Array<Omit<React.AnchorHTMLAttributes<HTMLAnchorElement>, keyof LinkProps> & LinkProps & ButtonLinkProps>}
  */
 export const UNIVERSITAS_SECTION_BUTTON = [
-    { text: 'Pelajari Lebih Lanjut', type: 'secondary', href: 'https://medium.com', isOpenNewTab: true, tabIndex: 1 },
-    { text: 'Mulai Sekarang', href: '/users?action=daftar', scroll: false, tabIndex: 1 }
+    { text: 'Pelajari Lebih Lanjut', type: 'secondary', href: 'https://medium.com', isOpenNewTab: true, tabIndex: 0 },
+    { text: 'Mulai Sekarang', href: '/users?action=daftar', scroll: false, tabIndex: 0 }
 ]
 
 // #endregion

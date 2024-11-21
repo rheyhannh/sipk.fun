@@ -384,7 +384,7 @@ const Fitur = () => {
         <section
             ref={sectionRef}
             id={'fitur'}
-            tabIndex={1}
+            tabIndex={0}
             className={`${styles.section} ${styles.fitur}`}
             onKeyDown={handleKeyDown}
         >

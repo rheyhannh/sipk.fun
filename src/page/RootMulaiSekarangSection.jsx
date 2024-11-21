@@ -84,7 +84,7 @@ const MulaiSekarang = () => {
         <section
             ref={sectionRef}
             id={'mulai_sekarang'}
-            tabIndex={1}
+            tabIndex={0}
             className={`${styles.section} ${styles.mulai_sekarang}`}
             onKeyDown={handleKeyDown}
         >
@@ -161,11 +161,11 @@ const MulaiSekarang = () => {
 
             <motion.div className={styles.title_big_cta}>
                 <Link href={'/users?action=login'} scroll={false} passHref legacyBehavior>
-                    <Button text={'Masuk'} type={'secondary'} tabIndex={1} />
+                    <Button text={'Masuk'} type={'secondary'} tabIndex={0} />
                 </Link>
 
                 <Link href={'/users?action=daftar'} scroll={false} passHref legacyBehavior>
-                    <Button text={'Daftar'} type={'main'} tabIndex={1} />
+                    <Button text={'Daftar'} type={'main'} tabIndex={0} />
                 </Link>
             </motion.div>
         </section>

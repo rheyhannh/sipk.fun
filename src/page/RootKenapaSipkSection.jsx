@@ -630,7 +630,7 @@ const KenapaSipk = ({ contents = ['x', 'y', 'z'], useAutoplay = false, autoplayO
         <section
             ref={sectionRef}
             id={'kenapa_sipk'}
-            tabIndex={1}
+            tabIndex={0}
             className={`${styles.section} ${styles.kenapa_sipk}`}
             onKeyDown={handleKeyDown}
         >
