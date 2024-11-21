@@ -569,13 +569,20 @@ const KenapaSipk = ({ contents = ['x', 'y', 'z'], useAutoplay = false, autoplayO
 
     const handleKeyDown = (event) => {
         if (event.key === 'Tab') {
+            if (event.shiftKey) {
+                if (activeContent !== 'active_1') {
+                    event.preventDefault();
+                    handleSlidePrevContent(false, false);
+                } 
+            }
+            else {
+                event.preventDefault();
+                handleSlideNextContent(false, true)
+            }
+        } else {
             event.preventDefault();
-            if (event.shiftKey) handleSlidePrevContent(false, true);
-            else handleSlideNextContent(false, true);
-        } else if (event.key === 'ArrowLeft') {
-            handleSlidePrevContent(true, false);
-        } else if (event.key === 'ArrowRight') {
-            handleSlideNextContent(true, false);
+            if (event.key === 'ArrowLeft') handleSlidePrevContent(true, false);
+            if (event.key === 'ArrowRight') handleSlideNextContent(true, false);
         }
     }
 

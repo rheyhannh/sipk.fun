@@ -65,19 +65,15 @@ const MulaiSekarang = () => {
     /** @param {React.KeyboardEvent} event */
     const handleKeyDown = (event) => {
         if (event.key === 'Tab') {
-            event.preventDefault();
             if (event.shiftKey) {
-                if (sectionRef.current && sectionRef.current.previousElementSibling) {
+                if (
+                    sectionRef.current &&
+                    sectionRef.current === document.activeElement &&
+                    sectionRef.current.previousElementSibling
+                ) {
+                    event.preventDefault();
                     sectionRef.current.previousElementSibling.focus();
                     scroller.scrollTo(sectionRef.current.previousElementSibling.id, { offset: -75 });
-                }
-            }
-            else {
-                const footer = document.getElementById('footer');
-                if (footer) {
-                    sectionRef.current.blur();
-                    footer.focus();
-                    scroller.scrollTo('footer');
                 }
             }
         }

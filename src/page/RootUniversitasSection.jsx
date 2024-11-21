@@ -122,12 +122,20 @@ const Universitas = ({ universitas }) => {
 
     const handleKeyDown = (event) => {
         if (event.key === 'Tab') {
-            event.preventDefault();
-            if (event.shiftKey) document.getElementById('navbar-cta').focus();
-            else {
+            if (event.shiftKey) {
+                if (sectionRef.current && sectionRef.current === document.activeElement) {
+                    event.preventDefault();
+                    document.getElementById('navbar-cta').focus();
+                }
+            } else {
                 if (sectionRef.current && sectionRef.current.nextElementSibling) {
-                    sectionRef.current.nextElementSibling.focus();
-                    scroller.scrollTo(sectionRef.current.nextElementSibling.id, { offset: -75 });
+                    const focusableElements = Array.from(sectionRef.current.querySelectorAll('[tabIndex="1"]'));
+                    const isLastFocusableElement = focusableElements[focusableElements.length - 1] === document.activeElement;
+                    if (isLastFocusableElement) {
+                        event.preventDefault();
+                        sectionRef.current.nextElementSibling.focus();
+                        scroller.scrollTo(sectionRef.current.nextElementSibling.id, { offset: -75 });
+                    }
                 }
             }
         }
