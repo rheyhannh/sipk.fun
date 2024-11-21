@@ -121,7 +121,12 @@ const Universitas = ({ universitas }) => {
     })
 
     return (
-        <div ref={sectionRef} id={'universitas'} className={`${styles.section} ${styles.universitas}`}>
+        <section
+            ref={sectionRef}
+            id={'universitas'}
+            tabIndex={1}
+            className={`${styles.section} ${styles.universitas}`}
+        >
             <div className={styles.inner}>
                 <div className={styles.layout}>
                     <div className={styles.text}>
@@ -346,7 +351,7 @@ const Universitas = ({ universitas }) => {
                 </div>
             </motion.div>
 
-        </div>
+        </section>
     )
 }
 

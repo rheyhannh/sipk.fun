@@ -130,7 +130,7 @@ const FooterWrapper = ({ children }) => (
 )
 
 const Footers = () => (
-    <footer className={styles.footer}>
+    <footer id={'footer'} className={styles.footer}>
         <motion.div
             className={styles.primary}
             whileInView={'show'}

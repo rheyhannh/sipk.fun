@@ -361,7 +361,12 @@ const Fitur = () => {
     }, 5000);
 
     return (
-        <div ref={sectionRef} id={'fitur'} className={`${styles.section} ${styles.fitur}`}>
+        <section
+            ref={sectionRef}
+            id={'fitur'}
+            tabIndex={1}
+            className={`${styles.section} ${styles.fitur}`}
+        >
             <div className={styles.fitur_wrapper}>
                 <motion.div
                     className={styles.title}
@@ -515,7 +520,7 @@ const Fitur = () => {
                     </motion.div>
                 </motion.div>
             </div>
-        </div>
+        </section>
     )
 }
 

@@ -116,7 +116,7 @@ const Header = () => {
 
     return (
         <div className={styles.header_outter}>
-            <header className={styles.header}>
+            <header id={'header'} className={styles.header}>
                 <nav className={styles.navbar}>
                     <motion.div
                         initial={{ y: -150, opacity: 0 }}
@@ -147,10 +147,11 @@ const Header = () => {
                         ))}
 
                         <NextLink href={'/users?action=daftar'} scroll={false} passHref legacyBehavior>
-                            <ButtonCTA text={'Mulai Sekarang'} />
+                            <ButtonCTA id={'navbar-cta'} text={'Mulai Sekarang'} />
                         </NextLink>
 
                         <div
+                            id={'navbar-theme'}
                             className={styles.theme}
                             onClick={() => {
                                 handleChangeTheme(theme === 'dark' ? 'light' : 'dark')

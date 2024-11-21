@@ -13,7 +13,7 @@ import styles from './style/root.module.css';
 const Hero = ({ universitas }) => {
 
     return (
-        <div
+        <section
             id={'home'}
             className={`${styles.section} ${styles.hero}`}
             style={{
@@ -21,7 +21,7 @@ const Hero = ({ universitas }) => {
             }}
         >
 
-        </div>
+        </section>
     )
 }
 

@@ -566,7 +566,12 @@ const KenapaSipk = ({ contents = ['x', 'y', 'z'], useAutoplay = false, autoplayO
     }, [autoplayCountdown])
 
     return (
-        <div ref={sectionRef} id={'kenapa_sipk'} className={`${styles.section} ${styles.kenapa_sipk}`}>
+        <section
+            ref={sectionRef}
+            id={'kenapa_sipk'}
+            tabIndex={1}
+            className={`${styles.section} ${styles.kenapa_sipk}`}
+        >
             <motion.h2
                 className={styles.title}
                 initial={{ visibility: 'hidden' }}
@@ -663,7 +668,7 @@ const KenapaSipk = ({ contents = ['x', 'y', 'z'], useAutoplay = false, autoplayO
                     </Details>
                 </Wrapper>
             </Content>
-        </div>
+        </section>
     )
 }
 

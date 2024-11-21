@@ -30,7 +30,12 @@ const Testimoni = ({ rating }) => {
     const headingRef = React.useRef(null);
 
     return (
-        <div id={'testimoni'} className={`${styles.section} ${styles.testimoni}`}>
+        <section
+            ref={sectionRef}
+            id={'testimoni'}
+            tabIndex={1}
+            className={`${styles.section} ${styles.testimoni}`}
+        >
             <div className={styles.inner}>
                 <motion.h2
                     ref={headingRef}
@@ -144,7 +149,7 @@ const Testimoni = ({ rating }) => {
                     ))}
                 </ScrollingCarousel>
             </motion.div>
-        </div>
+        </section>
     )
 }
 
