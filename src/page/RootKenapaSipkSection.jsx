@@ -79,6 +79,11 @@ const Content = ({ activeContent, children, ...props }) => {
     )
 }
 
+/**
+ * Component Description
+ * @param {Omit<HTMLMotionProps<'div'>, 'className' | 'layout' | 'transition'>} props Wrapper props
+ * @returns {React.ReactElement} Rendered component
+ */
 const Wrapper = ({ children, ...props }) => (
     <motion.div className={styles.wrapper} layout transition={{ ...layoutTransition }} {...props}>
         {children}
