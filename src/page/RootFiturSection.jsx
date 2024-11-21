@@ -503,7 +503,7 @@ const Fitur = () => {
                         <HighlightText text={'future'} {...resolveTitleProps('future')} />
                     </h2>
 
-                    <div
+                    {/* <div
                         style={{
                             position: 'absolute',
                             top: '10%',
@@ -522,7 +522,7 @@ const Fitur = () => {
                         <div style={{ border: '1px solid red', height: 'max-content', padding: '0.25rem', borderRadius: '0.5rem' }} onClick={() => { setTitleAnimation('shape_text') }}>shape_text</div>
                         <div style={{ border: '1px solid red', height: 'max-content', padding: '0.25rem', borderRadius: '0.5rem' }} onClick={() => { setTitleAnimation('translate_text') }}>translate_text</div>
                         <div style={{ border: '1px solid red', height: 'max-content', padding: '0.25rem', borderRadius: '0.5rem' }} onClick={() => { setTitleAnimation('hover') }}>hover</div>
-                    </div>
+                    </div> */}
                 </motion.div>
 
                 <motion.div className={styles.content} >
