@@ -15,7 +15,7 @@ import * as React from 'react';
 // #region HOOKS DEPEDENCY
 import useWindowSize from '@/hooks/useWindowSize';
 import { useLocalTheme } from '@/data/core';
-import { useTimeout } from 'ahooks';
+import { useTimeout, useKeyPress } from 'ahooks';
 // #endregion
 
 // #region COMPONENT DEPEDENCY
@@ -121,6 +121,13 @@ const Header = () => {
             if (showNavbar) setShowNavbar(false);
         }
     });
+
+    useKeyPress('Tab', (event, key) => {
+        if (!event.shiftKey) {
+            event.preventDefault();
+            event.target.blur();
+        }
+    }, { target: () => { return document.getElementById('navbar-theme') } })
 
     return (
         <div className={styles.header_outter}>

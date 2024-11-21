@@ -20,14 +20,6 @@ import MulaiSekarang from './RootMulaiSekarangSection';
 import Footer from './RootFooter';
 // #endregion
 
-// #region HOOKS DEPEDENCY
-import { useKeyPress } from 'ahooks';
-// #endregion
-
-// #region UTIL DEPEDENCY
-import { scroller } from 'react-scroll';
-// #endregion
-
 /**
  * Render root page `'/'`
  * @param {{universitas:Array<SupabaseTypes.UniversitasData>, rating:Array<SupabaseTypes.RatingData>, notifikasi:Array<SupabaseTypes.NotifikasiData>}} props Root props
