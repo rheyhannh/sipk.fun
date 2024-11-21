@@ -146,6 +146,21 @@ const Header = () => {
                                 routingOptions={{ ...item?.routingOptions }}
                                 className={styles.link}
                                 {...(item?.isOpenNewTab || false ? { target: '_blank' } : {})}
+                                tabIndex={0}
+                                onKeyDown={(event) => {
+                                    if (event.key === 'Enter' && item?.elementId) {
+                                        const target = document.getElementById(item.elementId);
+                                        scroller.scrollTo(item.elementId, { offset: -75 })
+                                        if (target) target.focus();
+                                    }
+                                }}
+                                onClickCapture={(event) => {
+                                    event.target.blur();
+                                    if (item?.elementId) {
+                                        const target = document.getElementById(item.elementId);
+                                        if (target) target.focus();
+                                    }
+                                }}
                             >
                                 {item.text}
                                 {item?.isOpenNewTab && (

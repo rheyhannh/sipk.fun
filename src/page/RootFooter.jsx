@@ -151,6 +151,21 @@ const Footers = () => (
                             scrollOptions={{ offset: -75, ...item?.scrollOptions }}
                             routingOptions={{ ...item?.routingOptions }}
                             {...(item?.isOpenNewTab || false ? { target: '_blank' } : {})}
+                            tabIndex={2}
+                            onKeyDown={(event) => {
+                                if (event.key === 'Enter' && item?.elementId) {
+                                    const target = document.getElementById(item.elementId);
+                                    scroller.scrollTo(item.elementId, { offset: -75 })
+                                    if (target) target.focus();
+                                }
+                            }}
+                            onClickCapture={(event) => {
+                                event.target.blur();
+                                if (item?.elementId) {
+                                    const target = document.getElementById(item.elementId);
+                                    if (target) target.focus();
+                                }
+                            }}
                         >
                             {item.text}
                             {item?.isOpenNewTab && (
@@ -163,7 +178,14 @@ const Footers = () => (
 
             <div className={styles.socials}>
                 {footerSocials.map((item, index) => (
-                    <motion.a key={index} className={styles.box} href={item.target} target={'_blank'} {...getFooterTransition(false, 0)}>
+                    <motion.a
+                        key={index}
+                        className={styles.box}
+                        href={item.target}
+                        target={'_blank'}
+                        tabIndex={2}
+                        onClickCapture={(event) => { event.currentTarget.blur() }}
+                        {...getFooterTransition(false, 0)}>
                         {item.icon}
                     </motion.a>
                 ))}
@@ -196,6 +218,21 @@ const Footers = () => (
                             scrollOptions={{ offset: -75, ...item?.scrollOptions }}
                             routingOptions={{ ...item?.routingOptions }}
                             {...(item?.isOpenNewTab || false ? { target: '_blank' } : {})}
+                            tabIndex={2}
+                            onKeyDown={(event) => {
+                                if (event.key === 'Enter' && item?.elementId) {
+                                    const target = document.getElementById(item.elementId);
+                                    scroller.scrollTo(item.elementId, { offset: -75 })
+                                    if (target) target.focus();
+                                }
+                            }}
+                            onClickCapture={(event) => {
+                                event.target.blur();
+                                if (item?.elementId) {
+                                    const target = document.getElementById(item.elementId);
+                                    if (target) target.focus();
+                                }
+                            }}
                         >
                             {item.text}
                             {item?.isOpenNewTab && (

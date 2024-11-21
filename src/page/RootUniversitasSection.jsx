@@ -63,6 +63,7 @@ import { replacePlaceholders } from './RootUtils';
 const ButtonLink = ({ text = 'Lorem', type = 'default', isOpenNewTab, ...props }) => (
     <Link
         className={`${styles.btn} ${type === 'secondary' ? styles.secondary : ''}`}
+        onClickCapture={(event) => { event.target.blur() }}
         {...(isOpenNewTab || false ? { target: '_blank' } : {})}
         {...props}
     >
