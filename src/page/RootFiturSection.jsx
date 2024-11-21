@@ -357,6 +357,7 @@ const Fitur = () => {
         }
     })
 
+    /** @param {React.KeyboardEvent} event */
     const handleKeyDown = (event) => {
         if (event.key === 'Tab') {
             event.preventDefault();

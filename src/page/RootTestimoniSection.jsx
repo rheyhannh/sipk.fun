@@ -31,6 +31,7 @@ const Testimoni = ({ rating }) => {
     const sectionRef = React.useRef(null);
     const headingRef = React.useRef(null);
 
+    /** @param {React.KeyboardEvent} event */
     const handleKeyDown = (event) => {
         if (event.key === 'Tab') {
             event.preventDefault();

@@ -122,6 +122,7 @@ const Universitas = ({ universitas }) => {
         jumlah_universitas: universitas.length
     })
 
+    /** @param {React.KeyboardEvent} event */
     const handleKeyDown = (event) => {
         if (event.key === 'Tab') {
             if (event.shiftKey) {
