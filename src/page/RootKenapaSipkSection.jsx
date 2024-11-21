@@ -660,7 +660,7 @@ const KenapaSipk = ({ contents = ['x', 'y', 'z'], useAutoplay = false, autoplayO
             >
                 {!contentShowed && (<motion.div className={styles.overlay} />)}
 
-                <Wrapper {...resolveActionProps(1)}>
+                <Wrapper {...resolveActionProps(1)} tabIndex={'-1'}>
                     <Box type={'x'}>
                         <AnimatePresence mode={'popLayout'}>
                             {activeContent.split('_')[1] === '1' && contentShowed && (
@@ -679,7 +679,7 @@ const KenapaSipk = ({ contents = ['x', 'y', 'z'], useAutoplay = false, autoplayO
                     </Details>
                 </Wrapper>
 
-                <Wrapper {...resolveActionProps(2)}>
+                <Wrapper {...resolveActionProps(2)} tabIndex={'-1'}>
                     <Box type={'y'}>
 
                     </Box>
@@ -694,7 +694,7 @@ const KenapaSipk = ({ contents = ['x', 'y', 'z'], useAutoplay = false, autoplayO
                     </Details>
                 </Wrapper>
 
-                <Wrapper {...resolveActionProps(3)}>
+                <Wrapper {...resolveActionProps(3)} tabIndex={'-1'}>
                     <Box type={'z'}>
                         <AnimatePresence mode={'popLayout'}>
                             {activeContent.split('_')[1] === '3' && contentShowed && (

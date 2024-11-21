@@ -33,7 +33,7 @@ const descriptionWords = description.split(' ');
 // with an array [logo, title, description, button, description highlight]
 const delayAnims = [0.125, 0.25, 0.85, 0.975, 1.175];
 
-const Button = React.forwardRef(({ type = 'default', text = 'Lorem', onClick, href }, ref) => {
+const Button = React.forwardRef(({ type = 'default', text = 'Lorem', onClick, href, ...props }, ref) => {
     if (typeof type !== 'string') type = 'default';
     if (!['default', 'main', 'secondary'].includes(type)) type = 'default';
 
@@ -52,6 +52,7 @@ const Button = React.forwardRef(({ type = 'default', text = 'Lorem', onClick, hr
             }}
             whileInView={'inView'}
             viewport={{ once: GLOBAL_VIEWPORT_ONCE }}
+            {...props}
         >
             {text}
         </motion.a>
@@ -160,11 +161,11 @@ const MulaiSekarang = () => {
 
             <motion.div className={styles.title_big_cta}>
                 <Link href={'/users?action=login'} scroll={false} passHref legacyBehavior>
-                    <Button text={'Masuk'} type={'secondary'} />
+                    <Button text={'Masuk'} type={'secondary'} tabIndex={1} />
                 </Link>
 
                 <Link href={'/users?action=daftar'} scroll={false} passHref legacyBehavior>
-                    <Button text={'Daftar'} type={'main'} />
+                    <Button text={'Daftar'} type={'main'} tabIndex={1} />
                 </Link>
             </motion.div>
         </section>
