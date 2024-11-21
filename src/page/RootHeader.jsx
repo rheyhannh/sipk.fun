@@ -176,6 +176,12 @@ const Header = () => {
                         <div
                             id={'navbar-theme'}
                             className={styles.theme}
+                            tabIndex={0}
+                            onKeyDown={(event) => {
+                                if (event.key === 'Enter') {
+                                    handleChangeTheme(theme === 'dark' ? 'light' : 'dark')
+                                }
+                            }}
                             onClick={() => {
                                 handleChangeTheme(theme === 'dark' ? 'light' : 'dark')
                             }}

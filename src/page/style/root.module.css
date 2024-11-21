@@ -178,7 +178,7 @@
 
 .navbar .nav>.theme {
     overflow: hidden;
-    width: calc(var(--logo-size) / 2);
+    width: var(--logo-size);
     height: var(--logo-size);
     color: var(--logo-second-color);
     cursor: pointer;
@@ -189,6 +189,7 @@
     align-items: center;
     flex-direction: column;
     gap: var(--logo-size);
+    width: var(--logo-size);
 }
 
 /* #endregion */
@@ -1206,6 +1207,10 @@
 
     .universitas .btn.secondary:focus:not(:hover) {
         border: 1px solid var(--logo-second-color);
+    }
+
+    .navbar .nav>.theme:focus:not(:hover) {
+        outline: 1px solid var(--logo-second-color);
     }
 
     .mulai_sekarang .title_big_cta .btn.main:focus:not(:hover),
