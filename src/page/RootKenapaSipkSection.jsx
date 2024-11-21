@@ -501,6 +501,10 @@ const KenapaSipk = ({ contents = ['x', 'y', 'z'], useAutoplay = false, autoplayO
         }, 1000 * pollingRate);
     };
 
+    /** 
+     * @param {boolean} [cycle]
+     * @param {boolean} [sectionSlide]
+     */
     const handleSlideNextContent = (cycle = true, sectionSlide = false) => {
         const currentContentNumber = parseInt(activeContent.split('_')[1]);
         const nextContentNumber = currentContentNumber + 1;
@@ -524,6 +528,11 @@ const KenapaSipk = ({ contents = ['x', 'y', 'z'], useAutoplay = false, autoplayO
             }
         }, 1000)
     }
+
+    /** 
+     * @param {boolean} [cycle]
+     * @param {boolean} [sectionSlide] 
+     */
     const handleSlidePrevContent = (cycle = true, sectionSlide = false) => {
         const currentContentNumber = parseInt(activeContent.split('_')[1]);
         const prevContentNumber = currentContentNumber - 1;
