@@ -71,18 +71,26 @@ const headerShorcuts = [
     },
 ]
 
-const ButtonCTA = React.forwardRef(({ text = 'Lorem', onClick, href }, ref) => (
+const ButtonCTA = React.forwardRef(({ text = 'Lorem', onClick, href, ...props }, ref) => (
     <motion.a
         ref={ref}
         className={styles.cta}
         onClick={onClick}
         href={href}
         initial={{ color: 'var(--root-header-textColor)' }}
-        whileHover={{
-            border: '1px solid var(--logo-second-color)',
-            color: 'var(--white-color)',
+        variants={{
+            hover: {
+                border: '1px solid var(--logo-second-color)',
+                color: 'var(--white-color)',
+            },
+            focus: {
+                border: '1px solid var(--logo-second-color)',
+            }
         }}
+        whileHover={'hover'}
+        whileFocus={'focus'}
         transition={{ duration: 0.75, delay: 0.1, ease: 'easeInOut' }}
+        {...props}
     >
         {text}
     </motion.a>
