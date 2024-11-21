@@ -38,7 +38,7 @@ export default function Root({ universitas, rating, notifikasi }) {
         <>
             <Header />
             <Container>
-                <Hero/>
+                <Hero />
                 <Universitas universitas={universitas} />
                 <KenapaSipk />
                 <Fitur />
