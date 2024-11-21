@@ -120,12 +120,26 @@ const Universitas = ({ universitas }) => {
         jumlah_universitas: universitas.length
     })
 
+    const handleKeyDown = (event) => {
+        if (event.key === 'Tab') {
+            event.preventDefault();
+            if (event.shiftKey) document.getElementById('navbar-cta').focus();
+            else {
+                if (sectionRef.current && sectionRef.current.nextElementSibling) {
+                    sectionRef.current.nextElementSibling.focus();
+                    scroller.scrollTo(sectionRef.current.nextElementSibling.id, { offset: -75 });
+                }
+            }
+        }
+    }
+
     return (
         <section
             ref={sectionRef}
             id={'universitas'}
             tabIndex={1}
             className={`${styles.section} ${styles.universitas}`}
+            onKeyDown={handleKeyDown}
         >
             <div className={styles.inner}>
                 <div className={styles.layout}>

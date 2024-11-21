@@ -27,7 +27,26 @@ import { AiFillStar } from 'react-icons/ai';
 
 const Testimoni = ({ rating }) => {
     const stars = [3, 3, 5, 4, 4, 5];
+    const sectionRef = React.useRef(null);
     const headingRef = React.useRef(null);
+
+    const handleKeyDown = (event) => {
+        if (event.key === 'Tab') {
+            event.preventDefault();
+            if (event.shiftKey) {
+                if (sectionRef.current && sectionRef.current.previousElementSibling) {
+                    sectionRef.current.previousElementSibling.focus();
+                    scroller.scrollTo(sectionRef.current.previousElementSibling.id, { offset: -75 });
+                }
+            }
+            else {
+                if (sectionRef.current && sectionRef.current.nextElementSibling) {
+                    sectionRef.current.nextElementSibling.focus();
+                    scroller.scrollTo(sectionRef.current.nextElementSibling.id, { offset: -75 });
+                }
+            }
+        }
+    }
 
     return (
         <section
@@ -35,6 +54,7 @@ const Testimoni = ({ rating }) => {
             id={'testimoni'}
             tabIndex={1}
             className={`${styles.section} ${styles.testimoni}`}
+            onKeyDown={handleKeyDown}
         >
             <div className={styles.inner}>
                 <motion.h2

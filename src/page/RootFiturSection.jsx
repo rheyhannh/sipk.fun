@@ -356,6 +356,24 @@ const Fitur = () => {
         }
     })
 
+    const handleKeyDown = (event) => {
+        if (event.key === 'Tab') {
+            event.preventDefault();
+            if (event.shiftKey) {
+                if (sectionRef.current && sectionRef.current.previousElementSibling) {
+                    sectionRef.current.previousElementSibling.focus();
+                    scroller.scrollTo(sectionRef.current.previousElementSibling.id, { offset: -75 });
+                }
+            }
+            else {
+                if (sectionRef.current && sectionRef.current.nextElementSibling) {
+                    sectionRef.current.nextElementSibling.focus();
+                    scroller.scrollTo(sectionRef.current.nextElementSibling.id, { offset: -75 });
+                }
+            }
+        }
+    }
+
     useInterval(() => {
         if (alreadyInView) setTitleAnimation('shape_text');
     }, 5000);
@@ -366,6 +384,7 @@ const Fitur = () => {
             id={'fitur'}
             tabIndex={1}
             className={`${styles.section} ${styles.fitur}`}
+            onKeyDown={handleKeyDown}
         >
             <div className={styles.fitur_wrapper}>
                 <motion.div

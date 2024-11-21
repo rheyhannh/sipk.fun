@@ -494,19 +494,45 @@ const KenapaSipk = ({ contents = ['x', 'y', 'z'], useAutoplay = false, autoplayO
         }, 1000 * pollingRate);
     };
 
-    const handleSlideNextContent = () => {
-        if (useAutoplay) {
-            setIsSleeping(true);
-            clearInterval(autoplayRef.current);
-        }
-        setActiveContent((prevState) => {
-            const prevNumber = parseInt(prevState.split('_')[1]);
-            const nextNumber = prevNumber + 1;
-            if (nextNumber > contents.length) {
-                return 'active_1'
+    const handleSlideNextContent = (cycle = true, sectionSlide = false) => {
+        const currentContentNumber = parseInt(activeContent.split('_')[1]);
+        const nextContentNumber = currentContentNumber + 1;
+        const isCorner = nextContentNumber > contents.length;
+
+        if (isCorner && !cycle && !sectionSlide) return;
+        if (isCorner && sectionSlide && !cycle) {
+            if (sectionRef.current && sectionRef.current.nextElementSibling) {
+                sectionRef.current.nextElementSibling.focus();
+                scroller.scrollTo(sectionRef.current.nextElementSibling.id, { offset: -75 });
             }
-            return `active_${nextNumber}`
-        })
+            return;
+        }
+        if (useAutoplay) { setIsSleeping(true); clearInterval(autoplayRef.current); }
+
+        setActiveContent(isCorner ? 'active_1' : `active_${nextContentNumber}`)
+
+        setTimeout(() => {
+            if (useAutoplay) {
+                setIsSleeping(false);
+            }
+        }, 1000)
+    }
+    const handleSlidePrevContent = (cycle = true, sectionSlide = false) => {
+        const currentContentNumber = parseInt(activeContent.split('_')[1]);
+        const prevContentNumber = currentContentNumber - 1;
+        const isCorner = prevContentNumber <= 0;
+
+        if (isCorner && !cycle && !sectionSlide) return;
+        if (isCorner && sectionSlide && !cycle) {
+            if (sectionRef.current && sectionRef.current.previousElementSibling) {
+                sectionRef.current.previousElementSibling.focus();
+                scroller.scrollTo(sectionRef.current.previousElementSibling.id, { offset: -75 });
+            }
+            return;
+        }
+        if (useAutoplay) { setIsSleeping(true); clearInterval(autoplayRef.current); }
+
+        setActiveContent(isCorner ? 'active_3' : `active_${prevContentNumber}`)
 
         setTimeout(() => {
             if (useAutoplay) {
@@ -541,6 +567,17 @@ const KenapaSipk = ({ contents = ['x', 'y', 'z'], useAutoplay = false, autoplayO
         }
     };
 
+    const handleKeyDown = (event) => {
+        if (event.key === 'Tab') {
+            event.preventDefault();
+            if (event.shiftKey) handleSlidePrevContent(false, true);
+            else handleSlideNextContent(false, true);
+        } else if (event.key === 'ArrowLeft') {
+            handleSlidePrevContent(true, false);
+        } else if (event.key === 'ArrowRight') {
+            handleSlideNextContent(true, false);
+        }
+    }
 
     const resolveActionProps = (contentNumber) => {
         const x = KENAPASIPK_ACTIVING_CONTENT_EVENT_TYPE;
@@ -561,7 +598,7 @@ const KenapaSipk = ({ contents = ['x', 'y', 'z'], useAutoplay = false, autoplayO
 
     React.useEffect(() => {
         if (autoplayCountdown <= 1) {
-            handleSlideNextContent()
+            handleSlideNextContent();
         }
     }, [autoplayCountdown])
 
@@ -571,6 +608,7 @@ const KenapaSipk = ({ contents = ['x', 'y', 'z'], useAutoplay = false, autoplayO
             id={'kenapa_sipk'}
             tabIndex={1}
             className={`${styles.section} ${styles.kenapa_sipk}`}
+            onKeyDown={handleKeyDown}
         >
             <motion.h2
                 className={styles.title}
