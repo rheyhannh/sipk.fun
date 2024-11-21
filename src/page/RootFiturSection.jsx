@@ -30,6 +30,7 @@ import styles from './style/root.module.css';
 import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
 import { ProgressDummy, DistribusiDummy, GrafikDummy } from '@/component/Card';
 import HighlightText from '@/component/motion/HighlightText';
+import { scroller } from 'react-scroll';
 // #endregion
 
 // #region ICON DEPEDENCY

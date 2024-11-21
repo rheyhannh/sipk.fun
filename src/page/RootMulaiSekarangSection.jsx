@@ -22,6 +22,7 @@ import styles from './style/root.module.css';
 import { motion } from 'framer-motion';
 import { LogoImage } from '@/component/Main';
 import HighlightText from '@/component/motion/HighlightText';
+import { scroller } from 'react-scroll';
 // #endregion
 
 const title = 'Mulai Sekarang';

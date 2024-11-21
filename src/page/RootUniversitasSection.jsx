@@ -29,6 +29,7 @@ import styles from './style/root.module.css';
 // #region COMPONENT DEPEDENCY
 import { motion, useScroll, useSpring } from 'framer-motion';
 import { AnimatedElement, ScrollingCarousel } from './RootComponents';
+import { scroller } from 'react-scroll';
 // #endregion
 
 // #region ICON DEPEDENCY

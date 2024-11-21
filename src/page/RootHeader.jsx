@@ -23,7 +23,7 @@ import { mutate } from 'swr';
 import { motion, useScroll, useMotionValueEvent } from 'framer-motion';
 import { LogoImage } from '@/component/Main';
 import Link from '@/component/Link';
-import { animateScroll as scroll } from 'react-scroll';
+import { animateScroll as scroll, scroller } from 'react-scroll';
 // #endregion
 
 // #region ICON DEPEDENCY

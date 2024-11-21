@@ -28,6 +28,7 @@ import {
     MatkulDummiesNilaiBobot,
     MatkulDummiesNilaiColorPreset
 } from '@/component/landing/variables/MatkulDummies';
+import { scroller } from 'react-scroll';
 // #endregion
 
 // #region UTIL DEPEDENCY
