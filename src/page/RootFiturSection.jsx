@@ -145,6 +145,7 @@ const FiturCard = ({ title, description, wrapperClassname, content, contentIndex
 }
 
 const Fitur = () => {
+    /** @type {React.MutableRefObject<HTMLDivElement>} */
     const sectionRef = React.useRef(null);
     // TODOS setIconSize based viewport / responsive
     const [iconSize, setIconSize] = React.useState(60);

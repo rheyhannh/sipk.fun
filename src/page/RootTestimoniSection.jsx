@@ -27,6 +27,7 @@ import { AiFillStar } from 'react-icons/ai';
 
 const Testimoni = ({ rating }) => {
     const stars = [3, 3, 5, 4, 4, 5];
+    /** @type {React.MutableRefObject<HTMLDivElement>} */
     const sectionRef = React.useRef(null);
     const headingRef = React.useRef(null);
 

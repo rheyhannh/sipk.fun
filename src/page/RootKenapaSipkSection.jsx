@@ -39,6 +39,7 @@ const layoutTransition = {
     layout: { type: 'spring', duration: 1, bounce: 0.3 }
 }
 
+/** @type {'hover' | 'tap' | 'both'} */
 const KENAPASIPK_ACTIVING_CONTENT_EVENT_TYPE = 'tap';
 
 /**
@@ -478,6 +479,7 @@ const KenapaSipk = ({ contents = ['x', 'y', 'z'], useAutoplay = false, autoplayO
     const [isSleeping, setIsSleeping] = React.useState(false);
 
     const autoplayRef = React.useRef(null);
+    /** @type {React.MutableRefObject<HTMLDivElement>} */
     const sectionRef = React.useRef(null);
 
     const [contentShowed, setContentShowed] = React.useState(false);

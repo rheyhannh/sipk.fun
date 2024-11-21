@@ -80,6 +80,7 @@ const ButtonLink = ({ text = 'Lorem', type = 'default', isOpenNewTab, ...props }
  * @returns {React.ReactElement} Rendered component
  */
 const Universitas = ({ universitas }) => {
+    /** @type {React.MutableRefObject<HTMLDivElement>} */
     const sectionRef = React.useRef(null);
     const { scrollYProgress } = useScroll({
         target: sectionRef,
