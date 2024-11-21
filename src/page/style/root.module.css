@@ -1197,6 +1197,30 @@
     .footer .secondary a:hover {
         color: var(--root-footer-textColor);
     }
+
+    .universitas .btn:focus:not(:hover) {
+        color: var(--dark-color);
+        border: 1px solid var(--logo-second-color);
+        background-color: transparent;
+    }
+
+    .universitas .btn.secondary:focus:not(:hover) {
+        border: 1px solid var(--logo-second-color);
+    }
+
+    .mulai_sekarang .title_big_cta .btn.main:focus:not(:hover),
+    .mulai_sekarang .title_big_cta .btn.secondary:focus:not(:hover) {
+        color: var(--dark-color);
+        border: 2px solid var(--logo-second-color);
+        background-color: transparent;
+    }
+
+    .navbar .nav a.link:focus:not(:hover),
+    .footer .primary a:focus:not(:hover),
+    .footer .socials .box:focus:not(:hover),
+    .footer .secondary a:focus:not(:hover) {
+        outline: 1px solid var(--root-footer-hoverColor);
+    }
 }
 
 @media screen and (min-width: 1280px) {
