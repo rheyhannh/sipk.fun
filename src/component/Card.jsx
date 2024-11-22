@@ -2358,7 +2358,7 @@ export function ProgressDummy({
     value = { sks: 132, matkul: 45, ipk: 3.62 },
     target = { sks: 144, matkul: 50, ipk: 3.75 },
     animOptions = { duration: 1.5, delay: 0 },
-    animOptions = { duration: 1500, delay: 0 },
+    countUpOptions,
     ...props
 }) {
     const animationDuration = animOptions?.duration ? (animOptions.duration) : 1.5;
@@ -2390,6 +2390,7 @@ export function ProgressDummy({
                                 end={value.sks}
                                 delay={animationDelay}
                                 preserveValue={true}
+                                {...countUpOptions}
                             >
                                 {({ countUpRef }) => (
                                     <h3 ref={countUpRef} />
@@ -2422,6 +2423,7 @@ export function ProgressDummy({
                                 end={value.matkul}
                                 delay={animationDelay}
                                 preserveValue={true}
+                                {...countUpOptions}
                             >
                                 {({ countUpRef }) => (
                                     <h3 ref={countUpRef} />
@@ -2454,6 +2456,7 @@ export function ProgressDummy({
                                 end={value.ipk}
                                 delay={animationDelay}
                                 preserveValue={true}
+                                {...countUpOptions}
                             >
                                 {({ countUpRef }) => (
                                     <h3 ref={countUpRef} />
