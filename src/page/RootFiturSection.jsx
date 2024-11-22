@@ -61,10 +61,6 @@ const FITUR_SECTION_CONTENTS = [
                     useAutoplay={false}
                     matkul={defaultMatakuliah}
                     penilaian={defaultPenilaian}
-                    animOptions={{
-                        duration: 1500,
-                        delay: (FITUR_FITURCARD_CONTENT_PROPS.transition.duration * 1000) / 2,
-                    }}
                     {...FITUR_FITURCARD_CONTENT_PROPS}
                 />
             )
@@ -76,14 +72,7 @@ const FITUR_SECTION_CONTENTS = [
             description: undefined,
             wrapperClassname: 'grafik_progress',
             content: (
-                <GrafikDummy
-                    matkul={defaultMatakuliah}
-                    animOptions={{
-                        duration: 1500,
-                        delay: (FITUR_FITURCARD_CONTENT_PROPS.transition.duration * 1000) / 2,
-                    }}
-                    {...FITUR_FITURCARD_CONTENT_PROPS}
-                />
+                <GrafikDummy matkul={defaultMatakuliah} {...FITUR_FITURCARD_CONTENT_PROPS} />
             )
         }
     },
@@ -93,13 +82,7 @@ const FITUR_SECTION_CONTENTS = [
             description: undefined,
             wrapperClassname: 'bar_progress',
             content: (
-                <ProgressDummy
-                    animOptions={{
-                        duration: 1500,
-                        delay: (FITUR_FITURCARD_CONTENT_PROPS.transition.duration * 1000) / 2,
-                    }}
-                    {...FITUR_FITURCARD_CONTENT_PROPS}
-                />
+                <ProgressDummy {...FITUR_FITURCARD_CONTENT_PROPS} />
             )
         }
     },
