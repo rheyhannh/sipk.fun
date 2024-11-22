@@ -37,14 +37,14 @@ const Testimoni = ({ rating }) => {
             event.preventDefault();
             if (event.shiftKey) {
                 if (sectionRef.current && sectionRef.current.previousElementSibling) {
-                    sectionRef.current.previousElementSibling.focus();
                     scroller.scrollTo(sectionRef.current.previousElementSibling.id, { offset: -75 });
+                    sectionRef.current.previousElementSibling.focus();
                 }
             }
             else {
                 if (sectionRef.current && sectionRef.current.nextElementSibling) {
+                    scroller.scrollTo(sectionRef.current.nextElementSibling.id, { offset: -75, smooth: true });
                     sectionRef.current.nextElementSibling.focus();
-                    scroller.scrollTo(sectionRef.current.nextElementSibling.id, { offset: -75 });
                 }
             }
         }

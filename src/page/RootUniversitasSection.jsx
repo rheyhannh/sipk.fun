@@ -131,8 +131,8 @@ const Universitas = ({ universitas }) => {
                     const isLastFocusableElement = focusableElements[focusableElements.length - 1] === document.activeElement;
                     if (isLastFocusableElement) {
                         event.preventDefault();
+                        scroller.scrollTo(sectionRef.current.nextElementSibling.id, { offset: -75, smooth: true });
                         sectionRef.current.nextElementSibling.focus();
-                        scroller.scrollTo(sectionRef.current.nextElementSibling.id, { offset: -75 });
                     }
                 }
             }

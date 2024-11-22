@@ -98,6 +98,7 @@ const ButtonCTA = React.forwardRef(({ text = 'Lorem', onClick, href, ...props },
 
 const Header = () => {
     const [showNavbar, setShowNavbar] = React.useState(false);
+    const navRef = React.useRef(null);
     const { width: windowWidth, height: windowHeight } = useWindowSize();
     const { data: theme } = useLocalTheme();
     const { scrollY } = useScroll();
@@ -127,10 +128,22 @@ const Header = () => {
             <header id={'header'} className={styles.header}>
                 <nav className={styles.navbar}>
                     <motion.div
+                        ref={navRef}
                         initial={{ y: -150, opacity: 0 }}
                         transition={{ duration: 0.5, bounce: 0.2 }}
                         animate={showNavbar ? { y: 0, opacity: 1 } : { y: -150, opacity: 0 }}
                         className={styles.nav}
+                        onKeyDown={(event) => {
+                            if (event.key === 'Tab') {
+                                if (!event.shiftKey) {
+                                    if (navRef.current && navRef.current.lastChild === document.activeElement) {
+                                        const sections = document.getElementsByTagName('section');
+                                        // TODOS should scroll to first section not second
+                                        scroller.scrollTo(sections[1].id, { offset: -75, smooth: true, duration: (x) => Math.abs(x) > 1500 ? 0 : 500 });
+                                    }
+                                }
+                            }
+                        }}
                     >
                         <div className={styles.logo} onClick={() => { scroll.scrollToTop({ smooth: false, duration: 1 }) }}>
                             <LogoImage src={'/logo_fill.png'} width={24} height={24} />

@@ -73,8 +73,18 @@ const MulaiSekarang = () => {
                     sectionRef.current.previousElementSibling
                 ) {
                     event.preventDefault();
+                    scroller.scrollTo(sectionRef.current.previousElementSibling.id, { offset: -75, smooth: true });
                     sectionRef.current.previousElementSibling.focus();
-                    scroller.scrollTo(sectionRef.current.previousElementSibling.id, { offset: -75 });
+                }
+            } else {
+                if (sectionRef.current) {
+                    const focusableElements = Array.from(sectionRef.current.querySelectorAll('[tabIndex="0"]'));
+                    const isLastFocusableElement = focusableElements[focusableElements.length - 1] === document.activeElement;
+                    if (isLastFocusableElement) {
+                        event.preventDefault();
+                        event.target.blur();
+                        scroller.scrollTo('footer-shorcuts', { smooth: true });
+                    }
                 }
             }
         }

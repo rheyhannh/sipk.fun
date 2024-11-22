@@ -513,8 +513,8 @@ const KenapaSipk = ({ contents = ['x', 'y', 'z'], useAutoplay = false, autoplayO
         if (isCorner && !cycle && !sectionSlide) return;
         if (isCorner && sectionSlide && !cycle) {
             if (sectionRef.current && sectionRef.current.nextElementSibling) {
+                scroller.scrollTo(sectionRef.current.nextElementSibling.id, { offset: -75, smooth: true });
                 sectionRef.current.nextElementSibling.focus();
-                scroller.scrollTo(sectionRef.current.nextElementSibling.id, { offset: -75 });
             }
             return;
         }
@@ -541,8 +541,13 @@ const KenapaSipk = ({ contents = ['x', 'y', 'z'], useAutoplay = false, autoplayO
         if (isCorner && !cycle && !sectionSlide) return;
         if (isCorner && sectionSlide && !cycle) {
             if (sectionRef.current && sectionRef.current.previousElementSibling) {
-                sectionRef.current.previousElementSibling.focus();
-                scroller.scrollTo(sectionRef.current.previousElementSibling.id, { offset: -75 });
+                scroller.scrollTo(sectionRef.current.previousElementSibling.id, { offset: -75, smooth: true });
+
+                const focusableElements = sectionRef.current.previousElementSibling.querySelectorAll('[tabIndex="0"]');
+                const lastFocusableElement = focusableElements[focusableElements.length - 1];
+
+                if (lastFocusableElement) lastFocusableElement.focus();
+                else sectionRef.current.previousElementSibling.focus();
             }
             return;
         }
@@ -587,19 +592,16 @@ const KenapaSipk = ({ contents = ['x', 'y', 'z'], useAutoplay = false, autoplayO
     const handleKeyDown = (event) => {
         if (event.key === 'Tab') {
             if (event.shiftKey) {
-                if (activeContent !== 'active_1') {
-                    event.preventDefault();
-                    handleSlidePrevContent(false, false);
-                } 
+                event.preventDefault();
+                handleSlidePrevContent(false, true);
             }
             else {
                 event.preventDefault();
                 handleSlideNextContent(false, true)
             }
         } else {
-            event.preventDefault();
-            if (event.key === 'ArrowLeft') handleSlidePrevContent(true, false);
-            if (event.key === 'ArrowRight') handleSlideNextContent(true, false);
+            if (event.key === 'ArrowLeft') { event.preventDefault(); handleSlidePrevContent(true, false); }
+            if (event.key === 'ArrowRight') { event.preventDefault(); handleSlideNextContent(true, false); }
         }
     }
 

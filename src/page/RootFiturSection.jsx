@@ -346,14 +346,14 @@ const Fitur = () => {
             event.preventDefault();
             if (event.shiftKey) {
                 if (sectionRef.current && sectionRef.current.previousElementSibling) {
+                    scroller.scrollTo(sectionRef.current.previousElementSibling.id, { offset: -75, smooth: true });
                     sectionRef.current.previousElementSibling.focus();
-                    scroller.scrollTo(sectionRef.current.previousElementSibling.id, { offset: -75 });
                 }
             }
             else {
                 if (sectionRef.current && sectionRef.current.nextElementSibling) {
-                    sectionRef.current.nextElementSibling.focus();
                     scroller.scrollTo(sectionRef.current.nextElementSibling.id, { offset: -75 });
+                    sectionRef.current.nextElementSibling.focus();
                 }
             }
         }
