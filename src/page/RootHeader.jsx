@@ -182,7 +182,8 @@ const Header = () => {
                                     handleChangeTheme(theme === 'dark' ? 'light' : 'dark')
                                 }
                             }}
-                            onClick={() => {
+                            onClick={(event) => {
+                                event.currentTarget.blur();
                                 handleChangeTheme(theme === 'dark' ? 'light' : 'dark')
                             }}
                         >
