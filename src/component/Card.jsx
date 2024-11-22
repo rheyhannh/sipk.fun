@@ -2357,11 +2357,12 @@ export function Progress({ state, user, matkul, penilaian }) {
 export function ProgressDummy({
     value = { sks: 132, matkul: 45, ipk: 3.62 },
     target = { sks: 144, matkul: 50, ipk: 3.75 },
+    animOptions = { duration: 1.5, delay: 0 },
     animOptions = { duration: 1500, delay: 0 },
     ...props
 }) {
-    const animationDuration = animOptions?.duration ? (animOptions.duration / 1000) : 1.5;
-    const animationDelay = animOptions?.delay ? (animOptions.delay / 1000) : 0;
+    const animationDuration = animOptions?.duration ? (animOptions.duration) : 1.5;
+    const animationDelay = animOptions?.delay ? (animOptions.delay) : 0;
 
     return (
         <motion.div className={styles.progress} {...props}>
