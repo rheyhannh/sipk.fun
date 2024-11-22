@@ -140,7 +140,7 @@ const Footers = () => (
                 <LogoImage src={'/logo_fill_contrast.png'} width={60} height={60} />
             </motion.div>
 
-            <div className={styles.shorcut}>
+            <div id={'footer-shorcuts'} className={styles.shorcut}>
                 {footerShorcuts.map((item, index) => (
                     <motion.div key={index} {...getFooterTransition(true, 0)}>
                         <Link
@@ -176,7 +176,7 @@ const Footers = () => (
                 ))}
             </div>
 
-            <div className={styles.socials}>
+            <div id={'footer-socials'} className={styles.socials}>
                 {footerSocials.map((item, index) => (
                     <motion.a
                         key={index}
@@ -207,7 +207,7 @@ const Footers = () => (
             <motion.span initial={{ y: 75, opacity: 0 }} {...getFooterTransition(true, 2)}>
                 2024 All Rights Reserved.
             </motion.span>
-            <div className={styles.sublinks}>
+            <div id={'footer-sublinks'} className={styles.sublinks}>
                 {footerSublinks.map((item, index) => (
                     <motion.div key={index} {...getFooterTransition(true, 2)}>
                         <Link
