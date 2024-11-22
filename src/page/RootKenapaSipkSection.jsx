@@ -274,7 +274,7 @@ const BoxContentX = React.forwardRef(({
                 <ProgressDummy
                     value={{ sks: total.sks, matkul: total.matkul, ipk: total.ipk }}
                     animOptions={{
-                        duration: 2500,
+                        duration: 2.5,
                         delay: 0,
                     }}
                     style={{ boxShadow: 'none', borderRadius: '1rem', transformOrigin: 'top right' }}
