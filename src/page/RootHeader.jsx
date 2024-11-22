@@ -98,6 +98,7 @@ const ButtonCTA = React.forwardRef(({ text = 'Lorem', onClick, href, ...props },
 
 const Header = () => {
     const [showNavbar, setShowNavbar] = React.useState(false);
+    /** @type {React.MutableRefObject<HTMLDivElement>} */
     const navRef = React.useRef(null);
     const { width: windowWidth, height: windowHeight } = useWindowSize();
     const { data: theme } = useLocalTheme();
