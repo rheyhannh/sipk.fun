@@ -24,7 +24,7 @@ import { useCookies } from 'next-client-cookies';
 import { DashboardContext } from "./provider/Dashboard";
 import { ModalContext } from "./provider/Modal";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
-import CountUp from 'react-countup';
+import CountUp, { CountUpProps } from 'react-countup';
 import ProgressBar from "@ramonak/react-progress-bar";
 import { LineChart, Line, BarChart, Bar, XAxis, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import { Icon } from '@/component/loader/ReactIcons'
@@ -2345,8 +2345,26 @@ export function Progress({ state, user, matkul, penilaian }) {
  * @property {number} target.sks
  * @property {number} target.matkul
  * @property {number} target.ipk
- * @property {animOptions} animOptions
+ * @property {Object} animOptions
  * Opsi animasi yang digunakan
+ * @property {number} animOptions.duration
+ * Durasi animasi dalam detik
+ * - Default : `1.5`
+ * @property {number} animOptions.delay
+ * Delay animasi dalam detik
+ * - Default : `0`
+ * @property {CountUpProps} countUpOptions
+ * Secara default menggunakan props berikut,
+ * ```js
+ * {
+ *      start: 0,
+ *      duration: animationDuration, // animOptions.duration
+ *      decimals: 0 || 2, // If value are decimal, use two number behind zeros
+ *      end: value, // retrieved from value props
+ *      delay: animationDelay, // animOptions.delay
+ *      preserveValue: true,
+ * }
+ * ```
  */
 
 /**
