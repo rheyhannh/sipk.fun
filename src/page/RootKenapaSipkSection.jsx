@@ -658,7 +658,8 @@ const KenapaSipk = ({ contents = ['x', 'y', 'z'], useAutoplay = false, autoplayO
                     adjustWavingFlyIn={{
                         y: [-225, 0],
                         bounce: 0.15,
-                        delay: 0.25
+                        delay: 0.25,
+                        wordWrapperStyle: { overflow: 'auto' }
                     }}
                 />
             </motion.h2>
