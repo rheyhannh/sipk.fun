@@ -559,7 +559,7 @@
 .fitur {
     --root-section-height: calc(100vh * 3);
     --icon-size: 60px;
-    --item-gap: 0.75rem;
+    --item-gap: 0.25rem;
     --word-gap: 0.25rem;
     position: relative;
     width: 100%;
@@ -616,7 +616,6 @@
 
 .fitur_wrapper h2:nth-child(2)>span {
     color: var(--footer2-textColor);
-    margin: 0 var(--item-gap);
 }
 
 .fitur_wrapper h2:nth-child(3) {
@@ -793,6 +792,12 @@
     text-align: center;
     gap: 0.5rem;
     padding: 1rem 2rem;
+    overflow: hidden;
+}
+
+.fitur_wrapper .content .card .card_secondary .title_small {
+    white-space: nowrap;
+    font-size: calc(var(--root-title-fontsize) * 0.675);
 }
 
 .fitur_wrapper .content .card .card_secondary .title_small_description {

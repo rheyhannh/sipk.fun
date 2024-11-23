@@ -138,6 +138,9 @@ const resolveTitleProps = (text) => ({
     },
     adjustWavingFlyIn: {
         baseDelay: FITUR_TITLE_STAGGERED[findArrayIndexByString(text, FITUR_TITLE_PARAGRAPH.flat())],
+        wordWrapperStyle: {
+            padding: '0 0.5rem'
+        }
     }
 })
 
