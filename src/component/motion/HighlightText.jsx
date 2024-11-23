@@ -314,6 +314,13 @@ import styles from './style/highlight_text.module.css'
  * @property {number} repeatDelay
  * Delay pengulangan animasi dalam satuan `detik` 
  * - Default : `0.1`
+ * @property {React.CSSProperties} wordWrapperStyle
+ * Style yang digunakan pada element wrapper untuk setiap `Word` atau kata yang digunakan. 
+ * 
+ * Saat props ini `truthy` atau ada style yang digunakan, maka setiap element kata akan dibungkus dengan
+ * element wrapper.
+ * 
+ * - Default : `null`
  */
 
 /** Opsi atau atribut yang dapat dicustom saat menggunakan preset `wavingTranslate`
@@ -345,6 +352,13 @@ import styles from './style/highlight_text.module.css'
  * @property {number} repeatDelay 
  * Delay pengulangan animasi dalam satuan `detik` 
  * - Default : `0.1`
+ * @property {React.CSSProperties} wordWrapperStyle
+ * Style yang digunakan pada element wrapper untuk setiap `Word` atau kata yang digunakan. 
+ * 
+ * Saat props ini `truthy` atau ada style yang digunakan, maka setiap element kata akan dibungkus dengan
+ * element wrapper.
+ * 
+ * - Default : `null`
  */
 
 /** Opsi atau atribut yang dapat dicustom saat menggunakan preset `springRotate`
@@ -377,6 +391,13 @@ import styles from './style/highlight_text.module.css'
  * @property {number} repeatDelay 
  * Delay pengulangan animasi dalam satuan `detik` 
  * - Default : `0.1`
+ * @property {React.CSSProperties} wordWrapperStyle
+ * Style yang digunakan pada element wrapper untuk setiap `Word` atau kata yang digunakan. 
+ * 
+ * Saat props ini `truthy` atau ada style yang digunakan, maka setiap element kata akan dibungkus dengan
+ * element wrapper.
+ * 
+ * - Default : `null`
  */
 
 /** Opsi atau atribut yang dapat dicustom saat menggunakan preset `wavingFlyIn`
@@ -409,6 +430,13 @@ import styles from './style/highlight_text.module.css'
  * @property {number} repeatDelay 
  * Delay pengulangan animasi dalam satuan `detik` 
  * - Default : `0.1`
+ * @property {React.CSSProperties} wordWrapperStyle
+ * Style yang digunakan pada element wrapper untuk setiap `Word` atau kata yang digunakan. 
+ * 
+ * Saat props ini `truthy` atau ada style yang digunakan, maka setiap element kata akan dibungkus dengan
+ * element wrapper.
+ * 
+ * Default : `{ overflow: 'hidden' }`
  */
 
 /** Opsi atau atribut yang dapat dicustom saat menggunakan preset `wavingRotation`
@@ -444,6 +472,13 @@ import styles from './style/highlight_text.module.css'
  * @property {number} repeatDelay 
  * Delay pengulangan animasi dalam satuan `detik` 
  * - Default : `0.1`
+ * @property {React.CSSProperties} wordWrapperStyle
+ * Style yang digunakan pada element wrapper untuk setiap `Word` atau kata yang digunakan. 
+ * 
+ * Saat props ini `truthy` atau ada style yang digunakan, maka setiap element kata akan dibungkus dengan
+ * element wrapper.
+ * 
+ * - Default : `null`
  */
 
 /** Opsi atau atribut yang dapat dicustom saat menggunakan preset `mixFancyTranslate`
@@ -533,6 +568,13 @@ import styles from './style/highlight_text.module.css'
  * @property {number} repeatDelay 
  * Delay pengulangan animasi dalam satuan `detik` 
  * - Default : `0.1`
+ * @property {React.CSSProperties} wordWrapperStyle
+ * Style yang digunakan pada element wrapper untuk setiap `Word` atau kata yang digunakan. 
+ * 
+ * Saat props ini `truthy` atau ada style yang digunakan, maka setiap element kata akan dibungkus dengan
+ * element wrapper.
+ * 
+ * - Default : `null`
  */
 
 /**
