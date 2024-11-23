@@ -43,6 +43,105 @@ import { LuShapes } from "react-icons/lu";
 import { shuffleArray, findArrayIndexByString } from './RootUtils';
 // #endregion
 
+/** 
+ * Method untuk menghitung jumlah karakter dan kata sebelumnya dari kata yang dipilih.
+ * Hanya gunakan method ini untuk menghitung konten `statis`. Berikut adalah format dari array yang digunakan,
+ * 
+ * ```js
+ * const pArray = [
+ *      ['Analytics'], // Index 0 sebagai paragraf 1
+ *      ['that', 'helps', 'you'], // Index 1 sebagai paragraf 2
+ *      ['shape', 'the', 'future'] // Index 2 sebagai paragraf 3
+ * ]
+ * 
+ * // Format pArray[pIndex][wIndex] - paragrafArray[indexParagraf][indexKata]
+ * // Sehingga,
+ * // pIndex dari 'that' = 1 dan wIndex = 0
+ * // pIndex dari 'the' = 2 dan wIndex = 1
+ * ```
+ * 
+ * Return object dengan key `words` sebagai jumlah kata, `chars` sebagai jumlah huruf dan `-1` jika beberapa case berikut terjadi,
+ * - Param `pArray` falsy atau bukan merupakan tipe array
+ * - Param `str` falsy atau tidak tersedia pada `pArray`
+ * - Param `pIndex` dan `wIndex` tidak tersedia pada `pArray`
+ * 
+ * Jika terdapat kata yang sama, `pIndex` dan `wIndex` harus dipass karna akan menyebabkan kesalahan perhitungan
+ * karna kata yang muncul terlebih dahulu akan dianggap sebagai kata yang dipilih. Untuk lebih jelasnya lihat contoh berikut,
+ * 
+ * ```js
+ * const same_words = [
+ *      ['lorem', 'ipsum', 'dolor'], 
+     *      ['lorem', 'ipsum', 'dolor'], 
+ *      ['lorem', 'ipsum', 'dolor'], 
+ *      ['sit', 'lorem', 'ipsum']
+ * ]
+ * console.log(countPrevCharactersAndWords(same_words, true, 'lorem')); // { previousWords: 0, previousCharacters: 0 }
+ * console.log(countPrevCharactersAndWords(same_words, true, 'ipsum')); // { previousWords: 1, previousCharacters: 5 }
+ * 
+ * // Pada console.log pertama, 'lorem' yang dimaksud adalah pada paragraf kedua namun hasil yang diberikan adalah 'lorem' yang pertama tampil
+ * // Pada console.log kedua, 'ipsum' yang dimaksud adalah pada paragraf kedua namun hasil yang diberikan adalah 'ipsum' yang pertama tampil
+ * ```
+ * @param {Array<Array<string>>} pArray Array yang mendeskripsikan kata dari setiap paragraf
+ * @param {boolean} [countDifferentParaghraph] Boolean untuk menghitung jumlah karakter dan kata sebelumnya walaupun berada pada paragraf yang berbeda, default `true`
+ * @param {string} str Kata yang dipilih untuk menghitung jumlah karakter dan kata sebelumnya
+ * @param {number} [pIndex] Index paragraf dari kata yang digunakan pada param `str`
+ * @param {number} [wIndex] Index kata dari kata yang digunakan pada param `str`
+ * @returns {{words:number, chars:number} | -1}
+*/
+const countPrevCharactersAndWords = (pArray, countDifferentParaghraph = true, str, pIndex = null, wIndex = null) => {
+    if (!pArray || !Array.isArray(pArray) || !str) return -1;
+    if (!pArray[pIndex] || !pArray[pIndex][wIndex] || pArray[pIndex][wIndex] !== str) return -1;
+
+    let words = 0;
+    let chars = 0;
+
+    for (let i = 0; i < pArray.length; i++) {
+        for (let j = 0; j < pArray[i].length; j++) {
+            if (pIndex !== null && wIndex !== null) {
+                if (i === pIndex && j === wIndex && pArray[i][j] === str) {
+                    return { words, chars };
+                }
+            } else {
+                if (pArray[i][j] === str) {
+                    return { words, chars };
+                }
+            }
+
+            if (countDifferentParaghraph) {
+                words += 1;
+                chars += pArray[i][j].length;
+            }
+            else {
+                if (pIndex === i) {
+                    words += 1;
+                    chars += pArray[i][j].length;
+                }
+            }
+        }
+    }
+
+    return -1;
+}
+
+/**
+ * Resolve props yang digunakan pada component `HighlightText`
+ * @param {string} text String teks untuk mengatur delay animasi
+ * @returns {HighlightTextProps} Props yang sudah diatur
+ */
+const resolveTitleProps = (text) => ({
+    useHook: false,
+    preset: 'wavingFlyIn',
+    presetOptions: {
+        makeVariant: true,
+        variantName: 'inView',
+        customCharVariants: FITUR_CUSTOM_CHAR_VARIANTS[text] ?? {},
+        customWordVariants: FITUR_CUSTOM_WORD_VARIANTS[text] ?? {},
+    },
+    adjustWavingFlyIn: {
+        baseDelay: FITUR_TITLE_STAGGERED[findArrayIndexByString(text, FITUR_TITLE_PARAGRAPH.flat())],
+    }
+})
+
 const FITUR_FITURCARD_CONTENT_PROPS = {
     initial: { opacity: 0 },
     animate: { opacity: 1 },
@@ -88,9 +187,87 @@ const FITUR_SECTION_CONTENTS = [
     },
 ]
 
-const FITUR_SECTION_LAYOUT_TRANSITION = { duration: 0.75, bounce: 0.1, type: 'spring' }
+const FITUR_TITLE_DELAY_OFFSET = 0.15;
+const FITUR_TITLE_PARAGRAPH = [
+    ['Analytics', 'that'],
+    ['that', 'helps', 'you'],
+    ['shape', 'the', 'future']
+]
+const FITUR_TITLE_STAGGERED = shuffleArray(FITUR_TITLE_PARAGRAPH.flat().map((_, index) => index * FITUR_TITLE_DELAY_OFFSET));
 
-const FITURCARD_STAGGER_OFFSET = 0.75;
+/** @type {Object<string, presetOptions['customCharVariants']>} */
+const FITUR_CUSTOM_CHAR_VARIANTS = {
+    Analytics: {
+        hover: {
+            z: [null, -200, 0],
+            scale: [null, 0.25, 0.75, 1],
+            rotateX: [null, -90, -90, 1],
+            opacity: [null, 0, 0, 1],
+            transformOrigin: '50% 100%',
+            transition: {
+                duration: 1.5
+            },
+            options: {
+                randomStart: ['scale'],
+                staggerType: 'random',
+                stagger: 0.075
+            }
+        }
+    },
+    shape: {
+        shape_text: {
+            color: [null, '#00d16f', '#5d1470', '#1bbad6', '#71a819', '#ea83d0', '#c6b3ba', 'var(--box-color-success2)'],
+            rotateX: [null, 90, 0],
+            scale: [null, 1.25, 0.45, 1.35, 1],
+            options: {
+                randomStart: ['color'],
+                staggerType: 'first',
+                stagger: 0.1
+            }
+        },
+    },
+    the: {
+        shape_text: {
+            color: [null, '#c5e8a4', '#5d1470', '#1bbad6', '#6b7772', '#ea83d0', '#9f48bf', 'var(--dark-color)'],
+            rotateX: [null, 90, 0],
+            scale: [null, 1.25, 0.35, 1.15, 1],
+            options: {
+                randomStart: ['color'],
+                staggerType: 'first',
+                stagger: 0.1,
+                baseDelay: countPrevCharactersAndWords(FITUR_TITLE_PARAGRAPH, false, 'the', 2, 1).chars * 0.1
+            }
+        },
+    },
+    future: {
+        shape_text: {
+            color: [null, '#2b769b', '#5d1470', '#1bbad6', '#328e91', '#ea83d0', '#f9fbfc', 'var(--warning-color-hex)'],
+            rotateX: [null, 90, 0],
+            scale: [null, 1.25, 0.35, 1.15, 1],
+            options: {
+                randomStart: ['color'],
+                staggerType: 'first',
+                stagger: 0.1,
+                baseDelay: countPrevCharactersAndWords(FITUR_TITLE_PARAGRAPH, false, 'future', 2, 2).chars * 0.1
+            }
+        },
+    },
+}
+
+/** @type {Object<string, presetOptions['customWordVariants']>} */
+const FITUR_CUSTOM_WORD_VARIANTS = {
+
+}
+
+/** 
+ * Array yang berisikan string sebagai nama dari custom animasi variant yang dimainkan setelah animasi pertama atau animasi `inView` 
+     * Array yang berisikan string sebagai nama dari custom animasi variant yang dimainkan setelah animasi pertama atau animasi `inView` 
+ * Array yang berisikan string sebagai nama dari custom animasi variant yang dimainkan setelah animasi pertama atau animasi `inView` 
+ * @type {Array<string>}
+ */
+const FITUR_CUSTOM_VARIANT_COLLECTIONS = [
+    'shape_text'
+]
 
 const FiturCard = ({ title, description, wrapperClassname, content, contentIndex = 0, ...props }) => {
     const [contentShowed, setContentShowed] = React.useState(false);
@@ -130,7 +307,6 @@ const FiturCard = ({ title, description, wrapperClassname, content, contentIndex
 const Fitur = () => {
     /** @type {React.MutableRefObject<HTMLDivElement>} */
     const sectionRef = React.useRef(null);
-    // TODOS setIconSize based viewport / responsive
     const [iconSize, setIconSize] = React.useState(60);
     const [alreadyInView, setAlreadyInView] = React.useState(false);
     const [titleAnimation, setTitleAnimation] = React.useState(null);
@@ -138,207 +314,6 @@ const Fitur = () => {
     const scrollContent = useTransform(sectionScrollProgress, [0, 1], ['12.5%', '-95%']);
     const iconX = useTransform(sectionScrollProgress, [0.44, 0.66], [0, 100])
     const iconLeft = useTransform(sectionScrollProgress, [0.44, 0.66], [(iconSize * -1), 0])
-
-    const titleDelayOffset = 0.15;
-    // TODOS update title text content
-    const titleParaghraph = [
-        ['Analytics', 'that'],
-        ['that', 'helps', 'you'],
-        ['shape', 'the', 'future']
-    ]
-
-    const calculateBaseDelay = (paraghraphIndex, str, stagger = 0.05) => {
-        const index = titleParaghraph[paraghraphIndex].indexOf(str);
-        var baseDelay = 0;
-        if (index === 0) return baseDelay;
-
-        for (var x = index; x > 0; x--) {
-            baseDelay = ((titleParaghraph[paraghraphIndex][x - 1].length) * stagger) + baseDelay;
-        }
-
-        return baseDelay;
-    }
-
-    /** 
-     * Method untuk menghitung jumlah karakter dan kata sebelumnya dari kata yang dipilih.
-     * Hanya gunakan method ini untuk menghitung konten `statis`. Berikut adalah format dari array yang digunakan,
-     * 
-     * ```js
-     * const pArray = [
-     *      ['Analytics'], // Index 0 sebagai paragraf 1
-     *      ['that', 'helps', 'you'], // Index 1 sebagai paragraf 2
-     *      ['shape', 'the', 'future'] // Index 2 sebagai paragraf 3
-     * ]
-     * 
-     * // Format pArray[pIndex][wIndex] - paragrafArray[indexParagraf][indexKata]
-     * // Sehingga,
-     * // pIndex dari 'that' = 1 dan wIndex = 0
-     * // pIndex dari 'the' = 2 dan wIndex = 1
-     * ```
-     * 
-     * Return object dengan key `words` sebagai jumlah kata, `chars` sebagai jumlah huruf dan `-1` jika beberapa case berikut terjadi,
-     * - Param `pArray` falsy atau bukan merupakan tipe array
-     * - Param `str` falsy atau tidak tersedia pada `pArray`
-     * - Param `pIndex` dan `wIndex` tidak tersedia pada `pArray`
-     * 
-     * Jika terdapat kata yang sama, `pIndex` dan `wIndex` harus dipass karna akan menyebabkan kesalahan perhitungan
-     * karna kata yang muncul terlebih dahulu akan dianggap sebagai kata yang dipilih. Untuk lebih jelasnya lihat contoh berikut,
-     * 
-     * ```js
-     * const same_words = [
-     *      ['lorem', 'ipsum', 'dolor'], 
-     *      ['sit', 'lorem', 'ipsum']
-     * ]
-     * console.log(countPrevCharactersAndWords(same_words, true, 'lorem')); // { previousWords: 0, previousCharacters: 0 }
-     * console.log(countPrevCharactersAndWords(same_words, true, 'ipsum')); // { previousWords: 1, previousCharacters: 5 }
-     * 
-     * // Pada console.log pertama, 'lorem' yang dimaksud adalah pada paragraf kedua namun hasil yang diberikan adalah 'lorem' yang pertama tampil
-     * // Pada console.log kedua, 'ipsum' yang dimaksud adalah pada paragraf kedua namun hasil yang diberikan adalah 'ipsum' yang pertama tampil
-     * ```
-     * @param {Array<Array<string>>} pArray Array yang mendeskripsikan kata dari setiap paragraf
-     * @param {boolean} [countDifferentParaghraph] Boolean untuk menghitung jumlah karakter dan kata sebelumnya walaupun berada pada paragraf yang berbeda, default `true`
-     * @param {string} str Kata yang dipilih untuk menghitung jumlah karakter dan kata sebelumnya
-     * @param {number} [pIndex] Index paragraf dari kata yang digunakan pada param `str`
-     * @param {number} [wIndex] Index kata dari kata yang digunakan pada param `str`
-     * @returns {{words:number, chars:number} | -1}
-    */
-    const countPrevCharactersAndWords = (pArray, countDifferentParaghraph = true, str, pIndex = null, wIndex = null) => {
-        if (!pArray || !Array.isArray(pArray) || !str) return -1;
-        if (!pArray[pIndex] || !pArray[pIndex][wIndex] || pArray[pIndex][wIndex] !== str) return -1;
-
-        let words = 0;
-        let chars = 0;
-
-        for (let i = 0; i < pArray.length; i++) {
-            for (let j = 0; j < pArray[i].length; j++) {
-                if (pIndex !== null && wIndex !== null) {
-                    if (i === pIndex && j === wIndex && pArray[i][j] === str) {
-                        return { words, chars };
-                    }
-                } else {
-                    if (pArray[i][j] === str) {
-                        return { words, chars };
-                    }
-                }
-
-                if (countDifferentParaghraph) {
-                    words += 1;
-                    chars += pArray[i][j].length;
-                }
-                else {
-                    if (pIndex === i) {
-                        words += 1;
-                        chars += pArray[i][j].length;
-                    }
-                }
-            }
-        }
-
-        return -1;
-    }
-
-    const titleStaggered = shuffleArray(titleParaghraph.flat().map((_, index) => index * titleDelayOffset));
-
-    /** @type {Object<string, presetOptions['customCharVariants']>} */
-    const customCharVariantsByText = {
-        Analytics: {
-            hover: {
-                z: [null, -200, 0],
-                scale: [null, 0.25, 0.75, 1],
-                rotateX: [null, -90, -90, 1],
-                opacity: [null, 0, 0, 1],
-                transformOrigin: '50% 100%',
-                transition: {
-                    duration: 1.5
-                },
-                options: {
-                    randomStart: ['scale'],
-                    staggerType: 'random',
-                    stagger: 0.075
-                }
-            }
-        },
-        shape: {
-            shape_text: {
-                color: [null, '#00d16f', '#5d1470', '#1bbad6', '#71a819', '#ea83d0', '#c6b3ba', 'var(--box-color-success2)'],
-                rotateX: [null, 90, 0],
-                scale: [null, 1.25, 0.45, 1.35, 1],
-                transition: {
-                    // repeat: Infinity,
-                    // repeatDelay: 5
-                },
-                options: {
-                    randomStart: ['color'],
-                    staggerType: 'first',
-                    stagger: 0.1
-                }
-            },
-        },
-        the: {
-            shape_text: {
-                color: [null, '#c5e8a4', '#5d1470', '#1bbad6', '#6b7772', '#ea83d0', '#9f48bf', 'var(--dark-color)'],
-                rotateX: [null, 90, 0],
-                scale: [null, 1.25, 0.35, 1.15, 1],
-                transition: {
-                    // repeat: Infinity,
-                    // repeatDelay: 5,
-                },
-                options: {
-                    randomStart: ['color'],
-                    staggerType: 'first',
-                    stagger: 0.1,
-                    baseDelay: calculateBaseDelay(2, 'the', 0.1),
-                }
-            },
-        },
-        future: {
-            shape_text: {
-                color: [null, '#2b769b', '#5d1470', '#1bbad6', '#328e91', '#ea83d0', '#f9fbfc', 'var(--warning-color-hex)'],
-                rotateX: [null, 90, 0],
-                scale: [null, 1.25, 0.35, 1.15, 1],
-                transition: {
-                    // repeat: Infinity,
-                    // repeatDelay: 5
-                },
-                options: {
-                    randomStart: ['color'],
-                    staggerType: 'first',
-                    stagger: 0.1,
-                    baseDelay: calculateBaseDelay(2, 'future', 0.1),
-                }
-            },
-        },
-    }
-
-    /** @type {Object<string, presetOptions['customWordVariants']>} */
-    const customWordVariantsByText = {
-
-    }
-
-    /** 
-     * Array yang berisikan string sebagai nama dari custom animasi variant yang dimainkan setelah animasi pertama atau animasi `inView` 
-     * @type {Array<string>}
-     */
-    const customVariantCollections = ['shape_text']
-
-    /**
-     * Resolve props yang digunakan pada component `HighlightText`
-     * @param {string} text String teks untuk mengatur delay animasi
-     * @returns {HighlightTextProps} Props yang sudah diatur
-     */
-    const resolveTitleProps = (text) => ({
-        useHook: false,
-        preset: 'wavingFlyIn',
-        presetOptions: {
-            makeVariant: true,
-            variantName: 'inView',
-            customCharVariants: customCharVariantsByText[text] ?? {},
-            customWordVariants: customWordVariantsByText[text] ?? {},
-        },
-        adjustWavingFlyIn: {
-            baseDelay: titleStaggered[findArrayIndexByString(text, titleParaghraph.flat())],
-        }
-    })
 
     /** @param {React.KeyboardEvent} event */
     const handleKeyDown = (event) => {
@@ -384,7 +359,7 @@ const Fitur = () => {
                     animate={titleAnimation ?? {}}
                     onAnimationComplete={(x) => {
                         if (typeof x === 'string') {
-                            if (customVariantCollections.includes(x)) setTitleAnimation({});
+                            if (FITUR_CUSTOM_VARIANT_COLLECTIONS.includes(x)) setTitleAnimation({});
                             if (x === 'inView') setAlreadyInView(true);
                         }
                     }}
@@ -397,13 +372,13 @@ const Fitur = () => {
                         <motion.div
                             className={styles.icons}
                             initial={{ scale: 0 }}
-                            variants={{ inView: { scale: 1, transition: { type: 'spring', duration: 1.5, bounce: 0, delay: titleStaggered[findArrayIndexByString('Analytics', titleParaghraph.flat())] } } }}
+                            variants={{ inView: { scale: 1, transition: { type: 'spring', duration: 1.5, bounce: 0, delay: FITUR_TITLE_STAGGERED[findArrayIndexByString('Analytics', FITUR_TITLE_PARAGRAPH.flat())] } } }}
                         >
                             <div className={`${styles.icon} ${styles.alt}`} >
                                 <motion.span
                                     initial={{ rotate: 180 }}
                                     style={{ x: iconX }}
-                                    variants={{ change: { x: 100 }, inView: { rotate: 0, transition: { type: 'spring', duration: 2, bounce: 0, delay: titleStaggered[findArrayIndexByString('Analytics', titleParaghraph.flat())] } } }}
+                                    variants={{ change: { x: 100 }, inView: { rotate: 0, transition: { type: 'spring', duration: 2, bounce: 0, delay: FITUR_TITLE_STAGGERED[findArrayIndexByString('Analytics', FITUR_TITLE_PARAGRAPH.flat())] } } }}
                                     transition={{ type: 'spring', duration: 0.5, bounce: 0.1 }}
                                 >
                                     <IoAnalyticsOutline fontSize={'0.5em'} />
@@ -417,7 +392,7 @@ const Fitur = () => {
                                     <div className={`${styles.icon_bg} ${styles.warning}`}>
                                         <motion.span
                                             initial={{ rotate: 180 }}
-                                            variants={{ inView: { rotate: 0, transition: { type: 'spring', duration: 2, bounce: 0, delay: titleStaggered[findArrayIndexByString('Analytics', titleParaghraph.flat())] } } }}
+                                            variants={{ inView: { rotate: 0, transition: { type: 'spring', duration: 2, bounce: 0, delay: FITUR_TITLE_STAGGERED[findArrayIndexByString('Analytics', FITUR_TITLE_PARAGRAPH.flat())] } } }}
                                             transition={{ type: 'spring', duration: 0.5, bounce: 0.1 }}
                                         >
                                             <TbAtom fontSize={'0.5em'} />
@@ -431,7 +406,7 @@ const Fitur = () => {
                                 <motion.span
                                     initial={{ rotate: 225 }}
                                     style={{ x: iconX }}
-                                    variants={{ change: { x: 100 }, inView: { rotate: 0, transition: { type: 'spring', duration: 3, bounce: 0, delay: titleStaggered[findArrayIndexByString('Analytics', titleParaghraph.flat())] } } }}
+                                    variants={{ change: { x: 100 }, inView: { rotate: 0, transition: { type: 'spring', duration: 3, bounce: 0, delay: FITUR_TITLE_STAGGERED[findArrayIndexByString('Analytics', FITUR_TITLE_PARAGRAPH.flat())] } } }}
                                     transition={{ type: 'spring', duration: 0.5, bounce: 0.1 }}
                                 >
                                     <TbAntennaBars5 fontSize={'0.5em'} />
@@ -445,7 +420,7 @@ const Fitur = () => {
                                     <div className={`${styles.icon_bg} ${styles.alt}`}>
                                         <motion.span
                                             initial={{ rotate: 180 }}
-                                            variants={{ inView: { rotate: 0, transition: { type: 'spring', duration: 2, bounce: 0, delay: titleStaggered[findArrayIndexByString('Analytics', titleParaghraph.flat())] } } }}
+                                            variants={{ inView: { rotate: 0, transition: { type: 'spring', duration: 2, bounce: 0, delay: FITUR_TITLE_STAGGERED[findArrayIndexByString('Analytics', FITUR_TITLE_PARAGRAPH.flat())] } } }}
                                             transition={{ type: 'spring', duration: 0.5, bounce: 0.1 }}
                                         >
                                             <IoAnalyticsOutline fontSize={'0.5em'} />
@@ -472,12 +447,12 @@ const Fitur = () => {
                         <motion.div
                             className={`${styles.icon}`}
                             initial={{ scale: 0 }}
-                            variants={{ inView: { scale: 1, transition: { type: 'spring', duration: 2, bounce: 0, delay: titleStaggered[findArrayIndexByString('shape', titleParaghraph.flat())] } } }}
+                            variants={{ inView: { scale: 1, transition: { type: 'spring', duration: 2, bounce: 0, delay: FITUR_TITLE_STAGGERED[findArrayIndexByString('shape', FITUR_TITLE_PARAGRAPH.flat())] } } }}
                         >
                             <motion.div
                                 className={`${styles.icon_bg} ${styles.success}`}
                                 initial={{ rotate: 270 }}
-                                variants={{ inView: { rotate: 0, transition: { type: 'spring', duration: 2.5, bounce: 0, delay: titleStaggered[findArrayIndexByString('shape', titleParaghraph.flat())] } } }}
+                                variants={{ inView: { rotate: 0, transition: { type: 'spring', duration: 2.5, bounce: 0, delay: FITUR_TITLE_STAGGERED[findArrayIndexByString('shape', FITUR_TITLE_PARAGRAPH.flat())] } } }}
                             >
                                 <LuShapes fontSize={'0.5em'} />
                             </motion.div>
