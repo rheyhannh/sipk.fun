@@ -153,8 +153,8 @@ const FITUR_FITURCARD_CONTENT_PROPS = {
 const FITUR_SECTION_CONTENTS = [
     {
         fiturCardProps: {
-            title: undefined,
-            description: undefined,
+            title: 'Distribusi Nilai',
+            description: 'Lihat distribusi nilai kamu dari setiap semester dengan bar chart yang menampilkan jumlah indeks nilai yang kamu peroleh.',
             wrapperClassname: 'sebaran_nilai',
             content: (
                 <DistribusiDummy
@@ -168,8 +168,8 @@ const FITUR_SECTION_CONTENTS = [
     },
     {
         fiturCardProps: {
-            title: undefined,
-            description: undefined,
+            title: 'Grafik Akademik',
+            description: 'Pantau perkembangan akademik kamu dari waktu ke waktu dengan grafik yang menampilkan jumlah SKS, mata kuliah, dan IP setiap semester.',
             wrapperClassname: 'grafik_progress',
             content: (
                 <GrafikDummy matkul={defaultMatakuliah} {...FITUR_FITURCARD_CONTENT_PROPS} />
@@ -178,8 +178,8 @@ const FITUR_SECTION_CONTENTS = [
     },
     {
         fiturCardProps: {
-            title: undefined,
-            description: undefined,
+            title: 'Progres Target',
+            description: 'Lacak progres kamu menuju target akademik dengan progress bar yang menunjukkan jumlah SKS, mata kuliah, dan IPK yang telah diraih.',
             wrapperClassname: 'bar_progress',
             content: (
                 <ProgressDummy {...FITUR_FITURCARD_CONTENT_PROPS} />

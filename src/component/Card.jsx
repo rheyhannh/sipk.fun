@@ -1216,7 +1216,7 @@ export function Grafik({ state, matkul, penilaian, savedState }) {
                                 <IoAnalyticsOutline size={'17px'} color={'var(--logo-second-color)'} />
                             </div>
                             <h3 style={{ color: 'var(--infoDark-color)', fontWeight: '500' }}>
-                                Grafik
+                                Grafik Akademik
                             </h3>
                         </div>
                     </div>
@@ -1387,7 +1387,7 @@ export function GrafikDummy({
                             <IoAnalyticsOutline size={'17px'} color={'var(--logo-second-color)'} />
                         </div>
                         <h3 style={{ color: 'var(--infoDark-color)', fontWeight: '500' }}>
-                            Grafik Progress
+                            Grafik Akademik
                         </h3>
                     </div>
                 </div>
@@ -1538,7 +1538,7 @@ export function Target({ state, matkul, penilaian, savedState }) {
                                 <TbTarget size={'17px'} color={'var(--logo-second-color)'} />
                             </div>
                             <h3 style={{ color: 'var(--infoDark-color)', fontWeight: '500' }}>
-                                Target
+                                Target Nilai
                             </h3>
                         </div>
                     </div>
@@ -1583,7 +1583,7 @@ export function Target({ state, matkul, penilaian, savedState }) {
                                         <h3>
                                             {type === 0 ? item.on_target.matkul : type === 1 ? item.on_target.sks : '-'}<span className={type === 0 ? styles.matkul : type === 1 ? styles.sks : styles.hide} />
                                         </h3>
-                                        <small>On Target</small>
+                                        <small>Sesuai Target</small>
                                     </div>
                                     <div className={styles.more}>
                                         <small onClick={() => { setColumnFilters(item.semester, true) }} />
@@ -1598,7 +1598,7 @@ export function Target({ state, matkul, penilaian, savedState }) {
                                         <h3>
                                             {type === 0 ? item.off_target.matkul : type === 1 ? item.off_target.sks : '-'}<span className={type === 0 ? styles.matkul : type === 1 ? styles.sks : styles.hide} />
                                         </h3>
-                                        <small>Off Target</small>
+                                        <small>Tidak Sesuai</small>
                                     </div>
                                     <div className={styles.more}>
                                         <small onClick={() => { setColumnFilters(item.semester, false) }} />
@@ -1839,7 +1839,7 @@ export function Distribusi({ state, matkul, penilaian, savedState }) {
                                 <TbAntennaBars5 size={'17px'} color={'var(--logo-second-color)'} />
                             </div>
                             <h3>
-                                Sebaran Nilai
+                                Distribusi Nilai
                             </h3>
                         </div>
                     </div>
@@ -2060,7 +2060,7 @@ export function DistribusiDummy({
                             <TbAntennaBars5 size={'17px'} color={'var(--logo-second-color)'} />
                         </div>
                         <h3>
-                            Sebaran Nilai
+                            Distribusi Nilai
                         </h3>
                     </div>
                 </div>
@@ -2162,7 +2162,7 @@ export function Progress({ state, user, matkul, penilaian }) {
                                 <TbAtom size={'17px'} color={'var(--logo-second-color)'} />
                             </div>
                             <h3 style={{ color: 'var(--infoDark-color)', fontWeight: '500' }}>
-                                Progress
+                                Progres Target
                             </h3>
                         </div>
                     </div>
@@ -2391,7 +2391,7 @@ export function ProgressDummy({
                             <TbAtom size={'17px'} color={'var(--logo-second-color)'} />
                         </div>
                         <h3 style={{ color: 'var(--infoDark-color)', fontWeight: '500' }}>
-                            Progress
+                            Progres Target
                         </h3>
                     </div>
                 </div>

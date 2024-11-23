@@ -448,7 +448,8 @@
 .target__left,
 .progress__left,
 .distribusi__left {
-    max-width: 125px;
+    max-width: 155px;
+    white-space: nowrap;
     width: 100%;
 }
 
