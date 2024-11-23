@@ -2,6 +2,7 @@
 
 // #region TYPE DEPEDENCY
 import { HighlightTextProps, presetOptions } from '@/component/motion/HighlightText';
+import { HTMLMotionProps } from 'framer-motion';
 // #endregion
 
 // #region CONFIG DEPEDENCY
@@ -140,6 +141,7 @@ const resolveTitleProps = (text) => ({
     }
 })
 
+/** @type {HTMLMotionProps<'div'>} */
 const FITUR_FITURCARD_CONTENT_PROPS = {
     initial: { opacity: 0 },
     animate: { opacity: 1 },
@@ -147,6 +149,7 @@ const FITUR_FITURCARD_CONTENT_PROPS = {
     transition: { duration: 0.75 }
 }
 
+/** @type {Array<{fiturCardProps:Omit<HTMLMotionProps<'div'>, 'className' | 'variants' | 'onAnimationStart' | 'onAnimationComplete'> & FiturCardProps}>} */
 const FITUR_SECTION_CONTENTS = [
     {
         fiturCardProps: {
@@ -185,12 +188,17 @@ const FITUR_SECTION_CONTENTS = [
     },
 ]
 
+/** @type {number} */
 const FITUR_TITLE_DELAY_OFFSET = 0.15;
+
+/** @type {Array<Array<string>>} */
 const FITUR_TITLE_PARAGRAPH = [
     ['Analytics', 'that'],
     ['that', 'helps', 'you'],
     ['shape', 'the', 'future']
 ]
+
+/** @type {Array<number>} */
 const FITUR_TITLE_STAGGERED = shuffleArray(FITUR_TITLE_PARAGRAPH.flat().map((_, index) => index * FITUR_TITLE_DELAY_OFFSET));
 
 /** @type {Object<string, presetOptions['customCharVariants']>} */
@@ -265,6 +273,28 @@ const FITUR_CUSTOM_VARIANT_COLLECTIONS = [
     'shape_text'
 ]
 
+/**
+ * Props yang digunakan component `FiturCard`
+ * @typedef {Object} FiturCardProps
+ * @property {React.ReactNode} [title] 
+ * Judul yang digunakan
+ * - Default : `'Lorem, ipsum dolor.'`
+ * @property {React.ReactNode} [description]
+ * Deskripsi yang digunakan
+ * - Default : `'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quia voluptates excepturi sit quis, assumenda ut natus quisquam nam iure magnam.'`
+ * @property {string} wrapperClassname
+ * Classname yang digunakan untuk wrapper `content`
+ * @property {React.ReactNode} content
+ * Content yang dirender
+ * @property {number} contentIndex
+ * Content identifier dalam bentuk angka
+ */
+
+/**
+ * Component Description
+ * @param {Omit<HTMLMotionProps<'div'>, 'className' | 'variants' | 'onAnimationStart' | 'onAnimationComplete'> & FiturCardProps} props FiturCard props
+ * @returns {React.ReactElement} Rendered component
+ */
 const FiturCard = ({ title, description, wrapperClassname, content, contentIndex = 0, ...props }) => {
     const [contentShowed, setContentShowed] = React.useState(false);
 
