@@ -155,9 +155,9 @@ export const PanduanDaftar = () => {
             title: 'Nama Lengkap',
             description: (
                 <ul>
-                    <li>Gunakan hanya huruf, tanpa simbol atau angka</li>
-                    <li>Panjang minimal 6 karakter, maksimal 100</li>
-                    <li>Gunakan hanya satu spasi di antara setiap kata</li>
+                    <li>Hanya dapat menggunakan huruf tanpa simbol maupun angka</li>
+                    <li>Jumlah minimal karakter 6 dan maksimal 100</li>
+                    <li>Pastikan hanya ada <span style={{fontWeight:500}}>satu spasi</span> di antara setiap kata</li>
                 </ul>
             ),
             icon: <FaPlus />
@@ -167,8 +167,7 @@ export const PanduanDaftar = () => {
             description: (
                 <ul>
                     <li>Pilih universitas yang sesuai dan tersedia</li>
-                    <li>Universitas yang berbeda dapat mempengaruhi penilaian, pastikan kamu memilih yang sesuai</li>
-                    <li>Jika universitasmu belum tersedia, kamu dapat daftar <span style={{ color: 'green' }}>disini</span></li>
+                    <li>Universitas yang tidak sesuai dapat mempengaruhi sistem penilaian yang digunakan, pastikan kamu memilih yang sesuai</li>
                 </ul>
             ),
             icon: <FaPlus />
@@ -178,7 +177,7 @@ export const PanduanDaftar = () => {
             description: (
                 <ul>
                     <li>Gunakan email valid yang dapat dihubungi</li>
-                    <li>Konfirmasi pendaftaran dengan mengklik link yang dikirimkan SIPK</li>
+                    <li>Lakukan konfirmasi pendaftaran dengan membuka tautan yang dikirim SIPK</li>
                 </ul>
 
             ),
@@ -189,9 +188,9 @@ export const PanduanDaftar = () => {
             title: 'Password',
             description: (
                 <ul>
-                    <li>Gunakan password minimal 6 karakter, maksimal 50</li>
-                    <li>Disarankan kombinasi huruf kecil, huruf besar, angka dan simbol</li>
-                    <li>Password lemah atau kurang kuat dapat digunakan, walaupun tidak disarankan</li>
+                    <li>Jumlah karakter minimal 6 dan maksimal 50</li>
+                    <li>Disarankan menggunakan kombinasi huruf kecil, huruf besar, angka dan simbol</li>
+                    <li>Password lemah ditandai dengan centang berwarna merah dan password kurang kuat ditandai dengan centang berwarna kuning, keduanya dapat digunakan walaupun tidak disarankan</li>
                 </ul>
             ),
             icon: <FaPlus />

@@ -67,6 +67,10 @@
     grid-template-columns: repeat(2, 1fr);
 } 
 
+.keterangan_icon span {
+    margin-bottom: 0.3rem;
+}
+
 .perubahan__terakhir.ubah {
     display: grid;
     grid-template-rows: 30px 30px auto 50px;
@@ -1033,6 +1037,11 @@
     .keterangan_icon {
         display: flex;
         flex-direction: column;
+        gap: 0.3rem;
+    }
+
+    .keterangan_icon span {
+        margin-bottom: 0;
     }
 
     .stars {
