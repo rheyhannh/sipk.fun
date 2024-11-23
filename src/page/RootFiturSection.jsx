@@ -71,8 +71,6 @@ import { shuffleArray, findArrayIndexByString } from './RootUtils';
  * ```js
  * const same_words = [
  *      ['lorem', 'ipsum', 'dolor'], 
-     *      ['lorem', 'ipsum', 'dolor'], 
- *      ['lorem', 'ipsum', 'dolor'], 
  *      ['sit', 'lorem', 'ipsum']
  * ]
  * console.log(countPrevCharactersAndWords(same_words, true, 'lorem')); // { previousWords: 0, previousCharacters: 0 }
@@ -260,8 +258,6 @@ const FITUR_CUSTOM_WORD_VARIANTS = {
 }
 
 /** 
- * Array yang berisikan string sebagai nama dari custom animasi variant yang dimainkan setelah animasi pertama atau animasi `inView` 
-     * Array yang berisikan string sebagai nama dari custom animasi variant yang dimainkan setelah animasi pertama atau animasi `inView` 
  * Array yang berisikan string sebagai nama dari custom animasi variant yang dimainkan setelah animasi pertama atau animasi `inView` 
  * @type {Array<string>}
  */
