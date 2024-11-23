@@ -202,7 +202,7 @@ export const PanduanDaftar = () => {
                 <div className={styles.keterangan_icon}>
                     <span><FaCircleInfo color='var(--primary-color)' />  Data dibutuhkan</span>
                     <span><FaGear color='var(--logo-second-color)' />  Data sedang divalidasi</span>
-                    <span><FaCheckCircle color='var(--success-color)' />  Data Valid</span>
+                    <span><FaCheckCircle color='var(--success-color)' />  Data Valid / Password kuat</span>
                     <span><FaCheckCircle color='var(--warning-color)' />  Password kurang kuat</span>
                     <span><FaCheckCircle color='var(--danger-color)' />  Password lemah</span>
                     <span><FaExclamationCircle color='crimson' />  Data Invalid</span>
