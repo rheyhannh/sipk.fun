@@ -621,6 +621,7 @@ const HighlightText = (
                 containerStyle: { perspective: adjustWavingTranslate?.perspective ?? 500 },
                 wrapperStyle: { transformStyle: 'preserve-3d' },
                 wordStyle: { transformStyle: 'inherit' },
+                wordWrapperStyle: adjustWavingTranslate?.wordWrapperStyle,
                 wordAnimate: undefined,
                 charAnimate: {
                     z: adjustWavingTranslate?.z ?? [300, 0],
@@ -652,6 +653,7 @@ const HighlightText = (
                 containerStyle: undefined,
                 wrapperStyle: undefined,
                 wordStyle: { transformOrigin: adjustSpringRotate?.transformOrigin ?? '0% 50%' },
+                wordWrapperStyle: adjustSpringRotate?.wordWrapperStyle,
                 wordAnimate: {
                     rotateZ: adjustSpringRotate?.rotateZ ?? [-30, 0],
                     opacity: adjustSpringRotate?.opacity ?? [0, 1],
@@ -687,7 +689,8 @@ const HighlightText = (
                     willChange: 'transform',
                 },
                 wordWrapperStyle: {
-                    overflow: 'hidden'
+                    overflow: 'hidden',
+                    ...adjustWavingFlyIn?.wordWrapperStyle
                 },
                 wordAnimate: {
                     y: adjustWavingFlyIn?.y ?? [125, 0],
@@ -723,6 +726,7 @@ const HighlightText = (
                     transformOrigin: adjustWavingRotation?.transformOrigin ?? '50% 100%',
                     willChange: 'transform, opacity',
                 },
+                wordWrapperStyle: adjustWavingRotation?.wordWrapperStyle,
                 wordAnimate: {
                     opacity: adjustWavingRotation?.opacity ?? [0, 1],
                     rotateX: adjustWavingRotation?.rotateX ?? [90, 0],
@@ -756,6 +760,7 @@ const HighlightText = (
                 wordStyle: {
                     willChange: 'transform, opacity',
                 },
+                wordWrapperStyle: adjustMixFancyTranslate?.wordWrapperStyle,
                 wordAnimate: {
                     opacity: adjustMixFancyTranslate?.opacity ?? [0, 1],
                     rotateX: adjustMixFancyTranslate?.rotateX ?? [-90, 90, 0],
@@ -790,6 +795,7 @@ const HighlightText = (
                 containerStyle: undefined,
                 wrapperStyle: undefined,
                 wordStyle: undefined,
+                wordWrapperStyle: adjustWavingColor?.wordWrapperStyle,
                 wordAnimate: undefined,
                 charAnimate: {
                     scale: adjustWavingColor?.scale ?? [null, 1.45, 1],
