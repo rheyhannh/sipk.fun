@@ -125,7 +125,7 @@ const BoxContentX = React.forwardRef(({
     const [activeMatkulIndex, setActiveMatkulIndex] = React.useState(0);
     const [total, setTotal] = React.useState({ ipk: 0, sks: 0, matkul: 0 });
 
-    const generateMatkulSections = (sourceArr = [...data], maxSections = maxSemester, random = { min: 2, max: 4 }) => {
+    const generateMatkulSections = (random = { min: 2, max: 4 }, sourceArr = [...data], maxSections = maxSemester) => {
         const { min, max } = random;
 
         for (let i = sourceArr.length - 1; i > 0; i--) {
