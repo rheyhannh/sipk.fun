@@ -196,7 +196,14 @@ const BoxContentX = React.forwardRef(({
     }, [maxSemester]);
 
     React.useEffect(() => {
-        setMatkul(generateMatkulSections());
+        if (ref.current) {
+            // Card height (80px) + Layout gap (0.75rem @10.5px) with rounding for some error space
+            const cardHeight = 100;
+            const innerHeight = ref.current.getBoundingClientRect().height;
+            const max = Math.floor(innerHeight / cardHeight);
+            const min = max - 2 > 0 ? max - 2 : 1;
+            setMatkul(generateMatkulSections({ min, max }));
+        }
     }, []);
 
     return (
