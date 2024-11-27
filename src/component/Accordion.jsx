@@ -40,10 +40,20 @@ export function Accordion({
         <div className={`${styles.container}`}>
             {
                 item.map((item, index) => (
-                    <div className={`${styles.item}`} onClick={() => { handleAccordionState(index) }} key={index}>
+                    <div className={`${styles.item}`} onClick={(event) => { event.target.blur(); handleAccordionState(index); }} key={index}>
                         <div className={`${styles.header}`}>
                             <i className={accordion[index] ? styles.active : ''}>{item.icon}</i>
-                            <h3 className={accordion[index] ? styles.active : ''}>{item.title}</h3>
+                            <h3
+                                className={accordion[index] ? styles.active : ''}
+                                onKeyDown={(event) => {
+                                    if (event.key === 'Enter') {
+                                        handleAccordionState(index);
+                                    }
+                                }}
+                                tabIndex={0}
+                            >
+                                {item.title}
+                            </h3>
                         </div>
                         <div className={`${styles.content}`}>
                             <div className={`${styles.description}`}>
