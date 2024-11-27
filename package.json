@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "next lint",
     "analyze": "cross-env ANALYZE=true next build",
-    "prod": "next build && next start"
+    "prod": "next build && next start",
+    "cypress:open": "cypress open"
   },
   "dependencies": {
     "@hcaptcha/react-hcaptcha": "^1.9.1",
