@@ -222,7 +222,12 @@ export const PanduanDaftar = () => {
                                 <div className={styles.title}>
                                     <h2>Panduan Daftar</h2>
                                 </div>
-                                <div className={styles.close} onClick={() => { context.handleModalClose() }}>
+                                <div
+                                    className={styles.close}
+                                    onClick={(event) => { event.target.blur(); context.handleModalClose(); }}
+                                    onKeyDown={(event) => { if (event.key === 'Enter') context.handleModalClose() }}
+                                    tabIndex={0}
+                                >
                                     <FaTimes />
                                 </div>
                             </div>
@@ -236,8 +241,9 @@ export const PanduanDaftar = () => {
 
                             <div className={styles.form__action}>
                                 <Link
-                                    prefetch={false}
                                     className={styles.btn}
+                                    onClick={(event) => { event.target.blur(); }}
+                                    prefetch={false}
                                     href='/docs'
                                     target={'_blank'}
                                 >
