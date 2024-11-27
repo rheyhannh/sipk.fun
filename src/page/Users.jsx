@@ -605,6 +605,7 @@ export default function Users({ universitasData }) {
                                             onChange={handleEmailChange}
                                             onFocus={() => { handleInputFocus(0) }}
                                             onBlur={(e) => { handleInputBlur(e, 0, 'email', 'login') }}
+                                            tabIndex={loginMode ? 2 : -1}
                                             required
                                         />
                                         <i className={`${styles.validator} ${inputValidator[0].state}`}>
@@ -630,6 +631,7 @@ export default function Users({ universitasData }) {
                                             onChange={handlePasswordChange}
                                             onFocus={() => { handleInputFocus(1) }}
                                             onBlur={(e) => { handleInputBlur(e, 1, 'password', 'login') }}
+                                            tabIndex={loginMode ? 2 : -1}
                                             required={emailLogin ? false : true}
                                         />
 
@@ -651,10 +653,23 @@ export default function Users({ universitasData }) {
                                         </i>
                                     </div>
 
-                                    <button type='submit' className={`${styles.btn}`}>{emailLogin ? 'Submit' : 'Login'}</button>
+                                    <button
+                                        type='submit'
+                                        className={`${styles.btn}`}
+                                        tabIndex={loginMode ? 2 : -1}
+                                        onClick={(event) => { event.target.blur() }}
+                                    >
+                                        {emailLogin ? 'Submit' : 'Login'}
+                                    </button>
 
                                     <p className={styles.social_text}>
-                                        <a onClick={() => { setEmailLogin(!emailLogin); setErrorMessageLogin(''); }}>{emailLogin ? 'Klik disini untuk login pakai password.' : 'Lupa password ? Klik disini.'}</a>
+                                        <a
+                                            onClick={(event) => { setEmailLogin(!emailLogin); setErrorMessageLogin(''); event.target.blur() }}
+                                            tabIndex={loginMode ? 2 : -1}
+                                            onKeyDown={(event) => { if (event.key === 'Enter') { setEmailLogin(!emailLogin); setErrorMessageLogin(''); } }}
+                                        >
+                                            {emailLogin ? 'Klik disini untuk login pakai password.' : 'Lupa password ? Klik disini.'}
+                                        </a>
                                     </p>
                                 </form>
                                 <form
@@ -681,6 +696,7 @@ export default function Users({ universitasData }) {
                                             onChange={handleNamaLengkapChange}
                                             onFocus={() => { handleInputFocus(2) }}
                                             onBlur={(e) => { handleInputBlur(e, 2, 'namalengkap', 'daftar') }}
+                                            tabIndex={!loginMode ? 4 : -1}
                                             required
                                         />
                                         <i className={`${styles.validator} ${inputValidator[2].state}`}>
@@ -712,6 +728,7 @@ export default function Users({ universitasData }) {
                                             onChange={handleUniversitasChange}
                                             onFocus={() => { handleInputFocus(3) }}
                                             onBlur={(e) => { handleInputBlur(e, 3, 'universitas', 'daftar') }}
+                                            tabIndex={!loginMode ? 4 : -1}
                                             required
                                         >
                                             <option
@@ -751,6 +768,7 @@ export default function Users({ universitasData }) {
                                             onChange={handleEmailChange}
                                             onFocus={() => { handleInputFocus(4) }}
                                             onBlur={(e) => { handleInputBlur(e, 4, 'email', 'daftar') }}
+                                            tabIndex={!loginMode ? 4 : -1}
                                             required
                                         />
                                         <i className={`${styles.validator} ${inputValidator[4].state}`}>
@@ -775,6 +793,7 @@ export default function Users({ universitasData }) {
                                             onChange={handlePasswordChange}
                                             onFocus={() => { handleInputFocus(5) }}
                                             onBlur={(e) => { handleInputBlur(e, 5, 'password', 'daftar') }}
+                                            tabIndex={!loginMode ? 4 : -1}
                                             required
                                         />
 
@@ -796,10 +815,16 @@ export default function Users({ universitasData }) {
                                         </i>
                                     </div>
 
-                                    <input type="submit" value={'daftar'} className={`${styles.btn}`} />
+                                    <input type="submit" value={'daftar'} className={`${styles.btn}`} tabIndex={!loginMode ? 4 : -1} />
 
                                     <p className={styles.social_text}>
-                                        <a onClick={() => { handleDaftarModal() }}>Butuh bantuan ? Klik disini.</a>
+                                        <a
+                                            onClick={(event) => { event.target.blur(); handleDaftarModal(); }}
+                                            tabIndex={!loginMode ? 4 : -1}
+                                            onKeyDown={(event) => { if (event.key === 'Enter') { handleDaftarModal(); } }}
+                                        >
+                                            Butuh bantuan ? Klik disini.
+                                        </a>
                                     </p>
                                 </form>
                             </div>
@@ -809,7 +834,13 @@ export default function Users({ universitasData }) {
                                 <div className={styles.content}>
                                     <h3>Belum daftar?</h3>
                                     <p>Yuk daftar dan nikmati fitur yang ditawarkan SIPK secara gratis.</p>
-                                    <button className={`${styles.btn} ${styles.transparent}`} onClick={handleModeDaftar}>Daftar</button>
+                                    <button
+                                        className={`${styles.btn} ${styles.transparent}`}
+                                        onClick={(event) => { event.target.blur(); handleModeDaftar(); }}
+                                        tabIndex={loginMode ? 1 : -1}
+                                    >
+                                        Daftar
+                                    </button>
                                 </div>
                                 <Image
                                     src="/daftar.svg"
@@ -824,7 +855,13 @@ export default function Users({ universitasData }) {
                                 <div className={styles.content}>
                                     <h3>Sudah punya akun?</h3>
                                     <p>Silahkan klik tombol dibawah untuk login.</p>
-                                    <button className={`${styles.btn} ${styles.transparent}`} onClick={handleModeLogin}>Login</button>
+                                    <button
+                                        className={`${styles.btn} ${styles.transparent}`}
+                                        onClick={(event) => { event.target.blur(); handleModeLogin(); }}
+                                        tabIndex={!loginMode ? 3 : -1}
+                                    >
+                                        Login
+                                    </button>
                                 </div>
                                 <Image
                                     src="/login.svg"
@@ -836,7 +873,17 @@ export default function Users({ universitasData }) {
                                 />
                             </div>
                         </div>
-                        <div className={styles.theme_toggle} onClick={handleChangeTheme}>
+                        <div
+                            className={styles.theme_toggle}
+                            onClick={(event) => {
+                                handleChangeTheme();
+                                event.target.blur();
+                            }}
+                            onKeyDown={(event) => {
+                                if (event.key === 'Enter') handleChangeTheme();
+                            }}
+                            tabIndex={0}
+                        >
                             <i>
                                 {theme === 'dark' ?
                                     <FiSun />
