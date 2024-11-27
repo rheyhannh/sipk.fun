@@ -558,7 +558,7 @@ export default function Users({ universitasData }) {
         setErrorMessageLogin('');
         setErrorMessageDaftar('');
         setInputValidator(initialInputValidator);
-        captcha.current.resetCaptcha();
+        if (captcha.current) captcha.current.resetCaptcha();
     }
 
     const getSelectColor = () => { return universitas === 0 ? 'var(--infoDark-color)' : 'var(--dark-color)'; }
