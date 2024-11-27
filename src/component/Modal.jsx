@@ -157,7 +157,7 @@ export const PanduanDaftar = () => {
                 <ul>
                     <li>Hanya dapat menggunakan huruf tanpa simbol maupun angka</li>
                     <li>Jumlah minimal karakter 6 dan maksimal 100</li>
-                    <li>Pastikan hanya ada <span style={{fontWeight:500}}>satu spasi</span> di antara setiap kata</li>
+                    <li>Pastikan hanya ada <span style={{ fontWeight: 500 }}>satu spasi</span> di antara setiap kata</li>
                 </ul>
             ),
             icon: <FaPlus />
