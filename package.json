@@ -25,7 +25,7 @@
     "joi": "^17.11.0",
     "jose": "^5.9.2",
     "jsonwebtoken": "^9.0.2",
-    "lenis": "^1.1.14",
+    "lenis": "^1.1.16",
     "lru-cache": "^10.0.2",
     "next": "13.5.6",
     "next-client-cookies": "^1.1.0",
@@ -44,5 +44,8 @@
     "swiper": "^11.1.4",
     "swr": "^2.2.4",
     "validator": "^13.11.0"
+  },
+  "devDependencies": {
+    "cypress": "^13.16.0"
   }
 }
