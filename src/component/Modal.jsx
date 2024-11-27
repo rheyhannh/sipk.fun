@@ -131,7 +131,12 @@ export const Default = () => {
                             </div>
 
                             <div className={styles.form__action}>
-                                <div className={`${styles.btn} ${styles.confirm}`} onClick={() => { context.handleModalClose() }}>
+                                <div
+                                    className={`${styles.btn} ${styles.confirm}`}
+                                    onClick={(event) => { event.target.blur(); context.handleModalClose(); }}
+                                    onKeyDown={(event) => { if (event.key === 'Enter') context.handleModalClose(); }}
+                                    tabIndex={0}
+                                >
                                     <h3>
                                         {
                                             context?.data?.actionText
