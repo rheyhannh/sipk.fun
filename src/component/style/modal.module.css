@@ -65,7 +65,7 @@
 .keterangan_icon {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-} 
+}
 
 .keterangan_icon span {
     margin-bottom: 0.3rem;
@@ -910,6 +910,12 @@
         visibility: hidden;
     }
 
+    .close:focus:not(:hover) {
+        background: transparent;
+        border: 1px solid var(--users-btn-alt);
+        color: var(--users-btn-hov);
+    }
+
     .perubahan__terakhir:hover .inner::-webkit-scrollbar,
     .tambah__matakuliah:hover .inner::-webkit-scrollbar,
     .detail__matakuliah:hover .inner::-webkit-scrollbar,
@@ -998,9 +1004,16 @@
         color: var(--primary-color);
         background: var(--box-color-primary);
     }
-    
+
     .tentang .content__section .item .card.clickable:hover {
         background: var(--accordion-bg-color);
+    }
+
+    .default .form__action .btn.confirm:focus:not(:hover),
+    .panduan__daftar .form__action .btn:focus:not(:hover) {
+        border: 1px solid var(--users-btn-alt);
+        background-color: transparent;
+        color: var(--users-btn-hov);
     }
 }
 

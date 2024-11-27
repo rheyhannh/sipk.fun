@@ -380,6 +380,18 @@
         background-color: var(--users-btn-hov);
     }
 
+    .btn:focus:not(:hover) {
+        background-color: transparent;
+        border: 1px solid var(--logo-second-color);
+        color: var(--dark-color);
+    }
+    
+    .btn.transparent:focus:not(:hover) {
+        background-color: var(--body2-color);
+        border: 2px solid transparent;
+        color: var(--dark-color);
+    }
+
     .social_icon:hover {
         color: #fff;
         background: var(--primary-color);
@@ -393,6 +405,16 @@
     .theme_toggle:hover {
         box-shadow: none;
         color: var(--logo-second-color);
+    }
+
+    .theme_toggle:focus:not(:hover) {
+        box-shadow: none;
+        color: var(--logo-second-color);
+        border: 1px solid var(--logo-second-color);
+    }
+
+    .social_text a:focus:not(:hover) {
+        border: 1px solid var(--logo-second-color);
     }
 }
 

@@ -43,7 +43,7 @@
 
 .header h3 {
     color: var(--dark-color);
-    transition: all var(--transition-default) ease-in-out, color 0s;
+    transition: all var(--transition-default) ease-in-out, color 0s, border 0s;
 }
 
 .header h3.active {
@@ -59,4 +59,10 @@
 .description {
     color: var(--dark-color);
     padding: 0 1.25rem 1.25rem 2.7rem;
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .header h3:focus:not(:hover) {
+        border: 1px solid var(--logo-second-color);
+    }
 }
