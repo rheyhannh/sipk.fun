@@ -70,6 +70,7 @@ import { BiMoon } from 'react-icons/bi';
  */
 export default function Users({ universitasData }) {
     /* ========== Next Hooks ========== */
+    /** @type {React.MutableRefObject<HCaptcha>} */
     const captcha = React.useRef();
     const router = useRouter();
     const searchParams = useSearchParams();
