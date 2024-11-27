@@ -577,7 +577,7 @@ export default function Users({ universitasData }) {
                             <div className={styles.signin_signup}>
                                 <HCaptcha
                                     ref={captcha}
-                                    sitekey="c397ab1e-e96e-4b8a-8bb3-f2fb86e62b47"
+                                    sitekey={process.env.NEXT_PUBLIC_HCAPTCHA_SITEKEY}
                                     size='invisible'
                                 />
 
