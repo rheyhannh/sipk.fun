@@ -22,8 +22,16 @@ import Footer from './RootFooter';
 // #endregion
 
 /**
+ * Props yang digunakan component `Root`
+ * @typedef {Object} RootProps
+ * @property {Array<SupabaseTypes.UniversitasData>} universitas
+ * @property {Array<SupabaseTypes.RatingData>} rating
+ * @property {Array<SupabaseTypes.NotifikasiData>} notifikasi
+ */
+
+/**
  * Render root page `'/'`
- * @param {{universitas:Array<SupabaseTypes.UniversitasData>, rating:Array<SupabaseTypes.RatingData>, notifikasi:Array<SupabaseTypes.NotifikasiData>}} props Root props
+ * @param {RootProps} props Root props
  * @returns {React.ReactElement} Rendered root page
  */
 export default function Root({ universitas, rating, notifikasi }) {
