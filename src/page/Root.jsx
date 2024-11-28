@@ -9,6 +9,7 @@ import * as React from 'react';
 // #endregion
 
 // #region COMPONENTS DEPEDENCY
+import { RootProvider } from '@/component/provider/Root';
 import { Container } from './RootComponents';
 import Header from './RootHeader';
 import Hero from './RootHero';
@@ -27,7 +28,7 @@ import Footer from './RootFooter';
  */
 export default function Root({ universitas, rating, notifikasi }) {
     return (
-        <>
+        <RootProvider>
             <Header />
             <Container>
                 <Hero />
@@ -38,6 +39,6 @@ export default function Root({ universitas, rating, notifikasi }) {
                 <MulaiSekarang />
             </Container>
             <Footer />
-        </>
+        </RootProvider>
     )
 }
