@@ -238,6 +238,7 @@
     justify-content: center;
     flex-direction: column;
     padding: var(--inner-padding);
+    perspective: 500px;
 }
 
 .universitas .title {
@@ -283,18 +284,11 @@
     align-items: center;
     gap: 1rem;
     padding: var(--inner-padding);
+    perspective: 500px;
 }
 
-.universitas .content .icons:nth-child(1) {
-    margin-top: 90px;
-}
-
-.universitas .content .icons:nth-child(3) {
-    margin-top: 45px;
-}
-
-.universitas .content .icons:nth-child(5) {
-    margin-bottom: 90px;
+.universitas .content .icons {
+    transform-style: preserve-3d;
 }
 
 .universitas .content .icons .icon {
