@@ -2,6 +2,7 @@
 
 // #region TYPE DEPEDENCY
 import * as SupabaseTypes from '@/types/supabase';
+import { AnimatedElementProps } from './RootComponents';
 // #endregion
 
 // #region CONFIG DEPEDENCY
@@ -10,6 +11,7 @@ import {
     UNIVERSITAS_SECTION_TITLE,
     UNIVERSITAS_SECTION_DESCRIPTION,
     UNIVERSITAS_SECTION_BUTTON,
+    UNIVERSITAS_ITEMS_LAYOUT,
 } from './RootConfig';
 // #endregion
 
@@ -37,7 +39,12 @@ import { FiExternalLink } from 'react-icons/fi';
 // #endregion
 
 // #region UTIL DEPEDENCY
-import { replacePlaceholders } from './RootUtils';
+import {
+    replacePlaceholders,
+    generateRandomNumber,
+    generateRandomNumberFixedRange,
+    generateRandomFloat,
+} from './RootUtils';
 // #endregion
 
 /**
