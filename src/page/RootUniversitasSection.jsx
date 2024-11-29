@@ -47,6 +47,42 @@ import {
 } from './RootUtils';
 // #endregion
 
+const LogoUniversitas = ({
+    universitas,
+    universitasId = 1,
+    universitasIndex,
+    width = 96,
+    height = 96,
+    ...props
+}) => {
+    const index = universitasIndex ?? universitas.findIndex((item) => item.id === universitasId);
+
+    return (
+        <Image
+            src={`/universitas/${universitas[index]?.assets?.logo ?? universitas[0]?.assets?.logo}`}
+            alt={`Logo ${universitas[index]?.nama ?? universitas[0]?.nama}`}
+            width={width}
+            height={height}
+            {...props}
+        />
+    )
+}
+const ScrollingItem = ({ universitas, index, isActive, ...props }) => (
+    <div className={`${styles.item} ${isActive ? styles.active : ''}`} {...props}>
+        <div className={styles.logo}>
+            <LogoUniversitas
+                universitas={universitas}
+                universitasIndex={index}
+                width={30}
+                height={30}
+            />
+        </div>
+        <h3 className={styles.title_small}>
+            {universitas[index]?.nama ?? universitas[0]?.nama}
+        </h3>
+    </div>
+)
+
 /**
  * Props yang digunakan component `ButtonLink`
  * @typedef {Object} ButtonLinkProps
@@ -101,31 +137,6 @@ const Universitas = ({ universitas }) => {
         damping: 30,
         restDelta: 0.001
     })
-
-    const LogoUniversitas = ({ index = 0 }) => (
-        <Image
-            src={`/universitas/${universitas[index]?.assets?.logo ?? universitas[0]?.assets?.logo}`}
-            alt={`Logo ${universitas[index]?.nama ?? universitas[0]?.nama}`}
-            width={96}
-            height={96}
-        />
-    )
-
-    const ScrollingItem = ({ index }) => (
-        <div className={styles.item}>
-            <div className={styles.logo}>
-                <Image
-                    src={`/universitas/${universitas[index]?.assets?.logo ?? universitas[0]?.assets?.logo}`}
-                    alt={`Logo ${universitas[index]?.nama ?? universitas[0]?.nama}`}
-                    width={30}
-                    height={30}
-                />
-            </div>
-            <h3 className={styles.title_small}>
-                {universitas[index]?.nama ?? universitas[0]?.nama}
-            </h3>
-        </div>
-    )
 
     const replacedDescription = replacePlaceholders(UNIVERSITAS_SECTION_DESCRIPTION, {
         jumlah_universitas: universitas.length
