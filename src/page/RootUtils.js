@@ -10,6 +10,28 @@
 */
 export const generateRandomNumber = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
 
+/** 
+ * Method untuk generate angka bulat beserta pemilihan positif atau negatif secara acak pada batasan tertentu
+ * dengan param `max` harus lebih besar dari `min`, jika tidak maka akan menggunakan nilai default.
+ * 
+ * Untuk detailnya dapat melihat contoh pada `example`
+ * @param {number} [min] Minimal angka yang digenerate, default `100`
+ * @param {number} [max] Maksimal angka yang digenerate, default `500`
+ * @returns {number} Angka bulat beserta positif atau negatif yang dipilih secara acak dengan range `min` dan `max`
+ * @example 
+ * ```js
+ * // Dua contoh dibawah memiliki logic yang sama yaitu
+ * // 1. Generate angka acak dari 42 sampai 242 atau -42 sampai 242
+ * // 2. Pilih secara acak apakah angka yang digenerate akan menjadi positif atau negatif
+ * console.log(generateRandomNumberFixedRange(42, 242)) // ex: 76
+ * console.log(generateRandomNumberFixedRange(-42, 242)) // ex: -32
+ * 
+ * // Contoh lainnya
+ * console.log(generateRandomNumberFixedRange(0, 0)) // 0
+ * console.log(generateRandomNumberFixedRange(-325, -325)) // -325 atau 325
+ * console.log(generateRandomNumberFixedRange(232, 232)) // -232 atau 232
+ * ```
+*/
 export const generateRandomNumberFixedRange = (min = 100, max = 500) => {
     if (min > max) { min = 100; max = 500; }
 

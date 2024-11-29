@@ -30,6 +30,14 @@ export const UNIVERSITAS_SECTION_BUTTON = [
     { text: 'Mulai Sekarang', href: '/users?action=daftar', scroll: false, tabIndex: 0 }
 ]
 
+/**
+ * Array yang berisikan object yang mendeskripsikan bagaimana layout icon universitas dibuat.
+ * 
+ * Setiap entries berperan sebagai sebuah container dengan key sebagai berikut,
+ * - `count` : Jumlah icon pada container 
+ * - `style` : Style yang digunakan pada container
+ * @type {Array<{count:number, style:React.CSSProperties}>}
+ */
 export const UNIVERSITAS_ITEMS_LAYOUT = [
     { count: 1, style: { marginTop: 90 } },
     { count: 3, style: {} },

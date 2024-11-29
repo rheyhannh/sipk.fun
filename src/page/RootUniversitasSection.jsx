@@ -89,6 +89,7 @@ const ButtonLink = ({ text = 'Lorem', type = 'default', isOpenNewTab, ...props }
 const Universitas = ({ universitas }) => {
     /** @type {React.MutableRefObject<HTMLDivElement>} */
     const sectionRef = React.useRef(null);
+    /** @type {ReturnType<typeof React.useState<Array<Pick<AnimatedElementProps, 'timeframe' | 'animations'>>>>} */
     const [iconAnimProps, setIconAnimProps] = React.useState([]);
     const { scrollYProgress } = useScroll({
         target: sectionRef,
