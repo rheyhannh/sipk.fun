@@ -125,6 +125,7 @@ const ButtonLink = ({ text = 'Lorem', type = 'default', isOpenNewTab, ...props }
 const Universitas = ({ universitas }) => {
     /** @type {React.MutableRefObject<HTMLDivElement>} */
     const sectionRef = React.useRef(null);
+    const [activeUnivId, setActiveUnivId] = React.useState(0);
     /** @type {ReturnType<typeof React.useState<Array<Pick<AnimatedElementProps, 'timeframe' | 'animations'>>>>} */
     const [iconAnimProps, setIconAnimProps] = React.useState([]);
     const { scrollYProgress } = useScroll({
@@ -250,19 +251,21 @@ const Universitas = ({ universitas }) => {
 
                             return (currentItems.length > 0) && (
                                 <div key={layoutIndex} className={styles.icons} style={config.style}>
-                                    {currentItems.map((_, index) => {
+                                    {currentItems.map((item, index) => {
                                         itemFlatIndex += 1;
                                         return (
                                             <AnimatedElement
                                                 key={index}
-                                                className={styles.icon}
+                                                className={`${styles.icon} ${activeUnivId === item.id ? styles.active : ''}`}
+                                                data-univshort={item.short.toLowerCase()}
                                                 style={{
                                                     transformOrigin: '100% 200%'
                                                 }}
                                                 scrollProgress={sectionScrollProgress}
+                                                onClick={() => { setActiveUnivId(item.id) }}
                                                 {...iconAnimProps[itemFlatIndex]}
                                             >
-                                                <LogoUniversitas index={itemFlatIndex} />
+                                                <LogoUniversitas universitas={universitas} universitasId={item.id} />
                                             </AnimatedElement>
                                         )
                                     })}
@@ -291,8 +294,14 @@ const Universitas = ({ universitas }) => {
                         contentRenderOffset={-1}
                         containerProps={{ style: { top: '50%', transform: 'translate(-50%, -50%)' } }}
                     >
-                        {universitas.map((_, index) => (
-                            <ScrollingItem key={index} index={index} />
+                        {universitas.map((item, index) => (
+                            <ScrollingItem
+                                key={index}
+                                universitas={universitas}
+                                index={index}
+                                isActive={activeUnivId === item.id}
+                                data-univshort={item.short.toLowerCase()}
+                            />
                         ))}
                     </ScrollingCarousel>
                 </div>
@@ -306,8 +315,14 @@ const Universitas = ({ universitas }) => {
                         contentRenderOffset={-1}
                         containerProps={{ style: { top: '50%', transform: 'translate(-50%, -50%)' } }}
                     >
-                        {universitas.map((_, index) => (
-                            <ScrollingItem key={index} index={index} />
+                        {universitas.map((item, index) => (
+                            <ScrollingItem
+                                key={index}
+                                universitas={universitas}
+                                index={index}
+                                isActive={activeUnivId === item.id}
+                                data-univshort={item.short.toLowerCase()}
+                            />
                         ))}
                     </ScrollingCarousel>
                 </div>
