@@ -95,10 +95,11 @@ export const RootProvider = ({ children }) => {
     /** @type {ReturnType<typeof React.useState<RootContextProps['isTouchDevice']>>} */
     const [isTouchDevice, setTouchDevice] = React.useState(false);
 
-    const richMediaQuery = window.matchMedia(`(min-width: ${RICH_CONTENT_WIDTH}px)`);
+    let richMediaQuery;
 
     React.useEffect(() => {
         const touchDevice = 'ontouchstart' in window || navigator.msMaxTouchPoints;
+        richMediaQuery = window.matchMedia(`(min-width: ${RICH_CONTENT_WIDTH}px)`);
 
         setRichContent(richMediaQuery.matches);
         if (touchDevice) setTouchDevice(true);
