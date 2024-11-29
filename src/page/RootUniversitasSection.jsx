@@ -16,7 +16,7 @@ import {
 // #endregion
 
 // #region NEXT DEPEDENCY
-import Image from 'next/image';
+import Image, { ImageProps } from 'next/image';
 import Link, { LinkProps } from 'next/link';
 // #endregion
 
@@ -47,6 +47,33 @@ import {
 } from './RootUtils';
 // #endregion
 
+/**
+ * Props yang digunakan component `LogoUniversitas`
+ * @typedef {Object} LogoUniversitasProps
+ * @property {Array<SupabaseTypes.UniversitasData>} universitas
+ * @property {SupabaseTypes.UniversitasData['id']} [universitasId]
+ * Id universitas yang dipilih
+ * - Default : `1`
+ * @property {number} universitasIndex
+ * Index array untuk universitas yang dipilih
+ * @property {ImageProps['width']} [width]
+ * Logo universitas width
+ * - Default : `96`
+ * @property {ImageProps['width']} [height]
+ * Logo universitas height
+ * - Default : `96`
+ * @property {ImageProps['alt']} [alt]
+ * Logo universitas alt
+ * - Default : `'Logo [Nama Universitas]'`
+ */
+
+/**
+ * Logo universitas menggunakan component `Image` pada {@link Image next/image}. 
+ * 
+ * Gunakan param {@link universitasId} untuk memilih universitas berdasarkan id atau {@link universitasIndex} untuk memilih universitas berdasarkan index array
+ * @param {Omit<ImageProps, 'src'> & LogoUniversitasProps} props LogoUniversitas props
+ * @returns {React.ReactElement} Rendered component
+ */
 const LogoUniversitas = ({
     universitas,
     universitasId = 1,
@@ -67,6 +94,22 @@ const LogoUniversitas = ({
         />
     )
 }
+
+/**
+ * Props yang digunakan component `ScrollingItem`
+ * @typedef {Object} ScrollingItemProps
+ * @property {Array<SupabaseTypes.UniversitasData>} universitas
+ * @property {number} index
+ * Mengacu pada index `universitas` yang digunakan
+ * @property {boolean} isActive
+ * Boolean apakah element aktif atau tidak dimana saat aktif akan mengganti `color`
+ */
+
+/**
+ * Element pada scrolling container yang menampilkan logo universitas dengan nama universitas
+ * @param {Omit<React.HTMLProps<HTMLDivElement>, 'className'> & ScrollingItemProps} props ScrollingItem props
+ * @returns {React.ReactElement} Rendered component
+ */
 const ScrollingItem = ({ universitas, index, isActive, ...props }) => (
     <div className={`${styles.item} ${isActive ? styles.active : ''}`} {...props}>
         <div className={styles.logo}>
