@@ -162,11 +162,7 @@ const Header = () => {
                                 {...(item?.isOpenNewTab || false ? { target: '_blank' } : {})}
                                 tabIndex={0}
                                 onKeyDown={(event) => {
-                                    if (event.key === 'Enter' && item?.elementId) {
-                                        const target = document.getElementById(item.elementId);
-                                        scroller.scrollTo(item.elementId, { offset: -75 })
-                                        if (target) target.focus();
-                                    }
+                                    if (event.key === 'Enter' && item?.elementId) scroller.scrollTo(item.elementId, { offset: -75 });
                                 }}
                                 onClickCapture={(event) => {
                                     event.target.blur();
