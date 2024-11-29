@@ -10,6 +10,15 @@
 */
 export const generateRandomNumber = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
 
+export const generateRandomNumberFixedRange = (min = 100, max = 500) => {
+    if (min > max) { min = 100; max = 500; }
+
+    const randomValue = Math.random() * (max - min) + min;
+    const sign = Math.random() < 0.5 ? -1 : 1;
+
+    return randomValue * sign;
+}
+
 /** 
  * Method untuk generate angka float acak dengan 2 angka dibelakang koma pada batasan tertentu
  * @param {number} min Minimal angka yang digenerate 
