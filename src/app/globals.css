@@ -93,6 +93,29 @@
     --box-color-main: hsl(222, 100%, 95%);
     /* #endregion */
 
+    /* #region UNIVERSITAS-THEMED */
+    --box-bgColor-ub: #7A91C1;
+    --box-bgColor-undip: #595454;
+    --box-bgColor-ui: #E8D122;
+    --box-bgColor-itb: #2182DD;
+    --box-bgColor-unair: #FFD942;
+    --box-bgColor-ipb: #6453B0;
+    --box-bgColor-its: #95E6FA;
+    --box-bgColor-telkom: #F36064;
+    --box-bgColor-unpad: #FFCD40;
+    --box-bgColor-unsoed: #FFF350;
+    --textColor-ub: #2C4370;
+    --textColor-undip: #3A3737;
+    --textColor-ui: #5F5012;
+    --textColor-itb: #15438F;
+    --textColor-unair: #755913;
+    --textColor-ipb: #382772;
+    --textColor-its: #1D6F84;
+    --textColor-telkom: #992628;
+    --textColor-unpad: #8A6416;
+    --textColor-unsoed: #6D5C10;
+    /* #endregion */
+
     /* #region BORDER-RADIUS */
     --card-border-radius: 2rem;
     --border-radius-1: 0.4rem;
@@ -310,6 +333,29 @@
     --box-color-crimson: hsl(0, 25%, 21%);
     --box-color-primary: hsl(234, 25%, 21%);
     --box-color-main: hsl(11, 25%, 21%);
+    /* #endregion */
+
+    /* #region UNIVERSITAS-THEMED */
+    --box-bgColor-ub: #6F86B5;
+    --box-bgColor-undip: #494444;
+    --box-bgColor-ui: #E8C821;
+    --box-bgColor-itb: #1973D0;
+    --box-bgColor-unair: #FFD636;
+    --box-bgColor-ipb: #544BA0;
+    --box-bgColor-its: #85E0F8;
+    --box-bgColor-telkom: #F14D51;
+    --box-bgColor-unpad: #FFC22A;
+    --box-bgColor-unsoed: #FFF040;
+    --textColor-ub: #B0C7E8;
+    --textColor-undip: #A7A2A2;
+    --textColor-ui: #F2E372;
+    --textColor-itb: #4BA1FF;
+    --textColor-unair: #FFE277;
+    --textColor-ipb: #8B73CF;
+    --textColor-its: #B0F0FF;
+    --textColor-telkom: #F6898B;
+    --textColor-unpad: #FFD66A;
+    --textColor-unsoed: #FFFA8A;
     /* #endregion */
 
     /* #region BOX-SHADOW */
