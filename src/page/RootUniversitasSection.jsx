@@ -89,6 +89,7 @@ const ButtonLink = ({ text = 'Lorem', type = 'default', isOpenNewTab, ...props }
 const Universitas = ({ universitas }) => {
     /** @type {React.MutableRefObject<HTMLDivElement>} */
     const sectionRef = React.useRef(null);
+    const [iconAnimProps, setIconAnimProps] = React.useState([]);
     const { scrollYProgress } = useScroll({
         target: sectionRef,
         offset: ["start end", "end end"]
@@ -129,6 +130,34 @@ const Universitas = ({ universitas }) => {
         jumlah_universitas: universitas.length
     })
 
+    const generateIconAnimProps = () => {
+        return Array.from({ length: universitas.length }, (_, index) => {
+            if (index % 2 === 0) {
+                return {
+                    timeframe: [0.25, generateRandomFloat(0.8, 0.95)],
+                    animations: {
+                        z: [generateRandomNumberFixedRange(125, 250), 0],
+                        scale: [generateRandomFloat(0.1, 1.25), 1],
+                        opacity: [0, 1],
+                        rotateX: [generateRandomNumber(-75, -35), 0],
+                        rotateY: [generateRandomNumber(-45, 45), 0],
+                    }
+                }
+            } else {
+                return {
+                    timeframe: [0.25, generateRandomFloat(0.8, 0.95)],
+                    animations: {
+                        z: [generateRandomNumberFixedRange(125, 250), 0],
+                        scale: [generateRandomFloat(0.1, 1.25), 1],
+                        opacity: [0, 1],
+                        rotateX: [generateRandomNumber(35, 75), 0],
+                        rotateY: [generateRandomNumber(-45, 45), 0],
+                    }
+                }
+            }
+        })
+    }
+
     /** @param {React.KeyboardEvent} event */
     const handleKeyDown = (event) => {
         if (event.key === 'Tab') {
@@ -146,6 +175,13 @@ const Universitas = ({ universitas }) => {
         }
     }
 
+    React.useEffect(() => {
+        setIconAnimProps(generateIconAnimProps());
+    }, []);
+
+    let itemFlatIndex = -1;
+    let itemIndex = 0;
+
     return (
         <section
             ref={sectionRef}
@@ -160,9 +196,11 @@ const Universitas = ({ universitas }) => {
                         <AnimatedElement
                             as={'h2'}
                             className={styles.title}
+                            style={{ transformOrigin: '-25% -100%' }}
                             timeframe={[0.1, 0.74]}
                             animations={{
-                                y: [-50, 0],
+                                rotateX: [-65, 0],
+                                rotateY: [35, 0],
                                 opacity: [0, 1]
                             }}
                             scrollProgress={sectionScrollProgress}
@@ -173,11 +211,8 @@ const Universitas = ({ universitas }) => {
                         <AnimatedElement
                             as={'p'}
                             className={styles.title_description}
-                            timeframe={[0.1, 0.77]}
-                            animations={{
-                                y: [50, 0],
-                                opacity: [0, 1]
-                            }}
+                            timeframe={[0.25, 0.77]}
+                            animations={{ opacity: [0, 1], y: [30, 0] }}
                             scrollProgress={sectionScrollProgress}
                         >
                             {replacedDescription}
@@ -186,11 +221,8 @@ const Universitas = ({ universitas }) => {
                         <AnimatedElement
                             as={'div'}
                             className={styles.title_cta}
-                            timeframe={[0.1, 0.8]}
-                            animations={{
-                                y: [50, 0],
-                                opacity: [0, 1]
-                            }}
+                            timeframe={[0.5, 0.8]}
+                            animations={{ opacity: [0, 1], y: [50, 0] }}
                             scrollProgress={sectionScrollProgress}
                         >
                             {UNIVERSITAS_SECTION_BUTTON.map((props, index) => (
@@ -200,140 +232,31 @@ const Universitas = ({ universitas }) => {
                     </div>
 
                     <div className={styles.content}>
-                        <div className={styles.icons}>
-                            <AnimatedElement
-                                className={styles.icon}
-                                timeframe={[0.1, 0.74]}
-                                animations={{
-                                    scale: [1.15, 1],
-                                    x: [-25, 0],
-                                    y: [100, 0],
-                                    opacity: [0, 1]
-                                }}
-                                scrollProgress={sectionScrollProgress}
-                            >
-                                <LogoUniversitas index={0} />
-                            </AnimatedElement>
-                        </div>
-                        <div className={styles.icons}>
-                            <AnimatedElement
-                                className={styles.icon}
-                                timeframe={[0.1, 0.62]}
-                                animations={{
-                                    scale: [1.25, 1],
-                                    x: [-35, 0],
-                                    y: [-30, 0],
-                                    opacity: [0, 1]
-                                }}
-                                scrollProgress={sectionScrollProgress}
-                            >
-                                <LogoUniversitas index={1} />
-                            </AnimatedElement>
-                            <AnimatedElement
-                                className={styles.icon}
-                                timeframe={[0.1, 0.68]}
-                                animations={{
-                                    y: [150, 0],
-                                    scale: [0.45, 1],
-                                    opacity: [0, 1]
-                                }}
-                                scrollProgress={sectionScrollProgress}
-                            >
-                                <LogoUniversitas index={2} />
-                            </AnimatedElement>
-                            <AnimatedElement
-                                className={styles.icon}
-                                timeframe={[0.1, 0.75]}
-                                animations={{
-                                    scale: [0.15, 1],
-                                    x: [15, 0],
-                                    y: [155, 0],
-                                    opacity: [0, 1]
-                                }}
-                                scrollProgress={sectionScrollProgress}
-                            >
-                                <LogoUniversitas index={3} />
-                            </AnimatedElement>
-                        </div>
-                        <div className={styles.icons}>
-                            <AnimatedElement
-                                className={styles.icon}
-                                timeframe={[0.1, 0.77]}
-                                animations={{
-                                    scale: [1.15, 1],
-                                    y: [-45, 0],
-                                    opacity: [0, 1]
-                                }}
-                                scrollProgress={sectionScrollProgress}
-                            >
-                                <LogoUniversitas index={4} />
-                            </AnimatedElement>
-                            <AnimatedElement
-                                className={styles.icon}
-                                timeframe={[0.1, 0.75]}
-                                animations={{
-                                    y: [150, 0],
-                                    scale: [0.25, 1],
-                                    opacity: [0, 1]
-                                }}
-                                scrollProgress={sectionScrollProgress}
-                            >
-                                <LogoUniversitas index={5} />
-                            </AnimatedElement>
-                        </div>
-                        <div className={styles.icons}>
-                            <AnimatedElement
-                                className={styles.icon}
-                                timeframe={[0.1, 0.72]}
-                                animations={{
-                                    scale: [1.1, 1],
-                                    y: [-55, 0],
-                                    opacity: [0, 1]
-                                }}
-                                scrollProgress={sectionScrollProgress}
-                            >
-                                <LogoUniversitas index={6} />
-                            </AnimatedElement>
-                            <AnimatedElement
-                                className={styles.icon}
-                                timeframe={[0.1, 0.58]}
-                                animations={{
-                                    y: [150, 0],
-                                    scale: [0.5, 1],
-                                    opacity: [0, 1]
-                                }}
-                                scrollProgress={sectionScrollProgress}
-                            >
-                                <LogoUniversitas index={7} />
-                            </AnimatedElement>
-                            <AnimatedElement
-                                className={styles.icon}
-                                timeframe={[0.1, 0.65]}
-                                animations={{
-                                    y: [150, 0],
-                                    scale: [0.1, 1],
-                                    opacity: [0, 1]
-                                }}
-                                scrollProgress={sectionScrollProgress}
-                            >
-                                <LogoUniversitas index={8} />
-                            </AnimatedElement>
-                        </div>
-                        <div className={styles.icons}>
-                            <AnimatedElement
-                                className={styles.icon}
-                                timeframe={[0.1, 0.79]}
-                                animations={{
-                                    scale: [0.45, 1],
-                                    y: [150, 0],
-                                    x: [25, 0],
-                                    opacity: [0, 1]
-                                }}
-                                scrollProgress={sectionScrollProgress}
-                            >
-                                <LogoUniversitas index={9} />
-                            </AnimatedElement>
-                        </div>
+                        {(iconAnimProps.length > 0) && UNIVERSITAS_ITEMS_LAYOUT.map((config, layoutIndex) => {
+                            const currentItems = universitas.slice(itemIndex, itemIndex + config.count);
+                            itemIndex += config.count;
+
+                            return (currentItems.length > 0) && (
+                                <div key={layoutIndex} className={styles.icons} style={config.style}>
+                                    {currentItems.map((_, index) => {
+                                        itemFlatIndex += 1;
+                                        return (
+                                            <AnimatedElement
+                                                key={index}
+                                                className={styles.icon}
+                                                style={{
+                                                    transformOrigin: '100% 200%'
+                                                }}
+                                                scrollProgress={sectionScrollProgress}
+                                                {...iconAnimProps[itemFlatIndex]}
+                                            >
+                                                <LogoUniversitas index={itemFlatIndex} />
+                                            </AnimatedElement>
+                                        )
+                                    })}
+                                </div>
+                            )
+                        })}
                     </div>
                 </div>
             </div>
