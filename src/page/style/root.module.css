@@ -300,6 +300,53 @@
     box-shadow: 0 0.5rem 0.75rem var(--light-color);
     border-radius: 1rem;
     transition: box-shadow var(--transition-default) ease-in-out;
+    cursor: pointer;
+}
+
+.universitas .content .icons .icon.active {
+    cursor: auto;
+    border: 1px solid var(--logo-second-color);
+    box-shadow: none;
+}
+
+.universitas .content .icons .icon.active[data-univshort="ub"] {
+    border: 1px solid var(--textColor-ub);
+}
+
+.universitas .content .icons .icon.active[data-univshort="undip"] {
+    border: 1px solid var(--textColor-undip);
+}
+
+.universitas .content .icons .icon.active[data-univshort="ui"] {
+    border: 1px solid var(--textColor-ui);
+}
+
+.universitas .content .icons .icon.active[data-univshort="itb"] {
+    border: 1px solid var(--textColor-itb);
+}
+
+.universitas .content .icons .icon.active[data-univshort="unair"] {
+    border: 1px solid var(--textColor-unair);
+}
+
+.universitas .content .icons .icon.active[data-univshort="ipb"] {
+    border: 1px solid var(--textColor-ipb);
+}
+
+.universitas .content .icons .icon.active[data-univshort="its"] {
+    border: 1px solid var(--textColor-its);
+}
+
+.universitas .content .icons .icon.active[data-univshort="telkom"] {
+    border: 1px solid var(--textColor-telkom);
+}
+
+.universitas .content .icons .icon.active[data-univshort="unpad"] {
+    border: 1px solid var(--textColor-unpad);
+}
+
+.universitas .content .icons .icon.active[data-univshort="unsoed"] {
+    border: 1px solid var(--textColor-unsoed);
 }
 
 .universitas .scrolling {
@@ -325,6 +372,50 @@
     display: flex;
     align-items: center;
     gap: 1rem;
+}
+
+.universitas .scrolling .item.active .title_small {
+    color: var(--logo-second-color);
+}
+
+.universitas .scrolling .item.active[data-univshort="ub"] .title_small {
+    color: var(--textColor-ub);
+}
+
+.universitas .scrolling .item.active[data-univshort="undip"] .title_small {
+    color: var(--textColor-undip);
+}
+
+.universitas .scrolling .item.active[data-univshort="ui"] .title_small {
+    color: var(--textColor-ui);
+}
+
+.universitas .scrolling .item.active[data-univshort="itb"] .title_small {
+    color: var(--textColor-itb);
+}
+
+.universitas .scrolling .item.active[data-univshort="unair"] .title_small {
+    color: var(--textColor-unair);
+}
+
+.universitas .scrolling .item.active[data-univshort="ipb"] .title_small {
+    color: var(--textColor-ipb);
+}
+
+.universitas .scrolling .item.active[data-univshort="its"] .title_small {
+    color: var(--textColor-its);
+}
+
+.universitas .scrolling .item.active[data-univshort="telkom"] .title_small {
+    color: var(--textColor-telkom);
+}
+
+.universitas .scrolling .item.active[data-univshort="unpad"] .title_small {
+    color: var(--textColor-unpad);
+}
+
+.universitas .scrolling .item.active[data-univshort="unsoed"] .title_small {
+    color: var(--textColor-unsoed);
 }
 
 .universitas .scrolling .item .logo {
