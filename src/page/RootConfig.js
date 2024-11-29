@@ -30,4 +30,12 @@ export const UNIVERSITAS_SECTION_BUTTON = [
     { text: 'Mulai Sekarang', href: '/users?action=daftar', scroll: false, tabIndex: 0 }
 ]
 
+export const UNIVERSITAS_ITEMS_LAYOUT = [
+    { count: 1, style: { marginTop: 90 } },
+    { count: 3, style: {} },
+    { count: 2, style: { marginTop: 45 } },
+    { count: 3, style: {} },
+    { count: 1, style: { marginBottom: 90 } },
+];
+
 // #endregion
