@@ -8,8 +8,17 @@
         or sticky scroll animation not working 
     */
     /* overflow: hidden; */
-    padding: var(--root-base-padding);
     font-size: var(--root-default-fontsize);
+}
+
+.container_wrap {
+    width: var(--container-width);
+    margin: 0 auto;
+}
+
+.container,
+.container_wrap {
+    padding: 0 var(--root-base-padding);
 }
 
 .section {
@@ -219,11 +228,9 @@
     border: none;
 }
 
-.universitas>.inner {
-    width: var(--container-width);
-    margin: 0 auto;
-    flex: 1;
+.universitas>.container_wrap {
     display: flex;
+    flex: 1;
 }
 
 .universitas .layout {
@@ -908,18 +915,13 @@
     overflow: hidden;
 }
 
-.testimoni>.inner {
-    width: var(--container-width);
-    margin: 0 auto;
-    overflow: hidden;
-}
-
-.testimoni>.inner .title {
+.testimoni>.container_wrap .title {
     width: 95%;
     margin: 0 auto;
     display: flex;
     justify-content: center;
     align-items: center;
+    text-align: center;
 }
 
 .testimoni>.cards {
@@ -1319,6 +1321,13 @@
     }
 }
 
+@media screen and (max-width: 1279px) {
+
+    .container,
+    .container_wrap {
+        overflow: hidden;
+    }
+}
 @media screen and (min-width: 1280px) {
     .container {
         --container-width: 1280px;

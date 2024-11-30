@@ -28,6 +28,12 @@ export const Container = ({ children }) => (
     </div>
 )
 
+export const ContainerWrapper = ({ children }) => (
+    <div className={styles.container_wrap}>
+        {children}
+    </div>
+)
+
 /**
  * Props yang digunakan component `AnimatedElement`
  * @typedef {Object} AnimatedElementProps

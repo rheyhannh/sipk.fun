@@ -30,7 +30,7 @@ import styles from './style/root.module.css';
 
 // #region COMPONENT DEPEDENCY
 import { motion, useScroll, useSpring } from 'framer-motion';
-import { AnimatedElement, ScrollingCarousel } from './RootComponents';
+import { AnimatedElement, ScrollingCarousel, ContainerWrapper } from './RootComponents';
 import { scroller } from 'react-scroll';
 // #endregion
 
@@ -246,7 +246,7 @@ const Universitas = ({ universitas }) => {
             className={`${styles.section} ${styles.universitas}`}
             onKeyDown={handleKeyDown}
         >
-            <div className={styles.inner}>
+            <ContainerWrapper>
                 <div className={styles.layout}>
                     <div className={styles.text}>
                         <AnimatedElement
@@ -317,7 +317,7 @@ const Universitas = ({ universitas }) => {
                         })}
                     </div>
                 </div>
-            </div>
+            </ContainerWrapper>
 
             <motion.div
                 initial={{ opacity: 0 }}

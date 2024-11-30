@@ -16,7 +16,7 @@ import styles from './style/root.module.css';
 
 // #region COMPONENT DEPEDENCY
 import { motion } from 'framer-motion';
-import { ScrollingCarousel } from './RootComponents';
+import { ScrollingCarousel, ContainerWrapper } from './RootComponents';
 import HighlightText from '@/component/motion/HighlightText';
 import { scroller } from 'react-scroll';
 // #endregion
@@ -58,7 +58,7 @@ const Testimoni = ({ rating }) => {
             className={`${styles.section} ${styles.testimoni}`}
             onKeyDown={handleKeyDown}
         >
-            <div className={styles.inner}>
+            <ContainerWrapper>
                 <motion.h2
                     ref={headingRef}
                     className={styles.title}
@@ -88,7 +88,7 @@ const Testimoni = ({ rating }) => {
                         text={'Kata Mereka Tentang SIPK'}
                     />
                 </motion.h2>
-            </div>
+            </ContainerWrapper>
 
             <motion.div whileInView={'inView'} viewport={{ once: GLOBAL_VIEWPORT_ONCE }} className={styles.content}>
                 <ScrollingCarousel
