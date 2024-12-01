@@ -14,6 +14,10 @@ import Link from 'next/link';
 import * as React from 'react';
 // #endregion
 
+// #region HOOKS DEPEDENCY
+import useMeasure from 'react-use-measure';
+// #endregion
+
 // #region STYLE DEPEDENCY
 import styles from './style/root.module.css';
 // #endregion
@@ -62,6 +66,8 @@ const Button = React.forwardRef(({ type = 'default', text = 'Lorem', onClick, hr
 const MulaiSekarang = () => {
     /** @type {React.MutableRefObject<HTMLDivElement>} */
     const sectionRef = React.useRef(null);
+
+    const [titleRef, { width: titleWidth }] = useMeasure();
 
     /** @param {React.KeyboardEvent} event */
     const handleKeyDown = (event) => {
@@ -114,6 +120,7 @@ const MulaiSekarang = () => {
             </motion.div>
 
             <motion.h1
+                ref={titleRef}
                 className={styles.title_big}
                 initial={{ visibility: 'hidden' }}
                 variants={{ inView: { visibility: 'visible' } }}
@@ -139,6 +146,9 @@ const MulaiSekarang = () => {
 
             <motion.div
                 className={styles.title_big_description}
+                style={{
+                    width: 0.9 * titleWidth
+                }}
                 whileInView={'inView'}
                 viewport={{ once: GLOBAL_VIEWPORT_ONCE }}
                 transition={{ type: 'spring', delayChildren: delayAnims[2] }}
