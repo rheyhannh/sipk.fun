@@ -207,12 +207,12 @@
     /* #region ROOT '/' */
     --root-base-padding: 16px;
     --root-section-margin-bottom: 10rem;
-    --root-section-height: calc(100vh - (2 * var(--root-base-padding)) - var(--root-header-height));
+    --root-section-height: 100%;
     --root-section-lineColor: #D4D5D8;
-    --root-default-fontsize: 1rem;
-    --root-title-fontsize: 2rem;
-    --root-description-fontsize: .85rem;
-    --root-action-fontsize: 1.1rem;
+    --root-default-fontsize: 0.975rem;
+    --root-title-fontsize: 1.575rem;
+    --root-description-fontsize: .825rem;
+    --root-action-fontsize: 1.075rem;
     --root-header-height: 75px;
     --root-header-bgColor: rgba(246, 246, 249, 0.8);
     --root-header-borderColor: rgba(209, 213, 219, 0.6);
@@ -579,6 +579,21 @@ main.dashboard {
     main.dashboard {
         width: 96%;
         margin: 0 auto;
+    }
+}
+
+@media screen and (max-width: 767px) {
+    :root {
+        --root-default-fontsize: 0.925rem;
+        --root-title-fontsize: 1.325rem;
+        --root-description-fontsize: .775rem;
+        --root-action-fontsize: 1.025rem;
+    }
+}
+
+@media screen and (min-width: 1024px) {
+    :root {
+        --root-section-height: calc(100vh - (2 * var(--root-base-padding)) - var(--root-header-height));
     }
 }
 

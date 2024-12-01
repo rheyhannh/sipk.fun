@@ -1344,11 +1344,129 @@
 
 @media screen and (max-width: 1279px) {
 
-    .container,
-    .container_wrap {
-        overflow: hidden;
+}
+
+@media screen and (max-width: 1023px) {
+    .header_outter {
+        display: none;
+    }
+
+    .universitas,
+    .kenapa_sipk,
+    .mulai_sekarang {
+        --inner-padding: 2rem 0;
+    }
+
+    .universitas {
+        gap: 2rem;
+    }
+
+    .universitas .layout {
+        flex-direction: column-reverse;
+        gap: 0;
+    }
+
+    .universitas .title {
+        margin-bottom: 0.5rem;
+    }
+
+    .universitas .title_description {
+        margin-bottom: 2.5rem;
     }
 }
+
+@media screen and (max-width: 767px) {
+    .universitas {
+        --icon-size: 65px;
+        --scrolling-icon-size: 27.5px;
+    }
+
+    .mulai_sekarang {
+        --logo-size: 96px;
+    }
+
+    .footer {
+        padding: 2rem 0;
+    }
+
+    .footer .primary {
+        gap: 1.25rem;
+        padding-top: 0;
+        padding-bottom: 1.25rem;
+        margin: calc(var(--brand-size) + 0.75rem) 1.5rem 0 1.5rem;
+    }
+
+    .footer .brand_wrap {
+        position: absolute;
+        top: 2rem;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+
+    .footer .shorcut {
+        justify-content: start;
+        column-gap: 1.75rem;
+    }
+}
+
+@media screen and (max-width: 524px) {
+    .footer .primary {
+        flex-direction: column;
+        padding: 0;
+    }
+
+    .footer .shorcut {
+        justify-content: center;
+    }
+
+    .footer .socials {
+        gap: 0.5rem;
+        max-width: none;
+        justify-content: center;
+    }
+
+    .footer .line {
+        display: none;
+    }
+
+    .footer .secondary {
+        flex-direction: column-reverse;
+        gap: 3rem;
+        margin: 1.5rem 1.5rem 0 1.5rem;
+        padding: 0;
+    }
+
+    .footer .sublinks {
+        flex-wrap: wrap;
+        justify-content: center;
+        column-gap: 2rem;
+        row-gap: 1rem;
+    }
+}
+
+@media screen and (max-width: 424px) {
+    .mulai_sekarang .title_big {
+        text-align: center;
+    }
+}
+
+@media screen and (max-width: 374px) {
+    .universitas .title_cta {
+        flex-direction: column;
+        align-items: center;
+    }
+}
+
+@media screen and (max-width: 319px) {
+
+    .footer .shorcut,
+    .footer .sublinks {
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+    }
+}
+
 @media screen and (min-width: 1280px) {
     .container {
         --container-width: 1280px;
