@@ -298,6 +298,7 @@ const Universitas = ({ universitas }) => {
                             const currentItems = universitas.slice(itemIndex, itemIndex + config.count);
                             itemIndex += config.count;
 
+                            /** @returns {React.CSSProperties} */
                             const resolveConfigStyle = () => {
                                 const style = {};
                                 if (config?.style && Object.keys(config.style).length > 0) {
