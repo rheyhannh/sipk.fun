@@ -17,6 +17,8 @@ const RICH_CONTENT_WIDTH = 1280;
  * 
  * State ini sudah dilengkapi event listener beserta cleanupnya sehingga state akan diperbarui secara `otomatis`
  * - Initial : `false` (akan diperbarui setelah mount)
+ * 
+ * Normalnya rich content saat viewport `>= 1280px`
  * @property {boolean} isTouchDevice 
  * State ini berfungsi untuk mendeteksi apakah user device merupakan touch device dengan menggunakan,
  * 
