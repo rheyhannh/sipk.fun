@@ -136,9 +136,11 @@ const Footers = () => (
             whileInView={'show'}
             viewport={{ once: GLOBAL_VIEWPORT_ONCE }}
         >
-            <motion.div className={styles.brand} onClick={() => { scroll.scrollToTop({ smooth: false, duration: 1 }) }} {...getFooterTransition(false, 0)}>
-                <LogoImage src={'/logo_fill_contrast.png'} width={60} height={60} />
-            </motion.div>
+            <div className={styles.brand_wrap}>
+                <motion.div className={styles.brand} onClick={() => { scroll.scrollToTop({ smooth: false, duration: 1 }) }} {...getFooterTransition(false, 0)}>
+                    <LogoImage src={'/logo_fill_contrast.png'} width={60} height={60} />
+                </motion.div>
+            </div>
 
             <div id={'footer-shorcuts'} className={styles.shorcut}>
                 {footerShorcuts.map((item, index) => (

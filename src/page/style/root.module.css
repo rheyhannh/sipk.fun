@@ -1148,6 +1148,7 @@
 }
 
 .footer {
+    position: relative;
     padding: 2.5rem 0;
 }
 
@@ -1174,6 +1175,10 @@
     height: var(--line-height);
     margin: 0 auto;
     background-color: var(--root-footer-lineColor);
+}
+
+.footer .brand_wrap {
+    position: relative;
 }
 
 .footer .brand {
