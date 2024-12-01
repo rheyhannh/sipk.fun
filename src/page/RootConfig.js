@@ -36,7 +36,26 @@ export const UNIVERSITAS_SECTION_BUTTON = [
  * Setiap entries berperan sebagai sebuah container dengan key sebagai berikut,
  * - `count` : Jumlah icon pada container 
  * - `style` : Style yang digunakan pada container
- * @type {Array<{count:number, style:React.CSSProperties}>}
+ * 
+ * Value pada atribut style dapat berupa callback function yang menerima dua parameter dimana 
+ * parameter `pertama` bernilai client viewport width dan parameter `kedua` bernilai client viewport
+ * height
+ * 
+ * @example
+ * ```js
+ * const UNIVERSITAS_ITEMS_LAYOUT = {
+ *      {
+ *          count: 1,
+ *          style: {
+ *              marginTop: 15,
+ *              // viewportWidth - viewportHeight + 300
+ *              marginBottom: (x, y) => x - y + 300, 
+ *          }
+ *      }
+ * }
+ * ```
+ * 
+ * @type {Array<{count:number, style:{[K in keyof React.CSSProperties]: React.CSSProperties[K] | (viewportWidth:number, viewportHeight:number) => React.CSSProperties[K]}}
  */
 export const UNIVERSITAS_ITEMS_LAYOUT = [
     { count: 1, style: { marginTop: 90, display: (x, y) => x < 425 ? 'none' : 'block' } },
