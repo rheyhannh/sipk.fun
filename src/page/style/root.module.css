@@ -84,6 +84,12 @@
     color: var(--footer4-linkColor);
 }
 
+.title_big,
+.title,
+.title_small {
+    line-height: 1;
+}
+
 /* #region Header */
 
 .header_outter {
@@ -246,6 +252,7 @@
     flex-direction: column;
     padding: var(--inner-padding);
     perspective: 500px;
+    z-index: 2;
 }
 
 .universitas .title {
@@ -292,6 +299,7 @@
     gap: 1rem;
     padding: var(--inner-padding);
     perspective: 500px;
+    z-index: 1;
 }
 
 .universitas .content .icons {
@@ -539,11 +547,11 @@
 .kenapa_sipk .content .box.x .inner .matkul_anim {
     display: flex;
     flex-direction: column;
+    /* Gap should not changed. */
     gap: 0.75rem;
     justify-content: center;
     width: 100%;
     height: 100%;
-    padding: 1rem;
     z-index: 1;
 }
 
@@ -552,6 +560,7 @@
     justify-content: center;
     align-items: center;
     transform-origin: bottom right;
+    position: relative;
 }
 
 .kenapa_sipk .content .box.x .inner .progress_anim>div {
@@ -1043,7 +1052,6 @@
     --logo-size: 128px;
     height: var(--root-section-height);
     padding: var(--inner-padding);
-    overflow: hidden;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -1066,11 +1074,10 @@
 }
 
 .mulai_sekarang .title_big {
-    margin-bottom: .5rem;
+    margin-bottom: 1.5rem;
 }
 
 .mulai_sekarang .title_big_description {
-    width: 500px;
     text-align: center;
     margin-bottom: 2rem;
 }
@@ -1100,7 +1107,9 @@
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 1.5rem;
-    width: 275px;
+    max-width: 275px;
+    width: 100%;
+    min-width: 175px;
 }
 
 .mulai_sekarang .title_big_cta .btn {
