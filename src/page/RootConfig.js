@@ -39,11 +39,11 @@ export const UNIVERSITAS_SECTION_BUTTON = [
  * @type {Array<{count:number, style:React.CSSProperties}>}
  */
 export const UNIVERSITAS_ITEMS_LAYOUT = [
-    { count: 1, style: { marginTop: 90 } },
+    { count: 1, style: { marginTop: 90, display: (x, y) => x < 425 ? 'none' : 'block' } },
     { count: 3, style: {} },
     { count: 2, style: { marginTop: 45 } },
     { count: 3, style: {} },
-    { count: 1, style: { marginBottom: 90 } },
+    { count: 1, style: { marginBottom: 90, display: (x, y) => x < 425 ? 'none' : 'block' } },
 ];
 
 // #endregion

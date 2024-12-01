@@ -24,6 +24,10 @@ import Link, { LinkProps } from 'next/link';
 import * as React from 'react';
 // #endregion
 
+// #region HOOKS DEPEDENCY
+import useWindowSize from '@/hooks/useWindowSize';
+// #endregion
+
 // #region STYLE DEPEDENCY
 import styles from './style/root.module.css';
 // #endregion
@@ -171,6 +175,8 @@ const Universitas = ({ universitas }) => {
     const [activeUnivId, setActiveUnivId] = React.useState(0);
     /** @type {ReturnType<typeof React.useState<Array<Pick<AnimatedElementProps, 'timeframe' | 'animations'>>>>} */
     const [iconAnimProps, setIconAnimProps] = React.useState([]);
+
+    const { width: viewportWidth, height: viewportHeight } = useWindowSize();
     const { scrollYProgress } = useScroll({
         target: sectionRef,
         offset: ["start end", "end end"]
@@ -292,8 +298,20 @@ const Universitas = ({ universitas }) => {
                             const currentItems = universitas.slice(itemIndex, itemIndex + config.count);
                             itemIndex += config.count;
 
+                            const resolveConfigStyle = () => {
+                                const style = {};
+                                if (config?.style && Object.keys(config.style).length > 0) {
+                                    Object.entries(config.style).forEach(([key, val]) => {
+                                        if (typeof val === 'function') style[key] = val(viewportWidth, viewportHeight);
+                                        else style[key] = val;
+                                    })
+                                }
+
+                                return style;
+                            }
+
                             return (currentItems.length > 0) && (
-                                <div key={layoutIndex} className={styles.icons} style={config.style}>
+                                <div key={layoutIndex} className={styles.icons} style={resolveConfigStyle()}>
                                     {currentItems.map((item, index) => {
                                         itemFlatIndex += 1;
                                         return (
