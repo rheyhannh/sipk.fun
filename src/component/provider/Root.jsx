@@ -30,6 +30,11 @@ const RICH_CONTENT_WIDTH = 1280;
  * 
  * - Initial : `false` (akan diperbarui setelah mount)
  * - Penting : Masih terdapat bug pada listener dimana perubahan tipe device pada debugger tidak akan memperbarui state
+ * @property {boolean} showNavbarOverlay
+ * Pada small device, navbar ditampilkan dengan sebuah overlay. 
+ * State ini menentukan apakah overlay tersebut ditampilkan atau tidak
+ * @property {React.Dispatch<React.SetStateAction<boolean>>} setShowNavbarOverlay
+ * Setter untuk state {@link RootContextProps.showNavbarOverlay showNavbarOverlay}
  */
 
 /** 
@@ -96,6 +101,7 @@ export const RootProvider = ({ children }) => {
     const [isRichContent, setRichContent] = React.useState(false);
     /** @type {ReturnType<typeof React.useState<RootContextProps['isTouchDevice']>>} */
     const [isTouchDevice, setTouchDevice] = React.useState(false);
+    /** @type {ReturnType<typeof React.useState<RootContextProps['showNavbarOverlay']>>} */
     const [showNavbarOverlay, setShowNavbarOverlay] = React.useState(false);
 
     let richMediaQuery;
