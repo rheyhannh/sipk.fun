@@ -12,6 +12,7 @@ import * as React from 'react';
 import { RootProvider } from '@/component/provider/Root';
 import { Container } from './RootComponents';
 import Header from './RootHeader';
+import Navbar from './RootNavbar';
 import Hero from './RootHero';
 import KenapaSipk from './RootKenapaSipkSection';
 import Universitas from './RootUniversitasSection';
@@ -38,6 +39,7 @@ export default function Root({ universitas, rating, notifikasi }) {
     return (
         <RootProvider>
             <Header />
+            <Navbar/>
             <Container>
                 <Hero />
                 <Universitas universitas={universitas} />
