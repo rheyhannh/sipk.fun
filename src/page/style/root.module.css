@@ -108,12 +108,113 @@
     --root-default-fontsize: 0.9rem;
     margin-left: auto;
     margin-right: auto;
-    width: 1280px;
     height: 100%;
     padding-left: 2rem;
     padding-right: 2rem;
     font-size: var(--root-default-fontsize);
     color: var(--root-header-textColor);
+}
+
+.navbar_overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: var(--accordion-highlight-color);
+    z-index: calc(var(--z-fixed) + 1);
+}
+
+.navbar_btn {
+    --navbar-btnSize: 46px;
+    --hamburger-color: var(--white-color);
+    position: fixed;
+    top: calc((var(--root-header-height) - 46px) / 2);
+    right: 2rem;
+    width: var(--navbar-btnSize);
+    height: var(--navbar-btnSize);
+    border-radius: 50%;
+    z-index: calc(var(--z-fixed) + 2);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--accordion-highlight-color);
+    cursor: pointer;
+}
+
+.navbar_btn .hamburger {
+    width: calc(var(--navbar-btnSize) / 2.25);
+    height: calc(var(--navbar-btnSize) / 2.25);
+    cursor: pointer;
+    color: var(--hamburger-color);
+    background-color: transparent;
+}
+
+.navbar_btn .hamburger.active .hamburger__inner,
+.navbar_btn .hamburger.active .hamburger__inner::before,
+.navbar_btn .hamburger.active .hamburger__inner::after {
+    background-color: var(--hamburger-color);
+}
+
+.navbar_btn .hamburger__box {
+    width: calc(var(--navbar-btnSize) / 2.25);
+    height: calc(var(--navbar-btnSize) / 2.25);
+    position: relative;
+}
+
+.navbar_btn .hamburger__inner {
+    display: block;
+    top: 50%;
+}
+
+.navbar_btn .hamburger__inner,
+.navbar_btn .hamburger__inner::before,
+.navbar_btn .hamburger__inner::after {
+    width: calc(var(--navbar-btnSize) / 2.25);
+    height: 2px;
+    background-color: var(--hamburger-color);
+    border-radius: 2px;
+    position: absolute;
+    transition-property: transform;
+    transition-duration: 0.15s;
+    transition-timing-function: ease;
+}
+
+.navbar_btn .hamburger__inner::before,
+.navbar_btn .hamburger__inner::after {
+    content: "";
+    display: block;
+}
+
+.navbar_btn .hamburger .hamburger__inner {
+    top: 2px;
+    transition-duration: 0.275s;
+    transition-timing-function: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.navbar_btn .hamburger .hamburger__inner::before {
+    top: 7.6px;
+    transition: opacity 0.125s 0.275s ease;
+}
+
+.navbar_btn .hamburger .hamburger__inner::after {
+    top: 15px;
+    transition: transform var(--transition-default) cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.navbar_btn .hamburger.active .hamburger__inner {
+    transform: translate3d(0, 7.6px, 0) rotate(135deg);
+    transition-delay: 0.075s;
+}
+
+.navbar_btn .hamburger.active .hamburger__inner::before {
+    transition-delay: 0s;
+    opacity: 0;
+}
+
+.navbar_btn .hamburger.active .hamburger__inner::after {
+    transform: translate3d(0, -15px, 0) rotate(-270deg);
+    transition-delay: 0.075s;
 }
 
 .navbar {
@@ -1342,14 +1443,9 @@
     }
 }
 
-@media screen and (max-width: 1279px) {
-
-}
+@media screen and (max-width: 1279px) {}
 
 @media screen and (max-width: 1023px) {
-    .header_outter {
-        display: none;
-    }
 
     .universitas,
     .kenapa_sipk,
@@ -1376,6 +1472,10 @@
 }
 
 @media screen and (max-width: 767px) {
+    .header_outter {
+        z-index: -1;
+    }
+
     .universitas {
         --icon-size: 65px;
         --scrolling-icon-size: 27.5px;
