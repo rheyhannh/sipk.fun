@@ -96,6 +96,7 @@ export const RootProvider = ({ children }) => {
     const [isRichContent, setRichContent] = React.useState(false);
     /** @type {ReturnType<typeof React.useState<RootContextProps['isTouchDevice']>>} */
     const [isTouchDevice, setTouchDevice] = React.useState(false);
+    const [showNavbarOverlay, setShowNavbarOverlay] = React.useState(false);
 
     let richMediaQuery;
 
@@ -145,7 +146,8 @@ export const RootProvider = ({ children }) => {
     return (
         <RootContext.Provider
             value={{
-                isRichContent, isTouchDevice
+                isRichContent, isTouchDevice,
+                showNavbarOverlay, setShowNavbarOverlay
             }}
         >
             {children}
