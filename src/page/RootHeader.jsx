@@ -21,6 +21,7 @@ import * as React from 'react';
 // #region HOOKS DEPEDENCY
 import useWindowSize from '@/hooks/useWindowSize';
 import { useLocalTheme } from '@/data/core';
+import { useClickAway } from 'ahooks';
 // #endregion
 
 // #region COMPONENT DEPEDENCY
@@ -150,15 +151,27 @@ const ThemeChanger = ({ theme, handleChangeTheme }) => (
     </div>
 )
 
-const Wrapper = ({ children }) => (
-    <div className={styles.header_outter}>
-        <header id={'header'} className={styles.header}>
-            <nav className={styles.navbar}>
-                {children}
-            </nav>
-        </header>
-    </div>
-)
+const Wrapper = ({ children }) => {
+    const { showNavbarOverlay, setShowNavbarOverlay } = React.useContext(RootContext);
+    const outerRef = React.useRef(null);
+
+    useClickAway(() => {
+        if (showNavbarOverlay) {
+            setShowNavbarOverlay(false);
+            document.body.classList.remove('disable_scroll');
+        }
+    }, outerRef);
+
+    return (
+        <div ref={outerRef} className={styles.header_outter}>
+            <header id={'header'} className={styles.header}>
+                <nav className={styles.navbar}>
+                    {children}
+                </nav>
+            </header>
+        </div>
+    )
+}
 
 const Navbar = ({ showNavbar, children }) => {
     /** @type {React.MutableRefObject<HTMLDivElement>} */
