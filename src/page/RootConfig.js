@@ -2,9 +2,47 @@
 import { LinkProps } from 'next/link';
 import * as React from 'react';
 import { ButtonLinkProps } from './RootUniversitasSection';
+import { NavItem } from '@/constant/client';
 // #endregion
 
 export const GLOBAL_VIEWPORT_ONCE = true;
+
+// #region Header and Navigation Confi 
+
+/**
+ * Array yang berisikan link yang digunakan pada navbar. Gunakan props `elementId` untuk scroll ke section atau element tertentu,
+ * gunakan `href` untuk routing ke url tertentu. 
+ * 
+ * Saat url dibuka pada tab baru, pastikan pass `true` pada props `isOpenNewTab` untuk
+ * menambahkan icon dan target `_blank` pada element anchor.
+ * 
+ * Untuk opsi lanjutan dapat diatur pada props `routingOptions` untuk opsi routing dan `scrollOptions` untuk opsi scroll.
+ * @type {Array<Omit<NavItem, 'icon' | 'iconName' | 'iconLib' | 'dropdown'> & {isOpenNewTab:boolean}>}
+ */
+export const HEADER_NAVIGATION_SHORCUTS = [
+    {
+        text: 'Tentang',
+        elementId: 'tentang',
+        href: null
+    },
+    {
+        text: 'Fitur',
+        elementId: 'fitur',
+        href: null
+    },
+    {
+        text: 'Testimoni',
+        elementId: 'testimoni',
+        href: null
+    },
+    {
+        text: 'Panduan',
+        elementId: null,
+        href: '/panduan',
+    },
+]
+
+// #endregion
 
 // #region Universitas Section Config
 

@@ -1,7 +1,13 @@
 'use client'
 
 // #region TYPE DEPEDENCY
-import { NavItem } from '@/constant/client';
+import { RootContextProps } from '@/component/provider/Root';
+// #endregion
+
+// #region CONFIG DEPEDENCY
+import {
+    HEADER_NAVIGATION_SHORCUTS,
+} from './RootConfig';
 // #endregion
 
 // #region NEXT DEPEDENCY
@@ -36,39 +42,6 @@ import {
 // #region STYLE DEPEDENCY
 import styles from './style/root.module.css';
 // #endregion
-
-/**
- * Array yang berisikan link yang digunakan pada navbar. Gunakan props `elementId` untuk scroll ke section atau element tertentu,
- * gunakan `href` untuk routing ke url tertentu. 
- * 
- * Saat url dibuka pada tab baru, pastikan pass `true` pada props `isOpenNewTab` untuk
- * menambahkan icon dan target `_blank` pada element anchor.
- * 
- * Untuk opsi lanjutan dapat diatur pada props `routingOptions` untuk opsi routing dan `scrollOptions` untuk opsi scroll.
- * @type {Array<Omit<NavItem, 'icon' | 'iconName' | 'iconLib' | 'dropdown'> & {isOpenNewTab:boolean}>}
- */
-const headerShorcuts = [
-    {
-        text: 'Tentang',
-        elementId: 'tentang',
-        href: null
-    },
-    {
-        text: 'Fitur',
-        elementId: 'fitur',
-        href: null
-    },
-    {
-        text: 'Testimoni',
-        elementId: 'testimoni',
-        href: null
-    },
-    {
-        text: 'Panduan',
-        elementId: null,
-        href: '/panduan',
-    },
-]
 
 const ButtonCTA = React.forwardRef(({ text = 'Lorem', onClick, href, ...props }, ref) => (
     <motion.a
