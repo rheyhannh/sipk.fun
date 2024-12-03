@@ -185,6 +185,44 @@ const Navbar = ({ showNavbar, children }) => {
     )
 }
 
+const NavbarOverlay = () => {
+    const { width: windowWidth } = useWindowSize();
+    const { showNavbarOverlay, setShowNavbarOverlay } = React.useContext(RootContext);
+
+    return (
+        <AnimatePresence
+            onExitComplete={() => {
+                if (showNavbarOverlay) setShowNavbarOverlay(false);
+            }}
+        >
+            {windowWidth < 600 && (
+                <motion.div
+                    className={`${styles.overlay} ${showNavbarOverlay ? styles.active : ''}`}
+                    variants={{
+                        hide: { scaleY: 0, transition: { when: 'afterChildren' } },
+                        show: { scaleY: 1, transition: { when: 'beforeChildren' } }
+                    }}
+                    initial={'hide'}
+                    exit={'hide'}
+                    animate={showNavbarOverlay ? 'show' : 'hide'}
+                >
+                    <motion.div
+                        variants={{ hide: { opacity: 0 }, show: { opacity: 1 } }}
+                        className={styles.layout}
+                    >
+                        <LogoWithWrapper />
+                        <LinkItems />
+                        <NextLink href={'/users?action=daftar'} scroll={false} passHref legacyBehavior>
+                            <ButtonCTA id={'navbar-cta'} text={'Mulai Sekarang'} />
+                        </NextLink>
+                    </motion.div>
+                </motion.div>
+            )}
+
+        </AnimatePresence>
+    )
+}
+
 const NavbarLeftContent = () => {
     const { showNavbarOverlay, setShowNavbarOverlay } = React.useContext(RootContext);
     const { width: windowWidth } = useWindowSize();
@@ -259,6 +297,7 @@ const Header = () => {
                 <NavbarLeftContent />
                 <NavbarCenterContent />
                 <NavbarRightContent />
+                <NavbarOverlay />
             </Navbar>
         </Wrapper>
     )
