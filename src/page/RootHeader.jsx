@@ -146,11 +146,86 @@ const ThemeChanger = ({ theme, handleChangeTheme }) => (
     </div>
 )
 
-const Header = () => {
+const Wrapper = ({ children }) => (
+    <div className={styles.header_outter}>
+        <header id={'header'} className={styles.header}>
+            <nav className={styles.navbar}>
+                {children}
+            </nav>
+        </header>
+    </div>
+)
+
+const Nav = ({ showNavbar, children }) => {
     /** @type {React.MutableRefObject<HTMLDivElement>} */
     const navRef = React.useRef(null);
-    const [showNavbar, setShowNavbar] = React.useState(true);
+
+    return (
+        <motion.div
+            ref={navRef}
+            className={styles.nav}
+            transition={{ duration: 0.5, bounce: 0.2 }}
+            variants={{ hide: { y: -125 }, show: { y: 0 } }}
+            initial={'hide'}
+            animate={showNavbar ? 'show' : 'hide'}
+            onKeyDown={(event) => {
+                if (event.key === 'Tab') {
+                    if (!event.shiftKey) {
+                        if (navRef.current && navRef.current.lastChild === document.activeElement) {
+                            const sections = document.getElementsByTagName('section');
+                            // TODOS should scroll to first section not second
+                            scroller.scrollTo(sections[1].id, { offset: -75, smooth: true, duration: (x) => Math.abs(x) > 1500 ? 0 : 500 });
+                        }
+                    }
+                }
+            }}
+        >
+            {children}
+        </motion.div>
+    )
+}
+
+const NavbarLeftContent = () => {
     const { showNavbarOverlay, setShowNavbarOverlay } = React.useContext(RootContext);
+    const { width: windowWidth } = useWindowSize();
+
+    if (windowWidth < 600) {
+        return (
+            <div className={`${styles.wrap} ${styles.left}`}>
+                <HamburgerButton
+                    showNavbarOverlay={showNavbarOverlay}
+                    setShowNavbarOverlay={setShowNavbarOverlay}
+                />
+                <LogoWithWrapper />
+            </div>
+        )
+    } else {
+        return <LogoWithWrapper />
+    }
+}
+
+const NavbarCenterContent = () => {
+    const { width: windowWidth } = useWindowSize();
+
+    if (windowWidth < 768) {
+        return (
+            <div className={`${styles.wrap} ${styles.center}`}>
+                <LinkItems />
+            </div>
+        )
+    } else {
+        return (
+            <>
+                <LinkItems />
+                <NextLink href={'/users?action=daftar'} scroll={false} passHref legacyBehavior>
+                    <ButtonCTA id={'navbar-cta'} text={'Mulai Sekarang'} />
+                </NextLink>
+            </>
+        )
+    }
+}
+
+const NavbarRightContent = () => {
     const { width: windowWidth } = useWindowSize();
     const { data: theme } = useLocalTheme();
 
@@ -160,69 +235,32 @@ const Header = () => {
         mutate('localUserTheme');
     }
 
+    if (windowWidth < 768) {
+        return (
+            <div className={`${styles.wrap} ${styles.right}`}>
+                <NextLink href={'/users?action=daftar'} scroll={false} passHref legacyBehavior>
+                    <ButtonCTA id={'navbar-cta'} text={'Mulai Sekarang'} />
+                </NextLink>
+
+                <ThemeChanger theme={theme} handleChangeTheme={handleChangeTheme} />
+            </div>
+        )
+    } else {
+        return <ThemeChanger theme={theme} handleChangeTheme={handleChangeTheme} />
+    }
+}
+
+const Header = () => {
+    const [showNavbar, setShowNavbar] = React.useState(true);
+
     return (
-        <div className={styles.header_outter}>
-            <header id={'header'} className={styles.header}>
-                <nav className={styles.navbar}>
-                    <motion.div
-                        ref={navRef}
-                        className={styles.nav}
-                        transition={{ duration: 0.5, bounce: 0.2 }}
-                        variants={{ hide: { y: -125 }, show: { y: 0 } }}
-                        initial={'hide'}
-                        animate={showNavbar ? 'show' : 'hide'}
-                        onKeyDown={(event) => {
-                            if (event.key === 'Tab') {
-                                if (!event.shiftKey) {
-                                    if (navRef.current && navRef.current.lastChild === document.activeElement) {
-                                        const sections = document.getElementsByTagName('section');
-                                        // TODOS should scroll to first section not second
-                                        scroller.scrollTo(sections[1].id, { offset: -75, smooth: true, duration: (x) => Math.abs(x) > 1500 ? 0 : 500 });
-                                    }
-                                }
-                            }
-                        }}
-                    >
-                        {windowWidth < 600 ?
-                            <div className={`${styles.wrap} ${styles.left}`}>
-                                <HamburgerButton
-                                    showNavbarOverlay={showNavbarOverlay}
-                                    setShowNavbarOverlay={setShowNavbarOverlay}
-                                />
-                                <LogoWithWrapper />
-                            </div>
-                            :
-                            <LogoWithWrapper />
-                        }
-
-                        {windowWidth < 768 ?
-                            <div className={`${styles.wrap} ${styles.center}`}>
-                                <LinkItems />
-                            </div>
-                            :
-                            <>
-                                <LinkItems />
-                                <NextLink href={'/users?action=daftar'} scroll={false} passHref legacyBehavior>
-                                    <ButtonCTA id={'navbar-cta'} text={'Mulai Sekarang'} />
-                                </NextLink>
-                            </>
-                        }
-
-                        {windowWidth < 768 ?
-                            <div className={`${styles.wrap} ${styles.right}`}>
-                                <NextLink href={'/users?action=daftar'} scroll={false} passHref legacyBehavior>
-                                    <ButtonCTA id={'navbar-cta'} text={'Mulai Sekarang'} />
-                                </NextLink>
-
-                                <ThemeChanger theme={theme} handleChangeTheme={handleChangeTheme} />
-                            </div>
-                            :
-                            <ThemeChanger theme={theme} handleChangeTheme={handleChangeTheme} />
-                        }
-                    </motion.div>
-                </nav>
-            </header>
-        </div >
+        <Wrapper>
+            <Nav showNavbar={showNavbar}>
+                <NavbarLeftContent />
+                <NavbarCenterContent />
+                <NavbarRightContent />
+            </Nav>
+        </Wrapper>
     )
 }
 
