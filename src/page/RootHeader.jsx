@@ -106,10 +106,10 @@ const LinkItems = () => (
 const HamburgerButton = ({ showNavbarOverlay, setShowNavbarOverlay }) => (
     <div
         className={`${styles.hamburger} ${showNavbarOverlay ? styles.active : ''}`}
-        onClick={() => { 
+        onClick={() => {
             if (showNavbarOverlay) document.body.classList.remove('disable_scroll');
             else document.body.classList.add('disable_scroll');
-            setShowNavbarOverlay(x => !x) ;
+            setShowNavbarOverlay(x => !x);
         }}
     >
         <div className={styles.hamburger_box}>
@@ -221,7 +221,7 @@ const NavbarOverlay = () => {
     return (
         <AnimatePresence
             onExitComplete={() => {
-                if (showNavbarOverlay){ 
+                if (showNavbarOverlay) {
                     setShowNavbarOverlay(false);
                     document.body.classList.remove('disable_scroll');
                 }
