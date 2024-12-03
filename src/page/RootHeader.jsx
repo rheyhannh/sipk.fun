@@ -176,13 +176,25 @@ const Wrapper = ({ children }) => {
 const Navbar = ({ showNavbar, children }) => {
     /** @type {React.MutableRefObject<HTMLDivElement>} */
     const navRef = React.useRef(null);
+    const { showNavbarOverlay } = React.useContext(RootContext);
 
     return (
         <motion.div
             ref={navRef}
             className={styles.nav}
             transition={{ duration: 0.5, bounce: 0.2 }}
-            variants={{ hide: { y: -125 }, show: { y: 0 } }}
+            variants={{
+                hide: {
+                    y: -125,
+                    backgroundColor: showNavbarOverlay ? 'var(--root-navbar-bgColorStrong)' : 'var(--root-navbar-bgColor)',
+                    backdropFilter: showNavbarOverlay ? 'none' : 'blur(7.5px) saturate(50%)',
+                },
+                show: {
+                    y: 0,
+                    backgroundColor: showNavbarOverlay ? 'var(--root-navbar-bgColorStrong)' : 'var(--root-navbar-bgColor)',
+                    backdropFilter: showNavbarOverlay ? 'none' : 'blur(7.5px) saturate(50%)',
+                }
+            }}
             initial={'hide'}
             animate={showNavbar ? 'show' : 'hide'}
             onKeyDown={(event) => {
@@ -217,7 +229,7 @@ const NavbarOverlay = () => {
         >
             {windowWidth < 600 && (
                 <motion.div
-                    className={`${styles.overlay} ${showNavbarOverlay ? styles.active : ''}`}
+                    className={styles.overlay}
                     variants={{
                         hide: { scaleY: 0, transition: { when: 'afterChildren' } },
                         show: { scaleY: 1, transition: { when: 'beforeChildren' } }

@@ -135,11 +135,7 @@
     border: 1px solid var(--root-header-borderColor);
     background-color: var(--root-navbar-bgColor);
     backdrop-filter: blur(5px) saturate(50%);
-}
-
-.navbar .nav:has(.overlay.active) {
-    background-color: var(--root-navbar-bgColorStrong);
-    backdrop-filter: none;
+    /* overflow: hidden; */
 }
 
 .navbar .nav .overlay {
