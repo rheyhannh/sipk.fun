@@ -100,7 +100,7 @@
     left: 0;
     margin: 0 auto;
     padding: 0 0;
-    overflow: hidden;
+    /* overflow: hidden; */
     z-index: var(--z-fixed);
 }
 
@@ -140,7 +140,7 @@
 
 .navbar .nav .overlay {
     position: absolute;
-    padding: 1rem 1.75rem 2rem 1.75rem;
+    padding: 1rem 1rem 2rem 1rem;
     background-color: var(--root-navbar-bgColorStrong);
     box-shadow: .25rem 1.25rem 1.25rem var(--light-color);
     left: 0;
@@ -150,9 +150,20 @@
 }
 
 .navbar .nav .overlay .layout {
+    max-height: calc(100vh - 2.75rem - var(--root-header-height));
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.navbar .nav .overlay .layout::-webkit-scrollbar {
+    width: .3rem;
+}
+
+.navbar .nav .overlay .layout .inner {
     display: flex;
     flex-direction: column;
     gap: 1.25rem;
+    padding: 0 0.75rem;
 }
 
 .navbar .nav .overlay a {

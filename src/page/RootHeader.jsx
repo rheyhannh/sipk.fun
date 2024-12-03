@@ -242,11 +242,13 @@ const NavbarOverlay = () => {
                         variants={{ hide: { opacity: 0 }, show: { opacity: 1 } }}
                         className={styles.layout}
                     >
-                        <LogoWithWrapper />
-                        <LinkItems />
-                        <NextLink href={'/users?action=daftar'} scroll={false} passHref legacyBehavior>
-                            <ButtonCTA id={'navbar-cta'} text={'Mulai Sekarang'} />
-                        </NextLink>
+                        <div className={styles.inner}>
+                            <LogoWithWrapper />
+                            <LinkItems />
+                            <NextLink href={'/users?action=daftar'} scroll={false} passHref legacyBehavior>
+                                <ButtonCTA id={'navbar-cta'} text={'Mulai Sekarang'} />
+                            </NextLink>
+                        </div>
                     </motion.div>
                 </motion.div>
             )}
