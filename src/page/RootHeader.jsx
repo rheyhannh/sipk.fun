@@ -156,7 +156,7 @@ const Wrapper = ({ children }) => (
     </div>
 )
 
-const Nav = ({ showNavbar, children }) => {
+const Navbar = ({ showNavbar, children }) => {
     /** @type {React.MutableRefObject<HTMLDivElement>} */
     const navRef = React.useRef(null);
 
@@ -255,11 +255,11 @@ const Header = () => {
 
     return (
         <Wrapper>
-            <Nav showNavbar={showNavbar}>
+            <Navbar showNavbar={showNavbar}>
                 <NavbarLeftContent />
                 <NavbarCenterContent />
                 <NavbarRightContent />
-            </Nav>
+            </Navbar>
         </Wrapper>
     )
 }
