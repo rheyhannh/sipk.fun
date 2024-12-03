@@ -21,7 +21,7 @@ import * as React from 'react';
 // #region HOOKS DEPEDENCY
 import useWindowSize from '@/hooks/useWindowSize';
 import { useLocalTheme } from '@/data/core';
-import { useClickAway } from 'ahooks';
+import { useClickAway, useUnmount } from 'ahooks';
 // #endregion
 
 // #region COMPONENT DEPEDENCY
@@ -217,6 +217,18 @@ const Navbar = ({ showNavbar, children }) => {
 const NavbarOverlay = () => {
     const { width: windowWidth } = useWindowSize();
     const { showNavbarOverlay, setShowNavbarOverlay } = React.useContext(RootContext);
+    
+    /*
+        Make sure body doesnt have disable_scroll when user do client navigation. 
+        Actualy we handle this using onExitComplete props on AnimatePresence below, but those props only fired
+        'after' animation.
+
+        This could breaking some features when we want disable scroll after user do client navigation
+        from navbar overlay.
+    */
+    useUnmount(() => {
+        document.body.classList.remove('disable_scroll');
+    })
 
     return (
         <AnimatePresence
