@@ -20,6 +20,7 @@ import * as React from 'react';
 
 // #region HOOKS DEPEDENCY
 import useWindowSize from '@/hooks/useWindowSize';
+import useScrollingEvent from '@/hooks/useScrollingEvent';
 import { useLocalTheme } from '@/data/core';
 import { useClickAway, useUnmount } from 'ahooks';
 // #endregion
@@ -335,6 +336,25 @@ const NavbarRightContent = () => {
 
 const Header = () => {
     const [showNavbar, setShowNavbar] = React.useState(true);
+    const { showNavbarOverlay } = React.useContext(RootContext);
+    const { height: viewportHeight } = useWindowSize();
+
+    const scrollFrames = React.useRef(0);
+
+    const handleScrollUp = () => {
+        scrollFrames.current = 0;
+        if (!showNavbar) setShowNavbar(true);
+    }
+
+    const handleScrollDown = () => {
+        scrollFrames.current += 1;
+        if (!showNavbarOverlay && scrollFrames.current > 5) setShowNavbar(false);
+    }
+
+    const scrollingType = useScrollingEvent(handleScrollUp, handleScrollDown, null, {
+        minimumScrollPosition: viewportHeight,
+        timeoutDuration: 500,
+    });
 
     return (
         <Wrapper>
