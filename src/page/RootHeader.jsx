@@ -217,7 +217,7 @@ const Navbar = ({ showNavbar, children }) => {
 const NavbarOverlay = () => {
     const { width: windowWidth } = useWindowSize();
     const { showNavbarOverlay, setShowNavbarOverlay } = React.useContext(RootContext);
-    
+
     /*
         Make sure body doesnt have disable_scroll when user do client navigation. 
         Actualy we handle this using onExitComplete props on AnimatePresence below, but those props only fired
@@ -264,7 +264,6 @@ const NavbarOverlay = () => {
                     </motion.div>
                 </motion.div>
             )}
-
         </AnimatePresence>
     )
 }
