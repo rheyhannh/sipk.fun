@@ -337,18 +337,18 @@ const NavbarRightContent = () => {
 const Header = () => {
     const [showNavbar, setShowNavbar] = React.useState(true);
     const { showNavbarOverlay } = React.useContext(RootContext);
-    const { height: viewportHeight } = useWindowSize();
+    const { width: viewportWidth, height: viewportHeight } = useWindowSize();
 
     const scrollFrames = React.useRef(0);
 
     const handleScrollUp = () => {
         scrollFrames.current = 0;
-        if (!showNavbar) setShowNavbar(true);
+        if (!showNavbar && viewportWidth < 768) setShowNavbar(true);
     }
 
     const handleScrollDown = () => {
         scrollFrames.current += 1;
-        if (!showNavbarOverlay && scrollFrames.current > 5) setShowNavbar(false);
+        if (!showNavbarOverlay && scrollFrames.current > 5 && viewportWidth < 768) setShowNavbar(false);
     }
 
     const scrollingType = useScrollingEvent(handleScrollUp, handleScrollDown, null, {
