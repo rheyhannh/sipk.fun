@@ -125,32 +125,42 @@ const LogoWithWrapper = () => (
     </div>
 )
 
-const ThemeChanger = ({ theme, handleChangeTheme }) => (
-    <div
-        id={'navbar-theme'}
-        className={styles.theme}
-        role={'button'}
-        tabIndex={0}
-        onKeyDown={(event) => {
-            if (event.key === 'Enter') {
+const ThemeChanger = () => {
+    const { data: theme } = useLocalTheme();
+
+    const handleChangeTheme = (newTheme) => {
+        if (theme === newTheme) { return }
+        localStorage.setItem('_theme', theme === 'dark' ? 'light' : 'dark');
+        mutate('localUserTheme');
+    }
+
+    return (
+        <div
+            id={'navbar-theme'}
+            className={styles.theme}
+            role={'button'}
+            tabIndex={0}
+            onKeyDown={(event) => {
+                if (event.key === 'Enter') {
+                    handleChangeTheme(theme === 'dark' ? 'light' : 'dark')
+                }
+            }}
+            onClick={(event) => {
+                event.currentTarget.blur();
                 handleChangeTheme(theme === 'dark' ? 'light' : 'dark')
-            }
-        }}
-        onClick={(event) => {
-            event.currentTarget.blur();
-            handleChangeTheme(theme === 'dark' ? 'light' : 'dark')
-        }}
-    >
-        <motion.div
-            className={styles.inner}
-            initial={false}
-            animate={theme === 'dark' ? { y: -37.5 } : { y: 7.5 }}
+            }}
         >
-            <FiMoon />
-            <FiSun />
-        </motion.div>
-    </div>
-)
+            <motion.div
+                className={styles.inner}
+                initial={false}
+                animate={theme === 'dark' ? { y: -37.5 } : { y: 7.5 }}
+            >
+                <FiMoon />
+                <FiSun />
+            </motion.div>
+        </div>
+    )
+}
 
 const Wrapper = ({ children }) => {
     const { showNavbarOverlay, setShowNavbarOverlay } = React.useContext(RootContext);
@@ -311,13 +321,6 @@ const NavbarCenterContent = () => {
 
 const NavbarRightContent = () => {
     const { width: windowWidth } = useWindowSize();
-    const { data: theme } = useLocalTheme();
-
-    const handleChangeTheme = (newTheme) => {
-        if (theme === newTheme) { return }
-        localStorage.setItem('_theme', theme === 'dark' ? 'light' : 'dark');
-        mutate('localUserTheme');
-    }
 
     if (windowWidth < 768) {
         return (
@@ -326,11 +329,11 @@ const NavbarRightContent = () => {
                     <ButtonCTA id={'navbar-cta'} text={'Mulai Sekarang'} />
                 </NextLink>
 
-                <ThemeChanger theme={theme} handleChangeTheme={handleChangeTheme} />
+                <ThemeChanger />
             </div>
         )
     } else {
-        return <ThemeChanger theme={theme} handleChangeTheme={handleChangeTheme} />
+        return <ThemeChanger />
     }
 }
 
