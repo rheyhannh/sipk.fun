@@ -104,6 +104,11 @@ const LinkItems = () => (
     </>
 )
 
+/**
+ * Animated hamburger button untuk toggle {@link NavbarOverlay navbar overlay} pada small devices
+ * @param {Pick<RootContextProps, 'showNavbarOverlay' | 'setShowNavbarOverlay'>} props HamburgerButton props
+ * @returns {React.ReactElement} Rendered component
+ */
 const HamburgerButton = ({ showNavbarOverlay, setShowNavbarOverlay }) => (
     <div
         className={`${styles.hamburger} ${showNavbarOverlay ? styles.active : ''}`}
