@@ -62,10 +62,10 @@ import {
  * Index array untuk universitas yang dipilih
  * @property {ImageProps['width']} [width]
  * Logo universitas width
- * - Default : `96`
+ * - Default : `250`
  * @property {ImageProps['width']} [height]
  * Logo universitas height
- * - Default : `96`
+ * - Default : `250`
  * @property {ImageProps['alt']} [alt]
  * Logo universitas alt
  * - Default : `'Logo [Nama Universitas]'`
