@@ -82,8 +82,8 @@ const LogoUniversitas = ({
     universitas,
     universitasId = 1,
     universitasIndex,
-    width = 96,
-    height = 96,
+    width = 250,
+    height = 250,
     ...props
 }) => {
     const index = universitasIndex ?? universitas.findIndex((item) => item.id === universitasId);
@@ -120,8 +120,8 @@ const ScrollingItem = ({ universitas, index, isActive, ...props }) => (
             <LogoUniversitas
                 universitas={universitas}
                 universitasIndex={index}
-                width={30}
-                height={30}
+                width={60}
+                height={60}
             />
         </div>
         <h3 className={styles.title_small}>

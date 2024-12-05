@@ -114,8 +114,8 @@ const MulaiSekarang = () => {
             >
                 <LogoImage
                     src={'/logo_fill.png'}
-                    width={128}
-                    height={128}
+                    width={250}
+                    height={250}
                 />
             </motion.div>
 

@@ -138,7 +138,7 @@ const Footers = () => (
         >
             <div className={styles.brand_wrap}>
                 <motion.div className={styles.brand} onClick={() => { scroll.scrollToTop({ smooth: false, duration: 1 }) }} {...getFooterTransition(false, 0)}>
-                    <LogoImage src={'/logo_fill_contrast.png'} width={60} height={60} />
+                    <LogoImage src={'/logo_fill_contrast.png'} width={250} height={250} />
                 </motion.div>
             </div>
 

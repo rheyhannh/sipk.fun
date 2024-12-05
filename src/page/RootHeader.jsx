@@ -120,7 +120,7 @@ const HamburgerButton = ({ showNavbarOverlay, setShowNavbarOverlay }) => (
 
 const LogoWithWrapper = () => (
     <div className={styles.logo} onClick={() => { scroll.scrollToTop({ smooth: false, duration: 1 }) }}>
-        <LogoImage src={'/logo_fill.png'} width={24} height={24} />
+        <LogoImage src={'/logo_fill.png'} width={250} height={250} />
     </div>
 )
 
