@@ -30,6 +30,10 @@ import { FaTelegram, FaLinkedin, FaTiktok } from 'react-icons/fa';
 import { FiArrowUpRight } from 'react-icons/fi';
 // #endregion
 
+/**
+ * Mendefinisikan width viewport dimana jika kurang dari nilai ini, maka animasi akan diadjust pada method {@link getFooterTransition}
+ * @type {number}
+ */
 const FOOTER_SMALL_DEVICES = 524;
 
 /**

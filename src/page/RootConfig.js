@@ -5,9 +5,16 @@ import { ButtonLinkProps } from './RootUniversitasSection';
 import { NavItem } from '@/constant/client';
 // #endregion
 
+/**
+ * Mendefinisikan opsi yang digunakan pada props `viewport.once` untuk setiap element yang menggunakan animasi atau component `motion`.
+ * 
+ * Saat bernilai `true` maka animasi masuk hanya ditampilkan sekali sedangkan saat `false` animasi dapat ditampilkan berulang kali setiap element masuk ke viewport.
+ * Umumnya opsi ini hanya akan bernilai `false` saat debug pada fase `development`
+ * @type {boolean}
+ */
 export const GLOBAL_VIEWPORT_ONCE = true;
 
-// #region Header and Navigation Confi 
+// #region Header and Navigation Config 
 
 /**
  * Array yang berisikan link yang digunakan pada navbar. Gunakan props `elementId` untuk scroll ke section atau element tertentu,
