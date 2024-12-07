@@ -97,20 +97,30 @@ export const AnimatedElement = ({
     timeframe,
     animations,
     scrollProgress,
+    scrollProgressOptions,
     style,
     children,
     ...props
 }) => {
+    const elementRef = React.useRef(null);
     const MotionTag = motion[Tag] ?? motion.div;
     const animationsHook = {};
 
+    var { spring: useSpringOptions = {}, ...useScrollOptions } = scrollProgressOptions ?? {};
+    useScrollOptions = { target: elementRef, offset: ["start end", "start center"], ...useScrollOptions }
+    useSpringOptions = { stiffness: 100, damping: 30, restDelta: 0.001, ...useSpringOptions }
+
+    const { scrollYProgress } = useScroll(useScrollOptions);
+    const defaultScrollProgress = useSpring(scrollYProgress, useSpringOptions);
+
     Object.entries(animations).forEach(([key, value]) => {
-        animationsHook[key] = useTransform(scrollProgress, timeframe, value);
+        animationsHook[key] = useTransform(scrollProgress ?? defaultScrollProgress, timeframe, value);
     })
 
     return (
         <MotionTag
             {...props}
+            ref={elementRef}
             style={{
                 ...style,
                 ...animationsHook
