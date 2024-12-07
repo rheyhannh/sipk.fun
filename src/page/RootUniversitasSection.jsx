@@ -53,54 +53,6 @@ import {
 // #endregion
 
 /**
- * Props yang digunakan component `LogoUniversitas`
- * @typedef {Object} LogoUniversitasProps
- * @property {Array<SupabaseTypes.UniversitasData>} universitas
- * @property {SupabaseTypes.UniversitasData['id']} [universitasId]
- * Id universitas yang dipilih
- * - Default : `1`
- * @property {number} universitasIndex
- * Index array untuk universitas yang dipilih
- * @property {ImageProps['width']} [width]
- * Logo universitas width
- * - Default : `250`
- * @property {ImageProps['width']} [height]
- * Logo universitas height
- * - Default : `250`
- * @property {ImageProps['alt']} [alt]
- * Logo universitas alt
- * - Default : `'Logo [Nama Universitas]'`
- */
-
-/**
- * Logo universitas menggunakan component `Image` pada {@link Image next/image}. 
- * 
- * Gunakan param {@link universitasId} untuk memilih universitas berdasarkan id atau {@link universitasIndex} untuk memilih universitas berdasarkan index array
- * @param {Omit<ImageProps, 'src'> & LogoUniversitasProps} props LogoUniversitas props
- * @returns {React.ReactElement} Rendered component
- */
-const LogoUniversitas = ({
-    universitas,
-    universitasId = 1,
-    universitasIndex,
-    width = 250,
-    height = 250,
-    ...props
-}) => {
-    const index = universitasIndex ?? universitas.findIndex((item) => item.id === universitasId);
-
-    return (
-        <Image
-            src={`/universitas/${universitas[index]?.assets?.logo ?? universitas[0]?.assets?.logo}`}
-            alt={`Logo ${universitas[index]?.nama ?? universitas[0]?.nama}`}
-            width={width}
-            height={height}
-            {...props}
-        />
-    )
-}
-
-/**
  * Props yang digunakan component `ScrollingItem`
  * @typedef {Object} ScrollingItemProps
  * @property {SupabaseTypes.UniversitasData} item
