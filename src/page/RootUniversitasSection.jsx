@@ -103,9 +103,7 @@ const LogoUniversitas = ({
 /**
  * Props yang digunakan component `ScrollingItem`
  * @typedef {Object} ScrollingItemProps
- * @property {Array<SupabaseTypes.UniversitasData>} universitas
- * @property {number} index
- * Mengacu pada index `universitas` yang digunakan
+ * @property {SupabaseTypes.UniversitasData} item
  * @property {boolean} isActive
  * Boolean apakah element aktif atau tidak dimana saat aktif akan mengganti `color`
  */
