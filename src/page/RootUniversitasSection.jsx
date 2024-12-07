@@ -210,7 +210,8 @@ const Universitas = ({ universitas }) => {
                                 rotateY: [35, 0],
                                 opacity: [0, 1]
                             }}
-                            scrollProgress={sectionScrollProgress}
+                            scrollProgress={viewportWidth < 1024 ? null : sectionScrollProgress}
+                            scrollProgressOptions={{ offset: ['start end', 'start 65%'] }}
                         >
                             {UNIVERSITAS_SECTION_TITLE}
                         </AnimatedElement>
@@ -220,7 +221,8 @@ const Universitas = ({ universitas }) => {
                             className={styles.title_description}
                             timeframe={[0.25, 0.77]}
                             animations={{ opacity: [0, 1], y: [30, 0] }}
-                            scrollProgress={sectionScrollProgress}
+                            scrollProgress={viewportWidth < 1024 ? null : sectionScrollProgress}
+                            scrollProgressOptions={{ offset: ['start end', 'start 65%'] }}
                         >
                             {replacedDescription}
                         </AnimatedElement>
@@ -230,7 +232,8 @@ const Universitas = ({ universitas }) => {
                             className={styles.title_cta}
                             timeframe={[0.5, 0.8]}
                             animations={{ opacity: [0, 1], y: [50, 0] }}
-                            scrollProgress={sectionScrollProgress}
+                            scrollProgress={viewportWidth < 1024 ? null : sectionScrollProgress}
+                            scrollProgressOptions={{ offset: ['start end', 'start 65%'] }}
                         >
                             {UNIVERSITAS_SECTION_BUTTON.map((props, index) => (
                                 <ButtonLink key={index} {...props} />
@@ -268,7 +271,8 @@ const Universitas = ({ universitas }) => {
                                                 style={{
                                                     transformOrigin: '100% 200%'
                                                 }}
-                                                scrollProgress={sectionScrollProgress}
+                                                scrollProgress={viewportWidth < 1024 ? null : sectionScrollProgress}
+                                                scrollProgressOptions={{ offset: ['start end', 'start 65%'] }}
                                                 onClick={() => { setActiveUnivId(item.id) }}
                                                 {...iconAnimProps[itemFlatIndex]}
                                             >
