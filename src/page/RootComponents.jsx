@@ -84,6 +84,25 @@ export const ContainerWrapper = ({ children }) => (
  * ```js
  * const { scrollXProgress: scrollProgress } = useScroll({ container: scrollRef });
  * ```
+ * 
+ * Disaat props ini tidak tersedia, maka scroll progress akan dibuat menggunakan {@link useScroll} dan {@link useSpring} dari opsi yang digunakan pada props `scrollProgressOptions`
+ * @property {Parameters<typeof useScroll>[0] & {spring:SpringOptions}} scrollProgressOptions
+ * Secara default menggunakan opsi berikut, 
+ * 
+ * ```js
+ * const scrollProgressOptions = {
+ *      target: elementRef, // ref to this element itself
+ *      offset: ["start end", "start center"],
+ *      spring: {
+ *          stiffness: 100, 
+ *          damping: 30, 
+ *          restDelta: 0.001
+ *      }
+ * }
+ * ```
+ * 
+ * Singkatnya berdasarkan opsi diatas, element akan mulai dianimasikan saat masuk viewport dan selesai saat element sudah berada pada tengah viewport
+ * 
  */
 
 /**
