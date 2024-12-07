@@ -36,6 +36,7 @@ import styles from './style/root.module.css';
 import { motion, useScroll, useSpring } from 'framer-motion';
 import { AnimatedElement, ScrollingCarousel, ContainerWrapper } from './RootComponents';
 import { scroller } from 'react-scroll';
+import { getLogoUniversitasByShort } from '@/loader/StaticImages';
 // #endregion
 
 // #region ICON DEPEDENCY
@@ -114,18 +115,13 @@ const LogoUniversitas = ({
  * @param {Omit<React.HTMLProps<HTMLDivElement>, 'className'> & ScrollingItemProps} props ScrollingItem props
  * @returns {React.ReactElement} Rendered component
  */
-const ScrollingItem = ({ universitas, index, isActive, ...props }) => (
+const ScrollingItem = ({ item, isActive, ...props }) => (
     <div className={`${styles.item} ${isActive ? styles.active : ''}`} {...props}>
         <div className={styles.logo}>
-            <LogoUniversitas
-                universitas={universitas}
-                universitasIndex={index}
-                width={60}
-                height={60}
-            />
+            {getLogoUniversitasByShort(item.short, { priority: true })}
         </div>
         <h3 className={styles.title_small}>
-            {universitas[index]?.nama ?? universitas[0]?.nama}
+            {item.nama}
         </h3>
     </div>
 )
@@ -327,7 +323,7 @@ const Universitas = ({ universitas }) => {
                                                 onClick={() => { setActiveUnivId(item.id) }}
                                                 {...iconAnimProps[itemFlatIndex]}
                                             >
-                                                <LogoUniversitas universitas={universitas} universitasId={item.id} />
+                                                {getLogoUniversitasByShort(item.short, { priority: true })}
                                             </AnimatedElement>
                                         )
                                     })}
@@ -359,8 +355,7 @@ const Universitas = ({ universitas }) => {
                         {universitas.map((item, index) => (
                             <ScrollingItem
                                 key={index}
-                                universitas={universitas}
-                                index={index}
+                                item={item}
                                 isActive={activeUnivId === item.id}
                                 data-univshort={item.short.toLowerCase()}
                             />
@@ -380,8 +375,7 @@ const Universitas = ({ universitas }) => {
                         {universitas.map((item, index) => (
                             <ScrollingItem
                                 key={index}
-                                universitas={universitas}
-                                index={index}
+                                item={item}
                                 isActive={activeUnivId === item.id}
                                 data-univshort={item.short.toLowerCase()}
                             />
