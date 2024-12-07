@@ -67,7 +67,7 @@ import {
 const ScrollingItem = ({ item, isActive, ...props }) => (
     <div className={`${styles.item} ${isActive ? styles.active : ''}`} {...props}>
         <div className={styles.logo}>
-            {getLogoUniversitasByShort(item.short, { priority: true })}
+            {getLogoUniversitasByShort(item.short, { width: 90 })}
         </div>
         <h3 className={styles.title_small}>
             {item.nama}
@@ -272,7 +272,7 @@ const Universitas = ({ universitas }) => {
                                                 onClick={() => { setActiveUnivId(item.id) }}
                                                 {...iconAnimProps[itemFlatIndex]}
                                             >
-                                                {getLogoUniversitasByShort(item.short, { priority: true })}
+                                                {getLogoUniversitasByShort(item.short, { width: 210 })}
                                             </AnimatedElement>
                                         )
                                     })}
