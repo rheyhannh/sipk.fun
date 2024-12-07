@@ -52,8 +52,18 @@ export const ContainerWrapper = ({ children }) => (
  *      y : [-100, 25, 100],
  * }
  * ```
- * @property {boolean} invertTimeframe
- * Lorem
+ * @property {boolean} [invertTimeframe]
+ * Boolean untuk inverse timeframe yang digunakan. Saat `true` animasi yang digunakan akan dianimasikan secara terbalik. Lihat contoh berikut,
+ * 
+ * ```js
+ * const timeframe = [0, 0.5, 1]
+ * const animations = {
+ *      x : [-150, 0, 250],
+ * }
+ * ```
+ * 
+ * Normalnya animasi `x` dimulai dari -150 -> 0 -> 250 namun saat props ini `true` animasi dimulai dari 250 -> 0 -> -150
+ * 
  * - Default : `false`
  * @property {MotionStyle} animations
  * Object yang mendeskripsikan animasi yang digunakan dimana key sebagai css atribut yang ingin dianimasikan bernilai dengan
@@ -69,7 +79,7 @@ export const ContainerWrapper = ({ children }) => (
  * }
  * ```
  * @property {MotionValue<number>} scrollProgress
- * Scroll progress dari sebuah element atau container yang diresolve menggunakan hook `useScroll`
+ * Scroll progress dari sebuah element atau container yang diresolve menggunakan hook `useScroll` dimana akan mengatur kapan animasi mulai dan selesai.
  * 
  * ```js
  * const { scrollXProgress: scrollProgress } = useScroll({ container: scrollRef });
