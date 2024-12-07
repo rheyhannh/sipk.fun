@@ -1,7 +1,7 @@
 'use client'
 
 // #region TYPE DEPEDENCY
-import { HTMLMotionProps, MotionStyle, MotionValue } from 'framer-motion';
+import { HTMLMotionProps, MotionStyle, MotionValue, SpringOptions } from 'framer-motion';
 // #endregion
 
 // #region REACT DEPEDENCY
