@@ -16,7 +16,6 @@ import {
 // #endregion
 
 // #region NEXT DEPEDENCY
-import Image, { ImageProps } from 'next/image';
 import Link, { LinkProps } from 'next/link';
 // #endregion
 
