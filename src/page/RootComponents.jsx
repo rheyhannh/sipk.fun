@@ -106,7 +106,11 @@ export const ContainerWrapper = ({ children }) => (
  */
 
 /**
- * Component wrapper untuk memberikan animasi pada timeframe tertentu berdasarkan scroll progress dari sebuah element atau container
+ * Element wrapper untuk memberikan animasi pada timeframe tertentu berdasarkan scroll progress dari sebuah element atau container yang digunakan pada props `scrollProgress`.
+ * 
+ * Jika tidak tersedia, scroll progress akan dibuat berdasarkan opsi yang digunakan pada props `scrollProgressOptions` dimana secara default animasi akan dimulai
+ * saat element masuk viewport dan selesai saat element berada pada tengah viewport
+ * 
  * @template [T='div']
  * @param {{as:T} & HTMLMotionProps<T> & AnimatedElementProps} props AnimatedElement props
  * @returns {React.ReactElement} Rendered component
