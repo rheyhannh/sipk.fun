@@ -11,6 +11,12 @@ import Image from 'next/image';
 import * as React from 'react';
 // #endregion
 
+// #region SIPK STATIC ASSETS DEPEDENCY
+import logo_sipk from '/public/logo.png';
+import logo_fill_sipk from '/public/logo_fill.png';
+import logo_fill_contrast_sipk from '/public/logo_fill_contrast.png';
+// #endregion
+
 // #region UNIVERSITAS STATIC ASSETS DEPEDENCY
 import logo_airlangga from '/public/universitas/logo_airlangga.png';
 import logo_brawijaya from '/public/universitas/logo_brawijaya.png';
@@ -23,6 +29,43 @@ import logo_padjajaran from '/public/universitas/logo_padjajaran.png';
 import logo_telkom from '/public/universitas/logo_telkom.png';
 import logo_unsoed from '/public/universitas/logo_unsoed.png';
 // #endregion
+
+/**
+ * Render logo SIPK tipe `default` dengan default props berikut,
+ * - `alt` : `'Logo SIPK'`
+ * 
+ * Karna menggunakan static import, jangan mengubah props `src` karna sudah diset sesuai dengan logo yang dimaksud.
+ * 
+ * Tipe logo `default` menggunakan ratio `1:1` dimana logo diletakan ditengah canvas ukuran `512x512` dan menggunakan warna `accents`.
+ * 
+ * @param {Omit<ImageProps, 'src'>} props Next.js {@link Image} props
+ */
+export const LogoSipk = ({ ...props }) => <Image src={logo_sipk} alt={'Logo SIPK'} {...props} />
+
+/**
+ * Render logo SIPK tipe `fill` dengan default props berikut,
+ * - `alt` : `'Logo SIPK'`
+ * 
+ * Karna menggunakan static import, jangan mengubah props `src` karna sudah diset sesuai dengan logo yang dimaksud.
+ * 
+ * Tipe logo `fill` menggunakan ratio `1:1` dimana logo distretch untuk penuh dengan canvas ukuran `512x512` dan menggunakan warna `accents`.
+ * 
+ * @param {Omit<ImageProps, 'src'>} props Next.js {@link Image} props
+ */
+export const LogoSipkFill = ({ ...props }) => <Image src={logo_fill_sipk} alt={'Logo SIPK'} {...props} />
+
+/**
+ * Render logo SIPK tipe `fill` & `contrast` dengan default props berikut,
+ * - `alt` : `'Logo SIPK'`
+ * 
+ * Karna menggunakan static import, jangan mengubah props `src` karna sudah diset sesuai dengan logo yang dimaksud
+ * 
+ * Tipe logo `fill` menggunakan ratio `1:1` dimana logo distretch untuk penuh dengan canvas ukuran `512x512`
+ * dan `constrast` menggunakan warna `neutral` dimana match dengan tema dark atau background yang gelap.
+ * 
+ * @param {Omit<ImageProps, 'src'>} props Next.js {@link Image} props
+ */
+export const LogoSipkFillContrast = ({ ...props }) => <Image src={logo_fill_contrast_sipk} alt={'Logo SIPK'} {...props} />
 
 /**
  * Render logo Universitas Airlangga dengan default props berikut,
@@ -153,4 +196,27 @@ export const getLogoUniversitasByShort = (short, props) => {
     }
 
     return logoByShort[short] ?? null;
+}
+
+/**
+ * Render logo SIPK berdasarkan tipe yang dipilih.
+ * 
+ * Karna menggunakan static import, jangan mengubah props `src` karna sudah diset sesuai dengan logo yang dimaksud.
+ * 
+ * Untuk penjelasan terkait tipe logo dapat dilihat sebagai berikut,
+ * - `default` : Menggunakan ratio `1:1` dimana logo diletakan ditengah canvas ukuran `512x512` dan menggunakan warna `accents`
+ * - `fill` :  Menggunakan ratio `1:1` dimana logo distretch untuk penuh dengan canvas ukuran `512x512` dan menggunakan warna `accents`
+ * - `fill-contrast` : Tipe `fill` dengan menggunakan warna `neutral` dimana match dengan tema dark atau background yang gelap
+ * @param {'default' | 'fill' | 'fill-contrast'} type Tipe logo yang dipilih, default : `'default'`
+ * @param {Omit<ImageProps, 'src'>} props Next.js {@link Image} props
+ * @returns {React.ReactElement | null} Logo sipk dengan tipe yang dipilih, `null` saat tidak tersedia
+ */
+export const getLogoSipkByType = (type, props) => {
+    const logoByType = {
+        'default': <LogoSipk {...props} />,
+        'fill': <LogoSipkFill {...props} />,
+        'fill-contrast': <LogoSipkFillContrast {...props} />
+    }
+
+    return logoByType[type] ?? null;
 }
