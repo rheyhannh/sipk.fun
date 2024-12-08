@@ -28,7 +28,7 @@ import { useClickAway, useUnmount } from 'ahooks';
 // #region COMPONENT DEPEDENCY
 import { mutate } from 'swr';
 import { motion, AnimatePresence } from 'framer-motion';
-import { LogoImage } from '@/component/Main';
+import { LogoSipkFill } from '@/loader/StaticImages';
 import Link from '@/component/Link';
 import { animateScroll as scroll, scroller } from 'react-scroll';
 import { RootContext } from '@/component/provider/Root';
@@ -126,7 +126,7 @@ const HamburgerButton = ({ showNavbarOverlay, setShowNavbarOverlay }) => (
 
 const LogoWithWrapper = () => (
     <div className={styles.logo} onClick={() => { scroll.scrollToTop({ smooth: false, duration: 1 }) }}>
-        <LogoImage src={'/logo_fill.png'} width={250} height={250} />
+        <LogoSipkFill />
     </div>
 )
 

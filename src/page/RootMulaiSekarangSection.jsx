@@ -24,7 +24,7 @@ import styles from './style/root.module.css';
 
 // #region COMPONENT DEPEDENCY
 import { motion } from 'framer-motion';
-import { LogoImage } from '@/component/Main';
+import { LogoSipkFill } from '@/loader/StaticImages';
 import HighlightText from '@/component/motion/HighlightText';
 import { scroller } from 'react-scroll';
 // #endregion
@@ -112,11 +112,7 @@ const MulaiSekarang = () => {
                 transition={{ type: 'spring', duration: 0.75, delay: delayAnims[0] }}
                 className={styles.logo}
             >
-                <LogoImage
-                    src={'/logo_fill.png'}
-                    width={250}
-                    height={250}
-                />
+                <LogoSipkFill priority={true} />
             </motion.div>
 
             <motion.h1
