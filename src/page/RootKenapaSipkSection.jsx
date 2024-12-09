@@ -149,6 +149,12 @@ const BoxContentX = React.forwardRef(({
     const [total, setTotal] = React.useState({ ipk: 0, sks: 0, matkul: 0 });
     const [iteration, setIteration] = React.useState(0);
 
+    /** 
+     * Method untuk menghitung jumlah minimal dan maksimal card matakuliah yang dapat dibuat dengan menghitung 
+     * height yang tersedia pada parent element dibagi dengan height yang dibutuhkan card. 
+     * 
+     * @returns {{min:number, max:number}} Jumlah `min` dan `max` card matakuliah yang dapat dibuat
+    */
     const getMatkulMinMax = () => {
         if (forwardedRef.current) {
             const innerHeight = forwardedRef.current.getBoundingClientRect().height;
@@ -163,6 +169,17 @@ const BoxContentX = React.forwardRef(({
         return { min: 1, max: 1 };
     }
 
+    /** 
+     * Method untuk mengambil matakuliah secara acak dari `sourceArr` untuk jumlah semester yang ditentukan pada `maxSections` dengan jumlah minimal dan maksimal
+     * matakuliah setiap semester yang diatur pada `random`.
+     * 
+     * @param {Object} [random] Jumlah minimal dan maksimal matakuliah setiap semester
+     * @param {number} random.min Jumlah minimal matakuliah setiap semester, default : `2`
+     * @param {number} random.max Jumlah maksimal matakuliah setiap semester, default : `4`
+     * @param {Array<MatkulDummiesProps>} [sourceArr] Sumber data matakuliah, default : {@link data}
+     * @param {number} [maxSections] Jumlah semester, default : {@link maxSemester}
+     * @returns Return array dengan panjang jumlah semester dan setiap entry berisikan array yang berisikan matakuliah yang dipilih secara acak.
+    */
     const generateMatkulSections = (random = { min: 2, max: 4 }, sourceArr = [...data], maxSections = maxSemester) => {
         const { min, max } = random;
 
@@ -187,6 +204,14 @@ const BoxContentX = React.forwardRef(({
         return result;
     }
 
+    /** 
+     * Method untuk menghitung {@link total} jumlah sks, matakuliah dan perolehan IPK dari matakuliah yang tersedia pada state {@link addedMatkul}.
+     * Hasil perhitungan akan digunakan untuk memperbarui nilai state {@link total} yang baru.
+     * 
+     * Saat `reset` bernilai true, method ini tidak akan menghitung dan memperbarui state {@link total} melainkan mereset state tersebut ke initial value.
+     * 
+     * @param {boolean} [reset] Boolean untuk reset state {@link total} ke initial value atau tidak, default : `false`
+    */
     const calculateTotal = (reset = false) => {
         if (reset) {
             setTotal({ sks: 0, matkul: 0, ipk: 0 });
@@ -214,6 +239,15 @@ const BoxContentX = React.forwardRef(({
         setTotal({ sks: totalSks, matkul: totalMatkul, ipk: totalIpk });
     }
 
+    /** 
+     * Method untuk memulai ulang animasi matakuliah dari awal dengan jeda yang ditentukan dengan melakukan hal berikut,
+     * 
+     * 1. Reset state {@link addedMatkul} dan {@link total}
+     * 2. Mengambil matakuliah secara acak lagi dengan {@link generateMatkulSections}
+     * 3. Buat jeda dengan `delay` untuk memulai animasi lagi
+     * 
+     * @param {number} [delay] Jeda dalam `ms`, default : `1250`
+    */
     const resetAll = (delay = 1250) => {
         setAddedMatkul([]);
         setMatkul(generateMatkulSections(getMatkulMinMax()));
