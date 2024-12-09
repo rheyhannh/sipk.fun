@@ -570,7 +570,12 @@ const KenapaSipk = ({ contents = ['x', 'y', 'z'], useAutoplay = false, autoplayO
         }
         if (useAutoplay) { setIsSleeping(true); clearInterval(autoplayRef.current); }
 
-        setActiveContent(isCorner ? 'active_1' : `active_${nextContentNumber}`)
+        if (viewportWidth < 1080) {
+            if (!isCorner) scroller.scrollTo(`why-ct-${nextContentNumber}`, { offset: -75, smooth: true });
+            else scroller.scrollTo('kenapa_sipk', { offset: -75, duration: 0 });
+        } else {
+            setActiveContent(isCorner ? 'active_1' : `active_${nextContentNumber}`)
+        }
 
         setTimeout(() => {
             if (useAutoplay) {
@@ -603,7 +608,15 @@ const KenapaSipk = ({ contents = ['x', 'y', 'z'], useAutoplay = false, autoplayO
         }
         if (useAutoplay) { setIsSleeping(true); clearInterval(autoplayRef.current); }
 
-        setActiveContent(isCorner ? 'active_3' : `active_${prevContentNumber}`)
+        if (viewportWidth < 1080) {
+            if (!isCorner) {
+                if (prevContentNumber === 1) scroller.scrollTo('kenapa_sipk', { offset: -75, smooth: true });
+                else scroller.scrollTo(`why-ct-${prevContentNumber}`, { offset: -75, smooth: true });
+            }
+            else scroller.scrollTo(`why-ct-${3}`, { offset: -75, duration: 0 });
+        } else {
+            setActiveContent(isCorner ? 'active_3' : `active_${prevContentNumber}`);
+        }
 
         setTimeout(() => {
             if (useAutoplay) {
