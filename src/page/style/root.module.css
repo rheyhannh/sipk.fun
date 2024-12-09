@@ -632,6 +632,10 @@
     cursor: pointer;
 }
 
+.kenapa_sipk .content .wrapper.without_action {
+    cursor: auto;
+}
+
 .kenapa_sipk .content.active_1 .wrapper:nth-child(1) {
     cursor: auto;
 }

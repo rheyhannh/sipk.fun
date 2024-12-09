@@ -85,7 +85,11 @@ const Content = ({ activeContent, children, ...props }) => {
  * @returns {React.ReactElement} Rendered component
  */
 const Wrapper = ({ children, ...props }) => (
-    <motion.div className={styles.wrapper} layout transition={{ ...layoutTransition }} {...props}>
+    <motion.div
+        className={`${styles.wrapper} ${KENAPASIPK_ACTIVING_CONTENT_EVENT_TYPE === 'none' ? styles.without_action : ''}`}
+        layout
+        transition={{ ...layoutTransition }} {...props}
+    >
         {children}
     </motion.div>
 )
@@ -616,7 +620,8 @@ const KenapaSipk = ({ contents = ['x', 'y', 'z'], useAutoplay = false, autoplayO
         const x = KENAPASIPK_ACTIVING_CONTENT_EVENT_TYPE;
         if (x === 'hover') return ({ onHoverStart: () => { handleHoverStart(contentNumber) }, onHoverEnd: handleHoverEnd })
         else if (x === 'tap') return ({ onTap: () => { handleTap(contentNumber) } })
-        else return ({ onTap: () => { handleTap(contentNumber) }, onHoverStart: () => { handleHoverStart(contentNumber) }, onHoverEnd: handleHoverEnd })
+        else if (x === 'both') ({ onTap: () => { handleTap(contentNumber) }, onHoverStart: () => { handleHoverStart(contentNumber) }, onHoverEnd: handleHoverEnd })
+        else return {};
     }
 
     React.useEffect(() => {
