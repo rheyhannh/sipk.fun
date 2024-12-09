@@ -39,7 +39,7 @@ const layoutTransition = {
     layout: { type: 'spring', duration: 1, bounce: 0.3 }
 }
 
-/** @type {'hover' | 'tap' | 'both'} */
+/** @type {'hover' | 'tap' | 'both' | 'none'} */
 const KENAPASIPK_ACTIVING_CONTENT_EVENT_TYPE = 'tap';
 
 /**
@@ -114,18 +114,15 @@ const Box = ({ type = 'x', children }) => (
 
 /**
  * Component yang dibungkus dengan `forwardRef` untuk menampilkan content yang tampil pada `Box` dengan type `x`
- * @type {React.FC<HTMLMotionProps<'div'> & BoxContentXProps>}
+ * @type {ReturnType<typeof React.forwardRef<HTMLDivElement, HTMLMotionProps<'div'> & BoxContentXProps>>}
  */
 const BoxContentX = React.forwardRef(({
     data = MatkulDummies,
     penilaian = { style: MatkulDummiesNilaiColorPreset, bobot: MatkulDummiesNilaiBobot },
     maxSemester = 8,
     ...props
-}, ref) => {
-    /** @type {ReturnType<typeof React.useState<Array<Array<MatkulDummiesProps>>>>} */
-    const [matkul, setMatkul] = React.useState(Array.from({ length: maxSemester }, () => []));
-    /** @type {ReturnType<typeof React.useState<Array<MatkulDummiesProps>>>} */
-    const [addedMatkul, setAddedMatkul] = React.useState([]);
+    const [matkul, setMatkul] = React.useState(/** @type {Array<Array<MatkulDummiesProps>>} */(Array.from({ length: maxSemester }, () => [])));
+    const [addedMatkul, setAddedMatkul] = React.useState(/** @type {Array<MatkulDummiesProps>} */([]));
     const [activeMatkulIndex, setActiveMatkulIndex] = React.useState(0);
     const [total, setTotal] = React.useState({ ipk: 0, sks: 0, matkul: 0 });
 
@@ -349,7 +346,7 @@ const BoxContentX = React.forwardRef(({
 
 /**
  * Component yang dibungkus dengan `forwardRef` untuk menampilkan content yang tampil pada `Box` dengan type `z`
- * @type {React.FC<HTMLMotionProps<'div'> & BoxContentZProps>}
+ * @type {ReturnType<typeof React.forwardRef<HTMLDivElement, HTMLMotionProps<'div'> & BoxContentZProps>>}
  */
 const BoxContentZ = React.forwardRef(({
     value = { sks: 76, matkul: 31, ipk: 3.27 },
