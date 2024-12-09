@@ -193,13 +193,13 @@ const BoxContentX = React.forwardRef(({
         setTotal({ sks: totalSks, matkul: totalMatkul, ipk: totalIpk });
     }
 
-    const resetAll = () => {
+    const resetAll = (delay = 1250) => {
         setAddedMatkul([]);
         setMatkul(generateMatkulSections(getMatkulMinMax()));
         setTimeout(() => {
             setActiveMatkulIndex(0);
             setIteration(x => x + 1);
-        }, 1250);
+        }, delay);
     }
 
     React.useEffect(() => { calculateTotal(!addedMatkul.length) }, [addedMatkul]);
