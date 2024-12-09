@@ -15,6 +15,10 @@ import {
 import * as React from 'react';
 // #endregion
 
+// #region HOOKS DEPEDENCY
+import useWindowSize from '@/hooks/useWindowSize';
+// #endregion
+
 // #region STYLE DEPEDENCY
 import styles from './style/root.module.css';
 // #endregion
@@ -517,6 +521,8 @@ const KenapaSipk = ({ contents = ['x', 'y', 'z'], useAutoplay = false, autoplayO
     const [contentShowed, setContentShowed] = React.useState(false);
     const [activeContent, setActiveContent] = React.useState('active_1');
 
+    const { width: viewportWidth } = useWindowSize();
+
     const startAutoplay = () => {
         autoplayRef.current = setInterval(() => {
             setAutoplayCountdown((prevCountdown) => {
@@ -660,7 +666,7 @@ const KenapaSipk = ({ contents = ['x', 'y', 'z'], useAutoplay = false, autoplayO
         <section
             ref={sectionRef}
             id={'kenapa_sipk'}
-            tabIndex={0}
+            tabIndex={viewportWidth < 1080 ? -1 : 0}
             className={`${styles.section} ${styles.kenapa_sipk}`}
             onKeyDown={handleKeyDown}
         >
@@ -708,8 +714,8 @@ const KenapaSipk = ({ contents = ['x', 'y', 'z'], useAutoplay = false, autoplayO
             >
                 {!contentShowed && (<motion.div className={styles.overlay} />)}
 
-                <Wrapper {...resolveActionProps(1)} tabIndex={'-1'}>
-                    <Box type={'x'}>
+
+                <Wrapper id={'why-ct-1'} {...resolveActionProps(1)} tabIndex={viewportWidth < 1080 ? 0 : -1}>
                         <AnimatePresence mode={'popLayout'}>
                             {activeContent.split('_')[1] === '1' && contentShowed && (
                                 <BoxContentX />
@@ -727,7 +733,7 @@ const KenapaSipk = ({ contents = ['x', 'y', 'z'], useAutoplay = false, autoplayO
                     </Details>
                 </Wrapper>
 
-                <Wrapper {...resolveActionProps(2)} tabIndex={'-1'}>
+                <Wrapper id={'why-ct-2'} {...resolveActionProps(2)} tabIndex={viewportWidth < 1080 ? 0 : -1}>
                     <Box type={'y'}>
 
                     </Box>
@@ -742,7 +748,7 @@ const KenapaSipk = ({ contents = ['x', 'y', 'z'], useAutoplay = false, autoplayO
                     </Details>
                 </Wrapper>
 
-                <Wrapper {...resolveActionProps(3)} tabIndex={'-1'}>
+                <Wrapper id={'why-ct-3'} {...resolveActionProps(3)} tabIndex={viewportWidth < 1080 ? 0 : -1}>
                     <Box type={'z'}>
                         <AnimatePresence mode={'popLayout'}>
                             {activeContent.split('_')[1] === '3' && contentShowed && (
