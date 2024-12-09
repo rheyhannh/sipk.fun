@@ -374,7 +374,7 @@ const BoxContentZ = React.forwardRef(({
     newNumberRange = { sks: [50, 144], matkul: [32, 'target'], ipk: [1.25, 4.00] },
     newNumberInterval = 5000,
     ...props
-}, ref) => {
+}, forwardedRef) => {
     const [values, setValues] = React.useState(() => ({
         sks: { current: value.sks, target: target.sks, percentage: calculatePercentage(value.sks, target.sks) },
         matkul: { current: value.matkul, target: target.matkul, percentage: calculatePercentage(value.matkul, target.matkul) },
@@ -411,7 +411,7 @@ const BoxContentZ = React.forwardRef(({
 
     return (
         <motion.div
-            ref={ref}
+            ref={forwardedRef}
             className={styles.inner}
             layout
             transition={{ ...layoutTransition }}
