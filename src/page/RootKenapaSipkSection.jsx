@@ -98,11 +98,28 @@ const Wrapper = ({ children, ...props }) => (
     </motion.div>
 )
 
-const Box = ({ type = 'x', children }) => (
-    <motion.div className={`${styles.box} ${styles[type]}`} layout transition={{ ...layoutTransition }}>
-        {children}
-    </motion.div>
-)
+const Box = ({ contentNumber, type = 'x', setActiveContent, children }) => {
+    const { width: viewportWidth } = useWindowSize();
+
+    return (
+        <motion.div
+            className={`${styles.box} ${styles[type]}`}
+            layout
+            transition={{ ...layoutTransition }}
+            viewport={{ amount: 1 }}
+            onViewportEnter={() => {
+                /*
+                    While viewport < 1080, we render Box vertical instead horizontal and each box 
+                    are expanded without being 'activated', so we need to control 'activeContent' while 
+                    some Box fully enter viewport.
+                */
+                if (contentNumber && viewportWidth < 1080) setActiveContent(`active_${contentNumber}`);
+            }}
+        >
+            {children}
+        </motion.div>
+    )
+}
 
 /**
  * Props yang digunakan component `BoxContentX`
@@ -716,6 +733,7 @@ const KenapaSipk = ({ contents = ['x', 'y', 'z'], useAutoplay = false, autoplayO
 
 
                 <Wrapper id={'why-ct-1'} {...resolveActionProps(1)} tabIndex={viewportWidth < 1080 ? 0 : -1}>
+                    <Box contentNumber={1} type={'x'} setActiveContent={setActiveContent}>
                         <AnimatePresence mode={'popLayout'}>
                             {activeContent.split('_')[1] === '1' && contentShowed && (
                                 <BoxContentX />
@@ -734,7 +752,7 @@ const KenapaSipk = ({ contents = ['x', 'y', 'z'], useAutoplay = false, autoplayO
                 </Wrapper>
 
                 <Wrapper id={'why-ct-2'} {...resolveActionProps(2)} tabIndex={viewportWidth < 1080 ? 0 : -1}>
-                    <Box type={'y'}>
+                    <Box contentNumber={2} type={'y'} setActiveContent={setActiveContent}>
 
                     </Box>
 
@@ -749,7 +767,7 @@ const KenapaSipk = ({ contents = ['x', 'y', 'z'], useAutoplay = false, autoplayO
                 </Wrapper>
 
                 <Wrapper id={'why-ct-3'} {...resolveActionProps(3)} tabIndex={viewportWidth < 1080 ? 0 : -1}>
-                    <Box type={'z'}>
+                    <Box contentNumber={3} type={'z'} setActiveContent={setActiveContent}>
                         <AnimatePresence mode={'popLayout'}>
                             {activeContent.split('_')[1] === '3' && contentShowed && (
                                 <BoxContentZ generateNewNumber={true} />
