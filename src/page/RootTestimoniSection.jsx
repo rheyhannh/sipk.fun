@@ -10,6 +10,10 @@ import {
 import * as React from 'react';
 // #endregion
 
+// #region HOOKS DEPEDENCY
+import useWindowSize from '@/hooks/useWindowSize';
+// #endregion
+
 // #region STYLE DEPEDENCY
 import styles from './style/root.module.css';
 // #endregion
@@ -31,14 +35,24 @@ const Testimoni = ({ rating }) => {
     const sectionRef = React.useRef(null);
     const headingRef = React.useRef(null);
 
+    const { width: viewportWidth } = useWindowSize()
+
     /** @param {React.KeyboardEvent} event */
     const handleKeyDown = (event) => {
         if (event.key === 'Tab') {
             event.preventDefault();
             if (event.shiftKey) {
                 if (sectionRef.current && sectionRef.current.previousElementSibling) {
-                    scroller.scrollTo(sectionRef.current.previousElementSibling.id, { offset: -75 });
-                    sectionRef.current.previousElementSibling.focus();
+                    if (viewportWidth < 1080) {
+                        const focusableElements = sectionRef.current.previousElementSibling.querySelectorAll('[tabIndex="0"]');
+                        const lastFocusableElement = focusableElements[focusableElements.length - 1];
+
+                        scroller.scrollTo(lastFocusableElement.id, { offset: -75, smooth: true });
+                        lastFocusableElement.focus();
+                    } else {
+                        scroller.scrollTo(sectionRef.current.previousElementSibling.id, { offset: -75, smooth: true });
+                        sectionRef.current.previousElementSibling.focus();
+                    }
                 }
             }
             else {
