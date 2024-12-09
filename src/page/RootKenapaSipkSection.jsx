@@ -134,7 +134,7 @@ const BoxContentX = React.forwardRef(({
             const cardStyles = getComputedStyle(forwardedRef.current);
             const cardHeight = parseFloat(cardStyles.getPropertyValue('--matkul-card-height').trim().split('px')[0]);
             const cardGap = parseFloat(cardStyles.getPropertyValue('--matkul-card-gap').trim().split('rem')[0]) * 14;
-            const max = Math.floor(innerHeight / (cardHeight + cardGap + 10)); // 10px are rounding for error spaces
+            const max = Math.floor(innerHeight / (cardHeight + cardGap + 50)); // 50px (40px reserved space + 10px rounding error)
             const min = max - 2 > 0 ? max - 2 : 1;
             return { min, max };
         }
