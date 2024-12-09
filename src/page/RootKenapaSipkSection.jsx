@@ -121,10 +121,26 @@ const BoxContentX = React.forwardRef(({
     penilaian = { style: MatkulDummiesNilaiColorPreset, bobot: MatkulDummiesNilaiBobot },
     maxSemester = 8,
     ...props
+}, forwardedRef) => {
     const [matkul, setMatkul] = React.useState(/** @type {Array<Array<MatkulDummiesProps>>} */(Array.from({ length: maxSemester }, () => [])));
     const [addedMatkul, setAddedMatkul] = React.useState(/** @type {Array<MatkulDummiesProps>} */([]));
     const [activeMatkulIndex, setActiveMatkulIndex] = React.useState(0);
     const [total, setTotal] = React.useState({ ipk: 0, sks: 0, matkul: 0 });
+    const [iteration, setIteration] = React.useState(0);
+
+    const getMatkulMinMax = () => {
+        if (forwardedRef.current) {
+            const innerHeight = forwardedRef.current.getBoundingClientRect().height;
+            const cardStyles = getComputedStyle(forwardedRef.current);
+            const cardHeight = parseFloat(cardStyles.getPropertyValue('--matkul-card-height').trim().split('px')[0]);
+            const cardGap = parseFloat(cardStyles.getPropertyValue('--matkul-card-gap').trim().split('rem')[0]) * 14;
+            const max = Math.floor(innerHeight / (cardHeight + cardGap + 10)); // 10px are rounding for error spaces
+            const min = max - 2 > 0 ? max - 2 : 1;
+            return { min, max };
+        }
+
+        return { min: 1, max: 1 };
+    }
 
     const generateMatkulSections = (random = { min: 2, max: 4 }, sourceArr = [...data], maxSections = maxSemester) => {
         const { min, max } = random;
@@ -150,7 +166,12 @@ const BoxContentX = React.forwardRef(({
         return result;
     }
 
-    const calculateTotal = () => {
+    const calculateTotal = (reset = false) => {
+        if (reset) {
+            setTotal({ sks: 0, matkul: 0, ipk: 0 });
+            return;
+        }
+
         const totalMatkul = addedMatkul.length;
         const { totalSks } = addedMatkul.reduce((sum, current) => {
             return {
@@ -172,9 +193,16 @@ const BoxContentX = React.forwardRef(({
         setTotal({ sks: totalSks, matkul: totalMatkul, ipk: totalIpk });
     }
 
-    React.useEffect(() => {
-        calculateTotal();
-    }, [addedMatkul]);
+    const resetAll = () => {
+        setAddedMatkul([]);
+        setMatkul(generateMatkulSections(getMatkulMinMax()));
+        setTimeout(() => {
+            setActiveMatkulIndex(0);
+            setIteration(x => x + 1);
+        }, 1250);
+    }
+
+    React.useEffect(() => { calculateTotal(!addedMatkul.length) }, [addedMatkul]);
 
     React.useEffect(() => {
         const initialTimeout = setTimeout(() => {
@@ -194,22 +222,13 @@ const BoxContentX = React.forwardRef(({
 
         return () => clearTimeout(initialTimeout);
 
-    }, [maxSemester]);
+    }, [maxSemester, iteration]);
 
-    React.useEffect(() => {
-        if (ref.current) {
-            // Card height (80px) + Layout gap (0.75rem @10.5px) with rounding for some error space
-            const cardHeight = 100;
-            const innerHeight = ref.current.getBoundingClientRect().height;
-            const max = Math.floor(innerHeight / cardHeight);
-            const min = max - 2 > 0 ? max - 2 : 1;
-            setMatkul(generateMatkulSections({ min, max }));
-        }
-    }, []);
+    React.useEffect(() => { setMatkul(generateMatkulSections(getMatkulMinMax())) }, []);
 
     return (
         <motion.div
-            ref={ref}
+            ref={forwardedRef}
             className={styles.inner}
             layout
             exit={{ opacity: 0, x: -250 }}
