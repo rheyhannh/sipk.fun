@@ -134,6 +134,7 @@ const Testimoni = ({ rating }) => {
                     useHoverEffect={true}
                     hoverOffset={2}
                     scrollEffectType={'none'}
+                    contentRenderOffset={-1}
                     containerProps={{
                         initial: { opacity: 0 },
                         variants: { inView: { opacity: 1 } },
@@ -151,6 +152,7 @@ const Testimoni = ({ rating }) => {
                     useHoverEffect={true}
                     hoverOffset={2}
                     scrollEffectType={'none'}
+                    contentRenderOffset={-1}
                     containerProps={{
                         initial: { opacity: 0 },
                         variants: { inView: { opacity: 1 } },
