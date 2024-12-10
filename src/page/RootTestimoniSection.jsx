@@ -57,12 +57,9 @@ const Card = ({ item, ...props }) => (
 )
 
 const Testimoni = ({ rating }) => {
-    const stars = [3, 3, 5, 4, 4, 5];
-    /** @type {React.MutableRefObject<HTMLDivElement>} */
-    const sectionRef = React.useRef(null);
-    const headingRef = React.useRef(null);
+    const sectionRef = React.useRef(/** @type {HTMLDivElement} */(null));
 
-    const { width: viewportWidth } = useWindowSize()
+    const { width: viewportWidth } = useWindowSize();
 
     /** @param {React.KeyboardEvent} event */
     const handleKeyDown = (event) => {
@@ -101,7 +98,6 @@ const Testimoni = ({ rating }) => {
         >
             <ContainerWrapper>
                 <motion.h2
-                    ref={headingRef}
                     className={styles.title}
                     initial={{ visibility: 'hidden', minHeight: 85 }}
                     variants={{ inView: { visibility: 'visible' } }}
