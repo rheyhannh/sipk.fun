@@ -29,6 +29,33 @@ import { scroller } from 'react-scroll';
 import { AiFillStar } from 'react-icons/ai';
 // #endregion
 
+/**
+ * Component Description
+ * @param {React.HTMLAttributes<HTMLDivElement> & {item:SupabaseTypes.RatingData}} props Card props
+ * @returns {React.ReactElement} Rendered component
+ */
+const Card = ({ item, ...props }) => (
+    <div className={styles.card} {...props}>
+        <div className={styles.stars}>
+            {Array.from({ length: item.rating }).map((_, index) => (
+                <AiFillStar key={index} fontSize={'var(--star-fontsize)'} />
+            ))}
+        </div>
+
+        <p className={styles.review}>
+            {item.review}
+        </p>
+
+        <div className={styles.user}>
+            <div className={styles.avatar} />
+            <div className={styles.info}>
+                <span>{item.details.author}</span>
+                <small>{item.details.universitas}</small>
+            </div>
+        </div>
+    </div>
+)
+
 const Testimoni = ({ rating }) => {
     const stars = [3, 3, 5, 4, 4, 5];
     /** @type {React.MutableRefObject<HTMLDivElement>} */
@@ -117,31 +144,8 @@ const Testimoni = ({ rating }) => {
                         transition: { duration: 0.75, delay: 1.25, ease: 'linear' }
                     }}
                 >
-                    {Array.from({ length: 6 }).map((item, index) => (
-                        <div
-                            key={index}
-                            className={styles.card}
-                        >
-                            <div className={styles.stars}>
-                                {Array.from({ length: stars[index] }).map((item, index) => (
-                                    <AiFillStar key={index} fontSize={'var(--star-fontsize)'} />
-                                ))}
-                            </div>
-
-                            <p className={styles.review}>
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque viverra posuere turpis non rutrum. Donec quis molestie quis.
-                            </p>
-
-                            <div className={styles.user}>
-                                <div className={styles.avatar}>
-
-                                </div>
-                                <div className={styles.info}>
-                                    <span>Lorem ipsum dolor sit.</span>
-                                    <small>Lorem, ipsum dolor.</small>
-                                </div>
-                            </div>
-                        </div>
+                    {rating.map((item, index) => (
+                        <Card key={index} item={item} />
                     ))}
                 </ScrollingCarousel>
 
@@ -157,31 +161,8 @@ const Testimoni = ({ rating }) => {
                         transition: { duration: 0.75, delay: 1.5, ease: 'linear' }
                     }}
                 >
-                    {Array.from({ length: 6 }).map((item, index) => (
-                        <div
-                            key={index}
-                            className={styles.card}
-                        >
-                            <div className={styles.stars}>
-                                {Array.from({ length: stars[index] }).map((item, index) => (
-                                    <AiFillStar key={index} fontSize={'var(--star-fontsize)'} />
-                                ))}
-                            </div>
-
-                            <p className={styles.review}>
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque viverra posuere turpis non rutrum. Donec quis molestie quis.
-                            </p>
-
-                            <div className={styles.user}>
-                                <div className={styles.avatar}>
-
-                                </div>
-                                <div className={styles.info}>
-                                    <span>Lorem ipsum dolor sit.</span>
-                                    <small>Lorem, ipsum dolor.</small>
-                                </div>
-                            </div>
-                        </div>
+                    {rating.map((item, index) => (
+                        <Card key={index} item={item} />
                     ))}
                 </ScrollingCarousel>
             </motion.div>
