@@ -792,7 +792,7 @@ const KenapaSipk = ({ contents = ['x', 'y', 'z'], useAutoplay = false, autoplayO
                         <Progress text={'1'} active={activeContent.split('_')[1] === '1'} />
                         <Text
                             title={'Susun Rencana Akademikmu'}
-                            description={'Mulailah merencanakan perjalanan akademikmu dengan baik! SIPK membantumu memproyeksikan IPK berdasarkan mata kuliah yang dimasukkan, sehingga kamu bisa mengambil keputusan yang lebih terarah sejak dini.'}
+                            description={'Susun rencana akademikmu bersama SIPK sejak awal hingga kelulusan dengan perhitungan IPK yang akurat! Meskipun nilai aktualmu belum keluar, kamu bisa memperkirakan IPK berdasarkan rencana yang dibuat. Hal ini membantu kamu mengambil keputusan yang lebih terarah dan strategis sejak dini.'}
                             active={activeContent.split('_')[1] === '1'}
                         />
                     </Details>
@@ -806,8 +806,8 @@ const KenapaSipk = ({ contents = ['x', 'y', 'z'], useAutoplay = false, autoplayO
                     <Details type={'y'}>
                         <Progress text={'2'} active={activeContent.split('_')[1] === '2'} />
                         <Text
-                            title={'Dapatkan Gambaran IPK yang Jelas'}
-                            description={'Engga perlu lagi bingung dengan hasil IPK saat ingin memperbaiki atau mengulang mata kuliah! SIPK memberikan gambaran yang jelas, memudahkanmu dalam menavigasi setiap langkah akademikmu.'}
+                            title={'Atur Target Akademikmu'}
+                            description={'Buat target kelulusanmu jadi lebih terarah dengan SIPK! Tentukan jumlah SKS, total matakuliah, dan IPK yang ingin kamu capai. Selain itu, kamu juga bisa menetapkan target nilai untuk setiap matakuliah yang kamu tambahkan, sehingga kamu tahu mana saja yang sudah sesuai target dan mana yang belum.'}
                             active={activeContent.split('_')[1] === '2'}
                         />
                     </Details>
