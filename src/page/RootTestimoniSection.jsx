@@ -1,5 +1,9 @@
 'use client'
 
+// #region TYPE DEPEDENCY
+import * as SupabaseTypes from '@/types/supabase';
+// #endregion
+
 // #region CONFIG DEPEDENCY
 import {
     GLOBAL_VIEWPORT_ONCE,
@@ -56,6 +60,11 @@ const Card = ({ item, ...props }) => (
     </div>
 )
 
+/**
+ * Component Description
+ * @param {{rating:Array<SupabaseTypes.RatingData>}} props Testimoni props
+ * @returns {React.ReactElement} Rendered component
+ */
 const Testimoni = ({ rating }) => {
     const sectionRef = React.useRef(/** @type {HTMLDivElement} */(null));
 
