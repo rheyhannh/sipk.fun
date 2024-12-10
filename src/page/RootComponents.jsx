@@ -186,7 +186,7 @@ export const AnimatedElement = ({
  * @param {Omit<HTMLMotionProps<any>, 'className'> & TextFitContainerProps} props TextFitContainer props
  * @returns {React.ReactElement} Rendered component
  */
-export const TextFitContainer = ({ containerRef, as = 'span', minSize = 1, maxSize = 75, children, ...props }) => {
+export const TextFitContainer = ({ containerRef, as = 'span', minSize = 1, maxSize = 75, style, children, ...props }) => {
     const { width, height } = useWindowSize();
     const textRef = React.useRef(null);
     const TextElement = motion[as] ?? motion['span'];
