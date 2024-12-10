@@ -8,6 +8,10 @@ import * as SupabaseTypes from '@/types/supabase';
 import * as React from 'react';
 // #endregion
 
+// #region COMPONENT DEPEDENCY
+import { TextFitContainer } from './RootComponents';
+// #endregion
+
 // #region STYLE DEPEDENCY
 import styles from './style/panduan.module.css'
 // #endregion
@@ -18,11 +22,18 @@ import styles from './style/panduan.module.css'
  * @returns {React.ReactElement} Rendered panduan page
  */
 export default function Panduan({ fakta }) {
+    const containerRef = React.useRef(/** @type {HTMLDivElement} */(null));
+
     return (
-        <div className={styles.container}>
-            <span onClick={() => { console.log(fakta) }} >
+        <div ref={containerRef} className={styles.container}>
+            <TextFitContainer
+                containerRef={containerRef}
+                as={'h1'}
+                maxSize={55}
+                style={{ whiteSpace: 'normal' }}
+            >
                 Under Construction
-            </span>
+            </TextFitContainer>
         </div>
     )
 }
