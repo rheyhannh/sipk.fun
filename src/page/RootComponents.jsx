@@ -179,7 +179,7 @@ export const AnimatedElement = ({
  * - Perubahan width pada container 
  * - Perubahan width dan height pada viewport
  * 
- * Style dapat diatur melalui props `style` walaupun secara default menggunakan `className` yang menerapkan style berikut,
+ * Style dapat diatur melalui props `style` walaupun secara default menggunakan style berikut,
  * ```js
  * { margin: '0 auto',  whiteSpace: 'nowrap', textAlign: 'center' }
  * ```
