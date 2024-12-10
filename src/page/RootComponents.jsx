@@ -245,6 +245,7 @@ export const TextFitContainer = ({ containerRef, as = 'span', minSize = 1, maxSi
                 margin: "0 auto",
                 whiteSpace: "nowrap",
                 textAlign: "center",
+                ...style
             }}
             ref={textRef}
         >
