@@ -194,24 +194,40 @@ export async function POST(request) {
         formData.details.universitas = userUniversitas;
 
         if (formData.details.authorType === 0) {
-            const userFullname = decryptedSession?.user?.user_metadata?.fullname ?? decodedAccessToken?.user_metadata?.fullname;
-            if (!userFullname) {
+            /** @type {SupabaseTypes._from<SupabaseTypes.UserData} */
+            const { data, error } = await supabase.from('user').select('*');
+            if (!data.length || !data[0]?.fullname) {
                 throw notFoundError.resource_not_found(
                     defaultUserErrorMessage, undefined,
                     {
                         severity: 'error',
                         reason: 'Failed to add user rating, cant resolve user fullname',
                         stack: null,
-                        functionDetails: 'POST /api/rating line 199',
-                        functionArgs: null,
-                        functionResolvedVariable: null,
+                        functionDetails: 'supabase.from at POST /api/rating line 198',
+                        functionArgs: { from: 'user', select: '*' },
+                        functionResolvedVariable: { data, error },
                         request: await getRequestDetails(),
-                        more: { userFullname },
+                        more: null,
+                    }
+                )
+            }
+            if (error) {
+                throw serverError.interval_server_error(
+                    defaultUserErrorMessage, undefined,
+                    {
+                        severity: 'error',
+                        reason: 'Failed to add user rating, error when trying to resolve user nickname',
+                        stack: null,
+                        functionDetails: 'supabase.from at POST /api/rating line 215',
+                        functionArgs: { from: 'user', select: '*' },
+                        functionResolvedVariable: { data, error },
+                        request: await getRequestDetails(),
+                        more: error,
                     }
                 )
             }
 
-            formData.details.author = userFullname;
+            formData.details.author = data[0].fullname;
         } else if (formData.details.authorType === 1) {
             /** @type {SupabaseTypes._from<SupabaseTypes.UserData} */
             const { data, error } = await supabase.from('user').select('*');
@@ -426,24 +442,40 @@ export async function PATCH(request) {
         formData.details.universitas = userUniversitas;
 
         if (formData.details.authorType === 0) {
-            const userFullname = decryptedSession?.user?.user_metadata?.fullname ?? decodedAccessToken?.user_metadata?.fullname;
-            if (!userFullname) {
+            /** @type {SupabaseTypes._from<SupabaseTypes.UserData} */
+            const { data, error } = await supabase.from('user').select('*');
+            if (!data.length || !data[0]?.fullname) {
                 throw notFoundError.resource_not_found(
                     defaultUserErrorMessage, undefined,
                     {
                         severity: 'error',
                         reason: 'Failed to edit user rating, cant resolve user fullname',
                         stack: null,
-                        functionDetails: 'PATCH /api/rating line 431',
-                        functionArgs: null,
-                        functionResolvedVariable: null,
+                        functionDetails: 'supabase.from at PATCH /api/rating line 448',
+                        functionArgs: { from: 'user', select: '*' },
+                        functionResolvedVariable: { data, error },
                         request: await getRequestDetails(),
-                        more: { userFullname },
+                        more: null,
+                    }
+                )
+            }
+            if (error) {
+                throw serverError.interval_server_error(
+                    defaultUserErrorMessage, undefined,
+                    {
+                        severity: 'error',
+                        reason: 'Failed to edit user rating, error when trying to resolve user fullname',
+                        stack: null,
+                        functionDetails: 'supabase.from at PATCH /api/rating line 463',
+                        functionArgs: { from: 'user', select: '*' },
+                        functionResolvedVariable: { data, error },
+                        request: await getRequestDetails(),
+                        more: error,
                     }
                 )
             }
 
-            formData.details.author = userFullname;
+            formData.details.author = data[0].fullname;
         } else if (formData.details.authorType === 1) {
             /** @type {SupabaseTypes._from<SupabaseTypes.UserData} */
             const { data, error } = await supabase.from('user').select('*');
