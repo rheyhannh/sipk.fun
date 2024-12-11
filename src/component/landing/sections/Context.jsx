@@ -19,7 +19,7 @@ import styles from '../style/context.module.css'
 // #endregion
 
 // #region HOOKS DEPEDENCY
-import useWindowSize from '@/hooks/useWindowSize';
+import useWindowSize from '@/hooks/utils/useWindowSize';
 // #endregion
 
 /**

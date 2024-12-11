@@ -24,7 +24,7 @@ import * as React from 'react';
 // #endregion
 
 // #region HOOKS DEPEDENCY
-import useWindowSize from '@/hooks/useWindowSize';
+import useWindowSize from '@/hooks/utils/useWindowSize';
 // #endregion
 
 // #region STYLE DEPEDENCY
