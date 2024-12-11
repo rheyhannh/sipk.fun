@@ -27,63 +27,7 @@ import { getLocalTheme } from '@/utils/client_side';
 const baseApiUrl = process.env.NEXT_PUBLIC_SIPK_API_URL;
 // #endregion
 
-const fetchPublic = (url) => {
-    return fetch(url, {
-        headers: {
-            'Content-Type': 'application/json',
-        }
-    })
-        .then(async (response) => {
-            if (!response.ok) {
-                try {
-                    const { message } = await response.json();
-                    if (message) { throw new Error(`${message} (code: ${response.status})`); }
-                    else { throw new Error(`Terjadi error (code: ${response.status})`); }
-                } catch (error) {
-                    throw error;
-                }
-            }
-            return response.json();
-        })
-        .then(data => {
-            return data;
-        })
-        .catch(error => {
-            console.error('Gagal mengambil data:', error.message);
-            throw error;
-        });
-}
-
-const fetchDefault = (url, accessToken) => {
-    if (!accessToken) { throw new Error('Access token required') }
-    return fetch(url, {
-        headers: {
-            'Authorization': `Bearer ${accessToken}`,
-            'Content-Type': 'application/json',
-        }
-    })
-        .then(async (response) => {
-            if (!response.ok) {
-                try {
-                    const { message } = await response.json();
-                    if (message) { throw new Error(`${message} (code: ${response.status})`); }
-                    else { throw new Error(`Terjadi error (code: ${response.status})`); }
-                } catch (error) {
-                    throw error;
-                }
-            }
-            return response.json();
-        })
-        .then(data => {
-            return data;
-        })
-        .catch(error => {
-            console.error('Gagal mengambil data:', error.message);
-            throw error;
-        });
-}
-
-const fetchWithUserId = (url, id, accessToken) => {
+const fetchWithUserId = async (url, id, accessToken) => {
     if (!accessToken || !id) { throw new Error('Access token required') }
     return fetch(url, {
         headers: {
