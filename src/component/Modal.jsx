@@ -39,7 +39,7 @@ import isAlpha from 'validator/lib/isAlpha';
 // #endregion
 
 // #region HOOKS DEPEDENCY
-import { useRating } from "@/data/core";
+import useRating from '@/hooks/swr/useRating';
 // #endregion
 
 // #region ICON DEPEDENCY

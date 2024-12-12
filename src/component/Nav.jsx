@@ -16,7 +16,7 @@ import Link from '@/component/Link';
 // #endregion
 
 // #region HOOKS DEPEDENCY
-import { useUser } from '@/data/core';
+import useUser from '@/hooks/swr/useUser';
 // #endregion
 
 // #region VARIABLE DEPEDENCY

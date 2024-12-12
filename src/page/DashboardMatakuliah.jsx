@@ -16,7 +16,9 @@ import { Table } from '@/component/Table';
 // #endregion
 
 // #region HOOKS DEPEDENCY
-import { useMatkul, useUser, useMatkulHistory } from '@/data/core';
+import useUser from '@/hooks/swr/useUser';
+import useMatkul from '@/hooks/swr/useMatkul';
+import useMatkulHistory from '@/hooks/swr/useMatkulHistory';
 // #endregion
 
 // #region UTIL DEPEDENCY

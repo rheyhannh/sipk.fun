@@ -25,7 +25,7 @@ import isUUID from 'validator/lib/isUUID';
 // #endregion
 
 // #region HOOKS DEPEDENCY
-import { useLocalTheme } from '@/data/core';
+import useLocalTheme from '@/hooks/swr/useLocalTheme';
 // #endregion
 
 // #region STYLE DEPEDENCY

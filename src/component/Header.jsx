@@ -20,8 +20,9 @@ import { Spinner } from "./loader/Loading";
 import { Logo } from './Main.jsx';
 // #endregion
 
-// #region DATA DEPEDENCY
-import { useUser, useLocalTheme } from '@/data/core';
+// #region HOOKS DEPEDENCY
+import useUser from '@/hooks/swr/useUser';
+import useLocalTheme from '@/hooks/swr/useLocalTheme';
 // #endregion
 
 // #region STYLE DEPEDENCY

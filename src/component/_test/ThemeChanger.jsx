@@ -12,8 +12,8 @@ import { useEffect } from 'react';
 import { mutate } from 'swr';
 // #endregion
 
-// #region DATA DEPEDENCY
-import { useLocalTheme } from '@/data/core';
+// #region HOOKS DEPEDENCY
+import useLocalTheme from '@/hooks/swr/useLocalTheme';
 // #endregion
 
 // #region UTIL DEPEDENCY

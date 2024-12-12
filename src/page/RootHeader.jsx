@@ -21,7 +21,7 @@ import * as React from 'react';
 // #region HOOKS DEPEDENCY
 import useWindowSize from '@/hooks/utils/useWindowSize';
 import useScrollingEvent from '@/hooks/utils/useScrollingEvent';
-import { useLocalTheme } from '@/data/core';
+import useLocalTheme from '@/hooks/swr/useLocalTheme';
 import { useClickAway, useUnmount } from 'ahooks';
 // #endregion
 

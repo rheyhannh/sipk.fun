@@ -38,8 +38,8 @@ import isInt from 'validator/lib/isInt';
 import isUUID from 'validator/lib/isUUID';
 // #endregion
 
-// #region DATA DEPEDENCY
-import { useLocalTheme } from '@/data/core';
+// #region HOOKS DEPEDENCY
+import useLocalTheme from '@/hooks/swr/useLocalTheme';
 // #endregion
 
 // #region STYLE DEPEDENCY
