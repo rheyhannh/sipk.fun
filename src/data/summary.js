@@ -1,6 +1,8 @@
 export const getUserIpk = (matkul) => {
-  if (matkul.length !== 0) {
+  if (Array.isArray(matkul) && matkul.length !== 0) {
     const totalSks = getUserSks(matkul);
+    if (totalSks === -1 || totalSks === 0) return -1;
+
     const { totalNilaiAkhir } = matkul.reduce((sum, current) => {
       return {
         totalNilaiAkhir: sum.totalNilaiAkhir + current.nilai.akhir
@@ -14,9 +16,9 @@ export const getUserIpk = (matkul) => {
 }
 
 export const getUserIpkPercentage = (user, matkul) => {
-  if (user.length !== 0) {
-    const ipk = getUserIpk(matkul);
-    const ipkTarget = user[0].ipk_target || null;
+  if (Array.isArray(user) && user.length !== 0 && Array.isArray(matkul) && matkul.length !== 0) {
+    const ipk = parseFloat(getUserIpk(matkul));
+    const ipkTarget = user[0]?.ipk_target;
     const ipkPercentage = ipkTarget ? Math.round((ipk / ipkTarget) * 100) : Math.round((ipk / 4) * 100);
 
     return ipkPercentage > 100 ? 100 : ipkPercentage
@@ -26,7 +28,7 @@ export const getUserIpkPercentage = (user, matkul) => {
 }
 
 export const getUserSks = (matkul) => {
-  if (matkul.length !== 0) {
+  if (Array.isArray(matkul) && matkul.length !== 0) {
     const { totalSks } = matkul.reduce((sum, current) => {
       return {
         totalSks: sum.totalSks + current.sks,
@@ -40,9 +42,9 @@ export const getUserSks = (matkul) => {
 }
 
 export const getUserSksPercentage = (user, matkul) => {
-  if (user.length !== 0) {
+  if (Array.isArray(user) && user.length !== 0 && Array.isArray(matkul) && matkul.length !== 0) {
     const sks = getUserSks(matkul);
-    const sksTarget = user[0].sks_target || null;
+    const sksTarget = user[0]?.sks_target;
     const sksPercentage = sksTarget ? Math.round((sks / sksTarget) * 100) : Math.round((sks / 144) * 100);
 
     return sksPercentage > 100 ? 100 : sksPercentage
@@ -52,7 +54,7 @@ export const getUserSksPercentage = (user, matkul) => {
 }
 
 export const getUserMatkul = (matkul) => {
-  if (matkul) {
+  if (Array.isArray(matkul) && matkul.length !== 0) {
     return matkul.length
   }
 
@@ -60,9 +62,9 @@ export const getUserMatkul = (matkul) => {
 }
 
 export const getUserMatkulPercentage = (user, matkul) => {
-  if (user.length !== 0) {
+  if (Array.isArray(user) && user.length !== 0 && Array.isArray(matkul) && matkul.length !== 0) {
     const matkulTotal = matkul.length;
-    const matkulTarget = user[0].matkul_target || null;
+    const matkulTarget = user[0]?.matkul_target;
     const matkulPercentage = matkulTarget ? Math.round((matkulTotal / matkulTarget) * 100) : Math.round((matkulTotal / 50) * 100)
 
     return matkulPercentage > 100 ? 100 : matkulPercentage
@@ -72,7 +74,7 @@ export const getUserMatkulPercentage = (user, matkul) => {
 }
 
 export const getAllSemester = (matkul, sort = false) => {
-  if (matkul.length !== 0) {
+  if (Array.isArray(matkul) && matkul.length !== 0) {
     const allSemester = [...new Set(matkul.map(item => item.semester))];
     return sort ? allSemester.sort((x, y) => x - y) : allSemester;
   }
@@ -81,7 +83,7 @@ export const getAllSemester = (matkul, sort = false) => {
 }
 
 export const getStatsSemester = (matkul, sort = false) => {
-  if (matkul.length !== 0) {
+  if (Array.isArray(matkul) && matkul.length !== 0) {
     const groupBySemester = matkul.reduce((acc, item) => {
       const key = item.semester;
       if (!acc[key]) {
@@ -107,7 +109,7 @@ export const getStatsSemester = (matkul, sort = false) => {
 }
 
 export const getOnAndOffTarget = (matkul) => {
-  if (matkul.length !== 0) {
+  if (Array.isArray(matkul) && matkul.length !== 0) {
     const groupBySemester = matkul.reduce((acc, item) => {
       const key = item.semester;
       if (!acc[key]) {
@@ -134,7 +136,7 @@ export const getOnAndOffTarget = (matkul) => {
 }
 
 export const getDistribusiNilai = (matkul, penilaian, asc = false) => {
-  if (matkul.length !== 0) {
+  if (Array.isArray(matkul) && matkul.length !== 0) {
     const result = {};
 
     matkul.forEach(matakuliah => {
