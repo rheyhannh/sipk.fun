@@ -33,10 +33,11 @@ import fetcher from './fetcher';
  * @returns {SWRState<Array<SupabaseTypes.RatingData>, any>} Users rating data dan SWR state
  */
 function useRating(custom) {
-    const url = SWR_BASE_URL + '/api/rating';
+    const endpoint = '/api/rating';
+    const url = SWR_BASE_URL + endpoint;
     const userIdCookie = useCookies().get('s_user_id');
     const accessToken = useCookies().get('s_access_token');
-    return useSWR([url, userIdCookie], () => fetcher(url, userIdCookie, accessToken), { ...SWR_DEFAULT_OPTIONS, ...custom })
+    return useSWR([endpoint, userIdCookie], () => fetcher(url, userIdCookie, accessToken), { ...SWR_DEFAULT_OPTIONS, ...custom })
 }
 
 export default useRating;
