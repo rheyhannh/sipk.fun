@@ -151,11 +151,11 @@ export const getUserMatkulPercentage = (user, matkul) => {
 /**
  * Method untuk menghitung semester yang tersedia dari seluruh {@link matkul matakuliah}.
  * 
- * Pastikan {@link matkul} merupakan `Array` dengan length `!== 0` atau method tidak akan menghitung semester yang tersedia sehingga return `-1`
+ * Pastikan {@link matkul} merupakan `Array` dengan length `!== 0` atau method tidak akan menghitung semester yang tersedia sehingga return array kosong `[]`
  * 
  * @param {Array<SupabaseTypes.MatkulData>} matkul Array yang berisikan matakuliah
  * @param {boolean} [sort] Urutkan dari semester terkecil, default: `false`
- * @returns {Array<number>} Array yang berisikan semester yang tersedia, jika terjadi error return `-1`
+ * @returns {Array<number>} Array yang berisikan semester yang tersedia, jika terjadi error return array kosong `[]`
  * @example 
  * ```js
  * const matkul = [
@@ -203,11 +203,11 @@ export const getAllSemester = (matkul, sort = false) => {
 /**
  * Method untuk menghitung statistik per-semester berupa total nilai akhir, total SKS dan total matakuliah dari seluruh {@link matkul matakuliah}.
  * 
- * Pastikan {@link matkul} merupakan `Array` dengan length `!== 0` atau method akan return `-1`
+ * Pastikan {@link matkul} merupakan `Array` dengan length `!== 0` sehingga return array kosong `[]`
  * 
  * @param {Array<SupabaseTypes.MatkulData>} matkul Array yang berisikan matakuliah
  * @param {boolean} [sort] Urutkan dari semester terkecil, default: `false`
- * @returns {Array<getStatsSemesterReturnType>} Array yang berisikan {@link getStatsSemesterReturnType statistik} per-semester berupa total nilai akhir, total SKS dan total matakuliah, jika terjadi error return `-1`
+ * @returns {Array<getStatsSemesterReturnType>} Array yang berisikan {@link getStatsSemesterReturnType statistik} per-semester berupa total nilai akhir, total SKS dan total matakuliah, jika terjadi error return array kosong `[]`
  */
 export const getStatsSemester = (matkul, sort = false) => {
   if (Array.isArray(matkul) && matkul.length !== 0) {
@@ -258,10 +258,10 @@ export const getStatsSemester = (matkul, sort = false) => {
 /**
  * Method untuk menghitung statistik per-semester berupa jumlah matakuliah dan sks yang sesuai target dan tidak sesuai target dari seluruh {@link matkul matakuliah}.
  * 
- * Pastikan {@link matkul} merupakan `Array` dengan length `!== 0` atau method akan return `-1`
+ * Pastikan {@link matkul} merupakan `Array` dengan length `!== 0` sehingga return array kosong `[]`
  * 
  * @param {Array<SupabaseTypes.MatkulData>} matkul Array yang berisikan matakuliah
- * @returns {Array<getOnAndOffTargetReturnType>} Array yang berisikan {@link getOnAndOffTargetReturnType statistik} per-semester berupa jumlah matakuliah dan sks yang sesuai target dan tidak sesuai target, jika terjadi error return `-1`
+ * @returns {Array<getOnAndOffTargetReturnType>} Array yang berisikan {@link getOnAndOffTargetReturnType statistik} per-semester berupa jumlah matakuliah dan sks yang sesuai target dan tidak sesuai target, jika terjadi error return array kosong `[]`
  */
 export const getOnAndOffTarget = (matkul) => {
   if (Array.isArray(matkul) && matkul.length !== 0) {
@@ -322,7 +322,7 @@ export const getOnAndOffTarget = (matkul) => {
 /**
  * Method untuk menghitung sebaran nilai dari seluruh {@link matkul matakuliah}.
  * 
- * Pastikan {@link matkul} merupakan `Array` dengan length `!== 0` atau method akan return `-1`
+ * Pastikan {@link matkul} merupakan `Array` dengan length `!== 0` sehingga return `-1`
  * 
  * @param {Array<SupabaseTypes.MatkulData>} matkul Array yang berisikan matakuliah
  * @param {SupabaseTypes.UniversitasData['penilaian']} penilaian Sistem `penilaian` yang digunakan
