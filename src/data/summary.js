@@ -178,7 +178,7 @@ export const getAllSemester = (matkul, sort = false) => {
     return sort ? allSemester.sort((x, y) => x - y) : allSemester;
   }
 
-  return -1
+  return [];
 }
 
 /**
@@ -232,7 +232,7 @@ export const getStatsSemester = (matkul, sort = false) => {
     return sort ? statsSemester.sort((a, b) => a.semester - b.semester) : statsSemester;
   }
 
-  return -1
+  return [];
 }
 
 /**
@@ -287,7 +287,7 @@ export const getOnAndOffTarget = (matkul) => {
     return result;
   }
 
-  return -1;
+  return [];
 }
 
 /**
