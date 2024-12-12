@@ -106,29 +106,6 @@ export const getStatsSemester = (matkul, sort = false) => {
   return -1
 }
 
-export const getStatsByNilai = (matkul, universitas, sort = false) => {
-  if (matkul.length !== 0) {
-    const statsByNilai = Object.values(universitas).map((x, index) => {
-      const keyNilai = Object.keys(universitas);
-      const entries = matkul.filter(item => item.nilai.indeks === keyNilai[index]);
-      const totalSks = entries.reduce((sum, item) => sum + item.sks, 0);
-      const totalMatakuliah = entries.length;
-
-      return {
-        indeks: keyNilai[index],
-        totalSks,
-        totalMatakuliah,
-        style: x.style,
-        weight: x.weight,
-      };
-    });
-
-    return sort ? statsByNilai.sort((a, b) => b.weight - a.weight) : statsByNilai;
-  }
-
-  return -1;
-}
-
 export const getOnAndOffTarget = (matkul) => {
   if (matkul.length !== 0) {
     const groupBySemester = matkul.reduce((acc, item) => {
