@@ -39,7 +39,7 @@ import {
     getUserIpk, getUserIpkPercentage,
     getAllSemester, getStatsSemester,
     getOnAndOffTarget, getDistribusiNilai,
-} from "@/data/summary";
+} from "@/utils/users/stats";
 import { getSessionTable } from '@/utils/client_side';
 // #endregion
 

@@ -23,7 +23,7 @@ import {
     getUserMatkul, getUserMatkulPercentage,
     getUserSks, getUserSksPercentage,
     getUserIpk, getUserIpkPercentage,
-} from "@/data/summary";
+} from "@/utils/users/stats";
 // #endregion
 
 // #region STYLE DEPEDENCY
