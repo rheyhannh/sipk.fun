@@ -1,8 +1,4 @@
-/*
-============================== CODE START HERE ==============================
-*/
-
-const getUserIpk = (matkul) => {
+export const getUserIpk = (matkul) => {
   if (matkul.length !== 0) {
     const totalSks = getUserSks(matkul);
     const { totalNilaiAkhir } = matkul.reduce((sum, current) => {
@@ -17,7 +13,7 @@ const getUserIpk = (matkul) => {
   return -1
 }
 
-const getUserIpkPercentage = (user, matkul) => {
+export const getUserIpkPercentage = (user, matkul) => {
   if (user.length !== 0) {
     const ipk = getUserIpk(matkul);
     const ipkTarget = user[0].ipk_target || null;
@@ -29,7 +25,7 @@ const getUserIpkPercentage = (user, matkul) => {
   return -1
 }
 
-const getUserSks = (matkul) => {
+export const getUserSks = (matkul) => {
   if (matkul.length !== 0) {
     const { totalSks } = matkul.reduce((sum, current) => {
       return {
@@ -43,7 +39,7 @@ const getUserSks = (matkul) => {
   return -1
 }
 
-const getUserSksPercentage = (user, matkul) => {
+export const getUserSksPercentage = (user, matkul) => {
   if (user.length !== 0) {
     const sks = getUserSks(matkul);
     const sksTarget = user[0].sks_target || null;
@@ -55,7 +51,7 @@ const getUserSksPercentage = (user, matkul) => {
   return -1
 }
 
-const getUserMatkul = (matkul) => {
+export const getUserMatkul = (matkul) => {
   if (matkul) {
     return matkul.length
   }
@@ -63,7 +59,7 @@ const getUserMatkul = (matkul) => {
   return -1
 }
 
-const getUserMatkulPercentage = (user, matkul) => {
+export const getUserMatkulPercentage = (user, matkul) => {
   if (user.length !== 0) {
     const matkulTotal = matkul.length;
     const matkulTarget = user[0].matkul_target || null;
@@ -75,7 +71,7 @@ const getUserMatkulPercentage = (user, matkul) => {
   return -1
 }
 
-const getAllSemester = (matkul, sort = false) => {
+export const getAllSemester = (matkul, sort = false) => {
   if (matkul.length !== 0) {
     const allSemester = [...new Set(matkul.map(item => item.semester))];
     return sort ? allSemester.sort((x, y) => x - y) : allSemester;
@@ -84,7 +80,7 @@ const getAllSemester = (matkul, sort = false) => {
   return -1
 }
 
-const getStatsSemester = (matkul, sort = false) => {
+export const getStatsSemester = (matkul, sort = false) => {
   if (matkul.length !== 0) {
     const groupBySemester = matkul.reduce((acc, item) => {
       const key = item.semester;
@@ -110,7 +106,7 @@ const getStatsSemester = (matkul, sort = false) => {
   return -1
 }
 
-const getStatsByNilai = (matkul, universitas, sort = false) => {
+export const getStatsByNilai = (matkul, universitas, sort = false) => {
   if (matkul.length !== 0) {
     const statsByNilai = Object.values(universitas).map((x, index) => {
       const keyNilai = Object.keys(universitas);
@@ -133,7 +129,7 @@ const getStatsByNilai = (matkul, universitas, sort = false) => {
   return -1;
 }
 
-const getOnAndOffTarget = (matkul) => {
+export const getOnAndOffTarget = (matkul) => {
   if (matkul.length !== 0) {
     const groupBySemester = matkul.reduce((acc, item) => {
       const key = item.semester;
@@ -160,7 +156,7 @@ const getOnAndOffTarget = (matkul) => {
   return -1;
 }
 
-const getDistribusiNilai = (matkul, penilaian, asc = false) => {
+export const getDistribusiNilai = (matkul, penilaian, asc = false) => {
   if (matkul.length !== 0) {
     const result = {};
 
@@ -211,21 +207,3 @@ const getDistribusiNilai = (matkul, penilaian, asc = false) => {
 
   return -1;
 }
-
-module.exports = {
-  getUserIpk,
-  getUserIpkPercentage,
-  getUserMatkul,
-  getUserMatkulPercentage,
-  getUserSks,
-  getUserSksPercentage,
-  getAllSemester,
-  getStatsSemester,
-  getStatsByNilai,
-  getOnAndOffTarget,
-  getDistribusiNilai,
-}
-
-/*
-============================== CODE END HERE ==============================
-*/
