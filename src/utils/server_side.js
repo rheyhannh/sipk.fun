@@ -272,6 +272,7 @@ export async function validateJWT(token, userId, otherOptions = {}) {
             audience: 'authenticated',
             issuer,
             subject: userId,
+            currentDate: new Date(0), // Ignore Expired Token
             ...otherOptions,
         });
 
