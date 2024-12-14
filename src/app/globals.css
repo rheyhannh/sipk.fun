@@ -225,6 +225,7 @@
     --root-footer-linkColor: #ECEEF2;
     --root-footer-hoverColor: #7BAAF7;
     --root-footer-lineColor: #4A4A4A;
+    --root-custom-bgColor: #E1E1E5;
     /* #endregion */
 
     /* #region FOOTER */
@@ -416,6 +417,7 @@
     --root-footer-linkColor: #9BA3B3;
     --root-footer-hoverColor: var(--first-color-lighter);
     --root-footer-lineColor: #5A5A5A;
+    --root-custom-bgColor: #202328;
     /* #endregion */
 
     /* #region FOOTER */
