@@ -4,11 +4,17 @@
 import * as SupabaseTypes from '@/types/supabase';
 // #endregion
 
+// #region NEXT DEPEDENCY
+import Image from 'next/image';
+import error_svg from '/public/bug_fixing.svg';
+// #endregion
+
 // #region REACT DEPEDENCY
 import * as React from 'react';
 // #endregion
 
 // #region COMPONENT DEPEDENCY
+import { ErrorBoundary } from 'react-error-boundary';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Pagination } from 'swiper/modules';
 import { Grafik, Target, Progress, Distribusi } from '@/component/Card';
@@ -249,6 +255,46 @@ function TabelSection({ universitas }) {
     )
 }
 
+function DashboardMatakuliahError({ error }) {
+    const { setError, isRichContent, setNavbarActive } = React.useContext(DashboardContext);
+    const { setModal, setActive, setData } = React.useContext(ModalContext);
+
+    const handleLogoutModal = () => {
+        if (!isRichContent) { setNavbarActive(false); }
+        setData(null);
+        setModal('logout');
+        setTimeout(() => {
+            setActive(true);
+        }, 50)
+    }
+
+    React.useEffect(() => {
+        setError(!!error);
+
+        // Log to third party services
+        console.error(error);
+
+        return () => {
+            setError(false);
+        }
+    }, [error])
+
+    return (
+        <div className={`${styles.wrapper} ${styles.error}`}>
+            <Image src={error_svg} alt={'Logo SIPK'} />
+            <div className={styles.text}>
+                <h2>Terjadi Kesalahan</h2>
+                <p>
+                    Sepertinya terjadi kesalahan tak terduga. Kamu bisa coba login ulang dulu, ya.
+                    Kalau masalah ini masih muncul setelah login ulang, kayaknya bakal ada yang lembur
+                    buat benerin ini 😞
+                </p>
+            </div>
+            <span onClick={handleLogoutModal}>Logout Disini</span>
+        </div>
+    );
+}
+
 /**
  * Render dashboard matakuliah page `'/dashboard/matakuliah'`
  * @param {{universitas:Array<SupabaseTypes.UniversitasData>}}
@@ -258,50 +304,52 @@ export default function DashboardMatakuliah({ universitas }) {
     const [widget, setWidget] = React.useState(true);
 
     return (
-        <div className={styles.wrapper}>
-            <div className={styles.top}>
-                <h1>Matakuliah</h1>
-                <div className={styles.top__right} onClick={() => { setWidget(!widget) }}>
-                    <div className={styles.top__right_icon}>
-                        <AiOutlineAppstore size={'24px'} color={widget ? 'var(--logo-second-color)' : 'var(--infoDark-color)'} />
+        <ErrorBoundary FallbackComponent={DashboardMatakuliahError}>
+            <div className={styles.wrapper}>
+                <div className={styles.top}>
+                    <h1>Matakuliah</h1>
+                    <div className={styles.top__right} onClick={() => { setWidget(!widget) }}>
+                        <div className={styles.top__right_icon}>
+                            <AiOutlineAppstore size={'24px'} color={widget ? 'var(--logo-second-color)' : 'var(--infoDark-color)'} />
+                        </div>
+                        <h3 className={styles.top__right_text}>
+                            Widget
+                        </h3>
                     </div>
-                    <h3 className={styles.top__right_text}>
-                        Widget
-                    </h3>
                 </div>
-            </div>
-            <Swiper
-                slidesPerView={1}
-                spaceBetween={30}
-                breakpoints={{
-                    768: {
-                        slidesPerView: 2,
-                    },
-                    1280: {
-                        slidesPerView: 3,
-                    },
-                    1920: {
-                        slidesPerView: 4,
-                    }
-                }}
-                pagination={{
-                    clickable: true,
-                }}
-                style={{
-                    "--swiper-pagination-color": "var(--logo-second-color)",
-                    "--swiper-pagination-bullet-inactive-color": "var(--infoDark-color)",
-                }}
-                noSwipingSelector={['#grafik_data-scroll', '#distribusi_data-scroll']}
-                modules={[Pagination]}
-                className={`${styles.insight} ${widget ? styles.active : ''}`}
-            >
-                <SwiperSlide> <GrafikCard universitas={universitas} /> </SwiperSlide>
-                <SwiperSlide> <TargetCard universitas={universitas} /> </SwiperSlide>
-                <SwiperSlide> <DistribusiCard universitas={universitas} /> </SwiperSlide>
-                <SwiperSlide> <ProgressCard universitas={universitas} /> </SwiperSlide>
-            </Swiper>
+                <Swiper
+                    slidesPerView={1}
+                    spaceBetween={30}
+                    breakpoints={{
+                        768: {
+                            slidesPerView: 2,
+                        },
+                        1280: {
+                            slidesPerView: 3,
+                        },
+                        1920: {
+                            slidesPerView: 4,
+                        }
+                    }}
+                    pagination={{
+                        clickable: true,
+                    }}
+                    style={{
+                        "--swiper-pagination-color": "var(--logo-second-color)",
+                        "--swiper-pagination-bullet-inactive-color": "var(--infoDark-color)",
+                    }}
+                    noSwipingSelector={['#grafik_data-scroll', '#distribusi_data-scroll']}
+                    modules={[Pagination]}
+                    className={`${styles.insight} ${widget ? styles.active : ''}`}
+                >
+                    <SwiperSlide> <GrafikCard universitas={universitas} /> </SwiperSlide>
+                    <SwiperSlide> <TargetCard universitas={universitas} /> </SwiperSlide>
+                    <SwiperSlide> <DistribusiCard universitas={universitas} /> </SwiperSlide>
+                    <SwiperSlide> <ProgressCard universitas={universitas} /> </SwiperSlide>
+                </Swiper>
 
-            <TabelSection universitas={universitas} />
-        </div>
+                <TabelSection universitas={universitas} />
+            </div>
+        </ErrorBoundary>
     )
 }
