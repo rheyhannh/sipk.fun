@@ -1,13 +1,13 @@
 'use client'
 
-// ========== COMPONENT DEPEDENCY ========== //
+// #region COMPONENT DEPEDENCY
 import { toast, Toaster, ToastBar } from 'react-hot-toast';
-import { FaTimes } from 'react-icons/fa';
 import { Spinner } from './Loading';
+// #endregion
 
-/*
-============================== CODE START HERE ==============================
-*/
+// #region ICON DEPEDENCY
+import { FaTimes } from 'react-icons/fa';
+// #endregion
 
 export default function Notification({ position }) {
     return (
@@ -61,7 +61,3 @@ export default function Notification({ position }) {
         </Toaster>
     )
 }
-
-/*
-============================== CODE END HERE ==============================
-*/
