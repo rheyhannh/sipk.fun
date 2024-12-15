@@ -23,13 +23,28 @@ import {
 } from "../Modal"
 // #endregion
 
-export const ModalContext = React.createContext();
-/**
- * Modal context provider. Use this wrapper to use Modal component.
- * @param {{children:any}} props React props object
- * @param props.children Component or element children.
- * @returns {ReactElement} Modal context provider wrapper.
- */
+/** 
+ * Object dengan key sebagai nama modal dan value element `JSX` untuk modal tersebut
+ * @typedef {typeof availableModal} AvailableModal 
+ * */
+export const availableModal = {
+    default: <Default />,
+    panduanDaftar: <PanduanDaftar />,
+    logout: <Logout />,
+    perubahanTerakhirDetail: <PerubahanTerakhirDetail />,
+    perubahanTerakhirConfirm: <PerubahanTerakhirConfirm />,
+    tambahMatkul: <TambahMatkul />,
+    profil: <Profil />,
+    rating: <Rating />,
+    tabelSetting: <TabelSetting />,
+    tabelFilter: <TabelFilter />,
+    detailMatkul: <DetailMatkul />,
+    hapusPermanentConfirm: <HapusPermanentConfirm />,
+    akun: <Akun />,
+    tentang: <Tentang />
+}
+
+export const ModalContext = React.createContext(/** @type {import('@/types/context').ModalContext} */({}));
 export const ModalProvider = ({ children }) => {
     const [active, setActive] = React.useState(false);
     const [modal, setModal] = React.useState(null);
@@ -46,7 +61,7 @@ export const ModalProvider = ({ children }) => {
     }
 
     const handleModalPrev = (resetData = true) => {
-        if (prevModal && modalList.type[prevModal]) {
+        if (prevModal && availableModal[prevModal]) {
             if (resetData) { setData(null); }
             setPrevModal(null);
             setModal(prevModal);
@@ -71,25 +86,6 @@ export const ModalProvider = ({ children }) => {
         // }
     }, [active])
 
-    const modalList = {
-        type: {
-            default: <Default />,
-            panduanDaftar: <PanduanDaftar />,
-            logout: <Logout />,
-            perubahanTerakhirDetail: <PerubahanTerakhirDetail />,
-            perubahanTerakhirConfirm: <PerubahanTerakhirConfirm />,
-            tambahMatkul: <TambahMatkul />,
-            profil: <Profil />,
-            rating: <Rating />,
-            tabelSetting: <TabelSetting />,
-            tabelFilter: <TabelFilter />,
-            detailMatkul: <DetailMatkul />,
-            hapusPermanentConfirm: <HapusPermanentConfirm />,
-            akun: <Akun />,
-            tentang: <Tentang />
-        }
-    }
-
     return (
         <ModalContext.Provider
             value={{
@@ -98,7 +94,7 @@ export const ModalProvider = ({ children }) => {
                 handleModalClose, handleModalPrev
             }}
         >
-            {modalList.type[modal]}
+            {availableModal[modal]}
             {children}
         </ModalContext.Provider>
     )
