@@ -571,7 +571,7 @@ export default function Users({ universitasData }) {
                 </>
                 :
                 <div>
-                    <Ball active={loading.active ?? false} backdrop={loading.backdrop ?? 'default'} hideBall={loading.hideBall ?? false} />
+                    <Ball active={loading.active ?? false} backdrop={loading.backdrop ?? 'default'} hideBall={loading.hideBall ?? false} data-cy={'loading_backdrop'} />
                     <div className={`${styles.container} ${loginMode ? '' : styles.sign_up_mode}`}>
                         <div className={styles.forms_container}>
                             <div className={styles.signin_signup}>
@@ -591,9 +591,14 @@ export default function Users({ universitasData }) {
                                         });
                                     }}
                                     className={styles.sign_in_form}
+                                    data-cy={'login_form'}
                                 >
                                     <h2 className={styles.title}>{emailLogin ? 'Email Login' : 'Login'}</h2>
-                                    <h3 style={{ margin: '.25rem 0', color: 'var(--danger-color)', fontWeight: 'var(--font-medium)' }}>{errorMessageLogin}</h3>
+
+                                    <h3 style={{ margin: '.25rem 0', color: 'var(--danger-color)', fontWeight: 'var(--font-medium)' }} data-cy={'login_form_error_message'}>
+                                        {errorMessageLogin}
+                                    </h3>
+
                                     <div className={styles.input_field}>
                                         <i><FaEnvelope /></i>
                                         <input
@@ -606,6 +611,7 @@ export default function Users({ universitasData }) {
                                             onFocus={() => { handleInputFocus(0) }}
                                             onBlur={(e) => { handleInputBlur(e, 0, 'email', 'login') }}
                                             tabIndex={loginMode ? 2 : -1}
+                                            data-cy="login_email_input"
                                             required
                                         />
                                         <i className={`${styles.validator} ${inputValidator[0].state}`}>
@@ -632,6 +638,7 @@ export default function Users({ universitasData }) {
                                             onFocus={() => { handleInputFocus(1) }}
                                             onBlur={(e) => { handleInputBlur(e, 1, 'password', 'login') }}
                                             tabIndex={loginMode ? 2 : -1}
+                                            data-cy="login_password_input"
                                             required={emailLogin ? false : true}
                                         />
 

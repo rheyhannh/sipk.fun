@@ -168,11 +168,11 @@ function Right() {
             <div className={styles.dashboard__profile} onClick={() => { handleProfilModal() }}>
                 <div className={`${styles.dashboard__profile_info}`}>
                     <p>
-                        <b>
+                        <b data-cy={'header_profile_fullname'}>
                             {data[0].fullname}
                         </b>
                     </p>
-                    <small>
+                    <small data-cy={'header_profile_nickname'}>
                         {data[0].nickname}
                     </small>
                 </div>
