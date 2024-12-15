@@ -1,20 +1,20 @@
 'use client'
 
-// ========== TYPE DEPEDENCY ========== //
-import * as ContextTypes from '../types/context.js'
+// #region TYPE DEPEDENCY
+import * as ContextTypes from '@/types/context.js'
+// #endregion
 
-// ========== NEXT DEPEDENCY ========== //
+// #region NEXT DEPEDENCY
 import { usePathname, useSearchParams } from 'next/navigation'
+// #endregion
 
-// ========== REACT DEPEDENCY ========== //
+// #region REACT DEPEDENCY
 import { useContext, useEffect } from 'react'
+// #endregion
 
-// ========== COMPONENT DEPEDENCY ========== //
-import { DashboardContext } from './provider/Dashboard';
-
-/*
-============================== CODE START HERE ==============================
-*/
+// #region COMPONENT DEPEDENCY
+import { DashboardContext } from '@/component/provider/Dashboard';
+// #endregion
 
 export function NavigationEvents() {
     /** @type {ContextTypes.DashboardContext} */
@@ -32,7 +32,3 @@ export function NavigationEvents() {
 
     return null
 }
-
-/*
-============================== CODE END HERE ==============================
-*/
