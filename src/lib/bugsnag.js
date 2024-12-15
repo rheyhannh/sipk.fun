@@ -2,6 +2,38 @@ import Bugsnag from '@bugsnag/js'
 import BugsnagPluginReact from '@bugsnag/plugin-react'
 import React from 'react';
 
+/**
+ * Handle react component error pada `ErrorBoundary` dengan log error ke Bugsnag menggunakan template yang sudah ditentukan.
+ * @param {import('@bugsnag/js').NotifiableError} error Error instance
+ * @param {React.ErrorInfo} info Error info
+ * @param {import('next-client-cookies')['useCookies']} [cookieResolver] Cookie resolver untuk resolve user id. Saat tidak tersedia Bugsnag akan menggunakan id {@link https://docs.bugsnag.com/platforms/javascript/react/configuration-options/#collectuserip anonymous} 
+ * @param {string} [fallbackComponent] String nama fallback component yang digunakan
+ * @example
+ * ```jsx
+ * import { useCookies } from 'next-client-cookies';
+ * import { ErrorBoundary } from 'react-error-boundary';
+ *  
+ * const MyFallbackComponent = () => (...)
+ * const MyComponent = () => {
+ *      const cookieResolver = useCookies();
+ *      return (
+ *          <ErrorBoundary
+ *              FallbackComponent={MyFallbackComponent}
+ *              onError={(error, info) => {
+ *                  handleReactErrorBoundary(
+ *                      error, 
+ *                      info, 
+ *                      cookieResolver, 
+ *                      'MyFallbackComponent'
+ *                  );
+ *              }}
+ *          >
+ *              ...
+ *          </ErrorBoundary>
+ *      )
+ * } 
+ * ```
+ */
 export function handleReactErrorBoundary(
     error,
     info,
