@@ -12,41 +12,43 @@ import { createContext, useEffect, useState } from "react";
 import { useCookies } from 'next-client-cookies';
 // #endregion
 
-export const DashboardContext = createContext();
-/**
- * Dashboard page context provider. Use this wrapper to use any `DashboardContext` config.
- * @param {Object} props DashboardProvider props
- * @param {any} props.children Component or element children.
- * @returns {ReactElement} Dashboard page context provider wrapper.
- */
+// #region UTIL DEPEDENCY
+import Bugsnag, { startBugsnag } from "@/lib/bugsnag";
+// #endregion
+
+if (process.env.NODE_ENV === 'production') {
+    if (!Bugsnag.isStarted()) {
+        startBugsnag();
+    }
+}
+
+export const DashboardContext = createContext(/** @type {import('@/types/context').DashboardContext} */({}));
 export const DashboardProvider = ({ children }) => {
-    /* ========== Next Hooks ========== */
     const router = useRouter();
     const pathname = usePathname();
-
-    /*
-    ========== States ==========
-    */
-    // Nav 
-    const [isNavbarActive, setNavbarActive] = useState(false);
-    const [activeLink, setActiveLink] = useState(null);
-
-    // Rich (min-width: 1280px), Phone (max-width: 768px)
-    const [isRichContent, setRichContent] = useState(0);
-    const [isPhoneContent, setPhoneContent] = useState(false);
-
-    // Touch Devices
-    const [isTouchDevice, setTouchDevice] = useState(false);
-
-    // Error
-    const [error, setError] = useState(false);
-
-    /* ========== Cookies ========== */
     const cookies = useCookies();
 
-    /*
-    ========== Use Effect Hook ==========
-    */
+    const [isNavbarActive, setNavbarActive] = useState(
+        /** @type {import('@/types/context').DashboardContext['isNavbarActive']} */
+        (false)
+    );
+    const [activeLink, setActiveLink] = useState(
+        /** @type {import('@/types/context').DashboardContext['activeLink']} */
+        (null)
+    );
+    const [isRichContent, setRichContent] = useState(
+        /** @type {import('@/types/context').DashboardContext['isRichContent']} */
+        (0)
+    );
+    const [isPhoneContent, setPhoneContent] = useState(
+        /** @type {import('@/types/context').DashboardContext['isPhoneContent']} */
+        (false)
+    );
+    const [isTouchDevice, setTouchDevice] = useState(
+        /** @type {import('@/types/context').DashboardContext['isTouchDevice']} */
+        (false)
+    );
+
     useEffect(() => {
         // Content Init
         const richMediaQuery = window.matchMedia('(min-width: 1280px)');
@@ -95,7 +97,6 @@ export const DashboardProvider = ({ children }) => {
         }
     }, [])
 
-    /* ========== Methods, Functions, Helpers ========== */
     const handleAuthCheck = async () => {
         if (cookies.get('s_access_token')) {
             return;
@@ -119,7 +120,6 @@ export const DashboardProvider = ({ children }) => {
                 isRichContent, setRichContent,
                 isPhoneContent, setPhoneContent,
                 isTouchDevice, setTouchDevice,
-                error, setError
             }}
         >
             {children}
