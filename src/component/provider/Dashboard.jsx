@@ -38,6 +38,9 @@ export const DashboardProvider = ({ children }) => {
     // Touch Devices
     const [isTouchDevice, setTouchDevice] = useState(false);
 
+    // Error
+    const [error, setError] = useState(false);
+
     /* ========== Cookies ========== */
     const cookies = useCookies();
 
@@ -116,6 +119,7 @@ export const DashboardProvider = ({ children }) => {
                 isRichContent, setRichContent,
                 isPhoneContent, setPhoneContent,
                 isTouchDevice, setTouchDevice,
+                error, setError
             }}
         >
             {children}
