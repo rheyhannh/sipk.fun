@@ -68,6 +68,17 @@ export const ModalProvider = ({ children }) => {
         }
     }
 
+    const handleShowModal = (type, data = null, beforeShowingModal, afterShowingModal) => {
+        if (!type || !availableModal[type]) return;
+        if (beforeShowingModal && typeof beforeShowingModal === 'function') beforeShowingModal();
+        setData(data);
+        setModal(type);
+        setTimeout(() => {
+            setActive(true);
+            if (afterShowingModal && typeof afterShowingModal === 'function') afterShowingModal();
+        }, 50)
+    }
+
     React.useEffect(() => {
         if (active) { document.body.classList.add('disable_scroll'); }
         else { document.body.classList.remove('disable_scroll'); }
@@ -91,7 +102,7 @@ export const ModalProvider = ({ children }) => {
             value={{
                 modal, active, data, prevModal,
                 setModal, setActive, setData, setPrevModal,
-                handleModalClose, handleModalPrev
+                handleModalClose, handleModalPrev, handleShowModal
             }}
         >
             {availableModal[modal]}
