@@ -22,11 +22,13 @@ import { Summary, Notification, History } from '@/component/Card';
 import useUser from '@/hooks/swr/useUser';
 import useMatkul from '@/hooks/swr/useMatkul';
 import useMatkulHistory from '@/hooks/swr/useMatkulHistory';
+import { useCookies } from 'next-client-cookies';
 import { DashboardContext } from '@/component/provider/Dashboard';
 import { ModalContext } from '@/component/provider/Modal';
 // #endregion
 
 // #region UTIL DEPEDENCY
+import { handleReactErrorBoundary } from '@/lib/bugsnag';
 import {
     getUserMatkul, getUserMatkulPercentage,
     getUserSks, getUserSksPercentage,
@@ -203,8 +205,8 @@ export function HistoryCard({ count, universitas }) {
     )
 }
 
-function DashboardError({ error }) {
-    const { setError, isRichContent, setNavbarActive } = React.useContext(DashboardContext);
+function DashboardError() {
+    const { isRichContent, setNavbarActive } = React.useContext(DashboardContext);
     const { setModal, setActive, setData } = React.useContext(ModalContext);
 
     const handleLogoutModal = () => {
@@ -215,17 +217,6 @@ function DashboardError({ error }) {
             setActive(true);
         }, 50)
     }
-
-    React.useEffect(() => {
-        setError(!!error);
-
-        // Log to third party services
-        console.error(error);
-
-        return () => {
-            setError(false);
-        }
-    }, [error])
 
     return (
         <div className={`${styles.wrapper} ${styles.error}`}>
@@ -249,8 +240,13 @@ function DashboardError({ error }) {
  * @returns {React.ReactElement} Rendered dashboard page
  */
 export default function Dashboard({ universitas, notifikasi }) {
+    const cookieResolver = useCookies();
+
     return (
-        <ErrorBoundary FallbackComponent={DashboardError}>
+        <ErrorBoundary
+            FallbackComponent={DashboardError}
+            onError={(error, info) => handleReactErrorBoundary(error, info, cookieResolver, 'DashboardError')}
+        >
             <div className={styles.wrapper}>
                 <div className={styles.primary}>
                     <h1 className={styles.wrapper__title}>Dasbor</h1>

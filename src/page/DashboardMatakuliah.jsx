@@ -25,11 +25,13 @@ import { Table } from '@/component/Table';
 import useUser from '@/hooks/swr/useUser';
 import useMatkul from '@/hooks/swr/useMatkul';
 import useMatkulHistory from '@/hooks/swr/useMatkulHistory';
+import { useCookies } from 'next-client-cookies';
 import { DashboardContext } from '@/component/provider/Dashboard';
 import { ModalContext } from '@/component/provider/Modal';
 // #endregion
 
 // #region UTIL DEPEDENCY
+import { handleReactErrorBoundary } from '@/lib/bugsnag';
 import { getSessionTable, getSessionGrafik, getSessionTarget, getSessionDistribusi } from '@/utils/client_side';
 // #endregion
 
@@ -257,8 +259,8 @@ function TabelSection({ universitas }) {
     )
 }
 
-function DashboardMatakuliahError({ error }) {
-    const { setError, isRichContent, setNavbarActive } = React.useContext(DashboardContext);
+function DashboardMatakuliahError() {
+    const { isRichContent, setNavbarActive } = React.useContext(DashboardContext);
     const { setModal, setActive, setData } = React.useContext(ModalContext);
 
     const handleLogoutModal = () => {
@@ -269,17 +271,6 @@ function DashboardMatakuliahError({ error }) {
             setActive(true);
         }, 50)
     }
-
-    React.useEffect(() => {
-        setError(!!error);
-
-        // Log to third party services
-        console.error(error);
-
-        return () => {
-            setError(false);
-        }
-    }, [error])
 
     return (
         <div className={`${styles.wrapper} ${styles.error}`}>
@@ -304,9 +295,13 @@ function DashboardMatakuliahError({ error }) {
  */
 export default function DashboardMatakuliah({ universitas }) {
     const [widget, setWidget] = React.useState(true);
+    const cookieResolver = useCookies();
 
     return (
-        <ErrorBoundary FallbackComponent={DashboardMatakuliahError}>
+        <ErrorBoundary
+            FallbackComponent={DashboardMatakuliahError}
+            onError={(error, info) => handleReactErrorBoundary(error, info, cookieResolver, 'DashboardMatakuliahError')}
+        >
             <div className={styles.wrapper}>
                 <div className={styles.top}>
                     <h1>Matakuliah</h1>
