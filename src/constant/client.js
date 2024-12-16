@@ -7,10 +7,6 @@ import { LinkProps as ReactScrollProps } from "react-scroll";
 import * as React from 'react';
 // #endregion
 
-// #region VARIABLE DEPEDENCY
-import { CONTENTS as howContents } from "@/component/landing/sections/How";
-// #endregion
-
 /**
  * @typedef {Object} NavItem Object yang merepresentasikan navigation item link
  * @property {string} text 
@@ -67,21 +63,3 @@ export const dashboardNavItem = [
         },
     },
 ];
-
-/** 
- * Landing page navigation item
- * @type {Array<NavItem>}
- */
-export const landingNavItem = [
-    { text: 'Home', elementId: 'landing', href: null, iconName: 'AiOutlineAppstore', iconLib: 'ai' },
-    {
-        text: 'How', elementId: 'how', href: null, iconName: 'AiOutlineAppstore', iconLib: 'ai',
-        dropdown: howContents.map((x) => ({
-            text: x.short, elementId: x.id, href: null, iconName: x.iconName, iconLib: x.iconLib,
-        }))
-    },
-    { text: 'Universitas', elementId: 'universitas', href: null, iconName: 'AiOutlineAppstore', iconLib: 'ai' },
-    { text: 'Testimoni', elementId: 'testimoni', href: null, iconName: 'AiOutlineAppstore', iconLib: 'ai' },
-    { text: 'Blog', elementId: 'blog', href: null, iconName: 'AiOutlineAppstore', iconLib: 'ai', dropdown: [] },
-    { text: 'Context', elementId: 'context', href: null, iconName: 'AiOutlineAppstore', iconLib: 'ai' },
-]
