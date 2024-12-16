@@ -3,7 +3,7 @@
 // #region TYPE DEPEDENCY
 import * as ContextTypes from '@/types/context';
 import * as SupabaseTypes from '@/types/supabase';
-import { MatkulDummiesProps } from '@/component/landing/variables/MatkulDummies';
+import { MatkulDummiesProps } from '@/constant/matkul_dummies';
 import { HTMLMotionProps } from 'framer-motion';
 // #endregion
 

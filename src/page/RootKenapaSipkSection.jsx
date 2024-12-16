@@ -2,7 +2,7 @@
 
 // #region TYPE DEPEDENCY
 import { HTMLMotionProps } from 'framer-motion';
-import { MatkulDummiesProps } from '@/component/landing/variables/MatkulDummies';
+import { MatkulDummiesProps } from '@/constant/matkul_dummies';
 // #endregion
 
 // #region CONFIG DEPEDENCY
@@ -31,7 +31,7 @@ import {
     MatkulDummies,
     MatkulDummiesNilaiBobot,
     MatkulDummiesNilaiColorPreset
-} from '@/component/landing/variables/MatkulDummies';
+} from '@/constant/matkul_dummies';
 import { scroller } from 'react-scroll';
 // #endregion
 
