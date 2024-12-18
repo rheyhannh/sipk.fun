@@ -26,6 +26,87 @@ import {
 // #region Security, Encryptor, Decryptor
 
 /**
+ * Method untuk enkripsi teks atau data dengan algoritma `DES` dengan key
+ * 
+ * ```js
+ * process.env.SECRET_KEY
+ * ```
+ * 
+ * @param {string} message Teks atau data berbentuk `string` yang ingin diencrypt
+ * @return {Promise<string | null>} Promise dengan resolve encrypted teks atau data sebagai `string` saat berhasil dan `null` saat gagal
+ * @example 
+ * ```js
+ * // Stringified Data
+ * const data = {
+ *      email: 'john@gmail.com',     
+ *      session_id: '3fbacbd6-b429-4eb8-87a4-d6aeec54f6c9',
+ *      refresh_token: '04aad8a5-aa2a-424c-8c10-e7c058980a00'    
+ * }
+ * const stringifiedData = JSON.stringify(data);
+ * console.log(await encryptDES(stringifiedData)) // '...'
+ * 
+ * // Plain Text
+ * const text = 'pleaseEncryptMe'
+ * console.log(await encryptDES(text)) // '...'
+
+ * // Error
+ * console.log(await encryptDES(data)) // null
+ * ```
+ */
+export async function encryptDES(message) {
+    try {
+        const ciphertext = CryptoJS.DES.encrypt(message, process.env.SECRET_KEY).toString();
+        return ciphertext;
+    } catch (error) {
+        console.error(error);
+        return null;
+    }
+}
+
+/**
+ * Method untuk dekripsi teks atau data dengan algoritma `DES` dengan key
+ * 
+ * ```js
+ * process.env.SECRET_KEY
+ * ```
+ * 
+ * @param {string} ciphertext Teks atau data berbentuk `string` yang ingin didecrypt
+ * @param {boolean} [parse=false] Opsi boolean untuk parse hasil dekripsi, default: `false`
+ * @return {Promise<string | Object | null>} Promise dengan resolve decrypted teks atau data sebagai `string` atau `Object` saat berhasil dan `null` saat gagal
+ * @example 
+ * ```js
+ * // Only Decrypt
+ * const encryptedObject = 'someEncryptedText';
+ * const x = await encryptDES(encryptedObject);
+ * console.log(x); // "{email:'john@gmail.com'}"
+ * console.log(typeof x); // string
+ * 
+ * // Decrypt and Parse Data
+ * const y = await encryptDES(encryptedObject, true);
+ * console.log(y); // {email:'john@gmail.com'}
+ * console.log(typeof y); // object
+ * 
+ * // Error
+ * console.log(await encryptDES(null, true)) // null
+ * ```
+ */
+export async function decryptDES(ciphertext, parse = false) {
+    try {
+        const bytes = CryptoJS.DES.decrypt(ciphertext, process.env.SECRET_KEY)
+        const decryptedData = bytes.toString(CryptoJS.enc.Utf8);
+        if (parse) {
+            const decryptedDataParsed = JSON.parse(decryptedData);
+            return decryptedDataParsed;
+        } else {
+            return decryptedData;
+        }
+    } catch (error) {
+        console.error(error);
+        return null;
+    }
+}
+
+/**
  * Method untuk enkripsi teks atau data dengan algoritma `AES` dengan key
  * 
  * ```js

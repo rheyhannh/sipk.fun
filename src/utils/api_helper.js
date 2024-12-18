@@ -23,6 +23,8 @@ import Joi from 'joi';
 import {
     encryptAES,
     decryptAES,
+    encryptDES,
+    decryptDES,
     validateJWT,
     getCookieOptions,
     getSipkCookies,
@@ -325,6 +327,24 @@ export async function handleErrorResponse(error, requestLog = null, ratelimitLog
     if (ratelimitLog) error._details.resolvedRatelimit = ratelimitLog;
 
     const { code, headers = null, _details, ...rest } = error;
+
+    try {
+        const encryptedDigest = await encryptDES(JSON.stringify({
+            sipk_code: error?.error?.code,
+            stamp: _details?.stamp,
+            resolvedRatelimit: _details?.resolvedRatelimit,
+            reason: _details?.reason,
+            fnArgs: _details?.functionArgs,
+            fnDetails: _details?.functionDetails,
+            stack: _details?.stack,
+            more: _details?.more
+        }));
+
+        rest['error']['digest'] = encryptedDigest;
+    } catch (error) {
+        rest['error']['digest'] = null;
+    }
+
     const body = process.env.NODE_ENV === 'production' ? { ...rest } : { ...rest, _details: error._details };
 
     if (logError) {

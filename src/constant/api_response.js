@@ -122,6 +122,11 @@
  * - Contoh : `'Bad Request - Invalid JSON format'`
  * @property {string | null} error.hintUrl 
  * Link atau pathname yang dapat digunakan sebagai call to action untuk user mengetahui lebih lanjut `error` yang terjadi 
+ * @property {string | null} error.digest
+ * String yang diencrypt dengan `encryptDES` yang berisikan beberapa props {@link APIResponseBaseProps._details _details}.
+ * Setelah response API sampai diuser, ini akan dikirim ke Bugsnag untuk kebutuhan debug terkait error yang terjadi.
+ * 
+ * Jika proses enkripsi terjadi error, props ini bernilai `null`
  * @property {Object} _details
  * Error details untuk mendeskripsikan error lebih detail untuk tujuan `logging`, initial value `undefined`.
  * Selalu destructure props ini, pastikan props ini hanya tampil pada body response jika request diinisialisasikan oleh `service` atau proses `internal` lainnya.
