@@ -329,7 +329,7 @@ export async function handleErrorResponse(error, requestLog = null, ratelimitLog
     const { code, headers = null, _details, ...rest } = error;
 
     try {
-        const encryptedDigest = await encryptDES(JSON.stringify({
+        var encryptedDigest = await encryptDES(JSON.stringify({
             sipk_code: error?.error?.code,
             stamp: _details?.stamp,
             resolvedRatelimit: _details?.resolvedRatelimit,
@@ -338,7 +338,9 @@ export async function handleErrorResponse(error, requestLog = null, ratelimitLog
             fnDetails: _details?.functionDetails,
             stack: _details?.stack,
             more: _details?.more
-        }));
+        }))
+
+        if (error?._details?.severity) encryptedDigest = `${error._details.severity}_${encryptedDigest}`;
 
         rest['error']['digest'] = encryptedDigest;
     } catch (error) {
