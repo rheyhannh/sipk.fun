@@ -96,14 +96,58 @@ export async function PATCH(request) {
         }
 
         const { decryptedSession, decodedAccessToken } = await verifyAuth();
-        const userUniversitasId = decryptedSession?.user?.user_metadata?.university_id ?? decodedAccessToken?.user_metadata?.university_id;
+
+        /*
+            @breakingInFuture
+            Try to resolve user universitas from session or access token first. 
+            This case will not fit in the future when user can change their university.
+            But for now, when user cant change their university, it can save a lot requests.
+        */
+        var userUniversitasId = decryptedSession?.user?.user_metadata?.university_id ?? decodedAccessToken?.user_metadata?.university_id;
+        if (!userUniversitasId) {
+            /** @type {SupabaseTypes._from<SupabaseTypes.UserData>} */
+            const { data, error } = await supabase.from('user').select('*');
+            if (error) {
+                throw serverError.interval_server_error(
+                    defaultUserErrorMessage, undefined,
+                    {
+                        severity: 'error',
+                        reason: 'Failed to edit matakuliah, cant resolve user universitas id, supabase error occurred',
+                        stack: null,
+                        functionDetails: 'supabase.from at PATCH /api/matkul line 186',
+                        functionArgs: { from: 'user', select: '*' },
+                        functionResolvedVariable: null,
+                        request: await getRequestDetails(),
+                        more: error,
+                    }
+                )
+            }
+            if (!data.length || !data[0]?.university_id) {
+                throw notFoundError.resource_not_found(
+                    defaultUserErrorMessage, undefined,
+                    {
+                        severity: 'error',
+                        reason: 'Failed to edit matakuliah, cant resolve user universitas id after querying',
+                        stack: null,
+                        functionDetails: 'supabase.from at PATCH /api/matkul line 186',
+                        functionArgs: { from: 'user', select: '*' },
+                        functionResolvedVariable: { data, error },
+                        request: await getRequestDetails(),
+                        more: null,
+                    }
+                )
+            }
+
+            userUniversitasId = data[0].university_id;
+        }
+
         const userId = decryptedSession?.user?.id ?? decodedAccessToken?.sub;
-        if (!userUniversitasId || !userId) {
+        if (!userId) {
             throw notFoundError.resource_not_found(
                 defaultUserErrorMessage, undefined,
                 {
                     severity: 'error',
-                    reason: 'Failed to edit matakuliah, cant resolve user universitas id or user id',
+                    reason: 'Failed to edit matakuliah, cant resolve user id',
                     stack: null,
                     functionDetails: 'PATCH /api/matkul line 106',
                     functionArgs: null,
@@ -450,14 +494,58 @@ export async function POST(request) {
         }
 
         const { decryptedSession, decodedAccessToken } = await verifyAuth();
-        const userUniversitasId = decryptedSession?.user?.user_metadata?.university_id ?? decodedAccessToken?.user_metadata?.university_id;
+        
+        /*
+            @breakingInFuture
+            Try to resolve user universitas from session or access token first. 
+            This case will not fit in the future when user can change their university.
+            But for now, when user cant change their university, it can save a lot requests.
+        */
+        var userUniversitasId = decryptedSession?.user?.user_metadata?.university_id ?? decodedAccessToken?.user_metadata?.university_id;
+        if (!userUniversitasId) {
+            /** @type {SupabaseTypes._from<SupabaseTypes.UserData>} */
+            const { data, error } = await supabase.from('user').select('*');
+            if (error) {
+                throw serverError.interval_server_error(
+                    defaultUserErrorMessage, undefined,
+                    {
+                        severity: 'error',
+                        reason: 'Failed to add matakuliah, cant resolve user universitas id, supabase error occurred',
+                        stack: null,
+                        functionDetails: 'supabase.from at POST /api/matkul line 186',
+                        functionArgs: { from: 'user', select: '*' },
+                        functionResolvedVariable: null,
+                        request: await getRequestDetails(),
+                        more: error,
+                    }
+                )
+            }
+            if (!data.length || !data[0]?.university_id) {
+                throw notFoundError.resource_not_found(
+                    defaultUserErrorMessage, undefined,
+                    {
+                        severity: 'error',
+                        reason: 'Failed to add matakuliah, cant resolve user universitas id after querying',
+                        stack: null,
+                        functionDetails: 'supabase.from at POST /api/matkul line 186',
+                        functionArgs: { from: 'user', select: '*' },
+                        functionResolvedVariable: { data, error },
+                        request: await getRequestDetails(),
+                        more: null,
+                    }
+                )
+            }
+
+            userUniversitasId = data[0].university_id;
+        }
+
         const userId = decryptedSession?.user?.id ?? decodedAccessToken?.sub;
-        if (!userUniversitasId || !userId) {
+        if (!userId) {
             throw notFoundError.resource_not_found(
                 defaultUserErrorMessage, undefined,
                 {
                     severity: 'error',
-                    reason: 'Failed to add matakuliah, cant resolve user universitas id or user id',
+                    reason: 'Failed to add matakuliah, cant resolve user id',
                     stack: null,
                     functionDetails: 'POST /api/matkul line 461',
                     functionArgs: null,

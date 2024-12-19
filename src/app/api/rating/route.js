@@ -174,21 +174,48 @@ export async function POST(request) {
             )
         }
 
-        const userUniversitas = decryptedSession?.user?.user_metadata?.university ?? decodedAccessToken?.user_metadata?.university;
+        /*
+            @breakingInFuture
+            Try to resolve user universitas from session or access token first. 
+            This case will not fit in the future when user can change their university.
+            But for now, when user cant change their university, it can save a lot requests.
+        */
+        var userUniversitas = decryptedSession?.user?.user_metadata?.university ?? decodedAccessToken?.user_metadata?.university;
         if (!userUniversitas) {
-            throw notFoundError.resource_not_found(
-                defaultUserErrorMessage, undefined,
-                {
-                    severity: 'error',
-                    reason: 'Failed to add user rating, cant resolve user universitas',
-                    stack: null,
-                    functionDetails: 'POST /api/rating line 179',
-                    functionArgs: null,
-                    functionResolvedVariable: null,
-                    request: await getRequestDetails(),
-                    more: { userUniversitas },
-                }
-            )
+            /** @type {SupabaseTypes._from<SupabaseTypes.UserData>} */
+            const { data, error } = await supabase.from('user').select('*');
+            if (error) {
+                throw serverError.interval_server_error(
+                    defaultUserErrorMessage, undefined,
+                    {
+                        severity: 'error',
+                        reason: 'Failed to add user rating, cant resolve user universitas, supabase error occurred',
+                        stack: null,
+                        functionDetails: 'supabase.from at POST /api/rating line 186',
+                        functionArgs: { from: 'user', select: '*' },
+                        functionResolvedVariable: null,
+                        request: await getRequestDetails(),
+                        more: error,
+                    }
+                )
+            }
+            if (!data.length || !data[0]?.university) {
+                throw notFoundError.resource_not_found(
+                    defaultUserErrorMessage, undefined,
+                    {
+                        severity: 'error',
+                        reason: 'Failed to add user rating, cant resolve user universitas after querying',
+                        stack: null,
+                        functionDetails: 'supabase.from at POST /api/rating line 186',
+                        functionArgs: { from: 'user', select: '*' },
+                        functionResolvedVariable: { data, error },
+                        request: await getRequestDetails(),
+                        more: null,
+                    }
+                )
+            }
+
+            userUniversitas = data[0].university;
         }
 
         formData.details.universitas = userUniversitas;
@@ -422,21 +449,48 @@ export async function PATCH(request) {
             )
         }
 
-        const userUniversitas = decryptedSession?.user?.user_metadata?.university ?? decodedAccessToken?.user_metadata?.university;
+        /*
+            @breakingInFuture
+            Try to resolve user universitas from session or access token first. 
+            This case will not fit in the future when user can change their university.
+            But for now, when user cant change their university, it can save a lot requests.
+        */
+        var userUniversitas = decryptedSession?.user?.user_metadata?.university ?? decodedAccessToken?.user_metadata?.university;
         if (!userUniversitas) {
-            throw notFoundError.resource_not_found(
-                defaultUserErrorMessage, undefined,
-                {
-                    severity: 'error',
-                    reason: 'Failed to edit user rating, cant resolve user universitas',
-                    stack: null,
-                    functionDetails: 'PATCH /api/rating line 427',
-                    functionArgs: null,
-                    functionResolvedVariable: null,
-                    request: await getRequestDetails(),
-                    more: { userUniversitas },
-                }
-            )
+            /** @type {SupabaseTypes._from<SupabaseTypes.UserData>} */
+            const { data, error } = await supabase.from('user').select('*');
+            if (error) {
+                throw serverError.interval_server_error(
+                    defaultUserErrorMessage, undefined,
+                    {
+                        severity: 'error',
+                        reason: 'Failed to edit user rating, cant resolve user universitas, supabase error occurred',
+                        stack: null,
+                        functionDetails: 'supabase.from at PATCH /api/rating line 186',
+                        functionArgs: { from: 'user', select: '*' },
+                        functionResolvedVariable: null,
+                        request: await getRequestDetails(),
+                        more: error,
+                    }
+                )
+            }
+            if (!data.length || !data[0]?.university) {
+                throw notFoundError.resource_not_found(
+                    defaultUserErrorMessage, undefined,
+                    {
+                        severity: 'error',
+                        reason: 'Failed to edit user rating, cant resolve user universitas after querying',
+                        stack: null,
+                        functionDetails: 'supabase.from at PATCH /api/rating line 186',
+                        functionArgs: { from: 'user', select: '*' },
+                        functionResolvedVariable: { data, error },
+                        request: await getRequestDetails(),
+                        more: null,
+                    }
+                )
+            }
+
+            userUniversitas = data[0].university;
         }
 
         formData.details.universitas = userUniversitas;
