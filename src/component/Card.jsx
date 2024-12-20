@@ -27,7 +27,7 @@ import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import CountUp, { CountUpProps } from 'react-countup';
 import ProgressBar from "@ramonak/react-progress-bar";
 import { LineChart, Line, BarChart, Bar, XAxis, Tooltip, Legend, ResponsiveContainer } from 'recharts';
-import { Icon } from '@/component/loader/ReactIcons'
+import ReactIcons from '../loader/ReactIcons';
 import { Spinner } from "./loader/Loading";
 import { motion } from 'framer-motion';
 // #endregion
@@ -113,6 +113,12 @@ import { MdOutlineConfirmationNumber } from "react-icons/md";
  * - Default : `0`
  */
 // #endregion
+
+const SUMMARY_STATIC_ICONS = {
+    MdOutlineConfirmationNumber: <MdOutlineConfirmationNumber size={'24px'} />,
+    FaRegStar: <FaRegStar size={'24px'} />,
+    IoBookOutline: <IoBookOutline size={'24px'} />,
+}
 
 /**
  * Props yang digunakan component `Summary`
@@ -324,10 +330,9 @@ const SummaryLoaded = ({ icon, color, title, data }) => {
     return (
         <div className={`${styles.summary}`}>
             <div style={{ background: color ? color : 'var(--first-color)' }} className={styles.summary__icon}>
-                {icon.name && icon.lib ?
-                    <Icon name={icon.name} lib={icon.lib} props={{ size: '24px' }} />
-                    : null
-                }
+                {SUMMARY_STATIC_ICONS[icon?.name] ?? (
+                    <ReactIcons name={icon?.name ?? 'FaRocket'} lib={icon?.lib ?? 'fa'} size={'24px'} />
+                )}
             </div>
 
             <div className={styles.summary__data}>
@@ -392,12 +397,6 @@ export function SummaryDummy({ icon, color, title, data, ...props }) {
         return `${roundDraw.toFixed(2)} 999`;
     }
 
-    const staticIcons = {
-        MdOutlineConfirmationNumber: <MdOutlineConfirmationNumber size={'24px'} />,
-        FaRegStar: <FaRegStar size={'24px'} />,
-        IoBookOutline: <IoBookOutline size={'24px'} />,
-    }
-
     React.useEffect(() => {
         setDashArray(getCircleDraw(35, data.percentage))
     }, [data])
@@ -405,8 +404,8 @@ export function SummaryDummy({ icon, color, title, data, ...props }) {
     return (
         <div {...props} className={`${styles.summary}`}>
             <div style={{ background: color ? color : 'var(--first-color)' }} className={styles.summary__icon}>
-                {staticIcons[icon?.name] ?? (
-                    <Icon name={icon?.name ?? 'FaRocket'} lib={icon?.lib ?? 'fa'} props={{ size: '24px' }} />
+                {SUMMARY_STATIC_ICONS[icon?.name] ?? (
+                    <ReactIcons name={icon?.name ?? 'FaRocket'} lib={icon?.lib ?? 'fa'} size={'24px'} />
                 )}
             </div>
 
@@ -585,7 +584,9 @@ export function Notification({ state, data }) {
                                 <Link href={item.href} target={'_blank'} className={styles.notification__post} prefetch={false} key={crypto.randomUUID()}>
                                     <div className={styles.notification__main}>
                                         <span style={{ color: item.color }}>
-                                            <Icon name={item.icon.name} lib={item.icon.lib} />
+                                            {(item?.icon?.name && item?.icon?.lib) &&
+                                                <ReactIcons name={item.icon.name} lib={item.icon.lib} />
+                                            }
                                         </span>
                                         <p>
                                             <b style={{ color: item.color }}>
@@ -653,7 +654,9 @@ export function Notification({ state, data }) {
                                     <Link href={item.href} target={'_blank'} className={`${styles.notification__post} ${styles.swiper}`} prefetch={false}>
                                         <div className={styles.notification__main}>
                                             <span style={{ color: item.color }}>
-                                                <Icon name={item.icon.name} lib={item.icon.lib} />
+                                                {(item?.icon?.name && item?.icon?.lib) &&
+                                                    <ReactIcons name={item.icon.name} lib={item.icon.lib} />
+                                                }
                                             </span>
                                             <p>
                                                 <b style={{ color: item.color }}>

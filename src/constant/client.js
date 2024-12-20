@@ -3,8 +3,9 @@ import { LinkProps as NextLinkProps } from "next/link";
 import { LinkProps as ReactScrollProps } from "react-scroll";
 // #endregion
 
-// #region REACT DEPEDENCY
-import * as React from 'react';
+// #region ICON DEPEDENCY
+import { AiOutlineAppstore } from 'react-icons/ai';
+import { BsJournalBookmark } from 'react-icons/bs';
 // #endregion
 
 /**
@@ -46,6 +47,7 @@ export const dashboardNavItem = [
         text: 'Dashboard',
         elementId: null,
         href: '/dashboard',
+        icon: <AiOutlineAppstore size={'24px'} />,
         iconName: 'AiOutlineAppstore',
         iconLib: 'ai',
         routingOptions: {
@@ -56,6 +58,7 @@ export const dashboardNavItem = [
         text: 'Matakuliah',
         elementId: null,
         href: '/dashboard/matakuliah',
+        icon: <BsJournalBookmark size={'24px'} />,
         iconName: 'BsJournalBookmark',
         iconLib: 'bs',
         routingOptions: {

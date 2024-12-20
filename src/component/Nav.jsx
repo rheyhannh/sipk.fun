@@ -11,7 +11,7 @@ import { useContext, useEffect } from 'react';
 // #region COMPONENT DEPEDENCY
 import { DashboardContext } from '@/component/provider/Dashboard';
 import { ModalContext } from '@/component/provider/Modal';
-import { Icon } from '@/component/loader/ReactIcons';
+import ReactIcons from '../loader/ReactIcons';
 import Link from '@/component/Link';
 // #endregion
 
@@ -24,7 +24,11 @@ import { dashboardNavItem } from '@/constant/client';
 // #endregion
 
 // #region ICON DEPEDENCY
-import { PiUserCircleLight } from "react-icons/pi";
+import { PiUserCircleLight } from 'react-icons/pi';
+import { RiUserSettingsLine } from 'react-icons/ri';
+import { GoInfo } from 'react-icons/go';
+import { FiLogOut } from 'react-icons/fi';
+import { AiOutlineStar } from 'react-icons/ai';
 // #endregion
 
 // #region STYLE DEPEDENCY
@@ -142,7 +146,7 @@ export default function Nav({ children }) {
                                             onClick={handleAkunModal}
                                         >
                                             <span className={styles.link__icon}>
-                                                <Icon name={'RiUserSettingsLine'} lib={'ri'} props={{ size: '24px' }} />
+                                                <RiUserSettingsLine size={'24px'} />
                                             </span>
 
                                             <h4 className={styles.link__text} >
@@ -157,7 +161,7 @@ export default function Nav({ children }) {
                                                 key={`rich_dashboard_nav_item-${index}`}
                                             >
                                                 <span className={styles.link__icon}>
-                                                    <Icon name={item.iconName} lib={item.iconLib} props={{ size: '24px' }} />
+                                                    {item?.icon || (item?.iconName && item?.iconLib) && <ReactIcons name={item.iconName} lib={item.iconLib} size={'24px'} />}
                                                 </span>
 
                                                 <h4 className={styles.link__text} >
@@ -171,7 +175,7 @@ export default function Nav({ children }) {
                                             onClick={handleRatingModal}
                                         >
                                             <span className={styles.link__icon}>
-                                                <Icon name={'AiOutlineStar'} lib={'ai'} props={{ size: '24px' }} />
+                                                <AiOutlineStar size={'24px'} />
                                             </span>
 
                                             <h4 className={styles.link__text} >
@@ -184,7 +188,7 @@ export default function Nav({ children }) {
                                             onClick={handleTentangModal}
                                         >
                                             <span className={styles.link__icon}>
-                                                <Icon name={'GoInfo'} lib={'go'} props={{ size: '24px' }} />
+                                                <GoInfo size={'24px'} />
                                             </span>
 
                                             <h4 className={styles.link__text} >
@@ -197,7 +201,7 @@ export default function Nav({ children }) {
                                             onClick={() => { handleLogoutModal() }}
                                         >
                                             <span className={styles.link__icon}>
-                                                <Icon name={'FiLogOut'} lib={'fi'} props={{ size: '24px' }} />
+                                                <FiLogOut size={'24px'} />
                                             </span>
 
                                             <h4 className={styles.link__text} >
@@ -238,7 +242,7 @@ export default function Nav({ children }) {
                                         onClick={handleAkunModal}
                                     >
                                         <span className={styles.link__icon}>
-                                            <Icon name={'RiUserSettingsLine'} lib={'ri'} props={{ size: '24px' }} />
+                                            <RiUserSettingsLine size={'24px'} />
                                         </span>
 
                                         <h4 className={styles.link__text} >
@@ -253,7 +257,7 @@ export default function Nav({ children }) {
                                             key={`small_dashboard_nav_item-${index}`}
                                         >
                                             <span className={styles.link__icon}>
-                                                <Icon name={item.iconName} lib={item.iconLib} props={{ size: '24px' }} />
+                                                {item?.icon || (item?.iconName && item?.iconLib) && <ReactIcons name={item.iconName} lib={item.iconLib} size={'24px'} />}
                                             </span>
 
                                             <h4 className={styles.link__text} >
@@ -267,7 +271,7 @@ export default function Nav({ children }) {
                                         onClick={handleRatingModal}
                                     >
                                         <span className={styles.link__icon}>
-                                            <Icon name={'AiOutlineStar'} lib={'ai'} props={{ size: '24px' }} />
+                                            <AiOutlineStar size={'24px'} />
                                         </span>
 
                                         <h4 className={styles.link__text} >
@@ -280,7 +284,7 @@ export default function Nav({ children }) {
                                         onClick={handleTentangModal}
                                     >
                                         <span className={styles.link__icon}>
-                                            <Icon name={'GoInfo'} lib={'go'} props={{ size: '24px' }} />
+                                            <GoInfo size={'24px'} />
                                         </span>
 
                                         <h4 className={styles.link__text} >
@@ -293,7 +297,7 @@ export default function Nav({ children }) {
                                         onClick={() => { handleLogoutModal() }}
                                     >
                                         <span className={styles.link__icon}>
-                                            <Icon name={'FiLogOut'} lib={'fi'} props={{ size: '24px' }} />
+                                            <FiLogOut size={'24px'} />
                                         </span>
 
                                         <h4 className={styles.link__text} >
