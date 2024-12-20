@@ -20,19 +20,20 @@ import { BsJournalBookmark } from 'react-icons/bs';
  * URL atau path saat item diklik
  * - Contoh : `'/dashboard'`
  * - Property ini dapat bernilai `null`
- * @property {React.ReactElement} icon 
- * Element icon yang digunakan
+ * @property {import('react').ReactNode} icon 
+ * Element icon yang digunakan. 
+ * Jika props ini falsy, load icon secara dinamis dengan nama dan libary icon pada props {@link NavItem.iconName iconName} dan {@link NavItem.iconLib iconLib}
  * - Contoh : `<FaRocket/>`
  * @property {string} iconName 
- * Nama icon yang digunakan
+ * Nama icon yang digunakan untuk load icon secara dinamis
  * - Contoh : `'FaRocket'`
  * @property {string} iconLib 
- * Library icon yang digunakan
+ * Library icon yang digunakan untuk load icon secara dinamis
  * - Contoh : `'fa'`
  * @property {Array<NavItem>|null} dropdown 
  * List dropdown jika tersedia
  * - Property ini dapat bernilai `null`
- * @property {React.AnchorHTMLAttributes<HTMLAnchorElement> & NextLinkProps} routingOptions 
+ * @property {import('react').AnchorHTMLAttributes<HTMLAnchorElement> & NextLinkProps} routingOptions 
  * Props atau opsi yang digunakan untuk routing dengan component Link pada `'next/link'`.
  * @property {ReactScrollProps} scrollOptions 
  * Props atau opsi yang digunakan untuk scroll dengan component Link pada `'react-scroll'`.

@@ -5,7 +5,7 @@ import * as React from 'react';
 /** Context yang digunakan modal dengan template `T` sebagai type modal data yang digunakan
  * @template {any} T
  * @typedef {Object} ModalContext<T>
- * @property {React.Dispatch<React.SetStateAction<keyof import('@/component/provider/Modal').AvailableModal>>} setModal 
+ * @property {React.Dispatch<React.SetStateAction<keyof import('@/component/modal/provider').AvailableModal>>} setModal 
  * React dispatch untuk state {@link ModalContext.modal modal}.
  * Ini digunakan untuk menyetel tipe modal.
  * @property {React.Dispatch<React.SetStateAction<ModalContext['active']>} setActive 
@@ -14,10 +14,10 @@ import * as React from 'react';
  * @property {React.Dispatch<React.SetStateAction<T>} setData 
  * React dispatch untuk state {@link ModalContext.data data}.
  * Ini digunakan menyetel data modal.
- * @property {React.Dispatch<React.SetStateAction<keyof import('@/component/provider/Modal').AvailableModal>>} setPrevModal 
+ * @property {React.Dispatch<React.SetStateAction<keyof import('@/component/modal/provider').AvailableModal>>} setPrevModal 
  * React dispatch untuk state {@link ModalContext.prevModal prevModal}.
  * Ini digunakan menyetel tipe modal sebelumnya.
- * @property {keyof import('@/component/provider/Modal').AvailableModal} modal 
+ * @property {keyof import('@/component/modal/provider').AvailableModal} modal 
  * Tipe modal yang digunakan, ini akan merender element modal.
  * 
  * Jika ingin mengaktifkan suatu modal harus dibarengi dengan mengaktifkan state {@link ModalContext.active active},
@@ -29,7 +29,7 @@ import * as React from 'react';
  * karna jika modal aktif namun tipe tidak disetel, element modal tidak akan dirender.
  * @property {T} data 
  * Data modal yang digunakan.
- * @property {keyof import('@/component/provider/Modal').AvailableModal} prevModal 
+ * @property {keyof import('@/component/modal/provider').AvailableModal} prevModal 
  * Tipe modal sebelumnya yang digunakan, ini memungkinkan untuk perpindahan modal ke tipe sebelum dan setelah tanpa mengubah URL halaman.
  * @property {() => void} handleModalClose 
  * Method untuk menutup dan menonaktifkan modal.
