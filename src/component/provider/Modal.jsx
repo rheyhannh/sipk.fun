@@ -44,13 +44,25 @@ export const availableModal = {
     tentang: <Tentang />
 }
 
-export const ModalContext = React.createContext(/** @type {import('@/types/context').ModalContext} */({}));
+export const ModalContext = React.createContext(/** @type {import('@/types/context').ModalContext<any>} */({}));
 export const ModalProvider = ({ children }) => {
     const cookieResolver = useCookies();
-    const [active, setActive] = React.useState(false);
-    const [modal, setModal] = React.useState(null);
-    const [prevModal, setPrevModal] = React.useState(null);
-    const [data, setData] = React.useState(null);
+    const [active, setActive] = React.useState(
+        /** @type {import('@/types/context').ModalContext<any>['active']} */
+        (false)
+    );
+    const [modal, setModal] = React.useState(
+        /** @type {import('@/types/context').ModalContext<any>['modal']} */
+        (null)
+    );
+    const [prevModal, setPrevModal] = React.useState(
+        /** @type {import('@/types/context').ModalContext<any>['prevModal']} */
+        (null)
+    );
+    const [data, setData] = React.useState(
+        /** @type {import('@/types/context').ModalContext<any>['data']} */
+        (null)
+    );
 
     const handleModalClose = () => {
         setActive(false);
