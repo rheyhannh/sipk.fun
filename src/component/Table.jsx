@@ -23,7 +23,7 @@ import {
     useReactTable,
 } from '@tanstack/react-table'
 import toast from 'react-hot-toast';
-import { ModalContext } from "./provider/Modal";
+import { ModalContext } from "./modal/provider.jsx";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import { Spinner } from "./loader/Loading";
 

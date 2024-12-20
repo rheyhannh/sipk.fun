@@ -15,7 +15,7 @@ import Skeleton from "react-loading-skeleton";
 import toast from 'react-hot-toast';
 import { animateScroll as scroll } from 'react-scroll';
 import { DashboardContext } from './provider/Dashboard';
-import { ModalContext } from './provider/Modal';
+import { ModalContext } from './modal/provider.jsx';
 import { Spinner } from "./loader/Loading";
 import { Logo } from './Main.jsx';
 // #endregion

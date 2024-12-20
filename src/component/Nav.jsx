@@ -10,7 +10,7 @@ import { useContext, useEffect } from 'react';
 
 // #region COMPONENT DEPEDENCY
 import { DashboardContext } from '@/component/provider/Dashboard';
-import { ModalContext } from '@/component/provider/Modal';
+import { ModalContext } from '@/component/modal/provider';
 import ReactIcons from '../loader/ReactIcons';
 import Link from '@/component/Link';
 // #endregion

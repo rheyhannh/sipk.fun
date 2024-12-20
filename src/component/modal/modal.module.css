@@ -481,7 +481,7 @@
     z-index: 100;
 }
 
-.form__action .btn {
+.btn {
     cursor: pointer;
     display: flex;
     justify-content: center;
@@ -493,20 +493,20 @@
     color: var(--white-color);
 }
 
-.form__action .btn.confirm.hapus {
+.btn.confirm.hapus {
     background: var(--primary-sec-color);
 }
 
-.form__action .btn.confirm.tambah,
-.form__action .btn.confirm.reset {
+.btn.confirm.tambah,
+.btn.confirm.reset {
     background: var(--danger-sec-color);
 }
 
-.form__action .btn.confirm.ubah {
+.btn.confirm.ubah {
     background: var(--success-sec-color);
 }
 
-.form__action .btn.cancel {
+.btn.cancel {
     margin-top: .5rem;
     border: 1px solid var(--accordion-bg2-color);
     background: var(--white-color);
@@ -904,10 +904,26 @@
     color: var(--infoDark-color);
 }
 
+.gtc_repeat3_1fr {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+}
+
+.gtc_repeat2_1fr {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+}
+
 @media (hover: hover) and (pointer: fine) {
     .inner::-webkit-scrollbar-thumb:hover {
         border-radius: .25rem;
         visibility: hidden;
+    }
+
+    .prev:focus:not(:hover) {
+        border: 1px solid var(--users-btn-alt);
     }
 
     .close:focus:not(:hover) {
@@ -955,24 +971,24 @@
         visibility: visible;
     }
 
-    .form__action .btn:hover {
+    .btn:hover {
         background: var(--users-btn-hov);
     }
 
-    .form__action .btn.cancel:hover {
+    .btn.cancel:hover {
         background: var(--accordion-bg-color);
     }
 
-    .form__action .btn.confirm.hapus:hover {
+    .btn.confirm.hapus:hover {
         background: var(--primary-color);
     }
 
-    .form__action .btn.confirm.tambah:hover,
-    .form__action .btn.confirm.reset:hover {
+    .btn.confirm.tambah:hover,
+    .btn.confirm.reset:hover {
         background: var(--danger-color);
     }
 
-    .form__action .btn.confirm.ubah:hover {
+    .btn.confirm.ubah:hover {
         background: var(--success-color);
     }
 
@@ -1005,12 +1021,73 @@
         background: var(--box-color-primary);
     }
 
-    .tentang .content__section .item .card.clickable:hover {
+    .tentang .content__section .item .card.clickable:hover,
+    .tentang .content__section .item .card.clickable:focus:not(:hover) {
         background: var(--accordion-bg-color);
     }
 
-    .default .form__action .btn.confirm:focus:not(:hover),
-    .panduan__daftar .form__action .btn:focus:not(:hover) {
+    .rating .stars .star:focus:not(:hover) {
+        border: 1px solid var(--logo-second-color);
+    }
+
+    .rating select:focus:not(:hover) {
+        border: 1px solid var(--logo-second-color);
+    }
+
+    .tabel__filter_check .item:focus:not(:hover) {
+        border: 1px solid var(--logo-second-color);
+    }
+
+    .tabel__filter_check .item.success:focus:not(:hover) {
+        border: 1px solid var(--success-color);
+    }
+
+    .tabel__filter_check .item.warning:focus:not(:hover) {
+        border: 1px solid var(--warning-color);
+    }
+
+    .tabel__filter_check .item.danger:focus:not(:hover) {
+        border: 1px solid var(--danger-color);
+    }
+
+    .tabel__filter_check .item.crimson:focus:not(:hover) {
+        border: 1px solid var(--crimson-color);
+    }
+
+    .tabel__filter_check .item.primary:focus:not(:hover) {
+        border: 1px solid var(--primary-color);
+    }
+
+    .btn:focus:not(:hover) {
+        background: var(--users-btn-hov);
+    }
+
+    .btn.cancel:focus:not(:hover) {
+        background: var(--accordion-bg-color);
+    }
+
+    .btn.confirm.hapus:focus:not(:hover) {
+        background: var(--primary-color);
+    }
+
+    .btn.confirm.tambah:focus:not(:hover),
+    .btn.confirm.reset:focus:not(:hover) {
+        background: var(--danger-color);
+    }
+
+    .btn.confirm.ubah:focus:not(:hover) {
+        background: var(--success-color);
+    }
+
+    .tabel__setting_ordering .item .eye:focus:not(:hover) {
+        border: 1px solid var(--logo-second-color);
+    }
+
+    .tabel__setting_select select:focus:not(:hover) {
+        border: 1px solid var(--logo-second-color);
+    }
+
+    .default .form__action .btn.confirm:focus:not(:hover) {
         border: 1px solid var(--users-btn-alt);
         background-color: transparent;
         color: var(--users-btn-hov);
