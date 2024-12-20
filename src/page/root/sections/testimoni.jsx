@@ -7,7 +7,7 @@ import * as SupabaseTypes from '@/types/supabase';
 // #region CONFIG DEPEDENCY
 import {
     GLOBAL_VIEWPORT_ONCE,
-} from './RootConfig';
+} from '../config';
 // #endregion
 
 // #region REACT DEPEDENCY
@@ -19,12 +19,13 @@ import useWindowSize from '@/hooks/utils/useWindowSize';
 // #endregion
 
 // #region STYLE DEPEDENCY
-import styles from './style/root.module.css';
+import styles from '@root_page/root.module.css';
 // #endregion
 
 // #region COMPONENT DEPEDENCY
 import { motion } from 'framer-motion';
-import { ScrollingCarousel, ContainerWrapper } from './RootComponents';
+import { ContainerWrapper } from '../components';
+import ScrollingCarousel from '@/component/motion/ScrollingCarousel';
 import HighlightText from '@/component/motion/HighlightText';
 import { scroller } from 'react-scroll';
 // #endregion

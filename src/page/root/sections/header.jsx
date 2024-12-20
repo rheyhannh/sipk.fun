@@ -1,13 +1,9 @@
 'use client'
 
-// #region TYPE DEPEDENCY
-import { RootContextProps } from '@/component/provider/Root';
-// #endregion
-
 // #region CONFIG DEPEDENCY
 import {
     HEADER_NAVIGATION_SHORCUTS,
-} from './RootConfig';
+} from '../config';
 // #endregion
 
 // #region NEXT DEPEDENCY
@@ -31,7 +27,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { LogoSipkFill } from '@/loader/StaticImages';
 import Link from '@/component/Link';
 import { animateScroll as scroll, scroller } from 'react-scroll';
-import { RootContext } from '@/component/provider/Root';
+import { RootContext } from '@root_page/provider';
 // #endregion
 
 // #region ICON DEPEDENCY
@@ -43,7 +39,7 @@ import {
 // #endregion
 
 // #region STYLE DEPEDENCY
-import styles from './style/root.module.css';
+import styles from '@root_page/root.module.css';
 // #endregion
 
 const ButtonCTA = React.forwardRef(({ text = 'Lorem', onClick, href, ...props }, ref) => (
@@ -106,7 +102,7 @@ const LinkItems = () => (
 
 /**
  * Animated hamburger button untuk toggle {@link NavbarOverlay navbar overlay} pada small devices
- * @param {Pick<RootContextProps, 'showNavbarOverlay' | 'setShowNavbarOverlay'>} props HamburgerButton props
+ * @param {Pick<import('@root_page/provider').RootContextProps, 'showNavbarOverlay' | 'setShowNavbarOverlay'>} props HamburgerButton props
  * @returns {React.ReactElement} Rendered component
  */
 const HamburgerButton = ({ showNavbarOverlay, setShowNavbarOverlay }) => (

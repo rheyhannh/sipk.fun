@@ -1,3 +1,5 @@
+'use client'
+
 // #region TYPE DEPEDENCY
 import * as SupabaseTypes from '@/types/supabase';
 // #endregion
@@ -7,7 +9,7 @@ import * as React from 'react';
 // #endregion
 
 // #region STYLE DEPEDENCY
-import styles from './style/root.module.css';
+import styles from '@root_page/root.module.css';
 // #endregion
 
 const Hero = ({ universitas }) => {

@@ -10,8 +10,9 @@ import { poppins } from '@/fonts/fonts';
 
 // #region TAG OR METADATA
 export const metadata = {
-  title: 'SIPK Application',
-  description: 'Elevate your academic journey',
+  title: 'SIPK | Root',
+  description: 'Selamat datang di SIPK',
+  keywords: 'sipk, sistem indeks prestasi kumulatif, kalkulator ipk, kalkulator nilai, kalkulator kuliah, ipk, indeks prestasi kumulatif, kuliah, sipk website',
 }
 // #endregion
 

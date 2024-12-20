@@ -7,7 +7,7 @@ import { NavItem } from '@/constant/client';
 // #region CONFIG DEPEDENCY
 import {
     GLOBAL_VIEWPORT_ONCE,
-} from './RootConfig';
+} from '../config';
 // #endregion
 
 // #region REACT DEPEDENCY
@@ -19,7 +19,7 @@ import useWindowSize from '@/hooks/utils/useWindowSize';
 // #endregion
 
 // #region STYLE DEPEDENCY
-import styles from './style/root.module.css';
+import styles from '@root_page/root.module.css';
 // #endregion
 
 // #region COMPONENT DEPEDENCY

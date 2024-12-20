@@ -2,7 +2,7 @@
 
 // #region TYPE DEPEDENCY
 import * as SupabaseTypes from '@/types/supabase';
-import { AnimatedElementProps } from './RootComponents';
+import { AnimatedElementProps } from '../components';
 // #endregion
 
 // #region CONFIG DEPEDENCY
@@ -12,7 +12,7 @@ import {
     UNIVERSITAS_SECTION_DESCRIPTION,
     UNIVERSITAS_SECTION_BUTTON,
     UNIVERSITAS_ITEMS_LAYOUT,
-} from './RootConfig';
+} from '../config';
 // #endregion
 
 // #region NEXT DEPEDENCY
@@ -28,12 +28,14 @@ import useWindowSize from '@/hooks/utils/useWindowSize';
 // #endregion
 
 // #region STYLE DEPEDENCY
-import styles from './style/root.module.css';
+import styles from '@root_page/root.module.css';
 // #endregion
 
 // #region COMPONENT DEPEDENCY
 import { motion, useScroll, useSpring } from 'framer-motion';
-import { AnimatedElement, ScrollingCarousel, ContainerWrapper } from './RootComponents';
+import { ContainerWrapper } from '../components';
+import ScrollingCarousel from '@/component/motion/ScrollingCarousel';
+import AnimatedElement from '@/component/motion/AnimatedElement';
 import { scroller } from 'react-scroll';
 import { getLogoUniversitasByShort } from '@/loader/StaticImages';
 // #endregion
@@ -48,7 +50,7 @@ import {
     generateRandomNumber,
     generateRandomNumberFixedRange,
     generateRandomFloat,
-} from './RootUtils';
+} from '../utils';
 // #endregion
 
 /**

@@ -8,11 +8,11 @@ import { HTMLMotionProps } from 'framer-motion';
 // #region CONFIG DEPEDENCY
 import {
     GLOBAL_VIEWPORT_ONCE,
-} from './RootConfig';
+} from '../config';
 // #endregion
 
 // #region DATA DEPEDENCY
-import { defaultMatakuliah, defaultPenilaian } from './RootData';
+import { defaultMatakuliah, defaultPenilaian } from '../data';
 // #endregion
 
 // #region REACT DEPEDENCY
@@ -24,7 +24,7 @@ import { useInterval } from 'ahooks';
 // #endregion
 
 // #region STYLE DEPEDENCY
-import styles from './style/root.module.css';
+import styles from '@root_page/root.module.css';
 // #endregion
 
 // #region COMPONENT DEPEDENCY
@@ -41,7 +41,7 @@ import { LuShapes } from "react-icons/lu";
 // #endregion
 
 // #region UTIL DEPEDENCY
-import { shuffleArray, findArrayIndexByString } from './RootUtils';
+import { shuffleArray, findArrayIndexByString } from '../utils';
 // #endregion
 
 /** 

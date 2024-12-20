@@ -1,7 +1,7 @@
 // #region TYPE DEPEDENCY
 import { LinkProps } from 'next/link';
 import * as React from 'react';
-import { ButtonLinkProps } from './RootUniversitasSection';
+import { ButtonLinkProps } from './sections/universitas';
 import { NavItem } from '@/constant/client';
 // #endregion
 
