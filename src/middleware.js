@@ -26,7 +26,7 @@ export default async function middleware(request) {
     const serviceUserCookie = request.cookies.get('s_user_id')?.value;
     const serviceAccessTokenCookie = request.cookies.get('s_access_token')?.value;
     const serviceGuestCookie = request.cookies.get('s_guest_id')?.value;
-    const { pathname } = request.nextUrl;
+    const { pathname, searchParams } = request.nextUrl;
 
     let response = NextResponse.next({
         request: {
@@ -143,7 +143,14 @@ export default async function middleware(request) {
             // This block run when session (secure auth token) are valid or receiving new session ...
             // ... but user trying to access '/users' or '/magiclink'
             // Handle : redirect user to '/dashboard'
-            const dashboardUrl = new URL("/dashboard", request.url);
+            const fromParams = searchParams.get('from');
+            var redirectPathname = '/dashboard';
+
+            if (fromParams && ['matakuliah'].includes(fromParams)) {
+                redirectPathname = '/dashboard/' + fromParams;
+            }
+
+            const dashboardUrl = new URL(redirectPathname, request.url);
             response = NextResponse.redirect(dashboardUrl);
         }
     }
