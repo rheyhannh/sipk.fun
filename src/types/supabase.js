@@ -274,10 +274,10 @@ import {
  * @property {Object} icon 
  * Icon {@link https://react-icons.github.io/react-icons/ react-icons} yang digunakan
  * @property {string} icon.lib 
- * Library icon pada {@link https://react-icons.github.io/react-icons/ react-icons}
+ * Library icon pada {@link https://react-icons.github.io/react-icons/ react-icons} untuk load icon secara dinamis
  * - Contoh : `'fa'`, `'io5'`
  * @property {string} icon.name 
- * Nama icon pada {@link https://react-icons.github.io/react-icons/ react-icons}
+ * Nama icon pada {@link https://react-icons.github.io/react-icons/ react-icons} untuk load icon secara dinamis
  * - Contoh : `'FaRocket'`, `'IoAdd'`
  * @property {string} color 
  * Warna atau variabel warna yang digunakan

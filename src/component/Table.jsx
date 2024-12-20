@@ -164,7 +164,7 @@ export function Table({ state, validating, user, sessionTable, matkul, matkulHis
         const [pageControlPosition, setPageControlPosition] = useState(sessionTable?.pageControlPosition ?? user?.preferences?.table?.controlPosition ?? 0);
         const [rowAction, setRowAction] = useState(sessionTable?.rowAction ?? true);
         const [pagesIndex, setPagesIndex] = useState(sessionTable?.pageIndex ? sessionTable.pageIndex + 1 : 1);
-        /** @type {ContextTypes.ModalContext} */
+        /** @type {ContextTypes.ModalContext<any>} */
         const {
             setModal,
             setActive,

@@ -9,13 +9,13 @@ import { MotionProps } from 'framer-motion';
 /**
  * @typedef {Object} ContentEntry
  * Object yang merepresentasikan content
- * @property {JSX.Element | string} [icon]
+ * @property {import('react').ReactNode} [icon]
  * Element icon atau teks content
  * - Default : `'Null'`
- * @property {string} [color]
+ * @property {import('react').CSSProperties['color']} [color]
  * Warna icon atau teks content
  * - Default : `'#262626'`
- * @property {string} [backgroundColor]
+ * @property {import('react').CSSProperties['backgroundColor']} [backgroundColor]
  * Warna background icon atau teks content
  * - Default : `'#ff6341'`
  */
