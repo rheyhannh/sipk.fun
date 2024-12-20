@@ -1,5 +1,9 @@
 'use client'
 
+// #region NEXT DEPEDENCY
+import dynamic from 'next/dynamic';
+// #endregion
+
 // #region REACT DEPEDENCY
 import * as React from 'react';
 // #endregion
@@ -23,6 +27,22 @@ import { FaRegTimesCircle } from 'react-icons/fa';
 // #region STYLE DEPEDENCY
 import styles from '@/component/modal/modal.module.css'
 // #endregion
+
+const Default = dynamic(() => import('@/component/modal/template/Default'));
+const PanduanDaftar = dynamic(() => import('@/component/modal/template/PanduanDaftar'));
+const Logout = dynamic(() => import('@/component/modal/template/Logout'));
+const PerubahanTerakhirDetail = dynamic(() => import('@/component/modal/template/PerubahanTerakhirDetail'));
+const PerubahanTerakhirConfirm = dynamic(() => import('@/component/modal/template/PerubahanTerakhirConfirm'));
+const TambahMatkul = dynamic(() => import('@/component/modal/template/TambahMatkul'));
+const DetailMatkul = dynamic(() => import('@/component/modal/template/DetailMatkul'));
+const Profil = dynamic(() => import('@/component/modal/template/Profil'));
+const Rating = dynamic(() => import('@/component/modal/template/Rating'));
+const TabelSetting = dynamic(() => import('@/component/modal/template/TabelSetting'));
+const TabelFilter = dynamic(() => import('@/component/modal/template/TabelFilter'));
+const HapusPermanentConfirm = dynamic(() => import('@/component/modal/template/HapusPermanentConfirm'));
+const Akun = dynamic(() => import('@/component/modal/template/Akun'));
+const Tentang = dynamic(() => import('@/component/modal/template/Tentang'));
+
 /** 
  * Object dengan key sebagai nama modal dan value element `JSX` untuk modal tersebut
  * @typedef {typeof availableModal} AvailableModal 
