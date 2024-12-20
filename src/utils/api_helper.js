@@ -8,6 +8,7 @@ import {
 } from '@/constant/api_response';
 import { PostgrestError } from '@supabase/supabase-js';
 // #endregion
+
 // #region NEXT DEPEDENCY
 import { NextRequest } from 'next/server';
 import { cookies, headers } from 'next/headers';
@@ -24,7 +25,6 @@ import {
     encryptAES,
     decryptAES,
     encryptDES,
-    decryptDES,
     validateJWT,
     getCookieOptions,
     getSipkCookies,
@@ -323,6 +323,21 @@ export async function getLogAttributes(request) {
  * @returns {Promise<handleErrorResponseReturnType>} Resolve dengan object untuk digunakan sebagai response
  */
 export async function handleErrorResponse(error, requestLog = null, ratelimitLog = null, logError = true) {
+    // Check are error an SIPK Error
+    error = error?.error?.code ? error : serverError.interval_server_error(
+        undefined, undefined,
+        {
+            severity: 'critical',
+            reason: "Received an error outside SIPK error boundary",
+            stack: error?.stack,
+            functionDetails: null,
+            functionArgs: null,
+            functionResolvedVariable: { name: error?.name, message: error?.message },
+            request: await getRequestDetails(),
+            more: error,
+        }
+    )
+
     if (requestLog) error._details.request = { info: requestLog, ...error._details.request };
     if (ratelimitLog) error._details.resolvedRatelimit = ratelimitLog;
 
