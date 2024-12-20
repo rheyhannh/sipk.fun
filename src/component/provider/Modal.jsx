@@ -4,25 +4,25 @@
 import * as React from 'react';
 // #endregion
 
-// #region COMPONENT DEPEDENCY
-import {
-    Default,
-    PanduanDaftar,
-    Logout,
-    PerubahanTerakhirDetail,
-    PerubahanTerakhirConfirm,
-    TambahMatkul,
-    DetailMatkul,
-    Profil,
-    Rating,
-    TabelSetting,
-    TabelFilter,
-    HapusPermanentConfirm,
-    Akun,
-    Tentang
-} from "../Modal"
+// #region HOOKS DEPEDENCY
+import { useCookies } from 'next-client-cookies';
 // #endregion
 
+// #region COMPONENT DEPEDENCY
+import { ErrorBoundary } from 'react-error-boundary';
+// #endregion
+
+// #region UTIL DEPEDENCY
+import { handleReactErrorBoundary } from '@/lib/bugsnag';
+// #endregion
+
+// #region ICON DEPEDENCY
+import { FaRegTimesCircle } from 'react-icons/fa';
+// #endregion
+
+// #region STYLE DEPEDENCY
+import styles from '@/component/modal/modal.module.css'
+// #endregion
 /** 
  * Object dengan key sebagai nama modal dan value element `JSX` untuk modal tersebut
  * @typedef {typeof availableModal} AvailableModal 
@@ -46,6 +46,7 @@ export const availableModal = {
 
 export const ModalContext = React.createContext(/** @type {import('@/types/context').ModalContext} */({}));
 export const ModalProvider = ({ children }) => {
+    const cookieResolver = useCookies();
     const [active, setActive] = React.useState(false);
     const [modal, setModal] = React.useState(null);
     const [prevModal, setPrevModal] = React.useState(null);
@@ -82,19 +83,6 @@ export const ModalProvider = ({ children }) => {
     React.useEffect(() => {
         if (active) { document.body.classList.add('disable_scroll'); }
         else { document.body.classList.remove('disable_scroll'); }
-
-        // const handleClickOutside = (e) => {
-        //     const modal = document.getElementById('modal');
-        //     if (modal && !modal.contains(e.target)) {
-        //         handleModalClose();
-        //     }
-        // }
-
-        // document.addEventListener('click', handleClickOutside);
-
-        // return () => {
-        //     document.removeEventListener('click', handleClickOutside);
-        // }
     }, [active])
 
     return (
@@ -105,8 +93,63 @@ export const ModalProvider = ({ children }) => {
                 handleModalClose, handleModalPrev, handleShowModal
             }}
         >
-            {availableModal[modal]}
+            <ErrorBoundary
+                FallbackComponent={ModalError}
+                onError={(error, info) => handleReactErrorBoundary(error, info, cookieResolver, 'ModalError')}
+                onReset={() => {
+                    setActive(false);
+                    setModal(null);
+                    setPrevModal(null);
+                    setData(null);
+                }}
+            >
+                {availableModal[modal]}
+            </ErrorBoundary>
             {children}
         </ModalContext.Provider>
+    )
+}
+
+function ModalError({ error, resetErrorBoundary }) {
+    return (
+        <div className={`${styles.backdrop} ${styles.active}`}>
+            <div
+                id={'modal_error'}
+                onKeyDown={(event) => {
+                    if (event.key === 'Enter') resetErrorBoundary();
+                    if (event.key === 'Escape') resetErrorBoundary();
+                }}
+                tabIndex={0}
+                className={styles.default}
+            >
+                <div className={styles.main}>
+                    <FaRegTimesCircle size={'70px'} color={'var(--logo-second-color)'} />
+                </div>
+
+                <div style={{ textAlign: 'center' }} className={styles.title}>
+                    <h2>
+                        Ooops!
+                    </h2>
+                </div>
+
+                <div style={{ textAlign: 'center' }}>
+                    <p>
+                        Sepertinya terjadi kesalahan. Silahkan klik tombol dibawah atau refresh halaman.
+                    </p>
+                </div>
+
+                <div className={styles.form__action}>
+                    <div
+                        tabIndex={'0'}
+                        className={`${styles.btn} ${styles.confirm}`}
+                        onClick={() => { resetErrorBoundary(); }}
+                    >
+                        <h3>
+                            Tutup
+                        </h3>
+                    </div>
+                </div>
+            </div>
+        </div>
     )
 }
