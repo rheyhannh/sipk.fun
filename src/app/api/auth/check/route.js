@@ -30,10 +30,10 @@ import {
 // #endregion
 
 const routeMethods = ['GET'];
-const limitRequest = parseInt(process.env.API_AUTHCHECK_REQUEST_LIMIT);
+const limitRequest = parseInt(process.env.API_AUTH_CHECK_REQUEST_LIMIT);
 const limiter = await rateLimit({
-    interval: parseInt(process.env.API_AUTHCHECK_TOKEN_INTERVAL_SECONDS) * 1000,
-    uniqueTokenPerInterval: parseInt(process.env.API_AUTHCHECK_MAX_TOKEN_PERINTERVAL),
+    interval: parseInt(process.env.API_AUTH_CHECK_TOKEN_INTERVAL_SECONDS) * 1000,
+    uniqueTokenPerInterval: parseInt(process.env.API_AUTH_CHECK_MAX_TOKEN_PERINTERVAL),
 })
 
 const cookieServiceOptions = await getCookieOptions('service', 'set');

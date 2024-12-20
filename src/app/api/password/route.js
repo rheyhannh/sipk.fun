@@ -31,10 +31,10 @@ import {
 } from '@/utils/api_helper';
 // #endregion
 
-const limitRequest = parseInt(process.env.API_AUTH_REQUEST_LIMIT);
+const limitRequest = parseInt(process.env.API_PASSWORD_REQUEST_LIMIT);
 const limiter = await rateLimit({
-    interval: parseInt(process.env.API_AUTH_TOKEN_INTERVAL_SECONDS) * 1000,
-    uniqueTokenPerInterval: parseInt(process.env.API_AUTH_MAX_TOKEN_PERINTERVAL),
+    interval: parseInt(process.env.API_PASSWORD_TOKEN_INTERVAL_SECONDS) * 1000,
+    uniqueTokenPerInterval: parseInt(process.env.API_PASSWORD_MAX_TOKEN_PERINTERVAL),
 })
 
 /**
