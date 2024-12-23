@@ -8,7 +8,7 @@ import * as React from 'react';
  * @property {React.Dispatch<React.SetStateAction<keyof import('@/component/modal/provider').AvailableModal>>} setModal 
  * React dispatch untuk state {@link ModalContext.modal modal}.
  * Ini digunakan untuk menyetel tipe modal.
- * @property {React.Dispatch<React.SetStateAction<ModalContext['active']>} setActive 
+ * @property {React.Dispatch<React.SetStateAction<ModalContext<any>['active']>} setActive 
  * React dispatch untuk state {@link ModalContext.active active}.
  * Ini digunakan untuk mengaktifkan modal.
  * @property {React.Dispatch<React.SetStateAction<T>} setData 
