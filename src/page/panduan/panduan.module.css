@@ -1,0 +1,102 @@
+.container {
+    position: relative;
+    width: 100%;
+    /* height: 100vh; */
+    /* overflow: hidden; */
+    display: block;
+    padding: 3.5rem 1.75rem;
+    background-color: var(--landing-navbar-nub-color);
+}
+
+.circle {
+    z-index: 1;
+    position: absolute;
+    top: -62.5%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100vw;
+    height: 100vw;
+    border-radius: 50%;
+    background-color: red;
+}
+
+.heading,
+.tabs {
+    position: relative;
+    z-index: 2;
+}
+
+.heading {
+    text-align: center;
+}
+
+.heading>.text {
+    display: inline-block;
+    margin-bottom: 1.75rem;
+    font-size: 1rem;
+}
+
+.heading>h1.title {
+    margin-bottom: 1.5rem;
+    font-size: 3.5rem;
+}
+
+.tabs {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 2.5rem;
+}
+
+.tab {
+    border-radius: 0.25rem;
+    border: 1px solid var(--landing-border);
+    padding: 0.5rem 0.75rem;
+    background-color: transparent;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.tab.active {
+    background-color: var(--logo-second-color);
+    border: none;
+}
+
+.accordion {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    margin-top: 3rem;
+}
+
+.accordion .item {
+    padding: 0 1.25rem;
+    border: 1px solid var(--landing-border);
+    border-radius: 0.75rem;
+    color: var(--landing-copyLighterInverse);
+    overflow: hidden;
+}
+
+.accordion .item .title {
+    display: flex;
+    justify-content: space-between;
+    padding: 1.5rem 0;
+    cursor: pointer;
+}
+
+.accordion .item.active .title {
+    color: var(--landing-copy);
+}
+
+.accordion .item.active .title .icon {
+    color: var(--landing-copyLight);
+}
+
+.accordion .item .description {
+    overflow: hidden;
+}
+
+.accordion .item .description p {
+    color: inherit;
+}

@@ -23,8 +23,8 @@ import useUser from '@/hooks/swr/useUser';
 import useMatkul from '@/hooks/swr/useMatkul';
 import useMatkulHistory from '@/hooks/swr/useMatkulHistory';
 import { useCookies } from 'next-client-cookies';
-import { DashboardContext } from '@/component/provider/Dashboard';
-import { ModalContext } from '@/component/provider/Modal';
+import { DashboardContext } from '@/page/dashboard/provider';
+import { ModalContext } from '@/component/modal/provider';
 // #endregion
 
 // #region UTIL DEPEDENCY
@@ -37,7 +37,7 @@ import {
 // #endregion
 
 // #region STYLE DEPEDENCY
-import styles from './style/dashboard.module.css';
+import styles from '@dashboard_page/dashboard.module.css';
 // #endregion
 
 /**
@@ -220,7 +220,7 @@ function DashboardError() {
 
     return (
         <div className={`${styles.wrapper} ${styles.error}`}>
-            <Image src={error_svg} alt={'Logo SIPK'} />
+            <Image src={error_svg} alt={'Error Ilustration'} />
             <div className={styles.text}>
                 <h2>Terjadi Kesalahan</h2>
                 <p>

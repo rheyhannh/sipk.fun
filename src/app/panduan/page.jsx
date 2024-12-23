@@ -1,5 +1,5 @@
 // #region PAGE DEPEDENCY
-import Panduan from '@/page/Panduan';
+import Panduan from '@panduan_page/Panduan';
 // #endregion
 
 // #region UTIL DEPEDENCY

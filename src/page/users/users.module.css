@@ -1,3 +1,67 @@
+.root_error_container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    height: 100vh;
+    padding: 0 1.25rem;
+    font-size: 0.8rem;
+    overflow: auto;
+}
+
+.root_error_content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    text-align: center;
+    max-height: 100%;
+}
+
+.root_error_content h1 {
+    color: var(--dark-color);
+    margin-bottom: 0.25rem;
+}
+
+.root_error_content p {
+    text-align: justify;
+}
+
+.root_error_content img {
+    max-width: 145px;
+}
+
+.root_error_content h1 {
+    font-size: 1.4rem;
+}
+
+.root_error_content .buttons {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    column-gap: 1rem;
+    row-gap: 0.75rem;
+    padding: 0.5rem;
+    width: 100%;
+}
+
+.root_error_content button {
+    cursor: pointer;
+    padding: 0.5rem 0.75rem;
+    color: var(--white-color);
+    background-color: var(--logo-second-color);
+    border-radius: 0.5rem;
+    font-weight: 500;
+    transition: transform var(--transition-default) ease-in-out;
+}
+
+.root_error_content button.secondary {
+    border: 1px solid var(--accordion-bg2-color);
+    background: var(--white-color);
+    color: var(--dark-color);
+}
+
 .container {
     position: relative;
     width: 100%;
@@ -376,6 +440,12 @@
 }
 
 @media (hover: hover) and (pointer: fine) {
+
+    .root_error_content button:hover,
+    .root_error_content button:focus:not(:hover) {
+        transform: scale(1.05);
+    }
+
     .btn:not(.transparent):hover {
         background-color: var(--users-btn-hov);
     }
@@ -385,7 +455,7 @@
         border: 1px solid var(--logo-second-color);
         color: var(--dark-color);
     }
-    
+
     .btn.transparent:focus:not(:hover) {
         background-color: var(--body2-color);
         border: 2px solid transparent;
@@ -565,7 +635,45 @@
     }
 }
 
-@media screen and (min-width: 1366px), screen and (min-height: 1366px) {
+@media screen and (min-width: 480px) {
+    .root_error_content p {
+        text-align: center;
+    }
+
+    .root_error_content .text {
+        max-width: 450px;
+    }
+
+    .root_error_content .buttons {
+        max-width: 350px;
+    }
+}
+
+@media screen and (min-width: 1024px) {
+    .root_error_container {
+        padding: 0;
+        font-size: 1rem;
+    }
+
+    .root_error_content img {
+        max-width: 170px;
+    }
+
+    .root_error_content .text {
+        max-width: 550px;
+    }
+
+    .root_error_content .buttons {
+        max-width: 450px;
+    }
+
+    .root_error_content h1 {
+        font-size: 1.8rem;
+    }
+}
+
+@media screen and (min-width: 1366px),
+screen and (min-height: 1366px) {
     .container:before {
         width: calc(2000px + 50vw);
         height: calc(2000px + 100vh);

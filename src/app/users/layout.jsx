@@ -1,6 +1,6 @@
 // #region COMPONENT DEPEDENCY
-import { ModalProvider } from '@/component/provider/Modal';
-import { UsersProvider } from "@/component/provider/Users";
+import { ModalProvider } from '@/component/modal/provider';
+import { UsersProvider } from "@users_page/provider";
 // #endregion
 
 // #region TAG OR METADATA

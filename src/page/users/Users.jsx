@@ -1,8 +1,6 @@
 'use client'
 
 // #region TYPE DEPEDENCY
-import * as ContextTypes from '@/types/context';
-import * as SupabaseTypes from '@/types/supabase';
 import {
     ClientAPIResponseErrorProps as ApiResponseError,
     ClientAPIResponseSuccessProps as ApiResponseSuccess,
@@ -22,8 +20,8 @@ import * as React from 'react';
 import { mutate } from 'swr';
 import { useCookies } from 'next-client-cookies';
 import toast from 'react-hot-toast';
-import { UsersContext } from '@/component/provider/Users';
-import { ModalContext } from "@/component/provider/Modal";
+import { UsersContext } from '@/page/users/provider';
+import { ModalContext } from "@/component/modal/provider";
 import { Ball } from '@/component/loader/Loading';
 // #endregion
 
@@ -43,7 +41,7 @@ import useLocalTheme from '@/hooks/swr/useLocalTheme';
 // #endregion
 
 // #region STYLE DEPEDENCY
-import styles from './style/users.module.css'
+import styles from '@users_page/users.module.css';
 // #endregion
 
 // #region ICON DEPEDENCY
@@ -65,24 +63,27 @@ import { BiMoon } from 'react-icons/bi';
 
 /**
  * Render users page `'/users'`
- * @param {{universitasData:Array<SupabaseTypes.UniversitasData>}} props Users props
+ * @param {{universitasData:Array<import('@/types/supabase').UniversitasData>}} props Users props
  * @returns {React.ReactElement} Rendered users page
  */
 export default function Users({ universitasData }) {
+    /* ========== Captcha ========== */
+    const captcha = React.useRef(
+        /** @type {React.RefObject<HCaptcha>} */
+        (null)
+    );
+
     /* ========== Next Hooks ========== */
-    /** @type {React.MutableRefObject<HCaptcha>} */
-    const captcha = React.useRef();
     const router = useRouter();
     const searchParams = useSearchParams();
 
     /* ========== Context ========== */
-    /** @type {ContextTypes.UsersContext} */
     const {
-        loginMode, setLoginMode,
+        loginMode,
+        setLoginMode,
         isBigContent
     } = React.useContext(UsersContext);
 
-    /** @type {ContextTypes.ModalContext} */
     const {
         setModal,
         setActive,
@@ -232,6 +233,7 @@ export default function Users({ universitasData }) {
                             setErrorMessageLogin('Email atau password salah');
                         } else if (response.status === 429) {
                             setErrorMessageLogin(message ?? 'Terlalu banyak request, coba lagi dalam beberapa saat')
+                            handleErrorModal(message ?? 'Terlalu banyak request, coba lagi dalam beberapa saat');
                         } else {
                             handleErrorModal('Sepertinya ada yang salah, silahkan coba lagi');
                             setErrorMessageLogin('Terjadi kesalahan saat login');
@@ -305,6 +307,7 @@ export default function Users({ universitasData }) {
                         const { message, error: { code } } = await response.json();
                         if (response.status === 429) {
                             setErrorMessageDaftar(message ?? 'Terlalu banyak request, coba lagi dalam beberapa saat')
+                            handleErrorModal(message ?? 'Terlalu banyak request, coba lagi dalam beberapa saat');
                         } else if ((response.status === 503) && (code === 'SRV_03')) {
                             handleErrorModal('Untuk saat ini SIPK tidak menerima pendaftaran akun baru, nantikan informasi selanjutnya');
                             setErrorMessageDaftar(message);

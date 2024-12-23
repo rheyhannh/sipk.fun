@@ -14,7 +14,7 @@ import { useCookies } from 'next-client-cookies';
 import Skeleton from "react-loading-skeleton";
 import toast from 'react-hot-toast';
 import { animateScroll as scroll } from 'react-scroll';
-import { DashboardContext } from './provider/Dashboard';
+import { DashboardContext } from '@dashboard_page/provider';
 import { ModalContext } from './modal/provider.jsx';
 import { Spinner } from "./loader/Loading";
 import { Logo } from './Main.jsx';

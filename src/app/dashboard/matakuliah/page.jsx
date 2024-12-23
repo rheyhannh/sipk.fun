@@ -1,5 +1,5 @@
 // #region PAGE DEPEDENCY
-import DashboardMatakuliah from '@/page/DashboardMatakuliah';
+import DashboardMatakuliah from '@dashboard-matakuliah_page/DashboardMatakuliah';
 // #endregion
 
 // #region UTIL DEPEDENCY

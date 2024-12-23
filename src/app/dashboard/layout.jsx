@@ -4,8 +4,8 @@ import { Suspense } from 'react';
 
 // #region COMPONENT DEPEDENCY
 import { NavigationEvents } from '@/component/NavigationEvents';
-import { DashboardProvider } from '@/component/provider/Dashboard';
-import { ModalProvider } from '@/component/provider/Modal';
+import { DashboardProvider } from '@dashboard_page/provider';
+import { ModalProvider } from '@/component/modal/provider';
 import Header from '@/component/Header';
 import Navbar from '@/component/Nav';
 // #endregion

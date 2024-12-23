@@ -13,7 +13,7 @@ import { useContext, useEffect } from 'react'
 // #endregion
 
 // #region COMPONENT DEPEDENCY
-import { DashboardContext } from '@/component/provider/Dashboard';
+import { DashboardContext } from '@dashboard_page/provider';
 // #endregion
 
 export function NavigationEvents() {

@@ -21,7 +21,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Pagination, Autoplay, Navigation } from 'swiper/modules';
 import { mutate } from 'swr';
 import { useCookies } from 'next-client-cookies';
-import { DashboardContext } from "./provider/Dashboard";
+import { DashboardContext } from "@dashboard_page/provider";
 import { ModalContext } from "./modal/provider";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import CountUp, { CountUpProps } from 'react-countup';
