@@ -52,34 +52,34 @@ const DEFAULT_FALSY_MESSAGE = 'Sepertinya ada yang salah saat memproses perminta
 const Default = () => {
     /** @type {import('@/types/context').ModalContext<DefaultModalData>} */
     const { data } = React.useContext(ModalContext);
-    data['isSuccess'] = data?.isSuccess ?? true;
-    data['image'] = data?.image ?? data.isSuccess ? DEFAULT_TRUTHY_ICON : DEFAULT_FALSY_ICON;
-    data['title'] = data?.title ?? data.isSuccess ? DEFAULT_TRUTHY_TITLE : DEFAULT_FALSY_TITLE;
-    data['message'] = data?.message ?? data.isSuccess ? DEFAULT_TRUTHY_MESSAGE : DEFAULT_FALSY_MESSAGE;
-    data['actionText'] = data?.actionText ?? 'Tutup';
+    const isSuccess = data?.isSuccess ?? true;
+    const image = data?.image || (isSuccess ? DEFAULT_TRUTHY_ICON : DEFAULT_FALSY_ICON);
+    const title = data?.title || (isSuccess ? DEFAULT_TRUTHY_TITLE : DEFAULT_FALSY_TITLE);
+    const message = data?.message || (isSuccess ? DEFAULT_TRUTHY_MESSAGE : DEFAULT_FALSY_MESSAGE);
+    const actionText = data?.actionText ?? 'Tutup';
 
     return (
         <Backdrop>
             <Layout className={styles.default}>
                 <div className={styles.main}>
-                    {data.image}
+                    {image}
                 </div>
 
                 <div style={{ textAlign: 'center' }} className={styles.title}>
                     <h2>
-                        {data.title}
+                        {title}
                     </h2>
                 </div>
 
                 <div style={{ textAlign: 'center' }}>
                     <p>
-                        {data.message}
+                        {message}
                     </p>
                 </div>
 
                 <div className={styles.form__action}>
                     <Button
-                        title={data.actionText}
+                        title={actionText}
                         action={'close'}
                         className={`${styles.btn} ${styles.confirm}`}
                     />
