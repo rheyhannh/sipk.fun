@@ -1,8 +1,3 @@
-// #region TYPE DEPEDENCY
-import { LoginMagiclinkFormData } from '@/types/form_data';
-import { APIResponseErrorProps } from '@/constant/api_response';
-// #endregion
-
 // #region NEXT DEPEDENCY
 import { NextResponse, NextRequest } from 'next/server';
 // #endregion
@@ -51,9 +46,9 @@ export async function POST(request) {
             Object.assign(ratelimitLog, { currentUsage, currentTtl, currentSize })
         })
 
-        /** @type {LoginMagiclinkFormData} */
-        var formData = await parseFormData(request);
-
+        var formData = /** @type {import('@/types/form_data').LoginMagiclinkFormData} */ (
+            await parseFormData(request)
+        );
         await validateFormData(formData, 'magiclink');
 
         const { error } = await supabase.auth.signInWithOtp({
@@ -81,7 +76,7 @@ export async function POST(request) {
         }
 
         return new Response(null, { status: 204, headers: responseHeaders })
-    } catch (/** @type {APIResponseErrorProps} */ error) {
+    } catch (/** @type {import('@/constant/api_response').APIResponseErrorProps} */ error) {
         const { body, status, headers } = await handleErrorResponse(error, requestLog, ratelimitLog, true);
         if (headers) { Object.assign(responseHeaders, headers) }
         return NextResponse.json(body, { status, headers: responseHeaders })

@@ -89,7 +89,7 @@ export async function GET(request) {
         }
 
         return NextResponse.json(data, { status: 200, headers: responseHeaders });
-    } catch (/** @type {APIResponseErrorProps} */ error) {
+    } catch (/** @type {import('@/constant/api_response').APIResponseErrorProps} */ error) {
         const { body, status, headers } = await handleErrorResponse(error, requestLog, ratelimitLog, true);
         if (headers) { Object.assign(responseHeaders, headers) }
         return NextResponse.json(body, { status, headers: responseHeaders })
@@ -169,8 +169,9 @@ export async function PATCH(request) {
             )
         }
 
-        /** @type {UserFormData} */
-        var formData = await parseFormData(request);
+        var formData = /** @type {import('@/types/form_data').UserFormData} */ (
+            await parseFormData(request)
+        );
 
         const allowedColumn = ['nomor', 'matakuliah', 'semester', 'sks', 'nilai', 'diulang', 'target', 'ontarget'];
         const formDataSchema =
@@ -237,7 +238,7 @@ export async function PATCH(request) {
         }
 
         return NextResponse.json({ profil: profilBaru[0] }, { status: 200, headers: responseHeaders })
-    } catch (/** @type {APIResponseErrorProps} */ error) {
+    } catch (/** @type {import('@/constant/api_response').APIResponseErrorProps} */ error) {
         const { body, status, headers } = await handleErrorResponse(error, requestLog, ratelimitLog, true);
         if (headers) { Object.assign(responseHeaders, headers) }
         return NextResponse.json(body, { status, headers: responseHeaders })

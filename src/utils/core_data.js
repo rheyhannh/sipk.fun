@@ -1,9 +1,5 @@
 'use server'
 
-// #region TYPE DEPEDENCY
-import * as SupabaseTypes from '@/types/supabase';
-// #endregion
-
 // #region VARIABLES
 const nextOptions = {
     universitas: {
@@ -43,7 +39,7 @@ const baseApiUrl = process.env.NODE_ENV === 'production'
  * - Hanya gunakan method ini pada Server Component
  * 
  * @param {Omit<RequestInit, 'next'>} [options] Opsi fetch lainnya yang digunakan, default `{}`
- * @returns {Promise<Array<SupabaseTypes.UniversitasData>>} Array of universitas data
+ * @returns {Promise<Array<import('@/types/supabase').UniversitasData>>} Array of universitas data
  */
 export async function getUniversitasData(options = {}) {
     const { headers = {}, ...restOptions } = options;
@@ -73,7 +69,7 @@ export async function getUniversitasData(options = {}) {
  * - Hanya gunakan method ini pada Server Component
  * 
  * @param {Omit<RequestInit, 'next'>} [options] Opsi fetch lainnya yang digunakan, default `{}`
- * @returns {Promise<Array<SupabaseTypes.NotifikasiData>>} Array of notifikasi data
+ * @returns {Promise<Array<import('@/types/supabase').NotifikasiData>>} Array of notifikasi data
  */
 export async function getNotifikasiData(options = {}) {
     const { headers = {}, ...restOptions } = options;
@@ -103,7 +99,7 @@ export async function getNotifikasiData(options = {}) {
  * - Hanya gunakan method ini pada Server Component
  * 
  * @param {Omit<RequestInit, 'next'>} [options] Opsi fetch lainnya yang digunakan, default `{}`
- * @returns {Promise<Array<SupabaseTypes.RatingData>>} Array of rating data
+ * @returns {Promise<Array<import('@/types/supabase').RatingData>>} Array of rating data
  */
 export async function getRatingData(options = {}) {
     const { headers = {}, ...restOptions } = options;
@@ -133,7 +129,7 @@ export async function getRatingData(options = {}) {
  * - Hanya gunakan method ini pada Server Component
  * 
  * @param {Omit<RequestInit, 'next'>} [options] Opsi fetch lainnya yang digunakan, default `{}`
- * @returns {Promise<Array<SupabaseTypes.FaktaData>>} Array of fakta data
+ * @returns {Promise<Array<import('@/types/supabase').FaktaData>>} Array of fakta data
  */
 export async function getFaktaData(options = {}) {
     const { headers = {}, ...restOptions } = options;

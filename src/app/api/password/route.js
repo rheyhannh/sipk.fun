@@ -1,7 +1,5 @@
 // #region TYPE DEPEDENCY
 import * as SupabaseTypes from '@/types/supabase';
-import { PasswordFormData } from '@/types/form_data';
-import { APIResponseErrorProps } from '@/constant/api_response';
 // #endregion
 
 // #region NEXT DEPEDENCY
@@ -74,8 +72,9 @@ export async function PATCH(request) {
 
         const { decryptedSession, decodedAccessToken } = await verifyAuth();
 
-        /** @type {PasswordFormData} */
-        var formData = await parseFormData(request);
+        var formData = /** @type {import('@/types/form_data').PasswordFormData} */ (
+            await parseFormData(request)
+        );
 
         await validateFormData(formData, 'password');
 
@@ -99,7 +98,7 @@ export async function PATCH(request) {
         }
 
         return new Response(null, { status: 204, headers: responseHeaders })
-    } catch (/** @type {APIResponseErrorProps} */ error) {
+    } catch (/** @type {import('@/constant/api_response').APIResponseErrorProps} */ error) {
         const { body, status, headers } = await handleErrorResponse(error, requestLog, ratelimitLog, true);
         if (headers) { Object.assign(responseHeaders, headers) }
         return NextResponse.json(body, { status, headers: responseHeaders })

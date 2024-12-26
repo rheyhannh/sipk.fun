@@ -1,7 +1,5 @@
 // #region TYPE DEPEDENCY
 import * as SupabaseTypes from '@/types/supabase';
-import { RatingFormData } from '@/types/form_data';
-import { APIResponseErrorProps } from '@/constant/api_response';
 // #endregion
 
 // #region NEXT DEPEDENCY
@@ -90,7 +88,7 @@ export async function GET(request) {
         }
 
         return NextResponse.json(data, { status: 200, headers: responseHeaders });
-    } catch (/** @type {APIResponseErrorProps} */ error) {
+    } catch (/** @type {import('@/constant/api_response').APIResponseErrorProps} */ error) {
         const { body, status, headers } = await handleErrorResponse(error, requestLog, ratelimitLog, true);
         if (headers) { Object.assign(responseHeaders, headers) }
         return NextResponse.json(body, { status, headers: responseHeaders })
@@ -137,8 +135,9 @@ export async function POST(request) {
         const { decryptedSession, decodedAccessToken } = await verifyAuth();
         const userId = decryptedSession?.user?.id ?? decodedAccessToken?.sub;
 
-        /** @type {RatingFormData} */
-        var formData = await parseFormData(request);
+        var formData = /** @type {import('@/types/form_data').RatingFormData} */ (
+            await parseFormData(request)
+        );
 
         await validateFormData(formData, 'rating');
 
@@ -348,7 +347,7 @@ export async function POST(request) {
         }
 
         return NextResponse.json({ rating: data[0] }, { status: 200, headers: responseHeaders })
-    } catch (/** @type {APIResponseErrorProps} */ error) {
+    } catch (/** @type {import('@/constant/api_response').APIResponseErrorProps} */ error) {
         const { body, status, headers } = await handleErrorResponse(error, requestLog, ratelimitLog, true);
         if (headers) { Object.assign(responseHeaders, headers) }
         return NextResponse.json(body, { status, headers: responseHeaders })
@@ -412,8 +411,9 @@ export async function PATCH(request) {
 
         const { decryptedSession, decodedAccessToken } = await verifyAuth();
 
-        /** @type {RatingFormData} */
-        var formData = await parseFormData(request);
+        var formData = /** @type {import('@/types/form_data').RatingFormData} */ (
+            await parseFormData(request)
+        );
 
         await validateFormData(formData, 'rating');
 
@@ -590,7 +590,7 @@ export async function PATCH(request) {
         }
 
         return NextResponse.json({ rating: data[0] }, { status: 200, headers: responseHeaders })
-    } catch (/** @type {APIResponseErrorProps} */ error) {
+    } catch (/** @type {import('@/constant/api_response').APIResponseErrorProps} */ error) {
         const { body, status, headers } = await handleErrorResponse(error, requestLog, ratelimitLog, true);
         if (headers) { Object.assign(responseHeaders, headers) }
         return NextResponse.json(body, { status, headers: responseHeaders })

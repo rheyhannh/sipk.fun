@@ -158,8 +158,9 @@ export async function PATCH(request) {
             )
         }
 
-        /** @type {SupabaseTypes.MatkulData} */
-        var formData = await parseFormData(request);
+        var formData = /** @type {SupabaseTypes.MatkulData} */ (
+            await parseFormData(request)
+        );
 
         /** @type {SupabaseTypes._from<SupabaseTypes.UniversitasData} */
         var { data: universitas, error } = await supabase.from('universitas').select('*').eq('id', userUniversitasId);
@@ -295,7 +296,7 @@ export async function PATCH(request) {
         }
 
         return NextResponse.json({ matkul: matkulUpdated[0], ref: matkulHistory[0] }, { status: 200, headers: responseHeaders });
-    } catch (/** @type {APIResponseErrorProps} */ error) {
+    } catch (/** @type {import('@/constant/api_response').APIResponseErrorProps} */ error) {
         const { body, status, headers } = await handleErrorResponse(error, requestLog, ratelimitLog, true);
         if (headers) { Object.assign(responseHeaders, headers) }
         return NextResponse.json(body, { status, headers: responseHeaders })
@@ -433,7 +434,7 @@ export async function DELETE(request) {
         }
 
         return NextResponse.json({ ref: matkulHistory[0] }, { status: 200, headers: responseHeaders })
-    } catch (/** @type {APIResponseErrorProps} */ error) {
+    } catch (/** @type {import('@/constant/api_response').APIResponseErrorProps} */ error) {
         const { body, status, headers } = await handleErrorResponse(error, requestLog, ratelimitLog, true);
         if (headers) { Object.assign(responseHeaders, headers) }
         return NextResponse.json(body, { status, headers: responseHeaders })
@@ -494,7 +495,7 @@ export async function POST(request) {
         }
 
         const { decryptedSession, decodedAccessToken } = await verifyAuth();
-        
+
         /*
             @breakingInFuture
             Try to resolve user universitas from session or access token first. 
@@ -556,8 +557,9 @@ export async function POST(request) {
             )
         }
 
-        /** @type {SupabaseTypes.MatkulData} */
-        var formData = await parseFormData(request);
+        var formData = /** @type {SupabaseTypes.MatkulData} */ (
+            await parseFormData(request)
+        );
 
         /** @type {SupabaseTypes._from<SupabaseTypes.UniversitasData} */
         var { data: universitas, error } = await supabase.from('universitas').select('*').eq('id', userUniversitasId);
@@ -664,7 +666,7 @@ export async function POST(request) {
         }
 
         return NextResponse.json({ matkul: matkulBaru[0], ref: matkulBaruHistory[0] }, { status: 200, headers: responseHeaders })
-    } catch (/** @type {APIResponseErrorProps} */ error) {
+    } catch (/** @type {import('@/constant/api_response').APIResponseErrorProps} */ error) {
         const { body, status, headers } = await handleErrorResponse(error, requestLog, ratelimitLog, true);
         if (headers) { Object.assign(responseHeaders, headers) }
         return NextResponse.json(body, { status, headers: responseHeaders })
@@ -718,7 +720,7 @@ export async function GET(request) {
         }
 
         return NextResponse.json(data, { status: 200, headers: responseHeaders });
-    } catch (/** @type {APIResponseErrorProps} */ error) {
+    } catch (/** @type {import('@/constant/api_response').APIResponseErrorProps} */ error) {
         const { body, status, headers } = await handleErrorResponse(error, requestLog, ratelimitLog, true);
         if (headers) { Object.assign(responseHeaders, headers) }
         return NextResponse.json(body, { status, headers: responseHeaders })

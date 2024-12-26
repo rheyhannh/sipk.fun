@@ -402,10 +402,16 @@ export async function handleSupabaseError(error = null, throwErrorObject, initia
 }
 
 /**
- * Middleware untuk parse `formData` atau request `body` dengan `request.json()`
+ * Middleware untuk parse formData atau request body menggunakan,
+ * ```js
+ * request.json()
+ * ```
+ * 
+ * @async
+ * @template T
  * @param {NextRequest} request
- * @returns {Promise<Object<string, any>>} Resolve dengan parsed form data
- * @throws Object `BadRequestError` saat parsing gagal
+ * @returns {Promise<T>} Resolve dengan parsed form data
+ * @throws Object {@link badRequestError.malformed_request_body BadRequestError} saat parsing gagal
  */
 export async function parseFormData(request) {
     try {
@@ -430,12 +436,14 @@ export async function parseFormData(request) {
 }
 
 /**
- * Middleware untuk validate `formData` dengan preset schema yang tersedia atau custom schema menggunakan `Joi`
+ * Middleware untuk validate formData dengan preset schema yang tersedia atau custom schema menggunakan `Joi`
+ * 
+ * @async
  * @param {Object<string, any>} formData Form data yang ingin divalidasi
  * @param {keyof schemaDataJoi} [presetSchema] Preset schema yang digunakan
  * @param {Joi.ObjectSchema<any>} [customSchema] Custom schema yang digunakan
  * @returns {Promise<void>} Resolve dengan void
- * @throws Object `BadRequestError` saat validasi gagal
+ * @throws Object {@link badRequestError.invalid_form_data BadRequestError} saat validasi gagal
  */
 export async function validateFormData(formData, presetSchema = null, customSchema = null) {
     const schemaDataJoi = {

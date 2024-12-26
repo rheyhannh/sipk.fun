@@ -1,7 +1,5 @@
 // #region TYPE DEPEDENCY
 import * as SupabaseTypes from '@/types/supabase';
-import { RegisterFormData } from '@/types/form_data';
-import { APIResponseErrorProps } from '@/constant/api_response';
 // #endregion
 
 // #region NEXT DEPEDENCY
@@ -77,7 +75,7 @@ export async function POST(request) {
         }
         if (users.length >= maximumRegisteredUser) {
             throw serverError.user_registration_closed(
-                undefined, undefined, 
+                undefined, undefined,
                 {
                     severity: 'warning',
                     reason: 'Failed to register user, number of users is full',
@@ -91,8 +89,9 @@ export async function POST(request) {
             )
         }
 
-        /** @type {RegisterFormData} */
-        var formData = await parseFormData(request);
+        var formData = /** @type {import('@/types/form_data').RegisterFormData} */ (
+            await parseFormData(request)
+        );
 
         /** @type {SupabaseTypes._from<SupabaseTypes.UniversitasData} */
         var { data: universitas, error } = await supabaseService.from('universitas').select('*').order('id', { ascending: true });
@@ -188,7 +187,7 @@ export async function POST(request) {
         }
 
         return new Response(null, { status: 204, headers: responseHeaders })
-    } catch (/** @type {APIResponseErrorProps} */ error) {
+    } catch (/** @type {import('@/constant/api_response').APIResponseErrorProps} */ error) {
         const { body, status, headers } = await handleErrorResponse(error, requestLog, ratelimitLog, true);
         if (headers) { Object.assign(responseHeaders, headers) }
         return NextResponse.json(body, { status, headers: responseHeaders })

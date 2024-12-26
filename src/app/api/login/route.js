@@ -1,9 +1,3 @@
-// #region TYPE DEPEDENCY
-import * as SupabaseTypes from '@/types/supabase';
-import { LoginFormData } from '@/types/form_data';
-import { APIResponseErrorProps } from '@/constant/api_response';
-// #endregion
-
 // #region NEXT DEPEDENCY
 import { NextResponse, NextRequest } from 'next/server';
 import { cookies } from 'next/headers';
@@ -56,11 +50,12 @@ export async function POST(request) {
             Object.assign(ratelimitLog, { currentUsage, currentTtl, currentSize })
         })
 
-        /** @type {LoginFormData} */
-        var formData = await parseFormData(request);
+        var formData = /** @type {import('@/types/form_data').LoginFormData} */ (
+            await parseFormData(request)
+        );
         await validateFormData(formData, 'login');
 
-        /** @type {SupabaseTypes._auth_signInWithPassword} */
+        /** @type {import('@/types/supabase')._auth_signInWithPassword} */
         const { data, error } = await supabase.auth.signInWithPassword({
             email: formData.email,
             password: formData.password,
@@ -93,7 +88,7 @@ export async function POST(request) {
         }
 
         return new Response(null, { status: 204, headers: responseHeaders });
-    } catch (/** @type {APIResponseErrorProps} */ error) {
+    } catch (/** @type {import('@/constant/api_response').APIResponseErrorProps} */ error) {
         const { body, status, headers } = await handleErrorResponse(error, requestLog, ratelimitLog, true);
         if (headers) { Object.assign(responseHeaders, headers) }
         return NextResponse.json(body, { status, headers: responseHeaders })
