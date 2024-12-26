@@ -23,7 +23,8 @@ export default async function getFakta() {
         {
             method: 'GET',
             headers: {
-                'x-api-key': process.env.SUPABASE_SERVICE_KEY
+                'apikey': process.env.SUPABASE_SERVICE_KEY,
+                'Authorization': `Bearer ${process.env.SUPABASE_SERVICE_KEY}`,
             },
             next: nextOptions
         }
