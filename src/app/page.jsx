@@ -12,13 +12,15 @@ import Footer from '@root_page/sections/footer';
 // #endregion
 
 // #region UTIL DEPEDENCY
-import { getUniversitasData, getRatingData, getNotifikasiData } from '@/utils/core_data';
+import getUniversitas from '@/lib/supabase/cached/getUniversitas';
+import getRating from '@/lib/supabase/cached/getRating';
+import getNotifikasi from '@/lib/supabase/cached/getNotifikasi';
 // #endregion
 
 export default async function RootPage() {
-  const universitasData = await getUniversitasData();
-  const ratingData = await getRatingData();
-  const notifikasiData = await getNotifikasiData();
+  const universitasData = await getUniversitas();
+  const ratingData = await getRating();
+  const notifikasiData = await getNotifikasi();
 
   return (
     <PageProvider>
