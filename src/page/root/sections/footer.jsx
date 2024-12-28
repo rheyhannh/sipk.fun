@@ -74,9 +74,8 @@ const footerShorcuts = [
 ]
 
 const footerSocials = [
-    { icon: <FaLinkedin size={'100%'} />, target: 'https://www.linkedin.com/' },
-    { icon: <FaTiktok size={'100%'} />, target: 'https://www.tiktok.com/' },
-    { icon: <FaTelegram size={'100%'} />, target: 'https://web.telegram.org/' },
+    { icon: <FaLinkedin size={'100%'} />, target: 'https://www.linkedin.com/company/sipk-app' },
+    { icon: <FaTiktok size={'100%'} />, target: 'https://www.tiktok.com/@sipk.official' },
 ]
 
 /**
