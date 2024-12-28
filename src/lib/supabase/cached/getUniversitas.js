@@ -15,9 +15,10 @@ const nextOptions = /** @type {RequestInit['next']} */ ({
  * 
  * @async
  * @serverComponents
+ * @param {'desc' | 'asc'} [sort] Sort berdasarkan id universitas secara ascending dengan `asc` atau descending `desc`. Saat param ini falsy, data tidak akan disort, default: `asc`
  * @returns {Promise<Array<import('@/types/supabase').UniversitasData>>} Data universitas
  */
-export default async function getUniversitas() {
+export default async function getUniversitas(sort = 'asc') {
     const response = await fetch(
         process.env.SUPABASE_API_URL + '/universitas',
         {
@@ -30,5 +31,11 @@ export default async function getUniversitas() {
         }
     )
 
-    return await response.json();
+    const data = /** @type {Array<import('@/types/supabase').UniversitasData>} */ (
+        await response.json()
+    );
+
+    if (sort === 'asc') return data.sort((a, b) => a.id - b.id);
+    else if (sort === 'desc') return data.sort((a, b) => b.id - a.id);
+    else return data;
 }
