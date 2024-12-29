@@ -205,13 +205,8 @@ const Universitas = ({ universitas }) => {
                         <AnimatedElement
                             as={'h2'}
                             className={styles.title}
-                            style={{ transformOrigin: '-25% -100%' }}
                             timeframe={[0.1, 0.74]}
-                            animations={{
-                                rotateX: [-65, 0],
-                                rotateY: [35, 0],
-                                opacity: [0, 1]
-                            }}
+                            animations={{ y: [-40, 0], opacity: [0, 1] }}
                             scrollProgress={viewportWidth < 1024 ? null : sectionScrollProgress}
                             scrollProgressOptions={{ offset: ['start end', 'start 65%'] }}
                         >
