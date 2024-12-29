@@ -21,6 +21,7 @@ import * as React from 'react';
 
 // #region HOOKS DEPEDENCY
 import { useInterval } from 'ahooks';
+import useWindowSize from '@/hooks/utils/useWindowSize';
 // #endregion
 
 // #region STYLE DEPEDENCY
@@ -35,9 +36,8 @@ import { scroller } from 'react-scroll';
 // #endregion
 
 // #region ICON DEPEDENCY
-import { TbAtom, TbAntennaBars5 } from "react-icons/tb";
+import { TbAtom, TbAntennaBars5, TbStars } from "react-icons/tb";
 import { IoAnalyticsOutline } from "react-icons/io5";
-import { LuShapes } from "react-icons/lu";
 // #endregion
 
 // #region UTIL DEPEDENCY
@@ -138,17 +138,14 @@ const resolveTitleProps = (text) => ({
     },
     adjustWavingFlyIn: {
         baseDelay: FITUR_TITLE_STAGGERED[findArrayIndexByString(text, FITUR_TITLE_PARAGRAPH.flat())],
-        wordWrapperStyle: {
-            padding: '0 0.5rem'
-        }
     }
 })
 
 /** @type {HTMLMotionProps<'div'>} */
 const FITUR_FITURCARD_CONTENT_PROPS = {
-    initial: { opacity: 0 },
-    animate: { opacity: 1 },
-    exit: { opacity: 0 },
+    initial: { y: 10, opacity: 0 },
+    animate: { y: 0, opacity: 1 },
+    exit: { y: 10, opacity: 0 },
     transition: { duration: 0.75 }
 }
 
@@ -196,9 +193,9 @@ const FITUR_TITLE_DELAY_OFFSET = 0.15;
 
 /** @type {Array<Array<string>>} */
 const FITUR_TITLE_PARAGRAPH = [
-    ['Analytics', 'that'],
-    ['that', 'helps', 'you'],
-    ['shape', 'the', 'future']
+    ['Insight'],
+    ['yang', 'membantu', 'kamu'],
+    ['meraih', 'target', 'impianmu']
 ]
 
 /** @type {Array<number>} */
@@ -206,7 +203,7 @@ const FITUR_TITLE_STAGGERED = shuffleArray(FITUR_TITLE_PARAGRAPH.flat().map((_, 
 
 /** @type {Object<string, presetOptions['customCharVariants']>} */
 const FITUR_CUSTOM_CHAR_VARIANTS = {
-    Analytics: {
+    Insight: {
         hover: {
             z: [null, -200, 0],
             scale: [null, 0.25, 0.75, 1],
@@ -223,7 +220,7 @@ const FITUR_CUSTOM_CHAR_VARIANTS = {
             }
         }
     },
-    shape: {
+    meraih: {
         shape_text: {
             color: [null, '#00d16f', '#5d1470', '#1bbad6', '#71a819', '#ea83d0', '#c6b3ba', 'var(--box-color-success2)'],
             rotateX: [null, 90, 0],
@@ -235,7 +232,7 @@ const FITUR_CUSTOM_CHAR_VARIANTS = {
             }
         },
     },
-    the: {
+    target: {
         shape_text: {
             color: [null, '#c5e8a4', '#5d1470', '#1bbad6', '#6b7772', '#ea83d0', '#9f48bf', 'var(--dark-color)'],
             rotateX: [null, 90, 0],
@@ -244,11 +241,11 @@ const FITUR_CUSTOM_CHAR_VARIANTS = {
                 randomStart: ['color'],
                 staggerType: 'first',
                 stagger: 0.1,
-                baseDelay: countPrevCharactersAndWords(FITUR_TITLE_PARAGRAPH, false, 'the', 2, 1).chars * 0.1
+                baseDelay: countPrevCharactersAndWords(FITUR_TITLE_PARAGRAPH, false, 'target', 2, 1).chars * 0.1
             }
         },
     },
-    future: {
+    impianmu: {
         shape_text: {
             color: [null, '#2b769b', '#5d1470', '#1bbad6', '#328e91', '#ea83d0', '#f9fbfc', 'var(--warning-color-hex)'],
             rotateX: [null, 90, 0],
@@ -257,7 +254,7 @@ const FITUR_CUSTOM_CHAR_VARIANTS = {
                 randomStart: ['color'],
                 staggerType: 'first',
                 stagger: 0.1,
-                baseDelay: countPrevCharactersAndWords(FITUR_TITLE_PARAGRAPH, false, 'future', 2, 2).chars * 0.1
+                baseDelay: countPrevCharactersAndWords(FITUR_TITLE_PARAGRAPH, false, 'impianmu', 2, 2).chars * 0.1
             }
         },
     },
@@ -334,15 +331,13 @@ const FiturCard = ({ title, description, wrapperClassname, content, contentIndex
 }
 
 const Fitur = () => {
-    /** @type {React.MutableRefObject<HTMLDivElement>} */
-    const sectionRef = React.useRef(null);
-    const [iconSize, setIconSize] = React.useState(60);
-    const [alreadyInView, setAlreadyInView] = React.useState(false);
-    const [titleAnimation, setTitleAnimation] = React.useState(null);
+    const sectionRef = React.useRef(
+        /** @type {HTMLDivElement} */
+        (null)
+    );
+    const { width } = useWindowSize();
     const { scrollYProgress: sectionScrollProgress } = useScroll({ target: sectionRef, smooth: 1 });
-    const scrollContent = useTransform(sectionScrollProgress, [0, 1], ['12.5%', '-95%']);
-    const iconX = useTransform(sectionScrollProgress, [0.44, 0.66], [0, 100])
-    const iconLeft = useTransform(sectionScrollProgress, [0.44, 0.66], [(iconSize * -1), 0])
+    const scrollContent = useTransform(sectionScrollProgress, [0, 1], ['50%', '-100%']);
 
     /** @param {React.KeyboardEvent} event */
     const handleKeyDown = (event) => {
@@ -363,10 +358,6 @@ const Fitur = () => {
         }
     }
 
-    useInterval(() => {
-        if (alreadyInView) setTitleAnimation('shape_text');
-    }, 5000);
-
     return (
         <section
             ref={sectionRef}
@@ -376,159 +367,211 @@ const Fitur = () => {
             onKeyDown={handleKeyDown}
         >
             <div className={styles.fitur_wrapper}>
-                <motion.div
-                    className={styles.title}
-                    initial={{ visibility: 'hidden' }}
-                    style={{
-                        '--icon-size': `${iconSize}px`,
-                        position: 'relative'
-                    }}
-                    variants={{ inView: { visibility: 'visible' } }}
-                    whileInView={'inView'}
-                    animate={titleAnimation ?? {}}
-                    onAnimationComplete={(x) => {
-                        if (typeof x === 'string') {
-                            if (FITUR_CUSTOM_VARIANT_COLLECTIONS.includes(x)) setTitleAnimation({});
-                            if (x === 'inView') setAlreadyInView(true);
-                        }
-                    }}
-                    viewport={{
-                        once: GLOBAL_VIEWPORT_ONCE,
-                        amount: 1
-                    }}
-                >
-                    <h2 className={styles.wrap}>
-                        <motion.div
-                            className={styles.icons}
-                            initial={{ scale: 0 }}
-                            variants={{ inView: { scale: 1, transition: { type: 'spring', duration: 1.5, bounce: 0, delay: FITUR_TITLE_STAGGERED[findArrayIndexByString('Analytics', FITUR_TITLE_PARAGRAPH.flat())] } } }}
-                        >
-                            <div className={`${styles.icon} ${styles.alt}`} >
-                                <motion.span
-                                    initial={{ rotate: 180 }}
-                                    style={{ x: iconX }}
-                                    variants={{ change: { x: 100 }, inView: { rotate: 0, transition: { type: 'spring', duration: 2, bounce: 0, delay: FITUR_TITLE_STAGGERED[findArrayIndexByString('Analytics', FITUR_TITLE_PARAGRAPH.flat())] } } }}
-                                    transition={{ type: 'spring', duration: 0.5, bounce: 0.1 }}
-                                >
-                                    <IoAnalyticsOutline fontSize={'0.5em'} />
-                                </motion.span>
-                                <motion.div
-                                    className={styles.icon_bg_wrap}
-                                    style={{ left: iconLeft }}
-                                    variants={{ change: { left: 0 } }}
-                                    transition={{ type: 'spring', duration: 0.5, bounce: 0.1 }}
-                                >
-                                    <div className={`${styles.icon_bg} ${styles.warning}`}>
-                                        <motion.span
-                                            initial={{ rotate: 180 }}
-                                            variants={{ inView: { rotate: 0, transition: { type: 'spring', duration: 2, bounce: 0, delay: FITUR_TITLE_STAGGERED[findArrayIndexByString('Analytics', FITUR_TITLE_PARAGRAPH.flat())] } } }}
-                                            transition={{ type: 'spring', duration: 0.5, bounce: 0.1 }}
-                                        >
-                                            <TbAtom fontSize={'0.5em'} />
-                                        </motion.span>
-                                    </div>
-                                    <div className={`${styles.icon_bg} ${styles.alt}`} />
-                                </motion.div>
-                            </div>
+                <TitleAnimated sectionScrollProgress={sectionScrollProgress} />
 
-                            <div className={`${styles.icon}`} >
-                                <motion.span
-                                    initial={{ rotate: 225 }}
-                                    style={{ x: iconX }}
-                                    variants={{ change: { x: 100 }, inView: { rotate: 0, transition: { type: 'spring', duration: 3, bounce: 0, delay: FITUR_TITLE_STAGGERED[findArrayIndexByString('Analytics', FITUR_TITLE_PARAGRAPH.flat())] } } }}
-                                    transition={{ type: 'spring', duration: 0.5, bounce: 0.1 }}
-                                >
-                                    <TbAntennaBars5 fontSize={'0.5em'} />
-                                </motion.span>
-                                <motion.div
-                                    className={styles.icon_bg_wrap}
-                                    style={{ left: iconLeft }}
-                                    variants={{ change: { left: 0 } }}
-                                    transition={{ type: 'spring', duration: 0.5, bounce: 0.1 }}
-                                >
-                                    <div className={`${styles.icon_bg} ${styles.alt}`}>
-                                        <motion.span
-                                            initial={{ rotate: 180 }}
-                                            variants={{ inView: { rotate: 0, transition: { type: 'spring', duration: 2, bounce: 0, delay: FITUR_TITLE_STAGGERED[findArrayIndexByString('Analytics', FITUR_TITLE_PARAGRAPH.flat())] } } }}
-                                            transition={{ type: 'spring', duration: 0.5, bounce: 0.1 }}
-                                        >
-                                            <IoAnalyticsOutline fontSize={'0.5em'} />
-                                        </motion.span>
-                                    </div>
-                                    <div className={`${styles.icon_bg}`} />
-                                </motion.div>
-                            </div>
-                        </motion.div>
-                        <HighlightText text={'Analytics'} {...resolveTitleProps('Analytics')} />
-                    </h2>
-
-                    <h2>
-                        <HighlightText text={'that'} {...resolveTitleProps('that')} />
-
-                        <span>
-                            <HighlightText text={'helps'} {...resolveTitleProps('helps')} />
-                        </span>
-                        <HighlightText text={'you'} {...resolveTitleProps('you')} />
-                    </h2>
-
-                    <h2 className={styles.wrap}>
-                        <HighlightText text={'shape'} {...resolveTitleProps('shape')} />
-                        <motion.div
-                            className={`${styles.icon}`}
-                            initial={{ scale: 0 }}
-                            variants={{ inView: { scale: 1, transition: { type: 'spring', duration: 2, bounce: 0, delay: FITUR_TITLE_STAGGERED[findArrayIndexByString('shape', FITUR_TITLE_PARAGRAPH.flat())] } } }}
-                        >
-                            <motion.div
-                                className={`${styles.icon_bg} ${styles.success}`}
-                                initial={{ rotate: 270 }}
-                                variants={{ inView: { rotate: 0, transition: { type: 'spring', duration: 2.5, bounce: 0, delay: FITUR_TITLE_STAGGERED[findArrayIndexByString('shape', FITUR_TITLE_PARAGRAPH.flat())] } } }}
-                            >
-                                <LuShapes fontSize={'0.5em'} />
-                            </motion.div>
-                        </motion.div>
-                        <HighlightText text={'the'} {...resolveTitleProps('the')} />
-                        <HighlightText text={'future'} {...resolveTitleProps('future')} />
-                    </h2>
-
-                    {/* <div
-                        style={{
-                            position: 'absolute',
-                            top: '10%',
-                            left: '50%',
-                            width: '75%',
-                            height: 125,
-                            border: '1px solid red',
-                            transform: 'translate(-50%, -10%)',
-                            display: 'flex',
-                            gap: '1.25rem',
-                            fontWeight: 500,
-                            fontSize: '1rem',
-                            padding: '1rem',
-                        }}
-                    >
-                        <div style={{ border: '1px solid red', height: 'max-content', padding: '0.25rem', borderRadius: '0.5rem' }} onClick={() => { setTitleAnimation('shape_text') }}>shape_text</div>
-                        <div style={{ border: '1px solid red', height: 'max-content', padding: '0.25rem', borderRadius: '0.5rem' }} onClick={() => { setTitleAnimation('translate_text') }}>translate_text</div>
-                        <div style={{ border: '1px solid red', height: 'max-content', padding: '0.25rem', borderRadius: '0.5rem' }} onClick={() => { setTitleAnimation('hover') }}>hover</div>
-                    </div> */}
-                </motion.div>
-
-                <motion.div className={styles.content} >
-                    <motion.div
-                        className={styles.content_inner}
-                        initial={{ visibility: 'hidden', opacity: 0 }}
-                        whileInView={{ visibility: 'visible', opacity: 1 }}
-                        viewport={{
-                            once: GLOBAL_VIEWPORT_ONCE
-                        }}
-                        style={{ y: scrollContent }}
-                    >
-                        {FITUR_SECTION_CONTENTS.map((item, index) => (
-                            <FiturCard key={index} contentIndex={index} {...item.fiturCardProps} />
-                        ))}
-                    </motion.div>
-                </motion.div>
+                {width > 1023 ? <ContentScrolled scrollContent={scrollContent} /> : <ContentSimple />}
             </div>
         </section>
+    )
+}
+
+function TitleAnimated({ sectionScrollProgress }) {
+    const { width } = useWindowSize();
+
+    const [iconSize, setIconSize] = React.useState(
+        /** 
+         * @type {number} 
+         * Ukuran berupa width dan height yang digunakan pada icon wrapper
+         */
+        (60)
+    );
+    const [alreadyInView, setAlreadyInView] = React.useState(
+        /** 
+         * @type {boolean} 
+         * Boolean apakah element sudah dalam inView, ini akan bernilai true setelah animasi 'inView' selesai dimainkan. 
+         */
+        (false)
+    );
+    const [titleAnimation, setTitleAnimation] = React.useState(
+        /** 
+         * @type {string} 
+         * Nama animasi atau variants yang dimainkan, dapat bernilai `null` saat tidak ada animasi yang dimainkan.
+         */
+        (null)
+    );
+
+    const iconX = useTransform(sectionScrollProgress, [0.44, 0.66], [0, 100])
+    const iconLeft = useTransform(sectionScrollProgress, [0.44, 0.66], [(iconSize * -1), 0])
+
+    useInterval(() => {
+        if (alreadyInView) setTitleAnimation('shape_text');
+    }, 5000);
+
+    React.useEffect(() => {
+        if (width > 767) setIconSize(60);
+        else setIconSize(50);
+    }, [width])
+
+    return (
+        <motion.div
+            className={styles.title}
+            initial={{ visibility: 'hidden' }}
+            style={{ '--icon-size': `${iconSize}px` }}
+            variants={{ inView: { visibility: 'visible' } }}
+            whileInView={'inView'}
+            animate={titleAnimation ?? {}}
+            onAnimationComplete={(x) => {
+                if (typeof x === 'string') {
+                    if (FITUR_CUSTOM_VARIANT_COLLECTIONS.includes(x)) setTitleAnimation({});
+                    if (x === 'inView') setAlreadyInView(true);
+                }
+            }}
+            viewport={{
+                once: GLOBAL_VIEWPORT_ONCE,
+                amount: 1
+            }}
+        >
+            <h2>
+                <motion.div
+                    className={styles.icons}
+                    initial={{ scale: 0 }}
+                    variants={{ inView: { scale: 1, transition: { type: 'spring', duration: 1.5, bounce: 0, delay: FITUR_TITLE_STAGGERED[findArrayIndexByString('Insight', FITUR_TITLE_PARAGRAPH.flat())] } } }}
+                >
+                    <div className={`${styles.icon} ${styles.alt}`} >
+                        <motion.span
+                            initial={{ rotate: 180 }}
+                            style={{ x: iconX }}
+                            variants={{ change: { x: 100 }, inView: { rotate: 0, transition: { type: 'spring', duration: 2, bounce: 0, delay: FITUR_TITLE_STAGGERED[findArrayIndexByString('Insight', FITUR_TITLE_PARAGRAPH.flat())] } } }}
+                            transition={{ type: 'spring', duration: 0.5, bounce: 0.1 }}
+                        >
+                            <IoAnalyticsOutline fontSize={'0.6em'} />
+                        </motion.span>
+                        <motion.div
+                            className={styles.icon_bg_wrap}
+                            style={{ left: iconLeft }}
+                            variants={{ change: { left: 0 } }}
+                            transition={{ type: 'spring', duration: 0.5, bounce: 0.1 }}
+                        >
+                            <div className={`${styles.icon_bg} ${styles.warning}`}>
+                                <motion.span
+                                    initial={{ rotate: 180 }}
+                                    variants={{ inView: { rotate: 0, transition: { type: 'spring', duration: 2, bounce: 0, delay: FITUR_TITLE_STAGGERED[findArrayIndexByString('Insight', FITUR_TITLE_PARAGRAPH.flat())] } } }}
+                                    transition={{ type: 'spring', duration: 0.5, bounce: 0.1 }}
+                                >
+                                    <TbAtom fontSize={'0.6em'} />
+                                </motion.span>
+                            </div>
+                            <div className={`${styles.icon_bg} ${styles.alt}`} />
+                        </motion.div>
+                    </div>
+
+                    <div className={`${styles.icon}`} >
+                        <motion.span
+                            initial={{ rotate: 225 }}
+                            style={{ x: iconX }}
+                            variants={{ change: { x: 100 }, inView: { rotate: 0, transition: { type: 'spring', duration: 3, bounce: 0, delay: FITUR_TITLE_STAGGERED[findArrayIndexByString('Insight', FITUR_TITLE_PARAGRAPH.flat())] } } }}
+                            transition={{ type: 'spring', duration: 0.5, bounce: 0.1 }}
+                        >
+                            <TbAntennaBars5 fontSize={'0.6em'} />
+                        </motion.span>
+                        <motion.div
+                            className={styles.icon_bg_wrap}
+                            style={{ left: iconLeft }}
+                            variants={{ change: { left: 0 } }}
+                            transition={{ type: 'spring', duration: 0.5, bounce: 0.1 }}
+                        >
+                            <div className={`${styles.icon_bg} ${styles.alt}`}>
+                                <motion.span
+                                    initial={{ rotate: 180 }}
+                                    variants={{ inView: { rotate: 0, transition: { type: 'spring', duration: 2, bounce: 0, delay: FITUR_TITLE_STAGGERED[findArrayIndexByString('Insight', FITUR_TITLE_PARAGRAPH.flat())] } } }}
+                                    transition={{ type: 'spring', duration: 0.5, bounce: 0.1 }}
+                                >
+                                    <IoAnalyticsOutline fontSize={'0.6em'} />
+                                </motion.span>
+                            </div>
+                            <div className={`${styles.icon_bg}`} />
+                        </motion.div>
+                    </div>
+                </motion.div>
+                <HighlightText text={'Insight'} {...resolveTitleProps('Insight')} />
+            </h2>
+
+            <h2>
+                <HighlightText text={'yang'} {...resolveTitleProps('yang')} />
+
+                <span>
+                    <HighlightText text={'membantu'} {...resolveTitleProps('membantu')} />
+                </span>
+                <HighlightText text={'kamu'} {...resolveTitleProps('kamu')} />
+            </h2>
+
+            <h2>
+                <HighlightText text={'meraih'} {...resolveTitleProps('meraih')} />
+                <motion.div
+                    className={`${styles.icon}`}
+                    initial={{ scale: 0 }}
+                    variants={{ inView: { scale: 1, transition: { type: 'spring', duration: 2, bounce: 0, delay: FITUR_TITLE_STAGGERED[findArrayIndexByString('meraih', FITUR_TITLE_PARAGRAPH.flat())] } } }}
+                >
+                    <motion.div
+                        className={`${styles.icon_bg} ${styles.success}`}
+                        initial={{ rotate: 270 }}
+                        variants={{
+                            inView: { rotate: 0, transition: { type: 'spring', duration: 2.5, bounce: 0, delay: FITUR_TITLE_STAGGERED[findArrayIndexByString('meraih', FITUR_TITLE_PARAGRAPH.flat())] } },
+                            shape_text: {
+                                rotateY: [360, 0],
+                                scale: [null, 0.75, 1],
+                                transition: {
+                                    delay: countPrevCharactersAndWords(FITUR_TITLE_PARAGRAPH, false, 'target', 2, 1).chars * 0.1,
+                                    duration: 1.25,
+                                    times: [0, 0.6, 1],
+                                }
+                            }
+                        }}
+                    >
+                        <span>
+                            <TbStars fontSize={'0.6em'} />
+                        </span>
+                    </motion.div>
+                </motion.div>
+                <HighlightText text={'target'} {...resolveTitleProps('target')} />
+                <HighlightText text={'impianmu'} {...resolveTitleProps('impianmu')} />
+            </h2>
+        </motion.div>
+    )
+}
+
+function ContentSimple() {
+    return (
+        <motion.div className={styles.content}>
+            <motion.div
+                className={styles.content_inner}
+                initial={{ visibility: 'hidden', opacity: 0 }}
+                whileInView={{ visibility: 'visible', opacity: 1 }}
+                viewport={{ once: GLOBAL_VIEWPORT_ONCE }}
+            >
+                {FITUR_SECTION_CONTENTS.map((item, index) => (
+                    <FiturCard key={index} contentIndex={index} {...item.fiturCardProps} />
+                ))}
+            </motion.div>
+        </motion.div>
+    )
+}
+
+function ContentScrolled({ scrollContent }) {
+    return (
+        <motion.div className={styles.content}>
+            <motion.div
+                className={styles.content_inner}
+                initial={{ visibility: 'hidden', opacity: 0 }}
+                whileInView={{ visibility: 'visible', opacity: 1 }}
+                viewport={{ once: GLOBAL_VIEWPORT_ONCE }}
+                style={{ y: scrollContent }}
+            >
+                {FITUR_SECTION_CONTENTS.map((item, index) => (
+                    <FiturCard key={index} contentIndex={index} {...item.fiturCardProps} />
+                ))}
+            </motion.div>
+        </motion.div>
     )
 }
 
