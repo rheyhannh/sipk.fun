@@ -4,17 +4,20 @@
  * @property {string} id
  * Id matakuliah dummies dalam bentuk `UUID`
  * - Contoh : `'a86bfd11-9f8c-40f1-9f57-511f7a3daa6d'`
- * @property {'tambah'|'hapus'|'ubah'} type
+ * @property {'tambah'|'hapus'} type
  * Tipe matakuliah dummies
  * @property {string} nama
  * Nama matakuliah dummies dalam bentuk pascal case
  * - Contoh : `'Bahasa Indonesia'`
  * @property {string} date
  * Tanggal matakuliah dummies
+ * - Contoh : `Mon Dec 08 2014 15:16:51 GMT+0700 (Waktu Indonesia Barat)`
  * @property {string} nilai
- * Nilai matakuliah dummies
+ * Indeks nilai matakuliah dummies dimana menggunakan sistem indeks {@link MatkulDummiesNilai berikut} atau sama dengan yang digunakan Universitas Indonesia
  * @property {number} sks
  * Sks matakuliah dummies
+ * @property {number} semester
+ * Semester matakuliah dummies
  */
 
 /**
@@ -930,10 +933,8 @@ const MatkulDummies = /** @type {Array<MatkulDummiesProps>} */ ([
 ])
 
 /**
- * @default
  * @constant 
- * @description
- * Object dengan pair `key` nilai string dan `value` bobot number yang digunakan `MatkulDummies`
+ * Object dengan key sebagai indeks nilai dengan value bobot nilai yang digunakan {@link MatkulDummies}
  * @example
  * ```js
  * console.log(MatkulDummiesNilaiBobot['A']) // 4
@@ -959,10 +960,8 @@ const MatkulDummiesNilaiBobot = {
 }
 
 /**
- * @default
  * @constant 
- * @description
- * Object dengan pair `key` nilai string dan `value` color preset string yang digunakan `MatkulDummies`
+ * Object dengan key sebagai indeks nilai dengan value color preset yang digunakan {@link MatkulDummies}
  * @example
  * ```js
  * console.log(MatkulDummiesNilaiColorPreset['A']) // 'success'
