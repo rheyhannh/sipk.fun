@@ -23,812 +23,911 @@
  */
 
 /**
- * @type {Array<MatkulDummiesProps>}
  * @constant
- * Array dengan length `50` yang berisikan matkul dummies atau matakuliah palsu untuk preview
+ * Array dengan length `100` yang berisikan matkul dummies atau matakuliah palsu
  */
-const MatkulDummies = [
+const MatkulDummies = /** @type {Array<MatkulDummiesProps>} */ ([
     {
-        "id": "a86bfd11-9f8c-40f1-9f57-511f7a3daa6d",
-        "type": "hapus",
-        "nama": "Bahasa Indonesia",
-        "date": "Sun Jul 14 2019 12:38:47 GMT+0700 (Waktu Indonesia Barat)",
-        "nilai": "B",
-        "sks": 1
-    },
-    {
-        "id": "d0c4e17b-90c4-4fdb-b02b-0a81a7ecfda8",
+        "id": "4a814014-940a-4144-bd26-b3f521c93ab6",
         "type": "tambah",
-        "nama": "Statistika",
-        "date": "Fri Mar 17 2017 09:26:03 GMT+0700 (Waktu Indonesia Barat)",
-        "nilai": "C",
-        "sks": 4
+        "nama": "Bahasa Indonesia",
+        "date": "Mon Dec 08 2014 15:16:51 GMT+0700 (Waktu Indonesia Barat)",
+        "nilai": "A",
+        "sks": 3,
+        "semester": 2
     },
     {
-        "id": "565982b2-8860-4b29-80b9-d651e3fed85d",
+        "id": "4767d2f3-b90e-4926-b323-719e09ba820d",
+        "type": "hapus",
+        "nama": "Statistika",
+        "date": "Mon Dec 26 2022 07:18:28 GMT+0700 (Waktu Indonesia Barat)",
+        "nilai": "B+",
+        "sks": 2,
+        "semester": 5
+    },
+    {
+        "id": "15839055-c89e-4a1d-bc3f-b768f13d93d2",
         "type": "tambah",
         "nama": "Kalkulus",
-        "date": "Thu Apr 04 2024 17:09:18 GMT+0700 (Waktu Indonesia Barat)",
-        "nilai": "A",
-        "sks": 4
+        "date": "Tue Mar 07 2023 21:33:39 GMT+0700 (Waktu Indonesia Barat)",
+        "nilai": "D+",
+        "sks": 3,
+        "semester": 4
     },
     {
-        "id": "221dd193-040a-49a2-b8c9-b794ff2cee30",
-        "type": "tambah",
+        "id": "f077db2c-256e-4718-ba5d-92516512b410",
+        "type": "hapus",
         "nama": "Fisika Dasar",
-        "date": "Tue Mar 17 2015 14:36:26 GMT+0700 (Waktu Indonesia Barat)",
-        "nilai": "A",
-        "sks": 1
+        "date": "Wed Mar 17 2021 15:20:11 GMT+0700 (Waktu Indonesia Barat)",
+        "nilai": "D+",
+        "sks": 1,
+        "semester": 4
     },
     {
-        "id": "5228c321-45e9-4aba-94b3-907f5fc4cf83",
-        "type": "hapus",
+        "id": "38c95e04-dfcc-4a02-853a-cea9856e2cab",
+        "type": "tambah",
         "nama": "Kimia Dasar",
-        "date": "Sun Apr 23 2023 08:10:16 GMT+0700 (Waktu Indonesia Barat)",
-        "nilai": "C",
-        "sks": 3
+        "date": "Fri Jun 10 2016 06:42:10 GMT+0700 (Waktu Indonesia Barat)",
+        "nilai": "E",
+        "sks": 3,
+        "semester": 4
     },
     {
-        "id": "65fd41ba-095e-4bd6-9aa2-f81f5d583f02",
-        "type": "hapus",
+        "id": "32670d46-078d-495e-8a33-a04645123331",
+        "type": "tambah",
         "nama": "Biologi Umum",
-        "date": "Wed Dec 19 2018 12:56:23 GMT+0700 (Waktu Indonesia Barat)",
-        "nilai": "D",
-        "sks": 2
+        "date": "Fri Feb 03 2017 02:50:55 GMT+0700 (Waktu Indonesia Barat)",
+        "nilai": "E",
+        "sks": 2,
+        "semester": 6
     },
     {
-        "id": "1c7dc278-37a8-41a3-9d25-5ff4f26a4cbc",
-        "type": "hapus",
+        "id": "bd53bfda-9649-401f-81b3-4eade68ccca1",
+        "type": "tambah",
         "nama": "Sistem Informasi",
-        "date": "Sat Feb 21 2015 20:18:41 GMT+0700 (Waktu Indonesia Barat)",
-        "nilai": "C+",
-        "sks": 4
+        "date": "Wed Jan 22 2020 13:09:09 GMT+0700 (Waktu Indonesia Barat)",
+        "nilai": "D",
+        "sks": 1,
+        "semester": 8
     },
     {
-        "id": "d9b50bf8-3cca-47af-bea7-327c8e2975cf",
+        "id": "2d4bdd1f-4ecc-421d-9285-4045ae52b183",
         "type": "tambah",
         "nama": "Algoritma dan Pemrograman",
-        "date": "Mon Oct 03 2016 08:49:24 GMT+0700 (Waktu Indonesia Barat)",
-        "nilai": "C",
-        "sks": 4
+        "date": "Sat Sep 23 2017 21:42:52 GMT+0700 (Waktu Indonesia Barat)",
+        "nilai": "B+",
+        "sks": 1,
+        "semester": 8
     },
     {
-        "id": "f4c139ab-1d5e-40fd-8f00-2acac5dbf2c6",
-        "type": "tambah",
+        "id": "458453cd-85f8-4bfa-b816-1cf3852053ec",
+        "type": "hapus",
         "nama": "Struktur Data",
-        "date": "Sun Aug 04 2019 05:17:45 GMT+0700 (Waktu Indonesia Barat)",
-        "nilai": "C",
-        "sks": 4
+        "date": "Fri Jan 15 2016 23:22:52 GMT+0700 (Waktu Indonesia Barat)",
+        "nilai": "D+",
+        "sks": 1,
+        "semester": 4
     },
     {
-        "id": "8b892158-b6f6-4d4a-8e79-0d2b531f7d17",
+        "id": "bfc0466b-ffef-4b09-afa0-b07188f787e1",
         "type": "tambah",
         "nama": "Jaringan Komputer",
-        "date": "Thu May 24 2018 03:52:48 GMT+0700 (Waktu Indonesia Barat)",
-        "nilai": "B",
-        "sks": 2
+        "date": "Wed Jun 01 2022 11:28:41 GMT+0700 (Waktu Indonesia Barat)",
+        "nilai": "B+",
+        "sks": 3,
+        "semester": 6
     },
     {
-        "id": "c00c0c11-09e3-4c6e-8b94-5309476be965",
-        "type": "tambah",
+        "id": "3061df3b-5b90-4fb3-a3aa-5237c13152c8",
+        "type": "hapus",
         "nama": "Basis Data",
-        "date": "Sat Jun 23 2018 04:43:48 GMT+0700 (Waktu Indonesia Barat)",
-        "nilai": "C+",
-        "sks": 1
+        "date": "Tue Oct 04 2022 01:15:44 GMT+0700 (Waktu Indonesia Barat)",
+        "nilai": "A",
+        "sks": 1,
+        "semester": 6
     },
     {
-        "id": "d9af17ef-5991-49ac-b79e-de0b9e760315",
+        "id": "04f1763d-bf03-404a-a504-900ac04c455a",
         "type": "hapus",
         "nama": "Pemrograman Web",
-        "date": "Sat Nov 27 2021 04:35:52 GMT+0700 (Waktu Indonesia Barat)",
-        "nilai": "D+",
-        "sks": 4
+        "date": "Tue Oct 16 2018 14:39:31 GMT+0700 (Waktu Indonesia Barat)",
+        "nilai": "B",
+        "sks": 4,
+        "semester": 7
     },
     {
-        "id": "a66d05a2-6dd1-4bd1-83f4-9f364fe1cbd5",
-        "type": "hapus",
+        "id": "3ae1afe7-e909-431e-9abd-9429ed05bb4f",
+        "type": "tambah",
         "nama": "Keamanan Komputer",
-        "date": "Sat Feb 22 2014 21:57:22 GMT+0700 (Waktu Indonesia Barat)",
-        "nilai": "C+",
-        "sks": 3
+        "date": "Wed Jan 24 2024 07:21:04 GMT+0700 (Waktu Indonesia Barat)",
+        "nilai": "B",
+        "sks": 2,
+        "semester": 3
     },
     {
-        "id": "39c49e5b-2878-42d7-b6e0-f844ebed238a",
+        "id": "ba46006c-5b2a-4d78-9d12-bd6569283d3d",
         "type": "hapus",
         "nama": "Manajemen Proyek TI",
-        "date": "Thu Jul 06 2023 03:12:09 GMT+0700 (Waktu Indonesia Barat)",
-        "nilai": "B",
-        "sks": 4
+        "date": "Sat Aug 22 2020 21:11:21 GMT+0700 (Waktu Indonesia Barat)",
+        "nilai": "B+",
+        "sks": 1,
+        "semester": 4
     },
     {
-        "id": "55286404-d49f-4cc5-9d68-4e2333507499",
+        "id": "af582336-02fd-4ee1-8cad-71ca9d4959fb",
         "type": "hapus",
         "nama": "Analisis Sistem",
-        "date": "Sat Aug 24 2019 12:04:00 GMT+0700 (Waktu Indonesia Barat)",
-        "nilai": "D",
-        "sks": 3
+        "date": "Sat Oct 21 2023 08:29:36 GMT+0700 (Waktu Indonesia Barat)",
+        "nilai": "C+",
+        "sks": 2,
+        "semester": 1
     },
     {
-        "id": "4c1577e5-e35e-4f95-9c99-ec6b21181780",
-        "type": "hapus",
+        "id": "64084116-48c1-4443-a69d-5294351e39d9",
+        "type": "tambah",
         "nama": "Desain Grafis",
-        "date": "Fri Nov 17 2023 21:09:58 GMT+0700 (Waktu Indonesia Barat)",
-        "nilai": "B+",
-        "sks": 2
-    },
-    {
-        "id": "05017e7f-3fe5-4514-a24d-75aecddde48c",
-        "type": "hapus",
-        "nama": "Teknologi Multimedia",
-        "date": "Tue Mar 25 2014 06:43:19 GMT+0700 (Waktu Indonesia Barat)",
+        "date": "Wed Sep 11 2019 00:23:38 GMT+0700 (Waktu Indonesia Barat)",
         "nilai": "D+",
-        "sks": 1
+        "sks": 4,
+        "semester": 2
     },
     {
-        "id": "1c543378-e0b0-44db-81b5-69b14a5e11ad",
+        "id": "1214e273-0a65-4012-8c9e-03770019b19e",
+        "type": "tambah",
+        "nama": "Teknologi Multimedia",
+        "date": "Fri Jun 26 2020 15:15:37 GMT+0700 (Waktu Indonesia Barat)",
+        "nilai": "C+",
+        "sks": 4,
+        "semester": 8
+    },
+    {
+        "id": "0ed9c306-e96d-495f-b6a9-18b96f64ff3e",
         "type": "tambah",
         "nama": "Kewirausahaan",
-        "date": "Sat Oct 31 2020 03:42:37 GMT+0700 (Waktu Indonesia Barat)",
-        "nilai": "C+",
-        "sks": 4
+        "date": "Sun Jun 16 2024 13:42:25 GMT+0700 (Waktu Indonesia Barat)",
+        "nilai": "E",
+        "sks": 3,
+        "semester": 2
     },
     {
-        "id": "f35ada58-c11f-4d9d-bdad-3284b870640d",
-        "type": "tambah",
+        "id": "2d9641de-7ca4-432b-a9b4-79d01b002002",
+        "type": "hapus",
         "nama": "Etika Profesi",
-        "date": "Wed Mar 20 2019 15:56:22 GMT+0700 (Waktu Indonesia Barat)",
-        "nilai": "C",
-        "sks": 4
+        "date": "Fri Jan 09 2015 14:49:45 GMT+0700 (Waktu Indonesia Barat)",
+        "nilai": "E",
+        "sks": 1,
+        "semester": 5
     },
     {
-        "id": "5f66514b-0e3b-4aa2-aec0-959c50784287",
+        "id": "92f54933-ad42-4fe6-b626-9a0509d43d58",
         "type": "tambah",
         "nama": "Manajemen Pemasaran",
-        "date": "Sun Jun 02 2024 22:02:52 GMT+0700 (Waktu Indonesia Barat)",
-        "nilai": "B",
-        "sks": 3
+        "date": "Thu Sep 09 2021 16:21:02 GMT+0700 (Waktu Indonesia Barat)",
+        "nilai": "A",
+        "sks": 3,
+        "semester": 7
     },
     {
-        "id": "993e66f2-ca86-493f-a0a6-ba085c248130",
-        "type": "hapus",
+        "id": "e276462e-6f74-4622-b4cf-8336dd0256ce",
+        "type": "tambah",
         "nama": "Akuntansi Dasar",
-        "date": "Wed May 17 2017 04:21:57 GMT+0700 (Waktu Indonesia Barat)",
-        "nilai": "D",
-        "sks": 3
+        "date": "Sun Jan 05 2020 04:36:50 GMT+0700 (Waktu Indonesia Barat)",
+        "nilai": "E",
+        "sks": 1,
+        "semester": 5
     },
     {
-        "id": "80c7405e-adb6-4cf0-80d2-c5a57869f3cb",
+        "id": "d06f3ada-2f25-486c-b6ef-32cb0648cf02",
         "type": "hapus",
         "nama": "Ekonomi Mikro",
-        "date": "Fri Sep 04 2020 14:02:17 GMT+0700 (Waktu Indonesia Barat)",
-        "nilai": "C",
-        "sks": 4
+        "date": "Fri Feb 12 2016 23:04:16 GMT+0700 (Waktu Indonesia Barat)",
+        "nilai": "D+",
+        "sks": 2,
+        "semester": 8
     },
     {
-        "id": "6bc4ffa3-b5fb-4120-b4c3-f778cb0d8ebd",
+        "id": "8e7fdaad-7403-4bc0-975b-c6900196460a",
         "type": "tambah",
         "nama": "Ekonomi Makro",
-        "date": "Thu Jun 25 2015 05:22:18 GMT+0700 (Waktu Indonesia Barat)",
-        "nilai": "D",
-        "sks": 2
+        "date": "Fri Apr 09 2021 16:26:31 GMT+0700 (Waktu Indonesia Barat)",
+        "nilai": "B",
+        "sks": 3,
+        "semester": 2
     },
     {
-        "id": "88aba4c3-ab42-4a0d-a2b9-7f18c82d3daf",
-        "type": "tambah",
+        "id": "5a1728dc-53b6-47ba-8258-c90ba2dbfc7d",
+        "type": "hapus",
         "nama": "Hukum Bisnis",
-        "date": "Wed Sep 21 2022 16:52:23 GMT+0700 (Waktu Indonesia Barat)",
-        "nilai": "D",
-        "sks": 4
+        "date": "Tue Sep 02 2014 02:58:18 GMT+0700 (Waktu Indonesia Barat)",
+        "nilai": "B",
+        "sks": 1,
+        "semester": 6
     },
     {
-        "id": "45ac59d2-b6a1-4da3-9d49-aaac92ab1281",
+        "id": "622f6852-73dc-4b74-a7a8-fbbeba3ce5ee",
         "type": "hapus",
         "nama": "Teori Organisasi",
-        "date": "Mon Aug 06 2018 03:12:49 GMT+0700 (Waktu Indonesia Barat)",
-        "nilai": "D",
-        "sks": 1
+        "date": "Sun Sep 12 2021 13:16:18 GMT+0700 (Waktu Indonesia Barat)",
+        "nilai": "A",
+        "sks": 4,
+        "semester": 4
     },
     {
-        "id": "347dbc0c-7308-4371-9603-17b8cb18829a",
+        "id": "6d7a54bc-c9f5-4a92-8996-cf2313556e97",
         "type": "hapus",
         "nama": "Psikologi Industri",
-        "date": "Mon May 16 2016 14:35:39 GMT+0700 (Waktu Indonesia Barat)",
-        "nilai": "B",
-        "sks": 1
+        "date": "Fri Jul 14 2017 16:38:42 GMT+0700 (Waktu Indonesia Barat)",
+        "nilai": "B+",
+        "sks": 4,
+        "semester": 1
     },
     {
-        "id": "33805381-f553-466e-8aa5-16ec1c0293f6",
+        "id": "35c0d659-7669-4070-b8ad-523663a99481",
         "type": "hapus",
         "nama": "Psikologi Sosial",
-        "date": "Wed Aug 30 2023 13:42:12 GMT+0700 (Waktu Indonesia Barat)",
-        "nilai": "E",
-        "sks": 1
+        "date": "Sun May 31 2015 00:35:20 GMT+0700 (Waktu Indonesia Barat)",
+        "nilai": "D",
+        "sks": 2,
+        "semester": 5
     },
     {
-        "id": "6084d6bf-4126-4da4-bf92-c58027d36f26",
-        "type": "hapus",
+        "id": "e1020025-f400-474d-91c3-ccd79bc10e95",
+        "type": "tambah",
         "nama": "Psikologi Pendidikan",
-        "date": "Fri Mar 10 2017 09:05:33 GMT+0700 (Waktu Indonesia Barat)",
-        "nilai": "B+",
-        "sks": 2
+        "date": "Thu May 04 2017 01:51:16 GMT+0700 (Waktu Indonesia Barat)",
+        "nilai": "C",
+        "sks": 3,
+        "semester": 6
     },
     {
-        "id": "7ed0d3fa-443a-4ba4-b37f-d819a2dc71f7",
-        "type": "tambah",
+        "id": "855d854d-1f75-4204-9218-7998585cdfef",
+        "type": "hapus",
         "nama": "Psikologi Klinis",
-        "date": "Sun May 17 2015 08:12:52 GMT+0700 (Waktu Indonesia Barat)",
-        "nilai": "C+",
-        "sks": 4
+        "date": "Sun Oct 20 2019 05:05:10 GMT+0700 (Waktu Indonesia Barat)",
+        "nilai": "D",
+        "sks": 1,
+        "semester": 8
     },
     {
-        "id": "a70d5872-a135-45d7-9e20-95db5e0cce39",
-        "type": "tambah",
+        "id": "317a9e63-0834-4f65-8f4b-9e4ba0a679ca",
+        "type": "hapus",
         "nama": "Sosiologi",
-        "date": "Fri Feb 07 2020 20:07:07 GMT+0700 (Waktu Indonesia Barat)",
-        "nilai": "B+",
-        "sks": 3
+        "date": "Sat Jul 26 2014 13:36:39 GMT+0700 (Waktu Indonesia Barat)",
+        "nilai": "A",
+        "sks": 3,
+        "semester": 2
     },
     {
-        "id": "7c3c56c4-c226-4cff-9dab-1e134ccd0615",
+        "id": "5af35a0a-8b73-4b60-a2f2-9640997a754b",
         "type": "hapus",
         "nama": "Antropologi",
-        "date": "Sat Dec 22 2018 00:53:48 GMT+0700 (Waktu Indonesia Barat)",
-        "nilai": "B+",
-        "sks": 3
-    },
-    {
-        "id": "f0932450-a7fc-4c42-b967-ed095328640b",
-        "type": "hapus",
-        "nama": "Ilmu Politik",
-        "date": "Thu Jul 30 2015 17:59:28 GMT+0700 (Waktu Indonesia Barat)",
-        "nilai": "A",
-        "sks": 3
-    },
-    {
-        "id": "526e85ab-cfed-490f-b691-85be01f0a677",
-        "type": "tambah",
-        "nama": "Hubungan Internasional",
-        "date": "Fri Jan 18 2019 02:27:44 GMT+0700 (Waktu Indonesia Barat)",
+        "date": "Sun May 25 2014 15:20:31 GMT+0700 (Waktu Indonesia Barat)",
         "nilai": "C",
-        "sks": 3
+        "sks": 2,
+        "semester": 3
     },
     {
-        "id": "e042942e-b9b3-4435-815f-db7b9ef56a3c",
+        "id": "d24eeb79-e378-4b1b-94b0-ea2b6b579804",
+        "type": "tambah",
+        "nama": "Ilmu Politik",
+        "date": "Tue Jun 06 2017 17:57:17 GMT+0700 (Waktu Indonesia Barat)",
+        "nilai": "C+",
+        "sks": 4,
+        "semester": 8
+    },
+    {
+        "id": "ff0b3b84-a470-4331-b1b8-ed5d12dd5eef",
         "type": "hapus",
-        "nama": "Metodologi Penelitian",
-        "date": "Tue Feb 06 2018 12:27:03 GMT+0700 (Waktu Indonesia Barat)",
+        "nama": "Hubungan Internasional",
+        "date": "Tue Aug 30 2022 00:13:29 GMT+0700 (Waktu Indonesia Barat)",
         "nilai": "B+",
-        "sks": 1
+        "sks": 4,
+        "semester": 2
     },
     {
-        "id": "288568de-64e6-41c4-b889-87d77d26a749",
+        "id": "3dcfab16-d882-45cc-9517-6ac8fc2fb4e9",
+        "type": "tambah",
+        "nama": "Metodologi Penelitian",
+        "date": "Sat Apr 06 2024 22:16:46 GMT+0700 (Waktu Indonesia Barat)",
+        "nilai": "D+",
+        "sks": 2,
+        "semester": 2
+    },
+    {
+        "id": "900918a9-8c54-41df-a6dd-08acd0bfadc7",
         "type": "tambah",
         "nama": "Statistika Sosial",
-        "date": "Tue May 10 2022 00:24:29 GMT+0700 (Waktu Indonesia Barat)",
-        "nilai": "C",
-        "sks": 2
+        "date": "Tue Jul 28 2015 04:13:25 GMT+0700 (Waktu Indonesia Barat)",
+        "nilai": "C+",
+        "sks": 1,
+        "semester": 8
     },
     {
-        "id": "2b11750b-aa13-4c07-b47c-0f18522650e0",
+        "id": "e54e493f-eb0d-4324-a3e3-34f53bcec613",
         "type": "hapus",
         "nama": "Metode Penelitian Kualitatif",
-        "date": "Mon Dec 11 2017 07:32:16 GMT+0700 (Waktu Indonesia Barat)",
-        "nilai": "B",
-        "sks": 3
+        "date": "Fri Jul 21 2017 05:09:15 GMT+0700 (Waktu Indonesia Barat)",
+        "nilai": "D+",
+        "sks": 3,
+        "semester": 4
     },
     {
-        "id": "a0d3aec7-f485-4a75-a17c-662f881342e8",
+        "id": "2102068d-3532-4b20-ba3f-9ff2796a229e",
         "type": "hapus",
         "nama": "Metode Penelitian Kuantitatif",
-        "date": "Sun Jul 12 2015 09:57:43 GMT+0700 (Waktu Indonesia Barat)",
+        "date": "Sun Dec 07 2014 04:23:00 GMT+0700 (Waktu Indonesia Barat)",
         "nilai": "C",
-        "sks": 2
+        "sks": 3,
+        "semester": 2
     },
     {
-        "id": "a2341d13-ccac-4e34-8212-64c652be037b",
+        "id": "6dbb960b-5ceb-4780-aedc-cef6c34af49d",
         "type": "tambah",
         "nama": "Sejarah Indonesia",
-        "date": "Sat Apr 15 2017 21:38:59 GMT+0700 (Waktu Indonesia Barat)",
-        "nilai": "B+",
-        "sks": 3
+        "date": "Tue Nov 03 2020 07:52:00 GMT+0700 (Waktu Indonesia Barat)",
+        "nilai": "C",
+        "sks": 2,
+        "semester": 8
     },
     {
-        "id": "f63e2b04-8968-47c4-9ee7-389664652782",
+        "id": "99b60139-7818-4192-bfe1-fdfe9506802d",
         "type": "hapus",
         "nama": "Sejarah Dunia",
-        "date": "Sat Nov 22 2014 16:46:54 GMT+0700 (Waktu Indonesia Barat)",
-        "nilai": "C",
-        "sks": 3
-    },
-    {
-        "id": "82488b1e-6c77-4c30-894e-99ecc99bf412",
-        "type": "tambah",
-        "nama": "Geografi",
-        "date": "Thu Jan 30 2014 20:08:26 GMT+0700 (Waktu Indonesia Barat)",
-        "nilai": "B+",
-        "sks": 4
-    },
-    {
-        "id": "7f57f268-4d0b-4b0f-bba1-0300bd7124d6",
-        "type": "hapus",
-        "nama": "Geologi",
-        "date": "Sun Apr 04 2021 16:00:41 GMT+0700 (Waktu Indonesia Barat)",
-        "nilai": "C+",
-        "sks": 4
-    },
-    {
-        "id": "c611d343-5e9b-471d-b8d2-094496029e24",
-        "type": "hapus",
-        "nama": "Ekologi",
-        "date": "Thu Jul 07 2016 09:21:51 GMT+0700 (Waktu Indonesia Barat)",
+        "date": "Thu Jun 20 2024 00:17:29 GMT+0700 (Waktu Indonesia Barat)",
         "nilai": "A",
-        "sks": 4
+        "sks": 2,
+        "semester": 5
     },
     {
-        "id": "b8d77cd0-f518-47ab-aefb-90b198ab6823",
+        "id": "8293a4bc-7dff-4318-a597-3edbbf59267c",
+        "type": "hapus",
+        "nama": "Geografi",
+        "date": "Thu Oct 31 2024 16:57:18 GMT+0700 (Waktu Indonesia Barat)",
+        "nilai": "B",
+        "sks": 2,
+        "semester": 3
+    },
+    {
+        "id": "5311b691-769f-4aae-a8a9-a6da5994aaa0",
         "type": "tambah",
-        "nama": "Manajemen Sumber Daya Alam",
-        "date": "Thu Aug 04 2016 23:22:39 GMT+0700 (Waktu Indonesia Barat)",
-        "nilai": "B+",
-        "sks": 1
+        "nama": "Geologi",
+        "date": "Sun Nov 22 2015 21:50:36 GMT+0700 (Waktu Indonesia Barat)",
+        "nilai": "D",
+        "sks": 2,
+        "semester": 7
     },
     {
-        "id": "ba65765b-7dc8-4746-b8f6-facd739a4543",
+        "id": "9d4e0c71-c2c3-457a-8ef6-03b2d113f6e3",
+        "type": "tambah",
+        "nama": "Ekologi",
+        "date": "Thu Jun 11 2015 07:10:50 GMT+0700 (Waktu Indonesia Barat)",
+        "nilai": "D+",
+        "sks": 1,
+        "semester": 1
+    },
+    {
+        "id": "ffcbb104-28ea-4898-b563-912c40c04cf9",
+        "type": "hapus",
+        "nama": "Manajemen Sumber Daya Alam",
+        "date": "Fri May 10 2024 17:40:22 GMT+0700 (Waktu Indonesia Barat)",
+        "nilai": "E",
+        "sks": 3,
+        "semester": 4
+    },
+    {
+        "id": "5873c3f9-00c3-49f9-9eea-80e5ed95230b",
         "type": "tambah",
         "nama": "Teknik Lingkungan",
-        "date": "Fri Feb 28 2014 18:53:43 GMT+0700 (Waktu Indonesia Barat)",
-        "nilai": "B",
-        "sks": 4
-    },
-    {
-        "id": "10586e3a-1cde-4420-8659-28c34a92c5a9",
-        "type": "tambah",
-        "nama": "Hukum Lingkungan",
-        "date": "Tue Dec 19 2017 12:28:22 GMT+0700 (Waktu Indonesia Barat)",
+        "date": "Tue Sep 01 2015 20:09:20 GMT+0700 (Waktu Indonesia Barat)",
         "nilai": "A",
-        "sks": 3
+        "sks": 1,
+        "semester": 8
     },
     {
-        "id": "9f3a8155-9370-4d2b-ae61-0e2155a592cb",
+        "id": "56e97cdc-13fc-4d8b-9e2c-13c84b0a87af",
         "type": "hapus",
-        "nama": "Pengantar Ilmu Komunikasi",
-        "date": "Wed Sep 30 2015 20:18:15 GMT+0700 (Waktu Indonesia Barat)",
-        "nilai": "E",
-        "sks": 4
+        "nama": "Hukum Lingkungan",
+        "date": "Mon Jan 31 2022 10:52:01 GMT+0700 (Waktu Indonesia Barat)",
+        "nilai": "D+",
+        "sks": 3,
+        "semester": 8
     },
     {
-        "id": "00e23e02-6df5-473f-8226-500ebabd9f6a",
+        "id": "f7f0986c-ddb2-4442-b21b-56477b76a9a4",
+        "type": "tambah",
+        "nama": "Pengantar Ilmu Komunikasi",
+        "date": "Wed Jan 28 2015 16:38:00 GMT+0700 (Waktu Indonesia Barat)",
+        "nilai": "D+",
+        "sks": 1,
+        "semester": 2
+    },
+    {
+        "id": "61dd538b-8cc2-4b01-9a26-9e2cf2877481",
         "type": "tambah",
         "nama": "Jurnalistik",
-        "date": "Sat Dec 12 2020 22:36:06 GMT+0700 (Waktu Indonesia Barat)",
-        "nilai": "D+",
-        "sks": 3
+        "date": "Fri Jun 23 2017 15:12:18 GMT+0700 (Waktu Indonesia Barat)",
+        "nilai": "B",
+        "sks": 3,
+        "semester": 4
     },
     {
-        "id": "b5445d20-473c-4f9c-9cd1-6eb244627c2f",
-        "type": "tambah",
+        "id": "6504f975-1677-46c4-ae91-e94f9c33c3d2",
+        "type": "hapus",
         "nama": "Hubungan Masyarakat",
-        "date": "Thu May 19 2022 10:31:03 GMT+0700 (Waktu Indonesia Barat)",
-        "nilai": "B+",
-        "sks": 4
+        "date": "Sun Aug 05 2018 18:37:42 GMT+0700 (Waktu Indonesia Barat)",
+        "nilai": "C",
+        "sks": 3,
+        "semester": 2
     },
     {
-        "id": "b8f26dee-f7f8-44cf-8d47-081e2f008062",
+        "id": "2888715b-99fa-49e4-9b23-caac30cb6198",
         "type": "hapus",
         "nama": "Produksi Media",
-        "date": "Tue Nov 11 2014 10:23:50 GMT+0700 (Waktu Indonesia Barat)",
-        "nilai": "D+",
-        "sks": 4
+        "date": "Sun Oct 25 2020 02:39:34 GMT+0700 (Waktu Indonesia Barat)",
+        "nilai": "A",
+        "sks": 1,
+        "semester": 1
     },
     {
-        "id": "fc163a5f-281d-4f88-aeed-b361a30f47a1",
-        "type": "tambah",
+        "id": "ede0d962-8228-414d-95cc-d3876e80a6e1",
+        "type": "hapus",
         "nama": "Komunikasi Pemasaran",
-        "date": "Fri Jul 21 2023 10:32:33 GMT+0700 (Waktu Indonesia Barat)",
-        "nilai": "B+",
-        "sks": 1
+        "date": "Mon Mar 08 2021 00:03:38 GMT+0700 (Waktu Indonesia Barat)",
+        "nilai": "C",
+        "sks": 2,
+        "semester": 8
     },
     {
-        "id": "ffb2ccb9-1323-490b-b01f-ff41ca83d9ef",
+        "id": "7ddf514f-4c13-4ee6-8bd2-636543d62e0e",
         "type": "tambah",
         "nama": "Ilmu Ekonomi",
-        "date": "Mon Jun 06 2016 20:49:44 GMT+0700 (Waktu Indonesia Barat)",
-        "nilai": "B",
-        "sks": 4
+        "date": "Mon Nov 20 2023 05:21:36 GMT+0700 (Waktu Indonesia Barat)",
+        "nilai": "C+",
+        "sks": 1,
+        "semester": 2
     },
     {
-        "id": "0b882c7f-8f3e-4e39-810e-bb6927177f0c",
-        "type": "hapus",
+        "id": "9f9aa815-2be0-4099-bac8-64f62e2f19f3",
+        "type": "tambah",
         "nama": "Sistem Ekonomi",
-        "date": "Wed Jul 21 2021 14:39:49 GMT+0700 (Waktu Indonesia Barat)",
-        "nilai": "B+",
-        "sks": 2
+        "date": "Fri Oct 03 2014 05:15:44 GMT+0700 (Waktu Indonesia Barat)",
+        "nilai": "D",
+        "sks": 3,
+        "semester": 6
     },
     {
-        "id": "385ef9bc-ff17-403a-817c-c07e3fe5ccd2",
-        "type": "hapus",
+        "id": "6855a8bc-ee05-4f20-b8d7-5dbe7ca1544f",
+        "type": "tambah",
         "nama": "Pengantar Manajemen",
-        "date": "Wed Nov 11 2015 00:02:10 GMT+0700 (Waktu Indonesia Barat)",
-        "nilai": "E",
-        "sks": 3
+        "date": "Sat Sep 17 2022 04:30:01 GMT+0700 (Waktu Indonesia Barat)",
+        "nilai": "B",
+        "sks": 1,
+        "semester": 4
     },
     {
-        "id": "025fc1ad-b20a-44e7-9c73-683ca3fda19c",
+        "id": "3ec53978-05f0-4eab-9ad7-ed923054abd1",
         "type": "hapus",
         "nama": "Pengantar Akuntansi",
-        "date": "Sun Apr 18 2021 06:05:16 GMT+0700 (Waktu Indonesia Barat)",
-        "nilai": "D+",
-        "sks": 4
+        "date": "Wed Feb 01 2023 14:03:07 GMT+0700 (Waktu Indonesia Barat)",
+        "nilai": "E",
+        "sks": 3,
+        "semester": 4
     },
     {
-        "id": "2262a3be-30b7-4f50-b62a-469a02dfddaa",
-        "type": "tambah",
+        "id": "24516e47-64b5-4e4f-be7e-9fff1a052ebf",
+        "type": "hapus",
         "nama": "Hukum Perdata",
-        "date": "Thu Mar 07 2019 01:17:19 GMT+0700 (Waktu Indonesia Barat)",
-        "nilai": "D+",
-        "sks": 2
+        "date": "Sat Jan 15 2022 16:30:33 GMT+0700 (Waktu Indonesia Barat)",
+        "nilai": "C+",
+        "sks": 4,
+        "semester": 5
     },
     {
-        "id": "e589dedb-e1f1-4b2f-a52a-6b5131c93581",
+        "id": "9245f819-fea6-4b3f-8228-45d5728d23e9",
         "type": "hapus",
         "nama": "Hukum Pidana",
-        "date": "Sat Feb 16 2019 23:24:09 GMT+0700 (Waktu Indonesia Barat)",
-        "nilai": "B",
-        "sks": 1
+        "date": "Sat Mar 17 2018 07:25:38 GMT+0700 (Waktu Indonesia Barat)",
+        "nilai": "C+",
+        "sks": 2,
+        "semester": 3
     },
     {
-        "id": "ffe234a0-a76c-4258-9f36-2bd5dd002f36",
-        "type": "hapus",
+        "id": "7a289ae8-0aa1-4168-8076-b08de29772e2",
+        "type": "tambah",
         "nama": "Hukum Internasional",
-        "date": "Sat Mar 18 2023 11:20:36 GMT+0700 (Waktu Indonesia Barat)",
-        "nilai": "E",
-        "sks": 2
+        "date": "Thu Jun 12 2014 05:46:14 GMT+0700 (Waktu Indonesia Barat)",
+        "nilai": "C",
+        "sks": 3,
+        "semester": 7
     },
     {
-        "id": "379e97f2-27ed-4ee2-b326-bb3ac436dc9a",
+        "id": "d9ae9ff1-2409-47ef-85d2-dfdb73f191e1",
         "type": "tambah",
         "nama": "Administrasi Publik",
-        "date": "Fri Nov 15 2019 05:11:29 GMT+0700 (Waktu Indonesia Barat)",
-        "nilai": "C",
-        "sks": 4
+        "date": "Wed Nov 16 2022 22:25:53 GMT+0700 (Waktu Indonesia Barat)",
+        "nilai": "D",
+        "sks": 4,
+        "semester": 4
     },
     {
-        "id": "98b709d1-2f64-46ec-be26-51dd010ac7ce",
+        "id": "115b7c65-394c-4308-95e6-ad9e3e007969",
         "type": "tambah",
         "nama": "Administrasi Bisnis",
-        "date": "Fri Apr 25 2014 02:45:56 GMT+0700 (Waktu Indonesia Barat)",
+        "date": "Sun Dec 24 2023 18:12:46 GMT+0700 (Waktu Indonesia Barat)",
         "nilai": "C+",
-        "sks": 1
+        "sks": 3,
+        "semester": 2
     },
     {
-        "id": "e6add23b-acab-4c3a-9e78-9fb7f5137e81",
-        "type": "hapus",
-        "nama": "Manajemen Keuangan",
-        "date": "Mon Oct 19 2020 10:38:52 GMT+0700 (Waktu Indonesia Barat)",
-        "nilai": "C+",
-        "sks": 2
-    },
-    {
-        "id": "a6595083-fe2e-4094-9f14-d934fa31fcd0",
+        "id": "916478b6-5cef-4cd8-b4f6-6ff7c8882d50",
         "type": "tambah",
-        "nama": "Manajemen Operasi",
-        "date": "Sun Feb 14 2021 14:00:22 GMT+0700 (Waktu Indonesia Barat)",
-        "nilai": "D",
-        "sks": 1
+        "nama": "Manajemen Keuangan",
+        "date": "Fri Aug 09 2019 01:31:48 GMT+0700 (Waktu Indonesia Barat)",
+        "nilai": "C",
+        "sks": 2,
+        "semester": 6
     },
     {
-        "id": "00f09b4e-fc7b-40af-8292-3044deee2c24",
+        "id": "204ac55a-a1a9-4505-9ba0-2233eda7bc2d",
+        "type": "hapus",
+        "nama": "Manajemen Operasi",
+        "date": "Thu Apr 21 2022 02:31:32 GMT+0700 (Waktu Indonesia Barat)",
+        "nilai": "A",
+        "sks": 2,
+        "semester": 5
+    },
+    {
+        "id": "c4b80eed-97fd-4aec-b76c-c8391d90c45c",
         "type": "tambah",
         "nama": "Manajemen Strategis",
-        "date": "Sat Jul 24 2021 01:07:17 GMT+0700 (Waktu Indonesia Barat)",
-        "nilai": "C+",
-        "sks": 1
+        "date": "Wed May 24 2023 00:12:47 GMT+0700 (Waktu Indonesia Barat)",
+        "nilai": "E",
+        "sks": 1,
+        "semester": 8
     },
     {
-        "id": "d9433f50-dd53-4bb4-a7ad-21938052297b",
+        "id": "8d765878-ac2b-469e-8386-cce53ffa73da",
         "type": "tambah",
         "nama": "Ilmu Kedokteran Dasar",
-        "date": "Sun Aug 21 2016 16:58:54 GMT+0700 (Waktu Indonesia Barat)",
-        "nilai": "C+",
-        "sks": 4
+        "date": "Sun Jun 17 2018 23:14:05 GMT+0700 (Waktu Indonesia Barat)",
+        "nilai": "E",
+        "sks": 4,
+        "semester": 2
     },
     {
-        "id": "01cf8af1-bac5-4bf5-8d3c-5862c31ed686",
-        "type": "tambah",
+        "id": "d68bbc86-4e53-4b49-99f5-797df45d5916",
+        "type": "hapus",
         "nama": "Farmakologi",
-        "date": "Mon Jan 04 2021 09:28:28 GMT+0700 (Waktu Indonesia Barat)",
+        "date": "Sat Sep 17 2016 19:52:11 GMT+0700 (Waktu Indonesia Barat)",
         "nilai": "D+",
-        "sks": 3
+        "sks": 2,
+        "semester": 4
     },
     {
-        "id": "ea93c2cc-a99f-4217-be09-9de147262f64",
+        "id": "3ffa42c6-793a-4545-bc12-acd1c9d498b9",
         "type": "tambah",
         "nama": "Patologi",
-        "date": "Mon Apr 03 2023 21:24:23 GMT+0700 (Waktu Indonesia Barat)",
+        "date": "Sun Nov 13 2016 06:15:05 GMT+0700 (Waktu Indonesia Barat)",
         "nilai": "B",
-        "sks": 4
+        "sks": 4,
+        "semester": 4
     },
     {
-        "id": "20c00b4b-029f-4837-88c0-c6165fe90b4c",
+        "id": "d36e4a85-5628-4c0e-a393-89af6057e4b3",
         "type": "tambah",
         "nama": "Anatomi Manusia",
-        "date": "Fri Jan 13 2023 18:14:54 GMT+0700 (Waktu Indonesia Barat)",
-        "nilai": "D+",
-        "sks": 3
+        "date": "Fri Apr 19 2024 07:50:04 GMT+0700 (Waktu Indonesia Barat)",
+        "nilai": "B+",
+        "sks": 3,
+        "semester": 5
     },
     {
-        "id": "5e0ad3a5-c63f-4340-bb8f-d2676c2c0b8b",
-        "type": "tambah",
-        "nama": "Fisiologi Manusia",
-        "date": "Mon Aug 22 2022 07:24:09 GMT+0700 (Waktu Indonesia Barat)",
-        "nilai": "C+",
-        "sks": 3
-    },
-    {
-        "id": "401ea3ab-0786-43ec-9750-f83d8454df4f",
+        "id": "71e77a5b-308c-41a4-9304-eaa35fe1e7f1",
         "type": "hapus",
-        "nama": "Mikrobiologi",
-        "date": "Mon Feb 10 2020 22:13:49 GMT+0700 (Waktu Indonesia Barat)",
-        "nilai": "D",
-        "sks": 3
+        "nama": "Fisiologi Manusia",
+        "date": "Wed Mar 11 2015 11:28:56 GMT+0700 (Waktu Indonesia Barat)",
+        "nilai": "B+",
+        "sks": 4,
+        "semester": 2
     },
     {
-        "id": "92f52830-1d58-4b60-8815-b7405184d5df",
+        "id": "e9604103-3244-4111-84db-8367cd1c1a0f",
+        "type": "tambah",
+        "nama": "Mikrobiologi",
+        "date": "Fri Jan 16 2015 01:58:30 GMT+0700 (Waktu Indonesia Barat)",
+        "nilai": "E",
+        "sks": 2,
+        "semester": 5
+    },
+    {
+        "id": "996e77ee-b75e-4c60-85fe-cc7e24fa2a03",
         "type": "hapus",
         "nama": "Kesehatan Masyarakat",
-        "date": "Thu Apr 29 2021 05:10:01 GMT+0700 (Waktu Indonesia Barat)",
-        "nilai": "D+",
-        "sks": 2
+        "date": "Thu Nov 29 2018 07:31:50 GMT+0700 (Waktu Indonesia Barat)",
+        "nilai": "B+",
+        "sks": 2,
+        "semester": 8
     },
     {
-        "id": "815c36a8-e5e1-400d-b318-caf3bd5fa806",
+        "id": "06137bf7-34f8-4a17-898b-8454d7725941",
         "type": "tambah",
         "nama": "Epidemiologi",
-        "date": "Wed May 10 2017 00:37:16 GMT+0700 (Waktu Indonesia Barat)",
-        "nilai": "C+",
-        "sks": 2
+        "date": "Sat Jul 29 2017 18:39:14 GMT+0700 (Waktu Indonesia Barat)",
+        "nilai": "B+",
+        "sks": 3,
+        "semester": 4
     },
     {
-        "id": "5b1656b5-844c-4a5d-af16-d834a38a8572",
+        "id": "0ebe56de-aaf6-4f4e-8e90-90ea3a9d060c",
         "type": "hapus",
         "nama": "Gizi Kesehatan",
-        "date": "Fri Dec 21 2018 17:10:36 GMT+0700 (Waktu Indonesia Barat)",
-        "nilai": "B+",
-        "sks": 4
+        "date": "Tue Apr 21 2015 22:18:01 GMT+0700 (Waktu Indonesia Barat)",
+        "nilai": "E",
+        "sks": 2,
+        "semester": 2
     },
     {
-        "id": "7eec4842-4532-47ea-8f50-35fc689a381c",
-        "type": "tambah",
+        "id": "d8b31b4e-8179-48a9-9615-b61ddc257216",
+        "type": "hapus",
         "nama": "Kepemimpinan dalam Kesehatan",
-        "date": "Mon Nov 20 2017 18:45:23 GMT+0700 (Waktu Indonesia Barat)",
-        "nilai": "D",
-        "sks": 2
+        "date": "Fri Dec 22 2017 06:19:38 GMT+0700 (Waktu Indonesia Barat)",
+        "nilai": "E",
+        "sks": 4,
+        "semester": 3
     },
     {
-        "id": "015e2ea5-4f08-44ac-9d6c-ed7887b12c7d",
-        "type": "hapus",
+        "id": "317610f7-733a-4830-b1ef-1015be29010c",
+        "type": "tambah",
         "nama": "Teknik Mesin",
-        "date": "Sat May 14 2016 09:54:27 GMT+0700 (Waktu Indonesia Barat)",
-        "nilai": "C+",
-        "sks": 1
+        "date": "Thu Oct 28 2021 05:45:28 GMT+0700 (Waktu Indonesia Barat)",
+        "nilai": "B",
+        "sks": 2,
+        "semester": 4
     },
     {
-        "id": "5d4b9595-5757-4c64-b047-ea21cde7a6bc",
-        "type": "tambah",
-        "nama": "Termodinamika",
-        "date": "Thu May 18 2017 01:40:02 GMT+0700 (Waktu Indonesia Barat)",
-        "nilai": "A",
-        "sks": 4
-    },
-    {
-        "id": "63dbdfd6-a453-48dc-8bf5-e6ade951ad31",
-        "type": "tambah",
-        "nama": "Mekanika Fluida",
-        "date": "Fri Sep 09 2016 17:05:38 GMT+0700 (Waktu Indonesia Barat)",
-        "nilai": "B+",
-        "sks": 1
-    },
-    {
-        "id": "98a4c6bf-472e-42e5-8596-831bb00f0491",
+        "id": "387f0dd5-6544-4814-9515-4d5f27292614",
         "type": "hapus",
-        "nama": "Desain Mekanik",
-        "date": "Mon Jun 13 2022 00:43:47 GMT+0700 (Waktu Indonesia Barat)",
+        "nama": "Termodinamika",
+        "date": "Mon Jun 12 2017 08:28:30 GMT+0700 (Waktu Indonesia Barat)",
+        "nilai": "C",
+        "sks": 3,
+        "semester": 5
+    },
+    {
+        "id": "2c41217e-d1af-46c7-a974-da7fa005e251",
+        "type": "hapus",
+        "nama": "Mekanika Fluida",
+        "date": "Sun Jun 16 2024 12:02:59 GMT+0700 (Waktu Indonesia Barat)",
         "nilai": "C+",
-        "sks": 2
+        "sks": 4,
+        "semester": 7
     },
     {
-        "id": "4b3df01a-17b2-427c-b732-68e47af80f0d",
+        "id": "9f9d4c5d-f1b8-4c05-a5ff-1f18a5bbde39",
         "type": "tambah",
+        "nama": "Desain Mekanik",
+        "date": "Thu Mar 12 2015 09:54:13 GMT+0700 (Waktu Indonesia Barat)",
+        "nilai": "C",
+        "sks": 2,
+        "semester": 6
+    },
+    {
+        "id": "011eeb69-9bd4-4a14-864d-87d625b49629",
+        "type": "hapus",
         "nama": "Teknik Material",
-        "date": "Thu Jan 09 2020 16:13:22 GMT+0700 (Waktu Indonesia Barat)",
+        "date": "Mon Mar 27 2017 21:17:45 GMT+0700 (Waktu Indonesia Barat)",
         "nilai": "A",
-        "sks": 1
+        "sks": 1,
+        "semester": 6
     },
     {
-        "id": "e7c75ac0-0cb1-4603-993e-001a7cfcd39a",
-        "type": "tambah",
+        "id": "93eca9a1-e632-489c-9e19-b48a51bb0871",
+        "type": "hapus",
         "nama": "Proses Manufaktur",
-        "date": "Mon Nov 07 2022 04:02:35 GMT+0700 (Waktu Indonesia Barat)",
-        "nilai": "D+",
-        "sks": 2
+        "date": "Tue Jan 12 2016 08:40:13 GMT+0700 (Waktu Indonesia Barat)",
+        "nilai": "B+",
+        "sks": 3,
+        "semester": 6
     },
     {
-        "id": "5718eab2-7bb3-4350-8e15-46dcd2c3a195",
+        "id": "9689b697-bb38-430d-b130-266a334802a2",
         "type": "hapus",
         "nama": "Rekayasa Sistem",
-        "date": "Tue Jan 12 2021 10:46:09 GMT+0700 (Waktu Indonesia Barat)",
-        "nilai": "D",
-        "sks": 2
+        "date": "Thu Feb 23 2017 20:47:57 GMT+0700 (Waktu Indonesia Barat)",
+        "nilai": "C",
+        "sks": 3,
+        "semester": 5
     },
     {
-        "id": "d6de553f-b4e6-4181-a91b-c4bdd9f9facb",
-        "type": "hapus",
+        "id": "28bfbb91-5807-4ad0-98c1-73d8386cedce",
+        "type": "tambah",
         "nama": "Teknik Elektro",
-        "date": "Tue Aug 15 2017 22:53:04 GMT+0700 (Waktu Indonesia Barat)",
-        "nilai": "D+",
-        "sks": 4
+        "date": "Sat Jul 23 2022 09:35:31 GMT+0700 (Waktu Indonesia Barat)",
+        "nilai": "C",
+        "sks": 1,
+        "semester": 1
     },
     {
-        "id": "b348f745-a262-4564-8427-4bcf2837e52d",
+        "id": "790fdfc3-613e-4b3c-892d-6d5f97973bde",
         "type": "tambah",
         "nama": "Elektronika Dasar",
-        "date": "Mon Aug 03 2015 12:18:58 GMT+0700 (Waktu Indonesia Barat)",
-        "nilai": "A",
-        "sks": 3
+        "date": "Sat Aug 08 2015 13:52:58 GMT+0700 (Waktu Indonesia Barat)",
+        "nilai": "C+",
+        "sks": 2,
+        "semester": 7
     },
     {
-        "id": "ad93a276-8c93-4834-8454-b3d8439372db",
+        "id": "035ed5f8-ca89-409f-944a-1f14f1af4829",
         "type": "hapus",
         "nama": "Sistem Tenaga Listrik",
-        "date": "Fri Oct 03 2014 13:19:00 GMT+0700 (Waktu Indonesia Barat)",
-        "nilai": "B+",
-        "sks": 3
+        "date": "Tue Apr 05 2022 16:38:42 GMT+0700 (Waktu Indonesia Barat)",
+        "nilai": "B",
+        "sks": 1,
+        "semester": 1
     },
     {
-        "id": "78309553-1301-4125-90c2-8fabc1e59046",
+        "id": "b16dfceb-7330-4612-81b4-2322f2da418c",
         "type": "tambah",
         "nama": "Instrumentasi",
-        "date": "Sat Jun 22 2019 07:25:55 GMT+0700 (Waktu Indonesia Barat)",
-        "nilai": "A",
-        "sks": 3
+        "date": "Sat Sep 23 2023 11:32:16 GMT+0700 (Waktu Indonesia Barat)",
+        "nilai": "E",
+        "sks": 2,
+        "semester": 7
     },
     {
-        "id": "3f0ec6e7-9767-4402-8181-81fe40a09504",
-        "type": "hapus",
-        "nama": "Kontrol Otomatis",
-        "date": "Mon Mar 20 2023 09:15:39 GMT+0700 (Waktu Indonesia Barat)",
-        "nilai": "D",
-        "sks": 3
-    },
-    {
-        "id": "f306a6e6-65a4-41d8-b256-fc58edf392fc",
+        "id": "f6939c81-77e1-433a-b5b9-29cb15f02c02",
         "type": "tambah",
-        "nama": "Telekomunikasi",
-        "date": "Sat Jul 04 2020 23:14:07 GMT+0700 (Waktu Indonesia Barat)",
-        "nilai": "C",
-        "sks": 4
+        "nama": "Kontrol Otomatis",
+        "date": "Wed Aug 17 2016 01:13:00 GMT+0700 (Waktu Indonesia Barat)",
+        "nilai": "E",
+        "sks": 2,
+        "semester": 2
     },
     {
-        "id": "5b4f763c-e8d9-4e6c-8dd6-11ef4f51dbf6",
+        "id": "35ca34bf-1e63-4017-902a-49bc34a89254",
+        "type": "hapus",
+        "nama": "Telekomunikasi",
+        "date": "Sat Dec 07 2019 00:17:18 GMT+0700 (Waktu Indonesia Barat)",
+        "nilai": "D+",
+        "sks": 4,
+        "semester": 4
+    },
+    {
+        "id": "351b0bd9-b04f-4cb6-8653-ea41e560e4f4",
         "type": "hapus",
         "nama": "Robotika",
-        "date": "Sat Jul 01 2023 14:03:31 GMT+0700 (Waktu Indonesia Barat)",
-        "nilai": "B",
-        "sks": 4
+        "date": "Sat Dec 26 2015 04:23:31 GMT+0700 (Waktu Indonesia Barat)",
+        "nilai": "E",
+        "sks": 2,
+        "semester": 8
     },
     {
-        "id": "9ef1578c-6e74-414d-8c0b-fa19026d51fc",
+        "id": "6b164bd4-8972-4fbf-bcfb-c7dd68dfb06e",
         "type": "tambah",
         "nama": "Seni Musik",
-        "date": "Tue Nov 12 2019 17:50:56 GMT+0700 (Waktu Indonesia Barat)",
+        "date": "Mon Apr 27 2015 06:57:32 GMT+0700 (Waktu Indonesia Barat)",
         "nilai": "C+",
-        "sks": 3
+        "sks": 4,
+        "semester": 4
     },
     {
-        "id": "d8b3c3a8-d78a-4a5c-9997-3da97e3dc067",
+        "id": "5ca41fb9-7655-43ae-81be-d8509ea3135c",
         "type": "hapus",
         "nama": "Seni Tari",
-        "date": "Mon Apr 26 2021 23:15:00 GMT+0700 (Waktu Indonesia Barat)",
+        "date": "Sat Aug 17 2024 06:05:07 GMT+0700 (Waktu Indonesia Barat)",
         "nilai": "D+",
-        "sks": 4
+        "sks": 1,
+        "semester": 3
     },
     {
-        "id": "ab3f4c4d-c3a8-4f4e-af13-ea2d33a49eb3",
-        "type": "hapus",
-        "nama": "Seni Rupa",
-        "date": "Mon Nov 02 2020 11:13:03 GMT+0700 (Waktu Indonesia Barat)",
-        "nilai": "C",
-        "sks": 2
-    },
-    {
-        "id": "843604b1-71ed-45e8-876c-bcd50dc545e8",
-        "type": "hapus",
-        "nama": "Desain Interior",
-        "date": "Mon Jan 22 2018 10:22:46 GMT+0700 (Waktu Indonesia Barat)",
-        "nilai": "C+",
-        "sks": 2
-    },
-    {
-        "id": "b1665165-01de-4b78-a722-e4c7079fafd0",
+        "id": "0330dcb9-c0c9-4e6f-88a1-8d02a9a069ae",
         "type": "tambah",
-        "nama": "Desain Produk",
-        "date": "Tue Apr 09 2024 12:22:38 GMT+0700 (Waktu Indonesia Barat)",
-        "nilai": "E",
-        "sks": 4
+        "nama": "Seni Rupa",
+        "date": "Wed Jun 27 2018 20:15:27 GMT+0700 (Waktu Indonesia Barat)",
+        "nilai": "B",
+        "sks": 4,
+        "semester": 4
     },
     {
-        "id": "ece5e45c-6bfc-441d-8d04-618cb6f64843",
+        "id": "8a2d7a81-47e9-41eb-a5e1-e521c50fe772",
+        "type": "tambah",
+        "nama": "Desain Interior",
+        "date": "Sun Aug 30 2015 03:31:15 GMT+0700 (Waktu Indonesia Barat)",
+        "nilai": "B+",
+        "sks": 3,
+        "semester": 3
+    },
+    {
+        "id": "db348cdf-93ff-41c7-9568-4b17efb22689",
         "type": "hapus",
-        "nama": "Arsitektur",
-        "date": "Sat Jun 08 2024 01:32:54 GMT+0700 (Waktu Indonesia Barat)",
-        "nilai": "E",
-        "sks": 2
+        "nama": "Desain Produk",
+        "date": "Wed Feb 03 2016 15:57:37 GMT+0700 (Waktu Indonesia Barat)",
+        "nilai": "B+",
+        "sks": 1,
+        "semester": 1
     },
     {
-        "id": "7d1162e5-af99-44ae-98b5-3d4e6b3525ea",
+        "id": "4c131540-d1a0-4257-b7b5-5dd917d64367",
+        "type": "tambah",
+        "nama": "Arsitektur",
+        "date": "Sat Jul 06 2019 16:06:37 GMT+0700 (Waktu Indonesia Barat)",
+        "nilai": "C+",
+        "sks": 3,
+        "semester": 5
+    },
+    {
+        "id": "307484c1-8aec-4106-9c06-e6c1bb8cfa98",
         "type": "tambah",
         "nama": "Perencanaan Wilayah dan Kota",
-        "date": "Sun May 31 2020 07:52:00 GMT+0700 (Waktu Indonesia Barat)",
-        "nilai": "B",
-        "sks": 2
+        "date": "Wed Feb 27 2019 22:06:04 GMT+0700 (Waktu Indonesia Barat)",
+        "nilai": "C",
+        "sks": 3,
+        "semester": 1
     },
     {
-        "id": "62b76981-c4e5-4b5d-8825-4d1015568eae",
+        "id": "35de9614-3fb9-4dea-bcf7-3e28bad0b3a5",
         "type": "hapus",
         "nama": "Konstruksi Bangunan",
-        "date": "Wed Nov 02 2022 11:25:00 GMT+0700 (Waktu Indonesia Barat)",
-        "nilai": "B+",
-        "sks": 2
+        "date": "Thu Oct 14 2021 10:30:45 GMT+0700 (Waktu Indonesia Barat)",
+        "nilai": "A",
+        "sks": 2,
+        "semester": 2
     },
     {
-        "id": "3786ce6b-65fe-4d7b-ba8b-7633767c993a",
+        "id": "3a200544-686e-451d-9ccc-34fbd5be89c8",
         "type": "tambah",
         "nama": "Hukum Tata Negara",
-        "date": "Tue Oct 19 2021 01:49:00 GMT+0700 (Waktu Indonesia Barat)",
+        "date": "Mon Feb 24 2014 22:15:04 GMT+0700 (Waktu Indonesia Barat)",
         "nilai": "C+",
-        "sks": 1
+        "sks": 3,
+        "semester": 8
     },
     {
-        "id": "f47294f7-faba-4dfd-a8bc-3306af244690",
+        "id": "c8b2481c-c24f-479f-bfd5-6d86d1e9cb46",
         "type": "tambah",
         "nama": "Hukum Agraria",
-        "date": "Wed Jan 01 2020 16:34:29 GMT+0700 (Waktu Indonesia Barat)",
-        "nilai": "D+",
-        "sks": 2
+        "date": "Mon Feb 08 2021 04:06:35 GMT+0700 (Waktu Indonesia Barat)",
+        "nilai": "C+",
+        "sks": 1,
+        "semester": 1
     },
     {
-        "id": "2159bb17-63af-48ba-9c2f-b98a741c9b88",
-        "type": "tambah",
+        "id": "89db902c-f933-4278-a285-f590833f5db7",
+        "type": "hapus",
         "nama": "Pengantar Filsafat",
-        "date": "Mon Dec 13 2021 18:22:32 GMT+0700 (Waktu Indonesia Barat)",
+        "date": "Wed Jul 24 2024 01:28:39 GMT+0700 (Waktu Indonesia Barat)",
         "nilai": "D",
-        "sks": 1
+        "sks": 1,
+        "semester": 5
     },
     {
-        "id": "16336ffa-0f09-4fc2-9a42-de0c8a8773d7",
-        "type": "tambah",
+        "id": "2ae73688-3735-472c-89e6-258747ed56cf",
+        "type": "hapus",
         "nama": "Logika",
-        "date": "Mon Jul 30 2018 00:27:36 GMT+0700 (Waktu Indonesia Barat)",
-        "nilai": "D",
-        "sks": 4
+        "date": "Sat Jan 18 2014 17:27:38 GMT+0700 (Waktu Indonesia Barat)",
+        "nilai": "D+",
+        "sks": 2,
+        "semester": 4
     },
     {
-        "id": "90976fde-214c-4440-921d-c34d4f789786",
-        "type": "tambah",
+        "id": "66468f73-dc98-4175-a070-f63bb7b994da",
+        "type": "hapus",
         "nama": "Etika",
-        "date": "Sat Jul 15 2017 08:59:41 GMT+0700 (Waktu Indonesia Barat)",
-        "nilai": "C",
-        "sks": 4
+        "date": "Wed Dec 28 2022 20:49:40 GMT+0700 (Waktu Indonesia Barat)",
+        "nilai": "B",
+        "sks": 2,
+        "semester": 1
     },
     {
-        "id": "fdbf4f16-2132-4e47-a304-b081541c8e77",
+        "id": "7f321c35-21f6-4ec2-a892-95362523f5f2",
         "type": "tambah",
         "nama": "Sejarah Filsafat",
-        "date": "Thu Jul 06 2017 03:40:42 GMT+0700 (Waktu Indonesia Barat)",
+        "date": "Sun Jan 29 2023 20:39:29 GMT+0700 (Waktu Indonesia Barat)",
         "nilai": "C+",
-        "sks": 3
+        "sks": 2,
+        "semester": 3
     }
-]
+])
 
 /**
  * @default
