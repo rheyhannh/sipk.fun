@@ -164,17 +164,9 @@
 }
 
 @media screen and (min-width: 2048px) {
-    .content {
-        display: initial;
-    }
-
-    .content aside {
-        display: fixed;
-    }
-
     .content .container {
         max-width: 1920px;
-        width: calc(100vw - 400px);
+        width: 100%;
         margin: 0 auto;
     }
 }
