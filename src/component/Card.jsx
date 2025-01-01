@@ -1035,7 +1035,7 @@ export function History({ state, data, penilaian, count }) {
  * @param {HTMLMotionProps<'div'> & HistoryDummyProps} props History dummy props
  * @returns {React.ReactElement} Rendered component
  */
-export function HistoryDummy({ item, color = 'success', semester = 1, ...props }) {
+export function HistoryDummy({ item, color = 'success', semester, ...props }) {
     return (
         <motion.div
             className={styles.history}
@@ -1046,11 +1046,11 @@ export function HistoryDummy({ item, color = 'success', semester = 1, ...props }
                     <IoAddOutline size={'24px'} />
                 </div>
                 <div className={styles.history__details}>
-                    <h4>
+                    <h4 style={{ color: 'var(--dark-color)' }}>
                         {item?.nama ?? 'Nama Matakuliah'}
                     </h4>
                     <small style={{ fontSize: '0.7rem' }}>
-                        Semester {item?.semester ?? semester}
+                        Semester {semester ?? item?.semester ?? 1}
                     </small>
                 </div>
                 <div className={styles.history__value}>
