@@ -8,7 +8,8 @@
       "@magiclink_page/*": ["./src/page/magiclink/*"],
       "@panduan_page/*": ["./src/page/panduan/*"],
       "@root_page/*": ["./src/page/root/*"],
-      "@users_page/*": ["./src/page/users/*"]
+      "@users_page/*": ["./src/page/users/*"],
+      "@assets/*": ["./public/*"]
     }
   }
 }
