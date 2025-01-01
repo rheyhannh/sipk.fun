@@ -12,8 +12,9 @@
  * @property {string} date
  * Tanggal matakuliah dummies
  * - Contoh : `Mon Dec 08 2014 15:16:51 GMT+0700 (Waktu Indonesia Barat)`
- * @property {string} nilai
+ * @property {MatkulDummiesNilai} nilai
  * Indeks nilai matakuliah dummies dimana menggunakan sistem indeks {@link MatkulDummiesNilai berikut} atau sama dengan yang digunakan Universitas Indonesia
+ * - Contoh : `A`, `C-`, `D+`
  * @property {number} sks
  * Sks matakuliah dummies
  * @property {number} semester
