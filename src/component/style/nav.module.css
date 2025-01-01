@@ -132,13 +132,13 @@
         background: var(--body-color);
         box-shadow: none;
         transition:
-        all var(--transition-default) ease-in-out,
-        background 0s;
+            all var(--transition-default) ease-in-out,
+            background 0s;
     }
 
     .aside.active {
         box-shadow: none;
-        transition: width var(--transition-default) cubic-bezier(.68,-0.25,.26,1.55);
+        transition: width var(--transition-default) cubic-bezier(.68, -0.25, .26, 1.55);
     }
 }
 
