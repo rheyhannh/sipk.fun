@@ -41,86 +41,8 @@ import { IoAnalyticsOutline } from "react-icons/io5";
 // #endregion
 
 // #region UTIL DEPEDENCY
-import { shuffleArray, findArrayIndexByString } from '../utils';
+import { shuffleArray, findArrayIndexByString, countPrevCharactersAndWords } from '../utils';
 // #endregion
-
-/** 
- * Method untuk menghitung jumlah karakter dan kata sebelumnya dari kata yang dipilih.
- * Hanya gunakan method ini untuk menghitung konten `statis`. Berikut adalah format dari array yang digunakan,
- * 
- * ```js
- * const pArray = [
- *      ['Analytics'], // Index 0 sebagai paragraf 1
- *      ['that', 'helps', 'you'], // Index 1 sebagai paragraf 2
- *      ['shape', 'the', 'future'] // Index 2 sebagai paragraf 3
- * ]
- * 
- * // Format pArray[pIndex][wIndex] - paragrafArray[indexParagraf][indexKata]
- * // Sehingga,
- * // pIndex dari 'that' = 1 dan wIndex = 0
- * // pIndex dari 'the' = 2 dan wIndex = 1
- * ```
- * 
- * Return object dengan key `words` sebagai jumlah kata, `chars` sebagai jumlah huruf dan `-1` jika beberapa case berikut terjadi,
- * - Param `pArray` falsy atau bukan merupakan tipe array
- * - Param `str` falsy atau tidak tersedia pada `pArray`
- * - Param `pIndex` dan `wIndex` tidak tersedia pada `pArray`
- * 
- * Jika terdapat kata yang sama, `pIndex` dan `wIndex` harus dipass karna akan menyebabkan kesalahan perhitungan
- * karna kata yang muncul terlebih dahulu akan dianggap sebagai kata yang dipilih. Untuk lebih jelasnya lihat contoh berikut,
- * 
- * ```js
- * const same_words = [
- *      ['lorem', 'ipsum', 'dolor'], 
- *      ['sit', 'lorem', 'ipsum']
- * ]
- * console.log(countPrevCharactersAndWords(same_words, true, 'lorem')); // { previousWords: 0, previousCharacters: 0 }
- * console.log(countPrevCharactersAndWords(same_words, true, 'ipsum')); // { previousWords: 1, previousCharacters: 5 }
- * 
- * // Pada console.log pertama, 'lorem' yang dimaksud adalah pada paragraf kedua namun hasil yang diberikan adalah 'lorem' yang pertama tampil
- * // Pada console.log kedua, 'ipsum' yang dimaksud adalah pada paragraf kedua namun hasil yang diberikan adalah 'ipsum' yang pertama tampil
- * ```
- * @param {Array<Array<string>>} pArray Array yang mendeskripsikan kata dari setiap paragraf
- * @param {boolean} [countDifferentParaghraph] Boolean untuk menghitung jumlah karakter dan kata sebelumnya walaupun berada pada paragraf yang berbeda, default `true`
- * @param {string} str Kata yang dipilih untuk menghitung jumlah karakter dan kata sebelumnya
- * @param {number} [pIndex] Index paragraf dari kata yang digunakan pada param `str`
- * @param {number} [wIndex] Index kata dari kata yang digunakan pada param `str`
- * @returns {{words:number, chars:number} | -1}
-*/
-const countPrevCharactersAndWords = (pArray, countDifferentParaghraph = true, str, pIndex = null, wIndex = null) => {
-    if (!pArray || !Array.isArray(pArray) || !str) return -1;
-    if (!pArray[pIndex] || !pArray[pIndex][wIndex] || pArray[pIndex][wIndex] !== str) return -1;
-
-    let words = 0;
-    let chars = 0;
-
-    for (let i = 0; i < pArray.length; i++) {
-        for (let j = 0; j < pArray[i].length; j++) {
-            if (pIndex !== null && wIndex !== null) {
-                if (i === pIndex && j === wIndex && pArray[i][j] === str) {
-                    return { words, chars };
-                }
-            } else {
-                if (pArray[i][j] === str) {
-                    return { words, chars };
-                }
-            }
-
-            if (countDifferentParaghraph) {
-                words += 1;
-                chars += pArray[i][j].length;
-            }
-            else {
-                if (pIndex === i) {
-                    words += 1;
-                    chars += pArray[i][j].length;
-                }
-            }
-        }
-    }
-
-    return -1;
-}
 
 /**
  * Resolve props yang digunakan pada component `HighlightText`
