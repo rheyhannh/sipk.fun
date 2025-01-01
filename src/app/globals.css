@@ -225,7 +225,8 @@
     --root-footer-linkColor: #ECEEF2;
     --root-footer-hoverColor: #7BAAF7;
     --root-footer-lineColor: #4A4A4A;
-    --root-custom-bgColor: #E1E1E5;
+    --root-hero-mockupBgColor: linear-gradient(to left bottom, #f6f6f9, #f8f8fa, #faf9fb, #fbfbfc, #fdfdfd, #fdfdfd, #fdfdfd, #fdfdfd, #fbfbfc, #faf9fb, #f8f8fa, #f6f6f9);
+    --root-hero-mockupBgContrastColor: rgb(246, 246, 249);
     /* #endregion */
 
     /* #region FOOTER */
@@ -417,7 +418,8 @@
     --root-footer-linkColor: #9BA3B3;
     --root-footer-hoverColor: var(--first-color-lighter);
     --root-footer-lineColor: #5A5A5A;
-    --root-custom-bgColor: #202328;
+    --root-hero-mockupBgColor: linear-gradient(to left bottom, #181a1e, #191c20, #1b1e22, #1c2024, #1e2226, #1e2226, #1e2226, #1e2226, #1c2024, #1b1e22, #191c20, #181a1e);
+    --root-hero-mockupBgContrastColor: #171a1e;
     /* #endregion */
 
     /* #region FOOTER */
