@@ -1057,7 +1057,7 @@ export function HistoryDummy({ item, color = 'success', semester, ...props }) {
                     <h6 style={{ color: `var(--${color}-color)` }}>
                         {item?.nilai ?? 'A'}
                     </h6>
-                    <h6>
+                    <h6 style={{ color: 'var(--dark-color)' }}>
                         {item?.sks ?? '3'} SKS
                     </h6>
                 </div>
