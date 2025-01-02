@@ -573,6 +573,21 @@ export async function PATCH(request) {
 
         /** @type {SupabaseTypes._from<SupabaseTypes.RatingData>} */
         const { data, error } = await supabase.from('rating').update({ rating: formData.rating, review: formData.review, unix_updated_at: unixNow, details: formData.details }).eq('id', ratingId).select();
+        if (!data.length) {
+            throw notFoundError.resource_not_found(
+                defaultUserErrorMessage, undefined,
+                {
+                    severity: 'error',
+                    reason: 'Failed to update user rating, rating not found',
+                    stack: null,
+                    functionDetails: 'supabase.from at PATCH /api/rating line 521',
+                    functionArgs: { from: 'rating', update: { rating: formData.rating, review: formData.review, unix_updated_at: unixNow, details: formData.details }, eq: { id: ratingId }, select: true },
+                    functionResolvedVariable: { data, error },
+                    request: await getRequestDetails(),
+                    more: error,
+                }
+            )
+        }
         if (error) {
             throw serverError.interval_server_error(
                 defaultUserErrorMessage, undefined,
@@ -580,7 +595,7 @@ export async function PATCH(request) {
                     severity: 'error',
                     reason: 'Failed to update user rating',
                     stack: null,
-                    functionDetails: 'supabase.from at PATCH /api/rating line 489',
+                    functionDetails: 'supabase.from at PATCH /api/rating line 521',
                     functionArgs: { from: 'rating', update: { rating: formData.rating, review: formData.review, unix_updated_at: unixNow, details: formData.details }, eq: { id: ratingId }, select: true },
                     functionResolvedVariable: { data, error },
                     request: await getRequestDetails(),
