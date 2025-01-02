@@ -364,7 +364,6 @@
     margin-right: calc(-50vw + 50%);
     display: flex;
     flex-direction: column;
-    height: var(--root-section-height);
     border: none;
 }
 
@@ -1207,7 +1206,6 @@
 .mulai_sekarang {
     --inner-padding: 2rem;
     --logo-size: 128px;
-    height: var(--root-section-height);
     padding: var(--inner-padding);
     display: flex;
     flex-direction: column;
@@ -1501,14 +1499,6 @@
 
 @media screen and (max-height: 660px) {
     .kenapa_sipk {
-        --root-section-height: 100%;
-    }
-}
-
-@media screen and (max-height: 565px) {
-
-    .universitas,
-    .mulai_sekarang {
         --root-section-height: 100%;
     }
 }
