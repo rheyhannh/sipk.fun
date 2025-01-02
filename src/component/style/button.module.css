@@ -1,0 +1,144 @@
+/* #region Translate Variant */
+
+.translate_variant {
+    --textColor: #000000;
+    --textColor-hover: #b4af79;
+    --bgColor: #b4af79;
+    --bgColor-hover: #000000;
+    --borderColor: #d7d9dc;
+    --borderColor-hover: #000000;
+    position: relative;
+    appearance: none;
+    z-index: 0;
+    width: max-content;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    overflow: hidden;
+    white-space: nowrap;
+    padding: 0.375rem 0.75rem;
+    border-radius: inherit;
+    border: 1px solid var(--borderColor);
+    background-color: var(--bgColor);
+    color: var(--textColor);
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.translate_variant::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -10;
+    transform: translateY(200%) scale(2.5);
+    background-color: var(--bgColor-hover);
+    transition: transform 750ms ease-in-out;
+}
+
+.translate_variant[data-shape="oval"]::before {
+    border-radius: 50%;
+}
+
+.translate_variant[data-direction="top"]::before {
+    transform: translateY(200%) scale(2.5);
+}
+
+.translate_variant[data-direction="top_left"]::before {
+    transform: translateY(200%) translateX(150%) scale(2.5);
+}
+
+.translate_variant[data-direction="top_right"]::before {
+    transform: translateY(200%) translateX(-150%) scale(2.5);
+}
+
+.translate_variant[data-direction="bottom"]::before {
+    transform: translateY(-200%) scale(2.5);
+}
+
+.translate_variant[data-direction="left"]::before {
+    transform: translateX(200%) scale(2.5);
+}
+
+.translate_variant[data-direction="right"]::before {
+    transform: translateX(-200%) scale(2.5);
+}
+
+.translate_variant[data-direction="bottom_left"]::before {
+    transform: translateY(-200%) translateX(150%) scale(2.5);
+}
+
+.translate_variant[data-direction="bottom_right"]::before {
+    transform: translateY(-200%) translateX(-150%) scale(2.5);
+}
+
+/* #endregion */
+
+/* #region Simple Variant */
+
+.simple_variant {
+    --textColor: #000000;
+    --textColor-hover: #b4af79;
+    --bgColor: #b4af79;
+    --bgColor-hover: #000000;
+    --borderColor: #d7d9dc;
+    --borderColor-hover: #000000;
+    position: relative;
+    appearance: none;
+    z-index: 0;
+    width: max-content;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    overflow: hidden;
+    white-space: nowrap;
+    padding: 0.375rem 0.75rem;
+    border-radius: inherit;
+    border: 1px solid var(--borderColor);
+    background-color: var(--bgColor);
+    color: var(--textColor);
+    font-weight: 500;
+    cursor: pointer;
+}
+
+/* #endregion */
+
+@media (hover: hover) and (pointer: fine) {
+
+    .simple_variant:hover,
+    .simple_variant:focus {
+        border-color: var(--borderColor-hover);
+        background-color: var(--bgColor-hover);
+        color: var(--textColor-hover);
+    }
+
+    .translate_variant:hover::before,
+    .translate_variant[data-direction="top"]:hover::before,
+    .translate_variant[data-direction="bottom"]:hover::before,
+    .translate_variant:focus::before,
+    .translate_variant[data-direction="top"]:focus::before,
+    .translate_variant[data-direction="bottom"]:focus::before {
+        transform: translateY(0%) scale(2.5);
+    }
+
+    .translate_variant[data-direction="left"]:hover::before,
+    .translate_variant[data-direction="right"]:hover::before,
+    .translate_variant[data-direction="left"]:focus::before,
+    .translate_variant[data-direction="right"]:focus::before {
+        transform: translateX(0%) scale(2.5);
+    }
+
+    .translate_variant[data-direction="bottom_left"]:hover::before,
+    .translate_variant[data-direction="bottom_right"]:hover::before,
+    .translate_variant[data-direction="top_left"]:hover::before,
+    .translate_variant[data-direction="top_right"]:hover::before {
+        transform: translateY(0%) translateX(0%) scale(2.5);
+    }
+
+    .translate_variant[data-direction="bottom_left"]:focus::before,
+    .translate_variant[data-direction="bottom_right"]:focus::before,
+    .translate_variant[data-direction="top_left"]:focus::before,
+    .translate_variant[data-direction="top_right"]:focus::before {
+        transform: translateY(0%) translateX(0%) scale(2.5);
+    }
+
+}
