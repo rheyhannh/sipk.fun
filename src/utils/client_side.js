@@ -412,7 +412,8 @@ export const fetchWithAuth = async (
     }
 
     const target = endpoint === 'custom' ? customEndpoint : endpointByKey[endpoint];
-    const targetWithParams = new URL(target, window.location.origin);
+    const baseUrl = process.env.NEXT_PUBLIC_SIPK_API_URL || process.env.NEXT_PUBLIC_SIPK_URL;
+    const targetWithParams = new URL(target, baseUrl);
     if (urlParams) { Object.keys(urlParams).forEach(key => targetWithParams.searchParams.append(key, urlParams[key])) }
     const { headers: customHeaders = {}, ...restOptions } = otherOptions;
     const headers = {
