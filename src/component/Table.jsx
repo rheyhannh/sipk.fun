@@ -28,7 +28,7 @@ import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import { Spinner } from "./loader/Loading";
 
 // ========== UTIL DEPEDENCY ========== //
-import { getLoadingMessage, getSessionTable, unixToDate } from '@/utils/client_side';
+import { getLoadingMessage, getSessionTable, unixToDate, fetchWithAuth } from '@/utils/client_side';
 
 // ========== STYLE DEPEDENCY ========== //
 import styles from './style/table.module.css'
@@ -429,13 +429,9 @@ export function Table({ state, validating, user, sessionTable, matkul, matkulHis
                             throw new Error('Terjadi kesalahan, silahkan coba lagi');
                         }
 
-                        const response = await fetch(`/api/matkul?id=${matkulId}`, {
-                            method: 'DELETE',
-                            headers: {
-                                'Authorization': `Bearer ${accessToken}`,
-                                'Content-Type': 'application/json',
-                            },
-                        });
+                        const response = await fetchWithAuth('DELETE', 'matkul', accessToken, null, {
+                            id: matkulId
+                        })
 
                         if (!response.ok) {
                             if (response.status === 401) {

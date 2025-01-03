@@ -34,6 +34,7 @@ import isStrongPassword from 'validator/lib/isStrongPassword';
 import isAlpha from 'validator/lib/isAlpha';
 import isInt from 'validator/lib/isInt';
 import isUUID from 'validator/lib/isUUID';
+import { endpointByKey } from '@/constant/api_endpoint';
 // #endregion
 
 // #region HOOKS DEPEDENCY
@@ -175,7 +176,11 @@ export default function Users({ universitasData }) {
         if (!cookies.get('s_access_token')) { return }
         setLoading({ active: true, backdrop: 'transparent', hideBall: true });
         try {
-            const response = await fetch('/api/auth/check', {
+            const target = endpointByKey['auth/check'];
+            const baseUrl = process.env.NEXT_PUBLIC_SIPK_API_URL || process.env.NEXT_PUBLIC_SIPK_URL;
+            const url = new URL(target, baseUrl);
+
+            const response = await fetch(url, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json'
@@ -217,7 +222,11 @@ export default function Users({ universitasData }) {
             async: true
         })
             .then(async ({ response: token }) => {
-                const response = await fetch('/api/login', {
+                const target = endpointByKey['login'];
+                const baseUrl = process.env.NEXT_PUBLIC_SIPK_API_URL || process.env.NEXT_PUBLIC_SIPK_URL;
+                const url = new URL(target, baseUrl);
+
+                const response = await fetch(url, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -285,7 +294,11 @@ export default function Users({ universitasData }) {
             async: true
         })
             .then(async ({ response: token }) => {
-                const response = await fetch('/api/register', {
+                const target = endpointByKey['register'];
+                const baseUrl = process.env.NEXT_PUBLIC_SIPK_API_URL || process.env.NEXT_PUBLIC_SIPK_URL;
+                const url = new URL(target, baseUrl);
+
+                const response = await fetch(url, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -351,7 +364,11 @@ export default function Users({ universitasData }) {
             async: true
         })
             .then(async ({ response: token }) => {
-                const response = await fetch('/api/magiclink', {
+                const target = endpointByKey['magiclink'];
+                const baseUrl = process.env.NEXT_PUBLIC_SIPK_API_URL || process.env.NEXT_PUBLIC_SIPK_URL;
+                const url = new URL(target, baseUrl);
+
+                const response = await fetch(url, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'

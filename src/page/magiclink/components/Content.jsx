@@ -20,6 +20,7 @@ import { MagiclinkContext } from '@magiclink_page/provider';
 
 // #region UTIL DEPEDENCY
 import isUUID from 'validator/lib/isUUID';
+import { endpointByKey } from '@/constant/api_endpoint';
 // #endregion
 
 const Default = dynamic(() => import('@magiclink_page/components/Default'));
@@ -62,17 +63,14 @@ function Content({ fakta, ...props }) {
 
             await new Promise(resolve => setTimeout(resolve, 4000));
 
-            const response = await fetch(isLogin ?
-                `/api/auth/confirm/login?token_hash=${tokenHash}&type=email`
-                :
-                `/api/auth/confirm/signup?token_hash=${tokenHash}&type=email`,
-                {
-                    method: 'GET',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    }
-                }
-            )
+            const options = { method: 'GET', headers: { 'Content-Type': 'application/json' } }
+            const target = isLogin ? endpointByKey['auth/confirm/login'] : endpointByKey['auth/confirm/signup'];
+            const baseUrl = process.env.NEXT_PUBLIC_SIPK_API_URL || process.env.NEXT_PUBLIC_SIPK_URL;
+            const targetWithParams = new URL(target, baseUrl);
+            const urlParams = { token_hash: tokenHash, type: 'email' }
+            Object.keys(urlParams).forEach(key => targetWithParams.searchParams.append(key, urlParams[key]));
+
+            const response = await fetch(targetWithParams, options);
 
             if (!response.ok) {
                 if (response.status === 429) {
