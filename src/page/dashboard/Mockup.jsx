@@ -382,13 +382,21 @@ function Content({ summary = [], notifikasi = [], history = [], animation, ...pr
             }}
             {...props}
         >
-            <div className={layout_styles.primary}>
-                <h1 className={layout_styles.wrapper__title}>
+            <motion.div className={layout_styles.primary} style={{ perspective: 4000 }}>
+                <motion.h1
+                    className={layout_styles.wrapper__title}
+                    initial={{ ...animation?.initial, z: 25 }}
+                    variants={{
+                        inView: { ...animation?.variants?.inView, },
+                        exit: { ...animation?.variants?.exit, z: -25 }
+                    }}
+                    transition={{ ...animation?.transition, delay: DEFAULT_ANIMATION_DELAYS[1] }}
+                >
                     Dashboard
-                </h1>
+                </motion.h1>
                 <motion.div
                     className={layout_styles.insight}
-                    style={{ display: 'grid', gridTemplateColumns: '1fr', gridGap: '0', gap: '0', perspective: 4000 }}
+                    style={{ display: 'grid', gridTemplateColumns: '1fr', gridGap: '0', gap: '0', transformStyle: 'preserve-3d' }}
                 >
                     {summary.map((props, index) => (
                         <motion.div
@@ -400,13 +408,23 @@ function Content({ summary = [], notifikasi = [], history = [], animation, ...pr
                         </motion.div>
                     ))}
                 </motion.div>
-            </div>
+            </motion.div>
             <div className={layout_styles.secondary}>
                 <motion.div
                     className={layout_styles.history}
                     style={{ perspective: 4000 }}
                 >
-                    <h2 className={layout_styles.wrapper__title}>Riwayat Matakuliah</h2>
+                    <motion.h2
+                        className={layout_styles.wrapper__title}
+                        initial={{ ...animation?.initial, z: 25 }}
+                        variants={{
+                            inView: { ...animation?.variants?.inView, },
+                            exit: { ...animation?.variants?.exit, z: -25 }
+                        }}
+                        transition={{ ...animation?.transition, delay: DEFAULT_ANIMATION_DELAYS[2] }}
+                    >
+                        Riwayat Matakuliah
+                    </motion.h2>
                     {history.map((props, index) => (
                         <HistoryDummy
                             key={index}
@@ -430,7 +448,17 @@ function Content({ summary = [], notifikasi = [], history = [], animation, ...pr
                 </motion.div>
 
                 <motion.div style={{ perspective: 4000 }} >
-                    <h2 className={layout_styles.wrapper__title}>Pemberitahuan</h2>
+                    <motion.h2
+                        className={layout_styles.wrapper__title}
+                        initial={{ ...animation?.initial, z: 25 }}
+                        variants={{
+                            inView: { ...animation?.variants?.inView, },
+                            exit: { ...animation?.variants?.exit, z: -25 }
+                        }}
+                        transition={{ ...animation?.transition, delay: DEFAULT_ANIMATION_DELAYS[2] }}
+                    >
+                        Pemberitahuan
+                    </motion.h2>
                     <motion.div
                         {...animation}
                         transition={{ ...animation?.transition, delay: DEFAULT_ANIMATION_DELAYS[2] }}
