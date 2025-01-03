@@ -163,7 +163,8 @@ function DashboardRootError({ error, resetErrorBoundary }) {
         };
 
         const resetCookies = async () => {
-            const target = new URL('/api/auth/reset', process.env.NEXT_PUBLIC_SIPK_URL)
+            const baseUrl = process.env.NEXT_PUBLIC_SIPK_API_URL || process.env.NEXT_PUBLIC_SIPK_URL;
+            const target = new URL('/api/auth/reset', baseUrl)
             target.searchParams.set('envoke_session', 'true');
             toast.loading('Menghapus sesi terindah bersama mantan', { id: toastId });
             await delay(3250);
