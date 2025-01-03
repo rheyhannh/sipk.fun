@@ -1,5 +1,11 @@
+'use client'
+
 // #region REACT DEPEDENCY
 import * as React from 'react';
+// #endregion
+
+// #region COMPONENT DEPEDENCY
+import { motion } from 'framer-motion';
 // #endregion
 
 // #region STYLE DEPEDENCY
@@ -22,3 +28,40 @@ export const ContainerWrapper = ({ children, ...props }) => (
         {children}
     </div>
 )
+
+/**
+ * Props yang digunakan component `VisibilityWrapper`
+ * @typedef {Object} VisibilityWrapperProps
+ * @property {keyof import('framer-motion')['motion']} as
+ * Tipe element motion yang digunakan
+ * 
+ * - Default : `div`
+ */
+
+/**
+ * Component {@link motion} dengan menggunakan preset props berikut,
+ * 
+ * ```js
+ * {
+ *      initial: { visibility: 'hidden' },
+ *      variants: { inView: { visibility: 'visible' } }
+ * }
+ * ```
+ * 
+ * @template [Tag='div']
+ * @param {import('framer-motion').HTMLMotionProps<Tag> & VisibilityWrapperProps} props VisibilityWrapper props
+ * @returns {React.ReactElement} Rendered component
+ */
+export const VisibilityWrapper = ({ as: Tag = 'div', children, ...props }) => {
+    const MotionTag = motion[Tag] ?? motion.div;
+
+    return (
+        <MotionTag
+            {...props}
+            initial={{ visibility: 'hidden' }}
+            variants={{ inView: { visibility: 'visible' } }}
+        >
+            {children}
+        </MotionTag>
+    )
+}
