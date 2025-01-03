@@ -10,6 +10,8 @@
 export const endpointByKey = {
     'auth/check': '/api/auth/check',
     'auth/confirm': '/api/auth/confirm',
+    'auth/confirm/login': '/api/auth/confirm/login',
+    'auth/confirm/signup': '/api/auth/confirm/signup',
     'auth/reset': '/api/auth/reset',
     'fakta': '/api/fakta',
     'login': '/api/login',

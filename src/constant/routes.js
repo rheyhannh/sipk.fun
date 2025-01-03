@@ -52,6 +52,8 @@ export const PAGE_ROUTES = {
 export const API_ROUTES = {
     'auth_check': '/api/auth/check',
     'auth_confirm': '/api/auth/confirm',
+    'auth_confirm_login': '/api/auth/confirm/login',
+    'auth_confirm_signup': '/api/auth/confirm/signup',
     'auth_reset': '/api/auth/reset',
     'fakta': '/api/fakta',
     'login': '/api/login',
@@ -94,6 +96,8 @@ export const API_ROUTES = {
 export const API_ROUTES_WITHOUT_PREFIX = {
     'auth_check': '/auth/check',
     'auth_confirm': '/auth/confirm',
+    'auth_confirm_login': '/auth/confirm/login',
+    'auth_confirm_signup': '/auth/confirm/signup',
     'auth_reset': '/auth/reset',
     'fakta': '/fakta',
     'login': '/login',
