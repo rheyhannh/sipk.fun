@@ -167,6 +167,7 @@ function Banner({
                         }}
                         shape='oval'
                         animationDirection='top_left'
+                        target={'_blank'}
                     >
                         <span>
                             {title}
