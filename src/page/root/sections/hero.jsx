@@ -58,8 +58,8 @@ const resolveTitleProps = (text) => ({
     presetOptions: {
         makeVariant: true,
         variantName: 'inView',
-        customCharVariants: HERO_CUSTOM_CHAR_VARIANTS[text] ?? {},
-        customWordVariants: HERO_CUSTOM_WORD_VARIANTS[text] ?? { exit: { opacity: 0 } },
+        customCharVariants: {},
+        customWordVariants: {},
     },
     adjustWavingFlyIn: {
         baseDelay: HERO_TITLE_STAGGERED[findArrayIndexByString(text, HERO_TITLE_PARAGRAPH.flat())],
@@ -69,18 +69,6 @@ const resolveTitleProps = (text) => ({
 })
 
 const HERO_TITLE_STAGGERED = shuffleArray(HERO_TITLE_PARAGRAPH.flat().map((_, index) => index * HERO_TITLE_DELAY_OFFSET));
-
-const HERO_CUSTOM_CHAR_VARIANTS = {
-
-}
-
-const HERO_CUSTOM_WORD_VARIANTS = {
-
-}
-
-const HERO_CUSTOM_VARIANT_COLLECTIONS = [
-
-]
 
 /**
  * Component Description
