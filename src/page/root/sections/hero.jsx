@@ -241,7 +241,7 @@ const Hero = ({ notifikasi }) => {
                         variants={{ inView: { opacity: 1, y: 0, transition: { duration: 2.25, delay: 0.75, type: 'spring', bounce: 0.3 } } }}
                     >
                         <Link
-                            href={'/users?action=daftar'}
+                            href={'/users?action=daftar&utm_source=slp'}
                             passHref
                             legacyBehavior
                         >

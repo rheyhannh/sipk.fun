@@ -72,7 +72,7 @@ export const UNIVERSITAS_SECTION_DESCRIPTION = 'Saat ini, SIPK tersedia untuk ma
  */
 export const UNIVERSITAS_SECTION_BUTTON = [
     { text: 'Pelajari Lebih Lanjut', type: 'secondary', id: 'univ-cta-sec', href: 'https://medium.com', isOpenNewTab: true, tabIndex: 0 },
-    { text: 'Mulai Sekarang', href: '/users?action=daftar', id: 'univ-cta-main', scroll: false, tabIndex: 0 }
+    { text: 'Mulai Sekarang', href: '/users?action=daftar&utm_source=slp', id: 'univ-cta-main', scroll: false, tabIndex: 0 }
 ]
 
 /**
@@ -109,5 +109,15 @@ export const UNIVERSITAS_ITEMS_LAYOUT = [
     { count: 3, style: {} },
     { count: 1, style: { marginBottom: 90, display: (x, y) => x < 425 ? 'none' : 'block' } },
 ];
+
+// #endregion
+
+// #region Testimoni Section Config 
+
+/**
+ * Jumlah minimal rating untuk render section `Testimoni`
+ * @type {number}
+ */
+export const TESTIMONI_MINIMUM_RATING = 20;
 
 // #endregion

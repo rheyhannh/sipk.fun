@@ -176,11 +176,11 @@ const MulaiSekarang = () => {
             </motion.div>
 
             <motion.div className={styles.title_big_cta}>
-                <Link href={'/users?action=login'} scroll={false} passHref legacyBehavior>
+                <Link href={'/users?action=login&utm_source=slp'} scroll={false} passHref legacyBehavior>
                     <Button text={'Masuk'} type={'secondary'} tabIndex={0} />
                 </Link>
 
-                <Link href={'/users?action=daftar'} scroll={false} passHref legacyBehavior>
+                <Link href={'/users?action=daftar&utm_source=slp'} scroll={false} passHref legacyBehavior>
                     <Button text={'Daftar'} type={'main'} tabIndex={0} />
                 </Link>
             </motion.div>
