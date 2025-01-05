@@ -782,120 +782,148 @@ export function Notification({ state, data }) {
  * @returns {React.ReactElement} Rendered component
  */
 export function NotificationDummy({ data = [], isPhoneContent = false, ...props }) {
-    if (isPhoneContent) return (
-        <div className={`${styles.notification} ${styles.swiper}`} {...props}>
-            <Swiper
-                slidesPerView={1}
-                autoplay={{
-                    delay: 4500,
-                    disableOnInteraction: false,
-                }}
-                spaceBetween={10}
-                breakpoints={{
-                    475: {
-                        slidesPerView: 2,
-                        spaceBetween: 0,
-                    }
-                }}
-                pagination={{
-                    clickable: true,
-                }}
-                style={{
-                    "width": "100%",
-                    "height": "100%",
-                    "--swiper-pagination-color": "var(--logo-second-color)",
-                    "--swiper-pagination-bullet-inactive-color": "var(--infoDark-color)",
-                    "--swiper-pagination-bottom": "1px",
-                }}
-                modules={[Pagination, Autoplay]}
-            >
-                {data.map((item, index) => {
-                    const postedAt = (created_at, type) => {
-                        const postedAt = type === 'unix' ? new Date(created_at * 1000) : new Date(created_at);
-                        const currentDate = new Date();
-                        if (postedAt.toDateString() === currentDate.toDateString()) {
-                            const timeOnly = new Intl.DateTimeFormat('en-US', { hour: '2-digit', minute: '2-digit', hour12: false }).format(postedAt);
-                            return timeOnly;
-                        } else if (postedAt.toDateString() == new Date(currentDate - 86400000).toDateString()) {
-                            return 'Kemarin';
-                        } else {
-                            const dateMonth = new Intl.DateTimeFormat('id-ID', { day: 'numeric', month: 'short' }).format(postedAt);
-                            return dateMonth;
-                        }
-                    }
+    if (isPhoneContent) {
+        if (!Array.isArray(data) || data.length <= 0) {
+            return (
+                <div className={`${styles.notification} ${styles.swiper}`}>
+                    <div className={styles.empty__wrapper}>
+                        <div className={styles.empty__content}>
+                            <h5>Belum Ada Pemberitahuan</h5>
+                        </div>
+                    </div>
+                </div>
+            )
+        } else {
+            return (
+                <div className={`${styles.notification} ${styles.swiper}`} {...props}>
+                    <Swiper
+                        slidesPerView={1}
+                        autoplay={{
+                            delay: 4500,
+                            disableOnInteraction: false,
+                        }}
+                        spaceBetween={10}
+                        breakpoints={{
+                            475: {
+                                slidesPerView: 2,
+                                spaceBetween: 0,
+                            }
+                        }}
+                        pagination={{
+                            clickable: true,
+                        }}
+                        style={{
+                            "width": "100%",
+                            "height": "100%",
+                            "--swiper-pagination-color": "var(--logo-second-color)",
+                            "--swiper-pagination-bullet-inactive-color": "var(--infoDark-color)",
+                            "--swiper-pagination-bottom": "1px",
+                        }}
+                        modules={[Pagination, Autoplay]}
+                    >
+                        {data.map((item, index) => {
+                            const postedAt = (created_at, type) => {
+                                const postedAt = type === 'unix' ? new Date(created_at * 1000) : new Date(created_at);
+                                const currentDate = new Date();
+                                if (postedAt.toDateString() === currentDate.toDateString()) {
+                                    const timeOnly = new Intl.DateTimeFormat('en-US', { hour: '2-digit', minute: '2-digit', hour12: false }).format(postedAt);
+                                    return timeOnly;
+                                } else if (postedAt.toDateString() == new Date(currentDate - 86400000).toDateString()) {
+                                    return 'Kemarin';
+                                } else {
+                                    const dateMonth = new Intl.DateTimeFormat('id-ID', { day: 'numeric', month: 'short' }).format(postedAt);
+                                    return dateMonth;
+                                }
+                            }
 
-                    return (
-                        <SwiperSlide key={crypto.randomUUID()}>
-                            <span className={`${styles.notification__post} ${styles.swiper}`}>
-                                <div className={styles.notification__main}>
-                                    <span style={{ color: item.color }}>
-                                        {(item?.icon?.name && item?.icon?.lib) &&
-                                            <ReactIcons name={item.icon.name} lib={item.icon.lib} />
-                                        }
+                            return (
+                                <SwiperSlide key={crypto.randomUUID()}>
+                                    <span className={`${styles.notification__post} ${styles.swiper}`}>
+                                        <div className={styles.notification__main}>
+                                            <span style={{ color: item.color }}>
+                                                {(item?.icon?.name && item?.icon?.lib) &&
+                                                    <ReactIcons name={item.icon.name} lib={item.icon.lib} />
+                                                }
+                                            </span>
+                                            <p>
+                                                <b style={{ color: item.color }}>
+                                                    {item.title}
+                                                </b>
+                                            </p>
+                                            <small>
+                                                ○ {postedAt(item.unix_created_at, 'unix')}
+                                            </small>
+                                        </div>
+                                        <div className={styles.notification__details}>
+                                            {item.description}
+                                        </div>
                                     </span>
-                                    <p>
-                                        <b style={{ color: item.color }}>
-                                            {item.title}
-                                        </b>
-                                    </p>
-                                    <small>
-                                        ○ {postedAt(item.unix_created_at, 'unix')}
-                                    </small>
-                                </div>
-                                <div className={styles.notification__details}>
-                                    {item.description}
-                                </div>
-                            </span>
-                        </SwiperSlide>
-                    )
-                })}
-            </Swiper>
-        </div>
-    )
-    else return (
-        <div className={styles.notification} {...props}>
-            <div className={styles.notification__inner}>
-                {data.map((item, index) => {
-                    const postedAt = (created_at, type) => {
-                        const postedAt = type === 'unix' ? new Date(created_at * 1000) : new Date(created_at);
-                        const currentDate = new Date();
-                        if (postedAt.toDateString() === currentDate.toDateString()) {
-                            const timeOnly = new Intl.DateTimeFormat('en-US', { hour: '2-digit', minute: '2-digit', hour12: false }).format(postedAt);
-                            return timeOnly;
-                        } else if (postedAt.toDateString() == new Date(currentDate - 86400000).toDateString()) {
-                            return 'Kemarin';
-                        } else {
-                            const dateMonth = new Intl.DateTimeFormat('id-ID', { day: 'numeric', month: 'short' }).format(postedAt);
-                            return dateMonth;
-                        }
-                    }
+                                </SwiperSlide>
+                            )
+                        })}
+                    </Swiper>
+                </div>
+            )
+        }
+    }
+    else {
+        if (!Array.isArray(data) || data.length <= 0) {
+            return (
+                <div className={styles.notification}>
+                    <div className={styles.empty__wrapper}>
+                        <div className={styles.empty__content}>
+                            <h5>Belum Ada Pemberitahuan</h5>
+                        </div>
+                    </div>
+                </div>
+            )
+        } else {
+            return (
+                <div className={styles.notification} {...props}>
+                    <div className={styles.notification__inner}>
+                        {data.map((item, index) => {
+                            const postedAt = (created_at, type) => {
+                                const postedAt = type === 'unix' ? new Date(created_at * 1000) : new Date(created_at);
+                                const currentDate = new Date();
+                                if (postedAt.toDateString() === currentDate.toDateString()) {
+                                    const timeOnly = new Intl.DateTimeFormat('en-US', { hour: '2-digit', minute: '2-digit', hour12: false }).format(postedAt);
+                                    return timeOnly;
+                                } else if (postedAt.toDateString() == new Date(currentDate - 86400000).toDateString()) {
+                                    return 'Kemarin';
+                                } else {
+                                    const dateMonth = new Intl.DateTimeFormat('id-ID', { day: 'numeric', month: 'short' }).format(postedAt);
+                                    return dateMonth;
+                                }
+                            }
 
-                    return (
-                        <span className={styles.notification__post} key={crypto.randomUUID()}>
-                            <div className={styles.notification__main}>
-                                <span style={{ color: item.color }}>
-                                    {(item?.icon?.name && item?.icon?.lib) &&
-                                        <ReactIcons name={item.icon.name} lib={item.icon.lib} />
-                                    }
+                            return (
+                                <span className={styles.notification__post} key={crypto.randomUUID()}>
+                                    <div className={styles.notification__main}>
+                                        <span style={{ color: item.color }}>
+                                            {(item?.icon?.name && item?.icon?.lib) &&
+                                                <ReactIcons name={item.icon.name} lib={item.icon.lib} />
+                                            }
+                                        </span>
+                                        <p>
+                                            <b style={{ color: item.color }}>
+                                                {item.title}
+                                            </b>
+                                        </p>
+                                        <small>
+                                            ○ {postedAt(item.unix_created_at, 'unix')}
+                                        </small>
+                                    </div>
+                                    <div className={styles.notification__details}>
+                                        {item.description}
+                                    </div>
                                 </span>
-                                <p>
-                                    <b style={{ color: item.color }}>
-                                        {item.title}
-                                    </b>
-                                </p>
-                                <small>
-                                    ○ {postedAt(item.unix_created_at, 'unix')}
-                                </small>
-                            </div>
-                            <div className={styles.notification__details}>
-                                {item.description}
-                            </div>
-                        </span>
-                    )
-                })}
-            </div>
-        </div>
-    )
+                            )
+                        })}
+                    </div>
+                </div>
+            )
+        }
+    }
 }
 
 /**
