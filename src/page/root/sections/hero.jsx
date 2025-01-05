@@ -1,5 +1,19 @@
 'use client'
 
+// #region CONFIG DEPEDENCY
+import {
+    GLOBAL_VIEWPORT_ONCE,
+    HERO_SECTION_ID,
+    HERO_BANNER_ID,
+    HERO_TITLE_DELAY_OFFSET,
+    HERO_TITLE_PARAGRAPH,
+    HERO_TITLE_PROPS,
+    HERO_DESCRIPTION_TEXT,
+    HERO_BUTTONS,
+    HERO_NOTIFIKASI_DUMMY_DATA
+} from '@root_page/config';
+// #endregion
+
 // #region NEXT DEPEDENCY
 import Link from 'next/link';
 // #endregion
@@ -54,35 +68,7 @@ const resolveTitleProps = (text) => ({
     }
 })
 
-const HERO_SECTION_ID = 'home';
-
-const HERO_BANNER_ID = 'hero-cta-banner';
-
-const HERO_TITLE_DELAY_OFFSET = 0.175;
-const HERO_TITLE_PARAGRAPH = [
-    ['Perencanaan', 'Dinamis'],
-    ['untuk', 'IPK', 'yang', 'Lebih', 'Baik']
-]
-const HERO_TITLE_PROPS = /** @type {import('@root_page/sections/hero').TitleProps} */ ({
-    id: 'hero-title',
-    label: 'SIPK Introduction'
-});
 const HERO_TITLE_STAGGERED = shuffleArray(HERO_TITLE_PARAGRAPH.flat().map((_, index) => index * HERO_TITLE_DELAY_OFFSET));
-
-const HERO_DESCRIPTION_TEXT = 'SIPK memungkinkan kalian menyimpan seluruh matakuliah dengan SKS dan nilai yang kalian tentukan sendiri untuk memvisualisasikan perolehan IPK secara lebih fleksibel dan proaktif.'
-
-const HERO_BUTTONS = /** @type {Array<import('@root_page/sections/hero').ButtonItemProps>} */ ([
-    {
-        id: 'hero-cta-main',
-        text: 'Mulai Sekarang',
-        href: '/users?action=daftar&utm_source=slp'
-    },
-    {
-        id: 'hero-cta-secondary',
-        text: 'Pelajari Lebih Lanjut',
-        href: '#universitas'
-    }
-])
 
 const HERO_CUSTOM_CHAR_VARIANTS = {
 
@@ -94,61 +80,6 @@ const HERO_CUSTOM_WORD_VARIANTS = {
 
 const HERO_CUSTOM_VARIANT_COLLECTIONS = [
 
-]
-
-const ABC = [
-    {
-        "id": "18d26406-4bfd-414d-bb63-b3c9a6346a85",
-        "title": "Titik Baru",
-        "description": "Memulai perjalanan pada Desember 2023, sekarang pengguna SIPK sudah mencapai 3000 lebih👪. Baca selengkapnya disini👼",
-        "href": "/update/21112023/sipk-meraih-3000-member",
-        "icon": {
-            "lib": "fa",
-            "name": "FaRegStar"
-        },
-        "color": "var(--success-color)",
-        "date_created_at": "2023-11-22T07:14:45.630278+00:00",
-        "unix_created_at": 1700637275
-    },
-    {
-        "id": "1149c5e1-ca79-436c-a51a-19dfd0272727",
-        "title": "Maintenance",
-        "description": "Mohon maaf atas ketidaknyamanannya🙏, SIPK akan melakukan perawatan sistem pada 22 November 2023 jam 19:30 WIB🌙",
-        "href": "/update/22112023/maintenance-untuk-pemeliharan-jaringan",
-        "icon": {
-            "lib": "fa",
-            "name": "FaTools"
-        },
-        "color": "var(--warning-color)",
-        "date_created_at": "2023-11-22T06:19:57.158438+00:00",
-        "unix_created_at": 1700620147
-    },
-    {
-        "id": "bedf2609-e510-462a-8087-22919f2fba92",
-        "title": "Announcement",
-        "description": "Admin SIPK tidak pernah meminta password maupun data pribadi kamu❗ Dan email resmi SIPK hanya sipk.official.0@gmail.com ❗",
-        "href": "/update/21112023/admin-sipk-tidak-pernah-meminta-password",
-        "icon": {
-            "lib": "ri",
-            "name": "RiLockPasswordLine"
-        },
-        "color": "var(--danger-color)",
-        "date_created_at": "2023-11-22T06:21:26.929915+00:00",
-        "unix_created_at": 1700508547
-    },
-    {
-        "id": "a3405053-ce4a-48f2-931f-1023724c4c68",
-        "title": "Fitur Baru",
-        "description": "Share pengalaman akademik, organisasi, sertifikasi maupun portfolio kamu difitur 'Journey'🚀. Yuk cek disini detailnya🏃",
-        "href": "/update/20112023/fitur-baru-journey",
-        "icon": {
-            "lib": "fa",
-            "name": "FaRocket"
-        },
-        "color": "var(--primary-color)",
-        "date_created_at": "2023-11-22T06:22:33.95118+00:00",
-        "unix_created_at": 1700422147
-    }
 ]
 
 /**
@@ -168,7 +99,7 @@ const Hero = ({ notifikasi }) => {
             ref={sectionRef}
             className={`${styles.section} ${styles.hero}`}
             whileInView={'inView'}
-            viewport={{ once: true }}
+            viewport={{ once: GLOBAL_VIEWPORT_ONCE }}
         >
             <ContainerWrapper style={{ position: 'relative', zIndex: 2 }}>
                 <Banner
@@ -194,7 +125,7 @@ const Hero = ({ notifikasi }) => {
                                 { icon: { name: 'IoBookOutline', lib: 'io5' }, title: 'Matakuliah', color: 'var(--warning-color)', data: { value: 33, percentage: 66, keterangan: 'Targetmu 50' } },
                                 { icon: { name: 'MdOutlineConfirmationNumber', lib: 'md' }, title: 'SKS', color: 'var(--danger-color)', data: { value: 56, percentage: 88, keterangan: 'Targetmu 144' } },
                             ]}
-                            notifikasi={ABC}
+                            notifikasi={HERO_NOTIFIKASI_DUMMY_DATA}
                             history={[
                                 { item: MatkulDummies[1], color: MatkulDummiesNilaiColorPreset[MatkulDummies[1].nilai] },
                                 { item: MatkulDummies[0], color: MatkulDummiesNilaiColorPreset[MatkulDummies[0].nilai] },
