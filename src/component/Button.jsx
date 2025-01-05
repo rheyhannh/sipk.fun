@@ -147,6 +147,7 @@ export const ButtonTranslateForwarded = React.forwardRef((
         ref={ref}
         href={href}
         onClick={onClick}
+        onClickCapture={(event) => { if (event.currentTarget) { event.currentTarget.blur() } }}
         data-shape={shape || 'rectangle'}
         data-direction={animationDirection || 'top'}
         className={styles.translate_variant}
@@ -289,6 +290,7 @@ export const ButtonSimpleForwarded = React.forwardRef((
         ref={ref}
         href={href}
         onClick={onClick}
+        onClickCapture={(event) => { if (event.currentTarget) { event.currentTarget.blur() } }}
         className={styles.simple_variant}
         style={{
             '--textColor': textColor?.unhover || '#000000',
