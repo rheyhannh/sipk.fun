@@ -208,6 +208,28 @@ const Hero = ({ notifikasi }) => {
     )
 }
 
+/**
+ * Props yang digunakan component `Banner`
+ * @typedef {Object} BannerProps
+ * @property {string} [id]
+ * Element `id` atribute
+ * 
+ * - Default : `banner`
+ * @property {string} [title]
+ * Judul banner
+ * 
+ * - Default : `Lorem ipsum dolor`
+ * @property {string} [href]
+ * Target banner berupa sebuah URL, pathname atau element id dimana akan dihandle component {@link Link}.
+ * Jika element id, pastikan diikuti dengan tanda pagar `#`
+ * 
+ * - Default : `https://www.google.com/`
+ */
+
+/**
+ * @param {BannerProps} props Banner props
+ * @returns {React.ReactElement} Rendered component
+ */
 function Banner({
     id = 'banner',
     title = 'Lorem ipsum dolor',
@@ -261,6 +283,23 @@ function Banner({
     )
 }
 
+/**
+ * Props yang digunakan component `Title`
+ * @typedef {Object} TitleProps
+ * @property {string} [id]
+ * Element `id` atribute
+ * 
+ * - Default : `title`
+ * @property {string} [label]
+ * Element `aria-label` atribute
+ * 
+ * - Default : `Awesome Title`
+ */
+
+/**
+ * @param {TitleProps} props Title props
+ * @returns {React.ReactElement} Rendered component
+ */
 function Title({
     id = 'title',
     label = 'Awesome Title'
@@ -283,6 +322,17 @@ function Title({
     )
 }
 
+/**
+ * Props yang digunakan component `Description`
+ * @typedef {Object} DescriptionProps
+ * @property {string} text
+ * Description text
+ */
+
+/**
+ * @param {DescriptionProps} props Description props
+ * @returns {React.ReactElement} Rendered component
+ */
 function Description({ text }) {
     return (
         <VisibilityWrapper
@@ -308,6 +358,28 @@ function Description({ text }) {
     )
 }
 
+/**
+ * Props yang digunakan component `Buttons`
+ * @typedef {Object} ButtonItemProps
+ * @property {string} [id]
+ * Element `id` atribute
+ * 
+ * - Default : `button`
+ * @property {string} [text]
+ * Button text 
+ * 
+ * - Default : `Click Me`
+ * @property {string} [href]
+ * Target button berupa sebuah URL, pathname atau element id dimana akan dihandle component {@link Link}.
+ * Jika element id, pastikan diikuti dengan tanda pagar `#`
+ * 
+ * - Default : `https://www.google.com/`
+ */
+
+/**
+ * @param {{item:Array<ButtonItemProps>}} props Buttons props
+ * @returns {React.ReactElement} Rendered component
+ */
 function Buttons({
     item = [
         { id: 'button', text: 'Click Me', href: 'https://www.google.com/' },
@@ -391,6 +463,10 @@ function Buttons({
     )
 }
 
+/**
+ * @param {React.HTMLProps<HTMLDivElement>} props MockupContainer props
+ * @returns {React.ReactElement} Rendered component
+ */
 function MockupContainer({ children }) {
     return (
         <div className={styles.mockup_container} >
@@ -399,6 +475,10 @@ function MockupContainer({ children }) {
     )
 }
 
+/**
+ * @param {React.HTMLProps<HTMLDivElement>} props MockupPerspective props
+ * @returns {React.ReactElement} Rendered component
+ */
 function MockupPerspective({ children }) {
     return (
         <div className={styles.mockup_perspective}>
@@ -407,6 +487,10 @@ function MockupPerspective({ children }) {
     )
 }
 
+/**
+ * @param {React.HTMLProps<HTMLDivElement>} props Mockup3D props
+ * @returns {React.ReactElement} Rendered component
+ */
 function Mockup3D({ children }) {
     return (
         <div className={styles.mockup_3d}>
