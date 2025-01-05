@@ -258,7 +258,8 @@ const Hero = ({ notifikasi }) => {
                                     border: 'none',
                                     borderRadius: '0.75rem',
                                     padding: '0.7rem 0.9rem',
-                                    gap: '0.25rem'
+                                    gap: '0.25rem',
+                                    fontWeight: 600,
                                 }}
                             >
                                 <span>
