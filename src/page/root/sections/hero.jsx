@@ -47,27 +47,6 @@ import { shuffleArray, findArrayIndexByString, countPrevCharactersAndWords } fro
 import { MatkulDummies, MatkulDummiesNilaiColorPreset } from '@/constant/matkul_dummies';
 // #endregion
 
-/**
- * Resolve props yang digunakan pada component `HighlightText`
- * @param {string} text String teks untuk mengatur delay animasi
- * @returns {import('@/component/motion/HighlightText').HighlightTextProps} Props yang sudah diatur
- */
-const resolveTitleProps = (text) => ({
-    useHook: false,
-    preset: 'wavingFlyIn',
-    presetOptions: {
-        makeVariant: true,
-        variantName: 'inView',
-        customCharVariants: {},
-        customWordVariants: {},
-    },
-    adjustWavingFlyIn: {
-        baseDelay: HERO_TITLE_STAGGERED[findArrayIndexByString(text, HERO_TITLE_PARAGRAPH.flat())],
-        y: [-125, 0],
-        duration: 1.75
-    }
-})
-
 const HERO_TITLE_STAGGERED = shuffleArray(HERO_TITLE_PARAGRAPH.flat().map((_, index) => index * HERO_TITLE_DELAY_OFFSET));
 
 /**
@@ -416,6 +395,29 @@ function Mockup3D({ children }) {
             {children}
         </div>
     )
+}
+
+/**
+ * Resolve props yang digunakan pada component `HighlightText`
+ * @param {string} text String teks untuk mengatur delay animasi
+ * @returns {import('@/component/motion/HighlightText').HighlightTextProps} Props yang sudah diatur
+ */
+function resolveTitleProps(text) {
+    return {
+        useHook: false,
+        preset: 'wavingFlyIn',
+        presetOptions: {
+            makeVariant: true,
+            variantName: 'inView',
+            customCharVariants: {},
+            customWordVariants: {},
+        },
+        adjustWavingFlyIn: {
+            baseDelay: HERO_TITLE_STAGGERED[findArrayIndexByString(text, HERO_TITLE_PARAGRAPH.flat())],
+            y: [-125, 0],
+            duration: 1.75
+        }
+    }
 }
 
 export default Hero;
