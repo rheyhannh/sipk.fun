@@ -17,8 +17,8 @@ import { Backdrop, Layout, Head, Inner } from '@/component/modal/components';
 // #endregion
 
 // #region ICON DEPEDENCY
-import { FaExclamation, FaBook, FaTelegramPlane, FaCoffee, FaCodeBranch, FaRegUser, FaRegCalendarCheck } from 'react-icons/fa'
-import { FaPlus, FaCircleInfo, FaArrowUpRightFromSquare } from 'react-icons/fa6';
+import { FaExclamation, FaCodeBranch } from 'react-icons/fa'
+import { FaPlus, FaCircleInfo, FaArrowUpRightFromSquare, FaQ, FaRegRectangleList } from 'react-icons/fa6';
 import { AiFillStar } from 'react-icons/ai';
 // #endregion
 
@@ -91,8 +91,7 @@ const Tentang = () => {
                                     <div className={styles.content__section}>
                                         <Section title={'Info'}>
                                             <Card icon={{ primary: <FaCodeBranch /> }} title={'Version'} description={process.env.NEXT_PUBLIC_APP_VERSION ?? '-'} />
-                                            <Card icon={{ primary: <FaRegCalendarCheck /> }} title={'Release'} description={'19 Oktober 2024'} />
-                                            <Card useNextLink={true} href={'https://whoishayyan.cyclic.cloud/'} target={'_blank'} prefetch={false} clickable={true} useActionIcon={true} icon={{ primary: <FaRegUser /> }} title={'Developer'} description={'Reyhan Naufal Hayyan'} />
+                                            <Card useNextLink={true} href={'https://l.loggify.app/sipk/changes'} target={'_blank'} prefetch={false} clickable={true} useActionIcon={true} icon={{ primary: <FaRegRectangleList /> }} title={'Release Notes'} description={'Lihat di sini untuk melihat catatan rilis, apa yang baru dan yang berubah di versi ini'} />
                                         </Section>
                                         <Section title={'Support Us'}>
                                             <Card
@@ -106,14 +105,10 @@ const Tentang = () => {
                                                 title={'Rating'}
                                                 description={'Penilaianmu sangat berarti untuk aplikasi ini'}
                                             />
-                                            {/* Target link (href) belum sesuai. */}
-                                            <Card useNextLink={true} href={'https://sociabuzz.com/rheyhannh'} target={'_blank'} prefetch={false} clickable={true} useActionIcon={true} icon={{ primary: <FaCoffee /> }} title={'Traktir Developer'} description={'Segelas americano akan mengubah kehidupan pengembang aplikasi'} />
                                             <Card useNextLink={true} href={getFeedbackFormUrl()} target={'_blank'} prefetch={false} clickable={true} useActionIcon={true} icon={{ primary: <FaExclamation /> }} title={'Feedback'} description={'Laporin disini kalau kamu mengalami masalah tertentu terkait aplikasi ini'} />
                                         </Section>
                                         <Section title={'Help & Social'}>
-                                            {/* Target link (href) belum sesuai. */}
-                                            <Card useNextLink={true} href={'/panduan'} clickable={true} icon={{ primary: <FaBook /> }} title={'Panduan'} description={'Panduan lengkap yang mungkin menjawab pertanyaan atau kebingungan kamu'} />
-                                            <Card useNextLink={true} href={'https://web.telegram.org/k/'} target={'_blank'} prefetch={false} clickable={true} useActionIcon={true} icon={{ primary: <FaTelegramPlane /> }} title={'Telegram'} description={'Gabung grup telegram untuk memperoleh informasi terbaru'} />
+                                            <Card useNextLink={true} href={'/faq'} prefetch={true} clickable={true} icon={{ primary: <FaQ /> }} title={'FAQ'} description={'Pertanyaan yang sering ditanyain dan mungkin bisa menjawab kebinggungan kamu'} />
                                         </Section>
                                     </div>
                                 </div>
