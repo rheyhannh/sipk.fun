@@ -50,7 +50,7 @@ import {
  * @property {string} fullname 
  * Nama lengkap user dengan kriteria
  * - min_length : `6`
- * - max_length : `100`
+ * - max_length : `50`
  * @property {string} nickname 
  * Nama panggilan atau nickname user dengan kriteria
  * - min_length : `3`
