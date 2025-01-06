@@ -126,13 +126,15 @@ export async function POST(request) {
             )
         }
 
-        const formDataSchema = Joi.object({
-            email: Joi.string().min(6).max(100).email().required(),
-            password: Joi.string().min(6).max(50).required(),
-            fullname: Joi.string().min(6).max(100).required(),
-            university_id: Joi.number().min(0).max(universitas.length).required(),
-            token: process.env.NODE_ENV !== 'production' ? Joi.string() : Joi.string().required(),
-        });
+        const formDataSchema = Joi.object(
+            /** @type {import('@/types/form_data').RegisterFormData} */
+            ({
+                email: Joi.string().min(6).max(100).email().required(),
+                password: Joi.string().min(6).max(50).required(),
+                fullname: Joi.string().pattern(/^[A-Za-z\s]*$/, 'alpha only').pattern(/^[a-zA-Z]+(\s[a-zA-Z]+)*$/, 'one space each word').min(6).max(50),
+                university_id: Joi.number().min(0).max(universitas.length).required(),
+                token: process.env.NODE_ENV !== 'production' ? Joi.string() : Joi.string().required(),
+            }));
 
         await validateFormData(formData, null, formDataSchema);
 
