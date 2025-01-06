@@ -505,8 +505,8 @@ export default function Users({ universitasData }) {
             if (!isValidated) { newMessage = 'Password min 6, max 50 karakter', newStatus = 'error' }
             else { newMessage = 'Password valid', newStatus = 'success' }
         } else if (type === 'namalengkap' && !isEmpty(value)) {
-            isValidated = isLength(value, { min: 6, max: 100 });
-            if (!isValidated) { newMessage = 'Nama min 6, max 100 karakter', newStatus = 'error' }
+            isValidated = isLength(value, { min: 6, max: 50 });
+            if (!isValidated) { newMessage = 'Nama min 6, max 50 karakter', newStatus = 'error' }
             else {
                 isValidated = isAlpha(value.replace(/\s/g, ''));
                 if (!isValidated) { newMessage = 'Hanya dapat menggunakan huruf', newStatus = 'error' }

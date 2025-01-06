@@ -24,7 +24,7 @@ const accordionList = [
         description: (
             <ul>
                 <li>Hanya dapat menggunakan huruf tanpa simbol maupun angka</li>
-                <li>Jumlah minimal karakter 6 dan maksimal 100</li>
+                <li>Jumlah minimal karakter 6 dan maksimal 50</li>
                 <li>Pastikan hanya ada <span style={{ fontWeight: 500 }}>satu spasi</span> di antara setiap kata</li>
             </ul>
         ),
