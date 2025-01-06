@@ -6,6 +6,10 @@ import Link from 'next/link';
 import * as React from 'react';
 // #endregion
 
+// #region HOOKS DEPEDENCY
+import useUser from '@/hooks/swr/useUser';
+// #endregion
+
 // #region COMPONENT DEPEDENCY
 import { ModalContext } from '@/component/modal/provider';
 import { Logo } from '@/component/Main';
@@ -22,73 +26,105 @@ import { AiFillStar } from 'react-icons/ai';
 import styles from '@/component/modal/modal.module.css'
 // #endregion
 
-const Tentang = () => (
-    <ModalContext.Consumer>
-        {/** @param {import('@/types/context').ModalContext<any>} context */ context => {
-            const handleRatingModal = () => {
-                // Rating modal still without users rating data.
-                context.setData(null);
-                context.setPrevModal('tentang');
-                context.setModal('rating');
+const FEEDBACK_FORM_URL = 'https://form.jotform.com/250052728882460';
+
+const Tentang = () => {
+    const { data } = useUser({ revalidateOnMount: false });
+
+    const getFeedbackFormUrl = () => {
+        try {
+            if (data && Array.isArray(data) && data[0]) {
+                const { id, fullname, email, university } = data[0];
+                const url = new URL(FEEDBACK_FORM_URL);
+
+                // Actually we can add 'g_browser' and 'g_os' in jotform to describe browser and os that used,
+                // only after we can figured out how to get an UA (user-agent) from client-side because it can be
+                // parsed with ua-parser-js https://uaparser.dev/ 
+                url.search = new URLSearchParams({
+                    g_uid: id,
+                    fullname,
+                    email,
+                    universitas: university
+                }).toString();
+
+                return url.toString();
             }
 
-            return (
-                <Backdrop>
-                    <Layout className={`${styles.tentang}`} onEsc={true}>
-                        <Head title='Tentang' />
+            return FEEDBACK_FORM_URL;
+        } catch (error) {
+            console.error(error);
+            return FEEDBACK_FORM_URL;
+        }
+    }
 
-                        <Inner>
-                            <div className={styles.content}>
-                                <Logo
-                                    containerProps={{
-                                        className: styles.content__logo,
-                                    }}
-                                    image={{
-                                        src: '/logo_fill.png',
-                                        width: 128,
-                                        height: 128,
-                                        imageProps: {
-                                            priority: true,
-                                        }
-                                    }}
-                                />
+    return (
+        <ModalContext.Consumer>
+            {/** @param {import('@/types/context').ModalContext<any>} context */ context => {
+                const handleRatingModal = () => {
+                    // Rating modal still without users rating data.
+                    context.setData(null);
+                    context.setPrevModal('tentang');
+                    context.setModal('rating');
+                }
 
-                                <div className={styles.content__section}>
-                                    <Section title={'Info'}>
-                                        <Card icon={{ primary: <FaCodeBranch /> }} title={'Version'} description={process.env.NEXT_PUBLIC_APP_VERSION ?? '-'} />
-                                        <Card icon={{ primary: <FaRegCalendarCheck /> }} title={'Release'} description={'19 Oktober 2024'} />
-                                        <Card useNextLink={true} href={'https://whoishayyan.cyclic.cloud/'} target={'_blank'} prefetch={false} clickable={true} useActionIcon={true} icon={{ primary: <FaRegUser /> }} title={'Developer'} description={'Reyhan Naufal Hayyan'} />
-                                    </Section>
-                                    <Section title={'Support Us'}>
-                                        <Card
-                                            onClick={handleRatingModal}
-                                            onKeyDown={(event) => {
-                                                if (event.key === 'Enter') handleRatingModal();
-                                            }}
-                                            clickable={true}
-                                            useActionIcon={true}
-                                            icon={{ primary: <AiFillStar />, secondary: <FaPlus /> }}
-                                            title={'Rating'}
-                                            description={'Penilaianmu sangat berarti untuk aplikasi ini'}
-                                        />
-                                        {/* Target link (href) belum sesuai. */}
-                                        <Card useNextLink={true} href={'https://sociabuzz.com/rheyhannh'} target={'_blank'} prefetch={false} clickable={true} useActionIcon={true} icon={{ primary: <FaCoffee /> }} title={'Traktir Developer'} description={'Segelas americano akan mengubah kehidupan pengembang aplikasi'} />
-                                        <Card useNextLink={true} href={'https://docs.google.com/forms'} target={'_blank'} prefetch={false} clickable={true} useActionIcon={true} icon={{ primary: <FaExclamation /> }} title={'Feedback'} description={'Laporin disini kalau kamu mengalami masalah tertentu terkait aplikasi ini'} />
-                                    </Section>
-                                    <Section title={'Help & Social'}>
-                                        {/* Target link (href) belum sesuai. */}
-                                        <Card useNextLink={true} href={'/panduan'} clickable={true} icon={{ primary: <FaBook /> }} title={'Panduan'} description={'Panduan lengkap yang mungkin menjawab pertanyaan atau kebingungan kamu'} />
-                                        <Card useNextLink={true} href={'https://web.telegram.org/k/'} target={'_blank'} prefetch={false} clickable={true} useActionIcon={true} icon={{ primary: <FaTelegramPlane /> }} title={'Telegram'} description={'Gabung grup telegram untuk memperoleh informasi terbaru'} />
-                                    </Section>
+                return (
+                    <Backdrop>
+                        <Layout className={`${styles.tentang}`} onEsc={true}>
+                            <Head title='Tentang' />
+
+                            <Inner>
+                                <div className={styles.content}>
+                                    <Logo
+                                        containerProps={{
+                                            className: styles.content__logo,
+                                        }}
+                                        image={{
+                                            src: '/logo_fill.png',
+                                            width: 128,
+                                            height: 128,
+                                            imageProps: {
+                                                priority: true,
+                                            }
+                                        }}
+                                    />
+
+                                    <div className={styles.content__section}>
+                                        <Section title={'Info'}>
+                                            <Card icon={{ primary: <FaCodeBranch /> }} title={'Version'} description={process.env.NEXT_PUBLIC_APP_VERSION ?? '-'} />
+                                            <Card icon={{ primary: <FaRegCalendarCheck /> }} title={'Release'} description={'19 Oktober 2024'} />
+                                            <Card useNextLink={true} href={'https://whoishayyan.cyclic.cloud/'} target={'_blank'} prefetch={false} clickable={true} useActionIcon={true} icon={{ primary: <FaRegUser /> }} title={'Developer'} description={'Reyhan Naufal Hayyan'} />
+                                        </Section>
+                                        <Section title={'Support Us'}>
+                                            <Card
+                                                onClick={handleRatingModal}
+                                                onKeyDown={(event) => {
+                                                    if (event.key === 'Enter') handleRatingModal();
+                                                }}
+                                                clickable={true}
+                                                useActionIcon={true}
+                                                icon={{ primary: <AiFillStar />, secondary: <FaPlus /> }}
+                                                title={'Rating'}
+                                                description={'Penilaianmu sangat berarti untuk aplikasi ini'}
+                                            />
+                                            {/* Target link (href) belum sesuai. */}
+                                            <Card useNextLink={true} href={'https://sociabuzz.com/rheyhannh'} target={'_blank'} prefetch={false} clickable={true} useActionIcon={true} icon={{ primary: <FaCoffee /> }} title={'Traktir Developer'} description={'Segelas americano akan mengubah kehidupan pengembang aplikasi'} />
+                                            <Card useNextLink={true} href={getFeedbackFormUrl()} target={'_blank'} prefetch={false} clickable={true} useActionIcon={true} icon={{ primary: <FaExclamation /> }} title={'Feedback'} description={'Laporin disini kalau kamu mengalami masalah tertentu terkait aplikasi ini'} />
+                                        </Section>
+                                        <Section title={'Help & Social'}>
+                                            {/* Target link (href) belum sesuai. */}
+                                            <Card useNextLink={true} href={'/panduan'} clickable={true} icon={{ primary: <FaBook /> }} title={'Panduan'} description={'Panduan lengkap yang mungkin menjawab pertanyaan atau kebingungan kamu'} />
+                                            <Card useNextLink={true} href={'https://web.telegram.org/k/'} target={'_blank'} prefetch={false} clickable={true} useActionIcon={true} icon={{ primary: <FaTelegramPlane /> }} title={'Telegram'} description={'Gabung grup telegram untuk memperoleh informasi terbaru'} />
+                                        </Section>
+                                    </div>
                                 </div>
-                            </div>
-                        </Inner>
-                    </Layout>
-                </Backdrop>
-            )
-        }}
-    </ModalContext.Consumer>
-)
+                            </Inner>
+                        </Layout>
+                    </Backdrop>
+                )
+            }}
+        </ModalContext.Consumer>
+    )
+}
 
 function Section({ children, title }) {
     return (
