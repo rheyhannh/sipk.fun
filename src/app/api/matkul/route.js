@@ -197,14 +197,16 @@ export async function PATCH(request) {
 
         const nilaiRef = universitas[0].penilaian;
         const nilaiKeys = Object.keys(nilaiRef);
-        const formDataSchema = Joi.object({
-            nama: Joi.string().min(3).max(50).required(),
-            semester: Joi.number().min(0).max(50).required(),
-            sks: Joi.number().min(0).max(50).required(),
-            nilai: Joi.object({ indeks: Joi.string().valid(...nilaiKeys).required() }).required(),
-            dapat_diulang: Joi.boolean().required(),
-            target_nilai: Joi.object({ indeks: Joi.string().valid(...nilaiKeys).required() }).required()
-        });
+        const formDataSchema = Joi.object(
+            /** @type {import('@/types/form_data').MatkulFormData} */
+            ({
+                nama: Joi.string().min(3).max(50).required(),
+                semester: Joi.number().min(0).max(50).required(),
+                sks: Joi.number().min(0).max(50).required(),
+                nilai: Joi.object({ indeks: Joi.string().valid(...nilaiKeys).required() }).required(),
+                dapat_diulang: Joi.boolean().required(),
+                target_nilai: Joi.object({ indeks: Joi.string().valid(...nilaiKeys).required() }).required()
+            }));
 
         await validateFormData(formData, null, formDataSchema);
 
@@ -596,14 +598,16 @@ export async function POST(request) {
 
         const nilaiRef = universitas[0].penilaian;
         const nilaiKeys = Object.keys(nilaiRef);
-        const formDataSchema = Joi.object({
-            nama: Joi.string().min(3).max(50).required(),
-            semester: Joi.number().min(0).max(50).required(),
-            sks: Joi.number().min(0).max(50).required(),
-            nilai: Joi.object({ indeks: Joi.string().valid(...nilaiKeys).required() }).required(),
-            dapat_diulang: Joi.boolean().required(),
-            target_nilai: Joi.object({ indeks: Joi.string().valid(...nilaiKeys).required() }).required()
-        });
+        const formDataSchema = Joi.object(
+            /** @type {import('@/types/form_data').MatkulFormData} */
+            ({
+                nama: Joi.string().min(3).max(50).required(),
+                semester: Joi.number().min(0).max(50).required(),
+                sks: Joi.number().min(0).max(50).required(),
+                nilai: Joi.object({ indeks: Joi.string().valid(...nilaiKeys).required() }).required(),
+                dapat_diulang: Joi.boolean().required(),
+                target_nilai: Joi.object({ indeks: Joi.string().valid(...nilaiKeys).required() }).required()
+            }));
 
         await validateFormData(formData, null, formDataSchema);
 

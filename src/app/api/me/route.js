@@ -177,40 +177,46 @@ export async function PATCH(request) {
         const formDataSchema =
             type === 'preferences' ?
                 Joi.object({
-                    table: Joi.object({
-                        size: Joi.number().valid(-1, 5, 10, 25, 50, 100).required().options({ convert: false }),
-                        controlPosition: Joi.number().min(0).max(2).required().options({ convert: false }),
-                        columnOrder: Joi.array()
-                            .items(Joi.string().valid(...allowedColumn))
-                            .unique()
-                            .length(8)
-                            .required(),
-                        columnVisibility: Joi.object()
-                            .keys({
-                                nomor: Joi.boolean().required(),
-                                matakuliah: Joi.boolean().required(),
-                                semester: Joi.boolean().required(),
-                                sks: Joi.boolean().required(),
-                                nilai: Joi.boolean().required(),
-                                diulang: Joi.boolean().required(),
-                                target: Joi.boolean().required(),
-                                ontarget: Joi.boolean().required()
-                            })
-                            .required()
-                            .length(allowedColumn.length)
-                            .unknown(false)
-                            .options({ convert: false })
-                    }).required()
+                    table: Joi.object(
+                        /** @type {import('@/types/form_data').UserFormData['preferences']['table']} */
+                        ({
+                            size: Joi.number().valid(-1, 5, 10, 25, 50, 100).required().options({ convert: false }),
+                            controlPosition: Joi.number().min(0).max(2).required().options({ convert: false }),
+                            columnOrder: Joi.array()
+                                .items(Joi.string().valid(...allowedColumn))
+                                .unique()
+                                .length(8)
+                                .required(),
+                            columnVisibility: Joi.object()
+                                .keys({
+                                    nomor: Joi.boolean().required(),
+                                    matakuliah: Joi.boolean().required(),
+                                    semester: Joi.boolean().required(),
+                                    sks: Joi.boolean().required(),
+                                    nilai: Joi.boolean().required(),
+                                    diulang: Joi.boolean().required(),
+                                    target: Joi.boolean().required(),
+                                    ontarget: Joi.boolean().required()
+                                })
+                                .required()
+                                .length(allowedColumn.length)
+                                .unknown(false)
+                                .options({ convert: false })
+                        })
+                    ).required()
                 }).required()
                 :
-                Joi.object({
-                    fullname: Joi.string().pattern(/^[A-Za-z\s]*$/, 'alpha only').pattern(/^[a-zA-Z]+(\s[a-zA-Z]+)*$/, 'one space each word').min(6).max(50),
-                    nickname: Joi.string().min(3).max(20),
-                    jurusan: Joi.string().min(6).max(30),
-                    sks_target: Joi.number().integer().min(5).max(1000),
-                    matkul_target: Joi.number().integer().min(5).max(1000),
-                    ipk_target: Joi.number().min(1).max(4)
-                })
+                Joi.object(
+                    /** @type {Omit<import('@/types/form_data').UserFormData, 'preferences'>} */
+                    ({
+                        fullname: Joi.string().pattern(/^[A-Za-z\s]*$/, 'alpha only').pattern(/^[a-zA-Z]+(\s[a-zA-Z]+)*$/, 'one space each word').min(6).max(50),
+                        nickname: Joi.string().min(3).max(20),
+                        jurusan: Joi.string().min(6).max(30),
+                        sks_target: Joi.number().integer().min(5).max(1000),
+                        matkul_target: Joi.number().integer().min(5).max(1000),
+                        ipk_target: Joi.number().min(1).max(4)
+                    })
+                )
 
         await validateFormData(formData, null, formDataSchema);
 
