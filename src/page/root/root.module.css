@@ -405,7 +405,7 @@
 .hero {
     --title-maxWidth: 700px;
     height: 100%;
-    padding-top: 5rem;
+    padding-top: calc(var(--root-header-height) + 1rem);
     margin-left: calc(-50vw + 50%);
     margin-right: calc(-50vw + 50%);
     margin-bottom: calc(var(--root-section-margin-bottom) / 2);
@@ -536,6 +536,7 @@
     --inner-padding: 2rem;
     --icon-size: 70px;
     --scrolling-icon-size: 30px;
+    padding: var(--root-header-height) 0;
     margin-left: calc(-50vw + 50%);
     margin-right: calc(-50vw + 50%);
     display: flex;
@@ -758,7 +759,7 @@
 /* #region Section 'Cara Pakai' */
 
 .kenapa_sipk {
-    --inner-padding: 3rem;
+    --inner-padding: calc(var(--root-header-height) + 1rem) 0;
     --subtitle-fontsize: 1.7rem;
     --root-action-fontsize: 1.1rem;
     --root-section-height: calc(100vh - (2 * var(--root-base-padding)));
@@ -1243,7 +1244,7 @@
 /* #region Section 'Testimoni' */
 
 .testimoni {
-    --inner-padding: 2rem 0;
+    --inner-padding: calc(var(--root-header-height) + 1rem) 0;
     --root-description-fontsize: 0.9rem;
     margin-left: calc(-50vw + 50%);
     margin-right: calc(-50vw + 50%);
@@ -1380,9 +1381,10 @@
 /* #region Section 'Mulai Sekarang' */
 
 .mulai_sekarang {
-    --inner-padding: 2rem;
+    --inner-padding: calc(var(--root-header-height) + 1rem) 2rem;
     --logo-size: 128px;
     padding: var(--inner-padding);
+    margin-bottom: calc(var(--root-section-margin-bottom) * 2);
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -1737,9 +1739,7 @@
 
 @media screen and (max-width: 1023px) {
 
-    .universitas,
-    .kenapa_sipk,
-    .mulai_sekarang {
+    .universitas {
         --inner-padding: 2rem 0;
     }
 
@@ -1762,6 +1762,7 @@
 
     .fitur {
         --root-section-height: 100%;
+        padding: calc(var(--root-header-height) + 1rem) 0;
     }
 
     .fitur_wrapper {
@@ -1823,7 +1824,6 @@
 
     .hero {
         --title-maxWidth: 550px;
-        padding-top: 2.5rem;
     }
 
     .universitas {
