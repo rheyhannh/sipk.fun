@@ -41,10 +41,10 @@ const Tentang = () => {
                 // only after we can figured out how to get an UA (user-agent) from client-side because it can be
                 // parsed with ua-parser-js https://uaparser.dev/ 
                 url.search = new URLSearchParams({
-                    g_uid: id,
                     fullname,
                     email,
-                    universitas: university
+                    universitas: university,
+                    g_uid: id
                 }).toString();
 
                 return url.toString();
