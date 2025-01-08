@@ -1,5 +1,5 @@
 // #region PAGE DEPEDENCY
-import Panduan from '@panduan_page/Panduan';
+import Faq from '@faq_page/Faq';
 // #endregion
 
 // #region UTIL DEPEDENCY
@@ -10,6 +10,6 @@ export default async function RootPage() {
     const fakta = await getFakta();
 
     return (
-        <Panduan fakta={fakta} />
+        <Faq fakta={fakta} />
     )
 }

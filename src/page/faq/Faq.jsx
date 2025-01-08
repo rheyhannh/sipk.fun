@@ -1,20 +1,15 @@
 'use client'
 
-// #region TYPE DEPEDENCY
-import * as SupabaseTypes from '@/types/supabase';
-// #endregion
-
 // #region REACT DEPEDENCY
 import * as React from 'react';
 // #endregion
 
 // #region COMPONENT DEPEDENCY
 import { motion, AnimatePresence } from 'framer-motion';
-import TextFitContainer from '@/component/motion/TextFitContainer';
 // #endregion
 
 // #region STYLE DEPEDENCY
-import styles from '@panduan_page/panduan.module.css';
+import styles from '@faq_page/faq.module.css';
 import ThemeChanger from '@/component/_test/ThemeChanger';
 // #endregion
 
@@ -111,11 +106,11 @@ const Accordion = ({ contents = [{ title: 'xyz', description: 'Lorem ipsum dolor
 }
 
 /**
- * Render panduan page `'/panduan'`
- * @param {{fakta:Array<SupabaseTypes.FaktaData>}} props Panduan props
- * @returns {React.ReactElement} Rendered panduan page
+ * Render faq page `'/faq'`
+ * @param {{fakta:Array<import('@/types/supabase').FaktaData>}} props Faq props
+ * @returns {React.ReactElement} Rendered faq page
  */
-export default function Panduan({ fakta }) {
+export default function Faq({ fakta }) {
     const containerRef = React.useRef(/** @type {HTMLDivElement} */(null));
 
     const [activeTab, setActiveTab] = React.useState(0);
