@@ -217,6 +217,16 @@ function Tab({ title, isActive, tabIndex, setActiveTab, ...props }) {
 
 function Accordion({ contents = [{ title: LOREM_TITLE, description: LOREM_DESCRIPTION }], ...props }) {
     const [activeIndex, setActiveIndex] = React.useState(/** @type {Array<number>} */([]));
+    const handleActivatingItem = (itemIndex) => {
+        const isActive = activeIndex.includes(itemIndex);
+        const clone = [...activeIndex];
+        if (isActive) {
+            setActiveIndex(clone.filter(val => val !== itemIndex));
+        } else {
+            clone.push(itemIndex);
+            setActiveIndex(clone);
+        }
+    }
 
     return (
         <motion.div
@@ -230,16 +240,12 @@ function Accordion({ contents = [{ title: LOREM_TITLE, description: LOREM_DESCRI
             {contents.map((item, index) => (
                 <div
                     key={index}
+                    tabIndex={'0'}
                     className={`${styles.item} ${activeIndex.includes(index) ? styles.active : ''}`}
-                    onClick={() => {
-                        const isActive = activeIndex.includes(index);
-                        const clone = [...activeIndex];
-                        if (isActive) {
-                            setActiveIndex(clone.filter(val => val !== index));
-                        } else {
-                            clone.push(index);
-                            setActiveIndex(clone);
-                        }
+                    onClickCapture={(event) => { event.currentTarget.blur() }}
+                    onClick={() => { handleActivatingItem(index) }}
+                    onKeyDown={(event) => {
+                        if (event.key === 'Enter') handleActivatingItem(index)
                     }}
                 >
                     <h2 className={styles.title}>
