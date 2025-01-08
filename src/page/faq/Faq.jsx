@@ -135,7 +135,87 @@ const TABS = [
     }
 ]
 
-const Accordion = ({ contents = [{ title: LOREM_TITLE, description: LOREM_DESCRIPTION }] }) => {
+/**
+ * Render faq page `'/faq'`
+ * @param {{fakta:Array<import('@/types/supabase').FaktaData>}} props Faq props
+ * @returns {React.ReactElement} Rendered faq page
+ */
+export default function Faq({ fakta }) {
+    const [activeTab, setActiveTab] = React.useState(0);
+
+    return (
+        <Base>
+            <Container>
+                <ThemeChanger />
+                <Heading title={'FAQs'} />
+                <Tabs>
+                    {TABS.map((item, index) => (
+                        <Tab
+                            key={index}
+                            title={transformTabTitle(item.title, item.type)}
+                            isActive={activeTab === index}
+                            tabIndex={index}
+                            setActiveTab={setActiveTab}
+                        />
+                    ))}
+                </Tabs>
+                <AnimatePresence mode={'wait'}>
+                    {TABS.map((item, index) => activeTab === index && (
+                        <Accordion key={index} contents={item.contents} />
+                    ))}
+                </AnimatePresence>
+            </Container>
+        </Base>
+    )
+}
+
+function Base({ children, ...props }) {
+    return (
+        <div className={`${styles.base} ${styles.colors}`} {...props}>
+            {children}
+        </div>
+    )
+}
+
+function Container({ children, ...props }) {
+    return (
+        <div className={styles.container} {...props}>
+            {children}
+        </div>
+    )
+}
+
+function Heading({ title, ...props }) {
+    return (
+        <div className={styles.heading} {...props}>
+            <h1 className={styles.title}>
+                {title}
+            </h1>
+        </div>
+    )
+}
+
+function Tabs({ children, ...props }) {
+    return (
+        <div className={styles.tabs} {...props}>
+            {children}
+        </div>
+    )
+}
+
+function Tab({ title, isActive, tabIndex, setActiveTab, ...props }) {
+    return (
+        <div
+            className={`${styles.tab} ${isActive ? styles.active : ''}`}
+            onClick={() => { setActiveTab(tabIndex) }}
+            {...props}
+        >
+            {title}
+        </div>
+    )
+}
+
+function Accordion({ contents = [{ title: LOREM_TITLE, description: LOREM_DESCRIPTION }], ...props }) {
     const [activeIndex, setActiveIndex] = React.useState(/** @type {Array<number>} */([]));
 
     return (
@@ -145,6 +225,7 @@ const Accordion = ({ contents = [{ title: LOREM_TITLE, description: LOREM_DESCRI
             initial={{ y: 30, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             exit={{ y: 30, opacity: 0 }}
+            {...props}
         >
             {contents.map((item, index) => (
                 <div key={index} className={`${styles.item} ${activeIndex.includes(index) ? styles.active : ''}`}>
@@ -183,48 +264,6 @@ const Accordion = ({ contents = [{ title: LOREM_TITLE, description: LOREM_DESCRI
                 </div>
             ))}
         </motion.div>
-    )
-}
-
-/**
- * Render faq page `'/faq'`
- * @param {{fakta:Array<import('@/types/supabase').FaktaData>}} props Faq props
- * @returns {React.ReactElement} Rendered faq page
- */
-export default function Faq({ fakta }) {
-    const containerRef = React.useRef(/** @type {HTMLDivElement} */(null));
-
-    const [activeTab, setActiveTab] = React.useState(0);
-
-    return (
-        <div className={`${styles.base} ${styles.colors}`}>
-            <div ref={containerRef} className={styles.container}>
-                <ThemeChanger />
-
-                <div className={styles.heading}>
-                    <h1 className={styles.title}>FAQs</h1>
-                </div>
-
-                <div className={styles.tabs}>
-                    {TABS.map((item, index) => (
-                        <div
-                            key={index}
-                            className={`${styles.tab} ${activeTab === index ? styles.active : ''}`}
-                            onClick={() => { setActiveTab(index) }}
-                        >
-                            {transformTabTitle(item.title, item.type)}
-                        </div>
-                    ))}
-                </div>
-
-                <AnimatePresence mode={'wait'}>
-                    {TABS.map((item, index) => activeTab === index && (
-                        <Accordion key={index} contents={item.contents} />
-                    ))}
-
-                </AnimatePresence>
-            </div>
-        </div>
     )
 }
 
