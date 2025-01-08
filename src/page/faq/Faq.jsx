@@ -25,7 +25,54 @@ import { FaPlus } from 'react-icons/fa6';
 const LOREM_TITLE = 'Lorem ipsum dolor?';
 const LOREM_DESCRIPTION = 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sint tempora quasi eligendi distinctio, mollitia porro repudiandae modi consectetur consequuntur perferendis!'
 
-const TABS = [
+/**
+ * @typedef {Object} TabItem
+ * @property {string} title
+ * Judul tab dengan format `lowercase` dan mengganti penggunaan spasi dengan tanda kurang `-` atau garis bawah `_`.
+ * 
+ * Behaviour ini diperlukan karna property ini juga digunakan sebagai value dari URL query param `tab` pada halaman `/faq` dan juga digunakan sebagai `id` element terkait.
+ * Selain itu kita ingin meminimalisir error yang dapat terjadi dengan penggunaan simbol.
+ * 
+ * - Contoh : `fitur-rating`
+ * @property {Parameters<typeof transformTabTitle>[1]} [type]
+ * Tipe render yang digunakan untuk merender {@link TabItem.title judul tab} menggunakan method {@link transformTabTitle} dengan keterangan berikut,
+ * - `normal` : Render dengan lowercase (default)
+ * - `capitalize` : Render dengan Pascal Case
+ * - `uppercase` : Render dengan uppercase
+ * 
+ * Lihat contoh berikut untuk lebih jelasnya
+ * ```js
+ * const title = 'fitur-rating'
+ * // normal = fitur rating
+ * // capitalize = Fitur Rating
+ * // uppercase = FITUR RATING
+ * ```
+ * @property {Array<ContentItem>} contents
+ * Array yang berisikan content yang relevan dengan {@link TabItem.title judul tab} yang digunakan.
+ * 
+ * 
+ * ```js
+ * const default = [
+ *      { title: default_title, description: default_description }
+ * ]
+ * ```
+ * 
+ * Lihat default {@link LOREM_TITLE title} dan default {@link LOREM_DESCRIPTION description}
+ */
+
+/**
+ * @typedef {Object} ContentItem
+ * @property {string} title
+ * Judul content
+ * 
+ * - Default : Menggunakan {@link LOREM_TITLE variabel ini}
+ * @property {React.ReactNode} description
+ * Deskripsi konten dimana dapat berupa sebuah string, custom component atau lainnnya yang dapat dirender `React` dan akan dibungkus dengan element `p`
+ * 
+ * - Default : Menggunakan {@link LOREM_DESCRIPTION variabel ini}
+ */
+
+const TABS = /** @type {Array<TabItem>} */ ([
     {
         title: 'sipk',
         type: 'uppercase',
@@ -138,7 +185,7 @@ const TABS = [
             },
         ]
     }
-]
+])
 
 /**
  * Render faq page `'/faq'`
