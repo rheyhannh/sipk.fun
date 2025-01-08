@@ -1,5 +1,10 @@
 'use client'
 
+// #region NEXT DEPEDENCY
+import { usePathname, useSearchParams } from 'next/navigation';
+import Link from 'next/link';
+// #endregion
+
 // #region REACT DEPEDENCY
 import * as React from 'react';
 // #endregion
@@ -141,7 +146,20 @@ const TABS = [
  * @returns {React.ReactElement} Rendered faq page
  */
 export default function Faq({ fakta }) {
-    const [activeTab, setActiveTab] = React.useState(0);
+    const searchParams = useSearchParams();
+    const [activeTab, setActiveTab] = React.useState(-1);
+
+    React.useEffect(() => {
+        const tabQuery = searchParams.get('tab');
+        if (tabQuery) {
+            const tabQueryIndex = TABS.findIndex(item => item.title === tabQuery);
+            if (tabQueryIndex >= 0) {
+                setActiveTab(tabQueryIndex);
+                return;
+            }
+        }
+        setActiveTab(0);
+    }, [searchParams])
 
     return (
         <Base>
@@ -152,10 +170,9 @@ export default function Faq({ fakta }) {
                     {TABS.map((item, index) => (
                         <Tab
                             key={index}
+                            tabId={item.title}
                             title={transformTabTitle(item.title, item.type)}
                             isActive={activeTab === index}
-                            tabIndex={index}
-                            setActiveTab={setActiveTab}
                         />
                     ))}
                 </Tabs>
@@ -203,15 +220,19 @@ function Tabs({ children, ...props }) {
     )
 }
 
-function Tab({ title, isActive, tabIndex, setActiveTab, ...props }) {
+function Tab({ tabId, title, isActive, ...props }) {
+    const pathname = usePathname();
+
     return (
-        <div
+        <Link
             className={`${styles.tab} ${isActive ? styles.active : ''}`}
-            onClick={() => { setActiveTab(tabIndex) }}
+            href={pathname + '?' + 'tab=' + tabId}
+            scroll={false}
+            shallow={true}
             {...props}
         >
             {title}
-        </div>
+        </Link>
     )
 }
 
