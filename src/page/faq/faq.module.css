@@ -9,6 +9,7 @@
     --item-color-hover: #37a3dc;
     --border-color-default: rgba(255, 255, 255, 0.1);
     /* Rgb based on item-color-active */
+    --border-color-hover: rgba(72, 185, 241, 0.5);
     --border-color-active: rgba(72, 185, 241, 0.75);
     /* Rgb based on background-secondary */
     --accordion-background-default: rgba(26, 44, 68, 0.25);
@@ -135,11 +136,19 @@
         background-color: var(--background-secondary);
     }
 
+    .tab:focus:not(:hover) {
+        border: 1px solid var(--border-color-hover);
+    }
+
     .accordion .item:hover {
         background-color: var(--accordion-background-hover);
     }
 
     .accordion .item:hover .title .icon {
         color: var(--item-color-hover);
+    }
+
+    .accordion .item:focus:not(:hover) {
+        border: 1px solid var(--border-color-hover);
     }
 }
