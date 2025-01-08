@@ -67,9 +67,9 @@ const footerShorcuts = [
         href: null
     },
     {
-        text: 'Panduan',
+        text: 'FAQ',
         elementId: null,
-        href: '/panduan',
+        href: '/faq',
     },
 ]
 
