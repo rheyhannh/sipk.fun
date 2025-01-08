@@ -358,7 +358,7 @@ function Accordion({ contents = [{ title: LOREM_TITLE, description: LOREM_DESCRI
 
 /**
  * Transform `text` yang diberikan menjadi format spesifik tertentu
- * dengan mereplace garis bawah `_` dan tanda kurang `-` menjadi spasi dan melakukan format dengan tipe transform yang digunakan.
+ * dengan mereplace setiap garis bawah `_` dan tanda kurang `-` yang ada menjadi spasi dan melakukan format dengan tipe transform yang digunakan.
  * 
  * Untuk tipe format dapat dilihat sebagai berikut,
  * - `normal` : Format teks menggunakan lowercase 
@@ -367,7 +367,7 @@ function Accordion({ contents = [{ title: LOREM_TITLE, description: LOREM_DESCRI
  * 
  * @param {string} text Input teks, default `lorem_ipsum`
  * @param {'normal' | 'capitalize' | 'uppercase'} type Tipe transform yang digunakan, default `normal`
- * @returns {string} Lorem
+ * @returns {string} Teks sesuai dengan ketentuan pada deskripsi
  * @example 
  * ```js
  * console.log(transformTabTitle('transform_me', 'capitalize')); // 'Transform Me'
