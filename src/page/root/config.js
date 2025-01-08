@@ -43,9 +43,9 @@ export const HEADER_NAVIGATION_SHORCUTS = [
         href: null
     },
     {
-        text: 'Panduan',
+        text: 'FAQ',
         elementId: null,
-        href: '/panduan',
+        href: '/faq',
     },
 ]
 
