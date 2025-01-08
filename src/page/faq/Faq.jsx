@@ -324,7 +324,7 @@ function Accordion({ contents = [{ title: LOREM_TITLE, description: LOREM_DESCRI
     const [activeIndex, setActiveIndex] = React.useState(/** @type {Array<number>} */([]));
 
     React.useEffect(() => {
-        const contents = searchParams.getAll('content');
+        const contentQuery = searchParams.getAll('content');
         const newState = contents
             .map(contentIndex => contentIndex ? Number(contentIndex) : 'null')
             .filter(x => !isNaN(x) && x < contents.length);
