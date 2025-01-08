@@ -189,7 +189,12 @@ function Card(
 
 function CardContainer({ useNextLink, clickable, useActionIcon, children, ...props }) {
     return useNextLink ?
-        <Link {...props} className={`${styles.card} ${useActionIcon ? styles.explore : ''} ${clickable ? styles.clickable : ''}`}>
+        <Link {...props}
+            className={`${styles.card} ${useActionIcon ? styles.explore : ''} ${clickable ? styles.clickable : ''}`}
+            onClickCapture={(event) => {
+                event.currentTarget.blur();
+            }}
+        >
             {children}
         </Link>
         :
