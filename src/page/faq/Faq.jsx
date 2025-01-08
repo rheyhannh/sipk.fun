@@ -9,6 +9,10 @@ import Link from 'next/link';
 import * as React from 'react';
 // #endregion
 
+// #region HOOKS DEPEDENCY
+import useLocalTheme from '@/hooks/swr/useLocalTheme';
+// #endregion
+
 // #region COMPONENT DEPEDENCY
 import { motion, AnimatePresence } from 'framer-motion';
 // #endregion
@@ -238,8 +242,10 @@ export default function Faq({ fakta }) {
  * @returns {React.ReactElement} Rendered component
  */
 function Base({ children, ...props }) {
+    const { data: theme } = useLocalTheme();
+
     return (
-        <div className={`${styles.base} ${styles.colors}`} {...props}>
+        <div className={`${styles.base} ${styles.colors} ${theme === 'dark' ? styles.dark_theme : undefined}`} {...props}>
             {children}
         </div>
     )
