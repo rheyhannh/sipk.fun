@@ -1,45 +1,54 @@
-.container {
-    position: relative;
-    width: 100%;
-    /* height: 100vh; */
-    /* overflow: hidden; */
-    display: block;
-    padding: 3.5rem 1.75rem;
-    background-color: var(--landing-navbar-nub-color);
+.base.colors {
+    --background-primary: #0e1c2e;
+    --background-secondary: #1a2c44;
+    --background-accent: #122638;
+    --text-primary: #ffffff;
+    --text-secondary: #a0b9d0;
+    --text-accent: #48b9f1;
+    --item-color-active: #48b9f1;
+    --item-color-hover: #37a3dc;
+    --border-color-default: rgba(255, 255, 255, 0.1);
+    /* Rgb based on item-color-active */
+    --border-color-active: rgba(72, 185, 241, 0.75);
+    /* Rgb based on background-secondary */
+    --accordion-background-default: rgba(26, 44, 68, 0.25);
+    --accordion-background-hover: rgba(26, 44, 68, 0.5);
+    /* Gradient based on background-secondary and background-accent */
+    --accordion-background-active: radial-gradient(circle, #1a2c44, #182b41, #16293e, #14283b, #122638);
 }
 
-.circle {
-    z-index: 1;
-    position: absolute;
-    top: -62.5%;
-    left: 50%;
-    transform: translateX(-50%);
+.base {
     width: 100vw;
-    height: 100vw;
-    border-radius: 50%;
-    background-color: red;
-}
-
-.heading,
-.tabs {
-    position: relative;
-    z-index: 2;
-}
-
-.heading {
-    text-align: center;
-}
-
-.heading>.text {
-    display: inline-block;
-    margin-bottom: 1.75rem;
+    min-height: 100vh;
+    background-color: var(--background-primary);
+    color: var(--text-secondary);
     font-size: 1rem;
 }
 
-.heading>h1.title {
+.container {
+    position: relative;
+    min-width: 275px;
+    max-width: 768px;
+    width: 100%;
+    margin: 0 auto;
+    display: block;
+    padding: 3.5rem 1.75rem;
+    background-color: inherit;
+}
+
+/* #region Heading */
+
+
+.heading .title {
+    text-align: center;
     margin-bottom: 1.5rem;
     font-size: 3.5rem;
+    color: var(--text-accent);
 }
+
+/* #endregion */
+
+/* #region Tabs */
 
 .tabs {
     display: flex;
@@ -50,18 +59,24 @@
 }
 
 .tab {
-    border-radius: 0.25rem;
-    border: 1px solid var(--landing-border);
+    border-radius: 0.75rem;
+    border: 1px solid var(--border-color-default);
     padding: 0.5rem 0.75rem;
-    background-color: transparent;
+    background-color: var(--accordion-background-default);
+    color: var(--text-secondary);
     font-weight: 600;
     cursor: pointer;
 }
 
 .tab.active {
-    background-color: var(--logo-second-color);
-    border: none;
+    background-color: var(--background-accent);
+    color: var(--item-color-active);
+    border: 1px solid var(--border-color-active);
 }
+
+/* #endregion */
+
+/* #region Accordion */
 
 .accordion {
     display: flex;
@@ -72,25 +87,36 @@
 
 .accordion .item {
     padding: 0 1.25rem;
-    border: 1px solid var(--landing-border);
+    border: 1px solid var(--border-color-default);
     border-radius: 0.75rem;
-    color: var(--landing-copyLighterInverse);
+    background-color: var(--accordion-background-default);
     overflow: hidden;
+}
+
+.accordion .item.active {
+    background-image: var(--accordion-background-active);
 }
 
 .accordion .item .title {
     display: flex;
     justify-content: space-between;
+    align-items: center;
     padding: 1.5rem 0;
     cursor: pointer;
 }
 
 .accordion .item.active .title {
-    color: var(--landing-copy);
+    color: var(--text-primary);
+}
+
+.accordion .item .title .icon {
+    flex: 0 0 max-content;
+    transition: transform 0.3s ease-in-out;
 }
 
 .accordion .item.active .title .icon {
-    color: var(--landing-copyLight);
+    color: var(--item-color-active);
+    transform: rotate(45deg);
 }
 
 .accordion .item .description {
@@ -99,4 +125,21 @@
 
 .accordion .item .description p {
     color: inherit;
+}
+
+/* #endregion */
+
+@media (hover: hover) and (pointer: fine) {
+    .tab:hover {
+        color: var(--item-color-hover);
+        background-color: var(--background-secondary);
+    }
+
+    .accordion .item:hover {
+        background-color: var(--accordion-background-hover);
+    }
+
+    .accordion .item:hover .title .icon {
+        color: var(--item-color-hover);
+    }
 }

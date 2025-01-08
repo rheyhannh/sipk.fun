@@ -19,16 +19,44 @@ import { FaPlus } from 'react-icons/fa6';
 
 const TABS = [
     {
-        title: 'Web Dev',
+        title: 'SIPK',
         contents: [
-            { title: 'What is web development', description: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sint tempora quasi eligendi distinctio, mollitia porro repudiandae modi consectetur consequuntur perferendis!' },
-            { title: 'How do i know if i need it', description: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sint tempora quasi eligendi distinctio, mollitia porro repudiandae modi consectetur consequuntur perferendis!' },
-            { title: 'What does it cost', description: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sint tempora quasi eligendi distinctio, mollitia porro repudiandae modi consectetur consequuntur perferendis!' },
-            { title: 'What abous SEO', description: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sint tempora quasi eligendi distinctio, mollitia porro repudiandae modi consectetur consequuntur perferendis!' }
+            {
+                title: 'Apa itu SIPK?',
+                description: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sint tempora quasi eligendi distinctio, mollitia porro repudiandae modi consectetur consequuntur perferendis!'
+            },
+            {
+                title: 'Apa bedanya SIPK dengan portal akademik kampus?',
+                description: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sint tempora quasi eligendi distinctio, mollitia porro repudiandae modi consectetur consequuntur perferendis!'
+            },
+            {
+                title: 'Kenapa SIPK ada?',
+                description: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sint tempora quasi eligendi distinctio, mollitia porro repudiandae modi consectetur consequuntur perferendis!'
+            },
+            {
+                title: 'Apakah SIPK hanya untuk mahasiswa tingkat awal?',
+                description: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sint tempora quasi eligendi distinctio, mollitia porro repudiandae modi consectetur consequuntur perferendis!'
+            },
+            {
+                title: 'Apakah ada batasan jurusan atau jenjang pendidikan untuk menggunakan SIPK?',
+                description: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sint tempora quasi eligendi distinctio, mollitia porro repudiandae modi consectetur consequuntur perferendis!'
+            },
+            {
+                title: 'Kenapa universitas aku engga ada di SIPK?',
+                description: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sint tempora quasi eligendi distinctio, mollitia porro repudiandae modi consectetur consequuntur perferendis!'
+            },
+            {
+                title: 'Apakah SIPK cuma bisa diakses lewat Laptop? ',
+                description: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sint tempora quasi eligendi distinctio, mollitia porro repudiandae modi consectetur consequuntur perferendis!'
+            },
+            {
+                title: 'Apakah SIPK berbayar?',
+                description: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sint tempora quasi eligendi distinctio, mollitia porro repudiandae modi consectetur consequuntur perferendis!'
+            },
         ]
     },
     {
-        title: 'Mobile Dev',
+        title: 'Pendaftaran',
         contents: [
             { title: 'What is web development2', description: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sint tempora quasi eligendi distinctio, mollitia porro repudiandae modi consectetur consequuntur perferendis!' },
             { title: 'How do i know if i need it2', description: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sint tempora quasi eligendi distinctio, mollitia porro repudiandae modi consectetur consequuntur perferendis!' },
@@ -37,7 +65,7 @@ const TABS = [
         ]
     },
     {
-        title: 'UI/UX',
+        title: 'Rating',
         contents: [
             { title: 'What is web development3', description: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sint tempora quasi eligendi distinctio, mollitia porro repudiandae modi consectetur consequuntur perferendis!' },
             { title: 'How do i know if i need it3', description: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sint tempora quasi eligendi distinctio, mollitia porro repudiandae modi consectetur consequuntur perferendis!' },
@@ -46,7 +74,7 @@ const TABS = [
         ]
     },
     {
-        title: 'Copywriting',
+        title: 'Dolor',
         contents: [
             { title: 'What is web development4', description: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sint tempora quasi eligendi distinctio, mollitia porro repudiandae modi consectetur consequuntur perferendis!' },
             { title: 'How do i know if i need it4', description: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sint tempora quasi eligendi distinctio, mollitia porro repudiandae modi consectetur consequuntur perferendis!' },
@@ -83,7 +111,7 @@ const Accordion = ({ contents = [{ title: 'xyz', description: 'Lorem ipsum dolor
                         }}
                     >
                         <span>{item.title}</span>
-                        <span className={styles.icon}>X</span>
+                        <FaPlus className={styles.icon} />
                     </h2>
 
                     <motion.div
@@ -116,36 +144,35 @@ export default function Faq({ fakta }) {
     const [activeTab, setActiveTab] = React.useState(0);
 
     return (
-        <div ref={containerRef} className={styles.container}>
-            <ThemeChanger />
+        <div className={`${styles.base} ${styles.colors}`}>
+            <div ref={containerRef} className={styles.container}>
+                <ThemeChanger />
 
-            <div className={styles.heading}>
-                <span className={styles.text}>Let's answer some questions</span>
-                <h1 className={styles.title}>FAQs</h1>
+                <div className={styles.heading}>
+                    <h1 className={styles.title}>FAQs</h1>
+                </div>
+
+                <div className={styles.tabs}>
+                    {TABS.map((item, index) => (
+                        <div
+                            key={index}
+                            className={`${styles.tab} ${activeTab === index ? styles.active : ''}`}
+                            onClick={() => {
+                                setActiveTab(index);
+                            }}
+                        >
+                            {item.title}
+                        </div>
+                    ))}
+                </div>
+
+                <AnimatePresence mode={'wait'}>
+                    {TABS.map((item, index) => activeTab === index && (
+                        <Accordion key={index} contents={item.contents} />
+                    ))}
+
+                </AnimatePresence>
             </div>
-
-            <div className={styles.tabs}>
-                {TABS.map((item, index) => (
-                    <div
-                        key={index}
-                        className={`${styles.tab} ${activeTab === index ? styles.active : ''}`}
-                        onClick={() => {
-                            setActiveTab(index);
-                        }}
-                    >
-                        {item.title}
-                    </div>
-                ))}
-            </div>
-
-            <AnimatePresence mode={'wait'}>
-                {TABS.map((item, index) => activeTab === index && (
-                    <Accordion key={index} contents={item.contents} />
-                ))}
-
-            </AnimatePresence>
-
-            {/* <div className={styles.circle} /> */}
         </div>
     )
 }
