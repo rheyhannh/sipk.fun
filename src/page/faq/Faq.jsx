@@ -237,7 +237,20 @@ function Tab({ tabId, title, isActive, ...props }) {
 }
 
 function Accordion({ contents = [{ title: LOREM_TITLE, description: LOREM_DESCRIPTION }], ...props }) {
+    const searchParams = useSearchParams();
     const [activeIndex, setActiveIndex] = React.useState(/** @type {Array<number>} */([]));
+
+    React.useEffect(() => {
+        const contents = searchParams.getAll('content');
+        const newState = contents
+            .map(contentIndex => contentIndex ? Number(contentIndex) : 'null')
+            .filter(x => !isNaN(x) && x <= contents.length);
+
+        if (newState.length) {
+            setActiveIndex(newState);
+        }
+    }, [])
+
     const handleActivatingItem = (itemIndex) => {
         const isActive = activeIndex.includes(itemIndex);
         const clone = [...activeIndex];
