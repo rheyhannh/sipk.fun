@@ -12,6 +12,7 @@ import { Accordion } from '@/component/Accordion';
 // #region ICON DEPEDENCY
 import { FaCheckCircle, FaExclamationCircle } from 'react-icons/fa'
 import { FaPlus, FaCircleInfo, FaGear } from 'react-icons/fa6';
+import { FiExternalLink } from 'react-icons/fi';
 // #endregion
 
 // #region STYLE DEPEDENCY
@@ -94,12 +95,17 @@ const PanduanDaftar = () => (
             <div className={styles.form__action}>
                 <Link
                     className={styles.btn}
-                    onClick={(event) => { event.target.blur(); }}
+                    onClickCapture={(event) => { event.currentTarget.blur() }}
                     prefetch={false}
-                    href='/docs'
+                    href='/faq#pendaftaran'
                     target={'_blank'}
                 >
-                    <h3>Panduan Lengkap</h3>
+                    <h3 style={{ display: 'flex', alignItems: 'center' }}>
+                        <span style={{ marginRight: '0.25rem' }}>
+                            Cek Detailnya
+                        </span>
+                        <FiExternalLink />
+                    </h3>
                 </Link>
             </div>
         </Layout>
