@@ -17,74 +17,121 @@ import ThemeChanger from '@/component/_test/ThemeChanger';
 import { FaPlus } from 'react-icons/fa6';
 // #endregion
 
+const LOREM_TITLE = 'Lorem ipsum dolor?';
+const LOREM_DESCRIPTION = 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sint tempora quasi eligendi distinctio, mollitia porro repudiandae modi consectetur consequuntur perferendis!'
+
 const TABS = [
     {
         title: 'SIPK',
         contents: [
             {
                 title: 'Apa itu SIPK?',
-                description: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sint tempora quasi eligendi distinctio, mollitia porro repudiandae modi consectetur consequuntur perferendis!'
+                description: LOREM_DESCRIPTION
             },
             {
                 title: 'Apa bedanya SIPK dengan portal akademik kampus?',
-                description: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sint tempora quasi eligendi distinctio, mollitia porro repudiandae modi consectetur consequuntur perferendis!'
+                description: LOREM_DESCRIPTION
             },
             {
                 title: 'Kenapa SIPK ada?',
-                description: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sint tempora quasi eligendi distinctio, mollitia porro repudiandae modi consectetur consequuntur perferendis!'
+                description: LOREM_DESCRIPTION
             },
             {
                 title: 'Apakah SIPK hanya untuk mahasiswa tingkat awal?',
-                description: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sint tempora quasi eligendi distinctio, mollitia porro repudiandae modi consectetur consequuntur perferendis!'
+                description: LOREM_DESCRIPTION
             },
             {
                 title: 'Apakah ada batasan jurusan atau jenjang pendidikan untuk menggunakan SIPK?',
-                description: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sint tempora quasi eligendi distinctio, mollitia porro repudiandae modi consectetur consequuntur perferendis!'
+                description: LOREM_DESCRIPTION
             },
             {
                 title: 'Kenapa universitas aku engga ada di SIPK?',
-                description: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sint tempora quasi eligendi distinctio, mollitia porro repudiandae modi consectetur consequuntur perferendis!'
+                description: LOREM_DESCRIPTION
             },
             {
                 title: 'Apakah SIPK cuma bisa diakses lewat Laptop? ',
-                description: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sint tempora quasi eligendi distinctio, mollitia porro repudiandae modi consectetur consequuntur perferendis!'
+                description: LOREM_DESCRIPTION
             },
             {
                 title: 'Apakah SIPK berbayar?',
-                description: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sint tempora quasi eligendi distinctio, mollitia porro repudiandae modi consectetur consequuntur perferendis!'
+                description: LOREM_DESCRIPTION
             },
         ]
     },
     {
         title: 'Pendaftaran',
         contents: [
-            { title: 'What is web development2', description: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sint tempora quasi eligendi distinctio, mollitia porro repudiandae modi consectetur consequuntur perferendis!' },
-            { title: 'How do i know if i need it2', description: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sint tempora quasi eligendi distinctio, mollitia porro repudiandae modi consectetur consequuntur perferendis!' },
-            { title: 'What does it cost2', description: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sint tempora quasi eligendi distinctio, mollitia porro repudiandae modi consectetur consequuntur perferendis!' },
-            { title: 'What abous SEO2', description: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sint tempora quasi eligendi distinctio, mollitia porro repudiandae modi consectetur consequuntur perferendis!' }
+            {
+                title: '',
+                description: LOREM_DESCRIPTION
+            },
+            {
+                title: '',
+                description: LOREM_DESCRIPTION
+            },
+            {
+                title: '',
+                description: LOREM_DESCRIPTION
+            },
+            {
+                title: '',
+                description: LOREM_DESCRIPTION
+            },
+            {
+                title: '',
+                description: LOREM_DESCRIPTION
+            },
+            {
+                title: '',
+                description: LOREM_DESCRIPTION
+            },
         ]
     },
     {
         title: 'Rating',
         contents: [
-            { title: 'What is web development3', description: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sint tempora quasi eligendi distinctio, mollitia porro repudiandae modi consectetur consequuntur perferendis!' },
-            { title: 'How do i know if i need it3', description: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sint tempora quasi eligendi distinctio, mollitia porro repudiandae modi consectetur consequuntur perferendis!' },
-            { title: 'What does it cost3', description: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sint tempora quasi eligendi distinctio, mollitia porro repudiandae modi consectetur consequuntur perferendis!' },
-            { title: 'What abous SEO3', description: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sint tempora quasi eligendi distinctio, mollitia porro repudiandae modi consectetur consequuntur perferendis!' }
+            {
+                title: '',
+                description: LOREM_DESCRIPTION
+            },
+            {
+                title: '',
+                description: LOREM_DESCRIPTION
+            },
+            {
+                title: '',
+                description: LOREM_DESCRIPTION
+            },
         ]
     },
     {
         title: 'Dolor',
         contents: [
-            { title: 'What is web development4', description: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sint tempora quasi eligendi distinctio, mollitia porro repudiandae modi consectetur consequuntur perferendis!' },
-            { title: 'How do i know if i need it4', description: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sint tempora quasi eligendi distinctio, mollitia porro repudiandae modi consectetur consequuntur perferendis!' },
-            { title: 'What does it cost4', description: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sint tempora quasi eligendi distinctio, mollitia porro repudiandae modi consectetur consequuntur perferendis!' },
-            { title: 'What abous SEO4', description: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sint tempora quasi eligendi distinctio, mollitia porro repudiandae modi consectetur consequuntur perferendis!' }
+            {
+                title: '',
+                description: LOREM_DESCRIPTION
+            },
+            {
+                title: '',
+                description: LOREM_DESCRIPTION
+            },
+            {
+                title: '',
+                description: LOREM_DESCRIPTION
+            },
+            {
+                title: '',
+                description: LOREM_DESCRIPTION
+            },
+            {
+                title: '',
+                description: LOREM_DESCRIPTION
+            },
         ]
     }
 ]
 
-const Accordion = ({ contents = [{ title: 'xyz', description: 'Lorem ipsum dolor sit amet.' }] }) => {
+const Accordion = ({ contents = [{ title: LOREM_TITLE, description: LOREM_DESCRIPTION }] }) => {
     const [activeIndex, setActiveIndex] = React.useState(/** @type {Array<number>} */([]));
 
     return (
@@ -110,7 +157,9 @@ const Accordion = ({ contents = [{ title: 'xyz', description: 'Lorem ipsum dolor
                             }
                         }}
                     >
-                        <span>{item.title}</span>
+                        <span>
+                            {item.title || LOREM_TITLE}
+                        </span>
                         <FaPlus className={styles.icon} />
                     </h2>
 
@@ -124,7 +173,7 @@ const Accordion = ({ contents = [{ title: 'xyz', description: 'Lorem ipsum dolor
                         }}
                     >
                         <p>
-                            {item.description}
+                            {item.description || LOREM_DESCRIPTION}
                         </p>
                     </motion.div>
                 </div>
