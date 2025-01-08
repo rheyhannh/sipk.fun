@@ -22,7 +22,8 @@ const LOREM_DESCRIPTION = 'Lorem ipsum dolor sit, amet consectetur adipisicing e
 
 const TABS = [
     {
-        title: 'SIPK',
+        title: 'sipk',
+        type: 'uppercase',
         contents: [
             {
                 title: 'Apa itu SIPK?',
@@ -59,7 +60,8 @@ const TABS = [
         ]
     },
     {
-        title: 'Pendaftaran',
+        title: 'pendaftaran',
+        type: 'capitalize',
         contents: [
             {
                 title: '',
@@ -88,7 +90,8 @@ const TABS = [
         ]
     },
     {
-        title: 'Rating',
+        title: 'rating',
+        type: 'capitalize',
         contents: [
             {
                 title: '',
@@ -105,7 +108,8 @@ const TABS = [
         ]
     },
     {
-        title: 'Dolor',
+        title: 'dolor',
+        type: 'capitalize',
         contents: [
             {
                 title: '',
@@ -206,11 +210,9 @@ export default function Faq({ fakta }) {
                         <div
                             key={index}
                             className={`${styles.tab} ${activeTab === index ? styles.active : ''}`}
-                            onClick={() => {
-                                setActiveTab(index);
-                            }}
+                            onClick={() => { setActiveTab(index) }}
                         >
-                            {item.title}
+                            {transformTabTitle(item.title, item.type)}
                         </div>
                     ))}
                 </div>
