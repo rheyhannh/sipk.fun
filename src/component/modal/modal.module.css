@@ -1030,7 +1030,7 @@
         border: 1px solid var(--logo-second-color);
     }
 
-    .rating select:focus:not(:hover) {
+    .rating select:not(.border_off):focus:not(:hover) {
         border: 1px solid var(--logo-second-color);
     }
 
@@ -1083,7 +1083,7 @@
         border: 1px solid var(--logo-second-color);
     }
 
-    .tabel__setting_select select:focus:not(:hover) {
+    .tabel__setting_select select:not(.border_off):focus:not(:hover) {
         border: 1px solid var(--logo-second-color);
     }
 

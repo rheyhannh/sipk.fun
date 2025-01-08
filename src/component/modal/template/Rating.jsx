@@ -52,6 +52,7 @@ const Rating = () => {
     const [editRating, setEditRating] = React.useState(false);
     const [info, setInfo] = React.useState('');
     const [errorMessage, setErrorMessage] = React.useState('');
+    const [disableBorder, setDisableBorder] = React.useState(false);
 
     const handleReviewChange = (e) => {
         if (info) { setInfo(''); }
@@ -347,9 +348,18 @@ const Rating = () => {
                                                             </div>
                                                             <select
                                                                 id="authorRating"
+                                                                className={disableBorder ? styles.border_off : undefined}
                                                                 value={editRating ? author : ratingData[0].details.authorType}
                                                                 onChange={editRating ? handleAuthorChange : null}
-                                                                onFocus={editRating ? () => { setErrorMessage('') } : null}
+                                                                onFocus={editRating ? () => {
+                                                                    setDisableBorder(false);
+                                                                    setErrorMessage('')
+                                                                } : null}
+                                                                onMouseLeave={(event) => {
+                                                                    if (document.activeElement === event.currentTarget) {
+                                                                        setDisableBorder(true);
+                                                                    }
+                                                                }}
                                                                 disabled={!editRating}
                                                                 style={editRating ? {} : { cursor: 'auto' }}
                                                             >
@@ -402,9 +412,18 @@ const Rating = () => {
                                                             </div>
                                                             <select
                                                                 id="authorRating"
+                                                                className={disableBorder ? styles.border_off : undefined}
                                                                 value={author}
                                                                 onChange={handleAuthorChange}
-                                                                onFocus={() => { setErrorMessage('') }}
+                                                                onFocus={() => {
+                                                                    setDisableBorder(false);
+                                                                    setErrorMessage('');
+                                                                }}
+                                                                onMouseLeave={(event) => {
+                                                                    if (document.activeElement === event.currentTarget) {
+                                                                        setDisableBorder(true);
+                                                                    }
+                                                                }}
                                                             >
                                                                 <option value={0}>Fullname</option>
                                                                 <option value={1}>Nickname</option>

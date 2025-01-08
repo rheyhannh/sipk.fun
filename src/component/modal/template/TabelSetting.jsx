@@ -70,6 +70,8 @@ const TabelSetting = () => {
         { title: 'On Target', id: 'ontarget', visible: true },
     ]);
     const [errorMessage, setErrorMessage] = React.useState('');
+    const [disablePageSizeBorder, setDisablePageSizeBorder] = React.useState(false);
+    const [disableControlBorder, setDisableControlBorder] = React.useState(false);
 
     const dragItem = React.useRef(0);
     const draggedOverItem = React.useRef(0);
@@ -421,12 +423,21 @@ const TabelSetting = () => {
                                         <h3 style={{ marginBottom: '0' }} className={styles.tabel__setting_title}>Jumlah Baris</h3>
                                         <select
                                             id="pageSize"
+                                            className={disablePageSizeBorder ? styles.border_off : undefined}
                                             value={pageSize}
                                             onChange={editTabelSetting ? (e) => {
                                                 setPageSize(Number(e.target.value));
                                                 context.data.setPageSize(Number(e.target.value));
                                             } : null}
-                                            onFocus={editTabelSetting ? () => { setErrorMessage('') } : null}
+                                            onFocus={editTabelSetting ? () => {
+                                                setDisablePageSizeBorder(false);
+                                                setErrorMessage('')
+                                            } : null}
+                                            onMouseLeave={(event) => {
+                                                if (document.activeElement === event.currentTarget) {
+                                                    setDisablePageSizeBorder(true);
+                                                }
+                                            }}
                                             disabled={!editTabelSetting}
                                             style={editTabelSetting ? {} : { cursor: 'auto' }}
                                         >
@@ -441,12 +452,21 @@ const TabelSetting = () => {
                                         <h3 style={{ marginBottom: '0' }} className={styles.tabel__setting_title}>Posisi Kontrol</h3>
                                         <select
                                             id="controlPosition"
+                                            className={disableControlBorder ? styles.border_off : undefined}
                                             value={controlPosition}
                                             onChange={editTabelSetting ? (e) => {
                                                 setControlPosition(Number(e.target.value));
                                                 context.data.setPageControlPosition(Number(e.target.value));
                                             } : null}
-                                            onFocus={editTabelSetting ? () => { setErrorMessage('') } : null}
+                                            onFocus={editTabelSetting ? () => {
+                                                setDisableControlBorder(false);
+                                                setErrorMessage('');
+                                            } : null}
+                                            onMouseLeave={(event) => {
+                                                if (document.activeElement === event.currentTarget) {
+                                                    setDisableControlBorder(true);
+                                                }
+                                            }}
                                             disabled={!editTabelSetting}
                                             style={editTabelSetting ? {} : { cursor: 'auto' }}
                                         >
