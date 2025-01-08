@@ -227,6 +227,28 @@ export default function Faq({ fakta }) {
         </div>
     )
 }
+
+/**
+ * Transform `text` yang diberikan menjadi format spesifik tertentu
+ * dengan mereplace garis bawah `_` dan tanda kurang `-` menjadi spasi dan melakukan format dengan tipe transform yang digunakan.
+ * 
+ * Untuk tipe format dapat dilihat sebagai berikut,
+ * - `normal` : Format teks menggunakan lowercase 
+ * - `capitalize` : Format teks menggunakan Pascal Case
+ * - `uppercase` : Format teks menggunakan uppercase
+ * 
+ * @param {string} text Input teks, default `lorem_ipsum`
+ * @param {'normal' | 'capitalize' | 'uppercase'} type Tipe transform yang digunakan, default `normal`
+ * @returns {string} Lorem
+ * @example 
+ * ```js
+ * console.log(transformTabTitle('transform_me', 'capitalize')); // 'Transform Me'
+ * console.log(transformTabTitle('transform_me', 'uppercase'));  // 'TRANSFORM ME'
+ * console.log(transformTabTitle('transform-me', 'normal'));     // 'transform me'
+ * console.log(transformTabTitle('transform-me', 'capitalize')); // 'Transform Me'
+ * console.log(transformTabTitle('transformme', 'uppercase'));   // 'TRANSFORMME'
+ * ```
+ */
 function transformTabTitle(text = 'lorem_ipsum', type = 'normal') {
     let words = text.replace(/[_-]/g, ' ').split(' ');
 
