@@ -225,3 +225,15 @@ export default function Faq({ fakta }) {
         </div>
     )
 }
+function transformTabTitle(text = 'lorem_ipsum', type = 'normal') {
+    let words = text.replace(/[_-]/g, ' ').split(' ');
+
+    if (type === 'capitalize') {
+        return words.map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()).join(' ');
+    }
+    if (type === 'uppercase') {
+        return words.join(' ').toUpperCase();
+    }
+
+    return words.join(' ').toLowerCase();
+}
