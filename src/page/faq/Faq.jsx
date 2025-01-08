@@ -225,6 +225,7 @@ function Tab({ tabId, title, isActive, ...props }) {
 
     return (
         <Link
+            id={`tablink-${tabId}`}
             className={`${styles.tab} ${isActive ? styles.active : ''}`}
             href={pathname + '?' + 'tab=' + encodeURIComponent(tabId)}
             scroll={false}
