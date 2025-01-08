@@ -228,20 +228,21 @@ function Accordion({ contents = [{ title: LOREM_TITLE, description: LOREM_DESCRI
             {...props}
         >
             {contents.map((item, index) => (
-                <div key={index} className={`${styles.item} ${activeIndex.includes(index) ? styles.active : ''}`}>
-                    <h2
-                        className={styles.title}
-                        onClick={() => {
-                            const isActive = activeIndex.includes(index);
-                            const clone = [...activeIndex];
-                            if (isActive) {
-                                setActiveIndex(clone.filter(val => val !== index));
-                            } else {
-                                clone.push(index);
-                                setActiveIndex(clone);
-                            }
-                        }}
-                    >
+                <div
+                    key={index}
+                    className={`${styles.item} ${activeIndex.includes(index) ? styles.active : ''}`}
+                    onClick={() => {
+                        const isActive = activeIndex.includes(index);
+                        const clone = [...activeIndex];
+                        if (isActive) {
+                            setActiveIndex(clone.filter(val => val !== index));
+                        } else {
+                            clone.push(index);
+                            setActiveIndex(clone);
+                        }
+                    }}
+                >
+                    <h2 className={styles.title}>
                         <span>
                             {item.title || LOREM_TITLE}
                         </span>
