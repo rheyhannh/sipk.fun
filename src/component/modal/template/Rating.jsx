@@ -314,7 +314,7 @@ const Rating = () => {
                                                                     tabIndex={editRating ? '0' : '-1'}
                                                                     className={`${styles.star} ${editRating ? stars >= index + 1 ? styles.filled : '' : ratingData[0].rating >= index + 1 ? styles.filled : ''} ${editRating ? '' : styles.disabled}`}
                                                                     onClick={editRating ? (event) => {
-                                                                        event.target.blur();
+                                                                        event.currentTarget.blur();
                                                                         setStars(index + 1);
                                                                         setErrorMessage('');
                                                                     } : null}
@@ -368,7 +368,7 @@ const Rating = () => {
                                                                     tabIndex={'0'}
                                                                     className={`${styles.star} ${stars >= index + 1 ? styles.filled : ''}`}
                                                                     onClick={(event) => {
-                                                                        event.target.blur();
+                                                                        event.currentTarget.blur();
                                                                         setStars(index + 1);
                                                                         setErrorMessage('');
                                                                     }}
