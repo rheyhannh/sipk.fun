@@ -18,6 +18,26 @@
     --accordion-background-active: radial-gradient(circle, #1a2c44, #182b41, #16293e, #14283b, #122638);
 }
 
+.base.colors.dark_theme {
+    --background-primary: #181A1E;
+    --background-secondary: #24262b;
+    --background-accent: #202328;
+    --text-primary: #ffffff;
+    --text-secondary: #b0b0b5;
+    --text-accent: #ff825d;
+    --item-color-active: #ff6341;
+    --item-color-hover: #e55337;
+    --border-color-default: rgba(255, 255, 255, 0.1);
+    /* Rgb based on item-color-active */
+    --border-color-hover: rgba(255, 99, 65, 0.5);
+    --border-color-active: rgba(255, 99, 65, 0.75);
+    /* Rgb based on background-secondary */
+    --accordion-background-default: rgba(36, 38, 43, 0.25);
+    --accordion-background-hover: rgba(36, 38, 43, 0.5);
+    /* Gradient based on background-secondary and background-accent */
+    --accordion-background-active: radial-gradient(circle, #24262b, #212429, #1e2226, #1b2024, #202328);
+}
+
 .base {
     width: 100vw;
     min-height: 100vh;
