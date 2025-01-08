@@ -233,6 +233,10 @@ export default function Faq({ fakta }) {
     )
 }
 
+/**
+ * @param {Omit<React.HTMLProps<HTMLDivElement>, 'className'>} props Base props
+ * @returns {React.ReactElement} Rendered component
+ */
 function Base({ children, ...props }) {
     return (
         <div className={`${styles.base} ${styles.colors}`} {...props}>
@@ -241,6 +245,10 @@ function Base({ children, ...props }) {
     )
 }
 
+/**
+ * @param {Omit<React.HTMLProps<HTMLDivElement>, 'className'>} props Container props
+ * @returns {React.ReactElement} Rendered component
+ */
 function Container({ children, ...props }) {
     return (
         <div className={styles.container} {...props}>
@@ -249,6 +257,10 @@ function Container({ children, ...props }) {
     )
 }
 
+/**
+ * @param {Omit<React.HTMLProps<HTMLDivElement>, 'className'>} props Heading props
+ * @returns {React.ReactElement} Rendered component
+ */
 function Heading({ title, ...props }) {
     return (
         <div className={styles.heading} {...props}>
@@ -259,6 +271,10 @@ function Heading({ title, ...props }) {
     )
 }
 
+/**
+ * @param {Omit<React.HTMLProps<HTMLDivElement>, 'className'>} props Tabs props
+ * @returns {React.ReactElement} Rendered component
+ */
 function Tabs({ children, ...props }) {
     return (
         <div className={styles.tabs} {...props}>
@@ -267,6 +283,21 @@ function Tabs({ children, ...props }) {
     )
 }
 
+/**
+ * Props yang digunakan component `Tab`
+ * @typedef {Object} TabProps
+ * @property {string} tabId
+ * Id element yang diperoleh dari {@link TabItem.title judul tab}
+ * @property {string} title
+ * {@link TabItem.title Judul tab} yang sudah ditransform menggunakan {@link transformTabTitle}
+ * @property {boolean} isActive
+ * Boolean yang mengindikasikan apakah tab aktif atau tidak
+ */
+
+/**
+ * @param {Omit<Parameters<typeof Link>[0], 'id' | 'className' | 'href' | 'scroll' | 'shallow'> & TabProps} props Tab props
+ * @returns {React.ReactElement} Rendered component
+ */
 function Tab({ tabId, title, isActive, ...props }) {
     const pathname = usePathname();
 
@@ -284,6 +315,10 @@ function Tab({ tabId, title, isActive, ...props }) {
     )
 }
 
+/**
+ * @param {Omit<import('framer-motion').HTMLMotionProps<'div'>, 'transition' | 'initial' | 'animate' | 'exit' | 'className'> & {contents:TabItem['contents']}} props Accordion props
+ * @returns {React.ReactElement} Rendered component
+ */
 function Accordion({ contents = [{ title: LOREM_TITLE, description: LOREM_DESCRIPTION }], ...props }) {
     const searchParams = useSearchParams();
     const [activeIndex, setActiveIndex] = React.useState(/** @type {Array<number>} */([]));
