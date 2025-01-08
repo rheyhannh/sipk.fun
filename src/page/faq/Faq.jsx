@@ -171,7 +171,7 @@ export default function Faq({ fakta }) {
                         <Tab
                             key={index}
                             tabId={item.title}
-                            title={transformTabTitle(item.title, item.type)}
+                            title={transformTabTitle(item.title, item?.type)}
                             isActive={activeTab === index}
                         />
                     ))}
