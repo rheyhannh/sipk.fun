@@ -684,14 +684,22 @@ export default function Users({ universitasData }) {
                                         type='submit'
                                         className={`${styles.btn}`}
                                         tabIndex={loginMode ? 2 : -1}
-                                        onClick={(event) => { event.target.blur() }}
+                                        onClickCapture={(event) => {
+                                            event.currentTarget.blur()
+                                        }}
                                     >
                                         {emailLogin ? 'Submit' : 'Login'}
                                     </button>
 
                                     <p className={styles.social_text}>
                                         <a
-                                            onClick={(event) => { setEmailLogin(!emailLogin); setErrorMessageLogin(''); event.target.blur() }}
+                                            onClickCapture={(event) => {
+                                                event.currentTarget.blur();
+                                            }}
+                                            onClick={(event) => {
+                                                setEmailLogin(!emailLogin);
+                                                setErrorMessageLogin('');
+                                            }}
                                             tabIndex={loginMode ? 2 : -1}
                                             onKeyDown={(event) => { if (event.key === 'Enter') { setEmailLogin(!emailLogin); setErrorMessageLogin(''); } }}
                                         >
@@ -846,7 +854,12 @@ export default function Users({ universitasData }) {
 
                                     <p className={styles.social_text}>
                                         <a
-                                            onClick={(event) => { event.target.blur(); handleDaftarModal(); }}
+                                            onClickCapture={(event) => {
+                                                event.currentTarget.blur();
+                                            }}
+                                            onClick={(event) => {
+                                                handleDaftarModal();
+                                            }}
                                             tabIndex={!loginMode ? 4 : -1}
                                             onKeyDown={(event) => { if (event.key === 'Enter') { handleDaftarModal(); } }}
                                         >
@@ -863,7 +876,12 @@ export default function Users({ universitasData }) {
                                     <p>Yuk daftar dan nikmati fitur yang ditawarkan SIPK secara gratis.</p>
                                     <button
                                         className={`${styles.btn} ${styles.transparent}`}
-                                        onClick={(event) => { event.target.blur(); handleModeDaftar(); }}
+                                        onClickCapture={(event) => {
+                                            event.currentTarget.blur();
+                                        }}
+                                        onClick={(event) => {
+                                            handleModeDaftar();
+                                        }}
                                         tabIndex={loginMode ? 1 : -1}
                                     >
                                         Daftar
@@ -884,7 +902,12 @@ export default function Users({ universitasData }) {
                                     <p>Silahkan klik tombol dibawah untuk login.</p>
                                     <button
                                         className={`${styles.btn} ${styles.transparent}`}
-                                        onClick={(event) => { event.target.blur(); handleModeLogin(); }}
+                                        onClickCapture={(event) => {
+                                            event.currentTarget.blur();
+                                        }}
+                                        onClick={(event) => {
+                                            handleModeLogin();
+                                        }}
                                         tabIndex={!loginMode ? 3 : -1}
                                     >
                                         Login
@@ -902,9 +925,11 @@ export default function Users({ universitasData }) {
                         </div>
                         <div
                             className={styles.theme_toggle}
+                            onClickCapture={(event) => {
+                                event.currentTarget.blur();
+                            }}
                             onClick={(event) => {
                                 handleChangeTheme();
-                                event.target.blur();
                             }}
                             onKeyDown={(event) => {
                                 if (event.key === 'Enter') handleChangeTheme();
