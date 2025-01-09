@@ -311,6 +311,7 @@ function Tab({ tabId, title, isActive, ...props }) {
         <Link
             id={`tablink-${tabId}`}
             className={`${styles.tab} ${isActive ? styles.active : ''}`}
+            onClickCapture={(event) => { event.currentTarget.blur(); }}
             href={pathname + '?' + 'tab=' + encodeURIComponent(tabId)}
             scroll={false}
             shallow={true}
