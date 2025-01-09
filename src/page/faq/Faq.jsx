@@ -301,7 +301,7 @@ function Tabs({ children, ...props }) {
  */
 
 /**
- * @param {Omit<Parameters<typeof Link>[0], 'id' | 'className' | 'href' | 'scroll' | 'shallow'> & TabProps} props Tab props
+ * @param {Omit<Parameters<typeof Link>[0], 'id' | 'className' | 'onClickCapture' | 'href' | 'scroll' | 'shallow'> & TabProps} props Tab props
  * @returns {React.ReactElement} Rendered component
  */
 function Tab({ tabId, title, isActive, ...props }) {
