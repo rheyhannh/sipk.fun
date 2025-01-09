@@ -97,7 +97,7 @@ const PanduanDaftar = () => (
                     className={styles.btn}
                     onClickCapture={(event) => { event.currentTarget.blur() }}
                     prefetch={false}
-                    href='/faq#pendaftaran'
+                    href='/faq?tab=pendaftaran'
                     target={'_blank'}
                 >
                     <h3 style={{ display: 'flex', alignItems: 'center' }}>
