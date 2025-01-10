@@ -484,7 +484,7 @@ export function Notification({ state, data }) {
     const SkeletonCard = () => {
         if (isPhoneContent === false) {
             const skeletonElement = Array.from({ length: 3 }, (_, index) => (
-                <div className={`${styles.notification__post} ${styles.skeleton}`} key={crypto.randomUUID()}>
+                <div className={`${styles.notification__post} ${styles.skeleton}`} key={index}>
                     <div className={styles.notification__main}>
                         <div style={{ width: '100%' }}>
                             <SkeletonTheme
@@ -522,7 +522,7 @@ export function Notification({ state, data }) {
                             Array.from({ length: 2 }, (_, index) => (
                                 <div
                                     className={`${styles.notification__post} ${styles.swiper} ${styles.skeleton}`}
-                                    key={crypto.randomUUID()}
+                                    key={index}
                                 >
                                     <div className={styles.notification__main}>
                                         <div style={{ width: '100%' }}>
@@ -551,7 +551,7 @@ export function Notification({ state, data }) {
                     <div className={`${styles.notification__pagination} ${styles.skeleton}`}>
                         {
                             Array.from({ length: 5 }, (_, index) => (
-                                <div className={styles.notification__pagination_dot} key={crypto.randomUUID()} />
+                                <div className={styles.notification__pagination_dot} key={index} />
                             ))
                         }
                     </div>
@@ -581,7 +581,7 @@ export function Notification({ state, data }) {
                             }
 
                             return (
-                                <Link href={item.href} target={'_blank'} className={styles.notification__post} prefetch={false} key={crypto.randomUUID()}>
+                                <Link href={item.href} target={'_blank'} className={styles.notification__post} prefetch={false} key={item.id}>
                                     <div className={styles.notification__main}>
                                         <span style={{ color: item.color }}>
                                             {(item?.icon?.name && item?.icon?.lib) &&
@@ -650,7 +650,7 @@ export function Notification({ state, data }) {
                             }
 
                             return (
-                                <SwiperSlide key={crypto.randomUUID()}>
+                                <SwiperSlide key={item.id}>
                                     <Link href={item.href} target={'_blank'} className={`${styles.notification__post} ${styles.swiper}`} prefetch={false}>
                                         <div className={styles.notification__main}>
                                             <span style={{ color: item.color }}>
@@ -837,7 +837,7 @@ export function NotificationDummy({ data = [], isPhoneContent = false, ...props 
                             }
 
                             return (
-                                <SwiperSlide key={crypto.randomUUID()}>
+                                <SwiperSlide key={item.id}>
                                     <span className={`${styles.notification__post} ${styles.swiper}`}>
                                         <div className={styles.notification__main}>
                                             <span style={{ color: item.color }}>
@@ -897,7 +897,7 @@ export function NotificationDummy({ data = [], isPhoneContent = false, ...props 
                             }
 
                             return (
-                                <span className={styles.notification__post} key={crypto.randomUUID()}>
+                                <span className={styles.notification__post} key={item.id}>
                                     <div className={styles.notification__main}>
                                         <span style={{ color: item.color }}>
                                             {(item?.icon?.name && item?.icon?.lib) &&
@@ -976,7 +976,7 @@ export function History({ state, data, penilaian, count }) {
         const skeletonElement = Array.from({ length: 3 }, (_, index) => (
             <div
                 className={`${styles.history} ${styles.skeleton}`}
-                key={crypto.randomUUID()}
+                key={index}
             >
                 <div className={styles.history__content}>
                     <SkeletonTheme
@@ -1082,9 +1082,9 @@ export function History({ state, data, penilaian, count }) {
                         <div
                             className={styles.history}
                             {...isTouchDevice ? { onClick: () => handleEditModal(item) } : {}}
-                            key={crypto.randomUUID()}
+                            key={item.id}
                         >
-                            <div className={styles.history__tooltip} key={crypto.randomUUID()}>
+                            <div className={styles.history__tooltip} key={`tooltip-${item.id}`}>
                                 <div className={styles.wrapper}>
                                     <i onClick={() => { handleUndoModal(item) }}>
                                         <FaUndo size={'12px'} />
@@ -1094,7 +1094,7 @@ export function History({ state, data, penilaian, count }) {
                                     </i>
                                 </div>
                             </div>
-                            <div className={styles.history__content} key={crypto.randomUUID()}>
+                            <div className={styles.history__content} key={`content-${item.id}`}>
                                 <div className={`${styles.history__icon} ${item?.current?.type ? styles[item?.current?.type] : styles[item?.prev?.type]}`}>
                                     {getIcon[item?.current?.type ? item?.current?.type : item?.prev?.type]}
                                 </div>
@@ -1124,7 +1124,7 @@ export function History({ state, data, penilaian, count }) {
         const errorElement = Array.from({ length: 3 }, (_, index) => (
             <div
                 className={styles.history}
-                key={crypto.randomUUID()}
+                key={index}
             >
                 <div className={styles.error__content} onClick={handleRetry}>
                     <h5>Gagal mengambil data</h5>
@@ -1147,7 +1147,7 @@ export function History({ state, data, penilaian, count }) {
         const validatingElement = Array.from({ length: 3 }, (_, index) => (
             <div
                 className={styles.history}
-                key={crypto.randomUUID()}
+                key={index}
             >
                 <div className={styles.validating__wrapper}>
                     <div className={styles.validating__content}>
@@ -1400,7 +1400,7 @@ export function Grafik({ state, matkul, penilaian, savedState }) {
                                 Hide
                             </option>
                             {['Semua', 'Ip', 'Matakuliah', 'Sks', 'Kustom'].map((type, index) => (
-                                <option key={crypto.randomUUID()} value={index} hidden={index === 4 ? true : false}>
+                                <option key={type} value={index} hidden={index === 4 ? true : false}>
                                     {type}
                                 </option>
                             ))}
@@ -1715,7 +1715,7 @@ export function Target({ state, matkul, penilaian, savedState }) {
                             onChange={e => setType(Number(e.target.value))}
                         >
                             {['Matakuliah', 'Sks'].map((item, index) => (
-                                <option key={crypto.randomUUID()} value={index}>
+                                <option key={item} value={index}>
                                     {item}
                                 </option>
                             ))}
@@ -1740,7 +1740,7 @@ export function Target({ state, matkul, penilaian, savedState }) {
                 >
                     {target.map((item, index) => {
                         return (
-                            <SwiperSlide className={styles.target__data} key={crypto.randomUUID()}>
+                            <SwiperSlide className={styles.target__data} key={item.semester}>
                                 <h3 className={styles.target__data_title}>Semester {item.semester}</h3>
                                 <div className={styles.target__data_box}>
                                     <div className={styles.icon}>
@@ -2023,7 +2023,7 @@ export function Distribusi({ state, matkul, penilaian, savedState }) {
                             </option>
                             {
                                 getAllSemester(matkul, true).map((item, index) => (
-                                    <option key={crypto.randomUUID()} value={item}>
+                                    <option key={item} value={item}>
                                         Semester {item}
                                     </option>
                                 ))
@@ -2305,7 +2305,7 @@ export function Progress({ state, user, matkul, penilaian }) {
                 </div>
                 <div className={styles.progress__data}>
                     {Array.from({ length: 3 }, (_, index) => (
-                        <div className={styles.skeleton} key={crypto.randomUUID()}>
+                        <div className={styles.skeleton} key={index}>
                             <SkeletonTheme
                                 baseColor="var(--skeleton-base)"
                                 highlightColor="var(--skeleton-highlight)"

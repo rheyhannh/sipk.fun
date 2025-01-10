@@ -64,28 +64,28 @@ export function AcademicCard({ count, universitas }) {
 
     if (isError) {
         const errorCount = Array.from({ length: count }, (_, index) => (
-            <Summary state='error' key={crypto.randomUUID()} />
+            <Summary state='error' key={index} />
         ));
         return <>{errorCount}</>;
     }
 
     if (isLoading) {
         const loadingCount = Array.from({ length: count }, (_, index) => (
-            <Summary state='loading' key={crypto.randomUUID()} />
+            <Summary state='loading' key={index} />
         ));
         return <>{loadingCount}</>;
     }
 
     if (isValidating) {
         const validatingCount = Array.from({ length: count }, (_, index) => (
-            <Summary state='validating' key={crypto.randomUUID()} />
+            <Summary state='validating' key={index} />
         ));
         return <>{validatingCount}</>;
     }
 
     if (!matkul.length) {
         const emptyCount = Array.from({ length: count }, (_, index) => (
-            <Summary state='empty' penilaian={universitas[user[0].university_id - 1].penilaian} key={crypto.randomUUID()} />
+            <Summary state='empty' penilaian={universitas[user[0].university_id - 1].penilaian} key={index} />
         ));
         return <>{emptyCount}</>;
     }

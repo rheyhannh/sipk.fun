@@ -777,7 +777,7 @@ export default function Users({ universitasData }) {
                                             </option>
                                             {
                                                 universitasData && universitasData.map((item, index) => (
-                                                    <option style={{ color: '#000' }} value={item.id} key={crypto.randomUUID()}>{item.nama}</option>
+                                                    <option style={{ color: '#000' }} value={item.id} key={item.id}>{item.nama}</option>
                                                 ))
                                             }
                                         </select>

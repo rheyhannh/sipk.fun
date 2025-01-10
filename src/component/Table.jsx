@@ -74,7 +74,7 @@ export function Table({ state, validating, user, sessionTable, matkul, matkulHis
                 <div className={styles.tools}>
                     <div className={`${styles.tools__tabs} ${styles.skeleton}`}>
                         {['134px', '70px', '55px'].map((item, index) => (
-                            <div style={{ minWidth: item }} className={`${styles.btn} ${styles.skeleton}`} key={crypto.randomUUID()}>
+                            <div style={{ minWidth: item }} className={`${styles.btn} ${styles.skeleton}`} key={item}>
                                 <SkeletonTheme
                                     baseColor="var(--skeleton-base)"
                                     highlightColor="var(--skeleton-highlight)"
@@ -100,7 +100,7 @@ export function Table({ state, validating, user, sessionTable, matkul, matkulHis
                                 <SkeletonTheme
                                     baseColor="var(--skeleton-base)"
                                     highlightColor="var(--skeleton-highlight)"
-                                    key={crypto.randomUUID()}
+                                    key={index}
                                 >
                                     <Skeleton width={"100%"} height={"100%"} borderRadius={"2rem"} />
                                 </SkeletonTheme>
@@ -661,7 +661,7 @@ export function Table({ state, validating, user, sessionTable, matkul, matkulHis
                                         }}
                                     >
                                         {[5, 10, 25, 50, 100, matkul.length + 1].map((pageSize, index) => (
-                                            <option key={crypto.randomUUID()} value={pageSize}>
+                                            <option key={index} value={pageSize}>
                                                 {index === 5 ? 'Semua' : pageSize}
                                             </option>
                                         ))}
@@ -846,7 +846,7 @@ export function Table({ state, validating, user, sessionTable, matkul, matkulHis
                                         }}
                                     >
                                         {[5, 10, 25, 50, 100, matkul.length + 1].map((pageSize, index) => (
-                                            <option key={crypto.randomUUID()} value={pageSize}>
+                                            <option key={index} value={pageSize}>
                                                 {index === 5 ? 'Semua' : pageSize}
                                             </option>
                                         ))}

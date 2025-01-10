@@ -328,7 +328,7 @@ const TabelSetting = () => {
                                                 onDragEnter={editTabelSetting ? () => { draggedOverItem.current = index } : null}
                                                 onDragEnd={editTabelSetting ? () => { context.data.setColumnOrder(handleSort()) } : null}
                                                 onDragOver={editTabelSetting ? (e) => e.preventDefault() : null}
-                                                key={crypto.randomUUID()}
+                                                key={item.id}
                                             >
                                                 <div
                                                     tabIndex={editTabelSetting ? '0' : '-1'}
@@ -442,7 +442,7 @@ const TabelSetting = () => {
                                             style={editTabelSetting ? {} : { cursor: 'auto' }}
                                         >
                                             {[5, 10, 25, 50, 100, -1].map((pageSize, index) => (
-                                                <option key={crypto.randomUUID()} value={pageSize}>
+                                                <option key={index} value={pageSize}>
                                                     {index === 5 ? 'Semua' : pageSize}
                                                 </option>
                                             ))}
@@ -471,7 +471,7 @@ const TabelSetting = () => {
                                             style={editTabelSetting ? {} : { cursor: 'auto' }}
                                         >
                                             {[{ text: 'Bawah', val: 0 }, { text: 'Atas', val: 1 }, { text: 'Semua', val: 2 }].map((item, index) => (
-                                                <option key={crypto.randomUUID()} value={item.val}>
+                                                <option key={index} value={item.val}>
                                                     {item.text}
                                                 </option>
                                             ))}

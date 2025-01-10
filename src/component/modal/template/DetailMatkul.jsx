@@ -408,8 +408,8 @@ const DetailMatkul = () => {
                                             required
                                         >
                                             <option value={''} disabled hidden></option>
-                                            {penilaianKey.map((nilai) => (
-                                                <option value={nilai} key={crypto.randomUUID()}>{nilai}</option>
+                                            {penilaianKey.map((nilai, index) => (
+                                                <option value={nilai} key={nilai}>{nilai}</option>
                                             ))
                                             }
                                         </select>
@@ -480,8 +480,8 @@ const DetailMatkul = () => {
                                             required
                                         >
                                             <option value={''} disabled hidden></option>
-                                            {penilaianKey.map((nilai) => (
-                                                <option value={nilai} key={crypto.randomUUID()}>{nilai}</option>
+                                            {penilaianKey.map((nilai, index) => (
+                                                <option value={nilai} key={nilai}>{nilai}</option>
                                             ))
                                             }
                                         </select>

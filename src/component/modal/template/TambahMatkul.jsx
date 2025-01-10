@@ -265,8 +265,8 @@ const TambahMatkul = () => {
                                             required
                                         >
                                             <option value={-1} disabled hidden></option>
-                                            {penilaianKey.map((nilai) => (
-                                                <option value={penilaian[nilai].weight} key={crypto.randomUUID()}>{nilai}</option>
+                                            {penilaianKey.map((nilai, index) => (
+                                                <option value={penilaian[nilai].weight} key={nilai}>{nilai}</option>
                                             ))
                                             }
                                         </select>
@@ -330,8 +330,8 @@ const TambahMatkul = () => {
                                             required
                                         >
                                             <option value={-1} disabled hidden></option>
-                                            {penilaianKey.map((nilai) => (
-                                                <option value={penilaian[nilai].weight} key={crypto.randomUUID()}>{nilai}</option>
+                                            {penilaianKey.map((nilai, index) => (
+                                                <option value={penilaian[nilai].weight} key={nilai}>{nilai}</option>
                                             ))
                                             }
                                         </select>

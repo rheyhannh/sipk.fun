@@ -444,7 +444,7 @@ const TabelFilter = () => {
                                                                 setFilteredNilai(updatedState);
                                                             }
                                                         } : null}
-                                                        className={`${styles.item} ${styles[type]} ${filteredNilai[index] ? styles.active : ''}`} key={crypto.randomUUID()}
+                                                        className={`${styles.item} ${styles[type]} ${filteredNilai[index] ? styles.active : ''}`} key={key}
                                                     >
                                                         {key}
                                                     </span>
@@ -474,7 +474,7 @@ const TabelFilter = () => {
                                                                 setFilteredTargetNilai(updatedState);
                                                             }
                                                         } : null}
-                                                        className={`${styles.item} ${styles[type]} ${filteredTargetNilai[index] ? styles.active : ''}`} key={crypto.randomUUID()}
+                                                        className={`${styles.item} ${styles[type]} ${filteredTargetNilai[index] ? styles.active : ''}`} key={key}
                                                     >
                                                         {key}
                                                     </span>
