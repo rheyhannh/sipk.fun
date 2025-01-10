@@ -70,45 +70,6 @@ const Content = ({ activeContent, children, ...props }) => {
         ...layoutTransition
     }
 
-    /*
-        --body-bg: #0F172A;
-        --textcolor-gradientFrom: #8b5cf6;
-        --textcolor-gradientTo: #6366f1;
-        --defaultTextcolor: #F8FAFC;
-        --defaultDescriptionTextColor: #94A3B8;
-        --circlecolor-gradientFrom: rgba(124,58,237,.2);
-        --circlecolor-gradientTo: rgba(79,70,229,.2);
-        --boxcolor: x; rgb(15,23,42);
-        --box-bordercolor: rgb(71,85,105);
-        --boxcolor-activeGradientFrom: #7c3aed;
-        --boxcolor-activeGradientFrom: #4f46e5;
-        --accordion-bg: transparent;
-        --accordion-active-bg: #1E293B;
-        --accordionIcon-color: rgb(148,163,184);
-        --accordionIcon-active-color: rgb(248,250,252);
-
-        --body-bg: #0F172A;
-        --textcolor-gradientFrom: #f97316; 
-        --textcolor-gradientTo: #fb923c; 
-        --defaultTextcolor: #F8FAFC;
-        --defaultDescriptionTextColor: #94A3B8;
-        --circlecolor-gradientFrom: rgba(251,146,60,.2); 
-        --circlecolor-gradientTo: rgba(249,115,22,.2); 
-        --boxcolor: rgb(15,23,42); 
-        --box-bordercolor: rgb(71,85,105); 
-        --boxcolor-activeGradientFrom: #fb923c; 
-        --boxcolor-activeGradientTo: #f97316; 
-        --accordion-bg: transparent; 
-        --accordion-active-bg: #1E293B; 
-        --accordionIcon-color: rgb(148,163,184); 
-        --accordionIcon-active-color: rgb(248,250,252); 
-
-
-
-
-
-    */
-
     return (
         <motion.div
             className={`${styles.content} ${styles[activeContent]}`}
