@@ -33,7 +33,6 @@ import {
     MatkulDummiesNilaiColorPreset
 } from '@/constant/matkul_dummies';
 import { scroller } from 'react-scroll';
-import { ContainerWrapper } from '@root_page/components';
 // #endregion
 
 // #region UTIL DEPEDENCY
@@ -734,35 +733,33 @@ const KenapaSipk = ({ contents = ['x', 'y', 'z'], useAutoplay = false, autoplayO
             className={`${styles.section} ${styles.kenapa_sipk}`}
             onKeyDown={handleKeyDown}
         >
-            <ContainerWrapper>
-                <motion.h2
-                    className={styles.title}
-                    initial={{ visibility: 'hidden' }}
-                    variants={{ inView: { visibility: 'visible' } }}
-                    whileInView={'inView'}
-                    viewport={{
-                        once: GLOBAL_VIEWPORT_ONCE,
-                        amount: 1
+            <motion.h2
+                className={styles.title}
+                initial={{ visibility: 'hidden' }}
+                variants={{ inView: { visibility: 'visible' } }}
+                whileInView={'inView'}
+                viewport={{
+                    once: GLOBAL_VIEWPORT_ONCE,
+                    amount: 1
+                }}
+            >
+                <HighlightText
+                    useHook={false}
+                    text={'Kenapa Harus Pakai SIPK?'}
+                    preset={'wavingFlyIn'}
+                    presetOptions={{
+                        wordStagger: 'first',
+                        makeVariant: true,
+                        variantName: 'inView'
                     }}
-                >
-                    <HighlightText
-                        useHook={false}
-                        text={'Kenapa Harus Pakai SIPK?'}
-                        preset={'wavingFlyIn'}
-                        presetOptions={{
-                            wordStagger: 'first',
-                            makeVariant: true,
-                            variantName: 'inView'
-                        }}
-                        adjustWavingFlyIn={{
-                            y: [-225, 0],
-                            bounce: 0.15,
-                            delay: 0.25,
-                            wordWrapperStyle: { overflow: 'auto' }
-                        }}
-                    />
-                </motion.h2>
-            </ContainerWrapper>
+                    adjustWavingFlyIn={{
+                        y: [-225, 0],
+                        bounce: 0.15,
+                        delay: 0.25,
+                        wordWrapperStyle: { overflow: 'auto' }
+                    }}
+                />
+            </motion.h2>
 
             <Content
                 activeContent={activeContent}
