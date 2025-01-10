@@ -158,11 +158,13 @@ const Universitas = ({ universitas }) => {
     let itemIndex = 0;
 
     return (
-        <section
+        <motion.section
             ref={sectionRef}
             id={'universitas'}
             tabIndex={0}
             className={`${styles.section} ${styles.universitas}`}
+            whileInView={'inView'}
+            viewport={{ once: GLOBAL_VIEWPORT_ONCE }}
             onKeyDown={handleKeyDown}
         >
             <ContainerWrapper>
@@ -267,10 +269,8 @@ const Universitas = ({ universitas }) => {
 
             <motion.div
                 initial={{ opacity: 0 }}
-                whileInView={{ opacity: 1 }}
-                transition={{ duration: 2.5, ease: 'linear' }}
-                viewport={{
-                    once: GLOBAL_VIEWPORT_ONCE,
+                variants={{
+                    inView: { opacity: 1, transition: { duration: 2.5, ease: 'linear' } }
                 }}
                 className={styles.scrolling}
             >
@@ -314,8 +314,7 @@ const Universitas = ({ universitas }) => {
                     </ScrollingCarousel>
                 </div>
             </motion.div>
-
-        </section>
+        </motion.section>
     )
 }
 
