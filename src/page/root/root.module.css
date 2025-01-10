@@ -580,24 +580,7 @@
     color: var(--dark-color);
 }
 
-.universitas .btn {
-    display: flex;
-    align-items: center;
-    gap: 0.4rem;
-    cursor: pointer;
-    padding: 0.6rem 0.85rem;
-    border-radius: 0.5rem;
-    background-color: var(--users-btn-alt);
-    color: var(--white-color);
-}
-
-.universitas .btn.secondary {
-    border: 1px solid var(--accordion-bg2-color);
-    background-color: var(--white-color);
-    color: var(--dark-color);
-}
-
-.universitas .btn svg.external {
+.universitas .arrow_right_icon {
     font-size: calc(0.9 * 1em);
 }
 
@@ -1626,12 +1609,9 @@
         box-shadow: none;
     }
 
-    .universitas .btn:hover {
-        background-color: var(--users-btn-hov);
-    }
-
-    .universitas .btn.secondary:hover {
-        background-color: var(--accordion-bg-color);
+    .universitas a:hover .arrow_right_icon,
+    .universitas a:focus .arrow_right_icon {
+        animation: bounceRight 1.25s infinite;
     }
 
     .fitur_wrapper .content .card:hover {
@@ -1660,16 +1640,6 @@
 
     .footer .secondary a:hover {
         color: var(--root-footer-textColor);
-    }
-
-    .universitas .btn:focus:not(:hover) {
-        color: var(--dark-color);
-        border: 1px solid var(--logo-second-color);
-        background-color: transparent;
-    }
-
-    .universitas .btn.secondary:focus:not(:hover) {
-        border: 1px solid var(--logo-second-color);
     }
 
     .navbar .nav .theme:focus:not(:hover) {

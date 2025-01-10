@@ -1,7 +1,5 @@
 // #region TYPE DEPEDENCY
-import { LinkProps } from 'next/link';
 import * as React from 'react';
-import { ButtonLinkProps } from './sections/universitas';
 import { NavItem } from '@/constant/client';
 // #endregion
 
@@ -166,15 +164,6 @@ export const UNIVERSITAS_SECTION_TITLE = 'Untuk Siapa?';
  * @type {string}
  */
 export const UNIVERSITAS_SECTION_DESCRIPTION = 'Saat ini, SIPK tersedia untuk mahasiswa dari {jumlah_universitas} universitas yang didukung. Apapun jurusan atau program pendidikanmu, selama universitasmu ada dalam daftar, kamu bisa menggunakan SIPK.';
-
-/**
- * Button yang ditampilkan pada section `Universitas`
- * @type {Array<Omit<React.AnchorHTMLAttributes<HTMLAnchorElement>, keyof LinkProps> & LinkProps & ButtonLinkProps>}
- */
-export const UNIVERSITAS_SECTION_BUTTON = [
-    { text: 'Pelajari Lebih Lanjut', type: 'secondary', id: 'univ-cta-sec', href: 'https://medium.com', isOpenNewTab: true, tabIndex: 0 },
-    { text: 'Mulai Sekarang', href: '/users?action=daftar&utm_source=slp', id: 'univ-cta-main', scroll: false, tabIndex: 0 }
-]
 
 /**
  * Array yang berisikan object yang mendeskripsikan bagaimana layout icon universitas dibuat.

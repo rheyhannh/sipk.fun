@@ -10,13 +10,12 @@ import {
     GLOBAL_VIEWPORT_ONCE,
     UNIVERSITAS_SECTION_TITLE,
     UNIVERSITAS_SECTION_DESCRIPTION,
-    UNIVERSITAS_SECTION_BUTTON,
     UNIVERSITAS_ITEMS_LAYOUT,
 } from '../config';
 // #endregion
 
 // #region NEXT DEPEDENCY
-import Link, { LinkProps } from 'next/link';
+import Link from 'next/link';
 // #endregion
 
 // #region REACT DEPEDENCY
@@ -38,10 +37,11 @@ import ScrollingCarousel from '@/component/motion/ScrollingCarousel';
 import AnimatedElement from '@/component/motion/AnimatedElement';
 import { scroller } from 'react-scroll';
 import { getLogoUniversitasByShort } from '@/loader/StaticImages';
+import { ButtonSimpleForwarded } from '@/component/Button';
 // #endregion
 
 // #region ICON DEPEDENCY
-import { FiExternalLink } from 'react-icons/fi';
+import { FiArrowRight } from "react-icons/fi";
 // #endregion
 
 // #region UTIL DEPEDENCY
@@ -75,40 +75,6 @@ const ScrollingItem = ({ item, isActive, ...props }) => (
             {item.nama}
         </h3>
     </div>
-)
-
-/**
- * Props yang digunakan component `ButtonLink`
- * @typedef {Object} ButtonLinkProps
- * @property {React.ReactNode} [text]
- * Teks button
- * - Default `'Lorem'`
- * @property {'default' | 'secondary'} [type]
- * Tipe button yang digunakan
- * - Default : `'default'`
- * @property {boolean} [isOpenNewTab]
- * Boolean yang menyatakan apakah link dibuka di tab baru atau tidak.
- * Saat `true` akan menggunakan atribut target dengan nilai `_blank` dan menambahkan icon disamping teks
- * - Default : `false`
- */
-
-/**
- * Button yang menggunakan component Link pada `next/link`
- * @param {Omit<React.AnchorHTMLAttributes<HTMLAnchorElement>, keyof LinkProps> & LinkProps & ButtonLinkProps} props ButtonLink props
- * @returns {React.ReactElement} Rendered component
- */
-const ButtonLink = ({ text = 'Lorem', type = 'default', isOpenNewTab, ...props }) => (
-    <Link
-        className={`${styles.btn} ${type === 'secondary' ? styles.secondary : ''}`}
-        onClickCapture={(event) => { event.target.blur() }}
-        {...(isOpenNewTab || false ? { target: '_blank' } : {})}
-        {...props}
-    >
-        {text}
-        {isOpenNewTab && (
-            <FiExternalLink className={styles.external} />
-        )}
-    </Link>
 )
 
 /**
@@ -232,9 +198,24 @@ const Universitas = ({ universitas }) => {
                             scrollProgress={viewportWidth < 1024 ? null : sectionScrollProgress}
                             scrollProgressOptions={{ offset: ['start end', 'start 65%'] }}
                         >
-                            {UNIVERSITAS_SECTION_BUTTON.map((props, index) => (
-                                <ButtonLink key={index} {...props} />
-                            ))}
+                            <Link href={'/faq?tab=universitas'} scroll={false} passHref legacyBehavior>
+                                <ButtonSimpleForwarded
+                                    id='univ-cta-sec'
+                                    tabIndex={0}
+                                    {...BUTTONSIMPLE_SECONDARY_PRESET}
+                                >
+                                    Pelajari Lebih Lanjut <FiArrowRight className={styles.arrow_right_icon} />
+                                </ButtonSimpleForwarded>
+                            </Link>
+
+                            <Link href={'/users?action=daftar&utm_source=slp'} scroll={false} passHref legacyBehavior>
+                                <ButtonSimpleForwarded
+                                    id='univ-cta-main'
+                                    tabIndex={0}
+                                    children={'Mulai Sekarang'}
+                                    {...BUTTONSIMPLE_MAIN_PRESET}
+                                />
+                            </Link>
                         </AnimatedElement>
                     </div>
 
@@ -336,6 +317,47 @@ const Universitas = ({ universitas }) => {
 
         </section>
     )
+}
+
+export const BUTTONSIMPLE_MAIN_PRESET = {
+    textColor: {
+        unhover: 'var(--white-color)',
+        hover: 'var(--white-color)'
+    },
+    bgColor: {
+        unhover: 'var(--users-btn-alt)',
+        hover: 'var(--users-btn-hov)'
+    },
+    style: {
+        gap: '0.4rem',
+        padding: '0.6rem 0.85rem',
+        borderRadius: '0.5rem',
+        border: 'none',
+        fontSize: 'inherit',
+        fontWeight: 'inherit',
+    }
+}
+
+export const BUTTONSIMPLE_SECONDARY_PRESET = {
+    textColor: {
+        unhover: 'var(--dark-color)',
+        hover: 'var(--dark-color)'
+    },
+    bgColor: {
+        unhover: 'var(--white-color)',
+        hover: 'var(--accordion-bg-color)'
+    },
+    borderColor: {
+        unhover: 'var(--accordion-bg2-color)',
+        hover: 'var(--accordion-bg2-color)'
+    },
+    style: {
+        gap: '0.4rem',
+        padding: '0.6rem 0.85rem',
+        borderRadius: '0.5rem',
+        fontSize: 'inherit',
+        fontWeight: 'inherit',
+    }
 }
 
 export default Universitas;
