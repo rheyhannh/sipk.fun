@@ -33,6 +33,11 @@ import {
     MatkulDummiesNilaiColorPreset
 } from '@/constant/matkul_dummies';
 import { scroller } from 'react-scroll';
+import { ContainerWrapper } from '@root_page/components';
+// #endregion
+
+// #region ICON DEPEDENCY
+import { TbAdjustmentsCog, TbAtom, TbProgressCheck } from 'react-icons/tb';
 // #endregion
 
 // #region UTIL DEPEDENCY
