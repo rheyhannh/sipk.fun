@@ -820,7 +820,12 @@ const KenapaSipk = ({ contents = ['x', 'y', 'z'], useAutoplay = false, autoplayO
                 {!contentShowed && (<motion.div className={styles.overlay} />)}
 
 
-                <Wrapper id={'why-ct-1'} {...resolveActionProps(1)} tabIndex={viewportWidth < 1080 ? 0 : -1}>
+                <Wrapper
+                    id={'why-ct-1'}
+                    aria-label={'Hitung IPK dengan Mudah menggunakan SIPK'}
+                    {...resolveActionProps(1)}
+                    tabIndex={viewportWidth < 1080 ? 0 : -1}
+                >
                     <Box contentNumber={1} type={'x'} setActiveContent={setActiveContent}>
                         <AnimatePresence mode={'popLayout'}>
                             {activeContent.split('_')[1] === '1' && contentShowed && (
@@ -839,7 +844,12 @@ const KenapaSipk = ({ contents = ['x', 'y', 'z'], useAutoplay = false, autoplayO
                     </Details>
                 </Wrapper>
 
-                <Wrapper id={'why-ct-2'} {...resolveActionProps(2)} tabIndex={viewportWidth < 1080 ? 0 : -1}>
+                <Wrapper
+                    id={'why-ct-2'}
+                    aria-label={'Perubahan IPK Secara Cepat menggunakan SIPK'}
+                    {...resolveActionProps(2)}
+                    tabIndex={viewportWidth < 1080 ? 0 : -1}
+                >
                     <Box contentNumber={2} type={'y'} setActiveContent={setActiveContent}>
 
                     </Box>
@@ -854,7 +864,12 @@ const KenapaSipk = ({ contents = ['x', 'y', 'z'], useAutoplay = false, autoplayO
                     </Details>
                 </Wrapper>
 
-                <Wrapper id={'why-ct-3'} {...resolveActionProps(3)} tabIndex={viewportWidth < 1080 ? 0 : -1}>
+                <Wrapper
+                    id={'why-ct-3'}
+                    aria-label={'Lacak Target dan Progress menggunakan SIPK'}
+                    {...resolveActionProps(3)}
+                    tabIndex={viewportWidth < 1080 ? 0 : -1}
+                >
                     <Box contentNumber={3} type={'z'} setActiveContent={setActiveContent}>
                         <AnimatePresence mode={'popLayout'}>
                             {activeContent.split('_')[1] === '3' && contentShowed && (
