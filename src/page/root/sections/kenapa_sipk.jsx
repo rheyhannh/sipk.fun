@@ -836,8 +836,8 @@ const KenapaSipk = ({ contents = ['x', 'y', 'z'], useAutoplay = false, autoplayO
                     <Details type={'x'}>
                         <Progress text={'1'} active={activeContent.split('_')[1] === '1'} />
                         <Text
-                            title={'Susun Rencana Akademikmu'}
-                            description={'Susun rencana akademikmu bersama SIPK sejak awal hingga kelulusan dengan perhitungan IPK yang akurat! Meskipun nilai aktualmu belum keluar, kamu bisa memperkirakan IPK berdasarkan rencana yang dibuat. Hal ini membantu kamu mengambil keputusan yang lebih terarah dan strategis sejak dini.'}
+                            title={'Hitung IPK dengan Mudah'}
+                            description={'Maksimalkan perencanaan studi kalian dengan menghitung IPK bahkan dengan matakuliah yang belum kalian tempuh karena di SIPK kalian bisa bebas tambah dan hapus matakuliah sesuka kalian.'}
                             active={activeContent.split('_')[1] === '1'}
                         />
                     </Details>
@@ -851,8 +851,8 @@ const KenapaSipk = ({ contents = ['x', 'y', 'z'], useAutoplay = false, autoplayO
                     <Details type={'y'}>
                         <Progress text={'2'} active={activeContent.split('_')[1] === '2'} />
                         <Text
-                            title={'Atur Target Akademikmu'}
-                            description={'Buat target kelulusanmu jadi lebih terarah dengan SIPK! Tentukan jumlah SKS, total matakuliah, dan IPK yang ingin kamu capai. Selain itu, kamu juga bisa menetapkan target nilai untuk setiap matakuliah yang kamu tambahkan, sehingga kamu tahu mana saja yang sudah sesuai target dan mana yang belum.'}
+                            title={'Perubahan IPK Secara Cepat'}
+                            description={'Kalian bisa mengubah atribut matakuliah seperti nama, semester, bahkan SKS dan nilai kapan saja. Setiap perubahan langsung dihitung ulang sehingga IPK terbaru langsung terlihat secara instan.'}
                             active={activeContent.split('_')[1] === '2'}
                         />
                     </Details>
@@ -870,8 +870,8 @@ const KenapaSipk = ({ contents = ['x', 'y', 'z'], useAutoplay = false, autoplayO
                     <Details type={'z'}>
                         <Progress text={'3'} active={activeContent.split('_')[1] === '3'} />
                         <Text
-                            title={'Lacak Perkembangan Akademikmu'}
-                            description={'Pantau progres studimu dalam meraih target SKS, jumlah mata kuliah, dan mencapai IPK kelulusan yang diimpikan, semua dalam satu platform yang terorganisir dan mudah diakses.'}
+                            title={'Lacak Target dan Progress'}
+                            description={'Raih target akademik kalian dengan SIPK! Atur target IPK, SKS, dan jumlah matakuliah untuk kelulusan kalian. Kalian juga dapat menambahkan target nilai untuk setiap matakuliah saat menambahkan matakuliah.'}
                             active={activeContent.split('_')[1] === '3'}
                         />
                     </Details>
