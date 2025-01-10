@@ -1740,7 +1740,13 @@ export function Target({ state, matkul, penilaian, savedState }) {
                 >
                     {target.map((item, index) => {
                         return (
-                            <SwiperSlide className={styles.target__data} key={item.semester}>
+                            <SwiperSlide
+                                className={styles.target__data}
+                                key={item.semester}
+                                style={{
+                                    display: 'grid'
+                                }}
+                            >
                                 <h3 className={styles.target__data_title}>Semester {item.semester}</h3>
                                 <div className={styles.target__data_box}>
                                     <div className={styles.icon}>
