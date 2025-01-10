@@ -350,7 +350,7 @@ function TitleAnimated({ sectionScrollProgress }) {
             }}
             viewport={{
                 once: GLOBAL_VIEWPORT_ONCE,
-                amount: 1
+                amount: 0.66
             }}
         >
             <h2>
