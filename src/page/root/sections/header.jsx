@@ -73,8 +73,6 @@ const LinkItems = () => (
             <Link
                 key={index}
                 item={{ href: item.href, elementId: item.elementId }}
-                // TODOS offset still static '-75', when comes to mobile or any viewport less than 1280
-                // offset should be corrected
                 scrollOptions={{ offset: -75, ...item?.scrollOptions }}
                 routingOptions={{ ...item?.routingOptions }}
                 className={styles.link}
