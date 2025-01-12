@@ -796,7 +796,7 @@ const KenapaSipk = ({ contents = ['x', 'y', 'z'], useAutoplay = false, autoplayO
                         <Progress text={'1'} active={activeContent.split('_')[1] === '1'} />
                         <Text
                             title={'Hitung IPK dengan Mudah'}
-                            description={'Maksimalkan perencanaan studi kalian dengan menghitung IPK bahkan dengan matakuliah yang belum kalian tempuh karena di SIPK kalian bisa bebas tambah dan hapus matakuliah sesuka kalian.'}
+                            description={'Dengan SIPK kalian dapat mengetahui perolehan IPK sedini mungkin bahkan dengan matakuliah yang belum kalian tempuh dan tentu aja dengan semua skenario nilai yang kalian atur sendiri.'}
                             active={activeContent.split('_')[1] === '1'}
                         />
                     </Details>
@@ -816,7 +816,7 @@ const KenapaSipk = ({ contents = ['x', 'y', 'z'], useAutoplay = false, autoplayO
                         <Progress text={'2'} active={activeContent.split('_')[1] === '2'} />
                         <Text
                             title={'Perubahan IPK Secara Cepat'}
-                            description={'Kalian bisa mengubah atribut matakuliah seperti nama, semester, bahkan SKS dan nilai kapan saja. Setiap perubahan langsung dihitung ulang sehingga IPK terbaru langsung terlihat secara instan.'}
+                            description={'Kalian bisa mengubah atribut matakuliah seperti nama, semester, bahkan SKS dan nilai kapan saja. Setiap perubahan langsung dihitung ulang sehingga IPK terbaru langsung dihitung secara instan.'}
                             active={activeContent.split('_')[1] === '2'}
                         />
                     </Details>
