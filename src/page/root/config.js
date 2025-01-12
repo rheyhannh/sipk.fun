@@ -26,22 +26,22 @@ export const GLOBAL_VIEWPORT_ONCE = true;
  */
 export const HEADER_NAVIGATION_SHORCUTS = [
     {
-        text: 'Tentang',
-        elementId: 'tentang',
+        text: 'Untuk?',
+        elementId: 'universitas',
         href: null
     },
     {
-        text: 'Fitur',
+        text: 'Kenapa?',
+        elementId: 'kenapa_sipk',
+        href: null
+    },
+    {
+        text: 'Fitur?',
         elementId: 'fitur',
         href: null
     },
     {
-        text: 'Testimoni',
-        elementId: 'testimoni',
-        href: null
-    },
-    {
-        text: 'FAQ',
+        text: 'FAQ!',
         elementId: null,
         href: '/faq',
     },

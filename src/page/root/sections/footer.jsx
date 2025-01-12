@@ -52,22 +52,22 @@ const FOOTER_SMALL_DEVICES = 524;
  */
 const footerShorcuts = [
     {
-        text: 'Tentang',
-        elementId: 'tentang',
+        text: 'Untuk?',
+        elementId: 'universitas',
         href: null
     },
     {
-        text: 'Fitur',
+        text: 'Kenapa?',
+        elementId: 'kenapa_sipk',
+        href: null
+    },
+    {
+        text: 'Fitur?',
         elementId: 'fitur',
         href: null
     },
     {
-        text: 'Testimoni',
-        elementId: 'testimoni',
-        href: null
-    },
-    {
-        text: 'FAQ',
+        text: 'FAQ!',
         elementId: null,
         href: '/faq',
     },
