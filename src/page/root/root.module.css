@@ -403,7 +403,7 @@
 /* #region Hero */
 
 .hero {
-    --title-maxWidth: 700px;
+    --title-maxWidth: 735px;
     height: 100%;
     padding-top: calc(var(--root-header-height) + 1rem);
     margin-left: calc(-50vw + 50%);
@@ -1793,7 +1793,7 @@
     }
 
     .hero {
-        --title-maxWidth: 550px;
+        --title-maxWidth: 630px;
     }
 
     .universitas {

@@ -70,8 +70,8 @@ export const HERO_TITLE_DELAY_OFFSET = 0.175;
  * Array yang mendeskripsikan paragraf dan kata sebagai judul yang digunakan pada section `Hero`
  */
 export const HERO_TITLE_PARAGRAPH = [
-    ['Perencanaan', 'Dinamis'],
-    ['untuk', 'IPK', 'yang', 'Lebih', 'Baik']
+    ['Perhitungan', 'IPK'],
+    ['yang', 'Akurat', 'dengan', 'Matakuliah', 'Dinamis']
 ]
 
 /**
