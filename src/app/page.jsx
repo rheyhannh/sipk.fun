@@ -26,11 +26,11 @@ export default async function RootPage() {
     <PageProvider>
       <Header />
       <Container>
-        <Hero />
+        <Hero notifikasi={notifikasiData} />
         <Universitas universitas={universitasData} />
         <KenapaSipk />
-        {/* <Fitur /> */}
-        <Testimoni rating={ratingData} />
+        <Fitur />
+        {/* <Testimoni rating={ratingData} /> */}
         <MulaiSekarang />
       </Container>
       <Footer />
