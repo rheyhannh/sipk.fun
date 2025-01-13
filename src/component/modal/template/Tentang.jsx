@@ -91,7 +91,17 @@ const Tentang = () => {
                                     <div className={styles.content__section}>
                                         <Section title={'Info'}>
                                             <Card icon={{ primary: <FaCodeBranch /> }} title={'Version'} description={process.env.NEXT_PUBLIC_APP_VERSION ?? '-'} />
-                                            <Card useNextLink={true} href={'https://l.loggify.app/sipk/changes'} target={'_blank'} prefetch={false} clickable={true} useActionIcon={true} icon={{ primary: <FaRegRectangleList /> }} title={'Release Notes'} description={'Lihat di sini untuk melihat catatan rilis, apa yang baru dan yang berubah di versi ini'} />
+                                            {/* <Card
+                                                useNextLink={true}
+                                                href={'https://l.loggify.app/sipk/changes'}
+                                                target={'_blank'}
+                                                prefetch={false}
+                                                clickable={true}
+                                                useActionIcon={true}
+                                                icon={{ primary: <FaRegRectangleList /> }}
+                                                title={'Release Notes'}
+                                                description={'Lihat di sini untuk melihat catatan rilis, apa yang baru dan yang berubah di versi ini'}
+                                            /> */}
                                         </Section>
                                         <Section title={'Support Us'}>
                                             <Card
@@ -107,9 +117,9 @@ const Tentang = () => {
                                             />
                                             <Card useNextLink={true} href={getFeedbackFormUrl()} target={'_blank'} prefetch={false} clickable={true} useActionIcon={true} icon={{ primary: <FaExclamation /> }} title={'Feedback'} description={'Laporin disini kalau kamu mengalami masalah tertentu terkait aplikasi ini'} />
                                         </Section>
-                                        <Section title={'Help & Social'}>
+                                        {/* <Section title={'Help & Social'}>
                                             <Card useNextLink={true} href={'/faq'} prefetch={true} clickable={true} icon={{ primary: <FaQ /> }} title={'FAQ'} description={'Pertanyaan yang sering ditanyain dan mungkin bisa menjawab kebinggungan kamu'} />
-                                        </Section>
+                                        </Section> */}
                                     </div>
                                 </div>
                             </Inner>
