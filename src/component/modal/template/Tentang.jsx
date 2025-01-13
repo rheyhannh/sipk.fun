@@ -117,9 +117,9 @@ const Tentang = () => {
                                             />
                                             <Card useNextLink={true} href={getFeedbackFormUrl()} target={'_blank'} prefetch={false} clickable={true} useActionIcon={true} icon={{ primary: <FaExclamation /> }} title={'Feedback'} description={'Laporin disini kalau kamu mengalami masalah tertentu terkait aplikasi ini'} />
                                         </Section>
-                                        {/* <Section title={'Help & Social'}>
+                                        <Section title={'Help & Social'}>
                                             <Card useNextLink={true} href={'/faq'} prefetch={true} clickable={true} icon={{ primary: <FaQ /> }} title={'FAQ'} description={'Pertanyaan yang sering ditanyain dan mungkin bisa menjawab kebinggungan kamu'} />
-                                        </Section> */}
+                                        </Section>
                                     </div>
                                 </div>
                             </Inner>
