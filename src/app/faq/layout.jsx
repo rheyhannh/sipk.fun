@@ -1,9 +1,15 @@
 // #region TAG OR METADATA
-export const metadata = {
+export const metadata = /** @type {import('next').Metadata} */ ({
     title: 'FAQ | SIPK',
     description: 'Pertanyaan yang sering ditanyain terkait SIPK',
-    keywords: 'sipk, sistem indeks prestasi kumulatif, kalkulator ipk, kalkulator nilai, kalkulator kuliah, ipk, indeks prestasi kumulatif, kuliah, sipk website',
-}
+    keywords: [
+        'SIPK',
+        'Indeks Prestasi Kumulatif',
+        'Kalkulator IPK',
+        'Kalkulator Nilai',
+        'Kalkulator Kuliah',
+    ]
+})
 // #endregion
 
 export default function RootLayout({ children }) {

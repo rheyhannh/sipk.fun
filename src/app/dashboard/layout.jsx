@@ -11,11 +11,9 @@ import Navbar from '@/component/Nav';
 // #endregion
 
 // #region TAG OR METADATA
-export const metadata = {
-  title: 'SIPK | Dashboard',
-  description: 'SIPK Dashboard',
-  keywords: 'sipk, sistem indeks prestasi kumulatif, kalkulator ipk, kalkulator nilai, kalkulator kuliah, ipk, indeks prestasi kumulatif, kuliah, sipk website, sipk dashboard, dashboard',
-}
+export const metadata = /** @type {import('next').Metadata} */ ({
+  title: 'Dashboard | SIPK',
+})
 // #endregion
 
 export default async function DashboardLayout({ children }) {

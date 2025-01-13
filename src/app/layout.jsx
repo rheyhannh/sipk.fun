@@ -9,11 +9,17 @@ import { poppins } from '@/fonts/fonts';
 // #endregion
 
 // #region TAG OR METADATA
-export const metadata = {
-  title: 'SIPK | Root',
-  description: 'Selamat datang di SIPK',
-  keywords: 'sipk, sistem indeks prestasi kumulatif, kalkulator ipk, kalkulator nilai, kalkulator kuliah, ipk, indeks prestasi kumulatif, kuliah, sipk website',
-}
+export const metadata = /** @type {import('next').Metadata} */ ({
+  title: 'Cara Baru Menghitung IPK secara Cepat dan Akurat | SIPK',
+  description: 'Hitung IPK Sedini Mungkin secara Akurat dengan Matakuliah yang Dinamis',
+  keywords: [
+    'SIPK',
+    'Indeks Prestasi Kumulatif',
+    'Kalkulator IPK',
+    'Kalkulator Nilai',
+    'Kalkulator Kuliah',
+  ]
+})
 // #endregion
 
 export default function RootLayout({ children }) {
