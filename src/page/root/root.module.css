@@ -408,7 +408,7 @@
     padding-top: calc(var(--root-header-height) + 1rem);
     margin-left: calc(-50vw + 50%);
     margin-right: calc(-50vw + 50%);
-    margin-bottom: calc(var(--root-section-margin-bottom) / 2);
+    margin-bottom: 0;
     border: none;
 }
 
@@ -541,6 +541,7 @@
     margin-right: calc(-50vw + 50%);
     display: flex;
     flex-direction: column;
+    gap: 4rem;
     border: none;
 }
 
