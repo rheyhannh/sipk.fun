@@ -90,15 +90,9 @@ const footerSocials = [
  */
 const footerSublinks = [
     {
-        text: 'Status',
+        text: 'Analitik',
         elementId: null,
-        href: 'https://status.atlassian.com/',
-        isOpenNewTab: true,
-    },
-    {
-        text: 'Riwayat Pembaruan',
-        elementId: null,
-        href: 'https://l.loggify.app/sipk/changes',
+        href: 'https://us.umami.is/share/6QoD2HKX4uce8C8l/whoishayyan.site',
         isOpenNewTab: true,
     }
 ]
