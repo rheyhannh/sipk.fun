@@ -334,7 +334,7 @@ export function FancyInput({
             return;
         }
         if (validator && typeof validator === 'function') {
-            const { state = 'success', message = '' } = validator(value);
+            const { state = 'success', message = '' } = validator(value) ?? {};
             handleStateChange(state, message);
         } else {
             handleStateChange('success');
