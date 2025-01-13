@@ -33,6 +33,10 @@ import HighlightText from '@/component/motion/HighlightText';
 import DashboardMockup from '@/page/dashboard/Mockup';
 // #endregion
 
+// #region HOOKS DEPEDENCY
+import useWindowSize from '@/hooks/utils/useWindowSize';
+// #endregion
+
 // #region ICON DEPEDENCY
 import { FiArrowUpRight, FiArrowRight, FiArrowDown } from "react-icons/fi";
 // #endregion
@@ -285,6 +289,8 @@ function Buttons({
         { id: 'button', text: 'Click Me', href: 'https://www.google.com/' },
     ]
 }) {
+    const { width: vw, height: vh } = useWindowSize();
+
     return (
         <VisibilityWrapper>
             <motion.div
@@ -341,13 +347,22 @@ function Buttons({
                         padding: '0.7rem 0.9rem',
                         gap: '0.25rem'
                     }}
+                    onClickCapture={(event) => {
+                        event.currentTarget.blur();
+                    }}
                     onClick={(event) => {
                         const target = item[1]?.href || 'https://www.google.com/';
                         if (target.startsWith('#')) {
                             const id = target.split('#')[1];
-                            scroller.scrollTo(id, { smooth: true, offset: -75 })
+                            const height = document.getElementById(id)?.offsetHeight ?? 0;
+                            const useOffset = height > 0 && vw >= 1024 && vh > height;
+                            const offset = useOffset ? ((vh - height) / 2) * -1 : 0;
+                            scroller.scrollTo(id, {
+                                duration: 2750,
+                                smooth: 'easeOutCubic',
+                                offset
+                            })
                         }
-                        event.currentTarget.blur();
                     }}
                 >
                     <span>
