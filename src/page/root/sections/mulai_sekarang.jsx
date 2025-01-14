@@ -98,9 +98,9 @@ const MULAISEKARANG_DESCRIPTION_CUSTOM_CHAR_VARIANTS = /** @type {Object<string,
 const MULAISEKARANG_DELAY_ANIMATION = [0.125, 0.25, 0.85, 0.975, 1.175];
 
 const MulaiSekarang = () => {
-    /** @type {React.MutableRefObject<HTMLDivElement>} */
-    const sectionRef = React.useRef(null);
-
+    const sectionRef = React.useRef( /** @type {React.RefObject<HTMLDivElement>} */
+        (null)
+    );
     const [titleRef, { width: titleWidth }] = useMeasure();
 
     /** @param {React.KeyboardEvent} event */
