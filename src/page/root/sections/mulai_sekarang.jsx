@@ -40,16 +40,40 @@ import styles from '@root_page/root.module.css';
 import { shuffleArray, findArrayIndexByString, countPrevCharactersAndWords } from '@root_page/utils';
 // #endregion
 
+/**
+ * String sebagai title yang digunakan pada section `Mulai Sekarang`
+*/
 const MULAISEKARANG_TITLE = 'Mulai Sekarang';
+
+/**
+ * Number yang mendeskripsikan stagger offset untuk setiap kata pada description
+*/
 const MULAISEKARANG_DESCRIPTION_DELAY_OFFSET = 0.075;
+
+/**
+ * Array yang berisikan array of string yang mendeskripsikan paragraf untuk setiap kata pada description
+*/
 const MULAISEKARANG_DESCRIPTION_PARAGRAPH = [
     ['Akses', 'semua', 'fitur', 'secara', 'gratis!'],
     ['Daftar', 'sekarang', 'atau', 'login', 'jika', 'sudah', 'punya', 'akun.'],
     ['Jangan', 'lewatkan,'],
     ['kuota', 'pendaftaran', 'terbatas!']
 ]
+
+/**
+ * Array of string yang berisikan kata yang digunakan pada description
+*/
 const MULAISEKARANG_DESCRIPTION_WORDS = MULAISEKARANG_DESCRIPTION_PARAGRAPH.flat();
+
+/**
+ * Array of number yang mendeskripsikan delay animasi untuk setiap kata pada description.
+ * Ini dihitung dengan hasil perkalian index dari array {@link MULAISEKARANG_DESCRIPTION_PARAGRAPH paragraph} yang sudah diacak dengan {@link MULAISEKARANG_DESCRIPTION_DELAY_OFFSET stagger offset}.
+*/
 const MULAISEKARANG_DESCRIPTION_STAGGERED = shuffleArray(MULAISEKARANG_DESCRIPTION_PARAGRAPH.flat().map((_, index) => index * MULAISEKARANG_DESCRIPTION_DELAY_OFFSET));
+
+/**
+ * Object yang merepresentasikan custom variants yang digunakan untuk setiap kata pada description
+*/
 const MULAISEKARANG_DESCRIPTION_CUSTOM_CHAR_VARIANTS = /** @type {Object<string, import('@/component/motion/HighlightText').presetOptions['customCharVariants']>} */ ({
     kuota: {
         color_text: {
@@ -93,12 +117,21 @@ const MULAISEKARANG_DESCRIPTION_CUSTOM_CHAR_VARIANTS = /** @type {Object<string,
         },
     },
 })
+
+/**
+ * Array of string yang mendeskripsikan custom variants name yang tersedia
+*/
 const MULAISEKARANG_CUSTOM_VARIANT_COLLECTIONS = [
     'color_text'
 ]
 
-// Describe animation delay (after element inView)
-// with an array [logo, title, description, button]
+/**
+ * Array of number dengan length `4` yang mendeskripsikan delay animasi untuk setiap element dimana dihitung setelah `section` inView.
+ * - Index `0` : Delay animasi element logo
+ * - Index `1` : Delay animasi element title
+ * - Index `2` : Delay animasi element description
+ * - Index `3` : Delay animasi element buttons
+*/
 const MULAISEKARANG_DELAY_ANIMATION = [0.225, 0.5, 1.25, 3.25];
 
 const MulaiSekarang = () => {
