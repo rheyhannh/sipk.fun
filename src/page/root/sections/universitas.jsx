@@ -202,7 +202,7 @@ const Universitas = ({ universitas }) => {
                         >
                             <Link href={'/faq?tab=universitas'} scroll={false} passHref legacyBehavior>
                                 <ButtonSimpleForwarded
-                                    id='univ-cta-sec'
+                                    id='universitas-cta-sec'
                                     tabIndex={0}
                                     {...BUTTONSIMPLE_SECONDARY_PRESET}
                                 >
@@ -212,7 +212,7 @@ const Universitas = ({ universitas }) => {
 
                             <Link href={'/users?action=daftar&utm_source=slp'} scroll={false} passHref legacyBehavior>
                                 <ButtonSimpleForwarded
-                                    id='univ-cta-main'
+                                    id='universitas-cta-main'
                                     tabIndex={0}
                                     children={'Mulai Sekarang'}
                                     {...BUTTONSIMPLE_MAIN_PRESET}
