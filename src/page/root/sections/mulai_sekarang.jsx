@@ -18,15 +18,21 @@ import * as React from 'react';
 import useMeasure from 'react-use-measure';
 // #endregion
 
-// #region STYLE DEPEDENCY
-import styles from '@root_page/root.module.css';
-// #endregion
-
 // #region COMPONENT DEPEDENCY
 import { motion } from 'framer-motion';
 import { LogoSipkFill } from '@/loader/StaticImages';
 import HighlightText from '@/component/motion/HighlightText';
 import { scroller } from 'react-scroll';
+import { BUTTONSIMPLE_MAIN_PRESET, BUTTONSIMPLE_SECONDARY_PRESET } from './hero';
+import { ButtonSimpleForwarded } from '@/component/Button';
+// #endregion
+
+// #region ICON DEPEDENCY
+import { FiLogIn, FiUserPlus } from "react-icons/fi";
+// #endregion
+
+// #region STYLE DEPEDENCY
+import styles from '@root_page/root.module.css';
 // #endregion
 
 const title = 'Mulai Sekarang';
@@ -36,32 +42,6 @@ const descriptionWords = description.split(' ');
 // Describe animation delay (after element inView)
 // with an array [logo, title, description, button, description highlight]
 const delayAnims = [0.125, 0.25, 0.85, 0.975, 1.175];
-
-const Button = React.forwardRef(({ type = 'default', text = 'Lorem', onClick, href, ...props }, ref) => {
-    if (typeof type !== 'string') type = 'default';
-    if (!['default', 'main', 'secondary'].includes(type)) type = 'default';
-
-    const useClass = type !== 'default';
-
-    return (
-        <motion.a
-            ref={ref}
-            className={`${styles.btn} ${useClass ? styles[type] : ''}`}
-            href={href}
-            onClick={onClick}
-            initial={{ scale: 0 }}
-            variants={{
-                inView: { scale: 1, transition: { delay: delayAnims[3], type: 'spring', bounce: 0.2 } },
-                hide: { scale: 0 },
-            }}
-            whileInView={'inView'}
-            viewport={{ once: GLOBAL_VIEWPORT_ONCE }}
-            {...props}
-        >
-            {text}
-        </motion.a>
-    )
-})
 
 const MulaiSekarang = () => {
     /** @type {React.MutableRefObject<HTMLDivElement>} */
@@ -176,13 +156,63 @@ const MulaiSekarang = () => {
             </motion.div>
 
             <motion.div className={styles.title_big_cta}>
-                <Link href={'/users?action=login&utm_source=slp'} scroll={false} passHref legacyBehavior>
-                    <Button text={'Masuk'} type={'secondary'} tabIndex={0} />
-                </Link>
+                <motion.div
+                    initial={{ scale: 0 }}
+                    variants={{
+                        inView: { scale: 1, transition: { delay: delayAnims[3], type: 'spring', bounce: 0.2 } },
+                        hide: { scale: 0 },
+                    }}
+                    whileInView={'inView'}
+                    viewport={{ once: GLOBAL_VIEWPORT_ONCE }}
+                >
+                    <Link
+                        href={'/users?action=login&utm_source=slp'}
+                        scroll={false}
+                        passHref
+                        legacyBehavior
+                    >
+                        <ButtonSimpleForwarded
+                            id='mulai_sekarang-cta-secondary'
+                            {...BUTTONSIMPLE_SECONDARY_PRESET}
+                            style={{
+                                ...BUTTONSIMPLE_SECONDARY_PRESET?.style,
+                                gap: '0.35rem',
+                                fontWeight: 500,
+                            }}
+                        >
+                            Masuk <FiLogIn className={styles.icon} />
+                        </ButtonSimpleForwarded>
+                    </Link>
+                </motion.div>
 
-                <Link href={'/users?action=daftar&utm_source=slp'} scroll={false} passHref legacyBehavior>
-                    <Button text={'Daftar'} type={'main'} tabIndex={0} />
-                </Link>
+                <motion.div
+                    initial={{ scale: 0 }}
+                    variants={{
+                        inView: { scale: 1, transition: { delay: delayAnims[3], type: 'spring', bounce: 0.2 } },
+                        hide: { scale: 0 },
+                    }}
+                    whileInView={'inView'}
+                    viewport={{ once: GLOBAL_VIEWPORT_ONCE }}
+                >
+                    <Link
+                        href={'/users?action=daftar&utm_source=slp'}
+                        scroll={false}
+                        passHref
+                        legacyBehavior
+                    >
+                        <ButtonSimpleForwarded
+                            id='mulai_sekarang-cta-main'
+                            {...BUTTONSIMPLE_MAIN_PRESET}
+                            style={{
+                                ...BUTTONSIMPLE_MAIN_PRESET?.style,
+                                gap: '0.35rem',
+                                fontWeight: 500,
+                            }}
+                        >
+                            Daftar <FiUserPlus className={styles.icon} />
+                        </ButtonSimpleForwarded>
+                    </Link>
+                </motion.div>
             </motion.div>
         </section>
     )

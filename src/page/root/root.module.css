@@ -1449,24 +1449,14 @@
     min-width: 175px;
 }
 
-.mulai_sekarang .title_big_cta .btn {
-    display: flex;
+.mulai_sekarang .title_big_cta div a {
+    width: 100%;
+    text-align: center;
     justify-content: center;
-    align-items: center;
-    padding: .65rem;
-    height: 45px;
-    background-color: var(--white-color);
-    border-radius: 1.1rem;
-    cursor: pointer;
 }
 
-.mulai_sekarang .title_big_cta .btn.main {
-    background-color: var(--logo-second-color);
-    color: var(--white-color);
-}
-
-.mulai_sekarang .title_big_cta .btn.secondary {
-    background-color: var(--accordion-bg-color);
+.mulai_sekarang .title_big_cta div a .icon {
+    font-size: calc(0.9 * 1em);
 }
 
 /* #endregion Section 'Mulai Sekarang' */
@@ -1616,8 +1606,15 @@
         animation: bounceUpRight 1.25s infinite;
     }
 
+    .mulai_sekarang .title_big_cta div:last-child a:hover .icon,
+    .mulai_sekarang .title_big_cta div:last-child a:focus .icon {
+        animation: bounceUp 1.25s infinite;
+    }
+
     .hero .buttons a:hover .icon,
-    .hero .buttons a:focus .icon {
+    .hero .buttons a:focus .icon,
+    .mulai_sekarang .title_big_cta div:first-child a:hover .icon,
+    .mulai_sekarang .title_big_cta div:first-child a:focus .icon {
         animation: bounceRight 1.25s infinite;
     }
 
@@ -1645,14 +1642,6 @@
         box-shadow: none;
     }
 
-    .mulai_sekarang .title_big_cta .btn.main:hover {
-        background-color: var(--logo-second-color-lighter);
-    }
-
-    .mulai_sekarang .title_big_cta .btn.secondary:hover {
-        border: 2px solid var(--lighter-color);
-    }
-
     .footer .primary a:hover {
         color: var(--root-footer-hoverColor);
     }
@@ -1667,13 +1656,6 @@
 
     .navbar .nav .theme:focus:not(:hover) {
         outline: 1px solid var(--logo-second-color);
-    }
-
-    .mulai_sekarang .title_big_cta .btn.main:focus:not(:hover),
-    .mulai_sekarang .title_big_cta .btn.secondary:focus:not(:hover) {
-        color: var(--dark-color);
-        border: 2px solid var(--logo-second-color);
-        background-color: transparent;
     }
 
     .navbar .nav a.link:focus:not(:hover),
