@@ -1416,29 +1416,15 @@
 }
 
 .mulai_sekarang .title_big_description {
-    text-align: center;
     margin-bottom: 2rem;
 }
 
-.mulai_sekarang .title_big_description>span {
-    will-change: transform;
-    transform-origin: 0% 50%;
-}
-
-.mulai_sekarang .title_big_description span {
-    display: inline-block;
-}
-
-.mulai_sekarang .title_big_description span .word {
-    margin: 0 .2rem .2rem 0;
-}
-
-.mulai_sekarang .title_big_description mark {
+.mulai_sekarang .title_big_description .words {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    column-gap: 0.35rem;
     font-weight: 500;
-}
-
-.mulai_sekarang .title_big_description mark>span>span {
-    margin: 0 .2rem .2rem 0;
 }
 
 .mulai_sekarang .title_big_cta {

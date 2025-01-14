@@ -35,13 +35,67 @@ import { FiLogIn, FiUserPlus } from "react-icons/fi";
 import styles from '@root_page/root.module.css';
 // #endregion
 
-const title = 'Mulai Sekarang';
-const description = 'Akses semua fitur secara gratis! Daftar sekarang atau login jika sudah punya akun. Jangan lewatkan,'
-const descriptionWords = description.split(' ');
+// #region UTIL DEPEDENCY
+import { shuffleArray, findArrayIndexByString, countPrevCharactersAndWords } from '@root_page/utils';
+// #endregion
+
+const MULAISEKARANG_TITLE = 'Mulai Sekarang';
+const MULAISEKARANG_DESCRIPTION_DELAY_OFFSET = 0.075;
+const MULAISEKARANG_DESCRIPTION_PARAGRAPH = [
+    ['Akses', 'semua', 'fitur', 'secara', 'gratis!'],
+    ['Daftar', 'sekarang', 'atau', 'login', 'jika', 'sudah', 'punya', 'akun.'],
+    ['Jangan', 'lewatkan,'],
+    ['kuota', 'pendaftaran', 'terbatas!']
+]
+const MULAISEKARANG_DESCRIPTION_WORDS = MULAISEKARANG_DESCRIPTION_PARAGRAPH.flat();
+const MULAISEKARANG_DESCRIPTION_STAGGERED = shuffleArray(MULAISEKARANG_DESCRIPTION_PARAGRAPH.flat().map((_, index) => index * MULAISEKARANG_DESCRIPTION_DELAY_OFFSET));
+const MULAISEKARANG_DESCRIPTION_CUSTOM_CHAR_VARIANTS = /** @type {Object<string, import('@/component/motion/HighlightText').presetOptions['customCharVariants']>} */ ({
+    kuota: {
+        color_text: {
+            color: [null, 'var(--infoDark-color)', 'var(--danger-sec-color)'],
+            scale: [1, 1.3, 1],
+            transition: {
+                duration: 0.3
+            },
+            options: {
+                staggerType: 'first',
+                stagger: 0.05
+            }
+        },
+    },
+    pendaftaran: {
+        color_text: {
+            color: [null, 'var(--infoDark-color)', 'var(--danger-sec-color)'],
+            scale: [1, 1.3, 1],
+            transition: {
+                duration: 0.3
+            },
+            options: {
+                staggerType: 'first',
+                stagger: 0.05,
+                baseDelay: countPrevCharactersAndWords(MULAISEKARANG_DESCRIPTION_PARAGRAPH, false, 'pendaftaran', 3, 1).chars * 0.05
+            }
+        },
+    },
+    'terbatas!': {
+        color_text: {
+            color: [null, 'var(--infoDark-color)', 'var(--danger-sec-color)'],
+            scale: [1, 1.3, 1],
+            transition: {
+                duration: 0.3
+            },
+            options: {
+                staggerType: 'first',
+                stagger: 0.05,
+                baseDelay: countPrevCharactersAndWords(MULAISEKARANG_DESCRIPTION_PARAGRAPH, false, 'terbatas!', 3, 2).chars * 0.05
+            }
+        },
+    },
+})
 
 // Describe animation delay (after element inView)
 // with an array [logo, title, description, button, description highlight]
-const delayAnims = [0.125, 0.25, 0.85, 0.975, 1.175];
+const MULAISEKARANG_DELAY_ANIMATION = [0.125, 0.25, 0.85, 0.975, 1.175];
 
 const MulaiSekarang = () => {
     /** @type {React.MutableRefObject<HTMLDivElement>} */
@@ -89,7 +143,7 @@ const MulaiSekarang = () => {
                 variants={{ inView: { scale: 1, opacity: 1 }, hide: { scale: 1.5, opacity: 0 } }}
                 whileInView={'inView'}
                 viewport={{ once: GLOBAL_VIEWPORT_ONCE }}
-                transition={{ type: 'spring', duration: 0.75, delay: delayAnims[0] }}
+                transition={{ type: 'spring', duration: 0.75, delay: MULAISEKARANG_DELAY_ANIMATION[0] }}
                 className={styles.logo}
             >
                 <LogoSipkFill priority={true} />
@@ -102,10 +156,10 @@ const MulaiSekarang = () => {
                 variants={{ inView: { visibility: 'visible' } }}
                 whileInView={'inView'}
                 viewport={{ once: GLOBAL_VIEWPORT_ONCE }}
-                transition={{ type: 'spring', delayChildren: delayAnims[1] }}
+                transition={{ type: 'spring', delayChildren: MULAISEKARANG_DELAY_ANIMATION[1] }}
             >
                 <HighlightText
-                    text={title}
+                    text={MULAISEKARANG_TITLE}
                     useHook={false}
                     preset={'wavingTranslate'}
                     presetOptions={{
@@ -115,7 +169,7 @@ const MulaiSekarang = () => {
                     adjustWavingTranslate={{
                         perspective: 500,
                         duration: 0.75,
-                        baseDelay: delayAnims[1]
+                        baseDelay: MULAISEKARANG_DELAY_ANIMATION[1]
                     }}
                 />
             </motion.h1>
@@ -127,31 +181,20 @@ const MulaiSekarang = () => {
                 }}
                 whileInView={'inView'}
                 viewport={{ once: GLOBAL_VIEWPORT_ONCE }}
-                transition={{ type: 'spring', delayChildren: delayAnims[2] }}
+                transition={{ type: 'spring', delayChildren: MULAISEKARANG_DELAY_ANIMATION[2] }}
             >
                 <motion.span
-                    initial={{ y: 25, opacity: 0 }}
-                    variants={{ inView: { y: 0, opacity: 1 }, hide: { y: 25, opacity: 0 } }}
+                    className={styles.words}
+                    initial={{ visibility: 'hidden' }}
+                    variants={{ inView: { visibility: 'visible' }, hide: { visibility: 'hidden' } }}
                 >
-                    {descriptionWords.map((word, wordIndex) => (
-                        <span key={`word-${wordIndex}`} className={styles.word}>
-                            {word}
-                        </span>
+                    {MULAISEKARANG_DESCRIPTION_WORDS.map((word, wordIndex) => (
+                        <HighlightText
+                            key={`word-${wordIndex}`}
+                            text={word}
+                            {...resolveDescriptionProps(word)}
+                        />
                     ))}
-
-                    <HighlightText
-                        text={'kuota pendaftaran terbatas!'}
-                        hookOptions={{
-                            once: GLOBAL_VIEWPORT_ONCE
-                        }}
-                        adjustWavingColor={{
-                            color: ['var(--danger-sec-color)', 'var(--infoDark-color)', 'var(--danger-sec-color)'],
-                            scale: [1, 1.3, 1],
-                            baseDelay: delayAnims[4],
-                            repeat: Infinity,
-                            repeatDelay: 10
-                        }}
-                    />
                 </motion.span>
             </motion.div>
 
@@ -159,7 +202,7 @@ const MulaiSekarang = () => {
                 <motion.div
                     initial={{ scale: 0 }}
                     variants={{
-                        inView: { scale: 1, transition: { delay: delayAnims[3], type: 'spring', bounce: 0.2 } },
+                        inView: { scale: 1, transition: { delay: MULAISEKARANG_DELAY_ANIMATION[3], type: 'spring', bounce: 0.2 } },
                         hide: { scale: 0 },
                     }}
                     whileInView={'inView'}
@@ -188,7 +231,7 @@ const MulaiSekarang = () => {
                 <motion.div
                     initial={{ scale: 0 }}
                     variants={{
-                        inView: { scale: 1, transition: { delay: delayAnims[3], type: 'spring', bounce: 0.2 } },
+                        inView: { scale: 1, transition: { delay: MULAISEKARANG_DELAY_ANIMATION[3], type: 'spring', bounce: 0.2 } },
                         hide: { scale: 0 },
                     }}
                     whileInView={'inView'}
@@ -216,6 +259,31 @@ const MulaiSekarang = () => {
             </motion.div>
         </section>
     )
+}
+
+/**
+ * Resolve props yang digunakan pada component `HighlightText`
+ * @param {string} text String teks untuk mengatur delay animasi
+ * @returns {import('@/component/motion/HighlightText').HighlightTextProps} Props yang sudah diatur
+ */
+function resolveDescriptionProps(text) {
+    return {
+        useHook: false,
+        preset: 'mixFancyTranslate',
+        presetOptions: {
+            makeVariant: true,
+            variantName: 'inView',
+            customCharVariants: MULAISEKARANG_DESCRIPTION_CUSTOM_CHAR_VARIANTS[text] ?? {},
+            customWordVariants: {},
+        },
+        adjustMixFancyTranslate: {
+            baseDelay: MULAISEKARANG_DESCRIPTION_STAGGERED[findArrayIndexByString(text, MULAISEKARANG_DESCRIPTION_WORDS)] + MULAISEKARANG_DELAY_ANIMATION[2],
+            duration: 1.25,
+            x: ['-150%', '150%', '0%'],
+            y: ['-75%', '75%', '0%'],
+            z: [-500, 500, 0]
+        }
+    }
 }
 
 export default MulaiSekarang;
