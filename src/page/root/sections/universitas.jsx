@@ -216,7 +216,9 @@ const Universitas = ({ universitas }) => {
                                     tabIndex={0}
                                     children={'Mulai Sekarang'}
                                     {...BUTTONSIMPLE_MAIN_PRESET}
-                                />
+                                >
+                                    Mulai Sekarang <FiArrowRight className={styles.signup_icon} />
+                                </ButtonSimpleForwarded>
                             </Link>
                         </AnimatedElement>
                     </div>

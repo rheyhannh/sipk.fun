@@ -581,7 +581,8 @@
     color: var(--dark-color);
 }
 
-.universitas .arrow_right_icon {
+.universitas .arrow_right_icon,
+.universitas .signup_icon {
     font-size: calc(0.9 * 1em);
 }
 
@@ -1611,7 +1612,9 @@
     }
 
     .universitas a:hover .arrow_right_icon,
-    .universitas a:focus .arrow_right_icon {
+    .universitas a:focus .arrow_right_icon,
+    .universitas a:hover .signup_icon,
+    .universitas a:focus .signup_icon {
         animation: bounceRight 1.25s infinite;
     }
 
