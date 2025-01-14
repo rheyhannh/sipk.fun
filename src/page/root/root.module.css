@@ -87,6 +87,25 @@
     }
 }
 
+@keyframes bounceUp {
+
+    0%,
+    20%,
+    50%,
+    80%,
+    100% {
+        transform: translateY(0);
+    }
+
+    40% {
+        transform: translateY(-.25rem);
+    }
+
+    60% {
+        transform: translateY(-.1rem);
+    }
+}
+
 /* Match to h1 element */
 .title_big {
     font-size: calc(2.5 * var(--root-title-fontsize));
