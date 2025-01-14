@@ -1411,6 +1411,7 @@
 }
 
 .mulai_sekarang .title_big {
+    text-align: center;
     margin-bottom: 1.5rem;
 }
 
@@ -1943,9 +1944,6 @@
 }
 
 @media screen and (max-width: 424px) {
-    .mulai_sekarang .title_big {
-        text-align: center;
-    }
 
     .fitur_wrapper .content .card {
         height: 400px;
