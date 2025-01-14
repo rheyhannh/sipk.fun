@@ -99,23 +99,20 @@ const Testimoni = ({ rating }) => {
     }
 
     return (
-        <section
+        <motion.section
             ref={sectionRef}
             id={'testimoni'}
             tabIndex={0}
             className={`${styles.section} ${styles.testimoni} ${styles.center_overflow}`}
+            whileInView={'inView'}
+            viewport={{ once: GLOBAL_VIEWPORT_ONCE }}
             onKeyDown={handleKeyDown}
         >
             <ContainerWrapper>
                 <motion.h2
                     className={styles.title}
                     initial={{ visibility: 'hidden', minHeight: 85 }}
-                    variants={{ inView: { visibility: 'visible' } }}
-                    whileInView={'inView'}
-                    viewport={{
-                        once: GLOBAL_VIEWPORT_ONCE,
-                        amount: 1,
-                    }}
+                    variants={{ inView: { visibility: 'visible', transition: { delay: 0.25 } } }}
                 >
                     <HighlightText
                         useHook={false}
@@ -130,14 +127,15 @@ const Testimoni = ({ rating }) => {
                             y: [-125, 125, 0],
                             z: [-750, -250, 0],
                             rotateX: [-5, 5, 0],
-                            stagger: 0.25
+                            stagger: 0.25,
+                            baseDelay: 0.25
                         }}
                         text={'Kata Mereka Tentang SIPK'}
                     />
                 </motion.h2>
             </ContainerWrapper>
 
-            <motion.div whileInView={'inView'} viewport={{ once: GLOBAL_VIEWPORT_ONCE }} className={styles.content}>
+            <motion.div className={styles.content}>
                 <ScrollingCarousel
                     speed={75}
                     initialDirection={'left'}
@@ -148,7 +146,7 @@ const Testimoni = ({ rating }) => {
                     containerProps={{
                         initial: { opacity: 0 },
                         variants: { inView: { opacity: 1 } },
-                        transition: { duration: 0.75, delay: 1.25, ease: 'linear' }
+                        transition: { duration: 0.75, delay: 1.5, ease: 'linear' }
                     }}
                 >
                     {rating.map((item, index) => (
@@ -166,7 +164,7 @@ const Testimoni = ({ rating }) => {
                     containerProps={{
                         initial: { opacity: 0 },
                         variants: { inView: { opacity: 1 } },
-                        transition: { duration: 0.75, delay: 1.5, ease: 'linear' }
+                        transition: { duration: 0.75, delay: 1.75, ease: 'linear' }
                     }}
                 >
                     {rating.map((item, index) => (
@@ -174,7 +172,7 @@ const Testimoni = ({ rating }) => {
                     ))}
                 </ScrollingCarousel>
             </motion.div>
-        </section>
+        </motion.section>
     )
 }
 
