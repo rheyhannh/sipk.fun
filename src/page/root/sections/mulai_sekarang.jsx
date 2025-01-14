@@ -98,8 +98,8 @@ const MULAISEKARANG_CUSTOM_VARIANT_COLLECTIONS = [
 ]
 
 // Describe animation delay (after element inView)
-// with an array [logo, title, description, button, description highlight]
-const MULAISEKARANG_DELAY_ANIMATION = [0.125, 0.25, 0.85, 0.975, 1.175];
+// with an array [logo, title, description, button]
+const MULAISEKARANG_DELAY_ANIMATION = [0.225, 0.5, 1.25, 3.25];
 
 const MulaiSekarang = () => {
     const sectionRef = React.useRef( /** @type {React.RefObject<HTMLDivElement>} */
