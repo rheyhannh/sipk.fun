@@ -103,7 +103,7 @@ const Testimoni = ({ rating }) => {
             ref={sectionRef}
             id={'testimoni'}
             tabIndex={0}
-            className={`${styles.section} ${styles.testimoni}`}
+            className={`${styles.section} ${styles.testimoni} ${styles.center_overflow}`}
             onKeyDown={handleKeyDown}
         >
             <ContainerWrapper>

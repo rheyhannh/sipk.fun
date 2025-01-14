@@ -68,7 +68,7 @@ const Hero = ({ notifikasi }) => {
         <motion.section
             id={HERO_SECTION_ID}
             ref={sectionRef}
-            className={`${styles.section} ${styles.hero}`}
+            className={`${styles.section} ${styles.hero} ${styles.center_overflow}`}
             whileInView={'inView'}
             viewport={{ once: GLOBAL_VIEWPORT_ONCE }}
         >

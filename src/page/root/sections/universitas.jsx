@@ -162,7 +162,7 @@ const Universitas = ({ universitas }) => {
             ref={sectionRef}
             id={'universitas'}
             tabIndex={0}
-            className={`${styles.section} ${styles.universitas}`}
+            className={`${styles.section} ${styles.universitas} ${styles.center_overflow}`}
             whileInView={'inView'}
             viewport={{ once: GLOBAL_VIEWPORT_ONCE }}
             onKeyDown={handleKeyDown}
