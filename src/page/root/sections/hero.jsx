@@ -303,22 +303,9 @@ function Buttons({
                     passHref
                     legacyBehavior
                 >
-                    <ButtonSimpleForwarded id={item[0]?.id || 'button'}
-                        bgColor={{
-                            unhover: 'var(--users-btn-alt)',
-                            hover: 'var(--users-btn-hov)',
-                        }}
-                        textColor={{
-                            unhover: 'var(--white-color)',
-                            hover: 'var(--white-color)',
-                        }}
-                        style={{
-                            border: 'none',
-                            borderRadius: '0.75rem',
-                            padding: '0.7rem 0.9rem',
-                            gap: '0.25rem',
-                            fontWeight: 600,
-                        }}
+                    <ButtonSimpleForwarded
+                        id={item[0]?.id || 'button'}
+                        {...BUTTONSIMPLE_MAIN_PRESET}
                     >
                         <span>
                             {item[0]?.text || 'Click Me'}
@@ -329,24 +316,9 @@ function Buttons({
                     </ButtonSimpleForwarded>
                 </Link>
 
-                <ButtonSimple id={item[1]?.id || 'button'}
-                    bgColor={{
-                        unhover: 'var(--white-color)',
-                        hover: 'var(--accordion-bg-color)',
-                    }}
-                    textColor={{
-                        unhover: 'var(--dark-color)',
-                        hover: 'var(--dark-color)',
-                    }}
-                    borderColor={{
-                        unhover: 'var(--accordion-bg2-color)',
-                        hover: 'var(--accordion-bg2-color)',
-                    }}
-                    style={{
-                        borderRadius: '0.75rem',
-                        padding: '0.7rem 0.9rem',
-                        gap: '0.25rem'
-                    }}
+                <ButtonSimple
+                    id={item[1]?.id || 'button'}
+                    {...BUTTONSIMPLE_SECONDARY_PRESET}
                     onClickCapture={(event) => {
                         event.currentTarget.blur();
                     }}
@@ -433,6 +405,44 @@ function resolveTitleProps(text) {
             y: [-125, 0],
             duration: 1.75
         }
+    }
+}
+
+export const BUTTONSIMPLE_MAIN_PRESET = {
+    textColor: {
+        unhover: 'var(--white-color)',
+        hover: 'var(--white-color)'
+    },
+    bgColor: {
+        unhover: 'var(--users-btn-alt)',
+        hover: 'var(--users-btn-hov)'
+    },
+    style: {
+        border: 'none',
+        borderRadius: '0.75rem',
+        padding: '0.7rem 0.9rem',
+        gap: '0.25rem',
+        fontWeight: 600,
+    }
+}
+
+export const BUTTONSIMPLE_SECONDARY_PRESET = {
+    textColor: {
+        unhover: 'var(--dark-color)',
+        hover: 'var(--dark-color)'
+    },
+    bgColor: {
+        unhover: 'var(--white-color)',
+        hover: 'var(--accordion-bg-color)'
+    },
+    borderColor: {
+        unhover: 'var(--accordion-bg2-color)',
+        hover: 'var(--accordion-bg2-color)'
+    },
+    style: {
+        borderRadius: '0.75rem',
+        padding: '0.7rem 0.9rem',
+        gap: '0.25rem'
     }
 }
 
