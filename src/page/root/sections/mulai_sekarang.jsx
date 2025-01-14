@@ -16,6 +16,7 @@ import * as React from 'react';
 
 // #region HOOKS DEPEDENCY
 import useMeasure from 'react-use-measure';
+import { useInterval } from 'ahooks';
 // #endregion
 
 // #region COMPONENT DEPEDENCY
@@ -92,6 +93,9 @@ const MULAISEKARANG_DESCRIPTION_CUSTOM_CHAR_VARIANTS = /** @type {Object<string,
         },
     },
 })
+const MULAISEKARANG_CUSTOM_VARIANT_COLLECTIONS = [
+    'color_text'
+]
 
 // Describe animation delay (after element inView)
 // with an array [logo, title, description, button, description highlight]
@@ -99,6 +103,20 @@ const MULAISEKARANG_DELAY_ANIMATION = [0.125, 0.25, 0.85, 0.975, 1.175];
 
 const MulaiSekarang = () => {
     const sectionRef = React.useRef( /** @type {React.RefObject<HTMLDivElement>} */
+        (null)
+    );
+    const [descriptionInView, setDescriptionInView] = React.useState(
+        /** 
+         * @type {boolean} 
+         * Boolean apakah element teks description sudah dalam inView, ini akan bernilai true setelah animasi 'inView' selesai dimainkan. 
+         */
+        (false)
+    );
+    const [animateVariant, setAnimateVariant] = React.useState(
+        /** 
+         * @type {string} 
+         * Nama animasi atau variants yang dimainkan, dapat bernilai `null` saat tidak ada animasi yang dimainkan.
+         */
         (null)
     );
     const [titleRef, { width: titleWidth }] = useMeasure();
@@ -129,6 +147,10 @@ const MulaiSekarang = () => {
             }
         }
     }
+
+    useInterval(() => {
+        if (descriptionInView) setAnimateVariant('color_text');
+    }, 5000)
 
     return (
         <section
@@ -180,6 +202,13 @@ const MulaiSekarang = () => {
                     width: 0.9 * titleWidth
                 }}
                 whileInView={'inView'}
+                animate={animateVariant ?? {}}
+                onAnimationComplete={(x) => {
+                    if (typeof x === 'string') {
+                        if (MULAISEKARANG_CUSTOM_VARIANT_COLLECTIONS.includes(x)) setAnimateVariant({});
+                        if (x === 'inView') setDescriptionInView(true);
+                    }
+                }}
                 viewport={{ once: GLOBAL_VIEWPORT_ONCE }}
                 transition={{ type: 'spring', delayChildren: MULAISEKARANG_DELAY_ANIMATION[2] }}
             >
