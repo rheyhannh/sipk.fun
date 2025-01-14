@@ -153,18 +153,25 @@ const MulaiSekarang = () => {
     }, 5000)
 
     return (
-        <section
+        <motion.section
             ref={sectionRef}
             id={'mulai_sekarang'}
             tabIndex={0}
             className={`${styles.section} ${styles.mulai_sekarang}`}
+            whileInView={'inView'}
+            viewport={{ once: GLOBAL_VIEWPORT_ONCE }}
+            animate={animateVariant ?? {}}
+            onAnimationComplete={(x) => {
+                if (typeof x === 'string') {
+                    if (MULAISEKARANG_CUSTOM_VARIANT_COLLECTIONS.includes(x)) setAnimateVariant({});
+                    if (x === 'inView') setDescriptionInView(true);
+                }
+            }}
             onKeyDown={handleKeyDown}
         >
             <motion.div
                 initial={{ scale: 1.5, opacity: 0 }}
                 variants={{ inView: { scale: 1, opacity: 1 }, hide: { scale: 1.5, opacity: 0 } }}
-                whileInView={'inView'}
-                viewport={{ once: GLOBAL_VIEWPORT_ONCE }}
                 transition={{ type: 'spring', duration: 0.75, delay: MULAISEKARANG_DELAY_ANIMATION[0] }}
                 className={styles.logo}
             >
@@ -176,8 +183,6 @@ const MulaiSekarang = () => {
                 className={styles.title_big}
                 initial={{ visibility: 'hidden' }}
                 variants={{ inView: { visibility: 'visible' } }}
-                whileInView={'inView'}
-                viewport={{ once: GLOBAL_VIEWPORT_ONCE }}
                 transition={{ type: 'spring', delayChildren: MULAISEKARANG_DELAY_ANIMATION[1] }}
             >
                 <HighlightText
@@ -198,18 +203,7 @@ const MulaiSekarang = () => {
 
             <motion.div
                 className={styles.title_big_description}
-                style={{
-                    width: 0.9 * titleWidth
-                }}
-                whileInView={'inView'}
-                animate={animateVariant ?? {}}
-                onAnimationComplete={(x) => {
-                    if (typeof x === 'string') {
-                        if (MULAISEKARANG_CUSTOM_VARIANT_COLLECTIONS.includes(x)) setAnimateVariant({});
-                        if (x === 'inView') setDescriptionInView(true);
-                    }
-                }}
-                viewport={{ once: GLOBAL_VIEWPORT_ONCE }}
+                style={{ width: 0.9 * titleWidth }}
                 transition={{ type: 'spring', delayChildren: MULAISEKARANG_DELAY_ANIMATION[2] }}
             >
                 <motion.span
@@ -234,8 +228,6 @@ const MulaiSekarang = () => {
                         inView: { scale: 1, transition: { delay: MULAISEKARANG_DELAY_ANIMATION[3], type: 'spring', bounce: 0.2 } },
                         hide: { scale: 0 },
                     }}
-                    whileInView={'inView'}
-                    viewport={{ once: GLOBAL_VIEWPORT_ONCE }}
                 >
                     <Link
                         href={'/users?action=login&utm_source=slp'}
@@ -263,8 +255,6 @@ const MulaiSekarang = () => {
                         inView: { scale: 1, transition: { delay: MULAISEKARANG_DELAY_ANIMATION[3], type: 'spring', bounce: 0.2 } },
                         hide: { scale: 0 },
                     }}
-                    whileInView={'inView'}
-                    viewport={{ once: GLOBAL_VIEWPORT_ONCE }}
                 >
                     <Link
                         href={'/users?action=daftar&utm_source=slp'}
@@ -286,7 +276,7 @@ const MulaiSekarang = () => {
                     </Link>
                 </motion.div>
             </motion.div>
-        </section>
+        </motion.section>
     )
 }
 
