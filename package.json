@@ -4,11 +4,13 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "cross-env BUGSNAG_PURGE=true next build",
     "start": "next start",
     "lint": "next lint",
     "analyze": "cross-env ANALYZE=true next build",
-    "prod": "next build && next start",
+    "prodlike": "next build && next start",
+    "prodlike:4000": "next build && next start -p 4000",
+    "prodlike:analyze": "cross-env ANALYZE=true next build && next start",
     "cypress:open": "cypress open"
   },
   "dependencies": {
