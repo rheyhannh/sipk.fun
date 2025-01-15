@@ -20,18 +20,12 @@ import { ErrorBoundary } from 'react-error-boundary';
 // #endregion
 
 // #region UTIL DEPEDENCY
-import Bugsnag, { startBugsnag, handleReactErrorBoundary } from "@/lib/bugsnag";
+import { handleReactErrorBoundary } from '@/lib/bugsnag';
 // #endregion
 
 // #region STYLE DEPEDENCY
 import styles from '@dashboard_page/dashboard.module.css';
 // #endregion
-
-if (process.env.NODE_ENV === 'production') {
-    if (!Bugsnag.isStarted()) {
-        startBugsnag();
-    }
-}
 
 export const DashboardContext = createContext(
     /** @type {import('@/types/context').DashboardContext} */

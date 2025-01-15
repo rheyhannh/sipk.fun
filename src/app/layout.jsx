@@ -1,6 +1,7 @@
 // #region COMPONENT DEPEDENCY
-import Notification from '@/component/loader/Toaster';
 import { CookiesProvider } from 'next-client-cookies/server';
+import { GlobalProvider } from '@/app/provider';
+import Notification from '@/component/loader/Toaster';
 // #endregion
 
 // #region STYLE DEPEDENCY
@@ -27,8 +28,10 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body className={poppins.variable}>
         <CookiesProvider>
-          <Notification />
-          {children}
+          <GlobalProvider>
+            <Notification />
+            {children}
+          </GlobalProvider>
         </CookiesProvider>
       </body>
     </html>
