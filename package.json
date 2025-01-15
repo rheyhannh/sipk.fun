@@ -16,6 +16,7 @@
   "dependencies": {
     "@bugsnag/browser-performance": "^2.10.1",
     "@bugsnag/js": "^8.1.2",
+    "@bugsnag/plugin-aws-lambda": "^8.1.1",
     "@bugsnag/plugin-react": "^8.1.1",
     "@hcaptcha/react-hcaptcha": "^1.9.1",
     "@loadable/component": "^5.15.3",
@@ -52,6 +53,7 @@
     "validator": "^13.11.0"
   },
   "devDependencies": {
-    "cypress": "^13.16.0"
+    "cypress": "^13.16.0",
+    "webpack-bugsnag-plugins": "^1.8.0"
   }
 }
