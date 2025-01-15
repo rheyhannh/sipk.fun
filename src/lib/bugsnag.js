@@ -1,3 +1,4 @@
+import { PHASE_PRODUCTION_BUILD } from 'next/constants';
 import Bugsnag from '@bugsnag/js'
 import BugsnagPluginReact from '@bugsnag/plugin-react'
 import React from 'react';
@@ -58,11 +59,32 @@ export function handleReactErrorBoundary(
 }
 
 export function startBugsnag() {
-    if (process.env.NEXT_PHASE !== "phase-production-build") {
+    // Next.js executes top-level code at build time, so use NEXT_PHASE to avoid Bugsnag.start being executed during the build phase
+    if (process.env.NEXT_PHASE === PHASE_PRODUCTION_BUILD) return;
+
+    // This code only run on node, for now we only need error reporting in browser/client side
+    // if (typeof window === 'undefined') {
+    //     Bugsnag.start({
+    //         // apiKey should different when we want seperate Bugsnags projects e.g. a node and browser/client
+    //         apiKey: process.env.NEXT_PUBLIC_BUGSNAG_SITEKEY,
+    //         appType: 'node',
+    //         appVersion: process.env.NEXT_PUBLIC_APP_VERSION,
+    //         metadata: {
+    //             company: {
+    //                 name: 'SIPK App',
+    //             },
+    //         },
+    //         // @bugsnag/plugin-aws-lambda must only be imported on the server
+    //         plugins: [require('@bugsnag/plugin-aws-lambda')],
+    //     })
+    // }
+
+    // This code only run on browser/client side
+    if (typeof window !== 'undefined') {
         Bugsnag.start({
             apiKey: process.env.NEXT_PUBLIC_BUGSNAG_SITEKEY,
             appType: 'browser',
-            appVersion: process.env.NEXT_PUBLIC_SIPK_VERSION,
+            appVersion: process.env.NEXT_PUBLIC_APP_VERSION,
             enabledBreadcrumbTypes: ['error', 'navigation', 'request', 'user'],
             maxBreadcrumbs: 25,
             maxEvents: 10,
@@ -76,4 +98,50 @@ export function startBugsnag() {
     }
 }
 
-export default Bugsnag;
+/**
+ * This method required when we want error reporting in node or some of `/api` routes.
+ * Example still use `pages` folder structure so its api only expose single `handler`. Also in example
+ * use some of scenario because some scenario still failed to executed, see more above link.
+ *
+ * @see Bugsnag Next.js {@link https://github.com/bugsnag/bugsnag-js/tree/next/examples/js/nextjs example}
+ * @example
+ * `api/user/route.js`
+ * ```js
+ * import { startBugsnag, getServerlessHandler } from '@/lib/bugsnag';
+ *
+ * startBugsnag();
+ * const serverlessHandler = getServerlessHandler();
+ *
+ * const doSomethingErrorOne = () => Promise.reject(new Error('Error Scenario 1'));
+ * // doSomethingErrorOne();
+ *
+ * function doSomethingErrorTwo() {
+ *      throw new Error('Error Scenario 2');
+ * }
+ * // doSomethingErrorTwo();
+ *
+ * function doSomethingErrorThree() {
+ *      throw new Error('Error Scenario 3');
+ * }
+ *
+ * async function handler(req, res) {
+ *      // doSomethingErrorThree();
+ *
+ *      // try {
+ *          // throw new Error('Error Scenario 4');
+ *      // } catch (error) {
+ *          // Bugsnag.notify(error);
+ *          // // Flushing before returning is necessary if deploying to Vercel, see
+ *          // // https://vercel.com/docs/platform/limits#streaming-responses
+ *          // await require('@bugsnag/in-flight').flush(2000);
+ *      // }
+ *
+ *      res.status(200).json({ name: 'John Doe' })
+ * }
+ *
+ * export default serverlessHandler(handler);
+ * ```
+*/
+// export function getServerlessHandler() {
+//     return Bugsnag.getPlugin('awsLambda').createHandler();
+// }
