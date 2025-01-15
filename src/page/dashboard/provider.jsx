@@ -199,7 +199,7 @@ function DashboardRootError({ error, resetErrorBoundary }) {
     return (
         <div className={styles.root_error_container}>
             <div className={styles.root_error_content}>
-                <Image src={error_svg} alt={'Logo SIPK'} />
+                <Image src={error_svg} alt={'Error Ilustration'} />
                 <div className={styles.text}>
                     <h1>Terjadi Kesalahan</h1>
                     <p>
