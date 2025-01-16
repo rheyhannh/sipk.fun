@@ -19,7 +19,6 @@ import { motion, AnimatePresence } from 'framer-motion';
 
 // #region STYLE DEPEDENCY
 import styles from '@faq_page/faq.module.css';
-import ThemeChanger from '@/component/_test/ThemeChanger';
 // #endregion
 
 // #region ICON DEPEDENCY
@@ -215,7 +214,6 @@ export default function Faq({ fakta }) {
     return (
         <Base>
             <Container>
-                <ThemeChanger />
                 <Heading title={'FAQs'} />
                 <Tabs>
                     {TABS.map((item, index) => (
