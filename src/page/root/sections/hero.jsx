@@ -35,7 +35,6 @@ import DashboardMockup from '@/page/dashboard/Mockup';
 
 // #region HOOKS DEPEDENCY
 import useLocationHash from '@/hooks/utils/useLocationHash';
-import useWindowSize from '@/hooks/utils/useWindowSize';
 // #endregion
 
 // #region ICON DEPEDENCY
@@ -298,8 +297,6 @@ function Buttons({
         { id: 'button', text: 'Click Me', href: 'https://www.google.com/' },
     ]
 }) {
-    const { width: vw, height: vh } = useWindowSize();
-
     return (
         <VisibilityWrapper>
             <motion.div

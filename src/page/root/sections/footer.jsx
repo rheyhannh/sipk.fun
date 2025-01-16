@@ -30,7 +30,7 @@ import { animateScroll as scroll, scroller } from 'react-scroll';
 // #endregion
 
 // #region ICON DEPEDENCY
-import { FaTelegram, FaLinkedin, FaTiktok } from 'react-icons/fa';
+import { FaLinkedin, FaTiktok } from 'react-icons/fa';
 import { FiArrowUpRight } from 'react-icons/fi';
 // #endregion
 
