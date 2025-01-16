@@ -46,8 +46,7 @@ import styles from '@root_page/root.module.css';
 // #endregion
 
 // #region UTIL DEPEDENCY
-import { scroller } from 'react-scroll';
-import { shuffleArray, findArrayIndexByString, countPrevCharactersAndWords } from '@root_page/utils';
+import { shuffleArray, findArrayIndexByString } from '@root_page/utils';
 import { MatkulDummies, MatkulDummiesNilaiColorPreset } from '@/constant/matkul_dummies';
 // #endregion
 
@@ -327,14 +326,8 @@ function Buttons({
                         const target = item[1]?.href || 'https://www.google.com/';
                         if (target.startsWith('#')) {
                             const id = target.split('#')[1];
-                            const height = document.getElementById(id)?.offsetHeight ?? 0;
-                            const useOffset = height > 0 && vw >= 1024 && vh > height;
-                            const offset = useOffset ? ((vh - height) / 2) * -1 : 0;
-                            scroller.scrollTo(id, {
-                                duration: 2750,
-                                smooth: 'easeOutCubic',
-                                offset
-                            })
+                            const element = document.getElementById(id);
+                            if (element) element.scrollIntoView({ behavior: 'smooth', block: 'center' });
                         }
                     }}
                 >
