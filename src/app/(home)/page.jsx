@@ -13,7 +13,7 @@ import getRating from '@/lib/supabase/cached/getRating';
 import getNotifikasi from '@/lib/supabase/cached/getNotifikasi';
 // #endregion
 
-export default async function RootPage() {
+export default async function HomePage() {
   const universitasData = await getUniversitas();
   const ratingData = await getRating();
   const notifikasiData = await getNotifikasi();

@@ -6,7 +6,7 @@ import Faq from '@faq_page/Faq';
 import getFakta from '@/lib/supabase/cached/getFakta';
 // #endregion
 
-export default async function RootPage() {
+export default async function FaqPage() {
     const fakta = await getFakta();
 
     return (

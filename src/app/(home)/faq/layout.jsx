@@ -12,6 +12,6 @@ export const metadata = /** @type {import('next').Metadata} */ ({
 })
 // #endregion
 
-export default function RootLayout({ children }) {
+export default function FaqLayout({ children }) {
     return children;
 }
