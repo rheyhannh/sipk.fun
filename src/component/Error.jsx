@@ -88,9 +88,24 @@ import styles from '@/component/style/error.module.css';
  */
 
 /**
- * Lorem ipsum dolor
+ * Render error feedback dengan judul, deskripsi dan teks pada button yang dapat diatur. 
+ * Secara default saat button diklik ini akan mereset local dan session storage beserta cookies yang digunakan untuk autentikasi
+ * namun semuanya dapat diatur pada props `reset` atau pass custom click handler pada props `onClick`.
+ * 
+ * Setiap proses reset akan popup sebuah toast message yang dapat dikustom pada props `message` dan juga opsi toast yang digunakan pada props `toastOptions`.
+ * 
+ * Secara default component ini diwrap element dengan width `100vw` dan height `100vh` sehingga dapat dirender sebagai sebuah halaman. Jika ingin mengoverride
+ * behaviour tersebut, dapat menggunakan custom style pada props `style` atau membungkus element ini dengan element lainnya dan bind element `div`.
+ * 
+ * ```css
+ * .error_wrapper div {
+ *      width: 500px;
+ *      height: 250px
+ * }
+ * ```
+ * 
  * @param {ErrorProps} props Error props
- * @returns {React.ReactElement} Rendered component
+ * @returns {React.ReactElement<ErrorProps, 'div'>} Rendered component
  */
 export default function Error({
     title = 'Terjadi Kesalahan',
