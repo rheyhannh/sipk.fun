@@ -1,10 +1,5 @@
 'use client'
 
-// #region NEXT DEPEDENCY
-import Image from 'next/image';
-import error_svg from '/public/bug_fixing.svg';
-// #endregion
-
 // #region REACT DEPEDENCY
 import { createContext } from "react";
 // #endregion
@@ -14,16 +9,14 @@ import { useCookies } from 'next-client-cookies';
 // #endregion
 
 // #region COMPONENT DEPEDENCY
+import Notification from '@/component/loader/Toaster';
+import ErrorTemplate from '@/component/Error';
 import { ErrorBoundary } from 'react-error-boundary';
 // #endregion
 
 // #region UTIL DEPEDENCY
 import Bugsnag from '@bugsnag/js';
 import { startBugsnag, handleReactErrorBoundary } from '@/lib/bugsnag';
-// #endregion
-
-// #region STYLE DEPEDENCY
-import styles from '@/app/error.module.css';
 // #endregion
 
 if (process.env.NODE_ENV === 'production') {
@@ -38,34 +31,31 @@ export const GlobalProvider = ({ children }) => {
     const cookies = useCookies();
 
     return (
-        <ErrorBoundary
-            FallbackComponent={GlobalRootError}
-            onError={(error, info) => handleReactErrorBoundary(error, info, cookies, 'GlobalRootError')}
-        >
-            <GlobalContext.Provider value={{}}>
+        <GlobalContext.Provider value={{}}>
+            <Notification />
+            <ErrorBoundary
+                fallback={
+                    <ErrorTemplate
+                        title={'Terjadi Kesalahan'}
+                        description={'Sepertinya terjadi kesalahan tak terduga. Kamu bisa coba mereset SIPK dengan klik tombol dibawah. Kalau masalah ini masih muncul, kayaknya bakal ada yang lembur buat benerin ini 😞'}
+                        button={'Reset SIPK'}
+                        reset={{
+                            localStorage: true,
+                            sessionStorage: true,
+                            cookies: false,
+                        }}
+                        message={{
+                            onStart: 'Loading',
+                            onResetStorage: 'Mereset pengaturanmu',
+                            onRefresh: 'Memuat ulang halaman'
+                        }}
+                        finish={'refresh'}
+                    />
+                }
+                onError={(error, info) => handleReactErrorBoundary(error, info, cookies, 'GlobalProvider')}
+            >
                 {children}
-            </GlobalContext.Provider>
-        </ErrorBoundary>
-    )
-}
-
-function GlobalRootError({ error, resetErrorBoundary }) {
-    return (
-        <div className={styles.container}>
-            <div className={styles.content}>
-                <Image src={error_svg} alt={'Error Ilustration'} />
-                <div className={styles.text}>
-                    <h1>Terjadi Kesalahan</h1>
-                    <p>
-                        Sepertinya terjadi kesalahan tak terduga.
-                        Kamu bisa coba refresh halaman ini dengan klik tombol dibawah.
-                        Kalau masalah ini masih muncul, kayaknya bakal ada yang lembur buat benerin ini 😞
-                    </p>
-                </div>
-                <div className={styles.buttons} onClick={() => { window.location.reload() }}>
-                    <button>Refresh Halaman</button>
-                </div>
-            </div>
-        </div>
+            </ErrorBoundary>
+        </GlobalContext.Provider>
     )
 }
