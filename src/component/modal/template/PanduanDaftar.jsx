@@ -4,7 +4,12 @@
 import Link from 'next/link';
 // #endregion
 
+// #region REACT DEPEDENCY
+import * as React from 'react';
+// #endregion
+
 // #region COMPONENT DEPEDENCY
+import { ModalContext } from '@/component/modal/provider';
 import { Backdrop, Layout, Head, Inner } from '@/component/modal/components';
 import { Accordion } from '@/component/Accordion';
 // #endregion
@@ -80,32 +85,39 @@ const accordionList = [
     }
 ]
 
-const PanduanDaftar = () => (
-    <Backdrop>
-        <Layout className={styles.panduan__daftar}>
-            <Head title={'Panduan Daftar'} />
-            <Inner>
-                <p style={{ textAlign: 'justify', marginBottom: '.75rem' }}>
-                    Pastikan data yang kamu masukkan memenuhi kriteria sebagai berikut :
-                </p>
-                <Accordion item={accordionList} />
-            </Inner>
+const PanduanDaftar = () => {
+    const { handleModalClose } = React.useContext(ModalContext);
 
-            <div className={styles.form__action}>
-                <Link
-                    className={styles.btn}
-                    onClickCapture={(event) => { event.currentTarget.blur() }}
-                    href='/faq?tab=pendaftaran'
-                >
-                    <h3 style={{ display: 'flex', alignItems: 'center' }}>
-                        <span style={{ marginRight: '0.25rem' }}>
-                            Pelajari Lebih Lanjut
-                        </span>
-                    </h3>
-                </Link>
-            </div>
-        </Layout>
-    </Backdrop>
-)
+    return (
+        <Backdrop>
+            <Layout className={styles.panduan__daftar}>
+                <Head title={'Panduan Daftar'} />
+                <Inner>
+                    <p style={{ textAlign: 'justify', marginBottom: '.75rem' }}>
+                        Pastikan data yang kamu masukkan memenuhi kriteria sebagai berikut :
+                    </p>
+                    <Accordion item={accordionList} />
+                </Inner>
+
+                <div className={styles.form__action}>
+                    <Link
+                        className={styles.btn}
+                        onClickCapture={(event) => {
+                            event.currentTarget.blur();
+                            handleModalClose();
+                        }}
+                        href='/faq?tab=pendaftaran'
+                    >
+                        <h3 style={{ display: 'flex', alignItems: 'center' }}>
+                            <span style={{ marginRight: '0.25rem' }}>
+                                Pelajari Lebih Lanjut
+                            </span>
+                        </h3>
+                    </Link>
+                </div>
+            </Layout>
+        </Backdrop>
+    )
+}
 
 export default PanduanDaftar

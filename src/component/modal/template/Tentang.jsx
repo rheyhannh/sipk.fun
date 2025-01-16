@@ -118,7 +118,18 @@ const Tentang = () => {
                                             <Card useNextLink={true} href={getFeedbackFormUrl()} target={'_blank'} prefetch={false} clickable={true} useActionIcon={true} icon={{ primary: <FaExclamation /> }} title={'Feedback'} description={'Laporin disini kalau kamu mengalami masalah tertentu terkait aplikasi ini'} />
                                         </Section>
                                         <Section title={'Help & Social'}>
-                                            <Card useNextLink={true} href={'/faq'} prefetch={true} clickable={true} icon={{ primary: <FaQ /> }} title={'FAQ'} description={'Pertanyaan yang sering ditanyain dan mungkin bisa menjawab kebinggungan kamu'} />
+                                            <Card
+                                                title={'FAQ'}
+                                                description={'Pertanyaan yang sering ditanyain dan mungkin bisa menjawab kebinggungan kamu'}
+                                                icon={{ primary: <FaQ /> }}
+                                                useNextLink={true}
+                                                clickable={true}
+                                                href={'/faq'}
+                                                prefetch={true}
+                                                onClick={(event) => {
+                                                    context.handleModalClose();
+                                                }}
+                                            />
                                         </Section>
                                     </div>
                                 </div>
