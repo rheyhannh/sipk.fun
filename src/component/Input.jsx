@@ -270,7 +270,7 @@ export function FancyInput({
     onErrorState,
     onSuccessState,
     onWarningState,
-    onDangerState,
+    onDangerState
 }) {
     const [state, setState] = React.useState(
         /** @type {FancyInputProps['_state']} */
