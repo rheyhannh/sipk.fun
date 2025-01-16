@@ -70,6 +70,13 @@ import styles from '@/component/style/error.module.css';
  * - Default : `refresh`
  * @property {() => void} [onClick]
  * Override default behaviour dengan menyediakan callback saat button diclick
+ * @property {import('react-hot-toast').ToastOptions} [toastOptions]
+ * Opsi toast message yang digunakan
+ * 
+ * ```js
+ * // Default
+ * { position: 'top-center' }
+ * ```
  */
 
 /**
@@ -95,6 +102,7 @@ export default function Error({
     },
     finish = 'refresh',
     onClick,
+    toastOptions = { position: 'top-center' }
 }) {
     reset = {
         localStorage: reset?.localStorage ?? true,
@@ -110,7 +118,7 @@ export default function Error({
     }
 
     const handleReset = async () => {
-        const toastId = toast.loading(message.onStart, { position: 'top-center' });
+        const toastId = toast.loading(message.onStart, { ...toastOptions });
         const { pathname } = window.location;
         const fromParam = pathname === '/dashboard/matakuliah' ? 'matakuliah' : 'dashboard';
 
