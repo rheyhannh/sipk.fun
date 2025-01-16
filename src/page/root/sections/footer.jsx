@@ -52,22 +52,37 @@ const FOOTER_SMALL_DEVICES = 524;
  */
 const footerShorcuts = [
     {
-        text: 'Untuk?',
-        elementId: 'universitas',
-        href: null
+        text: 'Universitas',
+        elementId: null,
+        href: '/#universitas',
+        routingOptions: {
+            scroll: false,
+            onClick: (event) => {
+                const element = document.getElementById('universitas');
+                if (element) {
+                    event.preventDefault();
+                    element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }
+            }
+        }
     },
     {
-        text: 'Kenapa?',
-        elementId: 'kenapa_sipk',
-        href: null
+        text: 'Fitur',
+        elementId: null,
+        href: '/#kenapa_sipk',
+        routingOptions: {
+            scroll: false,
+            onClick: (event) => {
+                const element = document.getElementById('kenapa_sipk');
+                if (element) {
+                    event.preventDefault();
+                    element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }
+            }
+        }
     },
     {
-        text: 'Fitur?',
-        elementId: 'fitur',
-        href: null
-    },
-    {
-        text: 'FAQ!',
+        text: 'FAQ',
         elementId: null,
         href: '/faq',
     },
