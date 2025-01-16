@@ -35,11 +35,11 @@ function Error({ ...props }) {
                 title: 'Magiclink Invalid',
                 text: `Magiclink tidak sesuai atau sudah expired. Silahkan ${isLogin ? 'login ulang' : 'daftar ulang'} agar dapat magiclink baru.`,
                 action: isLogin ?
-                    <Link className={`${styles.btn} ${styles.error}`} href={'/users?action=login&type=email'} prefetch={false} replace>
+                    <Link className={`${styles.btn} ${styles.error}`} href={'/users?action=login&type=email'} replace>
                         <h3>Login Ulang</h3>
                     </Link>
                     :
-                    <Link className={`${styles.btn} ${styles.error}`} href={'/users?action=daftar'} prefetch={false} replace>
+                    <Link className={`${styles.btn} ${styles.error}`} href={'/users?action=daftar'} replace>
                         <h3>Daftar Ulang</h3>
                     </Link>
             }
@@ -48,11 +48,11 @@ function Error({ ...props }) {
                 title: 'Terjadi Kesalahan',
                 text: `Ada yang salah. Silahkan coba lagi atau ${isLogin ? 'login ulang' : 'daftar ulang'} untuk mendapatkan magiclink baru.`,
                 action: isLogin ?
-                    <Link className={`${styles.btn} ${styles.error}`} href={'/users?action=login&type=email'} prefetch={false} replace>
+                    <Link className={`${styles.btn} ${styles.error}`} href={'/users?action=login&type=email'} replace>
                         <h3>Login Ulang</h3>
                     </Link>
                     :
-                    <Link className={`${styles.btn} ${styles.error}`} href={'/users?action=daftar'} prefetch={false} replace>
+                    <Link className={`${styles.btn} ${styles.error}`} href={'/users?action=daftar'} replace>
                         <h3>Daftar Ulang</h3>
                     </Link>
             }

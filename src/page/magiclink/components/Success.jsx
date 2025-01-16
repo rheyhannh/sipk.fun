@@ -43,7 +43,7 @@ function Success({ ...props }) {
                                     Login berhasil. Kamu akan dialihkan ke dashboard dalam <span style={{ fontWeight: '700' }}>{props.seconds} detik</span>
                                 </div>
                                 <div className={styles.content__action}>
-                                    <Link className={`${styles.btn} ${styles.success}`} href={'/dashboard'} prefetch={false} replace>
+                                    <Link className={`${styles.btn} ${styles.success}`} href={'/dashboard'} replace>
                                         <h3>Menuju Dashboard ({props.seconds})</h3>
                                     </Link>
                                 </div>
@@ -57,7 +57,7 @@ function Success({ ...props }) {
                         Akun berhasil dikonfirmasi. Mulai pakai SIPK sekarang dengan klik tombol dibawah.
                     </div>
                     <div className={styles.content__action}>
-                        <Link className={`${styles.btn} ${styles.success}`} href={'/dashboard'} prefetch={false} replace>
+                        <Link className={`${styles.btn} ${styles.success}`} href={'/dashboard'} replace>
                             <h3>Mulai Sekarang</h3>
                         </Link>
                     </div>
