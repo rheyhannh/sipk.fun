@@ -4,16 +4,12 @@
 import * as SupabaseTypes from '@/types/supabase';
 // #endregion
 
-// #region NEXT DEPEDENCY
-import Image from 'next/image';
-import error_svg from '/public/bug_fixing.svg';
-// #endregion
-
 // #region REACT DEPEDENCY
 import * as React from 'react';
 // #endregion
 
 // #region COMPONENT DEPEDENCY
+import ErrorTemplate from '@/component/Error';
 import { ErrorBoundary } from 'react-error-boundary';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Pagination } from 'swiper/modules';
@@ -26,8 +22,6 @@ import useUser from '@/hooks/swr/useUser';
 import useMatkul from '@/hooks/swr/useMatkul';
 import useMatkulHistory from '@/hooks/swr/useMatkulHistory';
 import { useCookies } from 'next-client-cookies';
-import { DashboardContext } from '@/page/dashboard/provider';
-import { ModalContext } from '@/component/modal/provider';
 // #endregion
 
 // #region UTIL DEPEDENCY
@@ -259,35 +253,6 @@ function TabelSection({ universitas }) {
     )
 }
 
-function DashboardMatakuliahError() {
-    const { isRichContent, setNavbarActive } = React.useContext(DashboardContext);
-    const { setModal, setActive, setData } = React.useContext(ModalContext);
-
-    const handleLogoutModal = () => {
-        if (!isRichContent) { setNavbarActive(false); }
-        setData(null);
-        setModal('logout');
-        setTimeout(() => {
-            setActive(true);
-        }, 50)
-    }
-
-    return (
-        <div className={`${styles.wrapper} ${styles.error}`}>
-            <Image src={error_svg} alt={'Error Ilustration'} />
-            <div className={styles.text}>
-                <h2>Terjadi Kesalahan</h2>
-                <p>
-                    Sepertinya terjadi kesalahan tak terduga. Kamu bisa coba login ulang dulu, ya.
-                    Kalau masalah ini masih muncul setelah login ulang, kayaknya bakal ada yang lembur
-                    buat benerin ini 😞
-                </p>
-            </div>
-            <span onClick={handleLogoutModal}>Logout Disini</span>
-        </div>
-    );
-}
-
 /**
  * Render dashboard matakuliah page `'/dashboard/matakuliah'`
  * @param {{universitas:Array<SupabaseTypes.UniversitasData>}}
@@ -299,7 +264,29 @@ export default function DashboardMatakuliah({ universitas }) {
 
     return (
         <ErrorBoundary
-            FallbackComponent={DashboardMatakuliahError}
+            fallback={
+                <div className={styles.wrapper_error}>
+                    <ErrorTemplate
+                        title={'Terjadi Kesalahan'}
+                        description={'Sepertinya terjadi kesalahan tak terduga. Kamu bisa coba reset SIPK lalu login ulang dengan klik tombol dibawah. Kalau masalah ini masih muncul setelah login ulang, kayaknya bakal ada yang lembur buat benerin ini 😞'}
+                        button={'Reset dan Login Ulang'}
+                        reset={{
+                            localStorage: true,
+                            sessionStorage: true,
+                            cookies: true,
+                        }}
+                        message={{
+                            onStart: 'Memulai prosedur moveon',
+                            onResetStorage: 'Menghapus foto mantan',
+                            onResetCookies: 'Menghapus sesi terindah bersama mantan',
+                            onRedirecting: 'Mengalihkanmu dari masa lalu',
+                            onRefresh: 'Mengalihkanmu dari mantan'
+                        }}
+                        finish={'redirect'}
+                        toastOptions={{ position: 'top-left' }}
+                    />
+                </div>
+            }
             onError={(error, info) => handleReactErrorBoundary(error, info, cookieResolver, { boundaryLocation: 'DashboardMatakuliahPage' })}
         >
             <div className={styles.wrapper}>
