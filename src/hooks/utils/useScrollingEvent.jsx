@@ -1,3 +1,5 @@
+'use client'
+
 // #region REACT DEPEDENCY
 import * as React from 'react';
 // #endregion
