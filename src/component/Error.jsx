@@ -5,6 +5,10 @@ import Image from 'next/image';
 import error_svg from '/public/bug_fixing.svg';
 // #endregion
 
+// #region REACT DEPEDENCY
+import React from 'react';
+// #endregion
+
 // #region COMPONENT DEPEDENCY
 import toast from "react-hot-toast";
 // #endregion
@@ -77,6 +81,10 @@ import styles from '@/component/style/error.module.css';
  * // Default
  * { position: 'top-center' }
  * ```
+ * @property {React.CSSProperties} [style]
+ * Custom style yang digunakan
+ * 
+ * - Default : `{}`
  */
 
 /**
@@ -102,7 +110,8 @@ export default function Error({
     },
     finish = 'refresh',
     onClick,
-    toastOptions = { position: 'top-center' }
+    toastOptions = { position: 'top-center' },
+    style = {}
 }) {
     reset = {
         localStorage: reset?.localStorage ?? true,
@@ -181,7 +190,7 @@ export default function Error({
     }
 
     return (
-        <div className={styles.container}>
+        <div className={styles.container} style={style}>
             <div className={styles.content}>
                 <Image src={error_svg} alt={'Error Ilustration'} />
                 <div className={styles.text}>
