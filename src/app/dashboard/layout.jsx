@@ -21,14 +21,12 @@ export default async function DashboardLayout({ children }) {
     <DashboardProvider>
       <ModalProvider>
         <Header />
-        <main className={`dashboard`}>
-          <Navbar>
-            {children}
-          </Navbar>
-          <Suspense fallback={null}>
-            <NavigationEvents />
-          </Suspense>
-        </main>
+        <Navbar>
+          {children}
+        </Navbar>
+        <Suspense fallback={null}>
+          <NavigationEvents />
+        </Suspense>
       </ModalProvider>
     </DashboardProvider>
   )

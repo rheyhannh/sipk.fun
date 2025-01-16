@@ -581,11 +581,6 @@ main.dashboard {
     :root {
         --header-height: 4.5rem;
     }
-
-    main.dashboard {
-        width: 96%;
-        margin: 0 auto;
-    }
 }
 
 @media screen and (max-width: 767px) {
@@ -604,23 +599,7 @@ main.dashboard {
 }
 
 @media screen and (min-width: 1280px) {
-    main.dashboard {
-        width: 98%;
-    }
-
     aside.dashboard {
         position: relative;
     }
 }
-
-/* @media screen and (min-width: 1920px) {
-    :root {
-        --big-font-size: 3rem;
-        --h1-font-size: 2rem;
-        --h2-font-size: 1.75rem;
-        --h3-font-size: 1.5rem;
-        --normal-font-size: 1.225rem;
-        --small-font-size: 1.075rem;
-        --smaller-font-size: .975rem;
-    }
-} */
