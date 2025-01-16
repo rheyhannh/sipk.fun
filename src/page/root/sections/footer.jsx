@@ -92,7 +92,7 @@ const footerSublinks = [
     {
         text: 'Analitik',
         elementId: null,
-        href: 'https://us.umami.is/share/6QoD2HKX4uce8C8l/whoishayyan.site',
+        href: 'https://dashboard.simpleanalytics.com/sipk.fun',
         isOpenNewTab: true,
     }
 ]
