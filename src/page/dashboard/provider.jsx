@@ -124,7 +124,7 @@ export const DashboardProvider = ({ children }) => {
     return (
         <ErrorBoundary
             FallbackComponent={DashboardRootError}
-            onError={(error, info) => handleReactErrorBoundary(error, info, cookies, 'DashboardRootError')}
+            onError={(error, info) => handleReactErrorBoundary(error, info, cookies, { boundaryLocation: 'DashboardProvider' })}
         >
             <DashboardContext.Provider
                 value={{

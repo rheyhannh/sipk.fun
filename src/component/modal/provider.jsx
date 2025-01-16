@@ -127,7 +127,7 @@ export const ModalProvider = ({ children }) => {
         >
             <ErrorBoundary
                 FallbackComponent={ModalError}
-                onError={(error, info) => handleReactErrorBoundary(error, info, cookieResolver, 'ModalError')}
+                onError={(error, info) => handleReactErrorBoundary(error, info, cookieResolver, { boundaryLocation: 'ModalProvider' })}
                 onReset={() => {
                     setActive(false);
                     setModal(null);

@@ -8,7 +8,7 @@ import React from 'react';
  * @param {import('@bugsnag/js').NotifiableError} error Error instance
  * @param {React.ErrorInfo} info Error info
  * @param {import('next-client-cookies')['useCookies']} [cookieResolver] Cookie resolver untuk resolve user id. Saat tidak tersedia Bugsnag akan menggunakan id {@link https://docs.bugsnag.com/platforms/javascript/react/configuration-options/#collectuserip anonymous} 
- * @param {string} [fallbackComponent] String nama fallback component yang digunakan
+ * @param {Object<string, any>} [other] Informasi lainnya terkait error yang terjadi
  * @example
  * ```jsx
  * import { useCookies } from 'next-client-cookies';
@@ -39,7 +39,7 @@ export function handleReactErrorBoundary(
     error,
     info,
     cookieResolver,
-    fallbackComponent = '-',
+    other = {},
 ) {
     Bugsnag.notify(error, event => {
         if (cookieResolver) {
@@ -52,7 +52,7 @@ export function handleReactErrorBoundary(
         event.addMetadata('details', {
             type: 'react_error_boundary',
             reportedWith: 'handleReactErrorBoundary',
-            fallbackComponent,
+            ...other,
             ...info
         })
     })

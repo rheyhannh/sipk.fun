@@ -245,7 +245,7 @@ export default function Dashboard({ universitas, notifikasi }) {
     return (
         <ErrorBoundary
             FallbackComponent={DashboardError}
-            onError={(error, info) => handleReactErrorBoundary(error, info, cookieResolver, 'DashboardError')}
+            onError={(error, info) => handleReactErrorBoundary(error, info, cookieResolver, { boundaryLocation: 'DashboardPage' })}
         >
             <div className={styles.wrapper}>
                 <div className={styles.primary}>

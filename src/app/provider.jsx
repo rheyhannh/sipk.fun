@@ -52,7 +52,7 @@ export const GlobalProvider = ({ children }) => {
                         finish={'refresh'}
                     />
                 }
-                onError={(error, info) => handleReactErrorBoundary(error, info, cookies, 'GlobalProvider')}
+                onError={(error, info) => handleReactErrorBoundary(error, info, cookies, { boundaryLocation: 'GlobalProvider' })}
             >
                 {children}
             </ErrorBoundary>

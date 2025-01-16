@@ -300,7 +300,7 @@ export default function DashboardMatakuliah({ universitas }) {
     return (
         <ErrorBoundary
             FallbackComponent={DashboardMatakuliahError}
-            onError={(error, info) => handleReactErrorBoundary(error, info, cookieResolver, 'DashboardMatakuliahError')}
+            onError={(error, info) => handleReactErrorBoundary(error, info, cookieResolver, { boundaryLocation: 'DashboardMatakuliahPage' })}
         >
             <div className={styles.wrapper}>
                 <div className={styles.top}>
