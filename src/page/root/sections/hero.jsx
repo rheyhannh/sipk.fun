@@ -34,6 +34,7 @@ import DashboardMockup from '@/page/dashboard/Mockup';
 // #endregion
 
 // #region HOOKS DEPEDENCY
+import useLocationHash from '@/hooks/utils/useLocationHash';
 import useWindowSize from '@/hooks/utils/useWindowSize';
 // #endregion
 
@@ -62,6 +63,15 @@ const Hero = ({ notifikasi }) => {
         /** @type {HTMLElement} */
         (null)
     )
+
+    const locationHash = useLocationHash();
+
+    React.useEffect(() => {
+        if (locationHash) {
+            const element = document.getElementById(locationHash.replace('#', ''));
+            if (element) element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+    }, [locationHash])
 
     return (
         <motion.section
