@@ -192,8 +192,8 @@ export default function Error({
                         {description}
                     </p>
                 </div>
-                <div className={styles.buttons} onClick={onClick ?? handleReset}>
-                    <button>
+                <div className={styles.buttons}>
+                    <button onClick={onClick ?? handleReset}>
                         {button}
                     </button>
                 </div>
