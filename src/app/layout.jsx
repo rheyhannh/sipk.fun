@@ -1,3 +1,7 @@
+// #region NEXT DEPEDENCY
+import Script from 'next/script';
+// #endregion
+
 // #region COMPONENT DEPEDENCY
 import { CookiesProvider } from 'next-client-cookies/server';
 import { GlobalProvider } from '@/app/provider';
@@ -32,6 +36,15 @@ export default function RootLayout({ children }) {
           </GlobalProvider>
         </CookiesProvider>
       </body>
+      {process.env.NODE_ENV === 'production' && (
+        <Script
+          strategy='afterInteractive'
+          src="https://scripts.simpleanalyticscdn.com/latest.js"
+          data-hostname="sipk.fun"
+          data-ignore-pages="/api,/api/*,/dashboard,/dashboard/*,/magiclink,/magiclink/*"
+          data-strict-utm="true"
+        />
+      )}
     </html>
   )
 }
