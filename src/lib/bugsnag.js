@@ -14,19 +14,13 @@ import React from 'react';
  * import { useCookies } from 'next-client-cookies';
  * import { ErrorBoundary } from 'react-error-boundary';
  *  
- * const MyFallbackComponent = () => (...)
  * const MyComponent = () => {
  *      const cookieResolver = useCookies();
  *      return (
  *          <ErrorBoundary
- *              FallbackComponent={MyFallbackComponent}
+ *              fallback={<div>Something Went Wronk!</div>}
  *              onError={(error, info) => {
- *                  handleReactErrorBoundary(
- *                      error, 
- *                      info, 
- *                      cookieResolver, 
- *                      'MyFallbackComponent'
- *                  );
+ *                  handleReactErrorBoundary(error, info, cookieResolver);
  *              }}
  *          >
  *              ...
