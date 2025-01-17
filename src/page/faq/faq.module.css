@@ -1,21 +1,18 @@
 .base.colors {
-    --background-primary: #0e1c2e;
-    --background-secondary: #1a2c44;
-    --background-accent: #122638;
-    --text-primary: #ffffff;
-    --text-secondary: #a0b9d0;
-    --text-accent: #48b9f1;
-    --item-color-active: #48b9f1;
-    --item-color-hover: #37a3dc;
-    --border-color-default: rgba(255, 255, 255, 0.1);
-    /* Rgb based on item-color-active */
-    --border-color-hover: rgba(72, 185, 241, 0.5);
-    --border-color-active: rgba(72, 185, 241, 0.75);
-    /* Rgb based on background-secondary */
-    --accordion-background-default: rgba(26, 44, 68, 0.25);
-    --accordion-background-hover: rgba(26, 44, 68, 0.5);
-    /* Gradient based on background-secondary and background-accent */
-    --accordion-background-active: radial-gradient(circle, #1a2c44, #182b41, #16293e, #14283b, #122638);
+    --background-primary: #F6F6F9;
+    --background-secondary: #EDEFF2;
+    --background-accent: #DDE1E6;
+    --text-primary: #202328;
+    --text-secondary: #5A5F66;
+    --text-accent: #324267;
+    --item-color-active: #324267;
+    --item-color-hover: #41537A;
+    --border-color-default: rgba(0, 0, 0, 0.1);
+    --border-color-hover: rgba(40, 48, 67, 0.5);
+    --border-color-active: rgba(40, 48, 67, 0.75);
+    --accordion-background-default: rgba(237, 239, 242, 0.25);
+    --accordion-background-hover: rgba(237, 239, 242, 0.5);
+    --accordion-background-active: linear-gradient(135deg, #EDEFF2 30%, #DDE1E6 100%);
 }
 
 .base.colors.dark_theme {
@@ -28,14 +25,11 @@
     --item-color-active: #ff6341;
     --item-color-hover: #e55337;
     --border-color-default: rgba(255, 255, 255, 0.1);
-    /* Rgb based on item-color-active */
     --border-color-hover: rgba(255, 99, 65, 0.5);
     --border-color-active: rgba(255, 99, 65, 0.75);
-    /* Rgb based on background-secondary */
     --accordion-background-default: rgba(36, 38, 43, 0.25);
-    --accordion-background-hover: rgba(36, 38, 43, 0.5);
-    /* Gradient based on background-secondary and background-accent */
-    --accordion-background-active: radial-gradient(circle, #24262b, #212429, #1e2226, #1b2024, #202328);
+    --accordion-background-hover: linear-gradient(135deg, #24262b 60%, #202328 100%);
+    --accordion-background-active: linear-gradient(135deg, #24262b 30%, #202328 100%);
 }
 
 .base {
