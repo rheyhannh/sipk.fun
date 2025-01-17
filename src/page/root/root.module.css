@@ -765,10 +765,13 @@
     --root-action-fontsize: 1.1rem;
     --root-section-height: calc(100vh - (2 * var(--root-base-padding)));
     height: var(--root-section-height);
+    max-height: 968px;
     padding: var(--inner-padding);
     overflow: hidden;
     display: grid;
     grid-template-rows: max-content 1fr;
+    margin-bottom: 0;
+    border-bottom: none;
 }
 
 .kenapa_sipk .title {
@@ -1657,6 +1660,7 @@
 @media screen and (max-width: 1079px) {
     .kenapa_sipk {
         --root-section-height: 100%;
+        max-height: none;
     }
 
     .kenapa_sipk .content .overlay {
