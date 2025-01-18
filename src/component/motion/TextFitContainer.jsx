@@ -13,6 +13,10 @@ import useWindowSize from '@/hooks/utils/useWindowSize';
 import { useTimeout } from 'ahooks';
 // #endregion
 
+// #region COMPONENT DEPEDENCY
+import { motion } from 'framer-motion';
+// #endregion
+
 /**
  * Props yang digunakan component `TextFitContainer`
  * @typedef {Object} TextFitContainerProps
