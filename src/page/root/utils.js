@@ -73,6 +73,7 @@ export const calculatePercentage = (value, target) => {
 
 /** 
  * Method untuk mengacak index array
+ * dengan menyalin array terlebih dahulu menggunakan `slice` sehingga tidak mengubah source array.
  * @template T
  * @param {Array<T>} array Array yang ingin diacak
  * @returns {Array<T>} Array dengan index yang sudah diacak
