@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "cross-env BUGSNAG_PURGE=true next build",
+    "build": "next build",
+    "build:purge": "cross-env BUGSNAG_PURGE=true next build",
     "start": "next start",
     "lint": "next lint",
     "analyze": "cross-env ANALYZE=true next build",
