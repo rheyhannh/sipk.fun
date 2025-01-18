@@ -6,7 +6,10 @@
  * @property {StaticOrigin | OriginFn} [origin] 
  * Asal `origin` yang diperbolehkan untuk permintaan `CORS`. Dapat berupa string, regex, array, atau fungsi yang mengembalikan asal yang diizinkan
  * 
- * - Default : `process.env.NEXT_PUBLIC_SIPK_URL || '*'`
+ * ```js
+ * // Default
+ * process.env.NODE_ENV !== 'production' ? '*' : process.env.NEXT_PUBLIC_SIPK_URL
+ * ```
  * 
  * Silahkan atur untuk setiap API routes/endpoint walaupun umumnya origin yang digunakan sama sehingga menggunakan opsi default.
  * @property {string | string[]} [methods]
@@ -58,7 +61,7 @@
  * Opsi default `CORS` yang digunakan
  */
 export const DEFAULT_CORS_OPTIONS = /** @type {CorsOptions} */ ({
-    origin: process.env.NEXT_PUBLIC_SIPK_URL || '*',
+    origin: process.env.NODE_ENV !== 'production' ? '*' : process.env.NEXT_PUBLIC_SIPK_URL,
     methods: 'GET,POST,PUT,PATCH,DELETE',
     allowedHeaders: ['authorization', 'x-api-key', 'content-type'],
     exposedHeaders: null,
