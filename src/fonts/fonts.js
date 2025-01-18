@@ -6,14 +6,16 @@ const poppins = Poppins({
     subsets: ['latin'],
     display: 'swap',
     variable: '--poppins-font',
-    weight: ['100', '200', '300', '400', '500', '600', '700', '800', '900']
+    weight: ['100', '200', '300', '400', '500', '600', '700', '800', '900'],
+    fallback: ['system-ui', 'arial']
 });
 
 const league_spartan = League_Spartan({
     subsets: ['latin'],
     display: 'swap',
     variable: '--leaguespartan-font',
-    weight: ['100', '200', '300', '400', '500', '600', '700', '800', '900']
+    weight: ['100', '200', '300', '400', '500', '600', '700', '800', '900'],
+    fallback: ['system-ui', 'arial']
 })
 
 export { poppins, league_spartan };
