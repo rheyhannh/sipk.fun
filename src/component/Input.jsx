@@ -239,7 +239,18 @@ const DEFAULT_FANCYINPUT_ICONCOLOR = {
  */
 
 /**
- * Component Description
+ * Input field yang dapat dilengkapi dengan validator atau sebuah callback untuk memvalidasi value input.
+ * Validator atau callback nantinya mereturn {@link FancyInputProps._state state} dimana terdapat beberapa state sebagai berikut,
+ * 
+ * - `empty` : Input value masih kosong. State ini dapat diset melalui {@link FancyInputProps.validator validator} atau otomatis dengan {@link FancyInputProps.validateFalsyValue validateFalsyValue}
+ * - `validating` : Input value sedang divalidasi. State ini otomatis diset saat input element `blur`.
+ * - `error` : Input value tidak valid. State ini diset melalui {@link FancyInputProps.validator validator}.
+ * - `success` : Input value valid dengan menggunakan success color. State ini diset melalui {@link FancyInputProps.validator validator}
+ * - `warning` : Input value valid dengan menggunakan warning color. State ini diset melalui {@link FancyInputProps.validator validator}
+ * - `danger` : Input value valid dengan menggunakan danger color. State ini diset melalui {@link FancyInputProps.validator validator}
+ * 
+ * Untuk custom styling dapat disetel melalui {@link FancyInputProps.fieldOptions fieldOptions}, {@link FancyInputProps.inputOptions inputOptions} dan {@link FancyInputProps.placeholderOptions placeholderOptions}.
+ * Setiap state validator dapat menggunakan custom {@link FancyInputProps.validatorIcon validatorIcon} dan {@link FancyInputProps.validatorIconColor validatorIconColor}.
  * @param {Omit<React.InputHTMLAttributes<HTMLInputElement>, 'value' | 'onChange' | 'onFocus' | 'onBlur'> & Omit<FancyInputProps, '_state'>} props FancyInput props
  * @returns {React.ReactElement} Rendered component
  */
