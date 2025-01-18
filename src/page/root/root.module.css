@@ -1643,7 +1643,10 @@
         outline: 1px solid var(--logo-second-color);
     }
 
-    .navbar .nav a.link:focus:not(:hover),
+    .navbar .nav a.link:focus:not(:hover) {
+        outline: 1px solid var(--logo-second-color);
+    }
+
     .footer .primary a:focus:not(:hover),
     .footer .socials .box:focus:not(:hover),
     .footer .secondary a:focus:not(:hover) {
