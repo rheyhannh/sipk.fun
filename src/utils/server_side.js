@@ -140,11 +140,12 @@ export async function decryptAES(ciphertext, parse = false) {
  * @returns {Promise<rateLimitInstance>} Promise dengan resolve instance ratelimit
  */
 export async function rateLimit(options) {
-    const tokenCache = new LRUCache({
-        max: options?.uniqueTokenPerInterval ?? 500,
-        ttl: options?.interval ?? 60000,
-        ttlAutopurge: true,
-    });
+    const { uniqueTokenPerInterval = 500, interval = 60000 } = options || {};
+
+    const max = (typeof uniqueTokenPerInterval === 'number' && uniqueTokenPerInterval > 0) ? uniqueTokenPerInterval : 500;
+    const ttl = (typeof interval === 'number' && interval > 0) ? interval : 60000;
+
+    const tokenCache = new LRUCache({ max, ttl, ttlAutopurge: true });
 
     /** @type {rateLimitInstance['check']} */
     const check = async (limit, token) => {
