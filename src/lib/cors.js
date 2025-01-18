@@ -18,7 +18,7 @@
  * @property {string | string[]} [allowedHeaders]
  * Header yang diizinkan untuk dikirimkan oleh klien dalam permintaan `CORS`
  * 
- * - Default : `['authorization', 'content-type']`
+ * - Default : `['authorization', 'x-api-key', 'content-type']`
  * 
  * Silahkan atur untuk setiap API routes/endpoint karena umumnya headers yang digunakan berbeda.
  * @property {string | string[]} [exposedHeaders]
@@ -60,7 +60,7 @@
 export const DEFAULT_CORS_OPTIONS = /** @type {CorsOptions} */ ({
     origin: process.env.NEXT_PUBLIC_SIPK_URL || '*',
     methods: 'GET,POST,PUT,PATCH,DELETE',
-    allowedHeaders: ['authorization', 'content-type'],
+    allowedHeaders: ['authorization', 'x-api-key', 'content-type'],
     exposedHeaders: null,
     preflightContinue: false,
     optionsSuccessStatus: 204,
