@@ -4,6 +4,7 @@ import { cookies } from 'next/headers';
 // #endregion
 
 // #region UTIL DEPEDENCY
+import cors, { DEFAULT_CORS_OPTIONS } from '@/lib/cors';
 import {
     rateLimit,
     getRequestDetails,
@@ -25,7 +26,21 @@ import {
 } from '@/utils/api_helper';
 // #endregion
 
+/** 
+ * Array of string berisikan method yang tersedia pada route `'/api/login'`
+*/
 const routeMethods = ['POST'];
+
+/** 
+ * Opsi `CORS` yang digunakan pada route `'/api/login'`
+ * 
+ * @see {@link DEFAULT_CORS_OPTIONS Default}
+*/
+const routeCorsOptions = /** @type {import('@/lib/cors').CorsOptions} */ ({
+    methods: routeMethods,
+} ?? DEFAULT_CORS_OPTIONS
+);
+
 const limitRequest = parseInt(process.env.API_LOGIN_REQUEST_LIMIT);
 const limiter = await rateLimit({
     interval: parseInt(process.env.API_LOGIN_TOKEN_INTERVAL_SECONDS) * 1000,
@@ -33,6 +48,14 @@ const limiter = await rateLimit({
 })
 
 const cookieServiceOptions = await getCookieOptions('service', 'set');
+
+/**
+ * Route Handler untuk `OPTIONS` `'/api/login'`
+ * @param {NextRequest} request
+ */
+export async function OPTIONS(request) {
+    return cors(request, new Response(null, { status: 204 }), routeCorsOptions);
+}
 
 /**
  * Route Handler untuk `POST` `'/api/login'`
@@ -87,10 +110,10 @@ export async function POST(request) {
             cookieStore.set({ name: 's_access_token', value: data.session.access_token, ...cookieServiceOptions });
         }
 
-        return new Response(null, { status: 204, headers: responseHeaders });
+        return cors(request, new Response(null, { status: 204, headers: responseHeaders }), routeCorsOptions);
     } catch (/** @type {import('@/constant/api_response').APIResponseErrorProps} */ error) {
         const { body, status, headers } = await handleErrorResponse(error, requestLog, ratelimitLog, true);
         if (headers) { Object.assign(responseHeaders, headers) }
-        return NextResponse.json(body, { status, headers: responseHeaders })
+        return cors(request, NextResponse.json(body, { status, headers: responseHeaders }), routeCorsOptions);
     }
 }

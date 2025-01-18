@@ -7,6 +7,7 @@ import { NextResponse, NextRequest } from 'next/server';
 // #endregion
 
 // #region UTIL DEPEDENCY
+import cors, { DEFAULT_CORS_OPTIONS } from '@/lib/cors';
 import {
     rateLimit,
     getRequestDetails,
@@ -34,11 +35,34 @@ import {
 } from '@/utils/api_helper';
 // #endregion
 
+/** 
+ * Array of string berisikan method yang tersedia pada route `'/api/me'`
+*/
+const routeMethods = ['GET', 'PATCH'];
+
+/** 
+ * Opsi `CORS` yang digunakan pada route `'/api/me'`
+ * 
+ * @see {@link DEFAULT_CORS_OPTIONS Default}
+*/
+const routeCorsOptions = /** @type {import('@/lib/cors').CorsOptions} */ ({
+    methods: routeMethods,
+} ?? DEFAULT_CORS_OPTIONS
+);
+
 const limitRequest = parseInt(process.env.API_ME_REQUEST_LIMIT);
 const limiter = await rateLimit({
     interval: parseInt(process.env.API_ME_TOKEN_INTERVAL_SECONDS) * 1000,
     uniqueTokenPerInterval: parseInt(process.env.API_ME_MAX_TOKEN_PERINTERVAL),
 })
+
+/**
+ * Route Handler untuk `OPTIONS` `'/api/me'`
+ * @param {NextRequest} request
+ */
+export async function OPTIONS(request) {
+    return cors(request, new Response(null, { status: 204 }), routeCorsOptions);
+}
 
 /**
  * Route Handler untuk `GET` `'/api/me'`
@@ -62,10 +86,10 @@ export async function GET(request) {
                 });
 
                 const body = { ...rest, _details: { ..._details, request: { info: requestLog, ..._details.request } } }
-                return NextResponse.json(body, { status: code, headers });
+                return cors(request, NextResponse.json(body, { status: code, headers }), routeCorsOptions);
             }
 
-            return NextResponse.json(data, { status: 200 });
+            return cors(request, NextResponse.json(data, { status: 200 }), routeCorsOptions);
         }
 
         await checkRateLimit(limiter, limitRequest).then(x => {
@@ -86,11 +110,11 @@ export async function GET(request) {
             })
         }
 
-        return NextResponse.json(data, { status: 200, headers: responseHeaders });
+        return cors(request, NextResponse.json(data, { status: 200, headers: responseHeaders }), routeCorsOptions);
     } catch (/** @type {import('@/constant/api_response').APIResponseErrorProps} */ error) {
         const { body, status, headers } = await handleErrorResponse(error, requestLog, ratelimitLog, true);
         if (headers) { Object.assign(responseHeaders, headers) }
-        return NextResponse.json(body, { status, headers: responseHeaders })
+        return cors(request, NextResponse.json(body, { status, headers: responseHeaders }), routeCorsOptions);
     }
 }
 
@@ -241,10 +265,10 @@ export async function PATCH(request) {
             )
         }
 
-        return NextResponse.json({ profil: profilBaru[0] }, { status: 200, headers: responseHeaders })
+        return cors(request, NextResponse.json({ profil: profilBaru[0] }, { status: 200, headers: responseHeaders }), routeCorsOptions);
     } catch (/** @type {import('@/constant/api_response').APIResponseErrorProps} */ error) {
         const { body, status, headers } = await handleErrorResponse(error, requestLog, ratelimitLog, true);
         if (headers) { Object.assign(responseHeaders, headers) }
-        return NextResponse.json(body, { status, headers: responseHeaders })
+        return cors(request, NextResponse.json(body, { status, headers: responseHeaders }), routeCorsOptions);
     }
 }
