@@ -1,6 +1,5 @@
 // #region TYPE DEPEDENCY
 import * as SupabaseTypes from '@/types/supabase';
-import { APIResponseErrorProps } from '@/constant/api_response';
 // #endregion
 
 // #region NEXT DEPEDENCY
