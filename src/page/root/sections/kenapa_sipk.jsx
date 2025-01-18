@@ -796,7 +796,7 @@ const KenapaSipk = ({ contents = ['x', 'y', 'z'], useAutoplay = false, autoplayO
                         <Progress text={'1'} active={activeContent.split('_')[1] === '1'} />
                         <Text
                             title={'Hitung IPK dengan Mudah'}
-                            description={'Dengan SIPK kalian dapat mengetahui perolehan IPK sedini mungkin bahkan dengan matakuliah yang belum kalian tempuh dan tentu aja dengan semua skenario nilai yang kalian atur sendiri.'}
+                            description={'Dengan SIPK kalian dapat mengetahui perolehan IPK sedini mungkin bahkan dengan matakuliah yang belum kalian tempuh dan tentu saja dengan semua skenario nilai yang kalian atur sendiri.'}
                             active={activeContent.split('_')[1] === '1'}
                         />
                     </Details>
