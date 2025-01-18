@@ -1,6 +1,5 @@
 // #region TYPE DEPEDENCY
 import * as SupabaseTypes from '@/types/supabase';
-import { APIResponseErrorProps } from '@/constant/api_response';
 // #endregion
 
 // #region NEXT DEPEDENCY
@@ -103,7 +102,7 @@ export async function GET(request) {
         }
 
         return cors(request, NextResponse.json(data, { status: 200, headers: responseHeaders }), routeCorsOptions);
-    } catch (/** @type {APIResponseErrorProps} */ error) {
+    } catch (/** @type {import('@/constant/api_response').APIResponseErrorProps} */ error) {
         const { body, status, headers } = await handleErrorResponse(error, requestLog, ratelimitLog, true);
         if (headers) { Object.assign(responseHeaders, headers) }
         return cors(request, NextResponse.json(body, { status, headers: responseHeaders }), routeCorsOptions);
