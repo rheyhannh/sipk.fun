@@ -367,6 +367,22 @@ const BoxContentX = React.forwardRef(({
     )
 });
 
+/**
+ * Props yang digunakan component `BoxContentY`
+ * @typedef {Object} BoxContentYProps
+ * @property {number} [initialMatkulCount]
+ * Jumlah matkul dummies yang digunakan untuk perhitungan IPK
+ * 
+ * - Default : `10`
+ * @property {Object} penilaian
+ * @property {typeof MatkulDummiesNilaiColorPreset} penilaian.style
+ * @property {typeof MatkulDummiesNilaiBobot} penilaian.bobot
+ */
+
+/**
+ * Component yang dibungkus dengan `forwardRef` untuk menampilkan content yang tampil pada `Box` dengan type `y`
+ * @type {ReturnType<typeof React.forwardRef<HTMLDivElement, HTMLMotionProps<'div'> & BoxContentYProps>>}
+ */
 const BoxContentY = React.forwardRef(({
     initialMatkulCount = 10,
     penilaian = { style: MatkulDummiesNilaiColorPreset, bobot: MatkulDummiesNilaiBobot },
