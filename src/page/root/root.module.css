@@ -841,7 +841,8 @@
     background-color: var(--secondInverse-shade-1);
 }
 
-.kenapa_sipk .content .box.x .inner {
+.kenapa_sipk .content .box.x .inner,
+.kenapa_sipk .content .box.y .inner {
     /* ONLY USE 'rem' based value */
     --matkul-card-gap: 0.75rem;
     /* ONLY USE 'px' based value */
@@ -860,27 +861,27 @@
     perspective: 1000px;
 }
 
+.kenapa_sipk .content .box.y .inner {
+    gap: 3rem;
+    justify-content: center;
+    grid-template-columns: minmax(250px, 315px) minmax(300px, 375px);
+}
+
 .kenapa_sipk .content .box.x .inner .matkul,
 .kenapa_sipk .content .box.x .inner .matkul_anim,
-.kenapa_sipk .content .box.x .inner .progress_anim {
+.kenapa_sipk .content .box.x .inner .progress_anim,
+.kenapa_sipk .content .box.y .inner .matkul,
+.kenapa_sipk .content .box.y .summary_anim {
     border-radius: inherit;
 }
 
-.kenapa_sipk .content .box.x .inner .matkul {
+.kenapa_sipk .content .box.x .inner .matkul,
+.kenapa_sipk .content .box.y .inner .matkul {
     position: relative;
 }
 
-.kenapa_sipk .content .box.x .inner .matkul .cta {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-}
-
-.kenapa_sipk .content .box.x .inner .matkul_anim {
+.kenapa_sipk .content .box.x .inner .matkul_anim,
+.kenapa_sipk .content .box.y .inner .matkul_anim {
     position: relative;
     display: flex;
     flex-direction: column;
@@ -891,18 +892,21 @@
     z-index: 1;
 }
 
-.kenapa_sipk .content .box.x .inner .matkul_anim>div {
+.kenapa_sipk .content .box.x .inner .matkul_anim>div,
+.kenapa_sipk .content .box.y .inner .matkul_anim>div {
     height: var(--matkul-card-height);
 }
 
-.kenapa_sipk .content .box.x .inner .progress_anim {
+.kenapa_sipk .content .box.x .inner .progress_anim,
+.kenapa_sipk .content .box.y .inner .summary_anim {
     display: flex;
     justify-content: flex-end;
     align-items: center;
     transform-origin: bottom right;
 }
 
-.kenapa_sipk .content .box.x .inner .progress_anim>div {
+.kenapa_sipk .content .box.x .inner .progress_anim>div,
+.kenapa_sipk .content .box.y .inner .summary_anim>div {
     z-index: 2;
     width: 100%;
     max-width: 325px;

@@ -33,10 +33,11 @@ import {
     MatkulDummiesNilaiColorPreset
 } from '@/constant/matkul_dummies';
 import { scroller } from 'react-scroll';
+import { useInterval } from 'ahooks';
 // #endregion
 
 // #region UTIL DEPEDENCY
-import { calculatePercentage, generateRandomNumber, generateRandomFloat } from '../utils';
+import { calculatePercentage, generateRandomNumber, generateRandomFloat, shuffleArray } from '../utils';
 // #endregion
 
 const layoutTransition = {
@@ -365,6 +366,135 @@ const BoxContentX = React.forwardRef(({
         </motion.div>
     )
 });
+
+const BoxContentY = React.forwardRef(({
+    initialMatkulCount = 10,
+    penilaian = { style: MatkulDummiesNilaiColorPreset, bobot: MatkulDummiesNilaiBobot },
+    ...props
+}, forwardedRef) => {
+    const [matkul, setMatkul] = React.useState(
+        /** @type {Array<MatkulDummiesProps>} */
+        ([])
+    )
+    const [editableMatkul, setEditableMatkul] = React.useState(
+        /** @type {Array<MatkulDummiesProps>} */
+        ([MatkulDummies[0], MatkulDummies[2], MatkulDummies[3]])
+    )
+    const [total, setTotal] = React.useState({ ipk: 0, sks: 0, matkul: 0 });
+
+    const getEditableMatkulMax = () => {
+        if (forwardedRef.current) {
+            const innerHeight = forwardedRef.current.getBoundingClientRect().height;
+            const cardStyles = getComputedStyle(forwardedRef.current);
+            const cardHeight = parseFloat(cardStyles.getPropertyValue('--matkul-card-height').trim().split('px')[0]);
+            const cardGap = parseFloat(cardStyles.getPropertyValue('--matkul-card-gap').trim().split('rem')[0]) * 14;
+            const max = Math.floor(innerHeight / (cardHeight + cardGap + 25)); // (25px reserved space)
+            return max;
+        }
+
+        return 1;
+    }
+
+    const calculateTotal = () => {
+        const totalMatkul = matkul.length + editableMatkul.length;
+        const { totalSks } = [...matkul, ...editableMatkul].reduce((sum, current) => {
+            return {
+                totalSks: sum.totalSks + current.sks
+            }
+        }, { totalSks: 0 }
+        );
+        const { totalNilaiAkhir } = [...matkul, ...editableMatkul].reduce((sum, current) => {
+            const { nama, sks, nilai: indeksNilai } = current;
+            const bobot = penilaian.bobot[indeksNilai];
+            return {
+                totalNilaiAkhir: sum.totalNilaiAkhir + (sks * bobot)
+            };
+        }, { totalNilaiAkhir: 0 }
+        );
+
+        const totalIpk = Math.round((totalNilaiAkhir / totalSks) * 100) / 100;
+
+        setTotal({ sks: totalSks, matkul: totalMatkul, ipk: totalIpk });
+    }
+
+    React.useEffect(() => {
+        calculateTotal();
+    }, [matkul, editableMatkul])
+
+    useInterval(() => {
+        var newMatkul = [];
+        const matkuls = [...editableMatkul];
+        const nilaiArr = Object.keys(MatkulDummiesNilaiBobot);
+
+        matkuls.forEach((item) => {
+            const sks = generateRandomNumber(1, 6);
+            const randomIndex = generateRandomNumber(0, nilaiArr.length - 1);
+            const nilai = nilaiArr[randomIndex];
+            const newItem = { ...item, sks, nilai };
+            newMatkul.push(newItem);
+        })
+
+        setEditableMatkul(newMatkul);
+    }, 5000);
+
+    React.useEffect(() => {
+        const shuffledDummies = shuffleArray(MatkulDummies);
+        setMatkul(shuffledDummies.slice(0, initialMatkulCount));
+        setEditableMatkul(shuffledDummies.slice(0, getEditableMatkulMax()));
+    }, [initialMatkulCount])
+
+    return (
+        <motion.div
+            ref={forwardedRef}
+            className={styles.inner}
+            layout
+            exit={{ opacity: 0 }}
+            transition={{ ...layoutTransition }}
+            {...props}
+        >
+            <motion.div
+                className={styles.summary_anim}
+                initial={{ opacity: 0, y: 150 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{
+                    type: 'spring',
+                    duration: 1,
+                    delay: 0.15,
+                }}
+            >
+                <SummaryDummy
+                    title={'IPK'}
+                    color='var(--success-color)'
+                    icon={{ name: 'FaRegStar', lib: 'fa' }}
+                    data={{ value: total.ipk, percentage: calculatePercentage(total.ipk, 3.66), keterangan: `Targetmu 3.66` }}
+                    style={{ marginTop: '0', boxShadow: 'none', borderRadius: '1rem' }}
+                />
+            </motion.div>
+
+            <motion.div className={styles.matkul}>
+                <motion.div
+                    className={styles.matkul_anim}
+                    initial={{ opacity: 0, y: -150 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{
+                        type: 'spring',
+                        duration: 1,
+                        delay: 0.15,
+                    }}
+                >
+                    {editableMatkul.map((item, itemIndex) => (
+                        <HistoryDummy
+                            key={item.id}
+                            item={item}
+                            color={penilaian.style[item.nilai]}
+                            style={{ boxShadow: 'none', borderRadius: '1rem', marginBottom: '0' }}
+                        />
+                    ))}
+                </motion.div>
+            </motion.div>
+        </motion.div>
+    )
+})
 
 /**
  * Props yang digunakan component `BoxContentZ`
@@ -809,7 +939,11 @@ const KenapaSipk = ({ contents = ['x', 'y', 'z'], useAutoplay = false, autoplayO
                     tabIndex={viewportWidth < 1080 ? 0 : -1}
                 >
                     <Box contentNumber={2} type={'y'} setActiveContent={setActiveContent}>
-
+                        <AnimatePresence mode={'popLayout'}>
+                            {activeContent.split('_')[1] === '2' && contentShowed && (
+                                <BoxContentY />
+                            )}
+                        </AnimatePresence>
                     </Box>
 
                     <Details type={'y'}>
