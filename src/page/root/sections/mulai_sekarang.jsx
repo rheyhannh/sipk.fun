@@ -264,7 +264,6 @@ const MulaiSekarang = () => {
                 >
                     <Link
                         href={'/users?action=login&utm_source=slp'}
-                        scroll={false}
                         passHref
                         legacyBehavior
                     >
@@ -291,7 +290,6 @@ const MulaiSekarang = () => {
                 >
                     <Link
                         href={'/users?action=daftar&utm_source=slp'}
-                        scroll={false}
                         passHref
                         legacyBehavior
                     >

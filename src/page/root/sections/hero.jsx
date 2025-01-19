@@ -306,7 +306,6 @@ function Buttons({
             >
                 <Link
                     href={item[0]?.href || 'https://www.google.com/'}
-                    scroll={false}
                     passHref
                     legacyBehavior
                 >

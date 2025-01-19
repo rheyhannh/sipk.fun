@@ -200,7 +200,7 @@ const Universitas = ({ universitas }) => {
                             scrollProgress={viewportWidth < 1024 ? null : sectionScrollProgress}
                             scrollProgressOptions={{ offset: ['start end', 'start 65%'] }}
                         >
-                            <Link href={'/faq?tab=universitas'} scroll={false} passHref legacyBehavior>
+                            <Link href={'/faq?tab=universitas'} passHref legacyBehavior>
                                 <ButtonSimpleForwarded
                                     id='universitas-cta-sec'
                                     tabIndex={0}
@@ -210,7 +210,7 @@ const Universitas = ({ universitas }) => {
                                 </ButtonSimpleForwarded>
                             </Link>
 
-                            <Link href={'/users?action=daftar&utm_source=slp'} scroll={false} passHref legacyBehavior>
+                            <Link href={'/users?action=daftar&utm_source=slp'} passHref legacyBehavior>
                                 <ButtonSimpleForwarded
                                     id='universitas-cta-main'
                                     tabIndex={0}

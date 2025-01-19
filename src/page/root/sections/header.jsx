@@ -267,7 +267,7 @@ const NavbarOverlay = () => {
                         <div className={styles.inner}>
                             <LogoWithWrapper />
                             <LinkItems />
-                            <NextLink href={'/users?action=daftar&utm_source=slp'} scroll={false} passHref legacyBehavior>
+                            <NextLink href={'/users?action=daftar&utm_source=slp'} passHref legacyBehavior>
                                 <ButtonCTA id={'navbar-cta'} text={'Mulai Sekarang'} />
                             </NextLink>
                         </div>
@@ -310,7 +310,7 @@ const NavbarCenterContent = () => {
         return (
             <>
                 <LinkItems />
-                <NextLink href={'/users?action=daftar&utm_source=slp'} scroll={false} passHref legacyBehavior>
+                <NextLink href={'/users?action=daftar&utm_source=slp'} passHref legacyBehavior>
                     <ButtonCTA id={'navbar-cta'} text={'Mulai Sekarang'} />
                 </NextLink>
             </>
@@ -324,7 +324,7 @@ const NavbarRightContent = () => {
     if (windowWidth < 768) {
         return (
             <div className={`${styles.wrap} ${styles.right}`}>
-                <NextLink href={'/users?action=daftar&utm_source=slp'} scroll={false} passHref legacyBehavior>
+                <NextLink href={'/users?action=daftar&utm_source=slp'} passHref legacyBehavior>
                     <ButtonCTA id={'navbar-cta'} text={'Mulai Sekarang'} />
                 </NextLink>
 
