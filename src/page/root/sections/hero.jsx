@@ -68,7 +68,13 @@ const Hero = ({ notifikasi }) => {
     React.useEffect(() => {
         if (locationHash) {
             const element = document.getElementById(locationHash.replace('#', ''));
-            if (element) element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            if (locationHash === '#universitas') {
+                const isSmall = window.matchMedia('(max-width: 1023px)').matches;
+                element.scrollIntoView({ behavior: 'instant', block: isSmall ? 'start' : 'center' });
+            } else if (locationHash === '#kenapa_sipk') {
+                const isSmall = window.matchMedia('(max-width: 1079px)').matches;
+                element.scrollIntoView({ behavior: 'instant', block: isSmall ? 'start' : 'center' });
+            }
         }
     }, [locationHash])
 
