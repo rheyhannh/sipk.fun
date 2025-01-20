@@ -12,10 +12,6 @@ const getHash = () => typeof window !== 'undefined' ? window.location.hash : '';
 
 /**
  * Hook custom untuk mendeteksi perubahan hash pada URL dengan `window.location.hash`. 
- * 
- * Perlu diingat hook hanya ditrigger saat navigasi dilakukan melalui client-side seperti menggunakan component `Link` 
- * atau hook `useRouter`, jika mengganti hash pada browser URL secara langsung hook ini tidak akan bekerja.
- * 
  * @returns {string} Location hash pada URL beserta tanda pagar `#`
  * @example
  * ```jsx
