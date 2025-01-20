@@ -26,7 +26,7 @@ import { useClickAway, useUnmount } from 'ahooks';
 import { mutate } from 'swr';
 import { motion, AnimatePresence } from 'framer-motion';
 import { LogoSipkFill } from '@/loader/StaticImages';
-import Link from '@/component/Link';
+import { LinkHash } from '../components';
 import { animateScroll as scroll, scroller } from 'react-scroll';
 import { RootContext } from '@root_page/provider';
 // #endregion
@@ -35,7 +35,6 @@ import { RootContext } from '@root_page/provider';
 import {
     FiSun,
     FiMoon,
-    FiArrowUpRight
 } from 'react-icons/fi';
 // #endregion
 
@@ -68,36 +67,27 @@ const ButtonCTA = React.forwardRef(({ text = 'Lorem', onClick, href, ...props },
     </motion.a>
 ))
 
-const LinkItems = () => (
-    <>
-        {HEADER_NAVIGATION_SHORCUTS.map((item, index) => (
-            <Link
-                key={index}
-                item={{ href: item.href, elementId: item.elementId }}
-                scrollOptions={{ offset: -75, ...item?.scrollOptions }}
-                routingOptions={{ ...item?.routingOptions }}
-                className={styles.link}
-                {...(item?.isOpenNewTab || false ? { target: '_blank' } : {})}
-                tabIndex={0}
-                onKeyDown={(event) => {
-                    if (event.key === 'Enter' && item?.elementId) scroller.scrollTo(item.elementId, { offset: -75 });
-                }}
-                onClickCapture={(event) => {
-                    event.target.blur();
-                    if (item?.elementId) {
-                        const target = document.getElementById(item.elementId);
-                        if (target) target.focus();
-                    }
-                }}
-            >
-                {item.text}
-                {item?.isOpenNewTab && (
-                    <FiArrowUpRight className={styles.external} />
-                )}
-            </Link>
-        ))}
-    </>
-)
+const LinkItems = () => {
+    const { showNavbarOverlay, setShowNavbarOverlay } = React.useContext(RootContext);
+
+    return (
+        <>
+            {HEADER_NAVIGATION_SHORCUTS.map((props, index) => (
+                <LinkHash
+                    key={index}
+                    className={styles.link}
+                    onClickCapture={() => {
+                        if (showNavbarOverlay) {
+                            setShowNavbarOverlay(false);
+                            document.body.classList.remove('disable_scroll');
+                        }
+                    }}
+                    {...props}
+                />
+            ))}
+        </>
+    )
+}
 
 /**
  * Animated hamburger button untuk toggle {@link NavbarOverlay navbar overlay} pada small devices

@@ -14,53 +14,27 @@ export const GLOBAL_VIEWPORT_ONCE = true;
 
 // #region Header and Navigation Config 
 
-/**
- * Array yang berisikan link yang digunakan pada navbar. Gunakan props `elementId` untuk scroll ke section atau element tertentu,
- * gunakan `href` untuk routing ke url tertentu. 
- * 
- * Saat url dibuka pada tab baru, pastikan pass `true` pada props `isOpenNewTab` untuk
- * menambahkan icon dan target `_blank` pada element anchor.
- * 
- * Untuk opsi lanjutan dapat diatur pada props `routingOptions` untuk opsi routing dan `scrollOptions` untuk opsi scroll.
- * @type {Array<Omit<NavItem, 'icon' | 'iconName' | 'iconLib' | 'dropdown'> & {isOpenNewTab:boolean}>}
- */
-export const HEADER_NAVIGATION_SHORCUTS = [
+/** Array yang berisikan link yang digunakan pada navbar */
+export const HEADER_NAVIGATION_SHORCUTS =  /** @type {Array<React.AnchorHTMLAttributes<HTMLAnchorElement> & import('next/link').LinkProps & import('@root_page/components').LinkHashProps>} */ ([
     {
-        text: 'Universitas',
-        elementId: null,
         href: '/#universitas',
-        routingOptions: {
-            scroll: false,
-            onClick: (event) => {
-                const element = document.getElementById('universitas');
-                if (element) {
-                    event.preventDefault();
-                    element.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                }
-            }
-        }
+        text: 'Universitas',
+        hashId: 'universitas',
+        scrollRules: ['(max-width: 1023px)', { behaviour: 'smooth', block: 'start' }, { behaviour: 'smooth', block: 'center' }]
     },
     {
-        text: 'Fitur',
-        elementId: null,
         href: '/#kenapa_sipk',
-        routingOptions: {
-            scroll: false,
-            onClick: (event) => {
-                const element = document.getElementById('kenapa_sipk');
-                if (element) {
-                    event.preventDefault();
-                    element.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                }
-            }
-        }
+        text: 'Fitur',
+        hashId: 'kenapa_sipk',
+        scrollRules: ['(max-width: 1079px)', { behaviour: 'smooth', block: 'start' }, { behaviour: 'smooth', block: 'center' }],
     },
     {
-        text: 'FAQ',
-        elementId: null,
         href: '/faq',
+        text: 'FAQ',
+        hashId: null,
+        scrollRules: null
     },
-]
+])
 
 // #endregion
 
