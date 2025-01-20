@@ -131,14 +131,12 @@ export const LinkHash = ({
     text,
     hashId,
     isOpenNewTab = false,
-    scroll = false,
     scrollRules = { behavior: 'smooth', block: 'center' },
     focusTarget = true,
     ...props
 }) => {
     return (
         <Link
-            scroll={scroll}
             tabIndex={props?.tabIndex ?? 0}
             {...(isOpenNewTab ? { target: '_blank' } : {})}
             onClick={(event) => {
