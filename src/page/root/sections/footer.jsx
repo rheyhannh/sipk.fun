@@ -33,10 +33,7 @@ import { animateScroll as scroll } from 'react-scroll';
 import { FaLinkedin, FaTiktok } from 'react-icons/fa';
 // #endregion
 
-/**
- * Mendefinisikan width viewport dimana jika kurang dari nilai ini, maka animasi akan diadjust pada method {@link getFooterTransition}
- * @type {number}
- */
+/** Mendefinisikan width viewport dimana jika kurang dari nilai ini, maka animasi akan diadjust pada method {@link getFooterTransition} */
 const FOOTER_SMALL_DEVICES = 524;
 
 /** Array yang berisikan link yang digunakan pada footer. */
