@@ -33,7 +33,7 @@ import {
     MatkulDummiesNilaiColorPreset
 } from '@/constant/matkul_dummies';
 import { scroller } from 'react-scroll';
-import { useInterval } from 'ahooks';
+import { useInterval, useUpdateEffect, useDebounceFn } from 'ahooks';
 // #endregion
 
 // #region UTIL DEPEDENCY
@@ -99,21 +99,44 @@ const Wrapper = ({ children, ...props }) => (
 )
 
 const Box = ({ contentNumber, type = 'x', setActiveContent, children }) => {
-    const { width: viewportWidth } = useWindowSize();
+    const [isSmallDevice, setIsSmallDevice] = React.useState(
+        /**  @type {boolean} True saat viewport `vw < 1080` */
+        (false)
+    );
+
+    const { run: updateContentDebounce } = useDebounceFn(
+        (ctNumber) => { setActiveContent(`active_${ctNumber}`); },
+        { wait: 475 }
+    )
+
+    React.useEffect(() => {
+        const smallDeviceQuery = window.matchMedia(`(max-width: 1079px)`);
+        setIsSmallDevice(smallDeviceQuery.matches);
+
+        smallDeviceQuery.addEventListener('change', (e) => {
+            setIsSmallDevice(e.matches);
+        })
+
+        return () => {
+            smallDeviceQuery.removeEventListener('change', (e) => {
+                setIsSmallDevice(e.matches);
+            })
+        }
+    }, [])
 
     return (
         <motion.div
             className={`${styles.box} ${styles[type]}`}
             layout
             transition={{ ...layoutTransition }}
-            viewport={{ amount: 1 }}
+            viewport={{ amount: isSmallDevice ? 0.5 : 1 }}
             onViewportEnter={() => {
                 /*
                     While viewport < 1080, we render Box vertical instead horizontal and each box 
                     are expanded without being 'activated', so we need to control 'activeContent' while 
                     some Box fully enter viewport.
                 */
-                if (contentNumber && viewportWidth < 1080) setActiveContent(`active_${contentNumber}`);
+                if (contentNumber && isSmallDevice) updateContentDebounce(contentNumber);
             }}
         >
             {children}
@@ -148,6 +171,10 @@ const BoxContentX = React.forwardRef(({
     const [activeMatkulIndex, setActiveMatkulIndex] = React.useState(0);
     const [total, setTotal] = React.useState({ ipk: 0, sks: 0, matkul: 0 });
     const [iteration, setIteration] = React.useState(0);
+    const [isSmallDevice, setIsSmallDevice] = React.useState(
+        /**  @type {boolean} True saat viewport `vw < 768` */
+        (false)
+    );
 
     /** 
      * Method untuk menghitung jumlah minimal dan maksimal card matakuliah yang dapat dibuat dengan menghitung 
@@ -156,6 +183,7 @@ const BoxContentX = React.forwardRef(({
      * @returns {{min:number, max:number}} Jumlah `min` dan `max` card matakuliah yang dapat dibuat
     */
     const getMatkulMinMax = () => {
+        if (isSmallDevice) return { min: 1, max: 2 };
         if (forwardedRef.current) {
             const innerHeight = forwardedRef.current.getBoundingClientRect().height;
             const cardStyles = getComputedStyle(forwardedRef.current);
@@ -279,15 +307,30 @@ const BoxContentX = React.forwardRef(({
 
     }, [maxSemester, iteration]);
 
-    React.useEffect(() => { setMatkul(generateMatkulSections(getMatkulMinMax())) }, []);
+    React.useEffect(() => {
+        const smallDeviceQuery = window.matchMedia(`(max-width: 767px)`);
+        setIsSmallDevice(smallDeviceQuery.matches);
+
+        setMatkul(generateMatkulSections(smallDeviceQuery?.matches ? { min: 1, max: 2 } : getMatkulMinMax()))
+
+        smallDeviceQuery.addEventListener('change', (e) => {
+            setIsSmallDevice(e.matches);
+        })
+
+        return () => {
+            smallDeviceQuery.removeEventListener('change', (e) => {
+                setIsSmallDevice(e.matches);
+            })
+        }
+    }, []);
 
     return (
         <motion.div
             ref={forwardedRef}
             className={styles.inner}
             layout
-            exit={{ opacity: 0, x: -250 }}
             transition={{ ...layoutTransition }}
+            exit={{ opacity: 0, x: -250 }}
             {...props}
         >
             <motion.div className={styles.matkul}>
@@ -299,17 +342,20 @@ const BoxContentX = React.forwardRef(({
                                 className={styles.matkul_anim}
                                 variants={{
                                     initial: {
-                                        x: -325,
+                                        x: isSmallDevice ? 0 : -325,
+                                        y: isSmallDevice ? -225 : 0,
                                         opacity: 0,
                                         scale: 0.5
                                     },
                                     view: {
                                         x: 0,
+                                        y: 0,
                                         opacity: 1,
                                         scale: 1
                                     },
                                     exit: {
-                                        x: 325,
+                                        x: isSmallDevice ? 0 : 325,
+                                        y: isSmallDevice ? 225 : 0,
                                         opacity: 0,
                                         scale: 0.4
                                     }
@@ -398,6 +444,8 @@ const BoxContentY = React.forwardRef(({
     )
     const [total, setTotal] = React.useState({ ipk: 0, sks: 0, matkul: 0 });
 
+    const { width: viewportWidth } = useWindowSize();
+
     const getEditableMatkulMax = () => {
         if (forwardedRef.current) {
             const innerHeight = forwardedRef.current.getBoundingClientRect().height;
@@ -457,15 +505,27 @@ const BoxContentY = React.forwardRef(({
         const shuffledDummies = shuffleArray(MatkulDummies);
         setMatkul(shuffledDummies.slice(0, initialMatkulCount));
         setEditableMatkul(shuffledDummies.slice(0, getEditableMatkulMax()));
-    }, [initialMatkulCount])
+    }, [initialMatkulCount]);
+
+    useUpdateEffect(() => {
+        const matkulClone = [...matkul];
+        if (viewportWidth < 768) {
+            if (editableMatkul.length > 2) setEditableMatkul(matkulClone.slice(0, 2));
+        } else {
+            const max = getEditableMatkulMax();
+            if (editableMatkul.length !== max) {
+                setEditableMatkul(matkulClone.slice(0, max));
+            }
+        }
+    }, [viewportWidth]);
 
     return (
         <motion.div
             ref={forwardedRef}
             className={styles.inner}
             layout
-            exit={{ opacity: 0 }}
             transition={{ ...layoutTransition }}
+            exit={{ opacity: 0 }}
             {...props}
         >
             <motion.div
@@ -504,6 +564,7 @@ const BoxContentY = React.forwardRef(({
                             item={item}
                             color={penilaian.style[item.nilai]}
                             style={{ boxShadow: 'none', borderRadius: '1rem', marginBottom: '0' }}
+                            exit={{ opacity: 0 }}
                         />
                     ))}
                 </motion.div>

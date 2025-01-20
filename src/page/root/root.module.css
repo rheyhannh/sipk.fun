@@ -855,6 +855,7 @@
     overflow: hidden;
     display: grid;
     grid-template-columns: 350px 1fr;
+    justify-content: center;
     gap: 2rem;
     padding: 2rem;
     border-radius: inherit;
@@ -863,7 +864,6 @@
 
 .kenapa_sipk .content .box.y .inner {
     gap: 3rem;
-    justify-content: center;
     grid-template-columns: minmax(250px, 315px) minmax(300px, 375px);
 }
 
@@ -927,6 +927,7 @@
     width: 100%;
     height: 100%;
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
     justify-content: center;
     gap: 1rem;
@@ -1799,8 +1800,66 @@
         --scrolling-icon-size: 27.5px;
     }
 
+    .kenapa_sipk .content,
+    .kenapa_sipk .content.active_1,
+    .kenapa_sipk .content.active_2,
+    .kenapa_sipk .content.active_3 {
+        grid-template-rows: repeat(3, max-content);
+    }
+
+    .kenapa_sipk .content .wrapper:nth-child(1) {
+        grid-template-rows: 510px max-content;
+    }
+
+    .kenapa_sipk .content .wrapper:nth-child(2) {
+        grid-template-rows: 480px max-content;
+    }
+
+    .kenapa_sipk .content .wrapper:nth-child(3) {
+        grid-template-rows: 540px max-content;
+    }
+
     .kenapa_sipk .content .text {
         width: 100%;
+    }
+
+    .kenapa_sipk .content .title_small {
+        line-height: normal;
+        white-space: normal;
+        margin-bottom: .25rem;
+    }
+
+    .kenapa_sipk .content .box.x .inner,
+    .kenapa_sipk .content .box.y .inner {
+        grid-template-rows: 1fr;
+        grid-template-columns: minmax(275px, 325px);
+    }
+
+    .kenapa_sipk .content .box.y .inner {
+        gap: 1rem;
+    }
+
+    .kenapa_sipk .content .box.y .inner .matkul_anim {
+        order: 1;
+    }
+
+    .kenapa_sipk .content .box.y .inner .summary_anim {
+        order: 2;
+    }
+
+    .kenapa_sipk .content .box.z .inner {
+        padding: 2rem;
+    }
+
+    .kenapa_sipk .content .box.z .inner>div:nth-child(1),
+    .kenapa_sipk .content .box.z .inner>div:nth-child(3) {
+        max-width: none;
+        flex: 1 0 250px;
+    }
+
+    .kenapa_sipk .content .box.z .inner>div:nth-child(2) {
+        max-width: none;
+        flex: 2 0 250px;
     }
 
     .fitur_wrapper .content .card {
@@ -1840,6 +1899,12 @@
     .footer .shorcut {
         justify-content: start;
         column-gap: 1.75rem;
+    }
+}
+
+@media screen and (max-width: 624px) {
+    .kenapa_sipk .content .wrapper:nth-child(3) {
+        grid-template-rows: 780px max-content;
     }
 }
 
