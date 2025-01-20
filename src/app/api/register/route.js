@@ -198,7 +198,7 @@ export async function POST(request) {
         if (signUpError) {
             if (signUpError.status === 429 || signUpError.code === 'over_email_send_rate_limit') {
                 throw serverError.service_unavailable(
-                    defaultUserErrorMessage, undefined,
+                    undefined, undefined,
                     {
                         severity: 'error',
                         reason: "Failed to register user, supabase error occurred, see details in 'more'",
