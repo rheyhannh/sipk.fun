@@ -124,7 +124,7 @@
  * Link atau pathname yang dapat digunakan sebagai call to action untuk user mengetahui lebih lanjut `error` yang terjadi 
  * @property {string | null} error.digest
  * String yang diencrypt dengan `encryptDES` yang berisikan beberapa props {@link APIResponseBaseProps._details _details}.
- * Setelah response API sampai diuser, ini akan dikirim ke Bugsnag untuk kebutuhan debug terkait error yang terjadi.
+ * Setelah response API sampai diuser, ini dapat dikirim ke Bugsnag untuk kebutuhan debug terkait error yang terjadi.
  * 
  * Jika proses enkripsi terjadi error, props ini bernilai `null`
  * @property {Object} _details
