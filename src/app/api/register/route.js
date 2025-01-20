@@ -196,7 +196,7 @@ export async function POST(request) {
         })
 
         if (signUpError) {
-            if (error.status === 429 || error.code === 'over_email_send_rate_limit') {
+            if (signUpError.status === 429 || signUpError.code === 'over_email_send_rate_limit') {
                 throw serverError.service_unavailable(
                     defaultUserErrorMessage, undefined,
                     {
