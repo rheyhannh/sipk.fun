@@ -7,6 +7,7 @@ import {
 // #endregion
 
 // #region NEXT DEPEDENCY
+import { useRouter, usePathname } from 'next/navigation';
 import NextLink from 'next/link';
 // #endregion
 
@@ -118,11 +119,22 @@ const HamburgerButton = ({ showNavbarOverlay, setShowNavbarOverlay }) => (
     </div>
 )
 
-const LogoWithWrapper = () => (
-    <div className={styles.logo} onClick={() => { scroll.scrollToTop({ smooth: false, duration: 1 }) }}>
-        <LogoSipkFill />
-    </div>
-)
+const LogoWithWrapper = () => {
+    const router = useRouter();
+    const pathname = usePathname();
+
+    return (
+        <div
+            className={styles.logo}
+            onClick={() => {
+                if (pathname === '/') scroll.scrollToTop({ smooth: false, duration: 1 })
+                else router.push('/')
+            }}
+        >
+            <LogoSipkFill />
+        </div>
+    )
+}
 
 const ThemeChanger = () => {
     const { data: theme } = useLocalTheme();

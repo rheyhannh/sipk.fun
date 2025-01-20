@@ -10,6 +10,10 @@ import {
 } from '../config';
 // #endregion
 
+// #region NEXT DEPEDENCY
+import { useRouter, usePathname } from 'next/navigation';
+// #endregion
+
 // #region REACT DEPEDENCY
 import * as React from 'react';
 // #endregion
@@ -147,18 +151,29 @@ const FooterWrapper = ({ children }) => (
     </div>
 )
 
-const Footers = ({ viewportWidth }) => (
-    <footer id={'footer'} className={styles.footer}>
-        <motion.div
-            className={styles.primary}
-            whileInView={'show'}
-            viewport={{ once: GLOBAL_VIEWPORT_ONCE }}
-        >
-            <div className={styles.brand_wrap}>
-                <motion.div className={styles.brand} onClick={() => { scroll.scrollToTop({ smooth: false, duration: 1 }) }} {...getFooterTransition(false, 0, false, viewportWidth <= FOOTER_SMALL_DEVICES)}>
-                    <LogoSipkFillContrast priority={true} />
-                </motion.div>
-            </div>
+const Footers = ({ viewportWidth }) => {
+    const router = useRouter();
+    const pathname = usePathname();
+
+    return (
+        <footer id={'footer'} className={styles.footer}>
+            <motion.div
+                className={styles.primary}
+                whileInView={'show'}
+                viewport={{ once: GLOBAL_VIEWPORT_ONCE }}
+            >
+                <div className={styles.brand_wrap}>
+                    <motion.div
+                        className={styles.brand}
+                        onClick={() => {
+                            if (pathname === '/') scroll.scrollToTop({ smooth: false, duration: 1 })
+                            else router.push('/')
+                        }}
+                        {...getFooterTransition(false, 0, false, viewportWidth <= FOOTER_SMALL_DEVICES)}
+                    >
+                        <LogoSipkFillContrast priority={true} />
+                    </motion.div>
+                </div>
 
             <div id={'footer-shorcuts'} className={styles.shorcut}>
                 {footerShorcuts.map((item, index) => (
