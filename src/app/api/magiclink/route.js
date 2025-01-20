@@ -83,13 +83,28 @@ export async function POST(request) {
         })
 
         if (error) {
+            if (error.status === 429 || error.code === 'over_email_send_rate_limit') {
+                throw serverError.service_unavailable(
+                    undefined, undefined,
+                    {
+                        severity: 'error',
+                        reason: "Supabase error occurred, see details in 'more'",
+                        stack: null,
+                        functionDetails: 'supabase.auth at POST /api/magiclink line 87',
+                        functionArgs: { signInWithOtp: { options: { captchaToken: formData?.token, shouldCreateUser: false } } },
+                        functionResolvedVariable: null,
+                        request: await getRequestDetails(),
+                        more: error,
+                    }
+                )
+            }
             throw serverError.interval_server_error(
                 undefined, undefined,
                 {
                     severity: 'error',
                     reason: "Supabase error occurred, see details in 'more'",
                     stack: null,
-                    functionDetails: 'supabase.auth at POST /api/magiclink line 59',
+                    functionDetails: 'supabase.auth at POST /api/magiclink line 101',
                     functionArgs: { signInWithOtp: { options: { captchaToken: formData?.token, shouldCreateUser: false } } },
                     functionResolvedVariable: null,
                     request: await getRequestDetails(),

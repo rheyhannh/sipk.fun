@@ -324,6 +324,9 @@ export default function Users({ universitasData }) {
                         } else if ((response.status === 503) && (code === 'SRV_03')) {
                             handleErrorModal('Untuk saat ini SIPK tidak menerima pendaftaran akun baru, nantikan informasi selanjutnya');
                             setErrorMessageDaftar(message);
+                        } else if ((response.status === 503) && (code === 'SRV_01')) {
+                            handleErrorModal(message || 'Server sibuk, coba lagi nanti');
+                            setErrorMessageDaftar(message || 'Server sibuk, coba lagi nanti')
                         } else {
                             handleErrorModal('Sepertinya ada yang salah, silahkan coba lagi');
                             setErrorMessageDaftar('Terjadi kesalahan saat daftar');
@@ -379,9 +382,11 @@ export default function Users({ universitasData }) {
                 if (!response.ok) {
                     try {
                         /** @type {ApiResponseError} */
-                        const { message } = await response.json();
+                        const { message, error: { code } } = await response.json();
                         if (response.status === 429) {
                             handleErrorModal(message ?? 'Terlalu banyak request, coba lagi dalam beberapa saat');
+                        } else if ((response.status === 503) && (code === 'SRV_01')) {
+                            handleErrorModal(message || 'Server sibuk, coba lagi nanti');
                         } else {
                             handleErrorModal('Sepertinya ada yang salah, silahkan coba lagi dan pastikan emailmu sudah terdaftar dan dikonfirmasi');
                         }

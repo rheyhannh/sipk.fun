@@ -196,13 +196,28 @@ export async function POST(request) {
         })
 
         if (signUpError) {
+            if (error.status === 429 || error.code === 'over_email_send_rate_limit') {
+                throw serverError.service_unavailable(
+                    defaultUserErrorMessage, undefined,
+                    {
+                        severity: 'error',
+                        reason: "Failed to register user, supabase error occurred, see details in 'more'",
+                        stack: null,
+                        functionDetails: 'supabase.auth.signUp at POST /api/register line 200',
+                        functionArgs: { formData },
+                        functionResolvedVariable: null,
+                        request: await getRequestDetails(),
+                        more: signUpError,
+                    }
+                )
+            }
             throw serverError.interval_server_error(
                 defaultUserErrorMessage, undefined,
                 {
                     severity: 'error',
                     reason: "Failed to register user, supabase error occurred, see details in 'more'",
                     stack: null,
-                    functionDetails: 'supabase.auth.signUp at POST /api/register line 175',
+                    functionDetails: 'supabase.auth.signUp at POST /api/register line 214',
                     functionArgs: { formData },
                     functionResolvedVariable: null,
                     request: await getRequestDetails(),
