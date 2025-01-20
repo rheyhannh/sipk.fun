@@ -182,7 +182,7 @@ export async function POST(request) {
         formData.university = userUniversitasName;
 
         /** @type {SupabaseTypes._auth_signUp} */
-        var { error } = await supabase.auth.signUp({
+        var { error: signUpError } = await supabase.auth.signUp({
             email: formData.email,
             password: formData.password,
             options: {
@@ -195,7 +195,7 @@ export async function POST(request) {
             }
         })
 
-        if (error) {
+        if (signUpError) {
             throw serverError.interval_server_error(
                 defaultUserErrorMessage, undefined,
                 {
@@ -206,7 +206,7 @@ export async function POST(request) {
                     functionArgs: { formData },
                     functionResolvedVariable: null,
                     request: await getRequestDetails(),
-                    more: error,
+                    more: signUpError,
                 }
             )
         }
