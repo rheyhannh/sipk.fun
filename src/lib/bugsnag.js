@@ -52,6 +52,51 @@ export function handleReactErrorBoundary(
     })
 }
 
+/**
+ * Handle API error dengan log error ke Bugsnag menggunakan template yang sudah ditentukan.
+ * @param {'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE'} [method] Request method, default `GET`
+ * @param {URL} apiURL URL dari API terkait, lihat `example` untuk detailnya
+ * @param {import('@/constant/api_response').ClientAPIResponseErrorProps} details Response API error yang diterima
+ * @param {import('next-client-cookies')['useCookies']} [cookieResolver] Cookie resolver untuk resolve user id. Saat tidak tersedia Bugsnag akan menggunakan id {@link https://docs.bugsnag.com/platforms/javascript/react/configuration-options/#collectuserip anonymous} 
+ * @example
+ * ```jsx
+ * import { useCookies } from 'next-client-cookies';
+ *  
+ * const MyComponent = () => {
+ *      const cookieResolver = useCookies(); // optional
+ *      
+ *      const getData = async () => {
+ *          const apiURL = new URL('/api/user', 'http://localhost:3000'); // required
+ *          const response = await fetch(apiURL);
+ *          if (!response.ok) {
+ *              const details = await response.json(); // required
+ *              handleApiErrorResponse('GET', apiURL, details, cookieResolver);
+ *          }
+ *      } 
+ *      ...
+ * } 
+ * ```
+ */
+export function handleApiErrorResponse(method = 'GET', apiURL, details, cookieResolver = null) {
+    Bugsnag.notify({
+        name: 'ApiError',
+        message: 'An error was caught in the API. Please check the digest properties for detailed information'
+    }, event => {
+        if (cookieResolver) {
+            const userIdCookie = cookieResolver.get('s_user_id');
+            if (userIdCookie) event.setUser(userIdCookie);
+        }
+
+        if (typeof apiURL?.pathname === 'string') event.context = apiURL.pathname;
+        if (details) event.addMetadata('response', details);
+        event.severity = 'error';
+        event.unhandled = false;
+        event.request.httpMethod = method;
+        event.request.url = apiURL.toString();
+        event.addMetadata('details', { type: 'api_error_boundary', reportedWith: 'handleApiErrorResponse' });
+    })
+}
+
 export function startBugsnag() {
     // Next.js executes top-level code at build time, so use NEXT_PHASE to avoid Bugsnag.start being executed during the build phase
     if (process.env.NEXT_PHASE === PHASE_PRODUCTION_BUILD) return;
