@@ -59,22 +59,29 @@
  */
 export const handleApiResponseError = async (response, eventId = null) => {
     try {
-        /** @type {import('@/constant/api_response').ClientAPIResponseErrorProps} */
-        const { message = 'Gagal memproses permintaan', error = null } = await response.json();
+        const parsed = /** @type {import('@/constant/api_response').ClientAPIResponseErrorProps} */ (await response.json());
+        const { message = 'Gagal memproses permintaan', error = null } = parsed;
 
-        if (!error) return { toastMessage: message, refresh: false, navigate: null };
+        if (!error) return {
+            toastMessage: message,
+            refresh: false,
+            navigate: null,
+            parsed
+        };
 
         if (['AUTH_00', 'AUTH_01'].includes(error.code)) {
             return {
                 toastMessage: 'Terjadi kesalahan, silahkan coba lagi',
                 refresh: false,
                 navigate: null,
+                parsed
             }
         } else if (['AUTH_02'].includes(error.code)) {
             return {
                 toastMessage: 'Terjadi kesalahan, silahkan coba lagi',
                 refresh: true,
                 navigate: null,
+                parsed
             }
         } else if (['AUTH_03', 'AUTH_04'].includes(error.code)) {
             return {
@@ -84,13 +91,24 @@ export const handleApiResponseError = async (response, eventId = null) => {
                     type: 'replace',
                     to: '/users?action=login&error=isession',
                     scrollOptions: false,
-                }
+                },
+                parsed
             }
         } else {
-            return { toastMessage: message, refresh: false, navigate: null };
+            return {
+                toastMessage: message,
+                refresh: false,
+                navigate: null,
+                parsed
+            };
         }
     } catch (error) {
         console.error(error);
-        return { toastMessage: 'Gagal memproses permintaan', refresh: false, navigate: null };
+        return {
+            toastMessage: 'Gagal memproses permintaan',
+            refresh: false,
+            navigate: null,
+            parsed: null,
+        };
     }
 }
