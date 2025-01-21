@@ -4,15 +4,14 @@ import { SWRConfiguration } from 'swr';
 
 /**
  * Object yang merepresentasikan state `SWR` dengan template `T` sebagai schema data dan `Y` sebagai schema error
- * @template [T=any] 
- * @template [Y=any]
+ * @template T
  * @typedef {Object} SWRState 
  * @property {boolean} isLoading 
  * Boolean yang menentukan SWR dalam state `loading`
  * @property {boolean} isValidating 
  * Boolean yang menentukan SWR dalam state `validating`
- * @property {Y} error 
- * Error yang diproduce
+ * @property {SWRError} error 
+ * Error yang diproduce, selengkapnya lihat {@link SWRError}
  * @property {T} data
  * Data yang diresolve 
  */

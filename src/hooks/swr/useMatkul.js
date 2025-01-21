@@ -30,7 +30,7 @@ import fetcher from './fetcher';
  * )
  * ```
  * @param {SWRConfiguration} custom Custom SWR options
- * @returns {SWRState<Array<SupabaseTypes.MatkulData>, any>} Users matakuliah data dan SWR state
+ * @returns {SWRState<Array<SupabaseTypes.MatkulData>>} Users matakuliah data dan SWR state
  */
 function useMatkul(custom) {
     const endpoint = '/api/matkul';

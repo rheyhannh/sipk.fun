@@ -30,7 +30,7 @@ import fetcher from './fetcher';
  * )
  * ```
  * @param {SWRConfiguration} custom Custom SWR options
- * @returns {SWRState<Array<SupabaseTypes.RatingData>, any>} Users rating data dan SWR state
+ * @returns {SWRState<Array<SupabaseTypes.RatingData>>} Users rating data dan SWR state
  */
 function useRating(custom) {
     const endpoint = '/api/rating';

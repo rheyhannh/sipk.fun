@@ -30,7 +30,7 @@ import fetcher from './fetcher';
  * )
  * ```
  * @param {SWRConfiguration} custom Custom SWR options
- * @returns {SWRState<Array<SupabaseTypes.UserData>, any>} Users data dan SWR state
+ * @returns {SWRState<Array<SupabaseTypes.UserData>>} Users data dan SWR state
  */
 function useUser(custom) {
     const endpoint = '/api/me';

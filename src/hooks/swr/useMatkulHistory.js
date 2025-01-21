@@ -30,7 +30,7 @@ import fetcher from './fetcher';
  * )
  * ```
  * @param {SWRConfiguration} custom Custom SWR options
- * @returns {SWRState<Array<SupabaseTypes.MatkulHistoryData>, any>} Users matakuliah history data dan SWR state
+ * @returns {SWRState<Array<SupabaseTypes.MatkulHistoryData>>} Users matakuliah history data dan SWR state
  */
 function useMatkulHistory(custom) {
     const endpoint = '/api/matkul-history';
