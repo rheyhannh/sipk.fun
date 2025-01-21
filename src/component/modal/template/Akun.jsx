@@ -33,8 +33,9 @@ import styles from '@/component/modal/modal.module.css'
 
 const Akun = () => {
     const router = useRouter();
-    const userIdCookie = useCookies().get('s_user_id');
-    const accessToken = useCookies().get('s_access_token');
+    const cookies = useCookies();
+    const userIdCookie = cookies.get('s_user_id');
+    const accessToken = cookies.get('s_access_token');
     const [editPassword, setEditPassword] = React.useState(false);
     const [password, setPassword] = React.useState('');
     const [hidePassword, setHidePassword] = React.useState(true);

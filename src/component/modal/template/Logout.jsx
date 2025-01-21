@@ -27,7 +27,8 @@ import styles from '@/component/modal/modal.module.css'
 
 const Logout = () => {
     const router = useRouter();
-    const accessToken = useCookies().get('s_access_token');
+    const cookies = useCookies();
+    const accessToken = cookies.get('s_access_token');
     const { handleModalClose } = React.useContext(ModalContext);
 
     const handleLogout = async () => {

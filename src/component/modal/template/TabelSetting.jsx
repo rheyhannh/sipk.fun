@@ -53,8 +53,9 @@ import styles from '@/component/modal/modal.module.css'
  */
 const TabelSetting = () => {
     const router = useRouter();
-    const userIdCookie = useCookies().get('s_user_id');
-    const accessToken = useCookies().get('s_access_token');
+    const cookies = useCookies();
+    const userIdCookie = cookies.get('s_user_id');
+    const accessToken = cookies.get('s_access_token');
     const [editTabelSetting, setEditTabelSetting] = React.useState(false);
     const [pageSize, setPageSize] = React.useState(5);
     const [activeId, setActiveId] = React.useState('');

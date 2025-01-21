@@ -43,8 +43,9 @@ const placeholderByStars = [
 
 const Rating = () => {
     const router = useRouter();
-    const userIdCookie = useCookies().get('s_user_id');
-    const accessToken = useCookies().get('s_access_token');
+    const cookies = useCookies();
+    const userIdCookie = cookies.get('s_user_id');
+    const accessToken = cookies.get('s_access_token');
     const { data: ratingData, error: ratingError, isLoading: ratingLoading, isValidating: ratingValidating } = useRating();
     const [stars, setStars] = React.useState(0);
     const [review, setReview] = React.useState('');

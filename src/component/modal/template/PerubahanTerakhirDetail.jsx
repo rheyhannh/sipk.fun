@@ -60,8 +60,9 @@ const FormTabs = ({ isSebelumForm, setIsSebelumForm, ...props }) => (
  */
 const PerubahanTerakhirDetail = () => {
     const router = useRouter();
-    const userIdCookie = useCookies().get('s_user_id');
-    const accessToken = useCookies().get('s_access_token');
+    const cookies = useCookies();
+    const userIdCookie = cookies.get('s_user_id');
+    const accessToken = cookies.get('s_access_token');
     const [isSebelumForm, setIsSebelumForm] = React.useState(false);
 
     return (

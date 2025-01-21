@@ -64,8 +64,9 @@ import styles from '@/component/modal/modal.module.css'
  */
 const DetailMatkul = () => {
     const router = useRouter();
-    const userIdCookie = useCookies().get('s_user_id');
-    const accessToken = useCookies().get('s_access_token');
+    const cookies = useCookies();
+    const userIdCookie = cookies.get('s_user_id');
+    const accessToken = cookies.get('s_access_token');
     /** @type {import('@/types/context').ModalContext<DetailMatkulModalData>} */
     const { data } = React.useContext(ModalContext);
     const [nama, setNama] = React.useState(data.nama ?? '');
