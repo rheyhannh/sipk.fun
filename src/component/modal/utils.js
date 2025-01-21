@@ -18,6 +18,14 @@
  * Target navigasi
  * @property {boolean} navigate.scrollOptions
  * Opsi scroll pada `router.replace()` atau `router.push()`
+ * @property {import('@/constant/api_response').ClientAPIResponseErrorProps} parsed
+ * Parsed response 
+ * 
+ * ```js
+ * response.json()
+ * ```
+ * 
+ * Dapat bernilai `null` saat proses parsing gagal
  */
 
 /** 
@@ -27,6 +35,7 @@
  * - `toastMessage` : Message yang perlu ditoast
  * - `refresh` : Boolean untuk menentukan apakah refresh diperlukan atau tidak
  * - `navigate` : Object untuk menentukan apakah redirect diperlukan atau tidak, object ini dapat bernilai `null`
+ * - `parsed` : Parsed response menggunakan `res.json()`
  * 
  * Lihat `example` untuk contoh penggunaan
  * @async
