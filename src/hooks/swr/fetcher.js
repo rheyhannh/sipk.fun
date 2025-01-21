@@ -18,12 +18,19 @@ const fetcher = async (url, id, accessToken) => {
     })
         .then(async (response) => {
             if (!response.ok) {
+                const swrError = /** @type {import('@/hooks/swr/config').SWRError} */ (
+                    new Error(`An error occurred while fetching the data with status ${response.status}`)
+                );
+
                 try {
-                    const { message } = await response.json();
-                    if (message) { throw new Error(`${message} (code: ${response.status})`); }
-                    else { throw new Error(`Terjadi error (code: ${response.status})`); }
+                    const parsed = /** @type {import('@/constant/api_response').ClientAPIResponseErrorProps} */ (
+                        await response.json()
+                    );
+                    swrError.info = parsed;
+                    throw swrError;
                 } catch (error) {
-                    throw error;
+                    swrError.info = null;
+                    throw swrError;
                 }
             }
             return response.json();
