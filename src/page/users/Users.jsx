@@ -35,6 +35,7 @@ import isAlpha from 'validator/lib/isAlpha';
 import isInt from 'validator/lib/isInt';
 import isUUID from 'validator/lib/isUUID';
 import { endpointByKey } from '@/constant/api_endpoint';
+import { handleApiErrorResponse } from '@/lib/bugsnag';
 // #endregion
 
 // #region HOOKS DEPEDENCY
@@ -236,13 +237,14 @@ export default function Users({ universitasData }) {
 
                 if (!response.ok) {
                     try {
-                        /** @type {ApiResponseError} */
-                        const { message } = await response.json();
+                        const res = /** @type {import('@/constant/api_response').ClientAPIResponseErrorProps} */ (await response.json());
+
+                        if (res?.error?.digest && res.error.digest.startsWith('critical')) handleApiErrorResponse('POST', url, res, cookies);
                         if (response.status === 401) {
                             setErrorMessageLogin('Email atau password salah');
                         } else if (response.status === 429) {
-                            setErrorMessageLogin(message ?? 'Terlalu banyak request, coba lagi dalam beberapa saat')
-                            handleErrorModal(message ?? 'Terlalu banyak request, coba lagi dalam beberapa saat');
+                            setErrorMessageLogin(res.message || 'Terlalu banyak request, coba lagi dalam beberapa saat')
+                            handleErrorModal(res.message || 'Terlalu banyak request, coba lagi dalam beberapa saat');
                         } else {
                             handleErrorModal('Sepertinya ada yang salah, silahkan coba lagi');
                             setErrorMessageLogin('Terjadi kesalahan saat login');
@@ -316,17 +318,18 @@ export default function Users({ universitasData }) {
 
                 if (!response.ok) {
                     try {
-                        /** @type {ApiResponseError} */
-                        const { message, error: { code } } = await response.json();
+                        const res = /** @type {import('@/constant/api_response').ClientAPIResponseErrorProps} */ (await response.json());
+
+                        if (res?.error?.digest && res.error.digest.startsWith('critical')) handleApiErrorResponse('POST', url, res, cookies);
                         if (response.status === 429) {
-                            setErrorMessageDaftar(message ?? 'Terlalu banyak request, coba lagi dalam beberapa saat')
-                            handleErrorModal(message ?? 'Terlalu banyak request, coba lagi dalam beberapa saat');
-                        } else if ((response.status === 503) && (code === 'SRV_03')) {
+                            setErrorMessageDaftar(res.message || 'Terlalu banyak request, coba lagi dalam beberapa saat')
+                            handleErrorModal(res.message || 'Terlalu banyak request, coba lagi dalam beberapa saat');
+                        } else if ((response.status === 503) && (res.error.code === 'SRV_03')) {
                             handleErrorModal('Untuk saat ini SIPK tidak menerima pendaftaran akun baru, nantikan informasi selanjutnya');
-                            setErrorMessageDaftar(message);
-                        } else if ((response.status === 503) && (code === 'SRV_01')) {
-                            handleErrorModal(message || 'Server sibuk, coba lagi nanti');
-                            setErrorMessageDaftar(message || 'Server sibuk, coba lagi nanti')
+                            setErrorMessageDaftar(res.message);
+                        } else if ((response.status === 503) && (res.error.code === 'SRV_01')) {
+                            handleErrorModal(res.message || 'Server sibuk, coba lagi nanti');
+                            setErrorMessageDaftar(res.message || 'Server sibuk, coba lagi nanti')
                         } else {
                             handleErrorModal('Sepertinya ada yang salah, silahkan coba lagi');
                             setErrorMessageDaftar('Terjadi kesalahan saat daftar');
@@ -381,12 +384,13 @@ export default function Users({ universitasData }) {
 
                 if (!response.ok) {
                     try {
-                        /** @type {ApiResponseError} */
-                        const { message, error: { code } } = await response.json();
+                        const res = /** @type {import('@/constant/api_response').ClientAPIResponseErrorProps} */ (await response.json());
+
+                        if (res?.error?.digest && res.error.digest.startsWith('critical')) handleApiErrorResponse('POST', url, res, cookies);
                         if (response.status === 429) {
-                            handleErrorModal(message ?? 'Terlalu banyak request, coba lagi dalam beberapa saat');
-                        } else if ((response.status === 503) && (code === 'SRV_01')) {
-                            handleErrorModal(message || 'Server sibuk, coba lagi nanti');
+                            handleErrorModal(res.message || 'Terlalu banyak request, coba lagi dalam beberapa saat');
+                        } else if ((response.status === 503) && (res.error.code === 'SRV_01')) {
+                            handleErrorModal(res.message || 'Server sibuk, coba lagi nanti');
                         } else {
                             handleErrorModal('Sepertinya ada yang salah, silahkan coba lagi dan pastikan emailmu sudah terdaftar dan dikonfirmasi');
                         }

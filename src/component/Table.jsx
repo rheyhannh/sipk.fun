@@ -28,7 +28,8 @@ import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import { Spinner } from "./loader/Loading";
 
 // ========== UTIL DEPEDENCY ========== //
-import { getLoadingMessage, getSessionTable, unixToDate, fetchWithAuth } from '@/utils/client_side';
+import { getLoadingMessage, getSessionTable, unixToDate, fetchWithAuth, getApiURL } from '@/utils/client_side';
+import { handleApiErrorResponse } from '@/lib/bugsnag.js';
 
 // ========== STYLE DEPEDENCY ========== //
 import styles from './style/table.module.css'
@@ -442,7 +443,18 @@ export function Table({ state, validating, user, sessionTable, matkul, matkulHis
                                 throw new Error(`Unauthorized`);
                             } else {
                                 try {
-                                    const { message } = await response.json();
+                                    const res = /** @type {import('@/constant/api_response').ClientAPIResponseErrorProps} */ (await response.json());
+                                    const { message, error: { digest } } = res;
+
+                                    if (digest && digest.startsWith('critical')) {
+                                        handleApiErrorResponse(
+                                            'DELETE',
+                                            getApiURL('matkul', { id: matkulId }),
+                                            res,
+                                            cookies
+                                        );
+                                    }
+
                                     if (message) {
                                         throw new Error(message);
                                     } else {

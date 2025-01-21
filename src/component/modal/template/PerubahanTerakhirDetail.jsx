@@ -18,8 +18,9 @@ import { Backdrop, Layout, Head, Button, Inner } from '@/component/modal/compone
 // #endregion
 
 // #region UTIL DEPEDENCY
-import { unixToDate, getLoadingMessage, fetchWithAuth } from '@/utils/client_side';
+import { unixToDate, getLoadingMessage, fetchWithAuth, getApiURL } from '@/utils/client_side';
 import { handleApiResponseError } from '@/component/modal/utils';
+import { handleApiErrorResponse } from '@/lib/bugsnag';
 // #endregion
 
 // #region STYLE DEPEDENCY
@@ -87,7 +88,13 @@ const PerubahanTerakhirDetail = () => {
                                 const response = await fetchWithAuth('DELETE', 'matkul', accessToken, null, { id: context.data.matkul_id });
 
                                 if (!response.ok) {
-                                    const { toastMessage, refresh, navigate } = await handleApiResponseError(response);
+                                    const { toastMessage, refresh, navigate, parsed } = await handleApiResponseError(response);
+                                    if (
+                                        typeof parsed?.error?.digest === 'string' &&
+                                        parsed.error.digest.startsWith('critical')
+                                    ) {
+                                        handleApiErrorResponse('DELETE', getApiURL('matkul', { id: context.data.matkul_id }), parsed, cookies);
+                                    }
                                     if (refresh) { router.refresh() }
                                     if (navigate && navigate?.type === 'push' && navigate?.to) { router.push(navigate.to, { scroll: navigate?.scrollOptions ?? true }) }
                                     if (navigate && navigate?.type === 'replace' && navigate?.to) { router.replace(navigate.to, { scroll: navigate?.scrollOptions ?? true }) }

@@ -18,11 +18,12 @@ import { Backdrop, Layout, Head, Button, Inner } from '@/component/modal/compone
 // #endregion
 
 // #region UTIL DEPEDENCY
-import { getLoadingMessage, fetchWithAuth } from '@/utils/client_side';
+import { getLoadingMessage, fetchWithAuth, getApiURL } from '@/utils/client_side';
 import { handleApiResponseError } from '@/component/modal/utils';
 import isLength from 'validator/lib/isLength';
 import isInt from 'validator/lib/isInt';
 import isEmpty from 'validator/lib/isEmpty';
+import { handleApiErrorResponse } from '@/lib/bugsnag';
 // #endregion
 
 // #region STYLE DEPEDENCY
@@ -182,7 +183,13 @@ const DetailMatkul = () => {
                                 const response = await fetchWithAuth('PATCH', 'matkul', accessToken, validatedData, { id: context.data.id })
 
                                 if (!response.ok) {
-                                    const { toastMessage, refresh, navigate } = await handleApiResponseError(response);
+                                    const { toastMessage, refresh, navigate, parsed } = await handleApiResponseError(response);
+                                    if (
+                                        typeof parsed?.error?.digest === 'string' &&
+                                        parsed.error.digest.startsWith('critical')
+                                    ) {
+                                        handleApiErrorResponse('PATCH', getApiURL('matkul', { id: context.data.id }), parsed, cookies);
+                                    }
                                     if (refresh) { router.refresh() }
                                     if (navigate && navigate?.type === 'push' && navigate?.to) { router.push(navigate.to, { scroll: navigate?.scrollOptions ?? true }) }
                                     if (navigate && navigate?.type === 'replace' && navigate?.to) { router.replace(navigate.to, { scroll: navigate?.scrollOptions ?? true }) }
@@ -266,7 +273,13 @@ const DetailMatkul = () => {
                                 const response = await fetchWithAuth('DELETE', 'matkul', accessToken, null, { id: context.data.id });
 
                                 if (!response.ok) {
-                                    const { toastMessage, refresh, navigate } = await handleApiResponseError(response);
+                                    const { toastMessage, refresh, navigate, parsed } = await handleApiResponseError(response);
+                                    if (
+                                        typeof parsed?.error?.digest === 'string' &&
+                                        parsed.error.digest.startsWith('critical')
+                                    ) {
+                                        handleApiErrorResponse('DELETE', getApiURL('matkul', { id: context.data.id }), parsed, cookies);
+                                    }
                                     if (refresh) { router.refresh() }
                                     if (navigate && navigate?.type === 'push' && navigate?.to) { router.push(navigate.to, { scroll: navigate?.scrollOptions ?? true }) }
                                     if (navigate && navigate?.type === 'replace' && navigate?.to) { router.replace(navigate.to, { scroll: navigate?.scrollOptions ?? true }) }

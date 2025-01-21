@@ -21,10 +21,11 @@ import { FaEye, FaEyeSlash } from 'react-icons/fa'
 // #endregion
 
 // #region UTIL DEPEDENCY
-import { getLoadingMessage, checkStrongPassword, fetchWithAuth } from '@/utils/client_side';
+import { getLoadingMessage, checkStrongPassword, fetchWithAuth, getApiURL } from '@/utils/client_side';
 import { handleApiResponseError } from '@/component/modal/utils';
 import isLength from 'validator/lib/isLength';
 import isEmpty from 'validator/lib/isEmpty';
+import { handleApiErrorResponse } from '@/lib/bugsnag';
 // #endregion
 
 // #region STYLE DEPEDENCY
@@ -134,7 +135,13 @@ const Akun = () => {
                                 const response = await fetchWithAuth('PATCH', 'password', accessToken, validatedData);
 
                                 if (!response.ok) {
-                                    const { toastMessage, refresh, navigate } = await handleApiResponseError(response);
+                                    const { toastMessage, refresh, navigate, parsed } = await handleApiResponseError(response);
+                                    if (
+                                        typeof parsed?.error?.digest === 'string' &&
+                                        parsed.error.digest.startsWith('critical')
+                                    ) {
+                                        handleApiErrorResponse('PATCH', getApiURL('password'), parsed, cookies);
+                                    }
                                     if (refresh) { router.refresh() }
                                     if (navigate && navigate?.type === 'push' && navigate?.to) { router.push(navigate.to, { scroll: navigate?.scrollOptions ?? true }) }
                                     if (navigate && navigate?.type === 'replace' && navigate?.to) { router.replace(navigate.to, { scroll: navigate?.scrollOptions ?? true }) }

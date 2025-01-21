@@ -21,6 +21,7 @@ import { MagiclinkContext } from '@magiclink_page/provider';
 // #region UTIL DEPEDENCY
 import isUUID from 'validator/lib/isUUID';
 import { endpointByKey } from '@/constant/api_endpoint';
+import { handleApiErrorResponse } from '@/lib/bugsnag';
 // #endregion
 
 const Default = dynamic(() => import('@magiclink_page/components/Default'));
@@ -73,6 +74,8 @@ function Content({ fakta, ...props }) {
             const response = await fetch(targetWithParams, options);
 
             if (!response.ok) {
+                const res = /** @type {import('@/constant/api_response').ClientAPIResponseErrorProps} */ (await response.json());
+                if (res?.error?.digest && res.error.digest.startsWith('critical')) handleApiErrorResponse('GET', targetWithParams, res);
                 if (response.status === 429) {
                     throw ({
                         shouldRefresh: false,

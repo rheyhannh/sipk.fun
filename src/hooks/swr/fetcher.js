@@ -1,3 +1,5 @@
+import { handleApiErrorResponse } from '@/lib/bugsnag';
+
 /**
  * Custom `SWR` fetcher
  * @async
@@ -26,6 +28,12 @@ const fetcher = async (url, id, accessToken) => {
                     const parsed = /** @type {import('@/constant/api_response').ClientAPIResponseErrorProps} */ (
                         await response.json()
                     );
+
+                    const { error: { digest } } = parsed;
+                    if (digest && digest.startsWith('critical')) {
+                        handleApiErrorResponse('GET', url, parsed);
+                    }
+
                     swrError.info = parsed;
                     throw swrError;
                 } catch (error) {

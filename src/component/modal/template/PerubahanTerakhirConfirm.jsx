@@ -15,7 +15,8 @@ import { Backdrop, Layout, Head, Button } from '@/component/modal/components';
 
 // #region UTIL DEPEDENCY
 import { handleApiResponseError } from '@/component/modal/utils';
-import { getLoadingMessage, fetchWithAuth } from '@/utils/client_side';
+import { getLoadingMessage, fetchWithAuth, getApiURL } from '@/utils/client_side';
+import { handleApiErrorResponse } from '@/lib/bugsnag';
 // #endregion
 
 // #region STYLE DEPEDENCY
@@ -66,7 +67,13 @@ const PerubahanTerakhirConfirm = () => {
                                     const response = await fetchWithAuth('DELETE', 'matkul', accessToken, null, { id: context.data.matkul_id })
 
                                     if (!response.ok) {
-                                        const { toastMessage, refresh, navigate } = await handleApiResponseError(response);
+                                        const { toastMessage, refresh, navigate, parsed } = await handleApiResponseError(response);
+                                        if (
+                                            typeof parsed?.error?.digest === 'string' &&
+                                            parsed.error.digest.startsWith('critical')
+                                        ) {
+                                            handleApiErrorResponse('DELETE', getApiURL('matkul', { id: context.data.matkul_id }), parsed, cookies);
+                                        }
                                         if (refresh) { router.refresh() }
                                         if (navigate && navigate?.type === 'push' && navigate?.to) { router.push(navigate.to, { scroll: navigate?.scrollOptions ?? true }) }
                                         if (navigate && navigate?.type === 'replace' && navigate?.to) { router.replace(navigate.to, { scroll: navigate?.scrollOptions ?? true }) }
@@ -152,7 +159,13 @@ const PerubahanTerakhirConfirm = () => {
                                     )
 
                                     if (!response.ok) {
-                                        const { toastMessage, refresh, navigate } = await handleApiResponseError(response);
+                                        const { toastMessage, refresh, navigate, parsed } = await handleApiResponseError(response);
+                                        if (
+                                            typeof parsed?.error?.digest === 'string' &&
+                                            parsed.error.digest.startsWith('critical')
+                                        ) {
+                                            handleApiErrorResponse('POST', getApiURL('matkul'), parsed, cookies);
+                                        }
                                         if (refresh) { router.refresh() }
                                         if (navigate && navigate?.type === 'push' && navigate?.to) { router.push(navigate.to, { scroll: navigate?.scrollOptions ?? true }) }
                                         if (navigate && navigate?.type === 'replace' && navigate?.to) { router.replace(navigate.to, { scroll: navigate?.scrollOptions ?? true }) }
@@ -233,7 +246,13 @@ const PerubahanTerakhirConfirm = () => {
                                     const response = await fetchWithAuth('PATCH', 'matkul', accessToken, prevDataFiltered, { id: context.data.matkul_id });
 
                                     if (!response.ok) {
-                                        const { toastMessage, refresh, navigate } = await handleApiResponseError(response);
+                                        const { toastMessage, refresh, navigate, parsed } = await handleApiResponseError(response);
+                                        if (
+                                            typeof parsed?.error?.digest === 'string' &&
+                                            parsed.error.digest.startsWith('critical')
+                                        ) {
+                                            handleApiErrorResponse('PATCH', getApiURL('matkul', { id: context.data.matkul_id }), parsed, cookies);
+                                        }
                                         if (refresh) { router.refresh() }
                                         if (navigate && navigate?.type === 'push' && navigate?.to) { router.push(navigate.to, { scroll: navigate?.scrollOptions ?? true }) }
                                         if (navigate && navigate?.type === 'replace' && navigate?.to) { router.replace(navigate.to, { scroll: navigate?.scrollOptions ?? true }) }
