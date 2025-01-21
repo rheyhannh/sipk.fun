@@ -34,7 +34,7 @@ import fetcher from './fetcher';
  */
 function useMatkulHistory(custom) {
     const endpoint = '/api/matkul-history';
-    const url = SWR_BASE_URL + endpoint;
+    const url = new URL(endpoint, SWR_BASE_URL);
     const userIdCookie = useCookies().get('s_user_id');
     const accessToken = useCookies().get('s_access_token');
     return useSWR([endpoint, userIdCookie], () => fetcher(url, userIdCookie, accessToken), { ...SWR_DEFAULT_OPTIONS, ...custom })
