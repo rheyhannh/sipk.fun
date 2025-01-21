@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 // #region REACT DEPEDENCY
 import * as React from 'react';
@@ -23,7 +23,7 @@ import * as React from 'react';
  * ```jsx
  * const MyComponent = () => {
  *      const { width, height } = useWindowSize();
- * 
+ *
  *      React.useEffect(() => {
  *          console.log('Width or height changed')
  *      }, [width, height]);
@@ -32,23 +32,25 @@ import * as React from 'react';
  * ```
  */
 function useWindowSize() {
-    const [windowSize, setWindowSize] = React.useState(/** @type {WindowSize} */({ width: undefined, height: undefined }));
+	const [windowSize, setWindowSize] = React.useState(
+		/** @type {WindowSize} */ ({ width: undefined, height: undefined })
+	);
 
-    React.useEffect(() => {
-        function handleResize() {
-            setWindowSize({
-                width: window.innerWidth,
-                height: window.innerHeight
-            });
-        }
+	React.useEffect(() => {
+		function handleResize() {
+			setWindowSize({
+				width: window.innerWidth,
+				height: window.innerHeight
+			});
+		}
 
-        window.addEventListener('resize', handleResize);
-        handleResize();
+		window.addEventListener('resize', handleResize);
+		handleResize();
 
-        return () => window.removeEventListener('resize', handleResize);
-    }, []);
+		return () => window.removeEventListener('resize', handleResize);
+	}, []);
 
-    return windowSize;
+	return windowSize;
 }
 
 export default useWindowSize;

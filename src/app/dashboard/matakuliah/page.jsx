@@ -7,9 +7,7 @@ import getUniversitas from '@/lib/supabase/cached/getUniversitas';
 // #endregion
 
 export default async function DashboardMatakuliahPage() {
-    const universitas = await getUniversitas();
+	const universitas = await getUniversitas();
 
-    return (
-        <DashboardMatakuliah universitas={universitas} />
-    )
+	return <DashboardMatakuliah universitas={universitas} />;
 }

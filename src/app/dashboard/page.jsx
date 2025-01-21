@@ -8,10 +8,8 @@ import getNotifikasi from '@/lib/supabase/cached/getNotifikasi';
 // #endregion
 
 export default async function DashboardPage() {
-    const universitas = await getUniversitas();
-    const notifikasi = await getNotifikasi();
+	const universitas = await getUniversitas();
+	const notifikasi = await getNotifikasi();
 
-    return (
-        <Dashboard universitas={universitas} notifikasi={notifikasi} />
-    )
+	return <Dashboard universitas={universitas} notifikasi={notifikasi} />;
 }

@@ -20,7 +20,7 @@ import fetcher from './fetcher';
 /**
  * Hook SWR untuk mendapatkan data matakuliah history user yang menggunakan {@link SWR_DEFAULT_OPTIONS opsi default}, dimana dapat dioverride melalui param `custom`.
  * Untuk menggunakan hook ini pastikan provider `CookiesProvider` tersedia.
- * 
+ *
  * ```jsx
  * import { CookiesProvider } from 'next-client-cookies/server';
  * const MyComponent => (
@@ -33,11 +33,15 @@ import fetcher from './fetcher';
  * @returns {SWRState<Array<SupabaseTypes.MatkulHistoryData>>} Users matakuliah history data dan SWR state
  */
 function useMatkulHistory(custom) {
-    const endpoint = '/api/matkul-history';
-    const url = new URL(endpoint, SWR_BASE_URL);
-    const userIdCookie = useCookies().get('s_user_id');
-    const accessToken = useCookies().get('s_access_token');
-    return useSWR([endpoint, userIdCookie], () => fetcher(url, userIdCookie, accessToken), { ...SWR_DEFAULT_OPTIONS, ...custom })
+	const endpoint = '/api/matkul-history';
+	const url = new URL(endpoint, SWR_BASE_URL);
+	const userIdCookie = useCookies().get('s_user_id');
+	const accessToken = useCookies().get('s_access_token');
+	return useSWR(
+		[endpoint, userIdCookie],
+		() => fetcher(url, userIdCookie, accessToken),
+		{ ...SWR_DEFAULT_OPTIONS, ...custom }
+	);
 }
 
 export default useMatkulHistory;

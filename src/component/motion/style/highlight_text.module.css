@@ -2,9 +2,9 @@
 .wrapper,
 .word,
 .char {
-    display: inline-block;
+	display: inline-block;
 }
 
 .word_wrapper {
-    display: inline-table;
+	display: inline-table;
 }

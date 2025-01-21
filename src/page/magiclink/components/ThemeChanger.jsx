@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 // #region REACT DEPEDENCY
 import * as React from 'react';
@@ -27,26 +27,41 @@ import { FiSun, FiMoon } from 'react-icons/fi';
  * @returns {React.ReactElement<Omit<React.HTMLProps<HTMLDivElement>, 'className'>, HTMLDivElement>} Rendered theme changer
  */
 function ThemeChanger({ ...props }) {
-    const { getClassnameByState } = React.useContext(MagiclinkContext);
-    const { data: theme } = useLocalTheme();
-    const handleChangeTheme = (newTheme) => {
-        if (theme === newTheme) { return }
-        localStorage.setItem('_theme', theme === 'dark' ? 'light' : 'dark')
-        mutate('localUserTheme');
-    }
+	const { getClassnameByState } = React.useContext(MagiclinkContext);
+	const { data: theme } = useLocalTheme();
+	const handleChangeTheme = (newTheme) => {
+		if (theme === newTheme) {
+			return;
+		}
+		localStorage.setItem('_theme', theme === 'dark' ? 'light' : 'dark');
+		mutate('localUserTheme');
+	};
 
-    return (
-        <div className={`${styles.theme__outter} ${getClassnameByState()}`} {...props}>
-            <div className={styles.theme__inner}>
-                <div className={`${styles.circle} ${theme !== 'dark' ? styles.active : ''}`} onClick={() => { handleChangeTheme('light') }}>
-                    <FiSun size={'15px'} />
-                </div>
-                <div className={`${styles.circle} ${theme === 'dark' ? styles.active : ''}`} onClick={() => { handleChangeTheme('dark') }}>
-                    <FiMoon size={'15px'} />
-                </div>
-            </div>
-        </div>
-    )
+	return (
+		<div
+			className={`${styles.theme__outter} ${getClassnameByState()}`}
+			{...props}
+		>
+			<div className={styles.theme__inner}>
+				<div
+					className={`${styles.circle} ${theme !== 'dark' ? styles.active : ''}`}
+					onClick={() => {
+						handleChangeTheme('light');
+					}}
+				>
+					<FiSun size={'15px'} />
+				</div>
+				<div
+					className={`${styles.circle} ${theme === 'dark' ? styles.active : ''}`}
+					onClick={() => {
+						handleChangeTheme('dark');
+					}}
+				>
+					<FiMoon size={'15px'} />
+				</div>
+			</div>
+		</div>
+	);
 }
 
 export default ThemeChanger;

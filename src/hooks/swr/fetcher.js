@@ -11,45 +11,52 @@ import { handleApiErrorResponse } from '@/lib/bugsnag';
  * @throws `SWRError`
  */
 const fetcher = async (url, id, accessToken) => {
-    if (!accessToken || !id) { throw new Error('Access token required') }
-    return fetch(url, {
-        headers: {
-            'Authorization': `Bearer ${accessToken}`,
-            'Content-Type': 'application/json',
-        }
-    })
-        .then(async (response) => {
-            if (!response.ok) {
-                const swrError = /** @type {import('@/hooks/swr/config').SWRError} */ (
-                    new Error(`An error occurred while fetching the data with status ${response.status}`)
-                );
+	if (!accessToken || !id) {
+		throw new Error('Access token required');
+	}
+	return fetch(url, {
+		headers: {
+			Authorization: `Bearer ${accessToken}`,
+			'Content-Type': 'application/json'
+		}
+	})
+		.then(async (response) => {
+			if (!response.ok) {
+				const swrError = /** @type {import('@/hooks/swr/config').SWRError} */ (
+					new Error(
+						`An error occurred while fetching the data with status ${response.status}`
+					)
+				);
 
-                try {
-                    const parsed = /** @type {import('@/constant/api_response').ClientAPIResponseErrorProps} */ (
-                        await response.json()
-                    );
+				try {
+					const parsed =
+						/** @type {import('@/constant/api_response').ClientAPIResponseErrorProps} */ (
+							await response.json()
+						);
 
-                    const { error: { digest } } = parsed;
-                    if (digest && digest.startsWith('critical')) {
-                        handleApiErrorResponse('GET', url, parsed);
-                    }
+					const {
+						error: { digest }
+					} = parsed;
+					if (digest && digest.startsWith('critical')) {
+						handleApiErrorResponse('GET', url, parsed);
+					}
 
-                    swrError.info = parsed;
-                    throw swrError;
-                } catch (error) {
-                    swrError.info = null;
-                    throw swrError;
-                }
-            }
-            return response.json();
-        })
-        .then(data => {
-            return data;
-        })
-        .catch(error => {
-            console.error(error.message);
-            throw error;
-        });
-}
+					swrError.info = parsed;
+					throw swrError;
+				} catch (error) {
+					swrError.info = null;
+					throw swrError;
+				}
+			}
+			return response.json();
+		})
+		.then((data) => {
+			return data;
+		})
+		.catch((error) => {
+			console.error(error.message);
+			throw error;
+		});
+};
 
 export default fetcher;

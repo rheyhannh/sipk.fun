@@ -1,68 +1,78 @@
 .container {
-    display: grid;
-    row-gap: .75rem;
+	display: grid;
+	row-gap: 0.75rem;
 }
 
 .item {
-    background: var(--accordion-bg-color);
-    color: var(--dark-color);
-    border-radius: .25rem;
-    position: relative;
-    transition: all var(--transition-default) ease-in-out, background 0s, color 0s;
+	background: var(--accordion-bg-color);
+	color: var(--dark-color);
+	border-radius: 0.25rem;
+	position: relative;
+	transition:
+		all var(--transition-default) ease-in-out,
+		background 0s,
+		color 0s;
 }
 
 .item::after {
-    content: '';
-    background: var(--accordion-highlight-color);
-    width: .4rem;
-    height: 100%;
-    position: absolute;
-    top: 0;
-    left: 0;
-    border-radius: .25rem 0 0 .25rem;
+	content: '';
+	background: var(--accordion-highlight-color);
+	width: 0.4rem;
+	height: 100%;
+	position: absolute;
+	top: 0;
+	left: 0;
+	border-radius: 0.25rem 0 0 0.25rem;
 }
 
 .header {
-    display: flex;
-    align-items: center;
-    column-gap: .75rem;
-    padding: 1.25rem 1.25rem 1.25rem 1rem;
-    cursor: pointer;
+	display: flex;
+	align-items: center;
+	column-gap: 0.75rem;
+	padding: 1.25rem 1.25rem 1.25rem 1rem;
+	cursor: pointer;
 }
 
 .header i {
-    display: flex;
-    font-size: var(--h2-font-size);
-    transition: all var(--transition-default) ease-in-out, color 0s;
+	display: flex;
+	font-size: var(--h2-font-size);
+	transition:
+		all var(--transition-default) ease-in-out,
+		color 0s;
 }
 
 .header i.active {
-    color: var(--accordion-highlight-color);
-    transform: rotate(45deg);
+	color: var(--accordion-highlight-color);
+	transform: rotate(45deg);
 }
 
 .header h3 {
-    color: var(--dark-color);
-    transition: all var(--transition-default) ease-in-out, color 0s, border 0s;
+	color: var(--dark-color);
+	transition:
+		all var(--transition-default) ease-in-out,
+		color 0s,
+		border 0s;
 }
 
 .header h3.active {
-    color: var(--accordion-highlight-color);
+	color: var(--accordion-highlight-color);
 }
 
 .content {
-    height: 0px;
-    overflow: hidden;
-    transition: all var(--transition-default) ease-in-out, background 0s;
+	height: 0px;
+	overflow: hidden;
+	transition:
+		all var(--transition-default) ease-in-out,
+		background 0s;
 }
 
 .description {
-    color: var(--dark-color);
-    padding: 0 1.25rem 1.25rem 2.7rem;
+	color: var(--dark-color);
+	padding: 0 1.25rem 1.25rem 2.7rem;
 }
 
 @media (hover: hover) and (pointer: fine) {
-    .header h3:focus:not(:hover) {
-        border: 1px solid var(--logo-second-color);
-    }
+	.header h3:focus:not(:hover) {
+		border: 1px solid var(--logo-second-color);
+	}
 }

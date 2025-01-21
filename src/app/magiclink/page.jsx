@@ -11,16 +11,16 @@ import getFakta from '@/lib/supabase/cached/getFakta';
 // #endregion
 
 export default async function MagiclinkPage() {
-    const fakta = await getFakta();
+	const fakta = await getFakta();
 
-    return (
-        <PageProvider>
-            <Container>
-                <Wrapper>
-                    <Content fakta={fakta} />
-                    <ThemeChanger/>
-                </Wrapper>
-            </Container>
-        </PageProvider>
-    )
+	return (
+		<PageProvider>
+			<Container>
+				<Wrapper>
+					<Content fakta={fakta} />
+					<ThemeChanger />
+				</Wrapper>
+			</Container>
+		</PageProvider>
+	);
 }

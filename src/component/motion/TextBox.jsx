@@ -5,7 +5,7 @@ import * as MotionTypes from './types/_global';
 // #endregion
 
 // #region COMPONENT DEPEDENCY
-import { motion } from "framer-motion";
+import { motion } from 'framer-motion';
 // #endregion
 
 // #region UTIL DEPEDENCY
@@ -13,17 +13,17 @@ import { getCommonAnimationVariants } from './_helper';
 // #endregion
 
 // #region STYLE DEPEDENCY
-import styles from './style/text_box.module.css'
+import styles from './style/text_box.module.css';
 // #endregion
 
 /**
- * 
+ *
  * @param {Object} props
  * @param {string} [props.text] Teks konten
  * - Default : `'Lorem ipsum'`
  * @param {boolean} [props.useBoxShadow] Boolean untuk menggunakan box shadow
  * - Default : `true`
- * @param {MotionTypes.CommonAnimationName | 'custom'} [props.enterAnimation] 
+ * @param {MotionTypes.CommonAnimationName | 'custom'} [props.enterAnimation]
  * Animasi yang digunakan. Jika menggunakan `'custom'`, silahkan pass props `customEnterAnimation`
  * - Default : `'throwDown'`
  * @param {Variants} props.customEnterAnimation Object yang berisikan `variants` animasi yang digunakan
@@ -42,36 +42,41 @@ import styles from './style/text_box.module.css'
  * ```
  * @param {HTMLProps | MotionProps} props.otherProps Object yang berisikan props lainnya yang digunakan
  * - Note : Props `motion` seperti `animate`, `transition` dan lainnya dapat digunakan
- * @returns 
+ * @returns
  */
-const TextBox = (
-    {
-        text = 'Lorem ipsum',
-        useBoxShadow = true,
-        enterAnimation = 'throwDown',
-        customEnterAnimation,
-        style,
-        otherProps
-    }
-) => {
-    const variants = enterAnimation === 'custom' ? { ...customEnterAnimation } : getCommonAnimationVariants(enterAnimation);
-    const isContainerCustomClass = otherProps?.className ? true : false;
+const TextBox = ({
+	text = 'Lorem ipsum',
+	useBoxShadow = true,
+	enterAnimation = 'throwDown',
+	customEnterAnimation,
+	style,
+	otherProps
+}) => {
+	const variants =
+		enterAnimation === 'custom'
+			? { ...customEnterAnimation }
+			: getCommonAnimationVariants(enterAnimation);
+	const isContainerCustomClass = otherProps?.className ? true : false;
 
-    return (
-        <motion.div
-            className={`${styles.container} ${useBoxShadow ? styles.shadow : ''}`}
-            style={{ ...style, background: 'none' }}
-            variants={variants}
-            {...otherProps}
-        >
-            <motion.span
-                className={isContainerCustomClass ? null : styles.content}
-                style={{ background: isContainerCustomClass ? null : style?.background ?? style?.backgroundColor ?? '#FF6341' }}
-            >
-                {text}
-            </motion.span>
-        </motion.div>
-    )
-}
+	return (
+		<motion.div
+			className={`${styles.container} ${useBoxShadow ? styles.shadow : ''}`}
+			style={{ ...style, background: 'none' }}
+			variants={variants}
+			{...otherProps}
+		>
+			<motion.span
+				className={isContainerCustomClass ? null : styles.content}
+				style={{
+					background: isContainerCustomClass
+						? null
+						: (style?.background ?? style?.backgroundColor ?? '#FF6341')
+				}}
+			>
+				{text}
+			</motion.span>
+		</motion.div>
+	);
+};
 
 export default TextBox;

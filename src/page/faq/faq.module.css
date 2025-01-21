@@ -1,64 +1,75 @@
 .base.colors {
-    --background-primary: #F6F6F9;
-    --background-secondary: #EDEFF2;
-    --background-accent: #DDE1E6;
-    --text-primary: #202328;
-    --text-secondary: #5A5F66;
-    --text-accent: #324267;
-    --item-color-active: #324267;
-    --item-color-hover: #41537A;
-    --border-color-default: rgba(0, 0, 0, 0.1);
-    --border-color-hover: rgba(40, 48, 67, 0.5);
-    --border-color-active: rgba(40, 48, 67, 0.75);
-    --accordion-background-default: rgba(237, 239, 242, 0.25);
-    --accordion-background-hover: rgba(237, 239, 242, 0.5);
-    --accordion-background-active: linear-gradient(135deg, #EDEFF2 30%, #DDE1E6 100%);
+	--background-primary: #f6f6f9;
+	--background-secondary: #edeff2;
+	--background-accent: #dde1e6;
+	--text-primary: #202328;
+	--text-secondary: #5a5f66;
+	--text-accent: #324267;
+	--item-color-active: #324267;
+	--item-color-hover: #41537a;
+	--border-color-default: rgba(0, 0, 0, 0.1);
+	--border-color-hover: rgba(40, 48, 67, 0.5);
+	--border-color-active: rgba(40, 48, 67, 0.75);
+	--accordion-background-default: rgba(237, 239, 242, 0.25);
+	--accordion-background-hover: rgba(237, 239, 242, 0.5);
+	--accordion-background-active: linear-gradient(
+		135deg,
+		#edeff2 30%,
+		#dde1e6 100%
+	);
 }
 
 .base.colors.dark_theme {
-    --background-primary: #181A1E;
-    --background-secondary: #24262b;
-    --background-accent: #202328;
-    --text-primary: #ffffff;
-    --text-secondary: #b0b0b5;
-    --text-accent: #ff825d;
-    --item-color-active: #ff6341;
-    --item-color-hover: #e55337;
-    --border-color-default: rgba(255, 255, 255, 0.1);
-    --border-color-hover: rgba(255, 99, 65, 0.5);
-    --border-color-active: rgba(255, 99, 65, 0.75);
-    --accordion-background-default: rgba(36, 38, 43, 0.25);
-    --accordion-background-hover: linear-gradient(135deg, #24262b 60%, #202328 100%);
-    --accordion-background-active: linear-gradient(135deg, #24262b 30%, #202328 100%);
+	--background-primary: #181a1e;
+	--background-secondary: #24262b;
+	--background-accent: #202328;
+	--text-primary: #ffffff;
+	--text-secondary: #b0b0b5;
+	--text-accent: #ff825d;
+	--item-color-active: #ff6341;
+	--item-color-hover: #e55337;
+	--border-color-default: rgba(255, 255, 255, 0.1);
+	--border-color-hover: rgba(255, 99, 65, 0.5);
+	--border-color-active: rgba(255, 99, 65, 0.75);
+	--accordion-background-default: rgba(36, 38, 43, 0.25);
+	--accordion-background-hover: linear-gradient(
+		135deg,
+		#24262b 60%,
+		#202328 100%
+	);
+	--accordion-background-active: linear-gradient(
+		135deg,
+		#24262b 30%,
+		#202328 100%
+	);
 }
 
 .base {
-    width: 100vw;
-    min-height: 100vh;
-    background-color: var(--background-primary);
-    color: var(--text-secondary);
-    font-size: 1rem;
+	width: 100vw;
+	min-height: 100vh;
+	background-color: var(--background-primary);
+	color: var(--text-secondary);
+	font-size: 1rem;
 }
 
 .container {
-    position: relative;
-    min-width: 275px;
-    max-width: 768px;
-    width: 100%;
-    margin: 0 auto;
-    display: block;
-    padding: 3.5rem 1.75rem;
-    background-color: inherit;
+	position: relative;
+	min-width: 275px;
+	max-width: 768px;
+	width: 100%;
+	margin: 0 auto;
+	display: block;
+	padding: 3.5rem 1.75rem;
+	background-color: inherit;
 }
 
 /* #region Heading */
 
-
 .heading .title {
-    text-align: center;
-    margin-bottom: 1.5rem;
-    font-size: 3.5rem;
-    color: var(--text-accent);
+	text-align: center;
+	margin-bottom: 1.5rem;
+	font-size: 3.5rem;
+	color: var(--text-accent);
 }
 
 /* #endregion */
@@ -66,28 +77,28 @@
 /* #region Tabs */
 
 .tabs {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
-    column-gap: 1.25rem;
-    row-gap: 1rem;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	align-items: center;
+	column-gap: 1.25rem;
+	row-gap: 1rem;
 }
 
 .tab {
-    border-radius: 0.75rem;
-    border: 1px solid var(--border-color-default);
-    padding: 0.5rem 0.75rem;
-    background-color: var(--accordion-background-default);
-    color: var(--text-secondary);
-    font-weight: 600;
-    cursor: pointer;
+	border-radius: 0.75rem;
+	border: 1px solid var(--border-color-default);
+	padding: 0.5rem 0.75rem;
+	background-color: var(--accordion-background-default);
+	color: var(--text-secondary);
+	font-weight: 600;
+	cursor: pointer;
 }
 
 .tab.active {
-    background-color: var(--background-accent);
-    color: var(--item-color-active);
-    border: 1px solid var(--border-color-active);
+	background-color: var(--background-accent);
+	color: var(--item-color-active);
+	border: 1px solid var(--border-color-active);
 }
 
 /* #endregion */
@@ -95,75 +106,75 @@
 /* #region Accordion */
 
 .accordion {
-    display: flex;
-    flex-direction: column;
-    gap: 1.25rem;
-    margin-top: 3rem;
+	display: flex;
+	flex-direction: column;
+	gap: 1.25rem;
+	margin-top: 3rem;
 }
 
 .accordion .item {
-    padding: 0 1.25rem;
-    border: 1px solid var(--border-color-default);
-    border-radius: 0.75rem;
-    background-color: var(--accordion-background-default);
-    cursor: pointer;
-    overflow: hidden;
+	padding: 0 1.25rem;
+	border: 1px solid var(--border-color-default);
+	border-radius: 0.75rem;
+	background-color: var(--accordion-background-default);
+	cursor: pointer;
+	overflow: hidden;
 }
 
 .accordion .item.active {
-    background-image: var(--accordion-background-active);
+	background-image: var(--accordion-background-active);
 }
 
 .accordion .item .title {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1.5rem 0;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 1.5rem 0;
 }
 
 .accordion .item.active .title {
-    color: var(--text-primary);
+	color: var(--text-primary);
 }
 
 .accordion .item .title .icon {
-    flex: 0 0 max-content;
-    transition: transform 0.3s ease-in-out;
+	flex: 0 0 max-content;
+	transition: transform 0.3s ease-in-out;
 }
 
 .accordion .item.active .title .icon {
-    color: var(--item-color-active);
-    transform: rotate(45deg);
+	color: var(--item-color-active);
+	transform: rotate(45deg);
 }
 
 .accordion .item .description {
-    overflow: hidden;
+	overflow: hidden;
 }
 
 .accordion .item .description p {
-    color: inherit;
+	color: inherit;
 }
 
 /* #endregion */
 
 @media (hover: hover) and (pointer: fine) {
-    .tab:hover {
-        color: var(--item-color-hover);
-        background-color: var(--background-secondary);
-    }
+	.tab:hover {
+		color: var(--item-color-hover);
+		background-color: var(--background-secondary);
+	}
 
-    .tab:focus:not(:hover) {
-        border: 1px solid var(--border-color-hover);
-    }
+	.tab:focus:not(:hover) {
+		border: 1px solid var(--border-color-hover);
+	}
 
-    .accordion .item:hover {
-        background-color: var(--accordion-background-hover);
-    }
+	.accordion .item:hover {
+		background-color: var(--accordion-background-hover);
+	}
 
-    .accordion .item:hover .title .icon {
-        color: var(--item-color-hover);
-    }
+	.accordion .item:hover .title .icon {
+		color: var(--item-color-hover);
+	}
 
-    .accordion .item:focus:not(:hover) {
-        border: 1px solid var(--border-color-hover);
-    }
+	.accordion .item:focus:not(:hover) {
+		border: 1px solid var(--border-color-hover);
+	}
 }

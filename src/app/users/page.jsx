@@ -7,9 +7,7 @@ import getUniversitas from '@/lib/supabase/cached/getUniversitas';
 // #endregion
 
 export default async function UsersPage() {
-    const universitas = await getUniversitas();
+	const universitas = await getUniversitas();
 
-    return (
-        <Users universitasData={universitas} />
-    )
+	return <Users universitasData={universitas} />;
 }

@@ -1,5 +1,5 @@
 // #region TYPE DEPEDENCY
-import { IntersectionOptions } from "react-intersection-observer";
+import { IntersectionOptions } from 'react-intersection-observer';
 // #endregion
 
 // #region REACT DEPEDENCY
@@ -7,7 +7,7 @@ import * as React from 'react';
 // #endregion
 
 // #region COMPONENT DEPEDENCY
-import { InView } from "react-intersection-observer";
+import { InView } from 'react-intersection-observer';
 // #endregion
 
 /**
@@ -17,7 +17,7 @@ import { InView } from "react-intersection-observer";
  * Tipe element wrapper dalam string
  * - Default : `'div'`
  * @property {IntersectionOptions} lazyOptions
- * Opsi {@link https://www.npmjs.com/package/react-intersection-observer#options react-intersection-observer} yang digunakan 
+ * Opsi {@link https://www.npmjs.com/package/react-intersection-observer#options react-intersection-observer} yang digunakan
  * ```js
  * // Default 'options'
  * const options = {
@@ -31,14 +31,19 @@ import { InView } from "react-intersection-observer";
  * @param {Omit<React.HTMLProps<HTMLElement>, 'ref'> & LazyWrapperProps} props LazyWrapper props
  * @returns {React.ReactElement} Rendered component
  */
-const LazyWrapper = ({ as: Component = 'div', lazyOptions, children, ...props }) => (
-    <InView triggerOnce {...lazyOptions}>
-        {({ inView, ref }) => (
-            <Component ref={ref} {...props}>
-                {inView ? children : null}
-            </Component>
-        )}
-    </InView>
+const LazyWrapper = ({
+	as: Component = 'div',
+	lazyOptions,
+	children,
+	...props
+}) => (
+	<InView triggerOnce {...lazyOptions}>
+		{({ inView, ref }) => (
+			<Component ref={ref} {...props}>
+				{inView ? children : null}
+			</Component>
+		)}
+	</InView>
 );
 
 export default LazyWrapper;

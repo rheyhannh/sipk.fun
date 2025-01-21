@@ -8,13 +8,11 @@ import styles from '@magiclink_page/magiclink.module.css';
  * @returns {import('react').ReactElement<Omit<import('react').HTMLProps<HTMLDivElement>, 'className'>, HTMLDivElement>} Rendered container
  */
 function Container({ children, ...props }) {
-    return (
-        <div className={styles.container} {...props}>
-            <div className={styles.backdrop}>
-                {children}
-            </div>
-        </div>
-    )
+	return (
+		<div className={styles.container} {...props}>
+			<div className={styles.backdrop}>{children}</div>
+		</div>
+	);
 }
 
 export default Container;

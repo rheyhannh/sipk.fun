@@ -12,22 +12,20 @@ import Navbar from '@/component/Nav';
 
 // #region TAG OR METADATA
 export const metadata = /** @type {import('next').Metadata} */ ({
-  title: 'Dashboard | SIPK',
-})
+	title: 'Dashboard | SIPK'
+});
 // #endregion
 
 export default async function DashboardLayout({ children }) {
-  return (
-    <DashboardProvider>
-      <ModalProvider>
-        <Header />
-        <Navbar>
-          {children}
-        </Navbar>
-        <Suspense fallback={null}>
-          <NavigationEvents />
-        </Suspense>
-      </ModalProvider>
-    </DashboardProvider>
-  )
+	return (
+		<DashboardProvider>
+			<ModalProvider>
+				<Header />
+				<Navbar>{children}</Navbar>
+				<Suspense fallback={null}>
+					<NavigationEvents />
+				</Suspense>
+			</ModalProvider>
+		</DashboardProvider>
+	);
 }

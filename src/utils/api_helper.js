@@ -2,9 +2,9 @@
 import * as SupabaseTypes from '@/types/supabase';
 import { rateLimitInstance } from '@/utils/server_side';
 import {
-    APIResponseErrorProps,
-    checkRateLimitReturnType,
-    getLogAttributesReturnType
+	APIResponseErrorProps,
+	checkRateLimitReturnType,
+	getLogAttributesReturnType
 } from '@/constant/api_response';
 import { PostgrestError } from '@supabase/supabase-js';
 // #endregion
@@ -22,21 +22,21 @@ import { createClient } from '@supabase/supabase-js';
 // #region UTIL DEPEDENCY
 import Joi from 'joi';
 import {
-    encryptAES,
-    decryptAES,
-    encryptDES,
-    validateJWT,
-    getCookieOptions,
-    getSipkCookies,
-    getApiKey,
-    resetSipkCookies,
-    getIpFromHeaders,
-    getRequestDetails,
+	encryptAES,
+	decryptAES,
+	encryptDES,
+	validateJWT,
+	getCookieOptions,
+	getSipkCookies,
+	getApiKey,
+	resetSipkCookies,
+	getIpFromHeaders,
+	getRequestDetails
 } from '@/utils/server_side';
 import {
-    BadRequestErrorResponse as badRequestError,
-    AuthErrorResponse as authError,
-    ServerErrorResponse as serverError,
+	BadRequestErrorResponse as badRequestError,
+	AuthErrorResponse as authError,
+	ServerErrorResponse as serverError
 } from '@/constant/api_response';
 // #endregion
 
@@ -47,43 +47,37 @@ import {
  * @throws Object `AuthError` saat user session tidak tersedia atau tidak valid
  */
 export async function verifySession(resetCookies = true) {
-    const { secureSessionCookie = null } = await getSipkCookies();
-    if (!secureSessionCookie) {
-        if (resetCookies) await resetSipkCookies();
-        throw authError.missing_session(
-            undefined, undefined,
-            {
-                severity: 'error',
-                reason: 'User session not found',
-                stack: null,
-                functionDetails: 'verifySession at utils/api_helper.js line 42',
-                functionArgs: { resetCookies },
-                functionResolvedVariable: { secureSessionCookie },
-                request: await getRequestDetails(),
-                more: null,
-            }
-        );
-    }
+	const { secureSessionCookie = null } = await getSipkCookies();
+	if (!secureSessionCookie) {
+		if (resetCookies) await resetSipkCookies();
+		throw authError.missing_session(undefined, undefined, {
+			severity: 'error',
+			reason: 'User session not found',
+			stack: null,
+			functionDetails: 'verifySession at utils/api_helper.js line 42',
+			functionArgs: { resetCookies },
+			functionResolvedVariable: { secureSessionCookie },
+			request: await getRequestDetails(),
+			more: null
+		});
+	}
 
-    const decryptedSession = await decryptAES(secureSessionCookie, true);
-    if (!decryptedSession) {
-        if (resetCookies) await resetSipkCookies();
-        throw authError.invalid_session(
-            undefined, undefined,
-            {
-                severity: 'error',
-                reason: 'User session invalid',
-                stack: null,
-                functionDetails: 'verifySession at utils/api_helper.js line 61',
-                functionArgs: { resetCookies },
-                functionResolvedVariable: { secureSessionCookie },
-                request: await getRequestDetails(),
-                more: null,
-            }
-        );
-    }
+	const decryptedSession = await decryptAES(secureSessionCookie, true);
+	if (!decryptedSession) {
+		if (resetCookies) await resetSipkCookies();
+		throw authError.invalid_session(undefined, undefined, {
+			severity: 'error',
+			reason: 'User session invalid',
+			stack: null,
+			functionDetails: 'verifySession at utils/api_helper.js line 61',
+			functionArgs: { resetCookies },
+			functionResolvedVariable: { secureSessionCookie },
+			request: await getRequestDetails(),
+			more: null
+		});
+	}
 
-    return decryptedSession;
+	return decryptedSession;
 }
 
 /**
@@ -93,46 +87,45 @@ export async function verifySession(resetCookies = true) {
  * @throws Object `AuthError` saat user access token tidak tersedia, tidak valid dan saat `userId` tidak dapat diresolve
  */
 export async function verifyAccessToken(userId = null) {
-    const authorizationHeader = headers().get('Authorization');
-    if (!authorizationHeader) throw authError.missing_access_token(
-        undefined, undefined,
-        {
-            severity: 'error',
-            reason: 'Authorization header not found',
-            stack: null,
-            functionDetails: 'verifyAccessToken at utils/api_helper.js line 87',
-            functionArgs: { userId },
-            functionResolvedVariable: { authorizationHeader },
-            request: await getRequestDetails(),
-            more: null,
-        }
-    );
+	const authorizationHeader = headers().get('Authorization');
+	if (!authorizationHeader)
+		throw authError.missing_access_token(undefined, undefined, {
+			severity: 'error',
+			reason: 'Authorization header not found',
+			stack: null,
+			functionDetails: 'verifyAccessToken at utils/api_helper.js line 87',
+			functionArgs: { userId },
+			functionResolvedVariable: { authorizationHeader },
+			request: await getRequestDetails(),
+			more: null
+		});
 
-    const authorizationToken = authorizationHeader.split(' ')[1] ? authorizationHeader.split(' ')[1] : null;
-    if (!authorizationToken) throw authError.missing_access_token(
-        undefined, undefined,
-        {
-            severity: 'error',
-            reason: "Authorization header format not valid, expected access token after 'Bearer'",
-            stack: null,
-            functionDetails: 'verifyAccessToken at utils/api_helper.js line 102',
-            functionArgs: { userId },
-            functionResolvedVariable: { authorizationHeader, authorizationToken },
-            request: await getRequestDetails(),
-            more: null,
-        }
-    );
+	const authorizationToken = authorizationHeader.split(' ')[1]
+		? authorizationHeader.split(' ')[1]
+		: null;
+	if (!authorizationToken)
+		throw authError.missing_access_token(undefined, undefined, {
+			severity: 'error',
+			reason:
+				"Authorization header format not valid, expected access token after 'Bearer'",
+			stack: null,
+			functionDetails: 'verifyAccessToken at utils/api_helper.js line 102',
+			functionArgs: { userId },
+			functionResolvedVariable: { authorizationHeader, authorizationToken },
+			request: await getRequestDetails(),
+			more: null
+		});
 
-    userId = userId ?? (await getSipkCookies()).serviceUserIdCookie ?? '';
+	userId = userId ?? (await getSipkCookies()).serviceUserIdCookie ?? '';
 
-    try {
-        const decodedAccessToken = await validateJWT(authorizationToken, userId);
+	try {
+		const decodedAccessToken = await validateJWT(authorizationToken, userId);
 
-        return decodedAccessToken;
-    } catch (/** @type {APIResponseErrorProps} */ error) {
-        // Rethrow error from validateJWT()
-        throw error;
-    }
+		return decodedAccessToken;
+	} catch (/** @type {APIResponseErrorProps} */ error) {
+		// Rethrow error from validateJWT()
+		throw error;
+	}
 }
 
 /**
@@ -150,47 +143,66 @@ export async function verifyAccessToken(userId = null) {
  * @returns {Promise<verifyAuthReturnType>} Resolve dengan object yg berisikan decrypted user session dan decoded user access token
  * @throws Object `AuthError` verifikasi session atau access token gagal
  */
-export async function verifyAuth(resetCookies = true, revalidateCookies = true) {
-    try {
-        const decryptedSession = await verifySession(resetCookies);
-        const { user: { id: userId = null }, access_token = null } = decryptedSession;
+export async function verifyAuth(
+	resetCookies = true,
+	revalidateCookies = true
+) {
+	try {
+		const decryptedSession = await verifySession(resetCookies);
+		const {
+			user: { id: userId = null },
+			access_token = null
+		} = decryptedSession;
 
-        const cookieStore = cookies();
-        const { serviceUserIdCookie, serviceAccessTokenCookie, serviceGuestCookie } = await getSipkCookies();
-        const cookieServiceOptions = await getCookieOptions('service', 'set');
-        const cookieServiceDeleteOptions = await getCookieOptions('service', 'remove');
+		const cookieStore = cookies();
+		const {
+			serviceUserIdCookie,
+			serviceAccessTokenCookie,
+			serviceGuestCookie
+		} = await getSipkCookies();
+		const cookieServiceOptions = await getCookieOptions('service', 'set');
+		const cookieServiceDeleteOptions = await getCookieOptions(
+			'service',
+			'remove'
+		);
 
-        if (revalidateCookies && userId && serviceUserIdCookie !== userId) {
-            cookieStore.set('s_user_id', userId, cookieServiceOptions);
-        }
+		if (revalidateCookies && userId && serviceUserIdCookie !== userId) {
+			cookieStore.set('s_user_id', userId, cookieServiceOptions);
+		}
 
-        if (revalidateCookies && serviceGuestCookie) {
-            cookieStore.set('s_guest_id', '', cookieServiceDeleteOptions)
-        }
+		if (revalidateCookies && serviceGuestCookie) {
+			cookieStore.set('s_guest_id', '', cookieServiceDeleteOptions);
+		}
 
-        const decodedAccessToken = await verifyAccessToken(userId).catch(/** @param {APIResponseErrorProps} error */ error => {
-            if (revalidateCookies && access_token && serviceAccessTokenCookie !== access_token) {
-                cookieStore.set('s_access_token', access_token, cookieServiceOptions);
-            }
+		const decodedAccessToken = await verifyAccessToken(userId).catch(
+			/** @param {APIResponseErrorProps} error */ (error) => {
+				if (
+					revalidateCookies &&
+					access_token &&
+					serviceAccessTokenCookie !== access_token
+				) {
+					cookieStore.set('s_access_token', access_token, cookieServiceOptions);
+				}
 
-            throw error;
-        });
+				throw error;
+			}
+		);
 
-        return { decryptedSession, decodedAccessToken }
-    } catch (/** @type {APIResponseErrorProps} */ error) {
-        // Rethrow error from verifySession() or verifyAccessToken()
-        throw error;
-    }
+		return { decryptedSession, decodedAccessToken };
+	} catch (/** @type {APIResponseErrorProps} */ error) {
+		// Rethrow error from verifySession() or verifyAccessToken()
+		throw error;
+	}
 }
 
 /**
  * Middleware untuk verifikasi service api key dari query param `'apiKey'` atau header `'X-Api-Key'`
- * @param {NextRequest} request 
+ * @param {NextRequest} request
  * @returns {Promise<boolean>} Resolve dengan boolean dimana `true` saat berhasil, dan `false` saat gagal
  */
 export async function verifyService(request) {
-    const serviceApiKey = await getApiKey(request);
-    return serviceApiKey === process.env.SUPABASE_SERVICE_KEY;
+	const serviceApiKey = await getApiKey(request);
+	return serviceApiKey === process.env.SUPABASE_SERVICE_KEY;
 }
 
 /**
@@ -201,69 +213,77 @@ export async function verifyService(request) {
  * @throws Object `RateLimitError` saat jumlah penggunaan sudah mencapai limit atau token pada server penuh
  */
 export async function checkRateLimit(limiter, maxRequest) {
-    const clientIp = await getIpFromHeaders() ?? 'public';
+	const clientIp = (await getIpFromHeaders()) ?? 'public';
 
-    try {
-        const { currentUsage, currentTtl, currentSize } = await limiter.check(maxRequest, clientIp);
-        const rateLimitHeaders = {
-            'X-Ratelimit-limit': maxRequest,
-            'X-Ratelimit-Remaining': maxRequest - currentUsage,
-        }
+	try {
+		const { currentUsage, currentTtl, currentSize } = await limiter.check(
+			maxRequest,
+			clientIp
+		);
+		const rateLimitHeaders = {
+			'X-Ratelimit-limit': maxRequest,
+			'X-Ratelimit-Remaining': maxRequest - currentUsage
+		};
 
-        return { currentUsage, currentTtl, currentSize, rateLimitHeaders }
-    } catch (/** @type {APIResponseErrorProps} */ error) {
-        throw error;
-    }
+		return { currentUsage, currentTtl, currentSize, rateLimitHeaders };
+	} catch (/** @type {APIResponseErrorProps} */ error) {
+		throw error;
+	}
 }
 
 /**
  * Supabase instance atau client yang digenerate menggunakan `createServerClient()` dilengkapi dengan cookie manager.
- * 
+ *
  * Autentikasi menggunakan user `Session` atau cookie `'_Secure-auth.session-token'`.
  * Gunakan instance ini untuk memperoleh data user atau hal lainnya dengan `autentikasi` tersebut.
  */
 export const supabaseServerClient = createServerClient(
-    process.env.SUPABASE_URL,
-    process.env.SUPABASE_ANON_KEY,
-    {
-        cookies: {
-            async get(name) {
-                try {
-                    const decryptedSession = await verifySession(false);
-                    return decryptedSession;
-                } catch { return null }
-            },
-            async set(name, value, options) {
-                const cookieStore = cookies();
-                const encryptedSession = await encryptAES(value);
-                const cookieAuthOptions = await getCookieOptions('auth', 'set');
-                cookieStore.set({
-                    name: process.env.USER_SESSION_COOKIES_NAME,
-                    value: encryptedSession,
-                    ...cookieAuthOptions,
-                });
-            },
-            async remove(name, options) {
-                await resetSipkCookies();
-            },
-        },
-    }
-)
+	process.env.SUPABASE_URL,
+	process.env.SUPABASE_ANON_KEY,
+	{
+		cookies: {
+			async get(name) {
+				try {
+					const decryptedSession = await verifySession(false);
+					return decryptedSession;
+				} catch {
+					return null;
+				}
+			},
+			async set(name, value, options) {
+				const cookieStore = cookies();
+				const encryptedSession = await encryptAES(value);
+				const cookieAuthOptions = await getCookieOptions('auth', 'set');
+				cookieStore.set({
+					name: process.env.USER_SESSION_COOKIES_NAME,
+					value: encryptedSession,
+					...cookieAuthOptions
+				});
+			},
+			async remove(name, options) {
+				await resetSipkCookies();
+			}
+		}
+	}
+);
 
 /**
  * Supabase instance atau client yang digenerate menggunakan `createClient()` dengan `SERVICE_KEY`.
- * 
+ *
  * Dengan service key, `autentikasi` tidak dibutuhkan dan service key dapat bypass supabase `RLS`, sehingga hanya gunakan instance ini untuk kebutuhan `internal`.
  */
-export const supabaseServiceClient = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_SERVICE_KEY);
+export const supabaseServiceClient = createClient(
+	process.env.SUPABASE_URL,
+	process.env.SUPABASE_SERVICE_KEY
+);
 
 /**
  * Middleware untuk retrieve log attributes untuk kebutuhan `logging`, resolve dengan object berikut,
- * 
+ *
  * ```js
- * const logAttributes = 
+ * const logAttributes =
  * {
- *      method: request.method, 
+ *      method: request.method,
  *      url: request.url,
  *      nextUrl: {
  *          host: request.nextUrl?.host,
@@ -281,23 +301,24 @@ export const supabaseServiceClient = createClient(process.env.SUPABASE_URL, proc
  * @returns {Promise<getLogAttributesReturnType>} Resolve dengan object `logAttributes` lihat deksripsi
  */
 export async function getLogAttributes(request) {
-    const { method, url } = request;
-    const { host, hostname, href, origin, pathname, port, protocol, search } = request.nextUrl;
+	const { method, url } = request;
+	const { host, hostname, href, origin, pathname, port, protocol, search } =
+		request.nextUrl;
 
-    return {
-        method: method ?? null,
-        url: url ?? null,
-        nextUrl: {
-            host: host ?? null,
-            hostname: hostname ?? null,
-            href: href ?? null,
-            origin: origin ?? null,
-            pathname: pathname ?? null,
-            port: port ?? null,
-            protocol: protocol ?? null,
-            search: search ?? null,
-        }
-    }
+	return {
+		method: method ?? null,
+		url: url ?? null,
+		nextUrl: {
+			host: host ?? null,
+			hostname: hostname ?? null,
+			href: href ?? null,
+			origin: origin ?? null,
+			pathname: pathname ?? null,
+			port: port ?? null,
+			protocol: protocol ?? null,
+			search: search ?? null
+		}
+	};
 }
 
 /**
@@ -322,54 +343,68 @@ export async function getLogAttributes(request) {
  * @param {boolean} [logError] Log error, default `true`
  * @returns {Promise<handleErrorResponseReturnType>} Resolve dengan object untuk digunakan sebagai response
  */
-export async function handleErrorResponse(error, requestLog = null, ratelimitLog = null, logError = true) {
-    // Check are error an SIPK Error
-    error = error?.error?.code ? error : serverError.interval_server_error(
-        undefined, undefined,
-        {
-            severity: 'critical',
-            reason: "Received an error outside SIPK error boundary",
-            stack: error?.stack,
-            functionDetails: null,
-            functionArgs: null,
-            functionResolvedVariable: { name: error?.name, message: error?.message },
-            request: await getRequestDetails(),
-            more: error,
-        }
-    )
+export async function handleErrorResponse(
+	error,
+	requestLog = null,
+	ratelimitLog = null,
+	logError = true
+) {
+	// Check are error an SIPK Error
+	error = error?.error?.code
+		? error
+		: serverError.interval_server_error(undefined, undefined, {
+				severity: 'critical',
+				reason: 'Received an error outside SIPK error boundary',
+				stack: error?.stack,
+				functionDetails: null,
+				functionArgs: null,
+				functionResolvedVariable: {
+					name: error?.name,
+					message: error?.message
+				},
+				request: await getRequestDetails(),
+				more: error
+			});
 
-    if (requestLog) error._details.request = { info: requestLog, ...error._details.request };
-    if (ratelimitLog) error._details.resolvedRatelimit = ratelimitLog;
+	if (requestLog)
+		error._details.request = { info: requestLog, ...error._details.request };
+	if (ratelimitLog) error._details.resolvedRatelimit = ratelimitLog;
 
-    const { code, headers = null, _details, ...rest } = error;
+	const { code, headers = null, _details, ...rest } = error;
 
-    try {
-        var encryptedDigest = await encryptDES(JSON.stringify({
-            sipk_code: error?.error?.code,
-            stamp: _details?.stamp,
-            resolvedRatelimit: _details?.resolvedRatelimit,
-            reason: _details?.reason,
-            fnArgs: _details?.functionArgs,
-            fnDetails: _details?.functionDetails,
-            stack: _details?.stack,
-            more: _details?.more
-        }))
+	try {
+		var encryptedDigest = await encryptDES(
+			JSON.stringify({
+				sipk_code: error?.error?.code,
+				stamp: _details?.stamp,
+				resolvedRatelimit: _details?.resolvedRatelimit,
+				reason: _details?.reason,
+				fnArgs: _details?.functionArgs,
+				fnDetails: _details?.functionDetails,
+				stack: _details?.stack,
+				more: _details?.more
+			})
+		);
 
-        if (error?._details?.severity) encryptedDigest = `${error._details.severity}_${encryptedDigest}`;
+		if (error?._details?.severity)
+			encryptedDigest = `${error._details.severity}_${encryptedDigest}`;
 
-        rest['error']['digest'] = encryptedDigest;
-    } catch (error) {
-        rest['error']['digest'] = null;
-    }
+		rest['error']['digest'] = encryptedDigest;
+	} catch (error) {
+		rest['error']['digest'] = null;
+	}
 
-    const body = process.env.NODE_ENV === 'production' ? { ...rest } : { ...rest, _details: error._details };
+	const body =
+		process.env.NODE_ENV === 'production'
+			? { ...rest }
+			: { ...rest, _details: error._details };
 
-    if (logError) {
-        if (error._details.severity === 'warning') console.warn(error);
-        else console.error(error);
-    }
+	if (logError) {
+		if (error._details.severity === 'warning') console.warn(error);
+		else console.error(error);
+	}
 
-    return { body, status: code, headers };
+	return { body, status: code, headers };
 }
 
 /**
@@ -380,25 +415,30 @@ export async function handleErrorResponse(error, requestLog = null, ratelimitLog
  * @returns {Promise<APIResponseErrorProps>} Resolve dengan object `ServerError` atau `void` saat `!throwErrorObject`
  * @throws Object `ServerError` saat param `throwErrorObject`
  */
-export async function handleSupabaseError(error = null, throwErrorObject, initiator = {}) {
-    if (!initiator?.functionDetails) initiator.functionDetails = null;
-    if (!initiator?.functionArgs) initiator.functionArgs = null;
-    if (!initiator?.functionResolvedVariable) initiator.functionResolvedVariable = null;
+export async function handleSupabaseError(
+	error = null,
+	throwErrorObject,
+	initiator = {}
+) {
+	if (!initiator?.functionDetails) initiator.functionDetails = null;
+	if (!initiator?.functionArgs) initiator.functionArgs = null;
+	if (!initiator?.functionResolvedVariable)
+		initiator.functionResolvedVariable = null;
 
-    const errorObject = serverError.interval_server_error(
-        undefined, undefined,
-        {
-            severity: 'error',
-            reason: 'Error when querying database',
-            stack: null,
-            ...initiator,
-            request: await getRequestDetails(),
-            more: error,
-        }
-    )
+	const errorObject = serverError.interval_server_error(undefined, undefined, {
+		severity: 'error',
+		reason: 'Error when querying database',
+		stack: null,
+		...initiator,
+		request: await getRequestDetails(),
+		more: error
+	});
 
-    if (throwErrorObject) { throw errorObject }
-    else { return errorObject }
+	if (throwErrorObject) {
+		throw errorObject;
+	} else {
+		return errorObject;
+	}
 }
 
 /**
@@ -406,7 +446,7 @@ export async function handleSupabaseError(error = null, throwErrorObject, initia
  * ```js
  * request.json()
  * ```
- * 
+ *
  * @async
  * @template T
  * @param {NextRequest} request
@@ -414,30 +454,27 @@ export async function handleSupabaseError(error = null, throwErrorObject, initia
  * @throws Object {@link badRequestError.malformed_request_body BadRequestError} saat parsing gagal
  */
 export async function parseFormData(request) {
-    try {
-        const formData = await request.json();
+	try {
+		const formData = await request.json();
 
-        return formData;
-    } catch (error) {
-        throw badRequestError.malformed_request_body(
-            undefined, undefined,
-            {
-                severity: 'error',
-                reason: 'Failed to parse request body',
-                stack: null,
-                functionDetails: 'parseFormData at utils/api_helper.js line 345',
-                functionArgs: null,
-                functionResolvedVariable: null,
-                request: await getRequestDetails(),
-                more: error,
-            }
-        );
-    }
+		return formData;
+	} catch (error) {
+		throw badRequestError.malformed_request_body(undefined, undefined, {
+			severity: 'error',
+			reason: 'Failed to parse request body',
+			stack: null,
+			functionDetails: 'parseFormData at utils/api_helper.js line 345',
+			functionArgs: null,
+			functionResolvedVariable: null,
+			request: await getRequestDetails(),
+			more: error
+		});
+	}
 }
 
 /**
  * Middleware untuk validate formData dengan preset schema yang tersedia atau custom schema menggunakan `Joi`
- * 
+ *
  * @async
  * @param {Object<string, any>} formData Form data yang ingin divalidasi
  * @param {keyof schemaDataJoi} [presetSchema] Preset schema yang digunakan
@@ -445,50 +482,60 @@ export async function parseFormData(request) {
  * @returns {Promise<void>} Resolve dengan void
  * @throws Object {@link badRequestError.invalid_form_data BadRequestError} saat validasi gagal
  */
-export async function validateFormData(formData, presetSchema = null, customSchema = null) {
-    const schemaDataJoi = {
-        login: Joi.object({
-            email: Joi.string().min(6).max(100).email().required(),
-            password: Joi.string().min(6).max(50).required(),
-            token: process.env.NODE_ENV !== 'production' ? Joi.string() : Joi.string().required(),
-        }),
-        magiclink: Joi.object({
-            email: Joi.string().min(6).max(100).email().required(),
-            token: process.env.NODE_ENV !== 'production' ? Joi.string() : Joi.string().required(),
-        }),
-        password: Joi.object({
-            password: Joi.string().min(6).max(50).required()
-        }).required(),
-        rating: Joi.object({
-            rating: Joi.number().min(1).max(5).required(),
-            review: Joi.string().allow('').max(200).required(),
-            details: Joi.object({
-                authorType: Joi.number().min(0).max(2).required(),
-            }).required()
-        }),
-    }
+export async function validateFormData(
+	formData,
+	presetSchema = null,
+	customSchema = null
+) {
+	const schemaDataJoi = {
+		login: Joi.object({
+			email: Joi.string().min(6).max(100).email().required(),
+			password: Joi.string().min(6).max(50).required(),
+			token:
+				process.env.NODE_ENV !== 'production'
+					? Joi.string()
+					: Joi.string().required()
+		}),
+		magiclink: Joi.object({
+			email: Joi.string().min(6).max(100).email().required(),
+			token:
+				process.env.NODE_ENV !== 'production'
+					? Joi.string()
+					: Joi.string().required()
+		}),
+		password: Joi.object({
+			password: Joi.string().min(6).max(50).required()
+		}).required(),
+		rating: Joi.object({
+			rating: Joi.number().min(1).max(5).required(),
+			review: Joi.string().allow('').max(200).required(),
+			details: Joi.object({
+				authorType: Joi.number().min(0).max(2).required()
+			}).required()
+		})
+	};
 
-    try {
-        const formDataSchema = customSchema ?? schemaDataJoi[presetSchema];
+	try {
+		const formDataSchema = customSchema ?? schemaDataJoi[presetSchema];
 
-        if (!formDataSchema) {
-            throw new Error('Schema required for validation');
-        }
+		if (!formDataSchema) {
+			throw new Error('Schema required for validation');
+		}
 
-        await formDataSchema.validateAsync(formData);
-    } catch (error) {
-        throw badRequestError.invalid_form_data(
-            undefined, undefined,
-            {
-                severity: 'error',
-                reason: error instanceof Joi.ValidationError ? 'Form data not match against schema' : error?.message ?? null,
-                stack: null,
-                functionDetails: 'validateFormData at utils/api_helper.js line 454',
-                functionArgs: null,
-                functionResolvedVariable: null,
-                request: await getRequestDetails(),
-                more: error instanceof Joi.ValidationError ? error : null,
-            }
-        );
-    }
+		await formDataSchema.validateAsync(formData);
+	} catch (error) {
+		throw badRequestError.invalid_form_data(undefined, undefined, {
+			severity: 'error',
+			reason:
+				error instanceof Joi.ValidationError
+					? 'Form data not match against schema'
+					: (error?.message ?? null),
+			stack: null,
+			functionDetails: 'validateFormData at utils/api_helper.js line 454',
+			functionArgs: null,
+			functionResolvedVariable: null,
+			request: await getRequestDetails(),
+			more: error instanceof Joi.ValidationError ? error : null
+		});
+	}
 }

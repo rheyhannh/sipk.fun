@@ -21,7 +21,11 @@ import { getLocalTheme } from '@/utils/client_side';
  * @returns {SWRState<Array<'dark' | 'light'>>} User local browser theme dan SWR state
  */
 function useLocalTheme(custom) {
-    return useSWR('localUserTheme', getLocalTheme, { ...SWR_DEFAULT_OPTIONS, revalidateOnFocus: true, ...custom });
+	return useSWR('localUserTheme', getLocalTheme, {
+		...SWR_DEFAULT_OPTIONS,
+		revalidateOnFocus: true,
+		...custom
+	});
 }
 
 export default useLocalTheme;

@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 // #region NEXT DEPEDENCY
 import dynamic from 'next/dynamic';
@@ -35,82 +35,110 @@ const Error = dynamic(() => import('@magiclink_page/components/Error'));
  * @returns {React.ReactElement<Omit<React.HTMLProps<HTMLDivElement>, 'className'>, HTMLDivElement>} Rendered content
  */
 function Content({ fakta, ...props }) {
-    const router = useRouter();
-    const searchParams = useSearchParams();
-    const guestIdCookie = useCookies().get('s_guest_id');
-    const { isLogin, setStates, states } = React.useContext(MagiclinkContext);
+	const router = useRouter();
+	const searchParams = useSearchParams();
+	const guestIdCookie = useCookies().get('s_guest_id');
+	const { isLogin, setStates, states } = React.useContext(MagiclinkContext);
 
-    const handleFetch = async () => {
-        const tokenHash = searchParams.get('token');
+	const handleFetch = async () => {
+		const tokenHash = searchParams.get('token');
 
-        try {
-            if (!guestIdCookie || !isUUID(guestIdCookie)) {
-                throw ({
-                    shouldRefresh: true,
-                    toast: { message: 'Terjadi kesalahan, silahkan coba lagi' },
-                    newState: null
-                })
-            }
+		try {
+			if (!guestIdCookie || !isUUID(guestIdCookie)) {
+				throw {
+					shouldRefresh: true,
+					toast: { message: 'Terjadi kesalahan, silahkan coba lagi' },
+					newState: null
+				};
+			}
 
-            if (!tokenHash) {
-                throw ({
-                    shouldRefresh: false,
-                    toast: { message: 'Token magiclink dibutuhkan!' },
-                    newState: null
-                })
-            }
+			if (!tokenHash) {
+				throw {
+					shouldRefresh: false,
+					toast: { message: 'Token magiclink dibutuhkan!' },
+					newState: null
+				};
+			}
 
-            setStates({ loading: true, error: false, success: false })
+			setStates({ loading: true, error: false, success: false });
 
-            await new Promise(resolve => setTimeout(resolve, 4000));
+			await new Promise((resolve) => setTimeout(resolve, 4000));
 
-            const options = { method: 'GET', headers: { 'Content-Type': 'application/json' } }
-            const target = isLogin ? endpointByKey['auth/confirm/login'] : endpointByKey['auth/confirm/signup'];
-            const baseUrl = process.env.NEXT_PUBLIC_SIPK_API_URL || process.env.NEXT_PUBLIC_SIPK_URL;
-            const targetWithParams = new URL(target, baseUrl);
-            const urlParams = { token_hash: tokenHash, type: 'email' }
-            Object.keys(urlParams).forEach(key => targetWithParams.searchParams.append(key, urlParams[key]));
+			const options = {
+				method: 'GET',
+				headers: { 'Content-Type': 'application/json' }
+			};
+			const target = isLogin
+				? endpointByKey['auth/confirm/login']
+				: endpointByKey['auth/confirm/signup'];
+			const baseUrl =
+				process.env.NEXT_PUBLIC_SIPK_API_URL ||
+				process.env.NEXT_PUBLIC_SIPK_URL;
+			const targetWithParams = new URL(target, baseUrl);
+			const urlParams = { token_hash: tokenHash, type: 'email' };
+			Object.keys(urlParams).forEach((key) =>
+				targetWithParams.searchParams.append(key, urlParams[key])
+			);
 
-            const response = await fetch(targetWithParams, options);
+			const response = await fetch(targetWithParams, options);
 
-            if (!response.ok) {
-                const res = /** @type {import('@/constant/api_response').ClientAPIResponseErrorProps} */ (await response.json());
-                if (res?.error?.digest && res.error.digest.startsWith('critical')) handleApiErrorResponse('GET', targetWithParams, res);
-                if (response.status === 429) {
-                    throw ({
-                        shouldRefresh: false,
-                        toast: false,
-                        newState: { loading: false, error: true, success: false, code: '429' }
-                    })
-                } else if (response.status === 401) {
-                    throw ({
-                        shouldRefresh: false,
-                        toast: false,
-                        newState: { loading: false, error: true, success: false, code: '401' }
-                    })
-                } else {
-                    throw ({
-                        shouldRefresh: false,
-                        toast: false,
-                        newState: { loading: false, error: true, success: false }
-                    })
-                }
-            } else {
-                setStates({ loading: false, error: false, success: true })
-            }
+			if (!response.ok) {
+				const res =
+					/** @type {import('@/constant/api_response').ClientAPIResponseErrorProps} */ (
+						await response.json()
+					);
+				if (res?.error?.digest && res.error.digest.startsWith('critical'))
+					handleApiErrorResponse('GET', targetWithParams, res);
+				if (response.status === 429) {
+					throw {
+						shouldRefresh: false,
+						toast: false,
+						newState: {
+							loading: false,
+							error: true,
+							success: false,
+							code: '429'
+						}
+					};
+				} else if (response.status === 401) {
+					throw {
+						shouldRefresh: false,
+						toast: false,
+						newState: {
+							loading: false,
+							error: true,
+							success: false,
+							code: '401'
+						}
+					};
+				} else {
+					throw {
+						shouldRefresh: false,
+						toast: false,
+						newState: { loading: false, error: true, success: false }
+					};
+				}
+			} else {
+				setStates({ loading: false, error: false, success: true });
+			}
+		} catch (error) {
+			const toastOptions = { duration: 3000, position: 'top-center' };
+			if (error.toast) {
+				toast.error(error.toast.message, toastOptions);
+			}
+			if (error.shouldRefresh) {
+				router.refresh();
+			}
+			if (error.newState) {
+				setStates(error.newState);
+			}
+		}
+	};
 
-        } catch (error) {
-            const toastOptions = { duration: 3000, position: 'top-center' };
-            if (error.toast) { toast.error(error.toast.message, toastOptions); }
-            if (error.shouldRefresh) { router.refresh() }
-            if (error.newState) { setStates(error.newState) }
-        }
-    }
-
-    if (states.loading) return <Loading fakta={fakta} {...props} />
-    else if (states.success) return <Success {...props} />
-    else if (states.error) return <Error {...props} />
-    else return <Default handleFetch={handleFetch} {...props} />
+	if (states.loading) return <Loading fakta={fakta} {...props} />;
+	else if (states.success) return <Success {...props} />;
+	else if (states.error) return <Error {...props} />;
+	else return <Default handleFetch={handleFetch} {...props} />;
 }
 
 export default Content;

@@ -7,9 +7,7 @@ import getFakta from '@/lib/supabase/cached/getFakta';
 // #endregion
 
 export default async function FaqPage() {
-    const fakta = await getFakta();
+	const fakta = await getFakta();
 
-    return (
-        <Faq fakta={fakta} />
-    )
+	return <Faq fakta={fakta} />;
 }

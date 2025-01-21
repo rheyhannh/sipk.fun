@@ -14,18 +14,18 @@ import getNotifikasi from '@/lib/supabase/cached/getNotifikasi';
 // #endregion
 
 export default async function HomePage() {
-  const universitasData = await getUniversitas();
-  const ratingData = await getRating();
-  const notifikasiData = await getNotifikasi();
+	const universitasData = await getUniversitas();
+	const ratingData = await getRating();
+	const notifikasiData = await getNotifikasi();
 
-  return (
-    <Container>
-      <Hero notifikasi={notifikasiData} />
-      <Universitas universitas={universitasData} />
-      <KenapaSipk />
-      <Fitur />
-      {/* <Testimoni rating={ratingData} /> */}
-      <MulaiSekarang />
-    </Container>
-  )
+	return (
+		<Container>
+			<Hero notifikasi={notifikasiData} />
+			<Universitas universitas={universitasData} />
+			<KenapaSipk />
+			<Fitur />
+			{/* <Testimoni rating={ratingData} /> */}
+			<MulaiSekarang />
+		</Container>
+	);
 }

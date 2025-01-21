@@ -1,7 +1,7 @@
-'use client'
+'use client';
 
 // #region NEXT DEPEDENCY
-import Link from 'next/link'
+import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 // #endregion
 
@@ -24,47 +24,57 @@ import styles from '@magiclink_page/magiclink.module.css';
  * @returns {React.ReactElement<Omit<React.HTMLProps<HTMLDivElement>, 'className'>, HTMLDivElement>} Rendered content success
  */
 function Success({ ...props }) {
-    const router = useRouter();
-    const { isLogin } = React.useContext(MagiclinkContext);
+	const router = useRouter();
+	const { isLogin } = React.useContext(MagiclinkContext);
 
-    return (
-        <div className={styles.content} {...props}>
-            <h2 className={styles.content__title}>
-                Magiclink Valid
-            </h2>
-            {isLogin ?
-                <Countdown
-                    date={Date.now() + 3000}
-                    onComplete={() => router.replace('/dashboard')}
-                    renderer={props => {
-                        return (
-                            <>
-                                <div className={styles.content__text}>
-                                    Login berhasil. Kamu akan dialihkan ke dashboard dalam <span style={{ fontWeight: '700' }}>{props.seconds} detik</span>
-                                </div>
-                                <div className={styles.content__action}>
-                                    <Link className={`${styles.btn} ${styles.success}`} href={'/dashboard'} replace>
-                                        <h3>Menuju Dashboard ({props.seconds})</h3>
-                                    </Link>
-                                </div>
-                            </>
-                        )
-                    }}
-                />
-                :
-                <>
-                    <div className={styles.content__text}>
-                        Akun berhasil dikonfirmasi. Mulai pakai SIPK sekarang dengan klik tombol dibawah.
-                    </div>
-                    <div className={styles.content__action}>
-                        <Link className={`${styles.btn} ${styles.success}`} href={'/dashboard'} replace>
-                            <h3>Mulai Sekarang</h3>
-                        </Link>
-                    </div>
-                </>
-            }
-        </div>
-    )
+	return (
+		<div className={styles.content} {...props}>
+			<h2 className={styles.content__title}>Magiclink Valid</h2>
+			{isLogin ? (
+				<Countdown
+					date={Date.now() + 3000}
+					onComplete={() => router.replace('/dashboard')}
+					renderer={(props) => {
+						return (
+							<>
+								<div className={styles.content__text}>
+									Login berhasil. Kamu akan dialihkan ke dashboard dalam{' '}
+									<span style={{ fontWeight: '700' }}>
+										{props.seconds} detik
+									</span>
+								</div>
+								<div className={styles.content__action}>
+									<Link
+										className={`${styles.btn} ${styles.success}`}
+										href={'/dashboard'}
+										replace
+									>
+										<h3>Menuju Dashboard ({props.seconds})</h3>
+									</Link>
+								</div>
+							</>
+						);
+					}}
+				/>
+			) : (
+				<>
+					<div className={styles.content__text}>
+						Akun berhasil dikonfirmasi. Mulai pakai SIPK sekarang dengan klik
+						tombol dibawah.
+					</div>
+					<div className={styles.content__action}>
+						<Link
+							className={`${styles.btn} ${styles.success}`}
+							href={'/dashboard'}
+							replace
+						>
+							<h3>Mulai Sekarang</h3>
+						</Link>
+					</div>
+				</>
+			)}
+		</div>
+	);
 }
 
 export default Success;

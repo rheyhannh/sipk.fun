@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 // #region TYPE DEPEDENCY
 import { HTMLMotionProps } from 'framer-motion';
@@ -36,12 +36,12 @@ import { motion } from 'framer-motion';
 /**
  * Component untuk membuat teks dengan ukuran yang fit terhadap sebuah container.
  * Pastikan ref dari element container dipass melalui props `containerRef`, karna jika tidak maka ukuran teks tidak akan berubah.
- * 
+ *
  * Perhitungan dan perubahan ukuran teks ditrigger saat,
  * - Component mount
- * - Perubahan width pada container 
+ * - Perubahan width pada container
  * - Perubahan width dan height pada viewport
- * 
+ *
  * Style dapat diatur melalui props `style` walaupun secara default menggunakan style berikut,
  * ```js
  * { margin: '0 auto',  whiteSpace: 'nowrap', textAlign: 'center' }
@@ -49,72 +49,80 @@ import { motion } from 'framer-motion';
  * @param {Omit<HTMLMotionProps<any>, 'className'> & TextFitContainerProps} props TextFitContainer props
  * @returns {React.ReactElement} Rendered component
  */
-const TextFitContainer = ({ containerRef, as = 'span', minSize = 1, maxSize = 75, style, children, ...props }) => {
-    const { width, height } = useWindowSize();
-    const textRef = React.useRef(null);
-    const TextElement = motion[as] ?? motion['span'];
+const TextFitContainer = ({
+	containerRef,
+	as = 'span',
+	minSize = 1,
+	maxSize = 75,
+	style,
+	children,
+	...props
+}) => {
+	const { width, height } = useWindowSize();
+	const textRef = React.useRef(null);
+	const TextElement = motion[as] ?? motion['span'];
 
-    const resizeText = () => {
-        if (!containerRef) return;
+	const resizeText = () => {
+		if (!containerRef) return;
 
-        const container = containerRef.current;
-        const text = textRef.current;
+		const container = containerRef.current;
+		const text = textRef.current;
 
-        if (!container || !text) return;
+		if (!container || !text) return;
 
-        const containerWidth = container.offsetWidth;
-        let min = minSize;
-        let max = maxSize;
+		const containerWidth = container.offsetWidth;
+		let min = minSize;
+		let max = maxSize;
 
-        while (min <= max) {
-            const mid = Math.floor((min + max) / 2);
-            text.style.fontSize = mid + "px";
+		while (min <= max) {
+			const mid = Math.floor((min + max) / 2);
+			text.style.fontSize = mid + 'px';
 
-            if (text.offsetWidth <= containerWidth) {
-                min = mid + 1;
-            } else {
-                max = mid - 1;
-            }
-        }
+			if (text.offsetWidth <= containerWidth) {
+				min = mid + 1;
+			} else {
+				max = mid - 1;
+			}
+		}
 
-        text.style.fontSize = max + "px";
-    }
+		text.style.fontSize = max + 'px';
+	};
 
-    useTimeout(() => {
-        if (containerRef?.current) {
-            const resizeObserver = new ResizeObserver((entries) => {
-                for (let entry of entries) {
-                    if (entry.contentRect.width) {
-                        resizeText();
-                    }
-                }
-            });
+	useTimeout(() => {
+		if (containerRef?.current) {
+			const resizeObserver = new ResizeObserver((entries) => {
+				for (let entry of entries) {
+					if (entry.contentRect.width) {
+						resizeText();
+					}
+				}
+			});
 
-            resizeObserver.observe(containerRef.current);
+			resizeObserver.observe(containerRef.current);
 
-            return () => {
-                resizeObserver.unobserve(containerRef.current);
-            };
-        }
-    }, 100);
+			return () => {
+				resizeObserver.unobserve(containerRef.current);
+			};
+		}
+	}, 100);
 
-    React.useEffect(() => {
-        resizeText();
-    }, [width, height]);
+	React.useEffect(() => {
+		resizeText();
+	}, [width, height]);
 
-    return (
-        <TextElement
-            style={{
-                margin: "0 auto",
-                whiteSpace: "nowrap",
-                textAlign: "center",
-                ...style
-            }}
-            ref={textRef}
-        >
-            {children}
-        </TextElement>
-    )
-}
+	return (
+		<TextElement
+			style={{
+				margin: '0 auto',
+				whiteSpace: 'nowrap',
+				textAlign: 'center',
+				...style
+			}}
+			ref={textRef}
+		>
+			{children}
+		</TextElement>
+	);
+};
 
 export default TextFitContainer;
