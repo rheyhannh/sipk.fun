@@ -1,3 +1,13 @@
+/**
+ * Custom `SWR` fetcher
+ * @async
+ * @template T
+ * @param {URL} url Fetch `URL` target
+ * @param {string} id User id
+ * @param {string} accessToken User access token
+ * @returns {Promise<T>}
+ * @throws `SWRError`
+ */
 const fetcher = async (url, id, accessToken) => {
     if (!accessToken || !id) { throw new Error('Access token required') }
     return fetch(url, {
