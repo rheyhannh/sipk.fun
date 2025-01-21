@@ -1,7 +1,3 @@
-// #region TYPE DEPEDENCY
-import * as SupabaseTypes from '@/types/supabase';
-// #endregion
-
 /**
  * Method untuk hitung perolehan IPK berdasarkan seluruh {@link matkul matakuliah} dengan tahap berikut,
  *
@@ -12,7 +8,7 @@ import * as SupabaseTypes from '@/types/supabase';
  *
  * Pastikan {@link matkul} merupakan `Array` dengan length `!== 0` atau method tidak akan menghitung perolehan IPK sehingga return `-1`
  *
- * @param {Array<SupabaseTypes.MatkulData>} matkul Array yang berisikan matakuliah
+ * @param {Array<import('@/types/supabase').MatkulData>} matkul Array yang berisikan matakuliah
  * @returns {string} Perolehan IPK dalam `string` dengan pembulatan 2 angka dibelakang koma, jika terjadi error return `-1`
  */
 export const getUserIpk = (matkul) => {
@@ -35,7 +31,7 @@ export const getUserIpk = (matkul) => {
 };
 
 /**
- * Method untuk hitung persentase perolehan IPK berdasarkan {@link SupabaseTypes.UserData.ipk_target ipk target} dengan tahap berikut,
+ * Method untuk hitung persentase perolehan IPK berdasarkan ipk target user dengan tahap berikut,
  *
  * 1. Menghitung perolehan IPK dari seluruh {@link matkul matakuliah}
  * 2. Persentase perolehan IPK dihitung dengan membagi perolehan ipk dengan ipk target
@@ -44,8 +40,8 @@ export const getUserIpk = (matkul) => {
  *
  * Pastikan {@link user} dan {@link matkul} merupakan `Array` dengan length `!== 0` atau method tidak akan menghitung persentase perolehan IPK sehingga return `-1`
  *
- * @param {Array<SupabaseTypes.UserData} user Array yang berisikan data user
- * @param {Array<SupabaseTypes.MatkulData>} matkul Array yang berisikan matakuliah
+ * @param {Array<import('@/types/supabase').UserData>} user Array yang berisikan data user
+ * @param {Array<import('@/types/supabase').MatkulData>} matkul Array yang berisikan matakuliah
  * @returns {number} Persentase perolehan IPK dalam bilangan bulat, jika terjadi error return `-1`
  */
 export const getUserIpkPercentage = (user, matkul) => {
@@ -72,7 +68,7 @@ export const getUserIpkPercentage = (user, matkul) => {
  *
  * Pastikan {@link matkul} merupakan `Array` dengan length `!== 0` atau method tidak akan menghitung perolehan SKS sehingga return `-1`
  *
- * @param {Array<SupabaseTypes.MatkulData>} matkul Array yang berisikan matakuliah
+ * @param {Array<import('@/types/supabase').MatkulData>} matkul Array yang berisikan matakuliah
  * @returns {number} Perolehan SKS, jika terjadi error return `-1`
  */
 export const getUserSks = (matkul) => {
@@ -92,7 +88,7 @@ export const getUserSks = (matkul) => {
 };
 
 /**
- * Method untuk hitung persentase perolehan SKS berdasarkan {@link SupabaseTypes.UserData.sks_target sks target} dengan tahap berikut,
+ * Method untuk hitung persentase perolehan SKS berdasarkan sks target user dengan tahap berikut,
  *
  * 1. Menghitung perolehan SKS dari seluruh {@link matkul matakuliah}
  * 2. Persentase perolehan SKS dihitung dengan membagi perolehan sks dengan sks target
@@ -101,8 +97,8 @@ export const getUserSks = (matkul) => {
  *
  * Pastikan {@link user} dan {@link matkul} merupakan `Array` dengan length `!== 0` atau method tidak akan menghitung persentase perolehan SKS sehingga return `-1`
  *
- * @param {Array<SupabaseTypes.UserData} user Array yang berisikan data user
- * @param {Array<SupabaseTypes.MatkulData>} matkul Array yang berisikan matakuliah
+ * @param {Array<import('@/types/supabase').UserData>} user Array yang berisikan data user
+ * @param {Array<import('@/types/supabase').MatkulData>} matkul Array yang berisikan matakuliah
  * @returns {number} Persentase perolehan SKS dalam bilangan bulat, jika terjadi error return `-1`
  */
 export const getUserSksPercentage = (user, matkul) => {
@@ -129,7 +125,7 @@ export const getUserSksPercentage = (user, matkul) => {
  *
  * Pastikan {@link matkul} merupakan `Array` dengan length `!== 0` atau method tidak akan menghitung perolehan matakuliah sehingga return `-1`
  *
- * @param {Array<SupabaseTypes.MatkulData>} matkul Array yang berisikan matakuliah
+ * @param {Array<import('@/types/supabase').MatkulData>} matkul Array yang berisikan matakuliah
  * @returns {number} Perolehan matakuliah, jika terjadi error return `-1`
  */
 export const getUserMatkul = (matkul) => {
@@ -141,7 +137,7 @@ export const getUserMatkul = (matkul) => {
 };
 
 /**
- * Method untuk hitung persentase perolehan matakuliah berdasarkan {@link SupabaseTypes.UserData.matkul_target matakuliah target} dengan tahap berikut,
+ * Method untuk hitung persentase perolehan matakuliah berdasarkan matakuliah target user dengan tahap berikut,
  *
  * 1. Menghitung perolehan matakuliah dari seluruh {@link matkul matakuliah}
  * 2. Persentase perolehan matakuliah dihitung dengan membagi perolehan matakuliah dengan matakuliah target
@@ -150,8 +146,8 @@ export const getUserMatkul = (matkul) => {
  *
  * Pastikan {@link user} dan {@link matkul} merupakan `Array` dengan length `!== 0` atau method tidak akan menghitung persentase perolehan matakuliah sehingga return `-1`
  *
- * @param {Array<SupabaseTypes.UserData} user Array yang berisikan data user
- * @param {Array<SupabaseTypes.MatkulData>} matkul Array yang berisikan matakuliah
+ * @param {Array<import('@/types/supabase').UserData>} user Array yang berisikan data user
+ * @param {Array<import('@/types/supabase').MatkulData>} matkul Array yang berisikan matakuliah
  * @returns {number} Persentase perolehan matakuliah dalam bilangan bulat, jika terjadi error return `-1`
  */
 export const getUserMatkulPercentage = (user, matkul) => {
@@ -178,7 +174,7 @@ export const getUserMatkulPercentage = (user, matkul) => {
  *
  * Pastikan {@link matkul} merupakan `Array` dengan length `!== 0` atau method tidak akan menghitung semester yang tersedia sehingga return array kosong `[]`
  *
- * @param {Array<SupabaseTypes.MatkulData>} matkul Array yang berisikan matakuliah
+ * @param {Array<import('@/types/supabase').MatkulData>} matkul Array yang berisikan matakuliah
  * @param {boolean} [sort] Urutkan dari semester terkecil, default: `false`
  * @returns {Array<number>} Array yang berisikan semester yang tersedia, jika terjadi error return array kosong `[]`
  * @example
@@ -230,7 +226,7 @@ export const getAllSemester = (matkul, sort = false) => {
  *
  * Pastikan {@link matkul} merupakan `Array` dengan length `!== 0` sehingga return array kosong `[]`
  *
- * @param {Array<SupabaseTypes.MatkulData>} matkul Array yang berisikan matakuliah
+ * @param {Array<import('@/types/supabase').MatkulData>} matkul Array yang berisikan matakuliah
  * @param {boolean} [sort] Urutkan dari semester terkecil, default: `false`
  * @returns {Array<getStatsSemesterReturnType>} Array yang berisikan {@link getStatsSemesterReturnType statistik} per-semester berupa total nilai akhir, total SKS dan total matakuliah, jika terjadi error return array kosong `[]`
  */
@@ -287,7 +283,7 @@ export const getStatsSemester = (matkul, sort = false) => {
  *
  * Pastikan {@link matkul} merupakan `Array` dengan length `!== 0` sehingga return array kosong `[]`
  *
- * @param {Array<SupabaseTypes.MatkulData>} matkul Array yang berisikan matakuliah
+ * @param {Array<import('@/types/supabase').MatkulData>} matkul Array yang berisikan matakuliah
  * @returns {Array<getOnAndOffTargetReturnType>} Array yang berisikan {@link getOnAndOffTargetReturnType statistik} per-semester berupa jumlah matakuliah dan sks yang sesuai target dan tidak sesuai target, jika terjadi error return array kosong `[]`
  */
 export const getOnAndOffTarget = (matkul) => {
@@ -361,8 +357,8 @@ export const getOnAndOffTarget = (matkul) => {
  *
  * Pastikan {@link matkul} merupakan `Array` dengan length `!== 0` sehingga return `-1`
  *
- * @param {Array<SupabaseTypes.MatkulData>} matkul Array yang berisikan matakuliah
- * @param {SupabaseTypes.UniversitasData['penilaian']} penilaian Sistem `penilaian` yang digunakan
+ * @param {Array<import('@/types/supabase').MatkulData>} matkul Array yang berisikan matakuliah
+ * @param {import('@/types/supabase').UniversitasData['penilaian']} penilaian Sistem `penilaian` yang digunakan
  * @param {boolean} asc Urutkan berdasarkan bobot nilai dimana saat `truthy` dari yang terkecil, sedangkan saat `falsy` dari yang terbesar, default `false`
  * @returns {getDistribusiNilaiReturnType} {@link getDistribusiNilaiReturnType Sebaran nilai} dari seluruh matakuliah, jika terjadi error return `-1`
  */
