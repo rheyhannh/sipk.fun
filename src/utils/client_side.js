@@ -10,6 +10,7 @@ import { TableState } from '@/types/table_matakuliah';
 // #region UTIL DEPEDENCY
 import isStrongPassword from 'validator/lib/isStrongPassword';
 import { endpointByKey } from '@/constant/api_endpoint';
+import { API_ROUTES } from '@/constant/routes';
 // #endregion
 
 // Date or Time Utility
@@ -434,3 +435,31 @@ export const fetchWithAuth = async (
         throw new Error('Gagal memproses permintaan');
     }
 };
+
+/**
+ * Method untuk mendapatkan `URL` berdasarkan endpoint API SIPK yang dipilih dengan menggunakan URL base sebagai berikut,
+ * 
+ * ```js
+ * var urlBase = process.env.NEXT_PUBLIC_SIPK_API_URL || process.env.NEXT_PUBLIC_SIPK_URL
+ * ```
+ * 
+ * @param {keyof import('@/constant/routes')['API_ROUTES']} endpoint API endpoint yang tersedia pada SIPK
+ * @param {Object<string, any>} [params] URL params yang digunakan dalam sebuah object, default `null`
+ * @returns {URL} `URL` object
+ * @example
+ * ```js
+ * const x = getApiURL('matkul').toString();
+ * const y = getApiURL('user', { id: 'xyz', ref: 'abc' }).toString();
+ * 
+ * console.log(x) // e.g. https://sipk.fun/api/matkul
+ * console.log(y) // e.g. https://api-sipk.fun/api/matkul?id=xyz&ref=abc
+ * ```
+ */
+export const getApiURL = (endpoint, params = null) => {
+    const urlBase = process.env.NEXT_PUBLIC_SIPK_API_URL || process.env.NEXT_PUBLIC_SIPK_URL;
+    const urlPathname = API_ROUTES[endpoint];
+    const urlWithParams = new URL(urlPathname, urlBase);
+    if (params) Object.keys(params).forEach(key => urlWithParams.searchParams.append(key, params[key]));
+
+    return urlWithParams;
+}
