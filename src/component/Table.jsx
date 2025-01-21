@@ -57,8 +57,9 @@ import { FaInfo, FaPen, FaTrash, FaAngleLeft, FaUndo } from "react-icons/fa";
 
 export function Table({ state, validating, user, sessionTable, matkul, matkulHistory, penilaian }) {
     const router = useRouter();
-    const userIdCookie = useCookies().get('s_user_id');
-    const accessToken = useCookies().get('s_access_token');
+    const cookies = useCookies();
+    const userIdCookie = cookies.get('s_user_id');
+    const accessToken = cookies.get('s_access_token');
     const handleRetry = () => {
         mutate(['/api/me', userIdCookie])
         mutate(['/api/matkul', userIdCookie])
