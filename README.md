@@ -127,3 +127,4 @@
 | `USER_SESSION_COOKIES_NAME`  | String | SIPK secure session cookie name. | `_Secure-session` | Yes |
 | `SECRET_KEY`     | String | Secret key to encrypt users sessions. | `BJF4QYmjOteU1olNdHTUxJKDK6LOgkAm` | Yes |
 | `MAXIMUM_REGISTERED_USER` | String | Maximum number of registered users. When this limit is reached, `api/register` will return an error response with the code `SRV_03`. | `500` | Yes |
+| `KEY_MAILGUN_APIKEY` | String | Mailgun api key that allows to perform all CRUD operations via various API endpoints | `2po8mU5DYP66FwtsGYa+VLWy0OI80FLThltuwiGd` | No |
