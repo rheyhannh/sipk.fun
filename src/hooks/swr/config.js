@@ -18,6 +18,16 @@ import { SWRConfiguration } from 'swr';
  */
 
 /**
+ * Object yang merepresentasikan `SWR` error object dimana extend `Error` constructor
+ * @typedef {Object} SWRError
+ * @property {string} name 
+ * @property {string} message 
+ * @property {string} [stack] 
+ * @property {import('@/constant/api_response').ClientAPIResponseErrorProps | null} info
+ * Jika proses parsing dengan {@link Response.json json()} error, props ini bernilai `null`
+ */
+
+/**
  * Konfigurasi default untuk setiap hook SWR yang digunakan
  * @type {SWRConfiguration}
  */
