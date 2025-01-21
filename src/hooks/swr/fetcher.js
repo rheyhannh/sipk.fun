@@ -39,7 +39,7 @@ const fetcher = async (url, id, accessToken) => {
             return data;
         })
         .catch(error => {
-            console.error('Gagal mengambil data:', error.message);
+            console.error(error.message);
             throw error;
         });
 }
