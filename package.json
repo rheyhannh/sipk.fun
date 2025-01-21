@@ -54,6 +54,7 @@
   },
   "devDependencies": {
     "cypress": "^13.16.0",
+    "prettier": "3.4.2",
     "webpack-bugsnag-plugins": "^1.8.0"
   }
 }
