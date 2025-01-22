@@ -341,7 +341,7 @@ function Tab({ tabId, title, isActive, ...props }) {
 }
 
 /**
- * @param {Omit<import('framer-motion').HTMLMotionProps<'div'>, 'transition' | 'initial' | 'animate' | 'exit' | 'className'> & {contents:TabItem['contents']}} props Accordion props
+ * @param {Omit<import('framer-motion').HTMLMotionProps<'div'>, 'transition' | 'initial' | 'animate' | 'exit' | 'className'> & FaqProps & {contents:TabItem['contents']}} props Accordion props
  * @returns {React.ReactElement} Rendered component
  */
 function Accordion({
