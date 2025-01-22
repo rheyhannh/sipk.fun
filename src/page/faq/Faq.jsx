@@ -193,8 +193,15 @@ const TABS = /** @type {Array<TabItem>} */ ([
 ]);
 
 /**
+ * Props yang digunakan component `Faq`
+ * @typedef {Object} FaqProps
+ * @property {Array<import('@/types/supabase').FaktaData>} fakta
+ * @property {Array<import('@/types/supabase').UniversitasData>} universitas
+ */
+
+/**
  * Render faq page `'/faq'`
- * @param {{fakta:Array<import('@/types/supabase').FaktaData>}} props Faq props
+ * @param {FaqProps} props Faq props
  * @returns {React.ReactElement} Rendered faq page
  */
 export default function Faq({ fakta, universitas }) {
