@@ -197,7 +197,7 @@ const TABS = /** @type {Array<TabItem>} */ ([
  * @param {{fakta:Array<import('@/types/supabase').FaktaData>}} props Faq props
  * @returns {React.ReactElement} Rendered faq page
  */
-export default function Faq({ fakta }) {
+export default function Faq({ fakta, universitas }) {
 	const searchParams = useSearchParams();
 	const [activeTab, setActiveTab] = React.useState(-1);
 
