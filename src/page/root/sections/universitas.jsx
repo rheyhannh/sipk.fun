@@ -152,6 +152,26 @@ const Universitas = ({ universitas }) => {
 						sectionRef.current.nextElementSibling.focus();
 					}
 				}
+			} else {
+				if (sectionRef.current && sectionRef.current.previousElementSibling) {
+					if (sectionRef.current === document.activeElement) {
+						event.preventDefault();
+						scroller.scrollTo(sectionRef.current.previousElementSibling.id, {
+							offset: -75,
+							smooth: true
+						});
+
+						const focusableElements =
+							sectionRef.current.previousElementSibling.querySelectorAll(
+								'[tabIndex="0"]'
+							);
+						const lastFocusableElement =
+							focusableElements[focusableElements.length - 1];
+
+						if (lastFocusableElement) lastFocusableElement.focus();
+						else sectionRef.current.previousElementSibling.focus();
+					}
+				}
 			}
 		}
 	};

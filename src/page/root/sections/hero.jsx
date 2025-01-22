@@ -32,6 +32,7 @@ import {
 import { ContainerWrapper, VisibilityWrapper } from '@root_page/components';
 import HighlightText from '@/component/motion/HighlightText';
 import DashboardMockup from '@/page/dashboard/Mockup';
+import { scroller } from 'react-scroll';
 // #endregion
 
 // #region HOOKS DEPEDENCY
@@ -97,6 +98,28 @@ const Hero = ({ notifikasi }) => {
 			className={`${styles.section} ${styles.hero} ${styles.center_overflow}`}
 			whileInView={'inView'}
 			viewport={{ once: GLOBAL_VIEWPORT_ONCE }}
+			onKeyDown={(event) => {
+				if (event.key === 'Tab') {
+					if (!event.shiftKey) {
+						if (sectionRef.current && sectionRef.current.nextElementSibling) {
+							const focusableElements = Array.from(
+								sectionRef.current.querySelectorAll('[tabIndex="0"]')
+							);
+							const isLastFocusableElement =
+								focusableElements[focusableElements.length - 1] ===
+								document.activeElement;
+							if (isLastFocusableElement) {
+								event.preventDefault();
+								scroller.scrollTo(sectionRef.current.nextElementSibling.id, {
+									offset: -75,
+									smooth: true
+								});
+								sectionRef.current.nextElementSibling.focus();
+							}
+						}
+					}
+				}
+			}}
 		>
 			<ContainerWrapper style={{ position: 'relative', zIndex: 2 }}>
 				<Banner
@@ -369,6 +392,7 @@ function Buttons({
 				>
 					<ButtonSimpleForwarded
 						id={item[0]?.id || 'button'}
+						tabIndex={0}
 						{...BUTTONSIMPLE_MAIN_PRESET}
 					>
 						<span>{item[0]?.text || 'Click Me'}</span>
@@ -380,6 +404,7 @@ function Buttons({
 
 				<ButtonSimple
 					id={item[1]?.id || 'button'}
+					tabIndex={0}
 					{...BUTTONSIMPLE_SECONDARY_PRESET}
 					onClickCapture={(event) => {
 						event.currentTarget.blur();
