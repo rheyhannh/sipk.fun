@@ -238,7 +238,12 @@ export default function Faq({ fakta, universitas }) {
 					{TABS.map(
 						(item, index) =>
 							activeTab === index && (
-								<Accordion key={index} contents={item.contents} />
+								<Accordion
+									key={index}
+									contents={item.contents}
+									fakta={fakta}
+									universitas={universitas}
+								/>
 							)
 					)}
 				</AnimatePresence>
@@ -341,6 +346,8 @@ function Tab({ tabId, title, isActive, ...props }) {
  */
 function Accordion({
 	contents = [{ title: LOREM_TITLE, description: LOREM_DESCRIPTION }],
+	fakta,
+	universitas,
 	...props
 }) {
 	const searchParams = useSearchParams();
