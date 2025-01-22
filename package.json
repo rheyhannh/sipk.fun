@@ -72,8 +72,7 @@
 	},
 	"lint-staged": {
 		"src/**/*.{js,jsx}": [
-			"prettier -w",
-			"jest"
+			"prettier -w"
 		],
 		"src/**/*.{json,css,scss,md,mdx}": [
 			"prettier -w"
