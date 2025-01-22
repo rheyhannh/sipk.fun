@@ -64,13 +64,13 @@ const ButtonCTA = React.forwardRef(
 	)
 );
 
-const LinkItems = () => {
+const LinkItems = ({ ...props }) => {
 	const { showNavbarOverlay, setShowNavbarOverlay } =
 		React.useContext(RootContext);
 
 	return (
 		<>
-			{HEADER_NAVIGATION_SHORCUTS.map((props, index) => (
+			{HEADER_NAVIGATION_SHORCUTS.map((itemProps, index) => (
 				<LinkHash
 					key={index}
 					className={styles.link}
@@ -80,6 +80,7 @@ const LinkItems = () => {
 							document.body.classList.remove('disable_scroll');
 						}
 					}}
+					{...itemProps}
 					{...props}
 				/>
 			))}
@@ -284,13 +285,17 @@ const NavbarOverlay = () => {
 					>
 						<div className={styles.inner}>
 							<LogoWithWrapper />
-							<LinkItems />
+							<LinkItems tabIndex={showNavbarOverlay ? '0' : '-1'} />
 							<NextLink
 								href={'/users?action=daftar&utm_source=slp'}
 								passHref
 								legacyBehavior
 							>
-								<ButtonCTA id={'navbar-cta'} text={'Mulai Sekarang'} />
+								<ButtonCTA
+									id={'navbar-cta'}
+									text={'Mulai Sekarang'}
+									tabIndex={showNavbarOverlay ? '0' : '-1'}
+								/>
 							</NextLink>
 						</div>
 					</motion.div>
