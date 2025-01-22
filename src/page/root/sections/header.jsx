@@ -226,12 +226,14 @@ const Navbar = ({ showNavbar, children }) => {
 							navRef.current.lastChild === document.activeElement
 						) {
 							const sections = document.getElementsByTagName('section');
-							// TODOS should scroll to first section not second
-							scroller.scrollTo(sections[1].id, {
-								offset: -75,
-								smooth: true,
-								duration: (x) => (Math.abs(x) > 1500 ? 0 : 500)
-							});
+							const target = sections[0]?.id;
+							if (target) {
+								scroller.scrollTo(target, {
+									offset: -75,
+									smooth: true,
+									duration: (x) => (Math.abs(x) > 1500 ? 0 : 500)
+								});
+							}
 						}
 					}
 				}
