@@ -212,7 +212,11 @@ const Universitas = ({ universitas }) => {
 							}
 							scrollProgressOptions={{ offset: ['start end', 'start 65%'] }}
 						>
-							<Link href={'/faq?tab=universitas'} passHref legacyBehavior>
+							<Link
+								href={'/faq?tab=universitas&content=0'}
+								passHref
+								legacyBehavior
+							>
 								<ButtonSimpleForwarded
 									id='universitas-cta-sec'
 									tabIndex={0}
