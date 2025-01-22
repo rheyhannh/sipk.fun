@@ -12,6 +12,7 @@
  * @returns {string} Perolehan IPK dalam `string` dengan pembulatan 2 angka dibelakang koma, jika terjadi error return `-1`
  */
 export const getUserIpk = (matkul) => {
+	const test = 'abc';
 	if (Array.isArray(matkul) && matkul.length !== 0) {
 		const totalSks = getUserSks(matkul);
 		if (totalSks === -1 || totalSks === 0) return -1;
