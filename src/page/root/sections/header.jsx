@@ -64,6 +64,10 @@ const ButtonCTA = React.forwardRef(
 	)
 );
 
+/**
+ * @param {Parameters<typeof LinkHash>[0]} props LinkItems props
+ * @returns {React.ReactElement} Rendered component
+ */
 const LinkItems = ({ ...props }) => {
 	const { showNavbarOverlay, setShowNavbarOverlay } =
 		React.useContext(RootContext);
