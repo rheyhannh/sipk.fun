@@ -256,7 +256,7 @@ function Base({ children, ...props }) {
 
 	return (
 		<div
-			className={`${styles.base} ${styles.colors} ${theme === 'dark' ? styles.dark_theme : undefined}`}
+			className={`${styles.base} ${styles.colors} ${theme === 'dark' ? styles.dark_theme : ''}`}
 			{...props}
 		>
 			{children}
