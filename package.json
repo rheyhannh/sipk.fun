@@ -65,8 +65,18 @@
 		"husky": "^9.1.7",
 		"jest": "^29.7.0",
 		"jest-environment-jsdom": "^29.7.0",
+		"lint-staged": "^15.4.1",
 		"prettier": "3.4.2",
 		"ts-node": "^10.9.2",
 		"webpack-bugsnag-plugins": "^1.8.0"
+	},
+	"lint-staged": {
+		"src/**/*.{js,jsx}": [
+			"prettier -w",
+			"jest"
+		],
+		"src/**/*.{json,css,scss,md,mdx}": [
+			"prettier -w"
+		]
 	}
 }
