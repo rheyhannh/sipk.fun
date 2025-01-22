@@ -83,110 +83,252 @@ const TABS = /** @type {Array<TabItem>} */ ([
 		contents: [
 			{
 				title: 'Apa itu SIPK?',
-				description: LOREM_DESCRIPTION
-			},
-			{
-				title: 'Apa bedanya SIPK dengan portal akademik kampus?',
-				description: LOREM_DESCRIPTION
+				description: (
+					<>
+						<span>
+							SIPK adalah aplikasi yang mirip dengan portal akademik kampus
+							kamu. Bedanya, SIPK nggak cuma menyimpan data matakuliah tapi juga
+							membantu kamu menghitung perolehan IPK berdasarkan matakuliah yang
+							kamu tambah secara dinamis💫
+						</span>
+					</>
+				)
 			},
 			{
 				title: 'Kenapa SIPK ada?',
-				description: LOREM_DESCRIPTION
+				description: (
+					<>
+						<span>
+							SIPK dibuat untuk mendukung kamu dalam{' '}
+							<strong>merencanakan</strong> dan <strong>melacak</strong>{' '}
+							perjalanan akademikmu:
+						</span>
+						<ul
+							style={{
+								marginLeft: '0.5rem',
+								marginTop: '0.65rem',
+								marginBottom: '0.65rem',
+								listStyle: 'circle inside',
+								padding: 0
+							}}
+						>
+							<li style={{ marginBottom: '0.5rem' }}>
+								<strong>Perencanaan</strong>: SIPK membantu kamu menyusun
+								rencana akademik, termasuk menghitung IPK sedini mungkin.
+							</li>
+							<li style={{ marginBottom: '0.5rem' }}>
+								<strong>Pelacakan</strong>: SIPK membantu kamu memantau
+								perkembangan IPK dari awal hingga lulus, supaya target
+								akademikmu tercapai dengan lebih terarah.
+							</li>
+						</ul>
+						<span>
+							Jadi alasan kamu pakai SIPK bukan untuk{' '}
+							<strong>mengubah nilai asli</strong> yang sudah kamu peroleh di
+							portal akademik kampus kamu yaa❗
+						</span>
+					</>
+				)
 			},
 			{
 				title: 'Apakah SIPK hanya untuk mahasiswa tingkat awal?',
-				description: LOREM_DESCRIPTION
+				description: (
+					<>
+						<span>
+							Enggak sama sekali! SIPK cocok untuk semua mahasiswa, baik tingkat
+							awal maupun tingkat akhir.
+						</span>
+						<ul
+							style={{
+								marginLeft: '0.5rem',
+								marginTop: '0.5rem',
+								listStyle: 'circle inside',
+								padding: 0
+							}}
+						>
+							<li style={{ marginBottom: '0.5rem' }}>
+								<strong>Mahasiswa tingkat awal</strong>: Bisa menyusun rencana
+								akademik sedini mungkin dengan perhitungan IPK yang akurat.
+							</li>
+							<li style={{ marginBottom: '0.5rem' }}>
+								<strong>Mahasiswa tingkat akhir</strong>: Bisa mengubah nilai
+								matakuliah tertentu untuk mengetahui perubahan IPK. Ini berguna
+								banget disaat kamu mau mengulang atau memperbaiki matakuliah.
+							</li>
+						</ul>
+					</>
+				)
 			},
 			{
 				title:
 					'Apakah ada batasan jurusan atau jenjang pendidikan untuk menggunakan SIPK?',
-				description: LOREM_DESCRIPTION
-			},
-			{
-				title: 'Kenapa universitas aku engga ada di SIPK?',
-				description: LOREM_DESCRIPTION
+				description: (
+					<>
+						<span>
+							Enggak ada batasan sama sekali! Selama kamu berasal dari
+							universitas yang sudah didukung SIPK, kamu bebas menggunakannya,
+							apa pun jurusan atau jenjang pendidikanmu💃
+						</span>
+					</>
+				)
 			},
 			{
 				title: 'Apakah SIPK cuma bisa diakses lewat Laptop? ',
-				description: LOREM_DESCRIPTION
+				description: (
+					<>
+						<span>
+							SIPK bisa diakses melalui smartphone maupun laptop kamu, yang
+							gabisa itu akses kenangan terindah bareng mantan😔
+						</span>
+					</>
+				)
 			},
 			{
 				title: 'Apakah SIPK berbayar?',
-				description: LOREM_DESCRIPTION
+				description: (
+					<>
+						<span>Graatiss🤑</span>
+					</>
+				)
 			}
 		]
 	},
 	{
-		title: 'pendaftaran',
+		title: 'universitas',
 		type: 'capitalize',
 		contents: [
 			{
-				title: '',
-				description: LOREM_DESCRIPTION
-			},
-			{
-				title: '',
-				description: LOREM_DESCRIPTION
-			},
-			{
-				title: '',
-				description: LOREM_DESCRIPTION
-			},
-			{
-				title: '',
-				description: LOREM_DESCRIPTION
-			},
-			{
-				title: '',
-				description: LOREM_DESCRIPTION
-			},
-			{
-				title: '',
-				description: LOREM_DESCRIPTION
+				title: 'Universitas apa aja yang didukung SIPK?',
+				description: ({ universitas }) => (
+					<>
+						<span>
+							Saat ini, SIPK masih dalam tahap akses awal dan baru dapat
+							mendukung <strong>{universitas.length} universitas</strong>🚀
+						</span>
+						<ul
+							style={{
+								marginLeft: '0.5rem',
+								marginTop: '0.65rem',
+								marginBottom: '0.65rem',
+								listStyle: 'numeric inside',
+								padding: 0
+							}}
+						>
+							{universitas.map((item, index) => (
+								<li key={index} style={{ marginBottom: '0.5rem' }}>
+									<strong>{item.nama}</strong>
+								</li>
+							))}
+						</ul>
+						<span>
+							Tapi, jangan khawatir! SIPK terus berupaya untuk menambahkan lebih
+							banyak universitas, ditunggu yaa⌚
+						</span>
+					</>
+				)
 			}
 		]
 	},
 	{
-		title: 'rating',
+		title: 'privasi',
 		type: 'capitalize',
 		contents: [
 			{
-				title: '',
-				description: LOREM_DESCRIPTION
+				title: 'Kenapa SIPK membutuhkan data kalian?',
+				description: (
+					<>
+						<span>
+							SIPK membutuhkan beberapa data kalian seperti email, nama lengkap
+							dan universitas untuk kebutuhan fungsional aplikasi dan tidak
+							lebih. Data yang kalian berikan memungkinkan SIPK untuk:
+						</span>
+						<ul
+							style={{
+								marginLeft: '0.5rem',
+								marginTop: '0.5rem',
+								listStyle: 'inside',
+								padding: 0
+							}}
+						>
+							<li style={{ marginBottom: '0.5rem' }}>
+								Memverifikasi dan mengonfirmasi email kalian saat pendaftaran.
+							</li>
+							<li style={{ marginBottom: '0.5rem' }}>
+								Memberikan akses ke fitur aplikasi.
+							</li>
+							<li style={{ marginBottom: '0.5rem' }}>
+								Memastikan keamanan data kalian melalui penggunaan cookies
+								autentikasi.
+							</li>
+						</ul>
+					</>
+				)
 			},
 			{
-				title: '',
-				description: LOREM_DESCRIPTION
+				title: 'Apakah data yang dimasukkan di SIPK aman?',
+				description: (
+					<>
+						<span>
+							SIPK sangat menghargai privasi kalian dan berkomitmen untuk
+							melindungi semua informasi pribadi kalian, maka dari itu:
+						</span>
+						<ul
+							style={{
+								marginLeft: '0.5rem',
+								marginTop: '0.5rem',
+								listStyle: 'inside',
+								padding: 0
+							}}
+						>
+							<li style={{ marginBottom: '0.5rem' }}>
+								SIPK membatasi akses data hanya kepada pihak yang berwenang dan
+								hanya digunakan untuk pengembangan atau pemeliharaan aplikasi.
+							</li>
+							<li style={{ marginBottom: '0.5rem' }}>
+								SIPK menggunakan protokol keamanan yang kuat untuk menyimpan
+								data kalian.
+							</li>
+							<li style={{ marginBottom: '0.5rem' }}>
+								SIPK secara rutin memantau sistem untuk mencegah pelanggaran
+								keamanan.
+							</li>
+						</ul>
+					</>
+				)
 			},
 			{
-				title: '',
-				description: LOREM_DESCRIPTION
+				title: 'Bagaimana caranya menghapus akun di SIPK?',
+				description: (
+					<>
+						<span>
+							Untuk saat ini proses penghapusan akun di SIPK masih secara manual
+							sehingga kalian perlu mengajukannya dengan mengirim email ke{' '}
+							<strong>
+								<a href='mailto:support@mail.sipk.fun'>support@mail.sipk.fun</a>
+							</strong>
+						</span>
+					</>
+				)
 			}
 		]
 	},
 	{
-		title: 'dolor',
+		title: 'lainnya',
 		type: 'capitalize',
 		contents: [
 			{
-				title: '',
-				description: LOREM_DESCRIPTION
-			},
-			{
-				title: '',
-				description: LOREM_DESCRIPTION
-			},
-			{
-				title: '',
-				description: LOREM_DESCRIPTION
-			},
-			{
-				title: '',
-				description: LOREM_DESCRIPTION
-			},
-			{
-				title: '',
-				description: LOREM_DESCRIPTION
+				title: 'Ada pertanyaan kamu yang belum terjawab?',
+				description: (
+					<>
+						<span>
+							Kalau kamu masih binggung dan ada yang ingin ditanyakan lebih
+							jauh, kamu dapat mengirim pertanyaan melalui email ke{' '}
+							<strong>
+								<a href='mailto:hayyan@mail.sipk.fun'>hayyan@mail.sipk.fun</a>
+							</strong>
+						</span>
+					</>
+				)
 			}
 		]
 	}
