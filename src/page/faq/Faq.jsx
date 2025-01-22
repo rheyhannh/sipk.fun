@@ -66,12 +66,12 @@ const LOREM_DESCRIPTION =
 
 /**
  * @typedef {Object} ContentItem
- * @property {string} title
+ * @property {string} [title]
  * Judul content
  *
  * - Default : Menggunakan {@link LOREM_TITLE variabel ini}
- * @property {React.ReactNode} description
- * Deskripsi konten dimana dapat berupa sebuah string, custom component atau lainnnya yang dapat dirender `React` dan akan dibungkus dengan element `p`
+ * @property {React.ReactNode | (props:FaqProps) => React.ReactNode} [description]
+ * Deskripsi konten dimana dapat berupa sebuah string atau custom component yang menerima {@link FaqProps} atau lainnnya yang dapat dirender `React`
  *
  * - Default : Menggunakan {@link LOREM_DESCRIPTION variabel ini}
  */
@@ -415,7 +415,11 @@ function Accordion({
 							marginBottom: activeIndex.includes(index) ? '1.5rem' : 0
 						}}
 					>
-						<p>{item.description || LOREM_DESCRIPTION}</p>
+						<div>
+							{typeof item?.description === 'function'
+								? item.description({ fakta, universitas })
+								: item.description || LOREM_DESCRIPTION}
+						</div>
 					</motion.div>
 				</div>
 			))}
