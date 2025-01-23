@@ -136,6 +136,7 @@ export function startBugsnag() {
 			apiKey: process.env.NEXT_PUBLIC_BUGSNAG_SITEKEY,
 			appType: 'browser',
 			appVersion: process.env.NEXT_PUBLIC_APP_VERSION,
+			autoDetectErrors: false,
 			enabledBreadcrumbTypes: ['error', 'navigation', 'request', 'user'],
 			maxBreadcrumbs: 25,
 			maxEvents: 10,
