@@ -1,18 +1,19 @@
 name: vercel-deployment
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
 env:
   VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
   VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
-on:
-  workflow_run:
-    workflows: ["build-and-test"]
-    types:
-      - completed
+  
 jobs:
   production:
     runs-on: ubuntu-latest
     steps:
       - name: 📦 Checkout repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
       
       - name: 📥 Download and install vercel CLI
         run: npm install --global vercel@latest
