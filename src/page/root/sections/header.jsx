@@ -113,6 +113,8 @@ const HamburgerButton = ({ showNavbarOverlay, setShowNavbarOverlay }) => (
 );
 
 const LogoWithWrapper = () => {
+	const { showNavbarOverlay, setShowNavbarOverlay } =
+		React.useContext(RootContext);
 	const router = useRouter();
 	const pathname = usePathname();
 
@@ -120,6 +122,10 @@ const LogoWithWrapper = () => {
 		<div
 			className={styles.logo}
 			onClick={() => {
+				if (showNavbarOverlay) {
+					setShowNavbarOverlay(false);
+					document.body.classList.remove('disable_scroll');
+				}
 				if (pathname === '/')
 					scroll.scrollToTop({ smooth: false, duration: 1 });
 				else router.push('/');
