@@ -178,7 +178,9 @@ const TABS = /** @type {Array<TabItem>} */ ([
 					<>
 						<span>
 							SIPK bisa diakses melalui smartphone maupun laptop kamu, yang
-							gabisa itu akses kenangan terindah bareng mantan😔
+							gabisa itu akses kenangan terindah bareng mantan😔. Namun, untuk
+							kenyamanan dan kemudahan, SIPK saranin kalian menggunakan laptop
+							atau tablet.
 						</span>
 					</>
 				)
