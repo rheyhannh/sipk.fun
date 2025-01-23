@@ -124,8 +124,16 @@ const Hero = ({ notifikasi }) => {
 			<ContainerWrapper style={{ position: 'relative', zIndex: 2 }}>
 				<Banner
 					id={HERO_BANNER_ID}
-					title='Cek fitur baru yang menarik di SIPK!'
-					href={notifikasi[3].href}
+					title={
+						notifikasi.length
+							? notifikasi[0].title
+							: 'Cek fitur baru yang menarik di SIPK!'
+					}
+					href={
+						notifikasi.length
+							? notifikasi[0].href
+							: '/update/20112023/fitur-baru'
+					}
 				/>
 				<Title {...HERO_TITLE_PROPS} />
 				<Description text={HERO_DESCRIPTION_TEXT} />
