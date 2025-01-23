@@ -1,5 +1,11 @@
 // #region TYPE DEPEDENCY
-import { MotionStyle, UseInViewOptions, Target, TargetAndTransition, CustomValueType } from 'framer-motion';
+import {
+	MotionStyle,
+	UseInViewOptions,
+	Target,
+	TargetAndTransition,
+	CustomValueType
+} from 'framer-motion';
 // #endregion
 
 // #region REACT DEPEDENCY
@@ -11,24 +17,24 @@ import { motion, mix, useInView } from 'framer-motion';
 // #endregion
 
 // #region STYLE DEPEDENCY
-import styles from './style/highlight_text.module.css'
+import styles from './style/highlight_text.module.css';
 // #endregion
 
-/** 
- * Ref dari element `mark` yang digunakan sebagai `Container` 
+/**
+ * Ref dari element `mark` yang digunakan sebagai `Container`
  * @typedef {React.RefObject<HTMLElement>} markRef
  */
 
-/** 
- * Hook `useInView` yang digunakan. 
+/**
+ * Hook `useInView` yang digunakan.
  * Saat `useHook` false, variable ini akan selalu bernilai false
  * @typedef {boolean} inViewHook
  */
 
-/** 
+/**
  * Array yang berisikan setiap kata dari `text` yang digunakan.
  * Setiap spasi akan diubah menjadi `'_spaces_'`
- * 
+ *
  * ```js
  * const text = 'Contoh text'
  * const textWords = ['Contoh', '_spaces_', 'text']
@@ -36,15 +42,15 @@ import styles from './style/highlight_text.module.css'
  * @typedef {Array<string>} textWords
  */
 
-/** 
+/**
  * Array yang berisikan array setiap huruf dari `text` yang digunakan.
  * Setiap spasi tetap berbentuk `'_spaces_'`
- * 
+ *
  * ```js
  * const text = 'Contoh text'
  * const textWords = ['Contoh', '_spaces_', 'text']
  * const textChars = [
- *      ['C', 'o', 'n', 't', 'o', 'h'], 
+ *      ['C', 'o', 'n', 't', 'o', 'h'],
  *      '_spaces_',
  *      ['t', 'e', 'x', 't']
  * ]
@@ -52,60 +58,60 @@ import styles from './style/highlight_text.module.css'
  * @typedef {Array<Array<string> | string>} textChars
  */
 
-/** 
+/**
  * Style yang digunakan element mark sebagai `Container`
  * @typedef {React.CSSProperties} containerStyle
  */
 
-/** 
+/**
  * Style yang digunakan component `Wrapper`
  * @typedef {React.CSSProperties} wrapperStyle
  */
 
-/** 
+/**
  * Style yang digunakan component `Word`
  * @typedef {MotionStyle} wordStyle
  */
 
-/** 
+/**
  * Style atau animasi yang digunakan component `Word`
  * @typedef {MotionStyle} wordAnimate
  */
 
-/** 
+/**
  * Style atau animasi yang digunakan component `Char`
  * @typedef {MotionStyle} charAnimate
  */
 
-/** 
+/**
  * Indeks relatif sebuah huruf atau kata yang dihitung tanpa adanya item `'_spaces_'`
- * 
+ *
  * ```js
  * // Example Word
- * const x = ['Word', '_spaces_', 'Word2']; 
+ * const x = ['Word', '_spaces_', 'Word2'];
  * // flatIndex 'Word2' === 1
- * 
+ *
  * // Example Character
  * const y = [
- *      ['A', 'b', 'c'], 
- *      '_spaces_', 
+ *      ['A', 'b', 'c'],
+ *      '_spaces_',
  *      ['X', 'y', 'z']
- * ]; 
+ * ];
  * // flatIndex ['X', 'y', 'z'] === 1
  * ```
- * 
+ *
  * Digunakan untuk menghitung perhitungan delay atau efek stagger kata maupun huruf tanpa menghitung adanya spasi
- * 
+ *
  * @typedef {number} flatIndex
  */
 
-/** 
+/**
  * Opsi yang digunakan pada custom variant yang dibuat untuk mengatur efek stagger setiap kata atau huruf
  * @typedef {Object} customVariantOptions
  * @property {'first' | 'last' | 'random'} staggerType
  * Jenis stagger effect yang digunakan.
  * - Default : `'first'`
- * 
+ *
  * Penjelasan lengkap untuk tipe stagger efek per-kata dapat dilihat {@link presetOptions.wordStagger},
  * sedangkan untuk efek per-huruf dapat dilihat {@link presetOptions.charStagger}
  * @property {number} baseDelay
@@ -116,10 +122,10 @@ import styles from './style/highlight_text.module.css'
  * - Default : `0.05`
  * @property {presetOptions['randomStart']} randomStart
  * Array yang berisikan atribut css yang dianimasikan dengan menggunakan `randomStart`.
- * 
+ *
  * Fitur `randomStart` memungkinkan untuk memulai animasi tertentu dengan nilai awal atau nilai target secara acak
  * berdasarkan suatu batasan nilai terkecil dan terendah menggunakan component `mix` pada framer-motion.
- * 
+ *
  * Syarat menggunakan fitur ini adalah sebagai berikut,
  * - Atribut yg ingin menggunakan fitur ini harus bernilai array pada variant
  * - Nilai pada array pertama dapat bernilai `null` dimana ini menandakan animasi akan mulai dari current state
@@ -129,7 +135,7 @@ import styles from './style/highlight_text.module.css'
  * - Format array dengan panjang 4 `[initial, min, max, target]`
  * - Format array dengan panjang 6 `[initial, min_1, max_1, min_2, max_2, target]`
  * - Dan seterusnya dimana dapat menampung lebih banyak lagi
- * 
+ *
  * Untuk contoh case penggunaan fitur ini dapat dilihat sebagai berikut,
  * ```js
  * // Case saat arr.length === 3
@@ -141,7 +147,7 @@ import styles from './style/highlight_text.module.css'
  * }
  * // Output 25 diatas merupakan contoh hasil generasi angka acak dengan jarak -45 sampai 90
  * // Konfigurasi diatas akan menganimasikan 'x' dari 25 -> 0
- * 
+ *
  * // Case saat arr.length 4
  * const randomStart = ['x'];
  * const variants = {
@@ -151,7 +157,7 @@ import styles from './style/highlight_text.module.css'
  * }
  * // Output 35 diatas merupakan contoh hasil generasi angka acak dengan jarak -25 sampai 45
  * // Konfigurasi diatas akan menganimasikan 'x' dari (awal posisi) -> 35 -> 0
- * 
+ *
  * // Case saat arr.length 6
  * const randomStart = ['x'];
  * const variants = {
@@ -163,13 +169,13 @@ import styles from './style/highlight_text.module.css'
  * // Output 125 diatas merupakan contoh hasil generasi angka acak dengan jarak 90 sampai 180
  * // Konfigurasi diatas akan menganimasikan 'x' dari 10 -> 15 -> 125 -> 0
  * ```
- * 
+ *
  * Array dapat berjumlah lebih dari 6 dan sebanyak-banyaknya asalkan genap dan memenuhi syarat lainnya.
  * Jika tidak memenuhi syarat, maka perhitungan tidak akan dilakukan dan array tidak akan dimodifikasi,
  * sehingga animasi berjalan sesuai dengan apa yang ditulis
  */
 
-/** 
+/**
  * @typedef {Object} animateByIndexFnProps
  * @property {number} index
  * Saat digunakan pada `customCharVariants` ini mengacu pada index huruf (tanpa spasi) yang dihitung secara ascending atau beruturan dari awal
@@ -177,7 +183,7 @@ import styles from './style/highlight_text.module.css'
  * const text = 'sit amex'
  * // 's' = 0, 't' = 2, 'x' = 6
  * ```
- * 
+ *
  * Saat digunakan pada `customWordVariants` ini mengacu pada index kata (tanpa spasi) yang dihitung secara ascending atau beruturan dari awal
  * ```js
  * const text = 'sit amex'
@@ -189,7 +195,7 @@ import styles from './style/highlight_text.module.css'
  * const text = 'sit amex'
  * // 's' = 6, 't' = 4, 'x' = 0
  * ```
- * 
+ *
  * Saat digunakan pada `customWordVariants` ini mengacu pada index kata (tanpa spasi) yang dihitung secara descending atau beruturan dari akhir
  * ```js
  * const text = 'sit amex'
@@ -201,7 +207,7 @@ import styles from './style/highlight_text.module.css'
  * const text = 'sit amex'
  * // 's' = 2 (acak), 't' = 1 (acak), 'x' = 3 (acak)
  * ```
- * 
+ *
  * Saat digunakan pada `customWordVariants` ini mengacu pada index kata (tanpa spasi) secara acak
  * ```js
  * const text = 'sit amex'
@@ -209,7 +215,7 @@ import styles from './style/highlight_text.module.css'
  * ```
  */
 
-/** 
+/**
  * @typedef {(x:animateByIndexFnProps) => string | number | Array<string | number>} animateByIndexFn
  */
 
@@ -233,35 +239,35 @@ import styles from './style/highlight_text.module.css'
  * @typedef {CustomTargetAndTransition | DefaultTargetResolver} CustomVariants
  */
 
-/** 
+/**
  * @typedef {Object} presetOptions
  * @property {boolean} makeVariant
  * Buat animasi dalam variant sehingga dapat dimainkan melalui `motion` parent element
  * - Default : `false`
  * @property {string} variantName
  * Nama variant yang digunakan
- * - Default : `'highlight_text'` 
+ * - Default : `'highlight_text'`
  * @property {Array<keyof MotionStyle>} randomStart
  * Array yang berisikan atribut css yang dianimasikan dengan menggunakan `randomStart`.
- * 
+ *
  * Props ini hanya digunakan untuk kebutuhan `internal` untuk disesuaikan dengan preset yang sudah tersedia
- * 
+ *
  * @property {'first' | 'last' | 'random'} wordStagger
- * Jenis stagger effect yang digunakan. 
- * 
+ * Jenis stagger effect yang digunakan.
+ *
  * Saat menggunakan `'first'` maka animasi dimulai berurutan dari kata pertama,
  * jika `'last'` maka animasi dimulai berurutan dari kata terakhir sedangkan jika `'random'`
  * animasi dimulai dari kata yang dipilih secara acak dengan urutan yang acak.
- * 
+ *
  * - Note : Props ini hanya memberikan efek pada preset yang menggunakan animasi per-kata
  * - Default : `'first'`
  * @property {'first' | 'last' | 'random'} charStagger
- * Jenis stagger effect yang digunakan. 
- * 
+ * Jenis stagger effect yang digunakan.
+ *
  * Saat menggunakan `'first'` maka animasi dimulai berurutan dari huruf pertama,
  * jika `'last'` maka animasi dimulai berurutan dari huruf terakhir sedangkan jika `'random'`
  * animasi dimulai dari huruf yang dipilih secara acak dengan urutan yang acak.
- * 
+ *
  * - Note : Props ini hanya memberikan efek pada preset yang menggunakan animasi per-huruf
  * - Default : `'first'`
  * @property {Object<string, CustomVariants & {options:customVariantOptions}>} customCharVariants
@@ -270,7 +276,7 @@ import styles from './style/highlight_text.module.css'
  * Tambah motion custom `variants` untuk setiap kata dengan stagger efek yang sudah diatur secara internal
  */
 
-/** 
+/**
  * @typedef {Object} resolvedPreset
  * @property {containerStyle} containerStyle
  * Style yang digunakan element mark sebagai `Container`, dapat bernilai `undefined`
@@ -295,31 +301,31 @@ import styles from './style/highlight_text.module.css'
  * @property {[number, number, number]} scale
  * Animasikan `scale` dalam keyframe tertentu. Keyframe pertama dapat bernilai `null` untuk menggunakan current scale value
  * - Default : `[null, 1.45, 1]`
- * @property {[string, string, string]} color 
+ * @property {[string, string, string]} color
  * Animasikan `color` dalam keyframe tertentu. Keyframe pertama dapat bernilai `null` untuk menggunakan current color value.
  * Setiap keyframe dapat menggunakan warna dalam `hex` maupun `rgb`
  * - Default : `[null, '#556b9d', '#FF6341']`
- * @property {number} duration 
+ * @property {number} duration
  * Durasi animasi untuk setiap huruf dalam satuan `detik`
  * - Default : `0.3`
  * @property {number} baseDelay
  * Delay animasi untuk setiap huruf dalam satuan `detik`
  * - Default : `0`
- * @property {number} stagger 
+ * @property {number} stagger
  * Stagger animasi untuk setiap huruf dalam satuan `detik`
  * - Default : `0.05`
- * @property {number} repeat 
+ * @property {number} repeat
  * Jumlah pengulangan animasi
  * - Default : `0`
  * @property {number} repeatDelay
- * Delay pengulangan animasi dalam satuan `detik` 
+ * Delay pengulangan animasi dalam satuan `detik`
  * - Default : `0.1`
  * @property {React.CSSProperties} wordWrapperStyle
- * Style yang digunakan pada element wrapper untuk setiap `Word` atau kata yang digunakan. 
- * 
+ * Style yang digunakan pada element wrapper untuk setiap `Word` atau kata yang digunakan.
+ *
  * Saat props ini `truthy` atau ada style yang digunakan, maka setiap element kata akan dibungkus dengan
  * element wrapper.
- * 
+ *
  * - Default : `null`
  */
 
@@ -331,33 +337,33 @@ import styles from './style/highlight_text.module.css'
  * @property {[number, number]} z
  * Animasikan `z` dalam keyframe tertentu. Keyframe pertama dapat bernilai `null` untuk menggunakan current z value
  * - Default : `[300, 0]`
- * @property {[number, number]} rotateX 
+ * @property {[number, number]} rotateX
  * Animasikan `rotateX` dalam keyframe tertentu. Keyframe pertama dapat bernilai `null` untuk menggunakan current rotateX value
  * - Default : `[-45, 0]`
- * @property {[number, number]} opacity 
+ * @property {[number, number]} opacity
  * Animasikan `opacity` dalam keyframe tertentu. Keyframe pertama dapat bernilai `null` untuk menggunakan current opacity value
  * - Default : `[0, 1]`
- * @property {number} duration 
+ * @property {number} duration
  * Durasi animasi untuk setiap huruf dalam satuan `detik`
  * - Default : `0.8`
  * @property {number} baseDelay
  * Delay animasi untuk setiap huruf dalam satuan `detik`
  * - Default : `0`
- * @property {number} stagger 
+ * @property {number} stagger
  * Stagger animasi untuk setiap huruf dalam satuan `detik`
  * - Default : `0.04`
- * @property {number} repeat 
+ * @property {number} repeat
  * Jumlah pengulangan animasi
  * - Default : `0`
- * @property {number} repeatDelay 
- * Delay pengulangan animasi dalam satuan `detik` 
+ * @property {number} repeatDelay
+ * Delay pengulangan animasi dalam satuan `detik`
  * - Default : `0.1`
  * @property {React.CSSProperties} wordWrapperStyle
- * Style yang digunakan pada element wrapper untuk setiap `Word` atau kata yang digunakan. 
- * 
+ * Style yang digunakan pada element wrapper untuk setiap `Word` atau kata yang digunakan.
+ *
  * Saat props ini `truthy` atau ada style yang digunakan, maka setiap element kata akan dibungkus dengan
  * element wrapper.
- * 
+ *
  * - Default : `null`
  */
 
@@ -369,34 +375,34 @@ import styles from './style/highlight_text.module.css'
  * @property {[number, number]} rotateZ
  * Animasikan `rotateZ` dalam keyframe tertentu. Keyframe pertama dapat bernilai `null` untuk menggunakan current rotateZ value
  * - Default : `[-30, 0]`
- * @property {[number, number]} opacity 
+ * @property {[number, number]} opacity
  * Animasikan `opacity` dalam keyframe tertentu. Keyframe pertama dapat bernilai `null` untuk menggunakan current opacity value
  * - Default : `[0, 1]`
- * @property {number} duration 
+ * @property {number} duration
  * Durasi animasi untuk setiap kata dalam satuan `detik`
  * - Default : `1.2`
  * @property {number} baseDelay
  * Delay animasi untuk setiap kata dalam satuan `detik`
  * - Default : `0`
- * @property {number} stagger 
+ * @property {number} stagger
  * Stagger animasi untuk setiap kata dalam satuan `detik`
  * - Default : `0.2`
- * @property {number} repeat 
+ * @property {number} repeat
  * Jumlah pengulangan animasi
  * - Default : `0`
  * @property {number} bounce
  * Efek `bounce` yang digunakan dalam skala `0` hingga `1`.
  * Semakin besar maka efek bounce akan semakin besar
  * - Default : `0.5`
- * @property {number} repeatDelay 
- * Delay pengulangan animasi dalam satuan `detik` 
+ * @property {number} repeatDelay
+ * Delay pengulangan animasi dalam satuan `detik`
  * - Default : `0.1`
  * @property {React.CSSProperties} wordWrapperStyle
- * Style yang digunakan pada element wrapper untuk setiap `Word` atau kata yang digunakan. 
- * 
+ * Style yang digunakan pada element wrapper untuk setiap `Word` atau kata yang digunakan.
+ *
  * Saat props ini `truthy` atau ada style yang digunakan, maka setiap element kata akan dibungkus dengan
  * element wrapper.
- * 
+ *
  * - Default : `null`
  */
 
@@ -408,34 +414,34 @@ import styles from './style/highlight_text.module.css'
  * @property {[number, number]} y
  * Animasikan `y` dalam keyframe tertentu. Keyframe pertama dapat bernilai `null` untuk menggunakan current y value
  * - Default : `[125, 0]`
- * @property {[number, number]} rotate 
+ * @property {[number, number]} rotate
  * Animasikan `rotate` dalam keyframe tertentu. Keyframe pertama dapat bernilai `null` untuk menggunakan current rotate value
  * - Default : `[-3, 0]`
- * @property {number} duration 
+ * @property {number} duration
  * Durasi animasi untuk setiap kata dalam satuan `detik`
  * - Default : `1.2`
  * @property {number} baseDelay
  * Delay animasi untuk setiap kata dalam satuan `detik`
  * - Default : `0`
- * @property {number} stagger 
+ * @property {number} stagger
  * Stagger animasi untuk setiap kata dalam satuan `detik`
  * - Default : `0.025`
- * @property {number} repeat 
+ * @property {number} repeat
  * Jumlah pengulangan animasi
  * - Default : `0`
  * @property {number} bounce
  * Efek `bounce` yang digunakan dalam skala `0` hingga `1`.
  * Semakin besar maka efek bounce akan semakin besar
  * - Default : `0.25`
- * @property {number} repeatDelay 
- * Delay pengulangan animasi dalam satuan `detik` 
+ * @property {number} repeatDelay
+ * Delay pengulangan animasi dalam satuan `detik`
  * - Default : `0.1`
  * @property {React.CSSProperties} wordWrapperStyle
- * Style yang digunakan pada element wrapper untuk setiap `Word` atau kata yang digunakan. 
- * 
+ * Style yang digunakan pada element wrapper untuk setiap `Word` atau kata yang digunakan.
+ *
  * Saat props ini `truthy` atau ada style yang digunakan, maka setiap element kata akan dibungkus dengan
  * element wrapper.
- * 
+ *
  * Default : `{ overflow: 'hidden' }`
  */
 
@@ -450,34 +456,34 @@ import styles from './style/highlight_text.module.css'
  * @property {[number, number]} opacity
  * Animasikan `opacity` dalam keyframe tertentu. Keyframe pertama dapat bernilai `null` untuk menggunakan current opacity value
  * - Default : `[0, 1]`
- * @property {[number, number]} rotateX 
+ * @property {[number, number]} rotateX
  * Animasikan `rotateX` dalam keyframe tertentu. Keyframe pertama dapat bernilai `null` untuk menggunakan current rotateX value
  * - Default : `[90, 0]`
- * @property {number} duration 
+ * @property {number} duration
  * Durasi animasi untuk setiap kata dalam satuan `detik`
  * - Default : `1.2`
  * @property {number} baseDelay
  * Delay animasi untuk setiap kata dalam satuan `detik`
  * - Default : `0`
- * @property {number} stagger 
+ * @property {number} stagger
  * Stagger animasi untuk setiap kata dalam satuan `detik`
  * - Default : `0.03`
- * @property {number} repeat 
+ * @property {number} repeat
  * Jumlah pengulangan animasi
  * - Default : `0`
  * @property {number} bounce
  * Efek `bounce` yang digunakan dalam skala `0` hingga `1`.
  * Semakin besar maka efek bounce akan semakin besar
  * - Default : `0.25`
- * @property {number} repeatDelay 
- * Delay pengulangan animasi dalam satuan `detik` 
+ * @property {number} repeatDelay
+ * Delay pengulangan animasi dalam satuan `detik`
  * - Default : `0.1`
  * @property {React.CSSProperties} wordWrapperStyle
- * Style yang digunakan pada element wrapper untuk setiap `Word` atau kata yang digunakan. 
- * 
+ * Style yang digunakan pada element wrapper untuk setiap `Word` atau kata yang digunakan.
+ *
  * Saat props ini `truthy` atau ada style yang digunakan, maka setiap element kata akan dibungkus dengan
  * element wrapper.
- * 
+ *
  * - Default : `null`
  */
 
@@ -489,7 +495,7 @@ import styles from './style/highlight_text.module.css'
  * @property {[number, number]} opacity
  * Animasikan `opacity` dalam keyframe tertentu. Keyframe pertama dapat bernilai `null` untuk menggunakan current opacity value
  * - Default : `[0, 1]`
- * @property {[number, number, number]} rotateX 
+ * @property {[number, number, number]} rotateX
  * Animasikan `rotateX` dengan nilai awal acak beserta dengan nilai target seperti array berikut,
  * ```js
  * [x, y, z]
@@ -501,10 +507,10 @@ import styles from './style/highlight_text.module.css'
  * Dengan pengaturan diatas maka nilai awal akan berada pada kisaran `25` dan `90`.
  * Lalu untuk variabel `z` adalah target akhir dari animasi, sehingga pengaturan diatas akan memainkan
  * animasi `rotateX` dari nilai acak yang dibuat dari kisaran `25` dan `90` menjadi `0`.
- * 
+ *
  * - Misc : Variabel pada array hanya dapat berupa `number`
  * - Default : `[-90, 90, 0]`
- * @property {[number|string, number|string, number|string]} x 
+ * @property {[number|string, number|string, number|string]} x
  * Animasikan `x` dengan nilai awal acak beserta dengan nilai target seperti array berikut,
  * ```js
  * [a, b, c]
@@ -516,10 +522,10 @@ import styles from './style/highlight_text.module.css'
  * Dengan pengaturan diatas maka nilai awal akan berada pada kisaran `25` dan `90`.
  * Lalu untuk variabel `c` adalah target akhir dari animasi, sehingga pengaturan diatas akan memainkan
  * animasi `x` dari nilai acak yang dibuat dari kisaran `25` dan `90` menjadi `0`.
- * 
+ *
  * - Misc : Variabel pada array dapat berupa `number` atau angka dengan persentase `'25%'`
  * - Default : `['-50%', '50%', '0%']`
- * @property {[number|string, number|string, number|string]} y 
+ * @property {[number|string, number|string, number|string]} y
  * Animasikan `y` dengan nilai awal acak beserta dengan nilai target seperti array berikut,
  * ```js
  * [a, b, c]
@@ -531,10 +537,10 @@ import styles from './style/highlight_text.module.css'
  * Dengan pengaturan diatas maka nilai awal akan berada pada kisaran `25` dan `90`.
  * Lalu untuk variabel `c` adalah target akhir dari animasi, sehingga pengaturan diatas akan memainkan
  * animasi `y` dari nilai acak yang dibuat dari kisaran `25` dan `90` menjadi `0`.
- * 
+ *
  * - Misc : Variabel pada array dapat berupa `number` atau angka dengan persentase `'25%'`
  * - Default : `['-10%', '10%', '0%']`
- * @property {[number, number, number]} z 
+ * @property {[number, number, number]} z
  * Animasikan `z` dengan nilai awal acak beserta dengan nilai target seperti array berikut,
  * ```js
  * [a, b, c]
@@ -546,34 +552,34 @@ import styles from './style/highlight_text.module.css'
  * Dengan pengaturan diatas maka nilai awal akan berada pada kisaran `25` dan `90`.
  * Lalu untuk variabel `c` adalah target akhir dari animasi, sehingga pengaturan diatas akan memainkan
  * animasi `z` dari nilai acak yang dibuat dari kisaran `25` dan `90` menjadi `0`.
- * 
+ *
  * - Misc : Variabel pada array hanya dapat berupa `number`
  * - Default : `[400, 700, 0]`
- * @property {number} duration 
+ * @property {number} duration
  * Durasi animasi untuk setiap kata dalam satuan `detik`
  * - Default : `1.5`
  * @property {number} baseDelay
  * Delay animasi untuk setiap kata dalam satuan `detik`
  * - Default : `0`
- * @property {number} stagger 
+ * @property {number} stagger
  * Stagger animasi untuk setiap kata dalam satuan `detik`
  * - Default : `0.004`
- * @property {number} repeat 
+ * @property {number} repeat
  * Jumlah pengulangan animasi
  * - Default : `0`
  * @property {number} bounce
  * Efek `bounce` yang digunakan dalam skala `0` hingga `1`.
  * Semakin besar maka efek bounce akan semakin besar
  * - Default : `0`
- * @property {number} repeatDelay 
- * Delay pengulangan animasi dalam satuan `detik` 
+ * @property {number} repeatDelay
+ * Delay pengulangan animasi dalam satuan `detik`
  * - Default : `0.1`
  * @property {React.CSSProperties} wordWrapperStyle
- * Style yang digunakan pada element wrapper untuk setiap `Word` atau kata yang digunakan. 
- * 
+ * Style yang digunakan pada element wrapper untuk setiap `Word` atau kata yang digunakan.
+ *
  * Saat props ini `truthy` atau ada style yang digunakan, maka setiap element kata akan dibungkus dengan
  * element wrapper.
- * 
+ *
  * - Default : `null`
  */
 
@@ -593,10 +599,10 @@ import styles from './style/highlight_text.module.css'
 /** Props yang digunakan component `HighlightText`
  * @typedef {Object} HighlightTextProps
  * @property {string} [text]
- * Teks yang digunakan 
+ * Teks yang digunakan
  * - Default : `'highlighted text'`
  * @property {boolean} [useHook]
- * Boolean untuk menggunakan hook `'useInView'` atau tidak. 
+ * Boolean untuk menggunakan hook `'useInView'` atau tidak.
  * - Default : `true`
  * - Tips : Jika tidak menggunakan hook, dapat trigger animasi melalui variant dengan mengaktifkan
  * `makeVariant` terlebih dahulu pada `presetOptions`
@@ -626,299 +632,360 @@ import styles from './style/highlight_text.module.css'
  * @param {HighlightTextProps} props HighlightText props
  * @returns {React.ReactElement} Rendered component
  */
-const HighlightText = (
-    {
-        text = 'highlighted text',
-        useHook = true,
-        hookOptions,
-        preset,
-        presetOptions,
-        adjustWavingColor,
-        adjustWavingTranslate,
-        adjustSpringRotate,
-        adjustWavingFlyIn,
-        adjustWavingRotation,
-        adjustMixFancyTranslate,
-    }
-) => {
-    /** @type {ReturnType<typeof React.useState<resolvedPreset>>} */
-    const [usedPreset, setUsedPreset] = React.useState(null);
-    /** @type {markRef} */
-    const markRef = React.useRef(null);
-    /** @type {inViewHook} */
-    const inViewHook = useHook ? useInView(hookOptions?.ref ?? markRef, hookOptions) : false;
+const HighlightText = ({
+	text = 'highlighted text',
+	useHook = true,
+	hookOptions,
+	preset,
+	presetOptions,
+	adjustWavingColor,
+	adjustWavingTranslate,
+	adjustSpringRotate,
+	adjustWavingFlyIn,
+	adjustWavingRotation,
+	adjustMixFancyTranslate
+}) => {
+	/** @type {ReturnType<typeof React.useState<resolvedPreset>>} */
+	const [usedPreset, setUsedPreset] = React.useState(null);
+	/** @type {markRef} */
+	const markRef = React.useRef(null);
+	/** @type {inViewHook} */
+	const inViewHook = useHook
+		? useInView(hookOptions?.ref ?? markRef, hookOptions)
+		: false;
 
-    /** @type {textWords} */
-    const textWords = text.split(' ').flatMap((word, index, arr) => index < arr.length - 1 ? [word, '_spaces_'] : [word]);
-    /** @type {textChars} */
-    const textChars = textWords.map(word => word === '_spaces_' ? word : word.split(''));
+	/** @type {textWords} */
+	const textWords = text
+		.split(' ')
+		.flatMap((word, index, arr) =>
+			index < arr.length - 1 ? [word, '_spaces_'] : [word]
+		);
+	/** @type {textChars} */
+	const textChars = textWords.map((word) =>
+		word === '_spaces_' ? word : word.split('')
+	);
 
-    /**
-     * Method untuk resolve preset, opsi atribut, assign default value
-     * @returns {resolvedPreset} Resolved preset
-     */
-    const resolvePreset = () => {
-        if (preset === 'wavingTranslate') {
-            return {
-                containerStyle: { perspective: adjustWavingTranslate?.perspective ?? 500 },
-                wrapperStyle: { transformStyle: 'preserve-3d' },
-                wordStyle: { transformStyle: 'inherit' },
-                wordWrapperStyle: adjustWavingTranslate?.wordWrapperStyle,
-                wordAnimate: undefined,
-                charAnimate: {
-                    z: adjustWavingTranslate?.z ?? [300, 0],
-                    rotateX: adjustWavingTranslate?.rotateX ?? [-45, 0],
-                    opacity: adjustWavingTranslate?.opacity ?? [0, 1],
-                    transition: {
-                        duration: adjustWavingTranslate?.duration ?? 0.8,
-                        baseDelay: adjustWavingTranslate?.baseDelay ?? 0,
-                        delay: adjustWavingTranslate?.stagger ?? 0.04,
-                        repeat: adjustWavingTranslate?.repeat ?? 0,
-                        repeatDelay: adjustWavingTranslate?.repeatDelay ?? 0.1,
-                    },
-                    options: {
-                        makeVariant: presetOptions?.makeVariant ?? false,
-                        variantName: presetOptions?.variantName ?? 'highlight_text',
-                        charStagger: presetOptions?.charStagger ?? 'first',
-                    },
-                    _initial: {
-                        z: adjustWavingTranslate?.z ? adjustWavingTranslate.z.slice().reverse() : [null, 300],
-                        rotateX: adjustWavingTranslate?.rotateX ? adjustWavingTranslate.rotateX.slice().reverse() : [null, -45],
-                        opacity: adjustWavingTranslate?.opacity ? adjustWavingTranslate.opacity.slice().reverse() : [null, 0],
-                    }
-                },
-                customCharVariants: presetOptions?.customCharVariants,
-                customWordVariants: presetOptions?.customWordVariants,
-            }
-        } else if (preset === 'springRotate') {
-            return {
-                containerStyle: undefined,
-                wrapperStyle: undefined,
-                wordStyle: { transformOrigin: adjustSpringRotate?.transformOrigin ?? '0% 50%' },
-                wordWrapperStyle: adjustSpringRotate?.wordWrapperStyle,
-                wordAnimate: {
-                    rotateZ: adjustSpringRotate?.rotateZ ?? [-30, 0],
-                    opacity: adjustSpringRotate?.opacity ?? [0, 1],
-                    transition: {
-                        duration: adjustSpringRotate?.duration ?? 1.2,
-                        baseDelay: adjustSpringRotate?.baseDelay ?? 0,
-                        delay: adjustSpringRotate?.stagger ?? 0.2,
-                        repeat: adjustSpringRotate?.repeat ?? 0,
-                        type: 'spring',
-                        bounce: adjustSpringRotate?.bounce ?? 0.5,
-                        repeatDelay: adjustSpringRotate?.repeatDelay ?? 0.1,
-                    },
-                    options: {
-                        makeVariant: presetOptions?.makeVariant ?? false,
-                        variantName: presetOptions?.variantName ?? 'highlight_text',
-                        wordStagger: presetOptions?.wordStagger ?? 'first',
-                    },
-                    _initial: {
-                        rotateZ: adjustSpringRotate?.rotateZ ? adjustSpringRotate.rotateZ.slice().reverse() : [null, -30],
-                        opacity: adjustSpringRotate?.opacity ? adjustSpringRotate.opacity.slice().reverse() : [null, 0],
-                    }
-                },
-                charAnimate: undefined,
-                customCharVariants: presetOptions?.customCharVariants,
-                customWordVariants: presetOptions?.customWordVariants,
-            }
-        } else if (preset === 'wavingFlyIn') {
-            return {
-                containerStyle: undefined,
-                wrapperStyle: undefined,
-                wordStyle: {
-                    transformOrigin: adjustWavingFlyIn?.transformOrigin ?? '0% 50%',
-                    willChange: 'transform',
-                },
-                wordWrapperStyle: {
-                    overflow: 'hidden',
-                    ...adjustWavingFlyIn?.wordWrapperStyle
-                },
-                wordAnimate: {
-                    y: adjustWavingFlyIn?.y ?? [125, 0],
-                    rotate: adjustWavingFlyIn?.rotate ?? [-3, 0],
-                    transition: {
-                        duration: adjustWavingFlyIn?.duration ?? 1.2,
-                        baseDelay: adjustWavingFlyIn?.baseDelay ?? 0,
-                        delay: adjustWavingFlyIn?.stagger ?? 0.025,
-                        repeat: adjustWavingFlyIn?.repeat ?? 0,
-                        type: 'spring',
-                        bounce: adjustWavingFlyIn?.bounce ?? 0.25,
-                        repeatDelay: adjustWavingFlyIn?.repeatDelay ?? 0.1,
-                    },
-                    options: {
-                        makeVariant: presetOptions?.makeVariant ?? false,
-                        variantName: presetOptions?.variantName ?? 'highlight_text',
-                        wordStagger: presetOptions?.wordStagger ?? 'first',
-                    },
-                    _initial: {
-                        y: adjustWavingFlyIn?.y ? adjustWavingFlyIn.y.slice().reverse() : [null, 125],
-                        rotate: adjustWavingFlyIn?.rotate ? adjustWavingFlyIn.rotate.slice().reverse() : [null, -3],
-                    }
-                },
-                charAnimate: undefined,
-                customCharVariants: presetOptions?.customCharVariants,
-                customWordVariants: presetOptions?.customWordVariants,
-            }
-        } else if (preset === 'wavingRotation') {
-            return {
-                containerStyle: { perspective: adjustWavingRotation?.perspective ?? 800 },
-                wrapperStyle: { transformStyle: 'preserve-3d' },
-                wordStyle: {
-                    transformOrigin: adjustWavingRotation?.transformOrigin ?? '50% 100%',
-                    willChange: 'transform, opacity',
-                },
-                wordWrapperStyle: adjustWavingRotation?.wordWrapperStyle,
-                wordAnimate: {
-                    opacity: adjustWavingRotation?.opacity ?? [0, 1],
-                    rotateX: adjustWavingRotation?.rotateX ?? [90, 0],
-                    transition: {
-                        duration: adjustWavingRotation?.duration ?? 1.2,
-                        baseDelay: adjustWavingRotation?.baseDelay ?? 0,
-                        delay: adjustWavingRotation?.stagger ?? 0.03,
-                        repeat: adjustWavingRotation?.repeat ?? 0,
-                        type: 'spring',
-                        bounce: adjustWavingRotation?.bounce ?? 0.25,
-                        repeatDelay: adjustWavingRotation?.repeatDelay ?? 0.1,
-                    },
-                    options: {
-                        makeVariant: presetOptions?.makeVariant ?? false,
-                        variantName: presetOptions?.variantName ?? 'highlight_text',
-                        wordStagger: presetOptions?.wordStagger ?? 'first',
-                    },
-                    _initial: {
-                        opacity: adjustWavingRotation?.opacity ? adjustWavingRotation.opacity.slice().reverse() : [null, 0],
-                        rotateX: adjustWavingRotation?.rotateX ? adjustWavingRotation.rotateX.slice().reverse() : [null, 90],
-                    }
-                },
-                charAnimate: undefined,
-                customCharVariants: presetOptions?.customCharVariants,
-                customWordVariants: presetOptions?.customWordVariants,
-            }
-        } else if (preset === 'mixFancyTranslate') {
-            return {
-                containerStyle: { perspective: adjustMixFancyTranslate?.perspective ?? 1000 },
-                wrapperStyle: { transformStyle: 'preserve-3d' },
-                wordStyle: {
-                    willChange: 'transform, opacity',
-                },
-                wordWrapperStyle: adjustMixFancyTranslate?.wordWrapperStyle,
-                wordAnimate: {
-                    opacity: adjustMixFancyTranslate?.opacity ?? [0, 1],
-                    rotateX: adjustMixFancyTranslate?.rotateX ?? [-90, 90, 0],
-                    x: adjustMixFancyTranslate?.x ?? ['-50%', '50%', '0%'],
-                    y: adjustMixFancyTranslate?.y ?? ['-10%', '10%', '0%'],
-                    z: adjustMixFancyTranslate?.z ?? [400, 700, 0],
-                    transition: {
-                        duration: adjustMixFancyTranslate?.duration ?? 1.5,
-                        baseDelay: adjustMixFancyTranslate?.baseDelay ?? 0,
-                        delay: adjustMixFancyTranslate?.stagger ?? 0.004,
-                        repeat: adjustMixFancyTranslate?.repeat ?? 0,
-                        type: 'spring',
-                        bounce: adjustMixFancyTranslate?.bounce ?? 0,
-                        repeatDelay: adjustMixFancyTranslate?.repeatDelay ?? 0.1,
-                    },
-                    options: {
-                        makeVariant: presetOptions?.makeVariant ?? false,
-                        variantName: presetOptions?.variantName ?? 'highlight_text',
-                        randomStart: ['rotateX', 'x', 'y', 'z'],
-                        wordStagger: presetOptions?.wordStagger ?? 'first',
-                    },
-                    _initial: {
-                        opacity: adjustMixFancyTranslate?.opacity ? adjustMixFancyTranslate.opacity.slice().reverse() : [null, 0],
-                    }
-                },
-                charAnimate: undefined,
-                customCharVariants: presetOptions?.customCharVariants,
-                customWordVariants: presetOptions?.customWordVariants,
-            }
-        } else {
-            return {
-                containerStyle: undefined,
-                wrapperStyle: undefined,
-                wordStyle: undefined,
-                wordWrapperStyle: adjustWavingColor?.wordWrapperStyle,
-                wordAnimate: undefined,
-                charAnimate: {
-                    scale: adjustWavingColor?.scale ?? [null, 1.45, 1],
-                    color: adjustWavingColor?.color ?? [null, '#556b9d', '#FF6341'],
-                    transition: {
-                        duration: adjustWavingColor?.duration ?? 0.3,
-                        baseDelay: adjustWavingColor?.baseDelay ?? 0,
-                        delay: adjustWavingColor?.stagger ?? 0.05,
-                        repeat: adjustWavingColor?.repeat ?? 0,
-                        repeatDelay: adjustWavingColor?.repeatDelay ?? 0.1,
-                    },
-                    options: {
-                        makeVariant: presetOptions?.makeVariant ?? false,
-                        variantName: presetOptions?.variantName ?? 'highlight_text',
-                        charStagger: presetOptions?.charStagger ?? 'first'
-                    },
-                    _initial: {
-                        scale: adjustWavingColor?.scale ? adjustWavingColor.scale.slice().reverse() : [1, 1.45, 1],
-                        color: adjustWavingColor?.color ? adjustWavingColor.color.slice().reverse() : ['#FF6341', '#556b9d', null],
-                    }
-                },
-                customCharVariants: presetOptions?.customCharVariants,
-                customWordVariants: presetOptions?.customWordVariants,
-            }
-        }
-    }
+	/**
+	 * Method untuk resolve preset, opsi atribut, assign default value
+	 * @returns {resolvedPreset} Resolved preset
+	 */
+	const resolvePreset = () => {
+		if (preset === 'wavingTranslate') {
+			return {
+				containerStyle: {
+					perspective: adjustWavingTranslate?.perspective ?? 500
+				},
+				wrapperStyle: { transformStyle: 'preserve-3d' },
+				wordStyle: { transformStyle: 'inherit' },
+				wordWrapperStyle: adjustWavingTranslate?.wordWrapperStyle,
+				wordAnimate: undefined,
+				charAnimate: {
+					z: adjustWavingTranslate?.z ?? [300, 0],
+					rotateX: adjustWavingTranslate?.rotateX ?? [-45, 0],
+					opacity: adjustWavingTranslate?.opacity ?? [0, 1],
+					transition: {
+						duration: adjustWavingTranslate?.duration ?? 0.8,
+						baseDelay: adjustWavingTranslate?.baseDelay ?? 0,
+						delay: adjustWavingTranslate?.stagger ?? 0.04,
+						repeat: adjustWavingTranslate?.repeat ?? 0,
+						repeatDelay: adjustWavingTranslate?.repeatDelay ?? 0.1
+					},
+					options: {
+						makeVariant: presetOptions?.makeVariant ?? false,
+						variantName: presetOptions?.variantName ?? 'highlight_text',
+						charStagger: presetOptions?.charStagger ?? 'first'
+					},
+					_initial: {
+						z: adjustWavingTranslate?.z
+							? adjustWavingTranslate.z.slice().reverse()
+							: [null, 300],
+						rotateX: adjustWavingTranslate?.rotateX
+							? adjustWavingTranslate.rotateX.slice().reverse()
+							: [null, -45],
+						opacity: adjustWavingTranslate?.opacity
+							? adjustWavingTranslate.opacity.slice().reverse()
+							: [null, 0]
+					}
+				},
+				customCharVariants: presetOptions?.customCharVariants,
+				customWordVariants: presetOptions?.customWordVariants
+			};
+		} else if (preset === 'springRotate') {
+			return {
+				containerStyle: undefined,
+				wrapperStyle: undefined,
+				wordStyle: {
+					transformOrigin: adjustSpringRotate?.transformOrigin ?? '0% 50%'
+				},
+				wordWrapperStyle: adjustSpringRotate?.wordWrapperStyle,
+				wordAnimate: {
+					rotateZ: adjustSpringRotate?.rotateZ ?? [-30, 0],
+					opacity: adjustSpringRotate?.opacity ?? [0, 1],
+					transition: {
+						duration: adjustSpringRotate?.duration ?? 1.2,
+						baseDelay: adjustSpringRotate?.baseDelay ?? 0,
+						delay: adjustSpringRotate?.stagger ?? 0.2,
+						repeat: adjustSpringRotate?.repeat ?? 0,
+						type: 'spring',
+						bounce: adjustSpringRotate?.bounce ?? 0.5,
+						repeatDelay: adjustSpringRotate?.repeatDelay ?? 0.1
+					},
+					options: {
+						makeVariant: presetOptions?.makeVariant ?? false,
+						variantName: presetOptions?.variantName ?? 'highlight_text',
+						wordStagger: presetOptions?.wordStagger ?? 'first'
+					},
+					_initial: {
+						rotateZ: adjustSpringRotate?.rotateZ
+							? adjustSpringRotate.rotateZ.slice().reverse()
+							: [null, -30],
+						opacity: adjustSpringRotate?.opacity
+							? adjustSpringRotate.opacity.slice().reverse()
+							: [null, 0]
+					}
+				},
+				charAnimate: undefined,
+				customCharVariants: presetOptions?.customCharVariants,
+				customWordVariants: presetOptions?.customWordVariants
+			};
+		} else if (preset === 'wavingFlyIn') {
+			return {
+				containerStyle: undefined,
+				wrapperStyle: undefined,
+				wordStyle: {
+					transformOrigin: adjustWavingFlyIn?.transformOrigin ?? '0% 50%',
+					willChange: 'transform'
+				},
+				wordWrapperStyle: {
+					overflow: 'hidden',
+					...adjustWavingFlyIn?.wordWrapperStyle
+				},
+				wordAnimate: {
+					y: adjustWavingFlyIn?.y ?? [125, 0],
+					rotate: adjustWavingFlyIn?.rotate ?? [-3, 0],
+					transition: {
+						duration: adjustWavingFlyIn?.duration ?? 1.2,
+						baseDelay: adjustWavingFlyIn?.baseDelay ?? 0,
+						delay: adjustWavingFlyIn?.stagger ?? 0.025,
+						repeat: adjustWavingFlyIn?.repeat ?? 0,
+						type: 'spring',
+						bounce: adjustWavingFlyIn?.bounce ?? 0.25,
+						repeatDelay: adjustWavingFlyIn?.repeatDelay ?? 0.1
+					},
+					options: {
+						makeVariant: presetOptions?.makeVariant ?? false,
+						variantName: presetOptions?.variantName ?? 'highlight_text',
+						wordStagger: presetOptions?.wordStagger ?? 'first'
+					},
+					_initial: {
+						y: adjustWavingFlyIn?.y
+							? adjustWavingFlyIn.y.slice().reverse()
+							: [null, 125],
+						rotate: adjustWavingFlyIn?.rotate
+							? adjustWavingFlyIn.rotate.slice().reverse()
+							: [null, -3]
+					}
+				},
+				charAnimate: undefined,
+				customCharVariants: presetOptions?.customCharVariants,
+				customWordVariants: presetOptions?.customWordVariants
+			};
+		} else if (preset === 'wavingRotation') {
+			return {
+				containerStyle: {
+					perspective: adjustWavingRotation?.perspective ?? 800
+				},
+				wrapperStyle: { transformStyle: 'preserve-3d' },
+				wordStyle: {
+					transformOrigin: adjustWavingRotation?.transformOrigin ?? '50% 100%',
+					willChange: 'transform, opacity'
+				},
+				wordWrapperStyle: adjustWavingRotation?.wordWrapperStyle,
+				wordAnimate: {
+					opacity: adjustWavingRotation?.opacity ?? [0, 1],
+					rotateX: adjustWavingRotation?.rotateX ?? [90, 0],
+					transition: {
+						duration: adjustWavingRotation?.duration ?? 1.2,
+						baseDelay: adjustWavingRotation?.baseDelay ?? 0,
+						delay: adjustWavingRotation?.stagger ?? 0.03,
+						repeat: adjustWavingRotation?.repeat ?? 0,
+						type: 'spring',
+						bounce: adjustWavingRotation?.bounce ?? 0.25,
+						repeatDelay: adjustWavingRotation?.repeatDelay ?? 0.1
+					},
+					options: {
+						makeVariant: presetOptions?.makeVariant ?? false,
+						variantName: presetOptions?.variantName ?? 'highlight_text',
+						wordStagger: presetOptions?.wordStagger ?? 'first'
+					},
+					_initial: {
+						opacity: adjustWavingRotation?.opacity
+							? adjustWavingRotation.opacity.slice().reverse()
+							: [null, 0],
+						rotateX: adjustWavingRotation?.rotateX
+							? adjustWavingRotation.rotateX.slice().reverse()
+							: [null, 90]
+					}
+				},
+				charAnimate: undefined,
+				customCharVariants: presetOptions?.customCharVariants,
+				customWordVariants: presetOptions?.customWordVariants
+			};
+		} else if (preset === 'mixFancyTranslate') {
+			return {
+				containerStyle: {
+					perspective: adjustMixFancyTranslate?.perspective ?? 1000
+				},
+				wrapperStyle: { transformStyle: 'preserve-3d' },
+				wordStyle: {
+					willChange: 'transform, opacity'
+				},
+				wordWrapperStyle: adjustMixFancyTranslate?.wordWrapperStyle,
+				wordAnimate: {
+					opacity: adjustMixFancyTranslate?.opacity ?? [0, 1],
+					rotateX: adjustMixFancyTranslate?.rotateX ?? [-90, 90, 0],
+					x: adjustMixFancyTranslate?.x ?? ['-50%', '50%', '0%'],
+					y: adjustMixFancyTranslate?.y ?? ['-10%', '10%', '0%'],
+					z: adjustMixFancyTranslate?.z ?? [400, 700, 0],
+					transition: {
+						duration: adjustMixFancyTranslate?.duration ?? 1.5,
+						baseDelay: adjustMixFancyTranslate?.baseDelay ?? 0,
+						delay: adjustMixFancyTranslate?.stagger ?? 0.004,
+						repeat: adjustMixFancyTranslate?.repeat ?? 0,
+						type: 'spring',
+						bounce: adjustMixFancyTranslate?.bounce ?? 0,
+						repeatDelay: adjustMixFancyTranslate?.repeatDelay ?? 0.1
+					},
+					options: {
+						makeVariant: presetOptions?.makeVariant ?? false,
+						variantName: presetOptions?.variantName ?? 'highlight_text',
+						randomStart: ['rotateX', 'x', 'y', 'z'],
+						wordStagger: presetOptions?.wordStagger ?? 'first'
+					},
+					_initial: {
+						opacity: adjustMixFancyTranslate?.opacity
+							? adjustMixFancyTranslate.opacity.slice().reverse()
+							: [null, 0]
+					}
+				},
+				charAnimate: undefined,
+				customCharVariants: presetOptions?.customCharVariants,
+				customWordVariants: presetOptions?.customWordVariants
+			};
+		} else {
+			return {
+				containerStyle: undefined,
+				wrapperStyle: undefined,
+				wordStyle: undefined,
+				wordWrapperStyle: adjustWavingColor?.wordWrapperStyle,
+				wordAnimate: undefined,
+				charAnimate: {
+					scale: adjustWavingColor?.scale ?? [null, 1.45, 1],
+					color: adjustWavingColor?.color ?? [null, '#556b9d', '#FF6341'],
+					transition: {
+						duration: adjustWavingColor?.duration ?? 0.3,
+						baseDelay: adjustWavingColor?.baseDelay ?? 0,
+						delay: adjustWavingColor?.stagger ?? 0.05,
+						repeat: adjustWavingColor?.repeat ?? 0,
+						repeatDelay: adjustWavingColor?.repeatDelay ?? 0.1
+					},
+					options: {
+						makeVariant: presetOptions?.makeVariant ?? false,
+						variantName: presetOptions?.variantName ?? 'highlight_text',
+						charStagger: presetOptions?.charStagger ?? 'first'
+					},
+					_initial: {
+						scale: adjustWavingColor?.scale
+							? adjustWavingColor.scale.slice().reverse()
+							: [1, 1.45, 1],
+						color: adjustWavingColor?.color
+							? adjustWavingColor.color.slice().reverse()
+							: ['#FF6341', '#556b9d', null]
+					}
+				},
+				customCharVariants: presetOptions?.customCharVariants,
+				customWordVariants: presetOptions?.customWordVariants
+			};
+		}
+	};
 
-    let flatWordIndex = 0;
-    let flatCharIndex = 0;
-    const flatWordRandomIndex = generateRandomFlatIndex(textWords.filter((item) => item !== '_spaces_').length);
-    const flatCharRandomIndex = generateRandomFlatIndex(textChars.filter((item) => item !== '_spaces_').flat().length)
+	let flatWordIndex = 0;
+	let flatCharIndex = 0;
+	const flatWordRandomIndex = generateRandomFlatIndex(
+		textWords.filter((item) => item !== '_spaces_').length
+	);
+	const flatCharRandomIndex = generateRandomFlatIndex(
+		textChars.filter((item) => item !== '_spaces_').flat().length
+	);
 
-    React.useEffect(() => {
-        setUsedPreset(resolvePreset());
-    }, [preset, presetOptions, adjustWavingColor, adjustSpringRotate, adjustWavingTranslate, adjustWavingFlyIn, adjustWavingRotation, adjustMixFancyTranslate])
+	React.useEffect(() => {
+		setUsedPreset(resolvePreset());
+	}, [
+		preset,
+		presetOptions,
+		adjustWavingColor,
+		adjustSpringRotate,
+		adjustWavingTranslate,
+		adjustWavingFlyIn,
+		adjustWavingRotation,
+		adjustMixFancyTranslate
+	]);
 
-    return (
-        <motion.mark
-            ref={markRef}
-            className={styles.container}
-            style={usedPreset?.containerStyle}
-        >
-            <Wrapper style={usedPreset?.wrapperStyle}>
-                {textChars.map((item, index) => {
-                    const currentFlatWordIndex = item !== '_spaces_' ? flatWordIndex++ : flatWordIndex;
+	return (
+		<motion.mark
+			ref={markRef}
+			className={styles.container}
+			style={usedPreset?.containerStyle}
+		>
+			<Wrapper style={usedPreset?.wrapperStyle}>
+				{textChars.map((item, index) => {
+					const currentFlatWordIndex =
+						item !== '_spaces_' ? flatWordIndex++ : flatWordIndex;
 
-                    return item !== '_spaces_' ? (
-                        <Word
-                            inViewHook={inViewHook}
-                            style={usedPreset?.wordStyle}
-                            wordAnimate={usedPreset?.wordAnimate}
-                            wordWrapperStyle={usedPreset?.wordWrapperStyle ?? null}
-                            wordRandomStagger={flatWordRandomIndex[currentFlatWordIndex]}
-                            wordLength={textWords.filter((item) => item !== '_spaces_').length}
-                            flatIndex={currentFlatWordIndex}
-                            customVariants={usedPreset?.customWordVariants}
-                            key={index}
-                        >
-                            {item.map((char, charIndex) => {
-                                const currentFlatCharIndex = flatCharIndex++;
-                                return (
-                                    <Char
-                                        inViewHook={inViewHook}
-                                        charAnimate={usedPreset?.charAnimate}
-                                        charRandomStagger={flatCharRandomIndex[currentFlatCharIndex]}
-                                        charLength={textChars.filter((item) => item !== '_spaces_').flat().length}
-                                        flatIndex={currentFlatCharIndex}
-                                        key={`${index}-${charIndex}`}
-                                        customVariants={usedPreset?.customCharVariants}
-                                    >
-                                        {char}
-                                    </Char>
-                                );
-                            })}
-                        </Word>
-                    ) : (<Spaces key={index} />)
-                })}
-            </Wrapper>
-        </motion.mark>
-    )
-}
+					return item !== '_spaces_' ? (
+						<Word
+							inViewHook={inViewHook}
+							style={usedPreset?.wordStyle}
+							wordAnimate={usedPreset?.wordAnimate}
+							wordWrapperStyle={usedPreset?.wordWrapperStyle ?? null}
+							wordRandomStagger={flatWordRandomIndex[currentFlatWordIndex]}
+							wordLength={
+								textWords.filter((item) => item !== '_spaces_').length
+							}
+							flatIndex={currentFlatWordIndex}
+							customVariants={usedPreset?.customWordVariants}
+							key={index}
+						>
+							{item.map((char, charIndex) => {
+								const currentFlatCharIndex = flatCharIndex++;
+								return (
+									<Char
+										inViewHook={inViewHook}
+										charAnimate={usedPreset?.charAnimate}
+										charRandomStagger={
+											flatCharRandomIndex[currentFlatCharIndex]
+										}
+										charLength={
+											textChars.filter((item) => item !== '_spaces_').flat()
+												.length
+										}
+										flatIndex={currentFlatCharIndex}
+										key={`${index}-${charIndex}`}
+										customVariants={usedPreset?.customCharVariants}
+									>
+										{char}
+									</Char>
+								);
+							})}
+						</Word>
+					) : (
+						<Spaces key={index} />
+					);
+				})}
+			</Wrapper>
+		</motion.mark>
+	);
+};
 
 /**
  * Component Description
@@ -926,13 +993,10 @@ const HighlightText = (
  * @returns {React.ReactElement} Rendered component
  */
 const Wrapper = ({ style, children }) => (
-    <span
-        className={styles.wrapper}
-        style={style}
-    >
-        {children}
-    </span>
-)
+	<span className={styles.wrapper} style={style}>
+		{children}
+	</span>
+);
 
 /**
  * Props yang digunakan component `Word`
@@ -941,11 +1005,11 @@ const Wrapper = ({ style, children }) => (
  * @property {MotionStyle} style
  * @property {wordAnimate & {options:presetOptions}} wordAnimate
  * @property {React.CSSProperties} wordWrapperStyle
- * Style yang digunakan pada element wrapper untuk setiap `Word` atau kata yang digunakan. 
- * 
+ * Style yang digunakan pada element wrapper untuk setiap `Word` atau kata yang digunakan.
+ *
  * Saat props ini `truthy` atau ada style yang digunakan, maka setiap element kata akan dibungkus dengan
  * element wrapper.
- * 
+ *
  * - Default : `null`
  * @property {number} wordRandomStagger
  * Stagger random yang diperoleh menggunakan `generateRandomFlatIndex`
@@ -962,134 +1026,193 @@ const Wrapper = ({ style, children }) => (
  * @param {WordProps} props Word props
  * @returns {React.ReactElement} Rendered component
  */
-const Word = ({ inViewHook, style, wordAnimate, wordWrapperStyle = null, wordRandomStagger, wordLength, flatIndex, customVariants, children }) => {
-    const useWrapper = !!wordWrapperStyle;
-    const useRandomStart = wordAnimate && Array.isArray(wordAnimate?.options?.randomStart);
+const Word = ({
+	inViewHook,
+	style,
+	wordAnimate,
+	wordWrapperStyle = null,
+	wordRandomStagger,
+	wordLength,
+	flatIndex,
+	customVariants,
+	children
+}) => {
+	const useWrapper = !!wordWrapperStyle;
+	const useRandomStart =
+		wordAnimate && Array.isArray(wordAnimate?.options?.randomStart);
 
-    const wordAnimateUpdated = {};
+	const wordAnimateUpdated = {};
 
-    if (useRandomStart) {
-        const { options: { randomStart } } = wordAnimate;
-        randomStart.forEach((attr, _) => {
-            const [min, max, target] = [wordAnimate[attr][0], wordAnimate[attr][1], wordAnimate[attr][2]]
-            const mixer = mix(min, max);
-            wordAnimateUpdated[attr] = [mixer(generateRandomScale()), target]
-        })
-    }
+	if (useRandomStart) {
+		const {
+			options: { randomStart }
+		} = wordAnimate;
+		randomStart.forEach((attr, _) => {
+			const [min, max, target] = [
+				wordAnimate[attr][0],
+				wordAnimate[attr][1],
+				wordAnimate[attr][2]
+			];
+			const mixer = mix(min, max);
+			wordAnimateUpdated[attr] = [mixer(generateRandomScale()), target];
+		});
+	}
 
-    /**
-     * Method untuk menghitung delay agar menciptakan animasi efek stagger per-kata berdasarkan tipe stagger yang digunakan
-     * @returns {number} Delay yang sudah dihitung
-     */
-    const countDelay = () => {
-        const staggerType = wordAnimate ? wordAnimate?.options?.wordStagger ?? 'first' : 'first';
-        const { delay = 0.1, baseDelay = 0 } = wordAnimate?.transition;
+	/**
+	 * Method untuk menghitung delay agar menciptakan animasi efek stagger per-kata berdasarkan tipe stagger yang digunakan
+	 * @returns {number} Delay yang sudah dihitung
+	 */
+	const countDelay = () => {
+		const staggerType = wordAnimate
+			? (wordAnimate?.options?.wordStagger ?? 'first')
+			: 'first';
+		const { delay = 0.1, baseDelay = 0 } = wordAnimate?.transition;
 
-        if (staggerType === 'random') {
-            return (wordRandomStagger * delay) + baseDelay
-        } else if (staggerType === 'last') {
-            return (Math.abs(flatIndex - (wordLength - 1)) * delay) + baseDelay
-        } else {
-            return (flatIndex * delay) + baseDelay
-        }
-    }
+		if (staggerType === 'random') {
+			return wordRandomStagger * delay + baseDelay;
+		} else if (staggerType === 'last') {
+			return Math.abs(flatIndex - (wordLength - 1)) * delay + baseDelay;
+		} else {
+			return flatIndex * delay + baseDelay;
+		}
+	};
 
-    const updatedPresetDelay = !wordAnimate ? {} : {
-        ...wordAnimate,
-        ...wordAnimateUpdated,
-        transition: {
-            ...wordAnimate.transition,
-            delay: countDelay()
-        }
-    };
-    const { options, _initial, transition, ...wordAnimateFiltered } = updatedPresetDelay;
+	const updatedPresetDelay = !wordAnimate
+		? {}
+		: {
+				...wordAnimate,
+				...wordAnimateUpdated,
+				transition: {
+					...wordAnimate.transition,
+					delay: countDelay()
+				}
+			};
+	const { options, _initial, transition, ...wordAnimateFiltered } =
+		updatedPresetDelay;
 
-    const initialUpdated = Object.keys(wordAnimateUpdated).reduce((acc, key) => {
-        acc[key] = wordAnimateUpdated[key].slice().reverse();
-        return acc;
-    }, {});
+	const initialUpdated = Object.keys(wordAnimateUpdated).reduce((acc, key) => {
+		acc[key] = wordAnimateUpdated[key].slice().reverse();
+		return acc;
+	}, {});
 
-    const initialAnimate = { ..._initial, ...initialUpdated };
+	const initialAnimate = { ..._initial, ...initialUpdated };
 
-    const fixedCustomVariants = !customVariants ? {} : Object.keys(customVariants).reduce((variants, key) => {
-        const { options = {}, transition: framerTransition = {}, ...animation } = customVariants[key];
-        const {
-            staggerType = 'first',
-            baseDelay = 0,
-            stagger = 0.05,
-            randomStart = [],
-        } = options;
+	const fixedCustomVariants = !customVariants
+		? {}
+		: Object.keys(customVariants).reduce((variants, key) => {
+				const {
+					options = {},
+					transition: framerTransition = {},
+					...animation
+				} = customVariants[key];
+				const {
+					staggerType = 'first',
+					baseDelay = 0,
+					stagger = 0.05,
+					randomStart = []
+				} = options;
 
-        const animationRandomStart = {};
+				const animationRandomStart = {};
 
-        Object.entries(animation).forEach(([key, val]) => {
-            if (typeof val === 'function') {
-                const [index, lastIndex, randomIndex] = [
-                    flatIndex,
-                    Math.abs(flatIndex - (wordLength - 1)),
-                    wordRandomStagger
-                ]
-                animation[key] = val({ index, lastIndex, randomIndex });
-            }
-        })
+				Object.entries(animation).forEach(([key, val]) => {
+					if (typeof val === 'function') {
+						const [index, lastIndex, randomIndex] = [
+							flatIndex,
+							Math.abs(flatIndex - (wordLength - 1)),
+							wordRandomStagger
+						];
+						animation[key] = val({ index, lastIndex, randomIndex });
+					}
+				});
 
-        if (randomStart.length) {
-            randomStart.forEach((attr) => {
-                if (animation[attr] && Array.isArray(animation[attr]) && animation[attr].length >= 3) {
-                    const animArray = animation[attr];
+				if (randomStart.length) {
+					randomStart.forEach((attr) => {
+						if (
+							animation[attr] &&
+							Array.isArray(animation[attr]) &&
+							animation[attr].length >= 3
+						) {
+							const animArray = animation[attr];
 
-                    if (animArray.length === 3) {
-                        const [min, max, target] = [animArray[0], animArray[1], animArray[2]]
-                        const mixer = mix(min, max);
-                        animationRandomStart[attr] = [mixer(generateRandomScale()), target]
-                    } else {
-                        if (animArray.length % 2 === 0 && animArray.slice(1).some(val => val !== null)) {
-                            const result = [animArray[0]];
+							if (animArray.length === 3) {
+								const [min, max, target] = [
+									animArray[0],
+									animArray[1],
+									animArray[2]
+								];
+								const mixer = mix(min, max);
+								animationRandomStart[attr] = [
+									mixer(generateRandomScale()),
+									target
+								];
+							} else {
+								if (
+									animArray.length % 2 === 0 &&
+									animArray.slice(1).some((val) => val !== null)
+								) {
+									const result = [animArray[0]];
 
-                            for (let i = 1; i < animArray.length - 1; i += 2) {
-                                const min = animArray[i];
-                                const max = animArray[i + 1];
-                                const mixer = mix(min, max);
-                                result.push(mixer(generateRandomScale()));
-                            }
+									for (let i = 1; i < animArray.length - 1; i += 2) {
+										const min = animArray[i];
+										const max = animArray[i + 1];
+										const mixer = mix(min, max);
+										result.push(mixer(generateRandomScale()));
+									}
 
-                            result.push(animArray[animArray.length - 1]);
-                            animationRandomStart[attr] = result;
-                        }
-                    }
-                }
-            })
-        }
+									result.push(animArray[animArray.length - 1]);
+									animationRandomStart[attr] = result;
+								}
+							}
+						}
+					});
+				}
 
-        const delay =
-            staggerType === 'random' ? (wordRandomStagger * stagger) + baseDelay :
-                staggerType === 'last' ? (Math.abs(flatIndex - (wordLength - 1)) * stagger) + baseDelay :
-                    (flatIndex * stagger) + baseDelay
-            ;
+				const delay =
+					staggerType === 'random'
+						? wordRandomStagger * stagger + baseDelay
+						: staggerType === 'last'
+							? Math.abs(flatIndex - (wordLength - 1)) * stagger + baseDelay
+							: flatIndex * stagger + baseDelay;
+				variants[key] = {
+					...animation,
+					...animationRandomStart,
+					transition: { ...framerTransition, delay }
+				};
 
-        variants[key] = { ...animation, ...animationRandomStart, transition: { ...framerTransition, delay } };
+				return variants;
+			}, {});
 
-        return variants;
-    }, {})
+	const motionWord = (
+		<motion.span
+			className={styles.word}
+			style={style}
+			initial={false}
+			animate={
+				inViewHook
+					? { ...wordAnimateFiltered, transition }
+					: { ...initialAnimate, transition }
+			}
+			variants={
+				options?.makeVariant
+					? {
+							[options.variantName]: { ...wordAnimateFiltered, transition },
+							...fixedCustomVariants
+						}
+					: fixedCustomVariants
+			}
+		>
+			{children}
+		</motion.span>
+	);
 
-    const motionWord = (
-        <motion.span
-            className={styles.word}
-            style={style}
-            initial={false}
-            animate={inViewHook ? { ...wordAnimateFiltered, transition } : { ...initialAnimate, transition }}
-            variants={options?.makeVariant ? { [options.variantName]: { ...wordAnimateFiltered, transition }, ...fixedCustomVariants } : fixedCustomVariants}
-        >
-            {children}
-        </motion.span>
-    )
-
-    return useWrapper ? (
-        <span className={styles.word_wrapper} style={wordWrapperStyle}>
-            {motionWord}
-        </span>
-    ) : (motionWord);
-}
+	return useWrapper ? (
+		<span className={styles.word_wrapper} style={wordWrapperStyle}>
+			{motionWord}
+		</span>
+	) : (
+		motionWord
+	);
+};
 
 /**
  * Props yang digunakan component `Char`
@@ -1109,114 +1232,160 @@ const Word = ({ inViewHook, style, wordAnimate, wordWrapperStyle = null, wordRan
  * @param {CharProps} props Char props
  * @returns {React.ReactElement} Rendered component
  */
-const Char = ({ inViewHook, charAnimate, charRandomStagger, charLength, flatIndex, customVariants, children }) => {
-    /**
-     * Method untuk menghitung delay agar menciptakan animasi efek stagger per-huruf berdasarkan tipe stagger yang digunakan
-     * @returns {number} Delay yang sudah dihitung
-     */
-    const countDelay = () => {
-        const staggerType = charAnimate ? charAnimate?.options?.charStagger ?? 'first' : 'first';
-        const { delay = 0.1, baseDelay = 0 } = charAnimate?.transition;
+const Char = ({
+	inViewHook,
+	charAnimate,
+	charRandomStagger,
+	charLength,
+	flatIndex,
+	customVariants,
+	children
+}) => {
+	/**
+	 * Method untuk menghitung delay agar menciptakan animasi efek stagger per-huruf berdasarkan tipe stagger yang digunakan
+	 * @returns {number} Delay yang sudah dihitung
+	 */
+	const countDelay = () => {
+		const staggerType = charAnimate
+			? (charAnimate?.options?.charStagger ?? 'first')
+			: 'first';
+		const { delay = 0.1, baseDelay = 0 } = charAnimate?.transition;
 
-        if (staggerType === 'random') {
-            return (charRandomStagger * delay) + baseDelay
-        } else if (staggerType === 'last') {
-            return (Math.abs(flatIndex - (charLength - 1)) * delay) + baseDelay
-        } else {
-            return (flatIndex * delay) + baseDelay
-        }
-    }
+		if (staggerType === 'random') {
+			return charRandomStagger * delay + baseDelay;
+		} else if (staggerType === 'last') {
+			return Math.abs(flatIndex - (charLength - 1)) * delay + baseDelay;
+		} else {
+			return flatIndex * delay + baseDelay;
+		}
+	};
 
-    const updatedPresetDelay = !charAnimate ? {} : {
-        ...charAnimate,
-        transition: {
-            ...charAnimate.transition,
-            delay: countDelay()
-        }
-    };
-    const { options, _initial, transition, ...charAnimateFiltered } = updatedPresetDelay;
+	const updatedPresetDelay = !charAnimate
+		? {}
+		: {
+				...charAnimate,
+				transition: {
+					...charAnimate.transition,
+					delay: countDelay()
+				}
+			};
+	const { options, _initial, transition, ...charAnimateFiltered } =
+		updatedPresetDelay;
 
-    const fixedCustomVariants = !customVariants ? {} : Object.keys(customVariants).reduce((variants, key) => {
-        const { options = {}, transition: framerTransition = {}, ...animation } = customVariants[key];
-        const {
-            staggerType = 'first',
-            baseDelay = 0,
-            stagger = 0.05,
-            randomStart = [],
-        } = options;
+	const fixedCustomVariants = !customVariants
+		? {}
+		: Object.keys(customVariants).reduce((variants, key) => {
+				const {
+					options = {},
+					transition: framerTransition = {},
+					...animation
+				} = customVariants[key];
+				const {
+					staggerType = 'first',
+					baseDelay = 0,
+					stagger = 0.05,
+					randomStart = []
+				} = options;
 
-        const animationRandomStart = {};
+				const animationRandomStart = {};
 
-        Object.entries(animation).forEach(([key, val]) => {
-            if (typeof val === 'function') {
-                const [index, lastIndex, randomIndex] = [
-                    flatIndex,
-                    Math.abs(flatIndex - (charLength - 1)),
-                    charRandomStagger
-                ]
-                animation[key] = val({ index, lastIndex, randomIndex });
-            }
-        })
+				Object.entries(animation).forEach(([key, val]) => {
+					if (typeof val === 'function') {
+						const [index, lastIndex, randomIndex] = [
+							flatIndex,
+							Math.abs(flatIndex - (charLength - 1)),
+							charRandomStagger
+						];
+						animation[key] = val({ index, lastIndex, randomIndex });
+					}
+				});
 
-        if (randomStart.length) {
-            randomStart.forEach((attr) => {
-                if (animation[attr] && Array.isArray(animation[attr]) && animation[attr].length >= 3) {
-                    const animArray = animation[attr];
+				if (randomStart.length) {
+					randomStart.forEach((attr) => {
+						if (
+							animation[attr] &&
+							Array.isArray(animation[attr]) &&
+							animation[attr].length >= 3
+						) {
+							const animArray = animation[attr];
 
-                    if (animArray.length === 3) {
-                        const [min, max, target] = [animArray[0], animArray[1], animArray[2]]
-                        const mixer = mix(min, max);
-                        animationRandomStart[attr] = [mixer(generateRandomScale()), target]
-                    } else {
-                        if (animArray.length % 2 === 0 && animArray.slice(1).some(val => val !== null)) {
-                            const result = [animArray[0]];
+							if (animArray.length === 3) {
+								const [min, max, target] = [
+									animArray[0],
+									animArray[1],
+									animArray[2]
+								];
+								const mixer = mix(min, max);
+								animationRandomStart[attr] = [
+									mixer(generateRandomScale()),
+									target
+								];
+							} else {
+								if (
+									animArray.length % 2 === 0 &&
+									animArray.slice(1).some((val) => val !== null)
+								) {
+									const result = [animArray[0]];
 
-                            for (let i = 1; i < animArray.length - 1; i += 2) {
-                                const min = animArray[i];
-                                const max = animArray[i + 1];
-                                const mixer = mix(min, max);
-                                result.push(mixer(generateRandomScale()));
-                            }
+									for (let i = 1; i < animArray.length - 1; i += 2) {
+										const min = animArray[i];
+										const max = animArray[i + 1];
+										const mixer = mix(min, max);
+										result.push(mixer(generateRandomScale()));
+									}
 
-                            result.push(animArray[animArray.length - 1]);
-                            animationRandomStart[attr] = result;
-                        }
-                    }
-                }
-            })
-        }
+									result.push(animArray[animArray.length - 1]);
+									animationRandomStart[attr] = result;
+								}
+							}
+						}
+					});
+				}
 
-        const delay =
-            staggerType === 'random' ? (charRandomStagger * stagger) + baseDelay :
-                staggerType === 'last' ? (Math.abs(flatIndex - (charLength - 1)) * stagger) + baseDelay :
-                    (flatIndex * stagger) + baseDelay
-            ;
+				const delay =
+					staggerType === 'random'
+						? charRandomStagger * stagger + baseDelay
+						: staggerType === 'last'
+							? Math.abs(flatIndex - (charLength - 1)) * stagger + baseDelay
+							: flatIndex * stagger + baseDelay;
+				variants[key] = {
+					...animation,
+					...animationRandomStart,
+					transition: { ...framerTransition, delay }
+				};
 
-        variants[key] = { ...animation, ...animationRandomStart, transition: { ...framerTransition, delay } };
+				return variants;
+			}, {});
 
-        return variants;
-    }, {})
+	return (
+		<motion.span
+			className={styles.char}
+			initial={false}
+			animate={
+				inViewHook
+					? { ...charAnimateFiltered, transition }
+					: { ..._initial, transition }
+			}
+			variants={
+				options?.makeVariant
+					? {
+							[options.variantName]: { ...charAnimateFiltered, transition },
+							...fixedCustomVariants
+						}
+					: fixedCustomVariants
+			}
+		>
+			{children}
+		</motion.span>
+	);
+};
 
-    return (
-        <motion.span
-            className={styles.char}
-            initial={false}
-            animate={inViewHook ? { ...charAnimateFiltered, transition } : { ..._initial, transition }}
-            variants={options?.makeVariant ? { [options.variantName]: { ...charAnimateFiltered, transition }, ...fixedCustomVariants } : fixedCustomVariants}
-        >
-            {children}
-        </motion.span>
-    )
-}
-
-const Spaces = () => (
-    <span> </span>
-)
+const Spaces = () => <span> </span>;
 
 /**
- * Method untuk generate angka acak diantara `0` sampai `1` dengan pembulatan 2 decimal 
+ * Method untuk generate angka acak diantara `0` sampai `1` dengan pembulatan 2 decimal
  * @returns {number} Angka acak
- * @example 
+ * @example
  * ```js
  * console.log(generateRandomScale()) // 0.37
  * console.log(generateRandomScale()) // 0.78
@@ -1224,14 +1393,14 @@ const Spaces = () => (
  * ```
  */
 const generateRandomScale = () => {
-    return parseFloat((Math.random()).toFixed(2));
-}
+	return parseFloat(Math.random().toFixed(2));
+};
 
 /**
  * Method untuk generate array dengan length `max` yang berisikan angka `0` sampai `max - 1` dengan urutan acak
  * @param {number} [max=5] Length array, default `5`
  * @returns {Array<number>} Array yang berisikan angka
- * @example 
+ * @example
  * ```js
  * console.log(generateRandomFlatIndex(7)); // [3, 5, 2, 1, 4, 6, 0]
  * console.log(generateRandomFlatIndex(3)); // [2, 0, 1]
@@ -1239,12 +1408,12 @@ const generateRandomScale = () => {
  * ```
  */
 const generateRandomFlatIndex = (max = 5) => {
-    const arr = Array.from({ length: max }, (_, i) => i);
-    for (let i = arr.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [arr[i], arr[j]] = [arr[j], arr[i]];
-    }
-    return arr;
+	const arr = Array.from({ length: max }, (_, i) => i);
+	for (let i = arr.length - 1; i > 0; i--) {
+		const j = Math.floor(Math.random() * (i + 1));
+		[arr[i], arr[j]] = [arr[j], arr[i]];
+	}
+	return arr;
 };
 
 export default HighlightText;

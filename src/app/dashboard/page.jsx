@@ -1,16 +1,15 @@
 // #region PAGE DEPEDENCY
-import Dashboard from '@/page/Dashboard';
+import Dashboard from '@dashboard_page/Dashboard';
 // #endregion
 
 // #region UTIL DEPEDENCY
-import { getUniversitasData, getNotifikasiData } from '@/utils/core_data';
+import getUniversitas from '@/lib/supabase/cached/getUniversitas';
+import getNotifikasi from '@/lib/supabase/cached/getNotifikasi';
 // #endregion
 
 export default async function DashboardPage() {
-    const universitas = await getUniversitasData();
-    const notifikasi = await getNotifikasiData();
+	const universitas = await getUniversitas();
+	const notifikasi = await getNotifikasi();
 
-    return (
-        <Dashboard universitas={universitas} notifikasi={notifikasi} />
-    )
+	return <Dashboard universitas={universitas} notifikasi={notifikasi} />;
 }

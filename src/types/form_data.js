@@ -30,4 +30,4 @@ import * as Supabase from './supabase';
  * @typedef {Pick<Supabase.RatingData, 'rating' | 'review' | 'details'>} RatingFormData
  */
 
-export const FormDataTypes = {}
+export const FormDataTypes = {};

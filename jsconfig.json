@@ -1,7 +1,15 @@
 {
-  "compilerOptions": {
-    "paths": {
-      "@/*": ["./src/*"]
-    }
-  }
+	"compilerOptions": {
+		"paths": {
+			"@/*": ["./src/*"],
+			"@dashboard_page/*": ["./src/page/dashboard/*"],
+			"@dashboard-matakuliah_page/*": ["./src/page/dashboard/matakuliah/*"],
+			"@faq_page/*": ["./src/page/faq/*"],
+			"@magiclink_page/*": ["./src/page/magiclink/*"],
+			"@panduan_page/*": ["./src/page/panduan/*"],
+			"@root_page/*": ["./src/page/root/*"],
+			"@users_page/*": ["./src/page/users/*"],
+			"@assets/*": ["./public/*"]
+		}
+	}
 }

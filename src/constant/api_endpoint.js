@@ -1,5 +1,5 @@
 /**
- * Object dengan key sebagai nama endpoint dengan value enpointnya. 
+ * Object dengan key sebagai nama endpoint dengan value enpointnya.
  * ```js
  * // Contoh
  * console.log(endpointByKey['fakta']) // '/api/fakta'
@@ -8,18 +8,21 @@
  * ```
  */
 export const endpointByKey = {
-    'auth/check': '/api/auth/check',
-    'auth/confirm': '/api/auth/confirm',
-    'fakta': '/api/fakta',
-    'login': '/api/login',
-    'logout': '/api/logout',
-    'magiclink': '/api/magiclink',
-    'matkul': '/api/matkul',
-    'matkul-history': '/api/matkul-history',
-    'me': '/api/me',
-    'notifikasi': '/api/notifikasi',
-    'password': '/api/password',
-    'rating': '/api/rating',
-    'register': '/api/register',
-    'universitas': '/api/universitas',
-}
+	'auth/check': '/api/auth/check',
+	'auth/confirm': '/api/auth/confirm',
+	'auth/confirm/login': '/api/auth/confirm/login',
+	'auth/confirm/signup': '/api/auth/confirm/signup',
+	'auth/reset': '/api/auth/reset',
+	fakta: '/api/fakta',
+	login: '/api/login',
+	logout: '/api/logout',
+	magiclink: '/api/magiclink',
+	matkul: '/api/matkul',
+	'matkul-history': '/api/matkul-history',
+	me: '/api/me',
+	notifikasi: '/api/notifikasi',
+	password: '/api/password',
+	rating: '/api/rating',
+	register: '/api/register',
+	universitas: '/api/universitas'
+};

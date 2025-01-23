@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 // #region TYPE DEPEDENCY
 import { HTMLProps, CSSProperties } from 'react';
@@ -21,15 +21,12 @@ import PropTypes from 'prop-types';
 // #endregion
 
 // #region ICON DEPEDENCY
-import {
-    FiSun,
-    FiMoon,
-} from 'react-icons/fi';
+import { FiSun, FiMoon } from 'react-icons/fi';
 // #endregion
 
 /**
  * @typedef {Object} ThemeChangerProps
- * @property {boolean} [useInterval] 
+ * @property {boolean} [useInterval]
  * Boolean untuk mengganti tema secara otomatis tanpa perlu klik element. Ubah interval pada props `interval`
  * - Default : `false`
  * @property {number} [interval]
@@ -56,13 +53,13 @@ import {
  * Offset untuk menggeser component secara horizontal, dapat berupa angka, string angka atau string angka dengan unit css.
  * - Angka atau string angka (`3.25, -25, '10', '-12.5', etc`) secara otomatis akan dikonversi ke `px`
  * - String angka dengan unit css (`'2rem', '-3.25vw', '25px', '0.25vmax', '-35%', etc`)
- * 
+ *
  * Hanya dapat digunakan jika preset posisi tidak `'none'`
  * @property {string|number} options.position.offsetY
  * Offset untuk menggeser component secara vertikal, dapat berupa angka, string angka atau string angka dengan unit css
  * - Angka atau string angka (`3.25, -25, '10', '-12.5', etc`) secara otomatis akan dikonversi ke `px`
  * - String angka dengan unit css (`'2rem', '-3.25vw', '25px', '0.25vmax', '-35%', etc`)
- * 
+ *
  * Hanya dapat digunakan jika preset posisi tidak `'none'`
  * @property {CSSProperties} style
  * Custom style yang digunakan
@@ -74,172 +71,171 @@ import {
  * @param {HTMLProps & ThemeChangerProps} props Component props
  * @returns {JSX.Element} Rendered component
  */
-const ThemeChanger = (
-    {
-        useInterval = false,
-        interval = 5,
-        options = {
-            size: 42,
-            sizeIcon: '40%',
-            position: {
-                type: 'relative',
-                preset: 'none',
-            },
-        },
-        style,
-        onClick: onClickCallback,
-        ...props
-    }
-) => {
-    const { data: theme } = useLocalTheme();
+const ThemeChanger = ({
+	useInterval = false,
+	interval = 5,
+	options = {
+		size: 42,
+		sizeIcon: '40%',
+		position: {
+			type: 'relative',
+			preset: 'none'
+		}
+	},
+	style,
+	onClick: onClickCallback,
+	...props
+}) => {
+	const { data: theme } = useLocalTheme();
 
-    const offsetX = options?.position?.offsetX ? convertOffset(options.position.offsetX) : { value: '0px', negative: false };
-    const offsetY = options?.position?.offsetY ? convertOffset(options.position.offsetY) : { value: '0px', negative: false };
+	const offsetX = options?.position?.offsetX
+		? convertOffset(options.position.offsetX)
+		: { value: '0px', negative: false };
+	const offsetY = options?.position?.offsetY
+		? convertOffset(options.position.offsetY)
+		: { value: '0px', negative: false };
 
-    const positionStylePreset = {
-        'none': { position: options?.position?.type ?? null },
-        'top-left': {
-            position: options?.position?.type ?? 'absolute',
-            top: `calc(0% ${offsetY.negative ? '-' : '+'} ${offsetY.value})`,
-            left: `calc(0% ${offsetX.negative ? '-' : '+'} ${offsetX.value})`,
-            transform: `translate(-0%, -0%)`
-        },
-        'top-center': {
-            position: options?.position?.type ?? 'absolute',
-            top: `calc(0% ${offsetY.negative ? '-' : '+'} ${offsetY.value})`,
-            left: `calc(50% ${offsetX.negative ? '-' : '+'} ${offsetX.value})`,
-            transform: `translate(-50%, -0%)`
-        },
-        'top-right': {
-            position: options?.position?.type ?? 'absolute',
-            top: `calc(0% ${offsetY.negative ? '-' : '+'} ${offsetY.value})`,
-            left: `calc(100% ${offsetX.negative ? '-' : '+'} ${offsetX.value})`,
-            transform: `translate(-100%, -0%)`
-        },
-        'bottom-left': {
-            position: options?.position?.type ?? 'absolute',
-            top: `calc(100% ${offsetY.negative ? '-' : '+'} ${offsetY.value})`,
-            left: `calc(0% ${offsetX.negative ? '-' : '+'} ${offsetX.value})`,
-            transform: `translate(-0%, -100%)`
-        },
-        'bottom-center': {
-            position: options?.position?.type ?? 'absolute',
-            top: `calc(100% ${offsetY.negative ? '-' : '+'} ${offsetY.value})`,
-            left: `calc(50% ${offsetX.negative ? '-' : '+'} ${offsetX.value})`,
-            transform: `translate(-50%, -100%)`
-        },
-        'bottom-right': {
-            position: options?.position?.type ?? 'absolute',
-            top: `calc(100% ${offsetY.negative ? '-' : '+'} ${offsetY.value})`,
-            left: `calc(100% ${offsetX.negative ? '-' : '+'} ${offsetX.value})`,
-            transform: `translate(-100%, -100%)`
-        },
-        'middle-left': {
-            position: options?.position?.type ?? 'absolute',
-            top: `calc(50% ${offsetY.negative ? '-' : '+'} ${offsetY.value})`,
-            left: `calc(0% ${offsetX.negative ? '-' : '+'} ${offsetX.value})`,
-            transform: `translate(-0%, -50%)`
-        },
-        'middle-center': {
-            position: options?.position?.type ?? 'absolute',
-            top: `calc(50% ${offsetY.negative ? '-' : '+'} ${offsetY.value})`,
-            left: `calc(50% ${offsetX.negative ? '-' : '+'} ${offsetX.value})`,
-            transform: `translate(-50%, -50%)`
-        },
-        'middle-right': {
-            position: options?.position?.type ?? 'absolute',
-            top: `calc(50% ${offsetY.negative ? '-' : '+'} ${offsetY.value})`,
-            left: `calc(100% ${offsetX.negative ? '-' : '+'} ${offsetX.value})`,
-            transform: `translate(-100%, -50%)`
-        },
-    }
-    const otherStylePreset = {
-        width: options?.size ?? 42,
-        height: options?.size ?? 42,
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        background: 'var(--box-color-main)',
-        color: 'var(--logo-second-color)',
-        borderRadius: '.5rem',
-        zIndex: 999
-    }
+	const positionStylePreset = {
+		none: { position: options?.position?.type ?? null },
+		'top-left': {
+			position: options?.position?.type ?? 'absolute',
+			top: `calc(0% ${offsetY.negative ? '-' : '+'} ${offsetY.value})`,
+			left: `calc(0% ${offsetX.negative ? '-' : '+'} ${offsetX.value})`,
+			transform: `translate(-0%, -0%)`
+		},
+		'top-center': {
+			position: options?.position?.type ?? 'absolute',
+			top: `calc(0% ${offsetY.negative ? '-' : '+'} ${offsetY.value})`,
+			left: `calc(50% ${offsetX.negative ? '-' : '+'} ${offsetX.value})`,
+			transform: `translate(-50%, -0%)`
+		},
+		'top-right': {
+			position: options?.position?.type ?? 'absolute',
+			top: `calc(0% ${offsetY.negative ? '-' : '+'} ${offsetY.value})`,
+			left: `calc(100% ${offsetX.negative ? '-' : '+'} ${offsetX.value})`,
+			transform: `translate(-100%, -0%)`
+		},
+		'bottom-left': {
+			position: options?.position?.type ?? 'absolute',
+			top: `calc(100% ${offsetY.negative ? '-' : '+'} ${offsetY.value})`,
+			left: `calc(0% ${offsetX.negative ? '-' : '+'} ${offsetX.value})`,
+			transform: `translate(-0%, -100%)`
+		},
+		'bottom-center': {
+			position: options?.position?.type ?? 'absolute',
+			top: `calc(100% ${offsetY.negative ? '-' : '+'} ${offsetY.value})`,
+			left: `calc(50% ${offsetX.negative ? '-' : '+'} ${offsetX.value})`,
+			transform: `translate(-50%, -100%)`
+		},
+		'bottom-right': {
+			position: options?.position?.type ?? 'absolute',
+			top: `calc(100% ${offsetY.negative ? '-' : '+'} ${offsetY.value})`,
+			left: `calc(100% ${offsetX.negative ? '-' : '+'} ${offsetX.value})`,
+			transform: `translate(-100%, -100%)`
+		},
+		'middle-left': {
+			position: options?.position?.type ?? 'absolute',
+			top: `calc(50% ${offsetY.negative ? '-' : '+'} ${offsetY.value})`,
+			left: `calc(0% ${offsetX.negative ? '-' : '+'} ${offsetX.value})`,
+			transform: `translate(-0%, -50%)`
+		},
+		'middle-center': {
+			position: options?.position?.type ?? 'absolute',
+			top: `calc(50% ${offsetY.negative ? '-' : '+'} ${offsetY.value})`,
+			left: `calc(50% ${offsetX.negative ? '-' : '+'} ${offsetX.value})`,
+			transform: `translate(-50%, -50%)`
+		},
+		'middle-right': {
+			position: options?.position?.type ?? 'absolute',
+			top: `calc(50% ${offsetY.negative ? '-' : '+'} ${offsetY.value})`,
+			left: `calc(100% ${offsetX.negative ? '-' : '+'} ${offsetX.value})`,
+			transform: `translate(-100%, -50%)`
+		}
+	};
+	const otherStylePreset = {
+		width: options?.size ?? 42,
+		height: options?.size ?? 42,
+		display: 'flex',
+		justifyContent: 'center',
+		alignItems: 'center',
+		background: 'var(--box-color-main)',
+		color: 'var(--logo-second-color)',
+		borderRadius: '.5rem',
+		zIndex: 999
+	};
 
-    const handleChangeTheme = (newTheme) => {
-        if (theme === newTheme) { return }
-        localStorage.setItem('_theme', theme === 'dark' ? 'light' : 'dark')
-        mutate('localUserTheme');
-    }
+	const handleChangeTheme = (newTheme) => {
+		if (theme === newTheme) {
+			return;
+		}
+		localStorage.setItem('_theme', theme === 'dark' ? 'light' : 'dark');
+		mutate('localUserTheme');
+	};
 
-    const handleOnClick = (event) => {
-        handleChangeTheme(theme === 'dark' ? 'light' : 'dark');
-        if (onClickCallback) { onClickCallback(event); }
-    }
+	const handleOnClick = (event) => {
+		handleChangeTheme(theme === 'dark' ? 'light' : 'dark');
+		if (onClickCallback) {
+			onClickCallback(event);
+		}
+	};
 
-    useEffect(() => {
-        if (useInterval) {
-            const intervalId = setInterval(() => {
-                handleChangeTheme(theme === 'dark' ? 'light' : 'dark');
-            }, interval * 1000);
+	useEffect(() => {
+		if (useInterval) {
+			const intervalId = setInterval(() => {
+				handleChangeTheme(theme === 'dark' ? 'light' : 'dark');
+			}, interval * 1000);
 
-            return () => clearInterval(intervalId);
-        }
-    }, [useInterval, interval, handleChangeTheme, theme]);
+			return () => clearInterval(intervalId);
+		}
+	}, [useInterval, interval, handleChangeTheme, theme]);
 
-    return (
-        <div
-            style={{
-                ...(positionStylePreset[options?.position?.preset ?? 'none'] ?? positionStylePreset['none']),
-                ...(otherStylePreset),
-                ...(style)
-            }}
-            onClick={handleOnClick}
-            {...props}
-        >
-            {theme === 'dark' ? <FiSun size={options?.sizeIcon ?? '40%'} /> : <FiMoon size={options?.sizeIcon ?? '40%'} />}
-        </div>
-    )
-}
+	return (
+		<div
+			style={{
+				...(positionStylePreset[options?.position?.preset ?? 'none'] ??
+					positionStylePreset['none']),
+				...otherStylePreset,
+				...style
+			}}
+			onClick={handleOnClick}
+			{...props}
+		>
+			{theme === 'dark' ? (
+				<FiSun size={options?.sizeIcon ?? '40%'} />
+			) : (
+				<FiMoon size={options?.sizeIcon ?? '40%'} />
+			)}
+		</div>
+	);
+};
 
 ThemeChanger.propTypes = {
-    useInterval: PropTypes.bool,
-    interval: PropTypes.number,
-    options: PropTypes.shape({
-        size: PropTypes.oneOfType([
-            PropTypes.number,
-            PropTypes.string,
-        ]),
-        sizeIcon: PropTypes.oneOfType([
-            PropTypes.number,
-            PropTypes.string,
-        ]),
-        position: PropTypes.shape({
-            type: PropTypes.string,
-            preset: PropTypes.oneOf([
-                'top-left',
-                'top-center',
-                'top-right',
-                'bottom-left',
-                'bottom-center',
-                'bottom-right',
-                'middle-left',
-                'middle-center',
-                'middle-right',
-                'none'
-            ]),
-            offsetX: PropTypes.oneOfType([
-                PropTypes.number,
-                PropTypes.string,
-            ]),
-            offsetY: PropTypes.oneOfType([
-                PropTypes.number,
-                PropTypes.string,
-            ]),
-        }),
-    }),
-    style: PropTypes.object,
-    onClick: PropTypes.func,
-}
+	useInterval: PropTypes.bool,
+	interval: PropTypes.number,
+	options: PropTypes.shape({
+		size: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+		sizeIcon: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+		position: PropTypes.shape({
+			type: PropTypes.string,
+			preset: PropTypes.oneOf([
+				'top-left',
+				'top-center',
+				'top-right',
+				'bottom-left',
+				'bottom-center',
+				'bottom-right',
+				'middle-left',
+				'middle-center',
+				'middle-right',
+				'none'
+			]),
+			offsetX: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+			offsetY: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
+		})
+	}),
+	style: PropTypes.object,
+	onClick: PropTypes.func
+};
 
 // #region Utils
 
@@ -257,7 +253,7 @@ ThemeChanger.propTypes = {
  * Untuk contoh output dapat lihat pada `example`
  * @param {string|number} offset Nilai yang ingin dikonversi
  * @returns {{value:string, negative:boolean}} Object dengan key `value` yang merupakan nilainya dan `negative` boolean apakah negatif
- * @example 
+ * @example
  * ```js
  * console.log(convertOffset('50')); // {value: '50px', negative: false}
  * console.log(convertOffset('-2.5')); // {value: '2.5px', negative: true}
@@ -269,34 +265,34 @@ ThemeChanger.propTypes = {
  * ```
  */
 const convertOffset = (offset) => {
-    const result = {
-        value: '0px',
-        negative: false
-    };
+	const result = {
+		value: '0px',
+		negative: false
+	};
 
-    if (typeof offset === 'string' && /^-?\d+(\.\d+)?$/.test(offset)) {
-        offset = parseFloat(offset);
-    }
+	if (typeof offset === 'string' && /^-?\d+(\.\d+)?$/.test(offset)) {
+		offset = parseFloat(offset);
+	}
 
-    if (typeof offset === 'number') {
-        result.value = `${Math.abs(offset)}px`;
-        result.negative = offset < 0;
-        return result;
-    }
+	if (typeof offset === 'number') {
+		result.value = `${Math.abs(offset)}px`;
+		result.negative = offset < 0;
+		return result;
+	}
 
-    if (typeof offset === 'string') {
-        const validUnits = /^(-?\d+(\.\d+)?)(px|em|rem|vh|vw|vmin|vmax|%)$/;
-        const match = offset.match(validUnits);
+	if (typeof offset === 'string') {
+		const validUnits = /^(-?\d+(\.\d+)?)(px|em|rem|vh|vw|vmin|vmax|%)$/;
+		const match = offset.match(validUnits);
 
-        if (match) {
-            result.value = `${Math.abs(parseFloat(match[1]))}${match[3]}`;
-            result.negative = parseFloat(match[1]) < 0;
-            return result;
-        }
-    }
+		if (match) {
+			result.value = `${Math.abs(parseFloat(match[1]))}${match[3]}`;
+			result.negative = parseFloat(match[1]) < 0;
+			return result;
+		}
+	}
 
-    return result;
-}
+	return result;
+};
 
 // #endregion
 

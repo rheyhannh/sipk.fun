@@ -1,349 +1,347 @@
 // #region TYPE DEPEDENCY
 import {
-    User as SupabaseUser,
-    Session as SupabaseSession,
-    AuthError as SupabaseAuthError,
-    PostgrestError as SupabasePostgrestError,
-    WeakPassword as SupabaseWeakPassword,
-    AuthenticatorAssuranceLevels,
-    AMREntry,
+	User as SupabaseUser,
+	Session as SupabaseSession,
+	AuthError as SupabaseAuthError,
+	PostgrestError as SupabasePostgrestError,
+	WeakPassword as SupabaseWeakPassword,
+	AuthenticatorAssuranceLevels,
+	AMREntry
 } from '@supabase/supabase-js';
 import * as Sipk from './sipk';
 import * as TableMatakuliah from './table_matakuliah';
-import {
-    Names as UniversitasNames
-} from './universitas';
+import { Names as UniversitasNames } from './universitas';
 // #endregion
 
 // #region [CORE]
 /** Entry user yang diperoleh dari API `'/api/me'` atau supabase database table `user`
  * @typedef {Object} UserData
- * @property {string} id 
+ * @property {string} id
  * Id user dalam bentuk `uuid-v4`
- * @property {string} email 
+ * @property {string} email
  * Email user dengan kriteria
  * - min_length : `6`
  * - max_length : `100`
  * - format : `email`
- * @property {boolean} is_email_confirmed 
+ * @property {boolean} is_email_confirmed
  * Boolean apakah email sudah dikonfirmasi
- * 
+ *
  * Secara default diisi dengan `false` pada supabase setelah user mendaftar.
- * @property {Date} email_confirmed_at 
+ * @property {Date} email_confirmed_at
  * Tanggal email dikonfirmasi
- * 
+ *
  * Secara default diisi dengan `null` pada supabase setelah user mendaftar.
- * @property {boolean} is_banned 
+ * @property {boolean} is_banned
  * Boolean apakah user diban
- * 
+ *
  * Secara default diisi dengan `false` pada supabase setelah user mendaftar.
- * @property {Date} banned_until 
+ * @property {Date} banned_until
  * Tanggal berakhirnya ban user
- * 
+ *
  * Secara default diisi dengan `null` pada supabase setelah user mendaftar.
- * @property {string} roles 
+ * @property {string} roles
  * Roles atau kategori user dengan keterangan berikut,
  * - `member` : User dengan plan `free`
- * - `premium` : User dengan plan `premium` 
- * 
+ * - `premium` : User dengan plan `premium`
+ *
  * Secara default diisi dengan `'member'` pada supabase setelah user mendaftar.
- * @property {string} fullname 
+ * @property {string} fullname
  * Nama lengkap user dengan kriteria
  * - min_length : `6`
- * - max_length : `100`
- * @property {string} nickname 
+ * - max_length : `50`
+ * @property {string} nickname
  * Nama panggilan atau nickname user dengan kriteria
  * - min_length : `3`
  * - max_length : `20`
- * 
+ *
  * Secara default diisi dengan `'Si Misterius'` pada supabase setelah user mendaftar.
  * Kriteria diatas berlaku saat user mengganti nickname pada pengaturan profil.
- * @property {UniversitasNames} university 
+ * @property {UniversitasNames} university
  * Nama universitas user dengan format pascal case
  * - Contoh : `'Universitas Brawijaya'`
- * @property {number} university_id 
+ * @property {number} university_id
  * Id universitas user dalam bentuk integer dimulai dari `1`
- * @property {string} jurusan 
+ * @property {string} jurusan
  * Jurusan atau program studi user dengan kriteria
  * - min_length : `6`
  * - max_length : `30`
- * 
+ *
  * Secara default diisi dengan `'-'` pada supabase setelah user mendaftar.
  * Kriteria diatas berlaku saat user mengganti jurusan pada pengaturan profil.
- * @property {number} sks_target 
+ * @property {number} sks_target
  * Target sks user dengan kriteria
  * - min : `5`
  * - max : `1000`
- * 
+ *
  * Secara default diisi dengan `144` pada supabase setelah user mendaftar.
  * Kriteria diatas berlaku saat user mengganti target sks pada pengaturan profil.
- * @property {number} matkul_target 
+ * @property {number} matkul_target
  * Target matakuliah user dengan kriteria
  * - min : `5`
  * - max : `1000`
- * 
+ *
  * Secara default diisi dengan `50` pada supabase setelah user mendaftar.
  * Kriteria diatas berlaku saat user mengganti target matakuliah pada pengaturan profil.
- * @property {float} ipk_target 
+ * @property {float} ipk_target
  * Target ipk user dengan kriteria
  * - min : `1.00`
  * - max : `4.00`
  * - decimal_digit : `2`
- * 
+ *
  * Secara default diisi dengan `4` pada supabase setelah user mendaftar.
  * Kriteria diatas berlaku saat user mengganti target ipk pada pengaturan profil.
- * @property {Date} created_at 
+ * @property {Date} created_at
  * Tanggal user daftar
- * 
+ *
  * Secara default diisi dengan `now()` pada supabase setelah user mendaftar.
- * @property {Date} updated_at 
+ * @property {Date} updated_at
  * Tanggal terakhir user memperbarui datanya
- * 
+ *
  * Secara default diisi dengan `now()` pada supabase setelah user mendaftar.
- * @property {Object} preferences 
+ * @property {Object} preferences
  * User preferences
- * 
+ *
  * Secara default diisi dengan `null` pada supabase setelah user mendaftar.
  * Selalu gunakan optional chaining atau nullish coalescing saat mengakses key dari property ini untuk menghindari error.
- * @property {TableMatakuliah.PreferencesProps} preferences.table 
+ * @property {TableMatakuliah.PreferencesProps} preferences.table
  * User table preferences
- * 
+ *
  * Secara default diisi dengan `null` pada supabase setelah user mendaftar.
  * Selalu gunakan optional chaining atau nullish coalescing saat mengakses key dari property ini untuk menghindari error.
  */
 
 /** Entry matakuliah yang diperoleh dari API `'/api/matkul'` atau supabase database table `matkul`
  * @typedef {Object} MatkulData
- * @property {string} id 
+ * @property {string} id
  * Id matakuliah dalam bentuk `uuid-v4`.
- * 
+ *
  * Diresolve pada supabase menggunakan `gen_random_uuid()`
- * @property {string} nama 
+ * @property {string} nama
  * Nama matakuliah dengan kriteria
  * - min_length : `3`
  * - max_length : `50`
- * 
+ *
  * Diinput melalui form oleh user, divalidasi pada `'api/matkul'`
- * @property {number} semester 
+ * @property {number} semester
  * Semester matakuliah dengan kriteria
  * - min : `0`
  * - max : `50`
- * 
+ *
  * Diinput melalui form oleh user, divalidasi pada `'api/matkul'`
- * @property {number} sks 
+ * @property {number} sks
  * Sks matakuliah dengan kriteria
  * - min: `0`
  * - max : `50`
- * 
+ *
  * Diinput melalui form oleh user, divalidasi pada `'api/matkul'`
  * @property {Object} nilai Object yang merepresentasikan nilai matakuliah
- * @property {Sipk.DefaultIndeksNilai} nilai.indeks 
+ * @property {Sipk.DefaultIndeksNilai} nilai.indeks
  * Indeks nilai matakuliah.
- * 
+ *
  * Diinput melalui form oleh user, divalidasi pada `'api/matkul'`
- * @property {float} nilai.bobot 
+ * @property {float} nilai.bobot
  * Bobot nilai matakuliah untuk indeks nilai yang digunakan.
- * 
+ *
  * Diinput pada `'api/matkul'`
- * @property {float} nilai.akhir 
+ * @property {float} nilai.akhir
  * Nilai akhir matakuliah dihitung dari `bobot` * `sks`.
- * 
+ *
  * Dihitung pada `'api/matkul'`
- * @property {boolean} dapat_diulang 
+ * @property {boolean} dapat_diulang
  * Boolean matakuliah dapat diulang atau tidak.
- * 
+ *
  * Diinput melalui form oleh user, divalidasi pada `'api/matkul'`
- * @property {string} owned_by 
+ * @property {string} owned_by
  * Id user pemilik matakuliah.
- * 
+ *
  * Diresolve pada supabase dimana match dengan id user pada session yang digunakan
  * @property {Object} target_nilai Object yang merepresentasikan nilai target matakuliah
- * @property {Sipk.DefaultIndeksNilai} target_nilai.indeks 
+ * @property {Sipk.DefaultIndeksNilai} target_nilai.indeks
  * Indeks nilai target matakuliah.
- * 
+ *
  * Diinput melalui form oleh user, divalidasi pada `'api/matkul'`
- * @property {float} target_nilai.bobot 
+ * @property {float} target_nilai.bobot
  * Bobot nilai matakuliah untuk indeks nilai target yang digunakan.
- * 
+ *
  * Diinput pada `'api/matkul'`
- * @property {number} created_at 
+ * @property {number} created_at
  * Unix timestamp matakuliah dibuat.
- * 
+ *
  * Diresolve pada `'api/matkul'`
- * @property {number} updated_at 
+ * @property {number} updated_at
  * Unix timestamp terakhir matakuliah diperbarui.
- * 
+ *
  * Diresolve pada `'api/matkul'`
- * @property {number} deleted_at 
+ * @property {number} deleted_at
  * Unix timestamp matakuliah dihapus.
- * 
+ *
  * Diresolve pada `'api/matkul'`
  */
 
 /** Entry matakuliah history yang diperoleh dari API `'/api/matkul-history'` atau supabase database table `matkul_history`
  * @typedef {Object} MatkulHistoryData
- * @property {string} id 
+ * @property {string} id
  * Id matakuliah history dalam bentuk `uuid-v4`
- * 
+ *
  * Diresolve pada supabase menggunakan `gen_random_uuid()`
- * @property {Pick<MatkulData, 'nama' | 'semester' | 'sks' | 'nilai' | 'dapat_diulang' | 'target_nilai'> & BaseMatkulHistoryData} current 
+ * @property {Pick<MatkulData, 'nama' | 'semester' | 'sks' | 'nilai' | 'dapat_diulang' | 'target_nilai'> & BaseMatkulHistoryData} current
  * Current history matakuliah
- * @property {Pick<MatkulData, 'nama' | 'semester' | 'sks' | 'nilai' | 'dapat_diulang' | 'target_nilai'> & BaseMatkulHistoryData} prev 
+ * @property {Pick<MatkulData, 'nama' | 'semester' | 'sks' | 'nilai' | 'dapat_diulang' | 'target_nilai'> & BaseMatkulHistoryData} prev
  * Previous history matakuliah
- * @property {string} owned_by 
+ * @property {string} owned_by
  * Id user pemilik history matakuliah
- * @property {number} last_change_at 
+ * @property {number} last_change_at
  * Unix timestamp perubahan terakhir history matakuliah
- * @property {string} matkul_id 
+ * @property {string} matkul_id
  * Id matakuliah
  */
 
 /** Entry rating yang diperoleh dari API `'/api/rating'` atau supabase database table `rating`
  * @typedef {Object} RatingData
- * @property {string} id 
+ * @property {string} id
  * Id rating dalam bentuk `uuid-v4`.
- * 
+ *
  * Diresolve pada supabase menggunakan `gen_random_uuid()`
- * @property {number} rating 
+ * @property {number} rating
  * Jumlah bintang atau rating dengan kriteria
  * - min: `1`
  * - max : `5`
- * 
+ *
  * Diinput melalui form oleh user, divalidasi pada `'api/rating'`
- * @property {string} review 
+ * @property {string} review
  * Ulasan atau review dengan kriteria
  * - min_length : `0`
  * - max_length : `200`
  * - Tidak mengandung simbol `>` , `<` , `&` , `'` , `"` dan `/`
  * - Tidak mengandung kata `'http'`, `'https'`, `'www'`
- * 
+ *
  * Diinput melalui form oleh user, divalidasi pada `'api/rating'`
- * @property {string} owned_by 
+ * @property {string} owned_by
  * Id user pemilik rating.
- * 
+ *
  * Diresolve pada supabase dimana match dengan id user pada session yang digunakan
- * @property {Date} created_at 
+ * @property {Date} created_at
  * Tanggal rating dibuat.
- * 
+ *
  * Diresolve pada supabase dengan `now()`
- * @property {number} unix_created_at 
+ * @property {number} unix_created_at
  * Unix timestamp rating dibuat
- * 
+ *
  * Diresolve pada `'api/rating'`
- * @property {number} unix_updated_at 
+ * @property {number} unix_updated_at
  * Unix timestamp terakhir rating diperbarui
- * 
+ *
  * Diresolve pada `'api/rating'`
  * @property {Object} details
  * Rating details
- * @property {string} details.author 
+ * @property {string} details.author
  * Dapat bernilai nama lengkap atau nickname user atau `'Anonim'` tergantung dengan `authorType` yang digunakan
- * 
+ *
  * Diresolve pada `'api/rating'`
- * @property {0|1|2} details.authorType 
+ * @property {0|1|2} details.authorType
  * Tipe author rating dengan keterangan berikut,
  * - `0` : Nama lengkap user akan digunakan pada `author`
  * - `1` : Nickname user akan digunakan pada `author`
  * - `2` : `'Anonim'` akan digunakan pada `author`
- * 
+ *
  * Diinput melalui form oleh user, divalidasi pada `'api/rating'`
- * @property {UniversitasNames} details.universitas 
+ * @property {UniversitasNames} details.universitas
  * Nama universitas user pemilik rating dengan format pascal case
  * - Contoh : `'Universitas Brawijaya'`
- * 
+ *
  * Diresolve pada `'api/rating'`
  */
 
 /** Entry notifikasi yang diperoleh dari API `'/api/notifikasi'` atau supabase database table `notifikasi`
  * @typedef {Object} NotifikasiData
- * @property {string} id 
+ * @property {string} id
  * Id notifikasi.
- * 
+ *
  * Diresolve pada supabase dengan `gen_random_uuid()`
- * @property {string} title 
+ * @property {string} title
  * Judul atau headline notifikasi dengan kriteria
  * - min_length : `3`
  * - max_length : `25`
- * @property {string} description 
+ * @property {string} description
  * Deskripsi notifikasi dengan kriteria
  * - min_length : `50`
  * - max_length : `125`
- * @property {string} href 
+ * @property {string} href
  * Path atau link notifikasi
  * - Contoh : `'/update/22112023/maintenance-untuk-pemeliharan-jaringan'`
- * @property {Object} icon 
+ * @property {Object} icon
  * Icon {@link https://react-icons.github.io/react-icons/ react-icons} yang digunakan
- * @property {string} icon.lib 
- * Library icon pada {@link https://react-icons.github.io/react-icons/ react-icons}
+ * @property {string} icon.lib
+ * Library icon pada {@link https://react-icons.github.io/react-icons/ react-icons} untuk load icon secara dinamis
  * - Contoh : `'fa'`, `'io5'`
- * @property {string} icon.name 
- * Nama icon pada {@link https://react-icons.github.io/react-icons/ react-icons}
+ * @property {string} icon.name
+ * Nama icon pada {@link https://react-icons.github.io/react-icons/ react-icons} untuk load icon secara dinamis
  * - Contoh : `'FaRocket'`, `'IoAdd'`
- * @property {string} color 
+ * @property {string} color
  * Warna atau variabel warna yang digunakan
  * - Contoh : `'red'`, `'var(--some-color)'`
- * @property {Date} date_created_at 
+ * @property {Date} date_created_at
  * Tanggal notifikasi dibuat.
- * 
+ *
  * Diresolve pada supabase dengan `now()`
- * @property {number} unix_created_at 
+ * @property {number} unix_created_at
  * Unix timestamp notifikasi dibuat
- * 
+ *
  * Diresolve pada `'/api/notifikasi'`
  */
 
 /** Entry universitas yang diperoleh dari API `'/api/universitas'` atau supabase database table `universitas`
  * @typedef {Object} UniversitasData
- * @property {number} id 
+ * @property {number} id
  * Id universitas dalam bentuk integer dimulai dari `1`
- * @property {UniversitasNames} nama 
+ * @property {UniversitasNames} nama
  * Nama universitas dengan format pascal case
  * - Contoh : `'Universitas Brawijaya'`
- * @property {string} short 
+ * @property {string} short
  * Singkatan universitas dengan format uppercase
  * - Contoh : `'UB', 'ITB', 'UNDIP'`
- * @property {Record<Sipk.DefaultIndeksNilai, PenilaianProps>} penilaian 
+ * @property {Record<Sipk.DefaultIndeksNilai, PenilaianProps>} penilaian
  * Indeks nilai yang digunakan pada universitas tertentu.
  * Perlu diingat setiap universitas mungkin menggunakan indeks nilai yang berbeda, sehingga beberapa key dari property ini dapat bernilai `null`
  * - Note : Selalu gunakan optional chaining atau nullish coalescing saat mengakses key dari property ini untuk menghindari error
- * @property {Object} assets 
+ * @property {Object} assets
  * Assets universitas
- * @property {string} assets.logo 
+ * @property {string} assets.logo
  * Logo universitas dalam bentuk filename
  * - Contoh : `'logo_itb.png'`
- * @property {string} assets.desc 
+ * @property {string} assets.desc
  * Deskripsi universitas
- * @property {Object} assets.style 
+ * @property {Object} assets.style
  * Universitas custom style
- * @property {Object} assets.style.color 
+ * @property {Object} assets.style.color
  * Universitas custom color dalam bentuk `hex`
- * @property {string} assets.style.color.primary 
+ * @property {string} assets.style.color.primary
  * Universitas primary hex color, ex: `'#FBEA04'`
- * @property {string} assets.style.color.secondary 
+ * @property {string} assets.style.color.secondary
  * Universitas secondary hex color, ex: `'#252422'`
- * @property {Date} created_at 
+ * @property {Date} created_at
  * Tanggal universitas ditambahkan
  */
 
 /** Entry fakta yang diperoleh dari API `'/api/fakta'` atau supabase database table `fakta`
  * @typedef {Object} FaktaData
- * @property {string} id 
+ * @property {string} id
  * Id fakta.
- * 
+ *
  * Diresolve pada supabase dengan `gen_random_uuid()`
- * @property {string} text 
+ * @property {string} text
  * Konten fakta
- * @property {Object} details 
+ * @property {Object} details
  * Details fakta
- * @property {Array<string>} details.tags 
+ * @property {Array<string>} details.tags
  * Array yang memuat string sebagai tag
- * @property {Date} created_at 
+ * @property {Date} created_at
  * Tanggal fakta dibuat.
- * 
+ *
  * Diresolve pada supabase dengan `now()`
- * @property {Date} updated_at 
+ * @property {Date} updated_at
  * Tanggal fakta diperbarui.
- * 
+ *
  * Diresolve pada supabase dengan `now()`
  */
 // #endregion
@@ -445,21 +443,21 @@ import {
 // #region [HELPER]
 /** Base atau props tambahan untuk matakuliah history `MatkulHistoryData`
  * @typedef {Object} BaseMatkulHistoryData
- * @property {'tambah'|'hapus'|'ubah'} type 
+ * @property {'tambah'|'hapus'|'ubah'} type
  * Tipe history matakuliah
- * @property {number} stamp 
+ * @property {number} stamp
  * Unix timestamp history matakuliah
  */
 
 /** Tipe `penilaian` pada entry universitas atau `UniversitasData`
  * @typedef {Object} PenilaianProps
- * @property {?string} cat 
+ * @property {?string} cat
  * Kategori penilaian
  * - Contoh : `'baik', 'kurang', etc`
- * 
+ *
  * Pada beberapa universitas kategori penilaian tidak tersedia sehingga bernilai `null`
  * - Note : Selalu gunakan optional chaining atau nullish coalescing saat mengakses property ini untuk menghindari error
- * @property {'success'|'warning'|'danger'|'crimson'} style 
+ * @property {'success'|'warning'|'danger'|'crimson'} style
  * Style color penilaian
  * @property {float} weight Bobot penilaian
  */
@@ -485,9 +483,9 @@ import {
  * - min_length : `6`
  * - max_length : `50`
  * @property {string} token
- * Token yang diresolve `hCaptcha` setelah menyelesaikan challange captcha. 
+ * Token yang diresolve `hCaptcha` setelah menyelesaikan challange captcha.
  * Saat production token ini `required` untuk proses login dan register, jika tidak maka `optional`
  */
 // #endregion
 
-export const SupabaseTypes = {}
+export const SupabaseTypes = {};

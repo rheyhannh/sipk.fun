@@ -1,15 +1,13 @@
 // #region PAGE DEPEDENCY
-import Users from '@/page/Users';
+import Users from '@users_page/Users';
 // #endregion
 
 // #region UTIL DEPEDENCY
-import { getUniversitasData } from '@/utils/core_data';
+import getUniversitas from '@/lib/supabase/cached/getUniversitas';
 // #endregion
 
 export default async function UsersPage() {
-    const universitas = await getUniversitasData();
+	const universitas = await getUniversitas();
 
-    return (
-        <Users universitasData={universitas} />
-    )
+	return <Users universitasData={universitas} />;
 }

@@ -1,31 +1,31 @@
 .container {
-    position: relative;
-    width: max-content;
-    height: max-content;
-    font-size: 1rem;
-    color: #edeffd;
-    border-radius: calc(0.25 * 1rem);
-    padding: calc(0.25 * 1rem);
+	position: relative;
+	width: max-content;
+	height: max-content;
+	font-size: 1rem;
+	color: #edeffd;
+	border-radius: calc(0.25 * 1rem);
+	padding: calc(0.25 * 1rem);
 }
 
 .container.shadow:before {
-    background-color: var(--landing-body);
-    border-radius: inherit;
-    content: "";
-    height: 100%;
-    left: .925rem;
-    position: absolute;
-    top: .925rem;
-    width: 100%;
-    opacity: 0.4;
-    z-index: 1;
+	background-color: var(--landing-body);
+	border-radius: inherit;
+	content: '';
+	height: 100%;
+	left: 0.925rem;
+	position: absolute;
+	top: 0.925rem;
+	width: 100%;
+	opacity: 0.4;
+	z-index: 1;
 }
 
 .container .content {
-    position: relative;
-    z-index: 2;
-    font-size: inherit;
-    color: inherit;
-    border-radius: inherit;
-    padding: inherit;
+	position: relative;
+	z-index: 2;
+	font-size: inherit;
+	color: inherit;
+	border-radius: inherit;
+	padding: inherit;
 }

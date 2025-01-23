@@ -1,0 +1,100 @@
+@keyframes rotate {
+	0% {
+		transform: rotate(0deg);
+	}
+
+	100% {
+		transform: rotate(360deg);
+	}
+}
+
+.hide {
+	display: none;
+	opacity: 0;
+	visibility: hidden;
+	user-select: none;
+}
+
+.fancy_variant {
+	max-width: var(--field-maxWidth);
+	height: var(--field-height);
+	background-color: var(--field-backgroundColor);
+	margin: var(--field-margin);
+	border-radius: var(--field-borderRadius);
+	grid-template-columns: var(--field-gridTemplateColumns);
+	display: grid;
+	width: 100%;
+	transition: box-shadow 0.25s ease-in-out;
+}
+
+.fancy_variant.use_eye {
+	grid-template-columns: 1fr calc(70% - 25px) 25px 1fr;
+}
+
+.fancy_variant i {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	color: var(--icon-color);
+	transition: 0.25s ease-in-out;
+}
+
+.fancy_variant i.validator {
+	color: var(--icon-color);
+}
+
+.fancy_variant i.validator.empty {
+	color: var(--validator-emptyColor);
+}
+
+.fancy_variant i.validator.validating {
+	color: var(--validator-validatingColor);
+}
+
+.fancy_variant i.validator.success {
+	color: var(--validator-successColor);
+}
+
+.fancy_variant i.validator.warning {
+	color: var(--validator-warningColor);
+}
+
+.fancy_variant i.validator.danger {
+	color: var(--validator-dangerColor);
+}
+
+.fancy_variant i.validator.error {
+	color: var(--validator-errorColor);
+}
+
+.fancy_variant i.validator span,
+.fancy_variant i.eye span {
+	display: flex;
+	cursor: pointer;
+}
+
+.fancy_variant input {
+	background: none;
+	outline: none;
+	border: none;
+	padding: var(--input-padding);
+	color: var(--input-color);
+	font-weight: var(--input-fontWeight);
+}
+
+.fancy_variant:focus-within i.validator span svg {
+	animation: rotate 2.5s linear 0s infinite normal;
+}
+
+.fancy_variant:focus-within {
+	box-shadow: 0 0 0.5rem var(--validator-validatingColor);
+}
+
+.fancy_variant:focus-within i:not(.validator):not(.eye) {
+	color: var(--validator-validatingColor);
+}
+
+.fancy_variant input::placeholder {
+	color: var(--placeholder-color);
+	font-weight: var(--placeholder-fontWeight);
+}

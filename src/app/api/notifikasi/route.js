@@ -1,6 +1,5 @@
 // #region TYPE DEPEDENCY
 import * as SupabaseTypes from '@/types/supabase';
-import { APIResponseErrorProps } from '@/constant/api_response';
 // #endregion
 
 // #region NEXT DEPEDENCY
@@ -8,80 +7,158 @@ import { NextResponse, NextRequest } from 'next/server';
 // #endregion
 
 // #region UTIL DEPEDENCY
-import {
-    rateLimit,
-} from '@/utils/server_side';
+import cors, { DEFAULT_CORS_OPTIONS } from '@/lib/cors';
+import { rateLimit } from '@/utils/server_side';
 // #endregion
 
 // #region API HELPER DEPEDENCY
 import {
-    getLogAttributes,
-    verifyService,
-    checkRateLimit,
-    verifyAuth,
-    handleErrorResponse,
-    handleSupabaseError,
-    supabaseServerClient as supabase,
-    supabaseServiceClient as supabaseService,
+	getLogAttributes,
+	verifyService,
+	checkRateLimit,
+	verifyAuth,
+	handleErrorResponse,
+	handleSupabaseError,
+	supabaseServerClient as supabase,
+	supabaseServiceClient as supabaseService
 } from '@/utils/api_helper';
 // #endregion
 
+/**
+ * Array of string berisikan method yang tersedia pada route `'/api/notifikasi'`
+ */
+const routeMethods = ['GET'];
+
+/**
+ * Opsi `CORS` yang digunakan pada route `'/api/notifikasi'`
+ *
+ * @see {@link DEFAULT_CORS_OPTIONS Default}
+ */
+const routeCorsOptions = /** @type {import('@/lib/cors').CorsOptions} */ (
+	{
+		methods: routeMethods
+	} ?? DEFAULT_CORS_OPTIONS
+);
+
 const limitRequest = parseInt(process.env.API_NOTIFIKASI_REQUEST_LIMIT);
 const limiter = await rateLimit({
-    interval: parseInt(process.env.API_NOTIFIKASI_TOKEN_INTERVAL_SECONDS) * 1000,
-    uniqueTokenPerInterval: parseInt(process.env.API_NOTIFIKASI_MAX_TOKEN_PERINTERVAL),
-})
+	interval: parseInt(process.env.API_NOTIFIKASI_TOKEN_INTERVAL_SECONDS) * 1000,
+	uniqueTokenPerInterval: parseInt(
+		process.env.API_NOTIFIKASI_MAX_TOKEN_PERINTERVAL
+	)
+});
+
+/**
+ * Route Handler untuk `OPTIONS` `'/api/notifikasi'`
+ * @param {NextRequest} request
+ */
+export async function OPTIONS(request) {
+	return cors(request, new Response(null, { status: 204 }), routeCorsOptions);
+}
 
 /**
  * Route Handler untuk `GET` `'/api/notifikasi'`
  * @param {NextRequest} request
  */
 export async function GET(request) {
-    const responseHeaders = {};
-    const requestLog = await getLogAttributes(request);
-    const ratelimitLog = {};
+	const responseHeaders = {};
+	const requestLog = await getLogAttributes(request);
+	const ratelimitLog = {};
 
-    try {
-        const isService = await verifyService(request);
-        if (isService) {
-            /** @type {SupabaseTypes._from<SupabaseTypes.NotifikasiData>} */
-            const { data, error } = await supabaseService.from('notifikasi').select('*').order('unix_created_at', { ascending: false });
-            if (error) {
-                const { code, headers = {}, _details, ...rest } = await handleSupabaseError(error, false, {
-                    functionDetails: 'supabaseService.from at GET /api/notifikasi line 48',
-                    functionArgs: { from: 'notifikasi', select: '*', orderColumn: 'unix_created_at', orderOptions: { ascending: false } },
-                    functionResolvedVariable: { data, error },
-                });
+	try {
+		const isService = await verifyService(request);
+		if (isService) {
+			/** @type {SupabaseTypes._from<SupabaseTypes.NotifikasiData>} */
+			const { data, error } = await supabaseService
+				.from('notifikasi')
+				.select('*')
+				.order('unix_created_at', { ascending: false });
+			if (error) {
+				const {
+					code,
+					headers = {},
+					_details,
+					...rest
+				} = await handleSupabaseError(error, false, {
+					functionDetails:
+						'supabaseService.from at GET /api/notifikasi line 48',
+					functionArgs: {
+						from: 'notifikasi',
+						select: '*',
+						orderColumn: 'unix_created_at',
+						orderOptions: { ascending: false }
+					},
+					functionResolvedVariable: { data, error }
+				});
 
-                const body = { ...rest, _details: { ..._details, request: { info: requestLog, ..._details.request } } }
-                return NextResponse.json(body, { status: code, headers });
-            }
+				const body = {
+					...rest,
+					_details: {
+						..._details,
+						request: { info: requestLog, ..._details.request }
+					}
+				};
+				return cors(
+					request,
+					NextResponse.json(body, { status: code, headers }),
+					routeCorsOptions
+				);
+			}
 
-            return NextResponse.json(data, { status: 200 })
-        }
+			return cors(
+				request,
+				NextResponse.json(data, { status: 200 }),
+				routeCorsOptions
+			);
+		}
 
-        await checkRateLimit(limiter, limitRequest).then(x => {
-            const { currentUsage, currentTtl, currentSize, rateLimitHeaders } = x;
-            Object.assign(responseHeaders, rateLimitHeaders);
-            Object.assign(ratelimitLog, { currentUsage, currentTtl, currentSize })
-        })
+		await checkRateLimit(limiter, limitRequest).then((x) => {
+			const { currentUsage, currentTtl, currentSize, rateLimitHeaders } = x;
+			Object.assign(responseHeaders, rateLimitHeaders);
+			Object.assign(ratelimitLog, { currentUsage, currentTtl, currentSize });
+		});
 
-        const { decryptedSession, decodedAccessToken } = await verifyAuth();
+		const { decryptedSession, decodedAccessToken } = await verifyAuth();
 
-        /** @type {SupabaseTypes._from<SupabaseTypes.NotifikasiData>} */
-        const { data, error } = await supabase.from('notifikasi').select('*').limit(10).order('unix_created_at', { ascending: false });
-        if (error) {
-            await handleSupabaseError(error, true, {
-                functionDetails: 'supabase.from at GET /api/notifikasi line 72',
-                functionArgs: { from: 'notifikasi', select: '*', limit: 10, orderColumn: 'unix_created_at', orderOptions: { ascending: false } },
-                functionResolvedVariable: { data, error },
-            })
-        }
+		/** @type {SupabaseTypes._from<SupabaseTypes.NotifikasiData>} */
+		const { data, error } = await supabase
+			.from('notifikasi')
+			.select('*')
+			.limit(10)
+			.order('unix_created_at', { ascending: false });
+		if (error) {
+			await handleSupabaseError(error, true, {
+				functionDetails: 'supabase.from at GET /api/notifikasi line 72',
+				functionArgs: {
+					from: 'notifikasi',
+					select: '*',
+					limit: 10,
+					orderColumn: 'unix_created_at',
+					orderOptions: { ascending: false }
+				},
+				functionResolvedVariable: { data, error }
+			});
+		}
 
-        return NextResponse.json(data, { status: 200, headers: responseHeaders });
-    } catch (/** @type {APIResponseErrorProps} */ error) {
-        const { body, status, headers } = await handleErrorResponse(error, requestLog, ratelimitLog, true);
-        if (headers) { Object.assign(responseHeaders, headers) }
-        return NextResponse.json(body, { status, headers: responseHeaders })
-    }
+		return cors(
+			request,
+			NextResponse.json(data, { status: 200, headers: responseHeaders }),
+			routeCorsOptions
+		);
+	} catch (/** @type {import('@/constant/api_response').APIResponseErrorProps} */ error) {
+		const { body, status, headers } = await handleErrorResponse(
+			error,
+			requestLog,
+			ratelimitLog,
+			true
+		);
+		if (headers) {
+			Object.assign(responseHeaders, headers);
+		}
+		return cors(
+			request,
+			NextResponse.json(body, { status, headers: responseHeaders }),
+			routeCorsOptions
+		);
+	}
 }

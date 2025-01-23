@@ -8,25 +8,25 @@
 
 /** Pengaturan atau preferensi tabel matakuliah yang dapat diatur
  * @typedef {Object} PreferencesProps
- * @property {number} size 
+ * @property {number} size
  * Jumlah maksimal matakuliah yang tampil pada tabel untuk 1 halaman. Dapat bernilai `-1` dimana menampilkan semua matakuliah yang ada.
- * @property {0|1|2} controlPosition 
+ * @property {0|1|2} controlPosition
  * Letak kontrol table untuk mengganti halaman tabel dengan keterangan berikut,
  * - `0` : Terletak pada bawah tabel
  * - `1` : Terletak pada atas tabel
  * - `2` : Terletak pada bawah dan atas tabel
- * @property {Array<ColumnId} columnOrder 
+ * @property {Array<ColumnId} columnOrder
  * Array yang berisikan `ColumnId` dimana urutan indexnya merepresentasikan urutan column. Index terkecil berada paling kiri, dan index terbesar berada paling kanan
  * ```js
- * const columnOrder = ['nomor', ..., 'sks'] 
- * // Column 'nomor' akan berada paling kiri sisi tabel, dan 'sks' akan berada paling kanan 
+ * const columnOrder = ['nomor', ..., 'sks']
+ * // Column 'nomor' akan berada paling kiri sisi tabel, dan 'sks' akan berada paling kanan
  * ```
- * @property {Record<ColumnId, boolean>} columnVisibility 
+ * @property {Record<ColumnId, boolean>} columnVisibility
  * Object dengan key `ColumnId` dengan value `boolean`. Saat `true`, maka column tersebut akan tampil jika `false` maka tidak akan tampil
  * ```js
  * const columnVisibility = {
  *      nomor: true,
- *      sks: false, 
+ *      sks: false,
  *      ...
  * }
  * // Column 'nomor' tampil dan 'sks' tidak tampil
@@ -48,7 +48,7 @@
  * - `string` : Keyword tertentu
  * - `Array<string>` : Array yang berisikan kumpulan string
  * - `boolean` : Boolean sebagai flag sebuah atribut
- *  
+ *
  * ```js
  * // Contoh
  * const columnFilters = [
@@ -77,4 +77,4 @@
  * @property {PreferencesProps['controlPosition'] | null} pageControlPosition
  */
 
-export const TableMatakuliahTypes = {}
+export const TableMatakuliahTypes = {};

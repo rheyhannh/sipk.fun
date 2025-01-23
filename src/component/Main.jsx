@@ -1,7 +1,7 @@
-'use client'
+'use client';
 
 // #region NEXT DEPENDENCY
-import Image, { ImageProps } from "next/image";
+import Image, { ImageProps } from 'next/image';
 // #endregion
 
 // #region REACT DEPEDENCY
@@ -9,7 +9,7 @@ import * as React from 'react';
 // #endregion
 
 // #region STYLE DEPEDENCY
-import { league_spartan } from "@/fonts/fonts";
+import { league_spartan } from '@/fonts/fonts';
 // #endregion
 
 /**
@@ -41,88 +41,70 @@ import { league_spartan } from "@/fonts/fonts";
 
 /**
  * Render text `SIPK` dengan font dan warna yang telah ditentukan
- * @param {LogoTextProps} props React props object 
+ * @param {LogoTextProps} props React props object
  * @returns Element react untuk render text `SIPK`
  */
-export function LogoText({
-    as: TextTag = 'h2',
-    textProps = {},
-    styles = {}
-}) {
-    return (
-        <TextTag
-            className={league_spartan.variable}
-            style={{ fontFamily: 'var(--leaguespartan-font)', ...styles }}
-            {...textProps}
-        >
-            <span style={{ color: 'var(--logo-first-color)' }}>SIP</span>
-            <span style={{ color: 'var(--logo-second-color)' }}>K</span>
-        </TextTag>
-    );
+export function LogoText({ as: TextTag = 'h2', textProps = {}, styles = {} }) {
+	return (
+		<TextTag
+			className={league_spartan.variable}
+			style={{ fontFamily: 'var(--leaguespartan-font)', ...styles }}
+			{...textProps}
+		>
+			<span style={{ color: 'var(--logo-first-color)' }}>SIP</span>
+			<span style={{ color: 'var(--logo-second-color)' }}>K</span>
+		</TextTag>
+	);
 }
 
 /**
  * Render logo menggunakan next image
- * @param {LogoImageProps} props React props object 
+ * @param {LogoImageProps} props React props object
  * @returns Element react untuk render logo menggunakan next image
  */
 export function LogoImage({
-    src = '/logo.png',
-    width = 96,
-    height = 96,
-    alt = 'SIPK Logo',
-    imageProps = {}
+	src = '/logo.png',
+	width = 96,
+	height = 96,
+	alt = 'SIPK Logo',
+	imageProps = {}
 }) {
-    return (
-        <Image
-            src={src}
-            width={width}
-            height={height}
-            alt={alt}
-            {...imageProps}
-        />
-    );
+	return (
+		<Image src={src} width={width} height={height} alt={alt} {...imageProps} />
+	);
 }
 
 /**
  * Render logo image dan logo text
- * @param {LogoProps} props React props object 
+ * @param {LogoProps} props React props object
  * @returns Element react untuk render logo image dan logo text
  */
 export function Logo({
-    container: ContainerTag = 'div',
-    containerProps = {},
-    image = {},
-    text = {}
+	container: ContainerTag = 'div',
+	containerProps = {},
+	image = {},
+	text = {}
 }) {
-    const {
-        src = '/logo.png',
-        width = 96,
-        height = 96,
-        alt = 'SIPK Logo',
-        imageProps = {}
-    } = image;
+	const {
+		src = '/logo.png',
+		width = 96,
+		height = 96,
+		alt = 'SIPK Logo',
+		imageProps = {}
+	} = image;
 
-    const {
-        as: TextTag = 'h2',
-        textProps = {},
-        styles = {}
-    } = text;
+	const { as: TextTag = 'h2', textProps = {}, styles = {} } = text;
 
-    return (
-        <ContainerTag {...containerProps}>
-            <LogoImage
-                src={src}
-                width={width}
-                height={height}
-                alt={alt}
-                imageProps={imageProps}
-            />
-            <LogoText
-                as={TextTag}
-                textProps={textProps}
-                styles={styles}
-            />
-        </ContainerTag>
-    );
+	return (
+		<ContainerTag {...containerProps}>
+			<LogoImage
+				src={src}
+				width={width}
+				height={height}
+				alt={alt}
+				imageProps={imageProps}
+			/>
+			<LogoText as={TextTag} textProps={textProps} styles={styles} />
+		</ContainerTag>
+	);
 }
