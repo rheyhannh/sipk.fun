@@ -1,4 +1,4 @@
-name: build-and-test
+name: production
 on:
   push:
     branches: [ "main" ]
@@ -34,6 +34,8 @@ env:
   SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
   SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
   USER_SESSION_COOKIES_NAME: ${{ secrets.USER_SESSION_COOKIES_NAME }}
+  VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+  VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
 
 jobs:
   build:
@@ -96,3 +98,22 @@ jobs:
         else
           echo "No test script defined. Skipping tests.";
         fi
+
+  deploy:
+    needs: [build, test]
+    runs-on: ubuntu-latest
+    steps:
+    - name: 📦 Checkout repository
+      uses: actions/checkout@v4
+    
+    - name: 📥 Download and install vercel CLI
+      uses: npm install --global vercel@latest
+        
+    - name: ⬇️ Pull vercel environment information
+      run: vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
+
+    - name: 🛠️ Build project artifacts
+      run: vercel build --prod --token=${{ secrets.VERCEL_TOKEN }}    
+
+    - name: 🚀 Deploy project artifacts to vercel
+      run: vercel deploy --prebuilt --prod --token=${{ secrets.VERCEL_TOKEN }}
