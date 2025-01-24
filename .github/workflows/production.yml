@@ -107,7 +107,7 @@ jobs:
       uses: actions/checkout@v4
     
     - name: 📥 Download and install vercel CLI
-      uses: npm install --global vercel@latest
+      run: npm install --global vercel@latest
         
     - name: ⬇️ Pull vercel environment information
       run: vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
