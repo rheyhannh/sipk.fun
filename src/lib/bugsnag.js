@@ -136,7 +136,7 @@ export function startBugsnag() {
 			apiKey: process.env.NEXT_PUBLIC_BUGSNAG_SITEKEY,
 			appType: 'browser',
 			appVersion: process.env.NEXT_PUBLIC_APP_VERSION,
-			autoDetectErrors: false,
+			autoDetectErrors: true,
 			enabledBreadcrumbTypes: ['error', 'navigation', 'request', 'user'],
 			maxBreadcrumbs: 25,
 			maxEvents: 10,
@@ -145,7 +145,8 @@ export function startBugsnag() {
 					name: 'SIPK App'
 				}
 			},
-			plugins: [new BugsnagPluginReact()]
+			plugins: [new BugsnagPluginReact()],
+			releaseStage: 'staging'
 		});
 	}
 }
